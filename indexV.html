@@ -48,6 +48,7 @@
 <!-- UI-Router -->
 <script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
 
+<script src="controller/matchPrices.js"></script>
 <script src="controller/pricelist.js"></script>
 <script src="controller/register.js"></script>
 <script src="controller/invoices.js"></script>
@@ -55,8 +56,8 @@
 
 <!-- App Script -->
 <script>
-    var  serverUrl = 'http://localhost:3101';
-//    var  serverUrl = 'http://200.123.104.182:3101';
+ //   var  serverUrl = 'http://localhost:3101';
+   var  serverUrl = 'http://200.5.223.97:8080';
 
     var myapp = angular.module('myapp', ['ui.router'])
 
@@ -153,7 +154,7 @@
                 .state('matches', {
                     url: "/match",
                     templateUrl: "view/matchprices.html",
-                    controller: pricelistCtrl
+                    controller: matchPricesCtrl
                 })
    })
 
