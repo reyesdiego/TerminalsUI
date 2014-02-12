@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+
+<head>
+    <title>AngularJS: UI-Router Quick Start</title>
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <!--<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="less/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="less/bootswatch.min.css">
+</head>
+
+<body class="container">
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="../" class="navbar-brand">Administración General de Puertos</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a ui-sref="register">Registro</a></li>
+                <li><a ui-sref="tarifario">Tarifario</a></li>
+                <li><a ui-sref="matches">Match</a></li>
+                <li><a ui-sref="invoices">Facturas</a></li>
+                <li><a href="https://wrapbootstrap.com/?ref=bsw">WrapBootstrap</a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <div class="well" ui-view></div>
+    </div>
+</div>
+
+<!-- Angular -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-resource.js"></script>
+
+<!-- UI-Router -->
+<script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+
+<script src="controller/pricelist.js"></script>
+<script src="controller/register.js"></script>
+<script src="controller/invoices.js"></script>
+
+
+<!-- App Script -->
+<script>
+    var  serverUrl = 'http://localhost:3101';
+//    var  serverUrl = 'http://200.123.104.182:3101';
+
+    var myapp = angular.module('myapp', ['ui.router'])
+
+    myapp.config(['$httpProvider', function ($httpProvider){
+        // Use x-www-form-urlencoded Content-Type
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+        // Override $http service's default transformRequest
+        $httpProvider.defaults.transformRequest = [function(data)
+        {
+            /**
+             * The workhorse; converts an object to x-www-form-urlencoded serialization.
+             * @param {Object} obj
+             * @return {String}
+             */
+            var param = function(obj)
+            {
+                var query = '';
+                var name, value, fullSubName, subName, subValue, innerObj, i;
+
+                for(name in obj)
+                {
+                    value = obj[name];
+
+                    if(value instanceof Array)
+                    {
+                        for(i=0; i<value.length; ++i)
+                        {
+                            subValue = value[i];
+                            fullSubName = name + '[' + i + ']';
+                            innerObj = {};
+                            innerObj[fullSubName] = subValue;
+                            query += param(innerObj) + '&';
+                        }
+                    }
+                    else if(value instanceof Object)
+                    {
+                        for(subName in value)
+                        {
+                            subValue = value[subName];
+                            fullSubName = name + '[' + subName + ']';
+                            innerObj = {};
+                            innerObj[fullSubName] = subValue;
+                            query += param(innerObj) + '&';
+                        }
+                    }
+                    else if(value !== undefined && value !== null)
+                    {
+                        query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+                    }
+                }
+
+                return query.length ? query.substr(0, query.length - 1) : query;
+            };
+
+            return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+        }];
+    }])
+
+    myapp.config(function($stateProvider, $urlRouterProvider){
+
+        // For any unmatched url, send to /route1
+        $urlRouterProvider.otherwise("/register");
+
+        $stateProvider
+                .state('register', {
+                    url: "/register",
+                    templateUrl: "view/register.html",
+                    controller: registerCtrl
+                })
+                .state('route1.list', {
+                    url: "/list",
+                    templateUrl: "route1.list.html",
+                    controller: function($scope){
+                        $scope.items = ["A", "List", "Of", "Items"];
+                    }
+                })
+                .state('tarifario', {
+                    url: "/pricelist",
+                    templateUrl: "view/pricelist.html",
+                    controller: pricelistCtrl
+                })
+                .state('route2.list', {
+                    url: "/list",
+                    templateUrl: "route2.list.html",
+                    controller: function($scope){
+                        $scope.things = ["A", "Set", "Of", "Things"];
+                    }
+                })
+                .state('invoices', {
+                    url: "/invoices",
+                    templateUrl: "view/list.html",
+                    controller: invoicesCtrl
+                })
+                .state('matches', {
+                    url: "/match",
+                    templateUrl: "view/matchprices.html",
+                    controller: pricelistCtrl
+                })
+   })
+
+</script>
+
+</body>
+
+</html>

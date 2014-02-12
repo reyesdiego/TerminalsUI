@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+<style>
+    .mitrue{
+        color:#ffff00;
+    }
+
+</style>
+    <script >
+        function bodyCtrl($scope, $http, $templateCache) {
+
+            $scope.btn1 = function (){
+                console.log($scope.micheck);
+
+            }
+            var  serverUrl = 'http://localhost:3101';
+
+            var inserturl = serverUrl + '/agp/pricelist';
+            $http({
+                method: 'GET',
+                url: inserturl,
+                cache: $templateCache
+            }).
+                    success(function(response) {
+                        console.log("success");
+                        $scope.list = response;
+                    }).
+                    error(function(response) {
+                        console.log("error");
+                        $scope.codeStatus = response || "Request failed";
+                        console.log($scope.codeStatus);
+                    });
+        }
+
+    </script>
+</head>
+<body ng-controller="bodyCtrl">
+<input type="text" placeholder="Ingresar algo" ng-model="text1" />
+<input type="text" value="{{ text1 }}" />
+
+    <li ng-repeat="mivar in list">
+        <ul class="mi{{ micheck }}">{{ mivar.description }}</ul>
+    </li>
+<input type="checkbox" value="true" ng-model="micheck" />
+<input type="button" ng-click="btn1" />
+</body>
+</html>
