@@ -1,10 +1,21 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function pricelistCtrl($scope, $http, $templateCache){
-	'use strict';
+function pricelistCtrl($scope, priceFactory){
+	//'use strict';
 
-	var inserturl = serverUrl + '/agp/pricelist';
+	priceFactory.getPrice(function (data) {
+		$scope.pricelist = data;
+	});
+
+	/*priceFactory.getPrice().success(function (data){
+		console.log("Se cargo la lista PriceList");
+		$scope.pricelist = data
+	}).error(function(){
+			console.log("Error al cargar la lista PriceList")
+		})*/
+
+	/*var inserturl = serverUrl + '/agp/pricelist';
 	$http({
 		method: 'GET',
 		url: inserturl,
@@ -14,6 +25,6 @@ function pricelistCtrl($scope, $http, $templateCache){
 			$scope.pricelist = data;
 		}).error(function(response) {
 			console.log("error");
-		});
+		});*/
 
 }
