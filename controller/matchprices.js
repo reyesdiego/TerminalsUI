@@ -14,16 +14,27 @@ function matchPricesCtrl($scope, $http, $templateCache, $dialogs){
 			console.log("success");
 			$scope.pricelist = data;
 
-			$scope.items = ['item1', 'item2', 'item3'];
+			$scope.open = function (precio){
+				var dlg = $dialogs.create('view/matchprices.modal.html','matchPricesModalCtrl',{itemTarifa: precio},{key: false, back: 'static'});
+				dlg.result.then(function(match){
+					console.log(match);
+					var inserturl = serverUrl + '/agp/matchPrice';
+					$http({
+						method: 'POST',
+						url: inserturl,
+						data: match
+					}).success(function(response) {
+							console.log("success");
+							$scope.codeStatus = response.data;
+							console.log($scope.codeStatus);
+						}).error(function(response) {
+							console.log("error");
+							$scope.codeStatus = response || "Request failed";
+							console.log($scope.codeStatus);
+						});
 
-			$scope.open = function (id){
-				$scope.id = id;
-				console.log($scope.id);
-				var dlg = $dialogs.create('view/matchprices.modal.html','matchPricesModalCtrl',{unId: $scope.id},{key: false,back: 'static'});
-				dlg.result.then(function(name){
-					$scope.name = name;
 				},function(){
-					$scope.name = 'You decided not to enter in your name, that makes me sad.';
+					console.log("se eligio cancelar");
 				});
 
 			};
