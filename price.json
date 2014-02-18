@@ -1,0 +1,72 @@
+[
+	{
+		"code": "TB1",
+		"description": "Manipuleo de contenedores FCL de 20 pies, entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque.",
+		"topPrice": 143.06,
+		"unitCurrency": "U$S/Container",
+		"id": "52e919f2c3a70b6004000002"
+	},
+	{
+		"code": "TC1",
+		"description": "Manipuleo de contenedores FCL de 40 pies, entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque",
+		"topPrice": 161.11,
+		"unitCurrency": "U$S/Container",
+		"id": "52e91b3884b2a9880c000002"
+	},
+	{
+		"code": "TD",
+		"description": "Entrega - devolución de contenedores para su llenado - vaciado por el cargador - consignatario.",
+		"topPrice": 29.4,
+		"unitCurrency": "U$S/Container",
+		"id": "52e91c4e84b2a9880c000003"
+	},
+	{
+		"code": "TE1",
+		"description": "Manipuleo de bolsas en general de 50 Kg. o más (Grupo 1), entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque.",
+		"topPrice": 14.11,
+		"unitCurrency": "U$S/tn",
+		"id": "52e91ce184b2a9880c000004"
+	},
+	{
+		"code": "TF1",
+		"description": "Manipuleo de pallets en general (Grupo 2), entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque.",
+		"topPrice": 12.94,
+		"unitCurrency": "U$S/tn",
+		"id": "52e91e7b84b2a9880c000005"
+	},
+	{
+		"code": "TG1",
+		"description": "Manipuleo de automóbiles y camiones (Grupo 3), entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque.",
+		"topPrice": 16.46,
+		"unitCurrency": "U$S/tn",
+		"id": "52e91f4747572a8017000002"
+	},
+	{
+		"code": "TH1",
+		"description": "Manipuleo de caños y barras sueltas y en atados (Grupo 4), entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque.",
+		"topPrice": 12.94,
+		"unitCurrency": "$/tn",
+		"id": "52e940f147572a8017000003"
+	},
+	{
+		"code": "TI1",
+		"description": "Manipuleo de bolsas de menos de 50 Kg. (Grupo 5), entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque.",
+		"topPrice": 23.52,
+		"unitCurrency": "$/tn",
+		"id": "52e9437b47572a8017000004"
+	},
+	{
+		"code": "TJ1",
+		"description": "Manipuleo de chapas sueltas, en atados y bobinas de acero (Grupo 6), entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque.",
+		"topPrice": 10.58,
+		"unitCurrency": "$/tn",
+		"id": "52e943ffcbeb54d411000002"
+	},
+	{
+		"code": "TK1",
+		"description": "Manipuleo de maquinaria vial, bultos pesados (Grupo 7), entrega dentro de los cinco (5) días corridos siguientes al de la finalización de la descarga del buque.",
+		"topPrice": 11.76,
+		"unitCurrency": "$/tn",
+		"id": "52e954f813d3b57808000002"
+	}
+]

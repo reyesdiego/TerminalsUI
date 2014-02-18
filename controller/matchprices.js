@@ -4,10 +4,11 @@
 function matchPricesCtrl($scope, $http, $templateCache, $dialogs){
 	'use strict';
 
-	var inserturl = serverUrl + '/agp/pricelist';
+	var inserturl = serverUrl + '/agp/prices';
 	$http({
 		method: 'GET',
-		url: inserturl,
+		url: 'price.json',
+		//url: inserturl,
 		cache: $templateCache
 	}).success(function(data) {
 			console.log("success");
@@ -15,15 +16,15 @@ function matchPricesCtrl($scope, $http, $templateCache, $dialogs){
 
 			$scope.items = ['item1', 'item2', 'item3'];
 
-			$scope.open = function (){
-
-				var dlg = $dialogs.create('view/matchprices.modal.html','whatsYourNameCtrl',{},{key: false,back: 'static'});
+			$scope.open = function (id){
+				$scope.id = id;
+				console.log($scope.id);
+				var dlg = $dialogs.create('view/matchprices.modal.html','matchPricesModalCtrl',{unId: $scope.id},{key: false,back: 'static'});
 				dlg.result.then(function(name){
 					$scope.name = name;
 				},function(){
 					$scope.name = 'You decided not to enter in your name, that makes me sad.';
 				});
-				/*$dialogs.create('view/matchprices.modal.html','whatsYourNameCtrl',{},{key: false,back: 'static'});*/
 
 			};
 
