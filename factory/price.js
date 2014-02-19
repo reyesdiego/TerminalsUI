@@ -38,5 +38,4 @@ myapp.factory('priceFactory', function($http){
 
 	return factory;
 
-
 });
