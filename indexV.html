@@ -57,8 +57,19 @@
 
 <!-- App Script -->
 <script>
+
+
+    Array.prototype.contains = function (item){
+        var result = false;
+        this.forEach(function (data){
+            if (data === item)
+                result = true;
+            return result;
+        });
+        return result;
+    }
  //   var  serverUrl = 'http://localhost:3101';
-   var  serverUrl = 'http://200.5.223.9:8081'
+   var  serverUrl = 'http://200.5.223.9:8080'
 
     var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'dialogs']);
 

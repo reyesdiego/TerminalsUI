@@ -4,29 +4,30 @@
 myapp.factory('priceFactory', function($http){
 	var inserturl = serverUrl + '/agp/prices';
 	var factory = {};
-	factory.getPrice = function(cn) {
+
+	factory.getPrice = function(callback) {
 		$http.get('price.json')
 			.success(function (data){
-				cn(data);
+				callback(data);
 			}).error(function(){
 				console.log("Error al cargar la lista PriceList")
 			});
 	};
-	factory.getMatchPrices = function(terminal, codigo, callback) {
-		/*$http.get('price.json')
+
+	factory.getMatchPrices = function(terminal, callback) {
+		$http.get('match.json')
 			.success(function (data){
-				cn(data);
+				callback(data);
 			}).error(function(){
 				console.log("Error al cargar la lista PriceList")
-			});*/
-		callback ({ terminal: terminal,
+			});
+		/*callback ({ terminal: terminal,
 				codes: { codeAgp: codigo,
-				codeNew: [ "PROBANDO1", "PROBANDO2", "PROBANDO3"]
-			}
-		});
+				codeNew: [ "COD1", "COD2", "COD3"]
+			}*/
+		};
 
-	}
-	factory.addMatchPrice = function (method, data){
+	factory.addMatchPrice = function (data){
 		var inserturl = serverUrl + '/agp/matchprice';
 		$http({
 			method: method,
