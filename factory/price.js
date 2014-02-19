@@ -12,18 +12,18 @@ myapp.factory('priceFactory', function($http){
 				console.log("Error al cargar la lista PriceList")
 			});
 	};
-	factory.getMatchPrices = function(callback) {
+	factory.getMatchPrices = function(terminal, codigo, callback) {
 		/*$http.get('price.json')
 			.success(function (data){
 				cn(data);
 			}).error(function(){
 				console.log("Error al cargar la lista PriceList")
 			});*/
-		return { terminal: "BACTSSA",
-				codes: { codeAgp: data.itemTarifa.code,
+		callback ({ terminal: terminal,
+				codes: { codeAgp: codigo,
 				codeNew: [ "PROBANDO1", "PROBANDO2", "PROBANDO3"]
 			}
-		};
+		});
 
 	}
 	factory.addMatchPrice = function (method, data){
@@ -34,7 +34,6 @@ myapp.factory('priceFactory', function($http){
 			data: data
 		}).success(function(response) {
 				console.log("success");
-
 			}).error(function(response) {
 				console.log("error");
 			});

@@ -12,23 +12,9 @@ function matchPricesCtrl($scope, $http, $dialogs, priceFactory){
 		$scope.pricelist = data;
 		$scope.open = function (precio){
 			var dlg = $dialogs.create('view/matchprices.modal.html','matchPricesModalCtrl',{itemTarifa: precio},{key: false, back: 'static'});
-			dlg.result.then(function(match){
+			dlg.result.then(function(match, method){
 				console.log(match);
-				var inserturl = serverUrl + '/agp/matchPrice';
-				$http({
-					method: 'POST',
-					url: inserturl,
-					data: match
-				}).success(function(response) {
-						console.log("success");
-						$scope.codeStatus = response.data;
-						console.log($scope.codeStatus);
-					}).error(function(response) {
-						console.log("error");
-						$scope.codeStatus = response || "Request failed";
-						console.log($scope.codeStatus);
-					});
-
+				priceFactory.addMatchPrice(method, match);
 			},function(){
 				console.log("se eligio cancelar");
 			})
