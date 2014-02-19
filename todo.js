@@ -1,16 +1,17 @@
 var myApp = angular.module('myApp', []);
-var  serverUrl = 'http://200.123.104.182:3101';
-//var  serverUrl = 'http://localhost:3101';
+//var  serverUrl = 'http://200.5.223.9:8080';
+var  serverUrl = 'http://localhost:8081';
 
 myApp.config(['$httpProvider', function($httpProvider) {
 //	$httpProvider.defaults.useXDomain = true;
 //	delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-
 	// Override $http service's default transformRequest
 	$httpProvider.defaults.transformRequest = [function(data)
 	{
+
 		/**
 		 * The workhorse; converts an object to x-www-form-urlencoded serialization.
 		 * @param {Object} obj
@@ -66,7 +67,7 @@ function TodoCtrl($scope, $http, $templateCache) {
 
 	$http({
 		method:	'GET',
-		url:	serverUrl + '/agp/pricelist'
+		url:	serverUrl + '/agp/prices'
 	}).success(function(data){
 			$scope.todos = data;
 
@@ -82,12 +83,11 @@ function TodoCtrl($scope, $http, $templateCache) {
 							"currency":		$scope.currency
 						};
 
-		var inserturl = serverUrl + '/agp/addprice';
+		var inserturl = serverUrl + '/agp/price';
 		$http({
 			method: 'POST',
 			url: inserturl,
-			data: formData,
-			cache: $templateCache
+			data: formData
 		}).
 			success(function(response) {
 				console.log("success");
