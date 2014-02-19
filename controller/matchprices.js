@@ -20,8 +20,7 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 		}*/
 
 		$scope.agregarCodigo = function(price) {
-
-			if (!price.match.contains(price.new)){
+			if (!price.match.contains(price.new) && !(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
 				price.match.push(price.new);
 			}
 			price.new = ''
@@ -33,7 +32,7 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 		}
 
 		$scope.hitEnter = function(evt, price){
-			if(angular.equals(evt.keyCode,13) && !(angular.equals(price.new,null) || angular.equals(price.new,'')))
+			if(angular.equals(evt.keyCode,13))
 				$scope.agregarCodigo(price);
 		} // end hitEnter
 
@@ -41,12 +40,12 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 			$scope.match = { terminal: "BACTSSA",
 							codes: []
 						};
-			var price;
-			for (price in $scope.pricelist){
-				var nuevoMatch = { codeAgp: price.code,
-									codeNew: price.match};
+			var prices = $scope.pricelist;
+			prices.forEach(function(item){
+				var nuevoMatch = { codeAgp: item.code,
+									codes: item.match};
 				$scope.match.codes.push(nuevoMatch);
-			}
+			});
 			priceFactory.addMatchPrice($scope.match);
 		}
 	});

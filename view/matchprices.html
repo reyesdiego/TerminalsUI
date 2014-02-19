@@ -1,52 +1,52 @@
 <div class="container">
 
-    <!-- Tables
-    ================================================== -->
-    <!--<div class="bs-docs-section">-->
+	<!-- Tables
+	================================================== -->
+	<!--<div class="bs-docs-section">-->
 
-    <div class="row">
-        <div class="col-lg-11">
-            <div class="xpage-header">
-                <h1 id="forms">Tarifario</h1>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-lg-11">
+			<div class="xpage-header">
+				<h1 id="forms">Tarifario</h1>
+			</div>
+		</div>
+	</div>
 
-    <div class="row">
-        <div class="col-lg-11">
-            <div class="bs-example table-responsive">
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th width="60%">Tarifa</th>
-                        <th width="15%">Match</th>
-                        <th width="20%">Cargar</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="price in pricelist">
-                        <td>{{ price.code }}</td>
-                        <td>{{ price.description }}</td>
-                        <td>
-                            <span ng-repeat="codigo in price.match track by $index"><a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a><span ng-show="!$last">, </span></span>
-                        </td>
-                        <td>
-                            <div class="col-lg-9">
-                                <input type="text" class="form-control" ng-model="price.new" size=10 ng-keyup="hitEnter($event, price)">
-                            </div>
-                            <input class="btn btn-primary" type="button" value="+" ng-click="agregarCodigo(price)">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-11">
-            <button class="btn btn-primary" ng-click="guardar()">Guardar</button>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-lg-11">
+			<div class="bs-example table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+					<tr>
+						<th>Código</th>
+						<th width="60%">Tarifa</th>
+						<th width="15%">Match</th>
+						<th width="20%">Cargar</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="price in pricelist">
+						<td>{{ price.code }}</td>
+						<td>{{ price.description }}</td>
+						<td>
+							<span ng-repeat="codigo in price.match track by $index"><a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a><span ng-show="!$last">, </span></span>
+						</td>
+						<td>
+							<div class="col-lg-9">
+								<input type="text" class="form-control" ng-model="price.new" size=10 ng-keyup="hitEnter($event, price)">
+							</div>
+							<input class="btn btn-primary" type="button" value="+" ng-click="agregarCodigo(price)">
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-11">
+			<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
+		</div>
+	</div>
 
 </div>
