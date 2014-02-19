@@ -26,7 +26,7 @@ myapp.factory('priceFactory', function($http){
 	factory.addMatchPrice = function (data){
 		var inserturl = serverUrl + '/agp/matchprice';
 		$http({
-			method: method,
+			method: "POST",
 			url: inserturl,
 			data: data
 		}).success(function(response) {
