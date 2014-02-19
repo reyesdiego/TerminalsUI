@@ -21,10 +21,6 @@ myapp.factory('priceFactory', function($http){
 			}).error(function(){
 				console.log("Error al cargar la lista PriceList")
 			});
-		/*callback ({ terminal: terminal,
-				codes: { codeAgp: codigo,
-				codeNew: [ "COD1", "COD2", "COD3"]
-			}*/
 		};
 
 	factory.addMatchPrice = function (data){

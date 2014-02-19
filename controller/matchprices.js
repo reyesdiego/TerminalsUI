@@ -8,6 +8,7 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 
 		$scope.pricelist = data;
 
+		/* YA NO SE USA LA VENTANA MODAL
 		$scope.open = function (precio){
 			var dlg = $dialogs.create('view/matchprices.modal.html','matchPricesModalCtrl',{itemTarifa: precio},{key: false, back: 'static'});
 			dlg.result.then(function(match, method){
@@ -16,7 +17,7 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 			},function(){
 				console.log("Se eligio cancelar");
 			})
-		}
+		}*/
 
 		$scope.agregarCodigo = function(price) {
 
