@@ -42,9 +42,11 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 						};
 			var prices = $scope.pricelist;
 			prices.forEach(function(item){
-				var nuevoMatch = { codeAgp: item.code,
-									codes: item.match};
-				$scope.match.codes.push(nuevoMatch);
+				if (item.match.length>0){
+					var nuevoMatch = { codeAgp: item.code,
+						codes: item.match};
+					$scope.match.codes.push(nuevoMatch);
+				}
 			});
 			priceFactory.addMatchPrice($scope.match);
 		}
