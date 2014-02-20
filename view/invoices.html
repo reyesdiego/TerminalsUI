@@ -18,14 +18,16 @@
 					<th>Razon Social</th>
 					<th>Fecha</th>
 					<th>Importe Total</th>
+					<th>Detalles</th>
 				</tr>
 				</thead>
 				<tbody>
 				<tr ng-repeat="invoice in invoices">
-					<td><a>{{ invoice.nroComprob }}</a></td>
+					<td>{{ invoice.nroComprob }}</td>
 					<td>{{ invoice.razSocial }}</td>
 					<td>{{ invoice.fecha.emision }}</td>
 					<td>${{ invoice.importe.total }}</td>
+					<td><input class="btn btn-primary" type="button" value="Más detalles" ng-click="open({{ invoice.nroComprob }})"/></td>
 				</tr>
 				</tbody>
 			</table>

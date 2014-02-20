@@ -21,4 +21,13 @@ function invoicesCtrl ($scope, $http, $templateCache) {
 			console.log("error");
 		});
 
+	$scope.open = function (nroComprob){
+		var dlg = $dialogs.create('view/invoices.detail.html','invoicesCtrl',{nroComprobante: nroComprob},{key: false, back: 'static'});
+		dlg.result.then(function(match, method){
+			console.log(match);
+		},function(){
+			console.log("Se eligio cancelar");
+		})
+	}
+
 }
