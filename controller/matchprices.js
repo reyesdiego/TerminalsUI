@@ -38,8 +38,8 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 
 		$scope.guardar = function() {
 			$scope.match = { terminal: "BACTSSA",
-							codes: []
-						};
+				codes: []
+			};
 			var prices = $scope.pricelist;
 			prices.forEach(function(item){
 				if (item.match.length>0){
@@ -48,7 +48,10 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 					$scope.match.codes.push(nuevoMatch);
 				}
 			});
-			priceFactory.addMatchPrice($scope.match);
+			priceFactory.addMatchPrice($scope.match, function(data){
+				console.log(data);
+				$scope.match
+			});
 		}
 	});
 
