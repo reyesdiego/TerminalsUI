@@ -22,10 +22,10 @@
 				</thead>
 				<tbody>
 				<tr ng-repeat="invoice in invoices">
-					<td><a href="#">{{ invoice.nroComprob }}</a></td>
+					<td><a>{{ invoice.nroComprob }}</a></td>
 					<td>{{ invoice.razSocial }}</td>
 					<td>{{ invoice.fecha.emision }}</td>
-					<td>{{ invoice.importe.total }}</td>
+					<td>${{ invoice.importe.total }}</td>
 				</tr>
 				</tbody>
 			</table>

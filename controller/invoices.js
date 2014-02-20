@@ -7,6 +7,7 @@ function invoicesCtrl ($scope, $http, $templateCache) {
 
 //	$scope.invoices = Booking.reviews({token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'});
 	var inserturl = serverUrl + '/invoices';
+	//noinspection JSUnresolvedFunction
 	$http({
 		method: 'GET',
 		url: inserturl,
@@ -16,7 +17,7 @@ function invoicesCtrl ($scope, $http, $templateCache) {
 	}).success(function(data) {
 			console.log("success");
 			$scope.invoices = data;
-		}).error(function(response) {
+		}).error(function() {
 			console.log("error");
 		});
 
