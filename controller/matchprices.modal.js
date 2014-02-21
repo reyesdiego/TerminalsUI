@@ -2,6 +2,8 @@
  * Created by kolesnikov-a on 17/02/14.
  */
 
+/** SIN USAR **/
+
 function matchPricesModalCtrl ($scope, $modalInstance,  data, priceFactory){
 	$scope.tarifa = data.itemTarifa;
 

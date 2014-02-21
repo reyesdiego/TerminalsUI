@@ -21,20 +21,17 @@ myapp.factory('priceFactory', function($http){
 			}).error(function(){
 				console.log("Error al cargar la lista PriceList")
 			});
-		/*callback ({ terminal: terminal,
-				codes: { codeAgp: codigo,
-				codeNew: [ "COD1", "COD2", "COD3"]
-			}*/
 		};
 
-	factory.addMatchPrice = function (data){
+	factory.addMatchPrice = function (data, callback){
 		var inserturl = serverUrl + '/agp/matchprice';
 		$http({
-			method: method,
+			method: "POST",
 			url: inserturl,
 			data: data
 		}).success(function(response) {
 				console.log("success");
+				callback(response);
 			}).error(function(response) {
 				console.log("error");
 			});
@@ -42,5 +39,26 @@ myapp.factory('priceFactory', function($http){
 
 	return factory;
 
+});
+
+myapp.factory('invoiceFactory', function($http, $templateCache){
+	var inserturl = serverUrl + '/invoices';
+	var factory = {};
+
+	factory.getInvoice = function(callback) {
+		$http({
+			method: 'GET',
+			url: inserturl,
+			cache: $templateCache,
+			headers:
+			{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'}
+		}).success(function(data) {
+				callback(data);
+			}).error(function() {
+				console.log("Error al cargar la lista Invoice");
+			});
+	};
+
+	return factory;
 
 });
