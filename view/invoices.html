@@ -25,7 +25,7 @@
 				<tr ng-repeat="invoice in invoices">
 					<td>{{ invoice.nroComprob }}</td>
 					<td>{{ invoice.razSocial }}</td>
-					<td>{{ invoice.fecha.emision }}</td>
+					<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 					<td>${{ invoice.importe.total }}</td>
 					<td><input class="btn btn-primary" type="button" value="Más detalles" ng-click="open(invoice)"/></td>
 				</tr>
