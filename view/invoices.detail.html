@@ -1,18 +1,114 @@
-<div class="modal">
+<div class="modal" >
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">
-					<span>Comprobante Número {{ factura.nroComprob }}</span>
-				</h4>
-			</div>
-			<div class="modal-body">
-				<span></span>
-				<ul class="unstyled">
-				</ul>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" ng-click="close()">Cerrar</button>
+				<table class="table">
+					<tr>
+						<td align="center" style="background-color:#357EBD;color:#FFF" colspan="2">
+							Factura
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4>Factura tipo {{ factura.codTipoComprob }} número: {{ factura.nroComprob }}</h4>
+						</td>
+						<!-- ACA SE PONE EL LOGO SI SE LLEGA A IMPLEMENTAR
+						<td align="right">
+							<input type="file" id="imgInp" />
+							<img ng-hide="logoRemoved" id="company_logo" src="{{ logo }}" alt="your image" width="300" />
+							<br/>
+						</td>
+						-->
+					</tr>
+					<tr>
+						<td>
+							<span>Emisión: {{ factura.fecha.emision }}</span>
+						</td>
+					</tr>
+				</table>
+				<table class="table">
+					<tr>
+						<td>
+							<div class="infos">
+								<div><strong><span>Documento cliente: {{ factura.nroDoc }}</span></strong></div>
+								<div><span>Vcto factura: {{ factura.fecha.vcto }}</span></div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div>
+								<div><strong><span>Terminal: {{ factura.terminal }}</span></strong></div>
+								<div><span>Punto de venta: {{ factura.nroPtoVenta }}</span></div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div>
+								<div><strong><span>Viaje: {{ factura.buque.viaje }}</span></strong></div>
+								<div><span>Desde: {{ factura.fecha.desde }}</span></div>
+								<div><span>Hasta: {{ factura.fecha.hasta }}</span></div>
+							</div>
+						</td>
+					</tr>
+				</table>
+				<table class="table table-striped" align="center">
+					<tr align="center">
+						<th width="25%" style="text-align:center;">Tarifa</th>
+						<th width="25%" style="text-align:center;">Cantidad</th>
+						<th width="25%" style="text-align:center;">Unidad</th>
+						<th width="25%" style="text-align:right;">Total</th>
+					</tr>
+				</table>
+				<table class="table table-striped" align="center" ng-repeat="contenedor in factura.detalle">
+					<tr>
+						<td colspan="4"><strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong></td>
+					</tr>
+					<tr ng-repeat="item in contenedor.items" align="center">
+						<td width="25%">
+							<span>{{ item.id }}</span>
+						</td>
+						<td width="25%">
+							<span>{{ item.cnt }}</span>
+						</td>
+						<td width="25%">
+							<span>{{ item.uniMed }}</span>
+						</td>
+						<td width="25%" style="text-align:right;">
+							<span>{{ item.impTot }}</span>
+						</td>
+					</tr>
+				</table>
+				<!--
+				<tr>
+					<td colspan="4" align="right">
+						Sub Total
+					</td>
+					<td align="right">
+						{{invoice_sub_total() | currency}}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" align="right">
+						Tax(%): <input ng-model="invoice.tax" ng-validate="number" style="width:43px">
+					</td>
+					<td align="right">
+						{{calculate_tax() | currency}}
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" align="right">
+						Grand Total:
+					</td>
+					<td align="right">
+						{{calculate_grand_total() | currency}}
+					</td>
+				</tr>
+				-->
+				<div>
+					<button class="btn btn-primary" ng-click="close()">Cerrar</button>
+				</div>
 			</div>
 		</div>
 	</div>
