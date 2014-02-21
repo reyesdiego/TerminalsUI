@@ -2,20 +2,20 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" align="center" style="background-color:#357EBD;color:#FFF">
+				<h4 class="modal-title" style="background-color:#357EBD; color:#FFF; text-align: center">
 					Factura
 				</h4>
 			</div>
 			<div class="modal-body">
 				<h4>Factura tipo {{ factura.codTipoComprob }} número: {{ factura.nroComprob }}</h4>
-				<div><span>Emisión: {{ factura.fecha.emision }}</span></div>
+				<div><span>Emisión: {{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
 				<br>
 				<table class="table">
 					<tr>
 						<td>
 							<div class="infos">
 								<div><strong><span>Documento cliente: {{ factura.nroDoc }}</span></strong></div>
-								<div><span>Vcto factura: {{ factura.fecha.vcto }}</span></div>
+								<div><span>Vencimiento factura: {{ factura.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
 							</div>
 						</td>
 					</tr>
@@ -31,67 +31,69 @@
 						<td>
 							<div>
 								<div><strong><span>Viaje: {{ factura.buque.viaje }}</span></strong></div>
-								<div><span>Desde: {{ factura.fecha.desde }}</span></div>
-								<div><span>Hasta: {{ factura.fecha.hasta }}</span></div>
+								<div><span>Desde: {{ factura.fecha.desde | date: 'dd/MM/yyyy' }}</span></div>
+								<div><span>Hasta: {{ factura.fecha.hasta | date: 'dd/MM/yyyy' }}</span></div>
 							</div>
 						</td>
 					</tr>
 				</table>
-				<table class="table table-striped" align="center">
-					<tr align="center">
-						<th width="25%" style="text-align:center;">Tarifa</th>
-						<th width="25%" style="text-align:center;">Cantidad</th>
-						<th width="25%" style="text-align:center;">Unidad</th>
-						<th width="25%" style="text-align:right;">Total</th>
+				<table class="table table-striped" style="text-align: center">
+					<tr style="text-align: center">
+						<th style="text-align:center; width: 25%">Item</th>
+						<th style="text-align:center; width: 25%">Cantidad</th>
+						<th style="text-align:center; width: 25%">Unidad</th>
+						<th style="text-align:right; width: 25%">Total</th>
 					</tr>
 				</table>
-				<table class="table table-striped" align="center" ng-repeat="contenedor in factura.detalle">
+				<table class="table table-striped" ng-repeat="contenedor in factura.detalle" style="text-align: center">
 					<tr>
-						<td colspan="4"><strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong></td>
+						<td colspan="4" style="text-align: left">
+							<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
+						</td>
 					</tr>
-					<tr ng-repeat="item in contenedor.items" align="center">
-						<td width="25%">
+					<tr ng-repeat="item in contenedor.items">
+						<td style="width: 25%">
 							<span>{{ item.id }}</span>
 						</td>
-						<td width="25%">
+						<td style="width: 25%">
 							<span>{{ item.cnt }}</span>
 						</td>
-						<td width="25%">
+						<td style="width: 25%">
 							<span>{{ item.uniMed }}</span>
 						</td>
-						<td width="25%" style="text-align:right;">
-							<span>{{ item.impTot }}</span>
+						<td style="text-align:right; width: 25%">
+							<span>{{ item.impTot | currency }}</span>
 						</td>
 					</tr>
 				</table>
-				<!--
-				<tr>
-					<td colspan="4" align="right">
-						Sub Total
-					</td>
-					<td align="right">
-						{{invoice_sub_total() | currency}}
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4" align="right">
-						Tax(%): <input ng-model="invoice.tax" ng-validate="number" style="width:43px">
-					</td>
-					<td align="right">
-						{{calculate_tax() | currency}}
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4" align="right">
-						Grand Total:
-					</td>
-					<td align="right">
-						{{calculate_grand_total() | currency}}
-					</td>
-				</tr>
-				-->
+				<table class="table table-striped">
+					<tr>
+						<td colspan="2" style="text-align: right;">Subtotal</td>
+						<td colspan="2" style="text-align: right;">{{ factura.importe.subtotal | currency }}</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align:right;">IVA</td>
+						<td colspan="2" style="text-align:right;">{{ factura.importe.iva | currency }}</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align: right">Otros Tributos</td>
+						<td colspan="2" style="text-align: right">{{ factura.importe.otrosTributos | currency }}</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align: right">Total</td>
+						<td colspan="2" style="text-align: right">{{ factura.importe.total | currency }}</td>
+					</tr>
+				</table>
+				<div>
+					<span>
+							Monto Gravado {{ factura.importe.gravado | currency }};
+							Monto No Gravado {{ factura.importe.noGravado | currency }};
+							Exento {{ factura.importe.exento | currency }}
+					</span>
+				</div>
 			</div>
 			<div class="modal-footer">
+				<button class="btn btn-primary" ng-click="print()">Imprimir</button>
 				<button class="btn btn-primary" ng-click="close()">Cerrar</button>
 			</div>
 		</div>
