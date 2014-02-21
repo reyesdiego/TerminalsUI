@@ -2,10 +2,10 @@
  * Created by gutierrez-g on 18/02/14.
  */
 myapp.factory('priceFactory', function($http){
-	var inserturl = serverUrl + '/agp/prices';
 	var factory = {};
 
 	factory.getPrice = function(callback) {
+		var inserturl = serverUrl + '/agp/prices';
 		$http.get('price.json')
 			.success(function (data){
 				callback(data);
@@ -15,7 +15,9 @@ myapp.factory('priceFactory', function($http){
 	};
 
 	factory.getMatchPrices = function(terminal, callback) {
-		$http.get('match.json')
+		var inserturl = serverUrl + '/agp/matchprices/'+terminal;
+//		$http.get('match.json')
+		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
 			}).error(function(){
