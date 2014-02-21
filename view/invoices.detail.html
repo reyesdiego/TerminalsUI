@@ -2,30 +2,14 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<table class="table">
-					<tr>
-						<td align="center" style="background-color:#357EBD;color:#FFF" colspan="2">
-							Factura
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<h4>Factura tipo {{ factura.codTipoComprob }} número: {{ factura.nroComprob }}</h4>
-						</td>
-						<!-- ACA SE PONE EL LOGO SI SE LLEGA A IMPLEMENTAR
-						<td align="right">
-							<input type="file" id="imgInp" />
-							<img ng-hide="logoRemoved" id="company_logo" src="{{ logo }}" alt="your image" width="300" />
-							<br/>
-						</td>
-						-->
-					</tr>
-					<tr>
-						<td>
-							<span>Emisión: {{ factura.fecha.emision }}</span>
-						</td>
-					</tr>
-				</table>
+				<h4 class="modal-title" align="center" style="background-color:#357EBD;color:#FFF">
+					Factura
+				</h4>
+			</div>
+			<div class="modal-body">
+				<h4>Factura tipo {{ factura.codTipoComprob }} número: {{ factura.nroComprob }}</h4>
+				<div><span>Emisión: {{ factura.fecha.emision }}</span></div>
+				<br>
 				<table class="table">
 					<tr>
 						<td>
@@ -106,9 +90,9 @@
 					</td>
 				</tr>
 				-->
-				<div>
-					<button class="btn btn-primary" ng-click="close()">Cerrar</button>
-				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" ng-click="close()">Cerrar</button>
 			</div>
 		</div>
 	</div>
