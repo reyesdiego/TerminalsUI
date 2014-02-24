@@ -2,20 +2,22 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-function invoicesCtrl ($scope, $dialogs, $templateCache, invoiceFactory) {
+function invoicesCtrl ($scope, $modal, invoiceFactory) {
 	'use strict';
 
 	invoiceFactory.getInvoice(function(data){
 		$scope.invoices = data;
-	})
+	});
 
 	$scope.open = function (factura){
-		var dlg = $dialogs.create('view/invoices.detail.html','invoicesModalCtrl',{factura: factura},{key: false, back: 'static'});
-		/*dlg.result.then(function(match, method){
-			console.log(match);
-		},function(){
-			console.log("Se eligio cancelar");
-		})*/
-	}
+		$modal.open({
+			templateUrl: 'view/invoices.detail.html',
+			controller: invoicesModalCtrl,
+			resolve: {
+				factura: function(){
+					return factura;
+				}
+			}
+		})};
 
 }
