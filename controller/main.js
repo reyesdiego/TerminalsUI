@@ -2,44 +2,39 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-Array.prototype.contains = function (item){
+Array.prototype.contains = function (item) {
 	var result = false;
-	this.forEach(function (data){
+	this.forEach(function (data) {
 		if (data === item)
 			result = true;
 		return result;
 	});
 	return result;
-}
-//   var  serverUrl = 'http://localhost:3101';
-var  serverUrl = 'http://200.41.137.88:8080'
+};
+
+var serverUrl = 'http://200.41.137.88:8080';
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'dialogs']);
 
-myapp.config(['$httpProvider', function ($httpProvider){
-	// Use x-www-form-urlencoded Content-Type
+myapp.config(['$httpProvider', function ($httpProvider) {
+
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-	// Override $http service's default transformRequest
-	$httpProvider.defaults.transformRequest = [function(data)
-	{
+
+	$httpProvider.defaults.transformRequest = [function (data) {
 		/**
 		 * The workhorse; converts an object to x-www-form-urlencoded serialization.
 		 * @param {Object} obj
 		 * @return {String}
 		 */
-		var param = function(obj)
-		{
+		var param = function (obj) {
 			var query = '';
 			var name, value, fullSubName, subName, subValue, innerObj, i;
 
-			for(name in obj)
-			{
+			for (name in obj) {
 				value = obj[name];
 
-				if(value instanceof Array)
-				{
-					for(i=0; i<value.length; ++i)
-					{
+				if (value instanceof Array) {
+					for (i = 0; i < value.length; ++i) {
 						subValue = value[i];
 						fullSubName = name + '[' + i + ']';
 						innerObj = {};
@@ -47,10 +42,8 @@ myapp.config(['$httpProvider', function ($httpProvider){
 						query += param(innerObj) + '&';
 					}
 				}
-				else if(value instanceof Object)
-				{
-					for(subName in value)
-					{
+				else if (value instanceof Object) {
+					for (subName in value) {
 						subValue = value[subName];
 						fullSubName = name + '[' + subName + ']';
 						innerObj = {};
@@ -58,8 +51,7 @@ myapp.config(['$httpProvider', function ($httpProvider){
 						query += param(innerObj) + '&';
 					}
 				}
-				else if(value !== undefined && value !== null)
-				{
+				else if (value !== undefined && value !== null) {
 					query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
 				}
 			}
@@ -69,13 +61,14 @@ myapp.config(['$httpProvider', function ($httpProvider){
 
 		return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
 	}];
-}])
+}]);
 
-myapp.config(function($stateProvider, $urlRouterProvider){
+myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 	// For any unmatched url, send to /route1
 	$urlRouterProvider.otherwise("/register");
 
+	//noinspection JSValidateTypes
 	$stateProvider
 		.state('register', {
 			url: "/register",
@@ -85,7 +78,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		.state('route1.list', {
 			url: "/list",
 			templateUrl: "route1.list.html",
-			controller: function($scope){
+			controller: function ($scope) {
 				$scope.items = ["A", "List", "Of", "Items"];
 			}
 		})
@@ -97,7 +90,7 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		.state('route2.list', {
 			url: "/list",
 			templateUrl: "route2.list.html",
-			controller: function($scope){
+			controller: function ($scope) {
 				$scope.things = ["A", "Set", "Of", "Things"];
 			}
 		})
@@ -121,4 +114,4 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: "view/correlatividad.html",
 			controller: correlativoCtrl
 		})
-})
+});

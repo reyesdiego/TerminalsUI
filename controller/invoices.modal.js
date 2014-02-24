@@ -7,6 +7,6 @@ function invoicesModalCtrl($scope, $modalInstance, factura){
 
 	$scope.close = function(){
 		$modalInstance.dismiss('canceled');
-	}; // end cancel
+	};
 
 }

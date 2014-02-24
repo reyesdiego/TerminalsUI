@@ -5,7 +5,7 @@ myapp.factory('priceFactory', function($http){
 	var factory = {};
 
 	factory.getPrice = function(callback) {
-		var inserturl = serverUrl + '/agp/prices';
+		//var inserturl = serverUrl + '/agp/prices';
 		$http.get('price.json')
 			.success(function (data){
 				callback(data);
@@ -16,7 +16,6 @@ myapp.factory('priceFactory', function($http){
 
 	factory.getMatchPrices = function(terminal, callback) {
 		var inserturl = serverUrl + '/agp/matchprices/'+terminal;
-//		$http.get('match.json')
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -25,19 +24,19 @@ myapp.factory('priceFactory', function($http){
 			});
 		};
 
-	factory.addMatchPrice = function (data, callback){
+	factory.addMatchPrice = function (data, callback) {
 		var inserturl = serverUrl + '/agp/matchprice';
 		$http({
 			method: "POST",
 			url: inserturl,
 			data: data
-		}).success(function(response) {
+		}).success(function (response) {
 				console.log("success");
 				callback(response);
-			}).error(function(response) {
+			}).error(function (response) {
 				console.log("error");
 			});
-	}
+	};
 
 	return factory;
 

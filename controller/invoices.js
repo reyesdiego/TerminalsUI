@@ -12,7 +12,7 @@ function invoicesCtrl ($scope, $modal, invoiceFactory) {
 	$scope.open = function (factura){
 		$modal.open({
 			templateUrl: 'view/invoices.detail.html',
-			controller: 'invoicesModalCtrl',
+			controller: invoicesModalCtrl,
 			resolve: {
 				factura: function(){
 					return factura;
