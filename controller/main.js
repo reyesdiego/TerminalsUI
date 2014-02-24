@@ -12,7 +12,7 @@ Array.prototype.contains = function (item){
 	return result;
 }
 //   var  serverUrl = 'http://localhost:3101';
-var  serverUrl = 'http://200.5.223.246:8080'
+var  serverUrl = 'http://200.41.137.126:8080'
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'dialogs']);
 

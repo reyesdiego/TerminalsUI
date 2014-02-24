@@ -6,8 +6,10 @@ function correlativoCtrl($scope){
 	'use strict';
 
 	$scope.today = function() {
-		$scope.dt = new Date();
+		$scope.desde = new Date();
+		$scope.hasta = new Date();
 	};
+
 	$scope.today();
 
 	$scope.showWeeks = true;
@@ -19,21 +21,23 @@ function correlativoCtrl($scope){
 		$scope.dt = null;
 	};
 
-	// Disable weekend selection
-	$scope.disabled = function(date, mode) {
-		return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-	};
-
 	$scope.toggleMin = function() {
 		$scope.minDate = ( $scope.minDate ) ? null : new Date();
 	};
+
 	$scope.toggleMin();
 
-	$scope.open = function($event) {
+	$scope.open = function($event, fecha) {
 		$event.preventDefault();
 		$event.stopPropagation();
 
-		$scope.opened = true;
+		if (fecha === 'desde'){
+			$scope.openDesde = true;
+			$scope.openHasta = false;
+		}else{
+			$scope.openHasta = true;
+			$scope.openDesde = false;
+		}
 	};
 
 	$scope.dateOptions = {
@@ -41,6 +45,6 @@ function correlativoCtrl($scope){
 		'starting-day': 1
 	};
 
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
-	$scope.format = $scope.formats[0];
+	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
+	$scope.format = $scope.formats[1];
 }
