@@ -1,9 +1,9 @@
 /**
  * Created by gutierrez-g on 20/02/14.
  */
-function invoicesModalCtrl($scope, $modalInstance, data){
+function invoicesModalCtrl($scope, $modalInstance, factura){
 	'use strict';
-	$scope.factura = data.factura;
+	$scope.factura = factura;
 
 	$scope.close = function(){
 		$modalInstance.dismiss('canceled');
