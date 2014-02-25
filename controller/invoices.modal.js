@@ -9,4 +9,14 @@ function invoicesModalCtrl($scope, $modalInstance, factura){
 		$modalInstance.dismiss('canceled');
 	};
 
+	/*$scope.print = function(){
+		$http({
+			method: 'GET',
+			url: 'view/invoices.detail.print.html',
+			controller: invoicesModalCtrl(factura)
+		}).success(function(data) {
+				callback(data);
+		});
+	}*/
+
 }

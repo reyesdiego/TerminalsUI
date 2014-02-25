@@ -6,7 +6,7 @@
         <ServerConfiguration>
           <option name="connectOnIdeStartup" value="true" />
           <option name="label" value="DLR" />
-          <option name="serverName" value="200.5.223.71" />
+          <option name="serverName" value="200.41.137.88" />
           <option name="serverPort" value="27017" />
           <option name="userDatabase" value="terapi" />
         </ServerConfiguration>

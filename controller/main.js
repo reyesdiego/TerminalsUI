@@ -12,7 +12,7 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
-var serverUrl = 'http://200.41.137.88:8080';
+var serverUrl = 'http://200.123.104.182:8080';
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'dialogs']);
 
