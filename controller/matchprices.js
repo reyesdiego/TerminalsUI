@@ -20,15 +20,25 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 		}*/
 
 		$scope.agregarCodigo = function(price) {
-			if (!price.match.contains(price.new) && !(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
-				price.match.push(price.new);
+			if (price.match == null){
+				$scope.nuevoMatch = { codes:[{
+											terminal: "BACTSSA",
+											codes: []}],
+									id: price.id
+									};
+				$scope.nuevoMatch.codes[0].codes.push(price.new);
+				price.match = $scope.nuevoMatch;
+			} else {
+				if (!price.match.codes[0].codes.contains(price.new) && !(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
+					price.match.codes[0].codes.push(price.new);
+				}
 			}
 			price.new = ''
 		};
 
 		$scope.borrar = function(price, codigo) {
-			var pos = price.match.indexOf(codigo);
-			pos > -1 && price.match.splice( pos, 1 );
+			var pos = price.match.codes[0].codes.indexOf(codigo);
+			pos > -1 && price.match.codes[0].codes.splice( pos, 1 );
 		}
 
 		$scope.hitEnter = function(evt, price){
@@ -37,20 +47,18 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 		} // end hitEnter
 
 		$scope.guardar = function() {
-			$scope.match = { terminal: "BACTSSA",
-				codes: []
-			};
-			var prices = $scope.pricelist;
+			$scope.match = [];
+
+			var prices = $scope.pricelist
 			prices.forEach(function(item){
-				if (item.match.length>0){
-					var nuevoMatch = { codeAgp: item.code,
-						codes: item.match};
-					$scope.match.codes.push(nuevoMatch);
+				if (item.match != null){
+					if (item.match.codes[0].codes.length>0){
+						$scope.match.push(item.match);
+					}
 				}
 			});
 			priceFactory.addMatchPrice($scope.match, function(data){
 				console.log(data);
-				$scope.match
 			});
 		}
 	});
