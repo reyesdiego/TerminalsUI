@@ -26,10 +26,10 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="price in pricelist">
-                        <td>{{ price.code }}</td>
+                        <td>{{ price.id }}</td>
                         <td>{{ price.description }}</td>
                         <td>
-                            <span ng-repeat="codigo in price.match track by $index"><a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a><span ng-show="!$last">, </span></span>
+                            <span ng-repeat="codigo in price.match.codes[0].codes track by $index"><a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a><span ng-show="!$last">, </span></span>
                         </td>
                         <td>
                             <div class="col-lg-9">
@@ -45,7 +45,7 @@
     </div>
     <div class="row">
         <div class="col-lg-11">
-            <button class="btn btn-primary">Guardar</button>
+            <button class="btn btn-primary" ng-click="guardar()">Guardar</button>
         </div>
     </div>
 
