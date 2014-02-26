@@ -33,7 +33,7 @@ myapp.factory('priceFactory', function($http){
 		}).success(function (response) {
 				console.log("success");
 				callback(response);
-			}).error(function (response) {
+			}).error(function () {
 				console.log("error");
 			});
 	};
@@ -42,9 +42,34 @@ myapp.factory('priceFactory', function($http){
 
 });
 
-myapp.factory('invoiceFactory', function($http, $templateCache){
+myapp.factory('invoiceFactory', function($http, $templateCache, utils){
 	var inserturl = serverUrl + '/invoices';
 	var factory = {};
+
+	var invoices =
+		$http({
+			method: 'GET',
+			url: inserturl,
+			cache: $templateCache,
+			headers:
+			{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'}
+		}).success(function(data) {
+				console.log('Llego a los datos');
+				return data;
+			}).error(function() {
+				console.log("Error al cargar la lista Invoice");
+			});
+
+	factory.all = function(){
+		console.log('llego');
+		return invoices;
+	};
+
+	factory.get = function (id) {
+		return invoices.then(function(){
+			return utils.findById(invoices, id)
+		})
+	};
 
 	factory.getInvoice = function(callback) {
 		$http({
@@ -62,4 +87,15 @@ myapp.factory('invoiceFactory', function($http, $templateCache){
 
 	return factory;
 
+});
+
+myapp.factory('utils', function(){
+	return{
+		findById: function findById(a, id){
+			for (var i = 0; i < a.length; i++) {
+				if (a[i]._id == id) return a[i];
+			}
+			return null;
+		}
+	};
 });
