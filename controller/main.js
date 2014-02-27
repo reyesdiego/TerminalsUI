@@ -119,4 +119,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/correlatividad.html",
 			controller: correlativoCtrl
 		})
+		.state('correlativo.result', {
+			templateUrl: "view/correlatividad.result.html"
+
+		})
 });
