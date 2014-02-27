@@ -1,23 +1,12 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, $dialogs, priceFactory){
+function matchPricesCtrl($scope, priceFactory){
 	'use strict';
 
 	priceFactory.getMatchPrices("BACTSSA", function (data) {
 
 		$scope.pricelist = data;
-
-		/* YA NO SE USA LA VENTANA MODAL
-		$scope.open = function (precio){
-			var dlg = $dialogs.create('view/matchprices.modal.html','matchPricesModalCtrl',{itemTarifa: precio},{key: false, back: 'static'});
-			dlg.result.then(function(match, method){
-				console.log(match);
-				priceFactory.addMatchPrice(method, match);
-			},function(){
-				console.log("Se eligio cancelar");
-			})
-		}*/
 
 		$scope.agregarCodigo = function(price) {
 			if (price.match == null){
