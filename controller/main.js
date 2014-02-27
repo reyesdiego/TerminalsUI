@@ -102,12 +102,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('invoicesprint', {
 			url: "/factura/:facId",
 			templateUrl: "view/invoices.detail.html",
-			controller: ['$stateParams', '$scope', 'invoiceFactory', 'utils', function($stateParams, $scope, invoiceFactory, utils){
-				invoiceFactory.getInvoice(function(data){
-					$scope.invoices = data;
-					$scope.factura = utils.findById($scope.invoices, $stateParams.facId);
-				});
-			}]
+			controller: invoiceDetailCtrl
 		})
 		.state('matches', {
 			url: "/match",

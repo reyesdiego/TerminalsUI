@@ -15,7 +15,7 @@ myapp.factory('priceFactory', function($http){
 	};
 
 	factory.getMatchPrices = function(terminal, callback) {
-		var inserturl = serverUrl + '/agp/matchprices/'+terminal;
+		var inserturl = serverUrl + '/agp/matchprices/' + terminal;
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -85,6 +85,16 @@ myapp.factory('invoiceFactory', function($http, $templateCache, utils){
 				console.log("Error al cargar la lista Invoice");
 			});
 	};
+
+	factory.getByDate = function(desde, hasta, terminal, callback) {
+		//Por ahora trabaja solo con un mock
+		$http.get('correlativo.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(){
+				console.log("Error al cargar la lista PriceList")
+			});
+	}
 
 	return factory;
 
