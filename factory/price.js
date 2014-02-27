@@ -29,7 +29,8 @@ myapp.factory('priceFactory', function($http){
 		$http({
 			method: "POST",
 			url: inserturl,
-			data: data
+			data: JSON.stringify(data),
+			headers:{"Content-Type":"application/json"}
 		}).success(function (response) {
 				console.log("success");
 				callback(response);

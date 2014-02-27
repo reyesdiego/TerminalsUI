@@ -53,10 +53,12 @@ function matchPricesCtrl($scope, $dialogs, priceFactory){
 			prices.forEach(function(item){
 				if (item.match != null){
 					if (item.match.codes[0].codes.length>0){
+						item.match._id = item.match.id;
 						$scope.match.push(item.match);
 					}
 				}
 			});
+			console.log($scope.match);
 			priceFactory.addMatchPrice($scope.match, function(data){
 				console.log(data);
 			});
