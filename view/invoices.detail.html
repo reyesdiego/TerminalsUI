@@ -1,12 +1,13 @@
-<div class="modal" >
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
+<!--<div class="modal" >-->
+<div>
+	<div>
+		<div>
+			<div>
 				<h4 class="modal-title" style="background-color:#357EBD; color:#FFF; text-align: center">
 					Factura
 				</h4>
 			</div>
-			<div class="modal-body">
+			<div>
 				<h4>Factura tipo {{ factura.codTipoComprob }} número: {{ factura.nroComprob }}</h4>
 				<div><span>Emisión: {{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
 				<br>
@@ -86,15 +87,15 @@
 				</table>
 				<div>
 					<span>
-							Monto Gravado {{ factura.importe.gravado | currency }};
-							Monto No Gravado {{ factura.importe.noGravado | currency }};
-							Exento {{ factura.importe.exento | currency }}
+						Monto Gravado {{ factura.importe.gravado | currency }};
+						Monto No Gravado {{ factura.importe.noGravado | currency }};
+						Exento {{ factura.importe.exento | currency }}
 					</span>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" ng-click="print()">Imprimir</button>
-				<button class="btn btn-primary" ng-click="close()">Cerrar</button>
+			<div>
+				<button class="btn btn-primary" ui-sref="invoicesprint({factura:factura.nroComprob })" ng-click="close()">Imprimir</button>
+				<button class="btn btn-primary" ui-sref="invoices">Volver</button>
 			</div>
 		</div>
 	</div>

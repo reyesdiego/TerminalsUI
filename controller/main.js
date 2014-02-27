@@ -14,7 +14,7 @@ Array.prototype.contains = function (item) {
 
 var serverUrl = 'http://200.123.104.182:8080';
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'dialogs']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -98,6 +98,16 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			url: "/invoices",
 			templateUrl: "view/invoices.html",
 			controller: invoicesCtrl
+		})
+		.state('invoicesprint', {
+			url: "/factura/:facId",
+			templateUrl: "view/invoices.detail.html",
+			controller: ['$stateParams', '$scope', 'invoiceFactory', 'utils', function($stateParams, $scope, invoiceFactory, utils){
+				invoiceFactory.getInvoice(function(data){
+					$scope.invoices = data;
+					$scope.factura = utils.findById($scope.invoices, $stateParams.facId);
+				});
+			}]
 		})
 		.state('matches', {
 			url: "/match",
