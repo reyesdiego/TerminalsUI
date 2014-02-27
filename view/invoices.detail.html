@@ -1,102 +1,146 @@
 <!--<div class="modal" >-->
-<div>
+
+<!--<div align="center" style="border: 1">
+	<table border="1" style="width: 800px">
+		<tr>
+			<td style="padding: 0">
+				<table border="1" align="center">
+					<tr>
+						<td>
+							<span>
+								<strong>{{ factura.codTipoComprob }}</strong>
+							</span>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding: 0">
+				<table border="1">
+					<tr>
+						<td align="left">Terminal {{ factura.terminal }}</td>
+						<td align="right">Factura Nro {{ factura.nroComprob }}</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>-->
+			<!--Datos del cliente/razon social-->
+<!--		</tr>
+		<tr>-->
+			<!--Datos del buque-->
+<!--		</tr>
+		<tr>-->
+			<!--Detalle de items-->
+<!--		</tr>
+		<tr>-->
+			<!--Detalle de monto gravado no gravado etc-->
+<!--		</tr>
+	</table>
+</div>-->
+
+<div style="width: 800px; align-content: center">
 	<div>
+		<table class="table">
+			<tr>
+				<td>
+					<div><h4><strong>Factura tipo {{ factura.codTipoComprob }} número: {{ factura.nroComprob }}</strong></h4></div>
+					<div><span>Terminal: {{ factura.terminal}}</span></div>
+					<div><span>Punto de venta: {{ factura.nroPtoVenta }}</span></div>
+					<div><span>Emisión: {{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
+				</td>
+			</tr>
+		</table>
+		<table class="table">
+			<tr>
+				<td>
+					<div class="infos">
+						<div><strong><span>Raz&oacute;n Social: {{ factura.razon }}</span></strong></div>
+						<div><span>Vencimiento factura: {{ factura.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
+					</div>
+				</td>
+				<td>
+					<div><span>Documento cliente: {{ factura.nroDoc }}</span></div>
+				</td>
+			</tr>
+		</table>
+		<table class="table">
+			<tr>
+				<td>
+					<div><strong><span>Buque: {{ factura.buque.name }}</span></strong></div>
+					<div><span>Desde: {{ factura.fecha.desde | date: 'dd/MM/yyyy' }}</span></div>
+				</td>
+				<td>
+					<div><span>Viaje: {{ factura.buque.viaje }}</span></div>
+					<div><span>Hasta: {{ factura.fecha.hasta | date: 'dd/MM/yyyy' }}</span></div>
+				</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td style="text-align: center">
+					<div><span>Detalle</span></div>
+				</td>
+			</tr>
+		</table>
+		<table class="table table-striped" style="text-align: center">
+			<tr style="text-align: center">
+				<th style="text-align:center; width: 25%">Item</th>
+				<th style="text-align:center; width: 25%">Cantidad</th>
+				<th style="text-align:center; width: 25%">Unidad</th>
+				<th style="text-align:right; width: 25%">Total</th>
+			</tr>
+		</table>
+		<table class="table table-striped" ng-repeat="contenedor in factura.detalle" style="text-align: center">
+			<tr>
+				<td colspan="4" style="text-align: left">
+					<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
+				</td>
+			</tr>
+			<tr ng-repeat="item in contenedor.items">
+				<td style="width: 25%">
+					<span>{{ item.id }}</span>
+				</td>
+				<td style="width: 25%">
+					<span>{{ item.cnt }}</span>
+				</td>
+				<td style="width: 25%">
+					<span>{{ item.uniMed }}</span>
+				</td>
+				<td style="text-align:right; width: 25%">
+					<span>{{ item.impTot | currency }}</span>
+				</td>
+			</tr>
+		</table>
+		<table class="table table-striped">
+			<tr>
+				<td colspan="2" style="text-align: right;">Subtotal</td>
+				<td colspan="2" style="text-align: right;">{{ factura.importe.subtotal | currency }}</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align:right;">IVA</td>
+				<td colspan="2" style="text-align:right;">{{ factura.importe.iva | currency }}</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align: right">Otros Tributos</td>
+				<td colspan="2" style="text-align: right">{{ factura.importe.otrosTributos | currency }}</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align: right">Total</td>
+				<td colspan="2" style="text-align: right">{{ factura.importe.total | currency }}</td>
+			</tr>
+		</table>
 		<div>
-			<div>
-				<h4 class="modal-title" style="background-color:#357EBD; color:#FFF; text-align: center">
-					Factura
-				</h4>
-			</div>
-			<div>
-				<h4>Factura tipo {{ factura.codTipoComprob }} número: {{ factura.nroComprob }}</h4>
-				<div><span>Emisión: {{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
-				<br>
-				<table class="table">
-					<tr>
-						<td>
-							<div class="infos">
-								<div><strong><span>Documento cliente: {{ factura.nroDoc }}</span></strong></div>
-								<div><span>Vencimiento factura: {{ factura.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div>
-								<div><strong><span>Terminal: {{ factura.terminal }}</span></strong></div>
-								<div><span>Punto de venta: {{ factura.nroPtoVenta }}</span></div>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div>
-								<div><strong><span>Viaje: {{ factura.buque.viaje }}</span></strong></div>
-								<div><span>Desde: {{ factura.fecha.desde | date: 'dd/MM/yyyy' }}</span></div>
-								<div><span>Hasta: {{ factura.fecha.hasta | date: 'dd/MM/yyyy' }}</span></div>
-							</div>
-						</td>
-					</tr>
-				</table>
-				<table class="table table-striped" style="text-align: center">
-					<tr style="text-align: center">
-						<th style="text-align:center; width: 25%">Item</th>
-						<th style="text-align:center; width: 25%">Cantidad</th>
-						<th style="text-align:center; width: 25%">Unidad</th>
-						<th style="text-align:right; width: 25%">Total</th>
-					</tr>
-				</table>
-				<table class="table table-striped" ng-repeat="contenedor in factura.detalle" style="text-align: center">
-					<tr>
-						<td colspan="4" style="text-align: left">
-							<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
-						</td>
-					</tr>
-					<tr ng-repeat="item in contenedor.items">
-						<td style="width: 25%">
-							<span>{{ item.id }}</span>
-						</td>
-						<td style="width: 25%">
-							<span>{{ item.cnt }}</span>
-						</td>
-						<td style="width: 25%">
-							<span>{{ item.uniMed }}</span>
-						</td>
-						<td style="text-align:right; width: 25%">
-							<span>{{ item.impTot | currency }}</span>
-						</td>
-					</tr>
-				</table>
-				<table class="table table-striped">
-					<tr>
-						<td colspan="2" style="text-align: right;">Subtotal</td>
-						<td colspan="2" style="text-align: right;">{{ factura.importe.subtotal | currency }}</td>
-					</tr>
-					<tr>
-						<td colspan="2" style="text-align:right;">IVA</td>
-						<td colspan="2" style="text-align:right;">{{ factura.importe.iva | currency }}</td>
-					</tr>
-					<tr>
-						<td colspan="2" style="text-align: right">Otros Tributos</td>
-						<td colspan="2" style="text-align: right">{{ factura.importe.otrosTributos | currency }}</td>
-					</tr>
-					<tr>
-						<td colspan="2" style="text-align: right">Total</td>
-						<td colspan="2" style="text-align: right">{{ factura.importe.total | currency }}</td>
-					</tr>
-				</table>
-				<div>
-					<span>
-						Monto Gravado {{ factura.importe.gravado | currency }};
-						Monto No Gravado {{ factura.importe.noGravado | currency }};
-						Exento {{ factura.importe.exento | currency }}
-					</span>
-				</div>
-			</div>
-			<div>
-				<button class="btn btn-primary" ui-sref="invoicesprint({factura:factura.nroComprob })" ng-click="close()">Imprimir</button>
-				<button class="btn btn-primary" ui-sref="invoices">Volver</button>
-			</div>
+			<span>
+				Monto Gravado {{ factura.importe.gravado | currency }};
+				Monto No Gravado {{ factura.importe.noGravado | currency }};
+				Exento {{ factura.importe.exento | currency }}
+			</span>
 		</div>
+	</div>
+	<div class="hidden-print">
+		<a href="javascript:window.print()" class="btn btn-primary" ng-click="window.print();">Imprimir</a>
+		<button class="btn btn-primary" ui-sref="invoices">Volver</button>
 	</div>
 </div>

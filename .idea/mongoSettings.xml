@@ -4,7 +4,6 @@
     <option name="serverConfigurations">
       <list>
         <ServerConfiguration>
-          <option name="connectOnIdeStartup" value="true" />
           <option name="label" value="DLR" />
           <option name="serverName" value="200.41.137.88" />
           <option name="serverPort" value="27017" />
