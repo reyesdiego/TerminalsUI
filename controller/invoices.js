@@ -2,14 +2,15 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-function invoicesCtrl ($scope, $filter, $modal, invoiceFactory) {
+function invoicesCtrl ($scope, invoiceFactory) {
 	'use strict';
 	$scope.filteredInvoices = []
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
 	$scope.maxSize = 5;
 
-	invoiceFactory.getInvoice(function(data){
+	var page = {skip:0, limit:50};
+	invoiceFactory.getInvoice(page, function(data){
 		$scope.invoices = data;
 
 		$scope.totalItems = $scope.invoices.length;
@@ -39,17 +40,5 @@ function invoicesCtrl ($scope, $filter, $modal, invoiceFactory) {
 		};
 
 	});
-
-	$scope.open = function (factura){
-		$modal.open({
-			templateUrl: 'view/invoices.detail.html',
-			controller: invoicesModalCtrl,
-			resolve: {
-				factura: function(){
-					return factura;
-				}
-			}
-		})
-	};
 
 }

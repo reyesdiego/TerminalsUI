@@ -44,10 +44,9 @@ myapp.factory('priceFactory', function($http){
 });
 
 myapp.factory('invoiceFactory', function($http, $templateCache, utils){
-	var inserturl = serverUrl + '/invoices';
 	var factory = {};
 
-	var invoices =
+	/*var invoices =
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -70,9 +69,10 @@ myapp.factory('invoiceFactory', function($http, $templateCache, utils){
 		return invoices.then(function(){
 			return utils.findById(invoices, id)
 		})
-	};
+	};*/
 
-	factory.getInvoice = function(callback) {
+	factory.getInvoice = function(page, callback) {
+		var inserturl = serverUrl + '/invoices/'+page.skip+'/'+page.limit;
 		$http({
 			method: 'GET',
 			url: inserturl,
