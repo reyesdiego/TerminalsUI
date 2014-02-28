@@ -81,7 +81,8 @@ myapp.factory('invoiceFactory', function($http, $templateCache, utils){
 			{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'}
 		}).success(function(data) {
 				callback(data);
-			}).error(function() {
+			}).error(function(response) {
+				console.log(response);
 				console.log("Error al cargar la lista Invoice");
 			});
 	};
