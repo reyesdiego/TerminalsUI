@@ -12,7 +12,7 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
-var serverUrl = 'https://200.41.137.219:8080';
+var serverUrl = 'https://179.41.106.13:8080';
 //var serverUrl = 'https://200.123.104.182:8080';
 //var serverUrl = 'https://10.1.0.55:8080';
 

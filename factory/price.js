@@ -72,7 +72,7 @@ myapp.factory('invoiceFactory', function($http, $templateCache, utils){
 	};*/
 
 	factory.getInvoice = function(page, callback) {
-		var inserturl = serverUrl + '/invoices/'+page.skip+'/'+page.limit;
+		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit;
 		$http({
 			method: 'GET',
 			url: inserturl,
