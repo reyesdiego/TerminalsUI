@@ -3,10 +3,10 @@
 		<table class="table">
 			<tr>
 				<td>
-					<div><h4><strong>Factura tipo {{ factura.codTipoComprob }} número: {{ factura.nroComprob }}</strong></h4></div>
-					<div><span>Terminal: {{ factura.terminal}}</span></div>
-					<div><span>Punto de venta: {{ factura.nroPtoVenta }}</span></div>
-					<div><span>Emisión: {{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
+					<div><h4><strong>Factura tipo {{ detalle.codTipoComprob }} número: {{ detalle.nroComprob }}</strong></h4></div>
+					<div><span>Terminal: {{ detalle.terminal}}</span></div>
+					<div><span>Punto de venta: {{ detalle.nroPtoVenta }}</span></div>
+					<div><span>Emisión: {{ detalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
 				</td>
 			</tr>
 		</table>
@@ -14,24 +14,24 @@
 			<tr>
 				<td>
 					<div class="infos">
-						<div><strong><span>Raz&oacute;n Social: {{ factura.razon }}</span></strong></div>
-						<div><span>Vencimiento factura: {{ factura.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
+						<div><strong><span>Raz&oacute;n Social: {{ detalle.razon }}</span></strong></div>
+						<div><span>Vencimiento factura: {{ detalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
 					</div>
 				</td>
 				<td>
-					<div><span>Documento cliente: {{ factura.nroDoc }}</span></div>
+					<div><span>Documento cliente: {{ detalle.nroDoc }}</span></div>
 				</td>
 			</tr>
 		</table>
 		<table class="table">
 			<tr>
 				<td>
-					<div><strong><span>Buque: {{ factura.buque.name }}</span></strong></div>
-					<div><span>Desde: {{ factura.fecha.desde | date: 'dd/MM/yyyy' }}</span></div>
+					<div><strong><span>Buque: {{ detalle.buque.name }}</span></strong></div>
+					<div><span>Desde: {{ detalle.fecha.desde | date: 'dd/MM/yyyy' }}</span></div>
 				</td>
 				<td>
-					<div><span>Viaje: {{ factura.buque.viaje }}</span></div>
-					<div><span>Hasta: {{ factura.fecha.hasta | date: 'dd/MM/yyyy' }}</span></div>
+					<div><span>Viaje: {{ detalle.buque.viaje }}</span></div>
+					<div><span>Hasta: {{ detalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span></div>
 				</td>
 			</tr>
 		</table>
@@ -50,7 +50,7 @@
 				<th style="text-align:right; width: 25%">Total</th>
 			</tr>
 		</table>
-		<table class="table table-striped" ng-repeat="contenedor in factura.detalle" style="text-align: center">
+		<table class="table table-striped" ng-repeat="contenedor in detalle.detalle" style="text-align: center">
 			<tr>
 				<td colspan="4" style="text-align: left">
 					<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>

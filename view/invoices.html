@@ -1,5 +1,5 @@
 <!--<input type="text" ng-model="search" class="search-query" placeholder="Search">>-->
-<div class="container">
+<div class="container" ng-hide="onOff">
 
 	<div class="row">
 		<div class="col-lg-11">
@@ -23,12 +23,12 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr ng-repeat="invoice in invoices">
+				<tr ng-repeat="invoice in invoices.data">
 					<td>{{ invoice.nroComprob }}</td>
 					<td>{{ invoice.razon }}</td>
 					<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 					<td>${{ invoice.importe.total }}</td>
-					<td><a ui-sref="invoicesprint({ 'facId': invoice._id })" class="btn btn-primary" type="button">M&aacute;s detalles</a></td>
+					<td><button ui-sref="invoicesprint" class="btn btn-primary" type="button" ng-click="cargar(invoice)">M&aacute;s detalles</button></td>
 				</tr>
 				</tbody>
 			</table>
@@ -36,3 +36,4 @@
 	</div>
 	<a href="" ><pagination href="" boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" page="currentPage" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></a>
 </div>
+<div ui-view></div>
