@@ -28,7 +28,7 @@
 					<td>{{ invoice.razon }}</td>
 					<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 					<td>${{ invoice.importe.total }}</td>
-					<td><button ui-sref="invoicesprint" class="btn btn-primary" type="button" ng-click="cargar(invoice)">M&aacute;s detalles</button></td>
+					<td><button ui-sref="invoices.detail" class="btn btn-primary" type="button" ng-click="cargar(invoice)">M&aacute;s detalles</button></td>
 				</tr>
 				</tbody>
 			</table>
@@ -36,4 +36,4 @@
 	</div>
 	<a href="" ><pagination href="" boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" page="currentPage" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></a>
 </div>
-<div ui-view></div>
+<div ui-view ng-hide="onOffDetalle"></div>

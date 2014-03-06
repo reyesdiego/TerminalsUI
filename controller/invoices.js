@@ -9,13 +9,10 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	$scope.currentPage = 1;
 	$scope.maxSize = 5;
 	$scope.onOff = false;
-	$scope.cargar = function(factura){
-		console.log(factura);
-		$scope.detalle = factura;
-		$scope.onOff = true;
-	};
+	$scope.onOffDetalle = true;
 
 	var page = {skip:0, limit: $scope.itemsPerPage};
+
 	invoiceFactory.getInvoice(page, function(data){
 		$scope.invoices = data;
 
@@ -45,6 +42,17 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		$scope.search = function () {
 			//$scope.filteredInvoices = $scope.invoices;
 		};
+
+		$scope.cargar = function(factura){
+			$scope.verDetalle = factura;
+			$scope.onOff = true;
+			$scope.onOffDetalle = false;
+		};
+
+		$scope.volver = function(){
+			$scope.onOff = false;
+			$scope.onOffDetalle = true;
+		}
 
 	});
 
