@@ -76,7 +76,7 @@ myapp.factory('invoiceFactory', function($http, $templateCache, utils){
 		$http({
 			method: 'GET',
 			url: inserturl,
-			cache: $templateCache,
+			//cache: $templateCache,
 			headers:
 			{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'}
 		}).success(function(data) {

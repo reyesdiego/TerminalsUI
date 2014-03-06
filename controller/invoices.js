@@ -9,7 +9,7 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	$scope.currentPage = 1;
 	$scope.maxSize = 5;
 
-	var page = {skip:0, limit:$scope.itemsPerPage};
+	var page = {skip:0, limit: $scope.itemsPerPage};
 	invoiceFactory.getInvoice(page, function(data){
 		$scope.invoices = data;
 

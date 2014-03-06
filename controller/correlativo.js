@@ -5,6 +5,8 @@
 function correlativoCtrl($scope, invoiceFactory){
 	'use strict';
 
+	$scope.onOff = false;
+
 	$scope.today = function() {
 		$scope.desde = new Date();
 		$scope.hasta = new Date();
@@ -55,6 +57,8 @@ function correlativoCtrl($scope, invoiceFactory){
 			$scope.control = 0;
 			$scope.faltantes = [];
 			$scope.mensaje = "No se hallaron anormalidades.";
+
+			$scope.onOff = true;
 
 			//Por ahora se esta realizando el chequeo contra el mock, el algoritmo está hecho suponiendo que
 			//el rango de facturas por fecha viene ordenado, tampoco hay nada que me permita comprobar que el primer
