@@ -16,7 +16,7 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	invoiceFactory.getInvoice(page, function(data){
 		$scope.invoices = data;
 
-		$scope.totalItems = $scope.invoices.length;
+		$scope.totalItems = $scope.invoices.totalCount;
 
 		$scope.setPage = function (pageNo) {
 			$scope.currentPage = pageNo;
@@ -24,14 +24,12 @@ function invoicesCtrl ($scope, invoiceFactory) {
 
 		//esta funcion debe ser reemplazada por una llamada al servidor que devuelva el total de facturas
 		$scope.numPages = function () {
-			//return Math.ceil($scope.invoices.length / $scope.itemsPerPage);
-			return 3;
+			return Math.ceil($scope.totalItems / $scope.itemsPerPage);
 		};
 
 		$scope.$watch('currentPage + itemsPerPage', function() {
 			var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			page.skip = skip;
-			console.log(page);
 			invoiceFactory.getInvoice(page, function(data) {
 				$scope.invoices = data;
 			})

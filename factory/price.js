@@ -87,7 +87,7 @@ myapp.factory('invoiceFactory', function($http, $templateCache, utils){
 			});
 	};
 
-	factory.getByDate = function(desde, hasta, terminal, callback) {
+	factory.getByDate = function(page, desde, hasta, terminal, callback) {
 		//Por ahora trabaja solo con un mock
 		$http.get('correlativo.json')
 			.success(function (data){
