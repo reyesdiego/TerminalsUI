@@ -2,7 +2,7 @@
  * Created by Artiom on 11/03/14.
  */
 
-function changePassCtrl ($scope, invoiceFactory) {
+function changePassCtrl ($scope, $templateCache, $http) {
 	'use strict';
 
 	$scope.changePass = function(){
