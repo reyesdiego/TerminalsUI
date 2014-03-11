@@ -5,8 +5,8 @@ myapp.factory('priceFactory', function($http){
 	var factory = {};
 
 	factory.getPrice = function(callback) {
-		//var inserturl = serverUrl + '/agp/prices';
-		$http.get('price.json')
+		var inserturl = serverUrl + '/agp/prices';
+		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
 			}).error(function(){

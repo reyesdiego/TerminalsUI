@@ -9,10 +9,12 @@ function changePassCtrl ($scope, invoiceFactory) {
 
 		var formData = {
 			"email": $scope.email,
-			"password": $scope.password
+			"password": $scope.password,
+			"newPass": $scope.newPass,
+			"confirmPass": $scope.confirmPass
 		};
 
-		var inserturl = serverUrl + '/agp/register';
+		var inserturl = serverUrl + '/agp/password';
 		$http({
 			method: 'POST',
 			url: inserturl,
