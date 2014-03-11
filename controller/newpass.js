@@ -1,10 +1,11 @@
 /**
- * Created by Diego Reyes on 1/23/14.
+ * Created by Artiom on 11/03/14.
  */
-function registerCtrl($scope, $http, $templateCache){
-	'use strict'
 
-	$scope.register = function(){
+function changePassCtrl ($scope, invoiceFactory) {
+	'use strict';
+
+	$scope.changePass = function(){
 
 		var formData = {
 			"email": $scope.email,

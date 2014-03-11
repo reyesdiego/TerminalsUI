@@ -74,7 +74,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
 		.state('register', {
 			url: "/register",
-			templateUrl: "view/register.html",
+			templateUrl: "view/login.html",
 			controller: registerCtrl
 		})
 		.state('route1.list', {
@@ -118,6 +118,11 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			url: "/correlatividad",
 			templateUrl: "view/correlatividad.html",
 			controller: correlativoCtrl
+		})
+		.state('changepass', {
+			url: "/cambiarpass",
+			templateUrl: "view/newpass.html",
+			controller: changePassCtrl
 		})
 		.state('correlativo.result', {
 			templateUrl: "view/correlatividad.result.html"
