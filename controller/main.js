@@ -12,7 +12,7 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
-//var serverUrl = 'https://179.41.106.13:8080'; // Diego
+//var serverUrl = 'http://200.5.223.219:8080'; // Diego
 var serverUrl = 'http://200.123.104.182:8080'; // Ip externa de desaweb02
 //var serverUrl = 'https://10.1.0.55:8080'; // Ip interna desaweb02
 
@@ -75,7 +75,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('register', {
 			url: "/register",
 			templateUrl: "view/login.html",
-			controller: registerCtrl
+			controller: loginCtrl
 		})
 		.state('route1.list', {
 			url: "/list",
@@ -119,21 +119,12 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/correlatividad.html",
 			controller: correlativoCtrl
 		})
-		.state('cdiario', {
-			url: "/cdiario",
-			templateUrl: "view/cdiario.html",
-			controller: cdiarioCtrl
+		.state('correlativo.result', {
+			templateUrl: "view/correlatividad.result.html"
 		})
 		.state('changepass', {
 			url: "/cambiarpass",
 			templateUrl: "view/newpass.html",
 			controller: changePassCtrl
-		})
-		.state('correlativo.result', {
-			templateUrl: "view/correlatividad.result.html"
-		})
-		.state('cdiario.result', {
-			templateUrl: "view/cdiario.result.html"
-
 		})
 });
