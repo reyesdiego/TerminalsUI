@@ -39,6 +39,17 @@ myapp.factory('priceFactory', function($http){
 			});
 	};
 
+	factory.getPriceWithMatch = function(terminal){
+		this.getPrice(function(price){
+			var priceList = price;
+			console.log(priceList);
+		});
+		this.getMatchPrices(terminal, function(match){
+			var matchList = match;
+			console.log(matchList);
+		})
+	}
+
 	return factory;
 
 });

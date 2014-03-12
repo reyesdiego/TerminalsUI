@@ -119,6 +119,11 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/correlatividad.html",
 			controller: correlativoCtrl
 		})
+		.state('cdiario', {
+			url: "/cdiario",
+			templateUrl: "view/cdiario.html",
+			controller: cdiarioCtrl
+		})
 		.state('changepass', {
 			url: "/cambiarpass",
 			templateUrl: "view/newpass.html",
@@ -126,6 +131,9 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 		.state('correlativo.result', {
 			templateUrl: "view/correlatividad.result.html"
+		})
+		.state('cdiario.result', {
+			templateUrl: "view/cdiario.result.html"
 
 		})
 });

@@ -1,0 +1,37 @@
+<div class="container" ng-hide="onOff">
+	<!-- Tables
+	================================================== -->
+	<!--<div class="bs-docs-section">-->
+
+	<div class="row">
+		<div class="col-lg-11">
+			<div class="xpage-header">
+				<h1 id="forms">Control diario</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="well">
+				<form ng-submit="cargar()" class="bs-example form-horizontal">
+					<fieldset>
+						<label for="fecha">Fecha</label>
+						<p class="input-group">
+							<input type="text" class="form-control" id="fecha" datepicker-popup="{{format}}" ng-model="fecha"  is-open="openFecha" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+							<span class="input-group-btn">
+								<button class="btn btn-default" ng-click="open($event, 'fecha')"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</p>
+						<div class="form-group">
+							<div class="col-lg-6">
+								<button class="btn btn-default" ui-sref="control">Volver</button>
+								<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar()">Cargar</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div ui-view></div>
