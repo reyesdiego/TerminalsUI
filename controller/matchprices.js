@@ -3,6 +3,8 @@
  */
 function matchPricesCtrl($scope, priceFactory){
 	'use strict';
+	$scope.listaMatch = false;
+	$scope.nuevoConcepto = true;
 
 	priceFactory.getMatchPrices("BACTSSA", function (data) {
 
@@ -35,6 +37,11 @@ function matchPricesCtrl($scope, priceFactory){
 				$scope.agregarCodigo(price);
 		} // end hitEnter
 
+		$scope.abrirNuevoConcepto = function(){
+			$scope.listaMatch = true;
+			$scope.nuevoConcepto = false;
+		}
+
 		$scope.guardar = function() {
 			$scope.match = [];
 
@@ -47,11 +54,48 @@ function matchPricesCtrl($scope, priceFactory){
 					}
 				}
 			});
-			console.log($scope.match);
+
 			priceFactory.addMatchPrice($scope.match, function(data){
 				console.log(data);
 			});
 		}
+
+		$scope.guardarNuevoConcepto = function() {
+
+			var formData = {
+				"description":	$scope.descripcion,
+				"topPrice":		$scope.precio,
+				"match": null,
+				"unit": $scope.unidad,
+				"currency": $scope.moneda,
+				"_id": $scope.codigo,
+				"terminal": "BACTSSA"
+			};
+
+			priceFactory.addPrice(formData, function(nuevoPrecio){
+
+				var nuevoMatch = { codes:[{
+					terminal: "BACTSSA",
+					codes: []}],
+					id: nuevoPrecio.id
+				};
+
+				nuevoMatch.codes[0].codes.push($scope.codigo);
+				nuevoPrecio.match = nuevoMatch;
+
+				$scope.match = [];
+				nuevoPrecio.match._id = nuevoPrecio.match.id;
+				$scope.match.push(nuevoPrecio.match);
+
+				priceFactory.addMatchPrice($scope.match, function(trash){
+					console.log(trash);
+				});
+
+				$scope.pricelist.push(nuevoPrecio);
+				$scope.listaMatch = false;
+				$scope.nuevoConcepto = true;
+			})
+		};
 	});
 
 

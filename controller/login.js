@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-function registerCtrl($scope, $http, $templateCache){
+function loginCtrl($scope, $http, $templateCache){
 	'use strict'
 
 	$scope.register = function(){

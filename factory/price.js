@@ -39,6 +39,22 @@ myapp.factory('priceFactory', function($http){
 			});
 	};
 
+	factory.addPrice = function (data, callback) {
+		var inserturl = serverUrl + '/agp/price';
+		$http({
+			method: 'POST',
+			url: inserturl,
+			data: data
+		}).
+			success(function(response) {
+				console.log("success");
+				callback(response);
+			}).
+			error(function(response) {
+				console.log("error");
+			});
+	};
+
 	return factory;
 
 });
