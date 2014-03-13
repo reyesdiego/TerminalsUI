@@ -54,8 +54,8 @@ myapp.factory('priceFactory', function($http){
 				console.log("error");
 			});
 	};
-	
-	factory.getPriceWithMatch = function(terminal){
+
+	/*factory.getPriceWithMatch = function(terminal){
 		this.getPrice(function(price){
 			var priceList = price;
 			console.log(priceList);
@@ -64,47 +64,20 @@ myapp.factory('priceFactory', function($http){
 			var matchList = match;
 			console.log(matchList);
 		})
-	}
-	
-	
+	}*/
+
 	return factory;
 
 });
 
-myapp.factory('invoiceFactory', function($http, $templateCache, utils){
+myapp.factory('invoiceFactory', function($http){
 	var factory = {};
-
-	/*var invoices =
-		$http({
-			method: 'GET',
-			url: inserturl,
-			cache: $templateCache,
-			headers:
-			{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'}
-		}).success(function(data) {
-				console.log('Llego a los datos');
-				return data;
-			}).error(function() {
-				console.log("Error al cargar la lista Invoice");
-			});
-
-	factory.all = function(){
-		console.log('llego');
-		return invoices;
-	};
-
-	factory.get = function (id) {
-		return invoices.then(function(){
-			return utils.findById(invoices, id)
-		})
-	};*/
 
 	factory.getInvoice = function(page, callback) {
 		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit;
 		$http({
 			method: 'GET',
 			url: inserturl,
-			//cache: $templateCache,
 			headers:
 			{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'}
 		}).success(function(data) {
@@ -129,13 +102,19 @@ myapp.factory('invoiceFactory', function($http, $templateCache, utils){
 
 });
 
-myapp.factory('utils', function(){
-	return{
-		findById: function findById(a, id){
-			for (var i = 0; i < a.length; i++) {
-				if (a[i]._id == id) return a[i];
-			}
-			return null;
-		}
-	};
-});
+myapp.factory('controlFactory', function($http){
+	var factory = {};
+
+	factory.getByDay = function(dia, callback){
+		//var inserturl = serverUrl + '/controldia/' + dia; // El que realmente se va a usar
+		var inserturl = 'controlday.json';
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(){
+				console.log('Error al cargar lista por día')
+			});
+	}
+
+	return factory;
+})

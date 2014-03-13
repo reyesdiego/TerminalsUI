@@ -1,5 +1,41 @@
 <div class="row" ng-hide="onOffResult">
 	<div class="col-lg-11">
-		hola
+		<div>
+			<h1 id="forms">Control por d&iacute;a</h1>
+		</div>
+		<div>
+			<p>D&iacute;a: {{ fecha | date: 'dd/MM/yyyy' }}</p>
+		</div>
+		<div>
+			<table>
+				<tr>
+					<td>Cantidad de Facturas = </td>
+					<td align="right">{{ control.invoicesCount }}</td>
+				</tr>
+				<tr>
+					<td>Primer factura del d&iacute;a N° = </td>
+					<td align="right">{{ control.invoicesFirst }}</td>
+				</tr>
+				<tr>
+					<td>&Uacute;ltima factura del d&iacute;a N° = </td>
+					<td align="right">{{ control.invoicesLast }}</td>
+				</tr>
+				<tr>
+					<td>Cantidad de tasas AGP = </td>
+					<td align="right">{{ control.tasasCount }}</td>
+				</tr>
+				<tr>
+					<td>Precio total tasas AGP = </td>
+					<td align="right">{{ control.tasasPrice | currency }}</td>
+				</tr>
+				<tr>
+					<td>Precio total facturas = </td>
+					<td align="right">{{ control.tasasTotal | currency }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="col-lg-11">
+		<button class="btn btn-primary" ng-click="volver()">Volver</button>
 	</div>
 </div>

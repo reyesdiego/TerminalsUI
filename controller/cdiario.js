@@ -2,20 +2,14 @@
  * Created by gutierrez-g on 12/03/14.
  */
 
-function cdiarioCtrl($scope, priceFactory){
+function cdiarioCtrl($scope, controlFactory){
 	'use strict';
-	$scope.filteredInvoices = []
-	$scope.itemsPerPage = 10;
-	$scope.currentPage = 1;
 	$scope.maxSize = 5;
 	$scope.onOff = false;
 	$scope.onOffResult = true;
 
-	var page = {skip:0, limit: $scope.itemsPerPage};
-
 	$scope.today = function() {
 		$scope.fecha = new Date();
-		//$scope.hasta = new Date();
 	};
 
 	$scope.today();
@@ -42,7 +36,7 @@ function cdiarioCtrl($scope, priceFactory){
 		if (fecha === 'fecha'){
 			$scope.openFecha = true;
 		}else{
-			$scope.openFecha = true;
+			$scope.openFecha = false;
 		}
 	};
 
@@ -56,60 +50,16 @@ function cdiarioCtrl($scope, priceFactory){
 
 	$scope.cargar = function(){
 
-		$scope.invoice = priceFactory.getPriceWithMatch('BACTSSA');
-		//invoiceFactory.getByDate(page, $scope.desde, $scope.hasta, 'BACTSSA', function(data) {
-		//	console.log(data);
-		//	$scope.result = data.data;
+		controlFactory.getByDay($scope.fecha, function(data){
+			$scope.control = data[0];
+		});
 
-			//$scope.totalItems = data.totalCount;
+		$scope.onOff = true;
+		$scope.onOffResult = false;
 
-			//$scope.setPage = function (pageNo) {
-			//	$scope.currentPage = pageNo;
-			//};
-
-			//esta funcion debe ser reemplazada por una llamada al servidor que devuelva el total de facturas
-			//$scope.numPages = function () {
-			//	return Math.ceil($scope.totalItems / $scope.itemsPerPage);
-			//};
-
-//			$scope.$watch('currentPage + itemsPerPage', function() {
-//				var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-//				page.skip = skip;
-//				invoiceFactory.getByDate(page, $scope.desde, $scope.hasta, 'BACTSSA', function(data) {
-//					$scope.result = data.data;
-//				})
-//				$scope.filtro = '';
-//			});
-
-			$scope.control = 0;
-			$scope.faltantes = [];
-			$scope.mensaje = "No se hallaron anormalidades.";
-
-			$scope.onOff = true;
-			$scope.onOffResult = false;
-
-			//Por ahora se esta realizando el chequeo contra el mock, el algoritmo está hecho suponiendo que
-			//el rango de facturas por fecha viene ordenado, tampoco hay nada que me permita comprobar que el primer
-			//comprobante sea el correcto...
-			/*$scope.result.forEach(function(factura){
-			 if ($scope.control == 0) {
-			 $scope.control = factura.nroComprob;
-			 } else {
-			 $scope.control += 1;
-			 if ($scope.control != factura.nroComprob){
-			 $scope.faltantes.push($scope.control);
-			 $scope.mensaje = "Se hallaron facturas faltantes: ";
-			 $scope.control = factura.nroComprob;
-			 }
-			 }
-
-			 })*/
-			//priceFactory.getPriceWithMatch('BACTSSA');
-
-			$scope.volver = function(){
-				$scope.onOff = false;
-				$scope.onOffResult = true;
-			}
-		//})
+		$scope.volver = function(){
+			$scope.onOff = false;
+			$scope.onOffResult = true;
+		};
 	};
 }
