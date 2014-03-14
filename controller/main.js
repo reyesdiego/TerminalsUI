@@ -12,8 +12,8 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
-var serverUrl = 'http://200.41.137.225:8080'; // Diego
-//var serverUrl = 'http://200.123.104.182:8080'; // Ip externa de desaweb02
+//var serverUrl = 'http://200.41.137.225:8080'; // Diego
+var serverUrl = 'http://200.123.104.179:8080'; // Ip externa de produccion cuidado!!
 //var serverUrl = 'https://10.1.0.55:8080'; // Ip interna desaweb02
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute']);
