@@ -128,7 +128,7 @@ myapp.factory('userService', function($http){
 			"email": user,
 			"password": pass
 		};
-
+		console.log(formData);
 		var inserturl = serverUrl + '/loginApp';
 		$http({
 			method: 'POST',
