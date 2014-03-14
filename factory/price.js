@@ -129,28 +129,17 @@ myapp.factory('userService', function($http){
 			"password": pass
 		};
 
-		var inserturl = serverUrl + '/agp/loginApp';
-		$http.get('loginMock.json')
-			.success(function (data){
-				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
-			});
-		/*Por ahora funciona con un mock
+		var inserturl = serverUrl + '/loginApp';
 		$http({
 			method: 'POST',
 			url: inserturl,
-			data: formData,
-			cache: $templateCache
-		}).success(function(response) {
+			data: formData
+		}).success(function(data) {
 				console.log("success");
-				$scope.codeStatus = response.data;
-				console.log($scope.codeStatus);
+				callback(data)
 			}).error(function(response) {
 				console.log("error");
-				$scope.codeStatus = response || "Request failed";
-				console.log($scope.codeStatus);
-			});*/
+			});
 	};
 
 	return factory;

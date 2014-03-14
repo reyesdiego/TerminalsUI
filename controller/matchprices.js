@@ -1,19 +1,19 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, priceFactory){
+function matchPricesCtrl($scope, priceFactory, $rootScope){
 	'use strict';
 	$scope.listaMatch = false;
 	$scope.nuevoConcepto = true;
 
-	priceFactory.getMatchPrices("BACTSSA", function (data) {
+	priceFactory.getMatchPrices($rootScope.dataUser.terminal, function (data) {
 
 		$scope.pricelist = data;
 
 		$scope.agregarCodigo = function(price) {
 			if (price.match == null){
 				$scope.nuevoMatch = { codes:[{
-											terminal: "BACTSSA",
+											terminal: $rootScope.dataUser.terminal,
 											codes: []}],
 									id: price.id
 									};
@@ -69,13 +69,13 @@ function matchPricesCtrl($scope, priceFactory){
 				"unit": $scope.unidad,
 				"currency": $scope.moneda,
 				"_id": $scope.codigo,
-				"terminal": "BACTSSA"
+				"terminal": $rootScope.dataUser.terminal
 			};
 
 			priceFactory.addPrice(formData, function(nuevoPrecio){
 
 				var nuevoMatch = { codes:[{
-					terminal: "BACTSSA",
+					terminal: $rootScope.dataUser.terminal,
 					codes: []}],
 					id: nuevoPrecio.id
 				};
