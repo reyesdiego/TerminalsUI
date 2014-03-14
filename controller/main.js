@@ -12,8 +12,8 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
-var serverUrl = 'http://200.5.223.219:8080'; // Diego
-//var serverUrl = 'http://200.123.104.182:8080'; // Ip externa de desaweb02
+//var serverUrl = 'http://200.5.223.219:8080'; // Diego
+var serverUrl = 'http://200.123.104.182:8080'; // Ip externa de desaweb02
 //var serverUrl = 'https://10.1.0.55:8080'; // Ip interna desaweb02
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute']);
@@ -72,8 +72,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 	//noinspection JSValidateTypes
 	$stateProvider
-		.state('register', {
-			url: "/register",
+		.state('login', {
+			url: "/login",
 			templateUrl: "view/login.html",
 			controller: loginCtrl
 		})
@@ -88,13 +88,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			url: "/pricelist",
 			templateUrl: "view/pricelist.html",
 			controller: pricelistCtrl
-		})
-		.state('route2.list', {
-			url: "/list",
-			templateUrl: "route2.list.html",
-			controller: function ($scope) {
-				$scope.things = ["A", "Set", "Of", "Things"];
-			}
 		})
 		.state('invoices', {
 			url: "/invoices",

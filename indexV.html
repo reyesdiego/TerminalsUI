@@ -12,7 +12,9 @@
 
 <body class="container">
 
-<div class="navbar navbar-default navbar-fixed-top hidden-print">
+<script src="controller/navigation.js"></script>
+
+<div class="navbar navbar-default navbar-fixed-top hidden-print" ng-controller="navigationCtrl">
 	<div class="container">
 		<div class="navbar-header">
 			<a href="../" class="navbar-brand">Administración General de Puertos</a>
@@ -24,11 +26,12 @@
 		</div>
 		<div class="navbar-collapse collapse" id="navbar-main">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a ui-sref="register">Ingreso</a></li>
-				<li><a ui-sref="tarifario">Tarifario</a></li>
-				<li><a ui-sref="matches">Asociar</a></li>
-				<li><a ui-sref="invoices">Facturas</a></li>
-				<li><a ui-sref="control">Control</a></li>
+				<li><a ui-sref="login">Ingreso</a></li>
+				<li><a ui-sref="tarifario" ng-hide="menuTerminal">Tarifario</a></li>
+				<li><a ui-sref="matches" ng-hide="menuTerminal">Asociar</a></li>
+				<li><a ui-sref="invoices" ng-hide="menuControl">Facturas</a></li>
+				<li><a ui-sref="control" ng-hide="menuControl">Control</a></li>
+				<li><a ng-hide="menuTerminal" ng-click="salir()">Salir</a></li>
 			</ul>
 
 		</div>

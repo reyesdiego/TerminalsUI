@@ -96,6 +96,17 @@ function matchPricesCtrl($scope, priceFactory){
 				$scope.nuevoConcepto = true;
 			})
 		};
+
+		$scope.cancelar = function(){
+			$scope.descripcion = "";
+			$scope.codigo = "";
+			$scope.unidad = "";
+			$scope.moneda = "";
+			$scope.precio = "";
+
+			$scope.listaMatch = false;
+			$scope.nuevoConcepto = true;
+		}
 	});
 
 

@@ -96,7 +96,7 @@ myapp.factory('invoiceFactory', function($http){
 			}).error(function(){
 				console.log("Error al cargar la lista PriceList")
 			});
-	}
+	};
 
 	return factory;
 
@@ -114,7 +114,44 @@ myapp.factory('controlFactory', function($http){
 			}).error(function(){
 				console.log('Error al cargar lista por día')
 			});
-	}
+	};
 
 	return factory;
-})
+});
+
+myapp.factory('userService', function($http){
+	var factory = {};
+
+	factory.loginApp = function(user, pass, callback){
+		"use strict";
+		var formData = {
+			"email": user,
+			"password": pass
+		};
+
+		var inserturl = serverUrl + '/agp/loginApp';
+		$http.get('loginMock.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(){
+				console.log("Error al cargar la lista PriceList")
+			});
+		/*Por ahora funciona con un mock
+		$http({
+			method: 'POST',
+			url: inserturl,
+			data: formData,
+			cache: $templateCache
+		}).success(function(response) {
+				console.log("success");
+				$scope.codeStatus = response.data;
+				console.log($scope.codeStatus);
+			}).error(function(response) {
+				console.log("error");
+				$scope.codeStatus = response || "Request failed";
+				console.log($scope.codeStatus);
+			});*/
+	};
+
+	return factory;
+});
