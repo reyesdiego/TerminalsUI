@@ -68,7 +68,7 @@ myapp.config(['$httpProvider', function ($httpProvider) {
 myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 	// For any unmatched url, send to /route1
-	$urlRouterProvider.otherwise("/register");
+	$urlRouterProvider.otherwise("/login");
 
 	//noinspection JSValidateTypes
 	$stateProvider
