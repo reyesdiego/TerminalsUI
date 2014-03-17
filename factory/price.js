@@ -96,7 +96,7 @@ myapp.factory('invoiceFactory', function($http){
 			}).error(function(){
 				console.log("Error al cargar la lista PriceList")
 			});
-	}
+	};
 
 	return factory;
 
@@ -114,7 +114,33 @@ myapp.factory('controlFactory', function($http){
 			}).error(function(){
 				console.log('Error al cargar lista por día')
 			});
-	}
+	};
 
 	return factory;
-})
+});
+
+myapp.factory('userService', function($http){
+	var factory = {};
+
+	factory.loginApp = function(user, pass, callback){
+		"use strict";
+		var formData = {
+			"email": user,
+			"password": pass
+		};
+		console.log(formData);
+		var inserturl = serverUrl + '/loginApp';
+		$http({
+			method: 'POST',
+			url: inserturl,
+			data: formData
+		}).success(function(data) {
+				console.log("success");
+				callback(data)
+			}).error(function(response) {
+				console.log("error");
+			});
+	};
+
+	return factory;
+});

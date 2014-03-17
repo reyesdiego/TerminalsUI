@@ -1,33 +1,19 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-function loginCtrl($scope, $http, $templateCache){
+function loginCtrl($scope, $rootScope, userService, $location){
 	'use strict'
 
-	$scope.register = function(){
-
-		var formData = {
-			"email": $scope.email,
-			"password": $scope.password
-		};
-
-		var inserturl = serverUrl + '/agp/register';
-		$http({
-			method: 'POST',
-			url: inserturl,
-			data: formData,
-			cache: $templateCache
-		}).success(function(response) {
-				console.log("success");
-				$scope.codeStatus = response.data;
-				console.log($scope.codeStatus);
-
-			}).error(function(response) {
-				console.log("error");
-				$scope.codeStatus = response || "Request failed";
-				console.log($scope.codeStatus);
-			});
-
+	$scope.login = function(){
+		userService.loginApp($scope.email, $scope.password, function(data){
+			console.log(data);
+			if (data.token != null | data.token != ''){
+				//Por ahora solo acceso a terminales
+				$rootScope.esTerminal = true;
+				$rootScope.dataUser = data;
+				$location.url('/pricelist');
+			}
+		})
 	}
 
 }
