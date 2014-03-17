@@ -1,4 +1,4 @@
-<div class="container" ng-hide="onOff">
+<div class="container">
 	<!-- Tables
 	================================================== -->
 	<!--<div class="bs-docs-section">-->
@@ -11,27 +11,37 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-6">
-			<div class="well">
-				<form ng-submit="cargar()" class="bs-example form-horizontal">
-					<fieldset>
-						<label for="fecha">Fecha</label>
-						<p class="input-group">
-							<input type="text" class="form-control" id="fecha" datepicker-popup="{{format}}" ng-model="fecha"  is-open="openFecha" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
-							<span class="input-group-btn">
-								<button class="btn btn-default" ng-click="open($event, 'fecha')"><i class="glyphicon glyphicon-calendar"></i></button>
-							</span>
-						</p>
-						<div class="form-group">
-							<div class="col-lg-6">
-								<button class="btn btn-default" ui-sref="control">Volver</button>
-								<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar()">Cargar</button>
-							</div>
-						</div>
-					</fieldset>
-				</form>
+		<div class="col-lg-4">
+			<div class="well" ng-hide="onOff">
+				<label for="fecha1">Fecha</label>
+				<p class="input-group">
+					<input type="text" class="form-control" id="fecha1" datepicker-popup="{{format}}" ng-model="fecha1"  is-open="openFecha1" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+					<span class="input-group-btn">
+						<button class="btn btn-default" ng-click="open($event, 'fecha1')"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+				<div class="form-group">
+					<button class="btn btn-default" ui-sref="control">Volver</button>
+					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar()">Cargar</button>
+				</div>
 			</div>
+			<div ui-view="fecha1"></div>
 		</div>
+		<!--<div class="col-lg-4">
+			<div class="well" ng-hide="onOff2">
+				<label for="fecha2">Fecha</label>
+				<p class="input-group">
+					<input type="text" class="form-control" id="fecha2" datepicker-popup="{{format}}" ng-model="fecha2"  is-open="openFecha2" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+					<span class="input-group-btn">
+						<button class="btn btn-default" ng-click="open($event, 'fecha2')"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+				<div class="form-group">
+					<button class="btn btn-default" ui-sref="control">Volver</button>
+					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar()">Cargar</button>
+				</div>
+			</div>
+			<div ui-view="fecha2"></div>
+		</div>-->
 	</div>
 </div>
-<div ui-view></div>
