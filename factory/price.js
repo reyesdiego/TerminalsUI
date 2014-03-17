@@ -119,7 +119,7 @@ myapp.factory('controlFactory', function($http){
 	return factory;
 });
 
-myapp.factory('userService', function($http){
+myapp.factory('userService', function($http, $dialogs){
 	var factory = {};
 
 	factory.loginApp = function(user, pass, callback){
@@ -129,7 +129,7 @@ myapp.factory('userService', function($http){
 			"password": pass
 		};
 		console.log(formData);
-		var inserturl = serverUrl + '/loginApp';
+		var inserturl = serverUrl + '/login';
 		$http({
 			method: 'POST',
 			url: inserturl,
@@ -139,6 +139,7 @@ myapp.factory('userService', function($http){
 				callback(data)
 			}).error(function(response) {
 				console.log("error");
+				$dialogs.error("Ha ocurrido un error al conectarse con el servidor, inténtelo nuevamente más tarde")
 			});
 	};
 
