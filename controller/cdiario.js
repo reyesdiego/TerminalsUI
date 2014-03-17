@@ -7,9 +7,11 @@ function cdiarioCtrl($scope, controlFactory){
 	$scope.maxSize = 5;
 	$scope.onOff = false;
 	$scope.onOffResult = true;
+	//$scope.onOff2 = false;
 
 	$scope.today = function() {
-		$scope.fecha = new Date();
+		$scope.fecha1 = new Date();
+		$scope.fecha2 = new Date();
 	};
 
 	$scope.today();
@@ -33,10 +35,12 @@ function cdiarioCtrl($scope, controlFactory){
 		$event.preventDefault();
 		$event.stopPropagation();
 
-		if (fecha === 'fecha'){
-			$scope.openFecha = true;
+		if (fecha === 'fecha1'){
+			$scope.openFecha1 = true;
+			//$scope.openFecha2 = false;
 		}else{
-			$scope.openFecha = false;
+			$scope.openFecha1 = false;
+			//$scope.openFecha2 = true;
 		}
 	};
 
@@ -62,4 +66,16 @@ function cdiarioCtrl($scope, controlFactory){
 			$scope.onOffResult = true;
 		};
 	};
+	/*$scope.cargar2 = function(){
+
+		controlFactory.getByDay($scope.fecha, function(data){
+			$scope.control = data[0];
+		});
+
+		$scope.onOff2 = true;
+
+		$scope.volver = function(){
+			$scope.onOff2 = false;
+		};
+	};*/
 }
