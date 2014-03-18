@@ -13,7 +13,8 @@ Array.prototype.contains = function (item) {
 };
 
 //var serverUrl = 'http://200.41.137.225:8080'; // Diego
-var serverUrl = 'http://200.123.104.179:8080'; // Ip externa de produccion cuidado!!
+//var serverUrl = 'http://200.123.104.179:8080'; // Ip externa de produccion cuidado!!
+var serverUrl = 'http://200.123.104.182:8080'; // Ip externa de desa!!
 //var serverUrl = 'https://10.1.0.55:8080'; // Ip interna desaweb02
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute']);
@@ -121,7 +122,14 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			controller: cdiarioCtrl
 		})
 		.state('cdiario.result', {
-			templateUrl: "view/cdiario.result.html"
+			views: {
+				fecha1: {
+					templateUrl: "view/cdiario.result.html"
+				},
+				fecha2: {
+					templateUrl: "view/cdiario.result.html"
+				}
+			}
 		})
 		.state('changepass', {
 			url: "/cambiarpass",
