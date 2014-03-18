@@ -91,11 +91,11 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 
 				priceFactory.addMatchPrice($scope.match, function(trash){
 					console.log(trash);
+					$scope.pricelist.push(nuevoPrecio);
+					$dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
+					$scope.listaMatch = false;
+					$scope.nuevoConcepto = true;
 				});
-
-				$scope.pricelist.push(nuevoPrecio);
-				$scope.listaMatch = false;
-				$scope.nuevoConcepto = true;
 			})
 		};
 
