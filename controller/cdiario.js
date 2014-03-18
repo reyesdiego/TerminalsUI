@@ -5,8 +5,7 @@
 function cdiarioCtrl($scope, controlFactory){
 	'use strict';
 	$scope.maxSize = 5;
-	$scope.onOff = false;
-	$scope.onOffResult = true;
+	$scope.onOff1 = false;
 	//$scope.onOff2 = false;
 
 	$scope.today = function() {
@@ -37,10 +36,13 @@ function cdiarioCtrl($scope, controlFactory){
 
 		if (fecha === 'fecha1'){
 			$scope.openFecha1 = true;
-			//$scope.openFecha2 = false;
 		}else{
 			$scope.openFecha1 = false;
-			//$scope.openFecha2 = true;
+		}
+		if (fecha === 'fecha2'){
+			$scope.openFecha2 = true;
+		}else{
+			$scope.openFecha2 = false;
 		}
 	};
 
@@ -52,19 +54,13 @@ function cdiarioCtrl($scope, controlFactory){
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
 
-	$scope.cargar = function(){
+	$scope.cargar = function(fecha){
 
-		controlFactory.getByDay($scope.fecha, function(data){
+		controlFactory.getByDay(fecha, function(data){
 			$scope.control = data[0];
+			$scope.fecha = fecha;
 		});
 
-		$scope.onOff = true;
-		$scope.onOffResult = false;
-
-		$scope.volver = function(){
-			$scope.onOff = false;
-			$scope.onOffResult = true;
-		};
 	};
 	/*$scope.cargar2 = function(){
 

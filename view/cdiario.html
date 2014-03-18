@@ -12,7 +12,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-4">
-			<div class="well" ng-hide="onOff">
+			<div class="well" ng-hide="onOff1">
 				<label for="fecha1">Fecha</label>
 				<p class="input-group">
 					<input type="text" class="form-control" id="fecha1" datepicker-popup="{{format}}" ng-model="fecha1"  is-open="openFecha1" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
@@ -22,14 +22,19 @@
 				</p>
 				<div class="form-group">
 					<button class="btn btn-default" ui-sref="control">Volver</button>
-					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar()">Cargar</button>
+					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar(fecha1); onOff1 = true">Cargar</button>
 				</div>
 			</div>
-			<div ui-view="fecha1"></div>
+			<div ng-hide="!onOff1" class="well">
+				<div ui-view="fecha1"></div>
+				<div>
+					<button class="btn btn-primary" ng-click="onOff1 = false">Volver</button>
+				</div>
+			</div>
 		</div>
-		<!--<div class="col-lg-4">
+		<div class="col-lg-4">
 			<div class="well" ng-hide="onOff2">
-				<label for="fecha2">Fecha</label>
+				<label for="fecha1">Fecha</label>
 				<p class="input-group">
 					<input type="text" class="form-control" id="fecha2" datepicker-popup="{{format}}" ng-model="fecha2"  is-open="openFecha2" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
 					<span class="input-group-btn">
@@ -38,10 +43,15 @@
 				</p>
 				<div class="form-group">
 					<button class="btn btn-default" ui-sref="control">Volver</button>
-					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar()">Cargar</button>
+					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar(fecha2); onOff2 = true">Cargar</button>
 				</div>
 			</div>
-			<div ui-view="fecha2"></div>
-		</div>-->
+			<div ng-hide="!onOff2" class="well">
+				<div ui-view="fecha2"></div>
+				<div>
+					<button class="btn btn-primary" ng-click="onOff2 = false">Volver</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

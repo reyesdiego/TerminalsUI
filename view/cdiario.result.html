@@ -1,44 +1,35 @@
-<div class="container" ng-hide="onOffResult">
-	<div class="row">
-		<div class="col-lg-4">
-			<div class="well">
-				<div class="control-label">
-					<span><strong>D&iacute;a: {{ fecha | date: 'dd/MM/yyyy' }}</strong></span>
-				</div>
-				<div>
-					<ul class="list-group">
-						<li class="list-group-item">
-							<span>Cantidad de Facturas</span>
-							<span class="badge" align="right">{{ control.invoicesCount }}</span>
-						</li>
-						<li class="list-group-item">
-							<span>Primer factura del d&iacute;a N°</span>
-							<span class="badge" align="right">{{ control.invoicesFirst }}</span>
-						</li>
-						<li class="list-group-item">
-							<span>&Uacute;ltima factura del d&iacute;a N°</span>
-							<span class="badge" align="right">{{ control.invoicesLast }}</span>
-						</li>
-						<li class="list-group-item">
-							<span>Cantidad de tasas AGP</span>
-							<span class="badge" align="right">{{ control.tasasCount }}</span>
-						</li>
-						<li class="list-group-item">
-							<span>Precio total tasas AGP</span>
-							<span class="badge" align="right">{{ control.tasasPrice | currency }}</span>
-						</li>
-						<li class="list-group-item">
-							<span>Precio total facturas</span>
-							<span class="badge" align="right">{{ control.tasasTotal | currency }}</span>
-						</li>
-					</ul>
-				</div>
-				<div>
-					<p>
-						<button class="btn btn-primary" ng-click="volver()">Volver</button>
-					</p>
-				</div>
-			</div>
+<div class="container row">
+	<div class="col-lg-3">
+		<div class="control-label">
+			<span><strong>D&iacute;a: {{ fecha | date: 'dd/MM/yyyy' }}</strong></span>
+		</div>
+		<div>
+			<ul class="list-group">
+				<li class="list-group-item">
+					<span>Cantidad de Facturas</span>
+					<span class="badge" align="right">{{ control.invoicesCount }}</span>
+				</li>
+				<li class="list-group-item">
+					<span>Primer factura del d&iacute;a N°</span>
+					<span class="badge" align="right">{{ control.invoicesFirst }}</span>
+				</li>
+				<li class="list-group-item">
+					<span>&Uacute;ltima factura del d&iacute;a N°</span>
+					<span class="badge" align="right">{{ control.invoicesLast }}</span>
+				</li>
+				<li class="list-group-item">
+					<span>Cantidad de tasas AGP</span>
+					<span class="badge" align="right">{{ control.tasasCount }}</span>
+				</li>
+				<li class="list-group-item">
+					<span>Precio total tasas AGP</span>
+					<span class="badge" align="right">{{ control.tasasPrice | currency }}</span>
+				</li>
+				<li class="list-group-item">
+					<span>Precio total facturas</span>
+					<span class="badge" align="right">{{ control.tasasTotal | currency }}</span>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>
