@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, priceFactory, $rootScope){
+function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 	'use strict';
 	$scope.listaMatch = false;
 	$scope.nuevoConcepto = true;
@@ -55,9 +55,11 @@ function matchPricesCtrl($scope, priceFactory, $rootScope){
 				}
 			});
 
-			priceFactory.addMatchPrice($scope.match, function(data){
-				console.log(data);
+			priceFactory.addMatchPrice($scope.match, function(datos){
+				console.log(datos);
+				$dialogs.notify("Asociar","Los datos se han guardado correctamente");
 			});
+
 		}
 
 		$scope.guardarNuevoConcepto = function() {
