@@ -1,11 +1,11 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-function loginCtrl($scope, $rootScope, userService, $location, $dialogs){
+function loginCtrl($scope, $rootScope, userFactory, $location, $dialogs){
 	'use strict'
 
 	$scope.login = function(){
-		userService.loginApp($scope.email, $scope.password, function(data){
+		userFactory.login($scope.email, $scope.password, function(data){
 			console.log(data);
 			if (data.error == 'AuthError'){
 				$rootScope.esTerminal = false;

@@ -1,0 +1,29 @@
+/**
+ * Created by Diego Reyes on 3/19/14.
+ */
+myapp.factory('userFactory', function($http, $dialogs){
+	var factory = {};
+
+	factory.login = function(user, pass, callback){
+		"use strict";
+		var formData = {
+			"email": user,
+			"password": pass
+		};
+		console.log(formData);
+		var inserturl = serverUrl + '/login';
+		$http({
+			method: 'POST',
+			url: inserturl,
+			data: formData
+		}).success(function(data) {
+				console.log("success");
+				callback(data)
+			}).error(function(response) {
+				console.log("error");
+				$dialogs.error("Ha ocurrido un error al conectarse con el servidor, inténtelo nuevamente más tarde")
+			});
+	};
+
+	return factory;
+});

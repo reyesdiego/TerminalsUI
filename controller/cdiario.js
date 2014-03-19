@@ -2,7 +2,7 @@
  * Created by gutierrez-g on 12/03/14.
  */
 
-function cdiarioCtrl($scope, controlFactory){
+function cdiarioCtrl($scope, controlPanelFactory){
 	'use strict';
 	$scope.maxSize = 5;
 	$scope.onOff1 = false;
@@ -56,7 +56,7 @@ function cdiarioCtrl($scope, controlFactory){
 
 	$scope.cargar = function(fecha){
 
-		controlFactory.getByDay(fecha, function(data){
+		controlPanelFactory.getByDay(fecha, function(data){
 			$scope.control = data[0];
 			$scope.fecha = fecha;
 		});
