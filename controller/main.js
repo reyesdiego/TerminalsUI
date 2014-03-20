@@ -122,7 +122,14 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			controller: cdiarioCtrl
 		})
 		.state('cdiario.result', {
-			templateUrl: "view/cdiario.result.html"
+			views: {
+				"fecha1" : {
+					templateUrl: "view/cdiario.result1.html"
+				},
+				"fecha2" : {
+					templateUrl: "view/cdiario.result2.html"
+				}
+			}
 		})
 		.state('changepass', {
 			url: "/cambiarpass",

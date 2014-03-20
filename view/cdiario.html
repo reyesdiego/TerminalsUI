@@ -22,7 +22,7 @@
 				</p>
 				<div class="form-group">
 					<button class="btn btn-default" ui-sref="control">Volver</button>
-					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar(fecha1); onOff1 = true">Cargar</button>
+					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar(fecha1,1); onOff1 = true">Cargar</button>
 				</div>
 			</div>
 			<div ng-hide="!onOff1" class="well">
@@ -43,7 +43,7 @@
 				</p>
 				<div class="form-group">
 					<button class="btn btn-default" ui-sref="control">Volver</button>
-					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar(fecha2); onOff2 = true">Cargar</button>
+					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar(fecha2,2); onOff2 = true">Cargar</button>
 				</div>
 			</div>
 			<div ng-hide="!onOff2" class="well">

@@ -6,7 +6,7 @@ myapp.factory('controlPanelFactory', function($http){
 
 	factory.getByDay = function(dia, callback){
 		//var inserturl = serverUrl + '/controldia/' + dia; // El que realmente se va a usar
-		var inserturl = 'controlday.json';
+		var inserturl = 'mocks/controlday.json';
 		$http.get(inserturl)
 			.success(function(data){
 				callback(data);

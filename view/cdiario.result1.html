@@ -1,33 +1,33 @@
 <div class="container row">
 	<div class="col-lg-3">
 		<div class="control-label">
-			<span><strong>D&iacute;a: {{ fecha | date: 'dd/MM/yyyy' }}</strong></span>
+			<span><strong>D&iacute;a: {{ fecha[1] | date: 'dd/MM/yyyy' }}</strong></span>
 		</div>
 		<div>
 			<ul class="list-group">
 				<li class="list-group-item">
 					<span>Cantidad de Facturas</span>
-					<span class="badge" align="right">{{ control.invoicesCount }}</span>
+					<span class="badge text-right">{{ control[1].invoicesCount }}</span>
 				</li>
 				<li class="list-group-item">
 					<span>Primer factura del d&iacute;a N°</span>
-					<span class="badge" align="right">{{ control.invoicesFirst }}</span>
+					<span class="badge text-right">{{ control[1].invoicesFirst }}</span>
 				</li>
 				<li class="list-group-item">
 					<span>&Uacute;ltima factura del d&iacute;a N°</span>
-					<span class="badge" align="right">{{ control.invoicesLast }}</span>
+					<span class="badge text-right">{{ control[1].invoicesLast }}</span>
 				</li>
 				<li class="list-group-item">
 					<span>Cantidad de tasas AGP</span>
-					<span class="badge" align="right">{{ control.tasasCount }}</span>
+					<span class="badge text-right">{{ control[1].tasasCount }}</span>
 				</li>
 				<li class="list-group-item">
 					<span>Precio total tasas AGP</span>
-					<span class="badge" align="right">{{ control.tasasPrice | currency }}</span>
+					<span class="badge text-right">{{ control[1].tasasPrice | currency }}</span>
 				</li>
 				<li class="list-group-item">
 					<span>Precio total facturas</span>
-					<span class="badge" align="right">{{ control.tasasTotal | currency }}</span>
+					<span class="badge text-right">{{ control[1].tasasTotal | currency }}</span>
 				</li>
 			</ul>
 		</div>

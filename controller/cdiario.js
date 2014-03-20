@@ -6,6 +6,8 @@ function cdiarioCtrl($scope, controlPanelFactory){
 	'use strict';
 	$scope.maxSize = 5;
 	$scope.onOff1 = false;
+	$scope.control = {};
+	$scope.fecha = {};
 	//$scope.onOff2 = false;
 
 	$scope.today = function() {
@@ -54,11 +56,11 @@ function cdiarioCtrl($scope, controlPanelFactory){
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
 
-	$scope.cargar = function(fecha){
+	$scope.cargar = function(fecha,nroControl){
 
 		controlPanelFactory.getByDay(fecha, function(data){
-			$scope.control = data[0];
-			$scope.fecha = fecha;
+			$scope.control[nroControl] = data[0];
+			$scope.fecha[nroControl] = fecha;
 		});
 
 	};
