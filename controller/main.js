@@ -13,9 +13,9 @@ Array.prototype.contains = function (item) {
 };
 
 //var serverUrl = 'http://200.41.145.155:8080'; // Diego
-//var serverUrl = 'http://200.123.104.182:8080'; // Ip externa de desaweb02
+var serverUrl = 'http://200.123.104.182:8080'; // Ip externa de desaweb02
 //var serverUrl = 'http://200.123.104.179:8080'; // Ip externa de produccion cuidado!!
-var serverUrl = 'http://10.1.0.55:8080'; // Ip interna desaweb02
+//var serverUrl = 'http://10.1.0.55:8080'; // Ip interna desaweb02
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute','dialogs']);
 
@@ -77,13 +77,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			url: "/login",
 			templateUrl: "view/login.html",
 			controller: loginCtrl
-		})
-		.state('route1.list', {
-			url: "/list",
-			templateUrl: "route1.list.html",
-			controller: function ($scope) {
-				$scope.items = ["A", "List", "Of", "Items"];
-			}
 		})
 		.state('tarifario', {
 			url: "/pricelist",

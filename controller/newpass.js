@@ -2,10 +2,15 @@
  * Created by Artiom on 11/03/14.
  */
 
-function changePassCtrl ($scope, $templateCache, $http) {
+function changePassCtrl ($scope, $templateCache, $http, $dialogs) {
 	'use strict';
 
 	$scope.changePass = function(){
+
+		if ($scope.newPass != $scope.confirmPass){
+			$dialogs.notify("Cambiar contraseña","Las contraseñas no coinciden");
+			return;
+		}
 
 		var formData = {
 			"email": $scope.email,
