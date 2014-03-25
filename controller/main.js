@@ -12,8 +12,8 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
-//var serverUrl = 'http://200.41.145.155:8080'; // Diego
-var serverUrl = 'http://200.123.104.182:8080'; // Ip externa de desaweb02
+var serverUrl = 'http://200.5.223.174:8080'; // Diego
+//var serverUrl = 'http://200.123.104.182:8081'; // Ip externa de desaweb02
 //var serverUrl = 'http://200.123.104.179:8080'; // Ip externa de produccion cuidado!!
 //var serverUrl = 'http://10.1.0.55:8080'; // Ip interna desaweb02
 
@@ -68,7 +68,7 @@ myapp.config(['$httpProvider', function ($httpProvider) {
 
 myapp.config(function ($stateProvider, $urlRouterProvider) {
 
-	// For any unmatched url, send to /route1
+	// For any unmatched url, send to /login
 	$urlRouterProvider.otherwise("/login");
 
 	//noinspection JSValidateTypes
