@@ -12,11 +12,36 @@
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+	<!-- Angular 1.2.4 y modulos-->
+	<script src="angular/angular.js"></script>
+	<script src="angular/angular-resource.js"></script>
+	<script src="angular/angular-route.min.js"></script>
+	<script src="angular/angular-sanitize.min.js.map"></script>
+	<script src="angular/angular-ui-router.js"></script>
+	<!-- App Script -->
+	<script src="controller/main.js"></script>
+	<!-- Factories -->
+	<script src="factory/controlPanel.js"></script>
+	<script src="factory/invoice.js"></script>
+	<script src="factory/price.js"></script>
+	<script src="factory/user.js"></script>
+	<!-- Controles Angular-->
+	<script src="controller/cdiario.js"></script>
+	<script src="controller/control.js"></script>
+	<script src="controller/correlativo.js"></script>
+	<script src="controller/dialogsLib.js"></script>
+	<script src="controller/invoice.detail.js"></script>
+	<script src="controller/invoices.js"></script>
+	<script src="controller/login.js"></script>
+	<script src="controller/matchprices.js"></script>
+	<script src="controller/matchprices.modal.js"></script>
+	<script src="controller/navigation.js"></script>
+	<script src="controller/newpass.js"></script>
+	<script src="controller/pricelist.js"></script>
+	<script src="bootstrap/ui-bootstrap-tpls-min-0.10.0.js" type="text/javascript"></script>
 </head>
 
 <body class="container">
-
-<script src="controller/navigation.js"></script>
 
 <div class="navbar navbar-default navbar-fixed-top hidden-print" ng-controller="navigationCtrl">
 	<div class="container">
@@ -45,38 +70,6 @@
 	<div ui-view>
 	</div>
 </div>
-
-<!-- Angular 1.2.4 y modulos-->
-<script src="angular/angular.js"></script>
-<script src="angular/angular-resource.js"></script>
-<script src="angular/angular-route.min.js"></script>
-<script src="angular/angular-sanitize.min.js.map"></script>
-<script src="angular/angular-ui-router.js"></script>
-
-<!-- App Script -->
-<script src="controller/main.js"></script>
-
-<!-- Factories -->
-<script src="factory/controlPanel.js"></script>
-<script src="factory/invoice.js"></script>
-<script src="factory/price.js"></script>
-<script src="factory/user.js"></script>
-
-<!-- Controles Angular-->
-<script src="controller/cdiario.js"></script>
-<script src="controller/control.js"></script>
-<script src="controller/correlativo.js"></script>
-<script src="controller/dialogsLib.js"></script>
-<script src="controller/invoice.detail.js"></script>
-<script src="controller/invoices.js"></script>
-<script src="controller/login.js"></script>
-<script src="controller/matchprices.js"></script>
-<script src="controller/matchprices.modal.js"></script>
-<script src="controller/navigation.js"></script>
-<script src="controller/newpass.js"></script>
-<script src="controller/pricelist.js"></script>
-
-<script src="bootstrap/ui-bootstrap-tpls-min-0.10.0.js" type="text/javascript"></script>
 
 </body>
 
