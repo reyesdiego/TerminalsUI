@@ -19,9 +19,13 @@ myapp.factory('userFactory', function($http, $dialogs){
 		}).success(function(data) {
 				console.log("success");
 				callback(data)
-			}).error(function(response) {
-				console.log("error");
+			}).error(function(errorText, errorNumber, e, request) {
+				console.log(errorText);
+			if (errorNumber === 403){
+				$dialogs.error("Usuario o clave incorrectos.")
+			} else {
 				$dialogs.error("Ha ocurrido un error al conectarse con el servidor, inténtelo nuevamente más tarde")
+			}
 			});
 	};
 

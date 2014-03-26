@@ -4,14 +4,14 @@
 
 function navigationCtrl($scope, $rootScope, $location){
 	"use strict";
-	$rootScope.esTerminal = false;
-	$rootScope.esControl = false;
+	$rootScope.esTerminal = true;
+	$rootScope.esControl = true;
 
-	$scope.menuTerminal = !$rootScope.esTerminal;
-	$scope.menuControl = !$rootScope.esControl;
+	$scope.menuTerminal = $rootScope.esTerminal;
+	$scope.menuControl = $rootScope.esControl;
 
 	$scope.$watch('esTerminal', function() {
-		$scope.menuTerminal = !$rootScope.esTerminal;
+		$scope.menuTerminal = $rootScope.esTerminal;
 	});
 
 	$scope.salir = function(){

@@ -4,14 +4,19 @@
 myapp.factory('priceFactory', function($http){
 	var factory = {};
 
-	factory.getPrice = function(callback) {
+	factory.getPrice = function(token, callback) {
 		var inserturl = serverUrl + '/agp/prices';
-		$http.get(inserturl)
-			.success(function (data){
-				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
-			});
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers: {
+				token: token
+			}
+		}).success(function (data){
+			callback(data);
+		}).error(function(){
+			console.log("Error al cargar la lista PriceList")
+		});
 	};
 
 	factory.getMatchPrices = function(terminal, callback) {
