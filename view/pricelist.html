@@ -21,7 +21,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="price in pricelist">
+                    <tr ng-repeat="price in filteredPrices">
                         <td>{{ price.id }}</td>
                         <td>{{ price.description }}</td>
                         <td>{{ price.unitCurrency}}</td>
@@ -32,4 +32,5 @@
             </div>
         </div>
     </div>
+	<a href="" ><pagination href="" boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" page="currentPage" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></a>
 </div>

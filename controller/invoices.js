@@ -18,26 +18,25 @@ function invoicesCtrl ($scope, invoiceFactory) {
 
 		$scope.totalItems = $scope.invoices.totalCount;
 
-		$scope.setPage = function (pageNo) {
+		$scope.setPage = function (pageNo){
 			$scope.currentPage = pageNo;
 		};
 
-		//esta funcion debe ser reemplazada por una llamada al servidor que devuelva el total de facturas
-		$scope.numPages = function () {
+		$scope.numPages = function (){
 			return Math.ceil($scope.totalItems / $scope.itemsPerPage);
 		};
 
-		$scope.$watch('currentPage + itemsPerPage', function() {
+		$scope.$watch('currentPage + itemsPerPage', function(){
 			var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			page.skip = skip;
-			invoiceFactory.getInvoice(page, function(data) {
+			invoiceFactory.getInvoice(page, function(data){
 				$scope.invoices = data;
 			})
 			$scope.filtro = '';
 		});
 
 		// init the filtered items
-		$scope.search = function () {
+		$scope.search = function (){
 			//$scope.filteredInvoices = $scope.invoices;
 		};
 

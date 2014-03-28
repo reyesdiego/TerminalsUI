@@ -6,9 +6,30 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 	$scope.listaMatch = false;
 	$scope.nuevoConcepto = true;
 
-	priceFactory.getMatchPrices($rootScope.dataUser.terminal, function (data) {
+	$scope.filteredPrices = []
+	$scope.itemsPerPage = 10;
+	$scope.currentPage = 1;
+	$scope.maxSize = 5;
+
+	priceFactory.getMatchPrices($rootScope.dataUser.terminal, function (data){
 
 		$scope.pricelist = data;
+		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
+
+		$scope.totalItems = $scope.pricelist.length;
+
+		$scope.setPage = function (pageNo) {
+			$scope.currentPage = pageNo;
+		};
+
+		$scope.numPages = function () {
+			return Math.ceil($scope.totalItems / $scope.itemsPerPage);
+		};
+
+		$scope.$watch('currentPage + itemsPerPage', function() {
+			$scope.guardar();
+			$scope.filtro = '';
+		});
 
 		$scope.agregarCodigo = function(price) {
 			if (price.match == null){
@@ -27,7 +48,7 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 			price.new = ''
 		};
 
-		$scope.borrar = function(price, codigo) {
+		$scope.borrar = function(price, codigo){
 			var pos = price.match.codes[0].codes.indexOf(codigo);
 			pos > -1 && price.match.codes[0].codes.splice( pos, 1 );
 		}
@@ -45,7 +66,7 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 		$scope.guardar = function() {
 			$scope.match = [];
 
-			var prices = $scope.pricelist
+			var prices = $scope.filteredPrices;
 			prices.forEach(function(item){
 				if (item.match != null){
 					if (item.match.codes[0].codes.length>0){
@@ -57,16 +78,17 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 
 			priceFactory.addMatchPrice($scope.match, function(datos){
 				console.log(datos);
-				$dialogs.notify("Asociar","Los datos se han guardado correctamente");
+				//$dialogs.notify("Asociar","Los datos se han guardado correctamente");
+				$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 			});
 
 		}
 
-		$scope.guardarNuevoConcepto = function() {
+		$scope.guardarNuevoConcepto = function(){
 
 			var formData = {
-				"description":	$scope.descripcion,
-				"topPrice":		$scope.precio,
+				"description":$scope.descripcion,
+				"topPrice":$scope.precio,
 				"match": null,
 				"unit": $scope.unidad,
 				"currency": $scope.moneda,
@@ -110,8 +132,5 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 			$scope.nuevoConcepto = true;
 		}
 	});
-
-
-
 
 }
