@@ -12,10 +12,10 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
-var serverUrl = 'http://localhost:8080'; // Diego
+//var serverUrl = 'http://localhost:8080'; // Diego
 //var serverUrl = 'http://200.123.104.182:8081'; // Ip externa de desaweb02
 //var serverUrl = 'http://200.123.104.179:8080'; // Ip externa de produccion cuidado!!
-//var serverUrl = 'http://10.1.0.55:8080'; // Ip interna desaweb02
+var serverUrl = 'http://10.1.0.55:8080'; // Ip interna desaweb02
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute','dialogs']);
 
@@ -108,6 +108,18 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 		.state('correlativo.result', {
 			templateUrl: "view/correlatividad.result.html"
+		})
+		.state('gates', {
+			url: "/gates",
+			templateUrl: "view/gates.html",
+			controller: gatesCtrl
+		})
+		.state('gates.result', {
+			views: {
+				"fecha1" : {
+					templateUrl: "view/gates.result.html"
+				}
+			}
 		})
 		.state('cdiario', {
 			url: "/controldia",

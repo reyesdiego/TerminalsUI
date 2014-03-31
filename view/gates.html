@@ -1,0 +1,57 @@
+<div class="container">
+	<!-- Tables
+	================================================== -->
+	<!--<div class="bs-docs-section">-->
+
+	<div class="row">
+		<div class="col-lg-11">
+			<div class="xpage-header">
+				<h1 id="forms">Gates</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="well" ng-hide="onOff1">
+				<label for="fecha1">Fecha 1</label>
+				<p class="input-group">
+					<input type="text" class="form-control" id="fecha1" datepicker-popup="{{format}}" ng-model="fecha1"  is-open="openFecha1" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+					<span class="input-group-btn">
+						<button class="btn btn-default" ng-click="open($event, 'fecha1')"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+				<div class="form-group">
+					<button class="btn btn-default" ui-sref="control">Volver</button>
+					<button class="btn btn-primary" ui-sref="gates.result" ng-click="cargar(fecha1); onOff1 = true">Cargar</button>
+				</div>
+			</div>
+			<div ng-hide="!onOff1" class="well">
+				<div ui-view="fecha1"></div>
+				<div>
+					<button class="btn btn-primary" ng-click="onOff1 = false">Volver</button>
+				</div>
+			</div>
+		</div>
+		<!--<div class="col-lg-4">
+			<div class="well" ng-hide="onOff2">
+				<label for="fecha1">Fecha 2</label>
+				<p class="input-group">
+					<input type="text" class="form-control" id="fecha2" datepicker-popup="{{format}}" ng-model="fecha2"  is-open="openFecha2" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+					<span class="input-group-btn">
+						<button class="btn btn-default" ng-click="open($event, 'fecha2')"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+				<div class="form-group">
+					<button class="btn btn-default" ui-sref="control">Volver</button>
+					<button class="btn btn-primary" ui-sref="cdiario.result" ng-click="cargar(fecha2,2); onOff2 = true">Cargar</button>
+				</div>
+			</div>
+			<div ng-hide="!onOff2" class="well">
+				<div ui-view="fecha2"></div>
+				<div>
+					<button class="btn btn-primary" ng-click="onOff2 = false">Volver</button>
+				</div>
+			</div>
+		</div>-->
+	</div>
+</div>
