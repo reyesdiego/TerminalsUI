@@ -15,8 +15,7 @@ myapp.factory('userFactory', function($http, $dialogs){
 		$http({
 			method: 'POST',
 			url: inserturl,
-			data: JSON.stringify(formData),
-			headers:{"Content-Type":"application/json"}
+			data: formData
 		}).success(function(data) {
 				console.log("success");
 				callback(data)
