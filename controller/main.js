@@ -12,6 +12,26 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
+function in_array(needle, haystack, argStrict){
+	var key = '',
+		strict = !! argStrict;
+
+	if(strict){
+		for(key in haystack){
+			if(haystack[key] === needle){
+				return true;
+			}
+		}
+	}else{
+		for(key in haystack){
+			if(haystack[key] == needle){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 //var serverUrl = 'http://10.0.0.223:8080'; // Diego
 var serverUrl = 'http://200.123.104.182:8081'; // Ip externa de desaweb02
 //var serverUrl = 'http://200.123.104.179:8080'; // Ip externa de produccion cuidado!!
@@ -141,4 +161,36 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/newpass.html",
 			controller: changePassCtrl
 		})
+		.state('forbidden', {
+			url: "/forbidden",
+			templateUrl: "view/forbidden.html"
+		})
 });
+
+myapp.run(function($rootScope, $state, loginService){
+	"use strict";
+	var rutasTerminales = ['tarifario', 'invoices', 'matches'];
+	var rutasControl = ['tarifario', 'control', 'correlativo', 'cdiario'];
+	var rutasComunes = ['login', 'forbidden', 'changepass'];
+
+	$rootScope.$on('$stateChangeStart', function(event, toState){
+		if (!in_array(toState.name, rutasComunes)){
+			if (loginService.getStatus()){
+				switch (loginService.getType()){
+					case 'terminal':
+						if(!in_array(toState.name, rutasTerminales)){
+							event.preventDefault();
+							$state.transitionTo('forbidden');
+						}
+						break;
+					case 'control':
+						if(!in_array(toState.name, rutasControl)){
+							event.preventDefault();
+							$state.transitionTo('forbidden');
+						}
+						break;
+				}
+			}
+		}
+	})
+})

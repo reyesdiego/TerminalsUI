@@ -3,19 +3,29 @@
  */
 
 myapp.service('loginService', function () {
-	var login = {};
 	return {
 		getStatus: function () {
-			return login.status;
+			return sessionStorage.getItem('loginStatus');
 		},
 		setStatus: function (value) {
-			login.status = value;
+			sessionStorage.setItem('loginStatus', value);
 		},
 		getToken: function () {
-			return login.token;
+			return sessionStorage.getItem('token');
 		},
 		setToken: function (value) {
-			login.token = value;
+			sessionStorage.setItem('token', value)
+		},
+		getType: function () {
+			return sessionStorage.getItem('type');
+		},
+		setType: function (value) {
+			sessionStorage.setItem('type', value);
+		},
+		unsetLogin: function(){
+			sessionStorage.removeItem('loginStatus');
+			sessionStorage.removeItem('token');
+			sessionStorage.removeItem('type');
 		}
 	};
 });
