@@ -101,6 +101,18 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/control.html",
 			controller: controlCtrl
 		})
+		.state('gates', {
+			url: "/gates",
+			templateUrl: "view/gates.html",
+			controller: gatesCtrl
+		})
+		.state('gates.result', {
+			views: {
+				"fecha1" : {
+					templateUrl: "view/gates.result.html"
+				}
+			}
+		})
 		.state('correlativo', {
 			url: "/correlatividad",
 			templateUrl: "view/correlatividad.html",

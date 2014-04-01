@@ -4,16 +4,26 @@
 			<span><strong>D&iacute;a: {{ fecha | date: 'dd/MM/yyyy' }}</strong></span>
 		</div>
 		<div>
-			<table class="table table-striped" style="text-align: center">
+			<table class="table table-striped table-bordered table-hover" style="text-align: center">
+				<tr>
+					<th style="text-align: center">Buque</th>
+					<th style="text-align: center">Viaje</th>
+					<th style="text-align: center">Contenedor</th>
+					<th style="text-align: center">Movimiento</th>
+					<th style="text-align: center">Tipo</th>
+					<th style="text-align: center">Patente del cami&oacute;n</th>
+					<th style="text-align: center">Inicio del turno</th>
+					<th style="text-align: center">Fin del turno</th>
+				</tr>
 				<tr ng-repeat="gate in gates">
-					<td>Buque: {{ gate.buque }}</td>
-					<td>Viaje: {{ gate.viaje }}</td>
-					<td>Contenedor: {{ gate.contenedor }}</td>
-					<td>Movimiento: {{ gate.mov }}</td>
-					<td>Tipo: {{ gate.tipo }}</td>
-					<td>Patente del cami&oacute;n: {{ gate.patenteCamion }}</td>
-					<td>Inicio del turno: {{ gate.turnoInicio | date: 'HH:mm' }}</td>
-					<td>Fin del turno: {{ gate.turnoFin | date: "HH:mm" }}</td>
+					<td>{{ gate.buque }}</td>
+					<td>{{ gate.viaje }}</td>
+					<td>{{ gate.contenedor }}</td>
+					<td>{{ gate.mov }}</td>
+					<td>{{ gate.tipo }}</td>
+					<td>{{ gate.patenteCamion }}</td>
+					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
+					<td>{{ gate.turnoFin | date: "HH:mm" }}</td>
 				</tr>
 			</table>
 		</div>
