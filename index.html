@@ -32,6 +32,7 @@
 	<script src="controller/control.js"></script>
 	<script src="controller/correlativo.js"></script>
 	<script src="controller/dialogsLib.js"></script>
+	<script src="controller/gates.js"></script>
 	<script src="controller/invoice.detail.js"></script>
 	<script src="controller/invoices.js"></script>
 	<script src="controller/login.js"></script>
@@ -60,8 +61,8 @@
 				<li><a ui-sref="login">Ingreso</a></li>
 				<li ng-hide="menuTerminal"><a ui-sref="tarifario">Tarifario</a></li>
 				<li ng-hide="menuTerminal"><a ui-sref="matches">Asociar</a></li>
-				<li ng-hide="menuControl"><a ui-sref="invoices">Facturas</a></li>
-				<li ng-hide="menuControl"><a ui-sref="control">Control</a></li>
+				<li ng-hide="menuTerminal"><a ui-sref="invoices">Facturas</a></li>
+				<li ng-hide="menuTerminal"><a ui-sref="control">Control</a></li>
 				<li ng-hide="menuTerminal"><a ng-click="salir()">Salir</a></li>
 			</ul>
 		</div>

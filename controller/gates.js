@@ -1,8 +1,8 @@
 /**
- * Created by gutierrez-g on 12/03/14.
+ * Created by leo on 31/03/14.
  */
 
-function cdiarioCtrl($scope, controlPanelFactory){
+function gatesCtrl($scope, controlPanelFactory){
 	'use strict';
 	$scope.maxSize = 5;
 	$scope.onOff1 = false;
@@ -40,11 +40,6 @@ function cdiarioCtrl($scope, controlPanelFactory){
 		}else{
 			$scope.openFecha1 = false;
 		}
-		if (fecha === 'fecha2'){
-			$scope.openFecha2 = true;
-		}else{
-			$scope.openFecha2 = false;
-		}
 	};
 
 	$scope.dateOptions = {
@@ -55,11 +50,11 @@ function cdiarioCtrl($scope, controlPanelFactory){
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
 
-	$scope.cargar = function(fecha,nroControl){
+	$scope.cargar = function(fecha){
 
-		controlPanelFactory.getByDay(fecha, function(data){
-			$scope.control[nroControl] = data[0];
-			$scope.fecha[nroControl] = fecha;
+		controlPanelFactory.getGateByDay(fecha, function(data){
+			$scope.gates = data;
+			$scope.fecha = fecha;
 		});
 
 	};

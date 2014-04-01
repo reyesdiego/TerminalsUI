@@ -1,0 +1,21 @@
+<div class="container row">
+	<div class="col-lg-11">
+		<div class="control-label">
+			<span><strong>D&iacute;a: {{ fecha | date: 'dd/MM/yyyy' }}</strong></span>
+		</div>
+		<div>
+			<table class="table table-striped" style="text-align: center">
+				<tr ng-repeat="gate in gates">
+					<td>Buque: {{ gate.buque }}</td>
+					<td>Viaje: {{ gate.viaje }}</td>
+					<td>Contenedor: {{ gate.contenedor }}</td>
+					<td>Movimiento: {{ gate.mov }}</td>
+					<td>Tipo: {{ gate.tipo }}</td>
+					<td>Patente del cami&oacute;n: {{ gate.patenteCamion }}</td>
+					<td>Inicio del turno: {{ gate.turnoInicio | date: 'HH:mm' }}</td>
+					<td>Fin del turno: {{ gate.turnoFin | date: "HH:mm" }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
