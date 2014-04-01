@@ -22,16 +22,16 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 			$scope.currentPage = pageNo;
 		};
 
-		$scope.numPages = function () {
+		$scope.numPages = function (){
 			return Math.ceil($scope.totalItems / $scope.itemsPerPage);
 		};
 
-		$scope.$watch('currentPage + itemsPerPage', function() {
+		$scope.$watch('currentPage + itemsPerPage', function(){
 			$scope.guardar();
 			$scope.filtro = '';
 		});
 
-		$scope.agregarCodigo = function(price) {
+		$scope.agregarCodigo = function(price){
 			if (price.match == null){
 				$scope.nuevoMatch = { codes:[{
 											terminal: $rootScope.dataUser.terminal,
@@ -63,7 +63,7 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 			$scope.nuevoConcepto = false;
 		}
 
-		$scope.guardar = function() {
+		$scope.guardar = function(){
 			$scope.match = [];
 
 			var prices = $scope.filteredPrices;
