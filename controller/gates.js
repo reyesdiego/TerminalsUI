@@ -5,13 +5,13 @@
 function gatesCtrl($scope, controlPanelFactory){
 	'use strict';
 	$scope.maxSize = 5;
-	$scope.onOff1 = false;
 	$scope.control = {};
-	$scope.fecha = {};
+	$scope.gates = {};
+	//$scope.fecha = {};
 
 	$scope.today = function() {
-		$scope.fecha1 = new Date();
-		$scope.fecha2 = new Date();
+		$scope.fechaDesde = new Date();
+		$scope.fechaHasta = new Date();
 	};
 
 	$scope.today();
@@ -35,10 +35,15 @@ function gatesCtrl($scope, controlPanelFactory){
 		$event.preventDefault();
 		$event.stopPropagation();
 
-		if (fecha === 'fecha1'){
-			$scope.openFecha1 = true;
+		if (fecha === 'fechaDesde'){
+			$scope.openFechaDesde = true;
 		}else{
-			$scope.openFecha1 = false;
+			$scope.openFechaDesde = false;
+		}
+		if (fecha === 'fechaHasta'){
+			$scope.openFechaHasta = true;
+		}else{
+			$scope.openFechaHasta = false;
 		}
 	};
 
@@ -50,11 +55,36 @@ function gatesCtrl($scope, controlPanelFactory){
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
 
-	$scope.cargar = function(fecha){
+	$scope.colorHorario = function(gate){
+		var horarioGate = new Date(gate.gateTimestamp);
+		var horarioInicio = new Date(gate.turnoInicio);
+		var horarioFin = new Date(gate.turnoFin);
+		if (horarioGate >= horarioInicio && horarioGate <= horarioFin)
+			{return 'green'}
+		else
+			{return 'red'}
+	};
 
+	$scope.cargar = function(){
+		var fecha = {desde:$scope.fechaDesde, hasta: $scope.fechaHasta};
 		controlPanelFactory.getGateByDay(fecha, function(data){
-			$scope.gates = data;
-			$scope.fecha = fecha;
+			$scope.gatesAux = data;
+			$scope.gatesAux = $scope.gatesAux.sort(function(a,b){ // Ordena el array
+				return a['gateTimestamp'] > b['gateTimestamp'];
+			});
+			var i = 0;
+			var fechaAux = new Date($scope.gatesAux[i]['gateTimestamp']);
+			$scope.gates[i] = new Array();
+			$scope.gatesAux.forEach(function(datos){
+				var fechaDatos = new Date(datos['gateTimestamp']);
+				if(fechaAux.getFullYear() != fechaDatos.getFullYear() || fechaAux.getMonth() != fechaDatos.getMonth() || fechaAux.getDate() != fechaDatos.getDate()){
+					i++;
+					$scope.gates[i] = new Array();
+				}
+				$scope.gates[i].push(datos);
+				fechaAux = new Date(datos['gateTimestamp']);
+			});
+			$scope.fecha = fecha.desde;
 		});
 
 	};

@@ -1,29 +1,31 @@
 <div class="container row">
-	<div class="col-lg-11">
-		<div class="control-label">
-			<span><strong>D&iacute;a: {{ fecha | date: 'dd/MM/yyyy' }}</strong></span>
+	<div class="col-lg-11" ng-repeat="gate in gates">
+		<div class="control-label row">
+			<button ng-click="fechaHide = !fechaHide" class="btn btn-default"><span><strong>D&iacute;a: {{ gate[0].gateTimestamp | date: 'dd/MM/yyyy' }}</strong></span></button>
 		</div>
-		<div>
-			<table class="table table-striped table-bordered table-hover" style="text-align: center">
+		<div ng-init="fechaHide = false" ng-hide="fechaHide" class="row">
+			<table class="table table-bordered table-hover" style="text-align: center">
 				<tr>
 					<th style="text-align: center">Buque</th>
 					<th style="text-align: center">Viaje</th>
 					<th style="text-align: center">Contenedor</th>
-					<th style="text-align: center">Movimiento</th>
-					<th style="text-align: center">Tipo</th>
 					<th style="text-align: center">Patente del cami&oacute;n</th>
+					<th style="text-align: center">Tipo</th>
+					<th style="text-align: center">Horario</th>
 					<th style="text-align: center">Inicio del turno</th>
 					<th style="text-align: center">Fin del turno</th>
+					<th style="text-align: center">Movimiento</th>
 				</tr>
-				<tr ng-repeat="gate in gates">
-					<td>{{ gate.buque }}</td>
-					<td>{{ gate.viaje }}</td>
-					<td>{{ gate.contenedor }}</td>
-					<td>{{ gate.mov }}</td>
-					<td>{{ gate.tipo }}</td>
-					<td>{{ gate.patenteCamion }}</td>
-					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
-					<td>{{ gate.turnoFin | date: "HH:mm" }}</td>
+				<tr ng-repeat="gat in gate">
+					<td>{{ gat.buque }}</td>
+					<td>{{ gat.viaje }}</td>
+					<td>{{ gat.contenedor }}</td>
+					<td>{{ gat.patenteCamion }}</td>
+					<td>{{ gat.tipo }}</td>
+					<td ng-init="colorH = colorHorario(gat)" ng-style="{'color': colorH}">{{ gat.gateTimestamp | date: 'HH:mm' }}</td>
+					<td>{{ gat.turnoInicio | date: 'HH:mm' }}</td>
+					<td>{{ gat.turnoFin | date: 'HH:mm' }}</td>
+					<td>{{ gat.mov }}</td>
 				</tr>
 			</table>
 		</div>

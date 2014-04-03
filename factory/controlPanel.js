@@ -15,8 +15,8 @@ myapp.factory('controlPanelFactory', function($http){
 			});
 	};
 
-	factory.getGateByDay = function(dia, callback){
-		//var inserturl = serverUrl + '/gates/' + dia; // El que realmente se va a usar
+	factory.getGateByDay = function(fecha, callback){
+		//var inserturl = serverUrl + '/gates/' + fecha.desde + '/' + fecha.hasta; // El que realmente se va a usar
 		var inserturl = 'mocks/gates.json';
 		$http.get(inserturl)
 			.success(function(data){
