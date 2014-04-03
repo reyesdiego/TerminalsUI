@@ -1,8 +1,10 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
+function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs, $timeout){
 	'use strict';
+	$scope.flagGuardado = true;
+
 	$scope.listaMatch = false;
 	$scope.nuevoConcepto = true;
 
@@ -65,7 +67,6 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 
 		$scope.guardar = function(){
 			$scope.match = [];
-
 			var prices = $scope.filteredPrices;
 			prices.forEach(function(item){
 				if (item.match != null){
@@ -75,13 +76,17 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 					}
 				}
 			});
-
-			priceFactory.addMatchPrice($scope.match, function(datos){
-				console.log(datos);
-				//$dialogs.notify("Asociar","Los datos se han guardado correctamente");
+			if ($scope.match.length > 0){
+				priceFactory.addMatchPrice($scope.match, function(datos){
+					$scope.flagGuardado = false;
+					$timeout(function(){
+						$scope.flagGuardado = true;
+					}, 3000);
+					$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
+				});
+			} else {
 				$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
-			});
-
+			}
 		}
 
 		$scope.guardarNuevoConcepto = function(){
@@ -130,6 +135,10 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs){
 
 			$scope.listaMatch = false;
 			$scope.nuevoConcepto = true;
+		}
+
+		$scope.esconderAlerta = function(){
+			$scope.flagGuardado = true;
 		}
 	});
 
