@@ -1,5 +1,5 @@
-<div style="width: 800px; align-content: center" ng-hide="onOffDetalle">
-	<div>
+<div class="container" style="width: 800px; text-align: center">
+	<div class="row">
 		<table class="table">
 			<tr>
 				<td>
@@ -38,7 +38,7 @@
 		<table>
 			<tr>
 				<td style="text-align: center">
-					<div><span>Detalle</span></div>
+					<div><span><strong>Detalle</strong></span></div>
 				</td>
 			</tr>
 		</table>
@@ -99,6 +99,6 @@
 	</div>
 	<div class="hidden-print">
 		<a href="javascript:window.print()" class="btn btn-primary" ng-click="window.print();">Imprimir</a>
-		<button class="btn btn-primary" ng-click="volver()">Volver</button>
+		<button class="btn btn-primary" ng-click="$parent.onOff = !$parent.onOff">Volver</button>
 	</div>
 </div>

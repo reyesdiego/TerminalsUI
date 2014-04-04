@@ -8,8 +8,6 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
 	$scope.maxSize = 5;
-	$scope.onOff = false;
-	$scope.onOffDetalle = true;
 
 	var page = {skip:0, limit: $scope.itemsPerPage};
 
@@ -42,14 +40,7 @@ function invoicesCtrl ($scope, invoiceFactory) {
 
 		$scope.cargar = function(factura){
 			$scope.verDetalle = factura;
-			$scope.onOff = true;
-			$scope.onOffDetalle = false;
 		};
-
-		$scope.volver = function(){
-			$scope.onOff = false;
-			$scope.onOffDetalle = true;
-		}
 
 	});
 

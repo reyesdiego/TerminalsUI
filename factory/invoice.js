@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http){
+myapp.factory('invoiceFactory', function($http, loginService){
 	var factory = {};
 
 	factory.getInvoice = function(page, callback) {
@@ -10,9 +10,9 @@ myapp.factory('invoiceFactory', function($http){
 			method: 'GET',
 			url: inserturl,
 			headers:
-			{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'}
+			{token: loginService.getToken()}
 		}).success(function(data) {
-				callback(data);
+			callback(data);
 			}).error(function(response) {
 				console.log(response);
 				console.log("Error al cargar la lista Invoice");
