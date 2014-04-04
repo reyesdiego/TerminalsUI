@@ -28,7 +28,7 @@
 					<td>{{ invoice.razon }}</td>
 					<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 					<td>${{ invoice.importe.total }}</td>
-					<td><button ui-sref="invoices.detail" class="btn btn-primary" type="button" ng-click="cargar(invoice); $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>
+					<td><button ui-sref="invoices.result" class="btn btn-primary" type="button" ng-click="cargar(invoice); $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>
 				</tr>
 				</tbody>
 			</table>
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 
-	<div class="row" ng-hide="!onOff">
+	<div ng-hide="!onOff">
 		<div ui-view></div>
 	</div>
 

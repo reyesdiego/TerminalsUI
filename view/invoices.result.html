@@ -1,15 +1,9 @@
-<div class="container" style="width: 800px; text-align: center">
-	<div class="row">
-		<table class="table">
-			<tr>
-				<td>
-					<div><h4><strong>Factura tipo {{ verDetalle.codTipoComprob }} número: {{ verDetalle.nroComprob }}</strong></h4></div>
-					<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
-					<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
-					<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
-				</td>
-			</tr>
-		</table>
+<div class="container well" style="width: 800px; text-align: center">
+	<div>
+		<div><h4><strong>Factura tipo {{ verDetalle.codTipoComprob }} número: {{ verDetalle.nroComprob }}</strong></h4></div>
+		<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
+		<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
+		<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
 		<table class="table">
 			<tr>
 				<td>
