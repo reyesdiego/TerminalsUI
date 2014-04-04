@@ -4,6 +4,7 @@
 function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs, $timeout){
 	'use strict';
 	$scope.flagGuardado = true;
+	$scope.flagCambios = false;
 
 	$scope.listaMatch = false;
 	$scope.nuevoConcepto = true;
@@ -30,6 +31,7 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs, $timeout){
 
 		$scope.$watch('currentPage + itemsPerPage', function(){
 			$scope.guardar();
+			$scope.flagCambios = false;
 			$scope.filtro = '';
 		});
 
@@ -47,12 +49,14 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs, $timeout){
 					price.match.codes[0].codes.push(price.new);
 				}
 			}
+			$scope.flagCambios = true;
 			price.new = ''
 		};
 
 		$scope.borrar = function(price, codigo){
 			var pos = price.match.codes[0].codes.indexOf(codigo);
 			pos > -1 && price.match.codes[0].codes.splice( pos, 1 );
+			$scope.flagCambios = true;
 		}
 
 		$scope.hitEnter = function(evt, price){
@@ -76,7 +80,7 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs, $timeout){
 					}
 				}
 			});
-			if ($scope.match.length > 0){
+			if ($scope.match.length > 0 && $scope.flagCambios){
 				priceFactory.addMatchPrice($scope.match, function(datos){
 					$scope.flagGuardado = false;
 					$timeout(function(){
