@@ -10,6 +10,10 @@ function navigationCtrl($scope, $rootScope, $state, loginService){
 	$scope.menuTerminal = !$rootScope.esTerminal;
 	$scope.menuControl = !$rootScope.esControl;
 
+	if (loginService.getStatus()){
+		$rootScope.esTerminal = true;
+	}
+
 	$scope.$watch('esTerminal', function() {
 		$scope.menuTerminal = !$rootScope.esTerminal;
 	});

@@ -13,7 +13,7 @@ function loginCtrl($scope, $rootScope, userFactory, $state, $dialogs, loginServi
 			} else {
 				//Por ahora solo acceso a terminales
 				$rootScope.esTerminal = true;
-				$rootScope.dataUser = data;
+				loginService.setInfo(data);
 				loginService.setStatus(true);
 				loginService.setType('terminal');
 				loginService.setToken(data.token.token);

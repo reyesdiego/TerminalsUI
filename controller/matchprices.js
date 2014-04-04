@@ -1,20 +1,22 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs, $timeout){
+function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService){
 	'use strict';
+	$scope.dataUser = loginService.getInfo();
+
 	$scope.flagGuardado = true;
 	$scope.flagCambios = false;
 
 	$scope.listaMatch = false;
 	$scope.nuevoConcepto = true;
 
-	$scope.filteredPrices = []
+	$scope.filteredPrices = [];
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
 	$scope.maxSize = 5;
 
-	priceFactory.getMatchPrices($rootScope.dataUser.terminal, function (data){
+	priceFactory.getMatchPrices(loginService.getInfo().terminal, function (data){
 
 		$scope.pricelist = data;
 		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
@@ -38,7 +40,7 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs, $timeout){
 		$scope.agregarCodigo = function(price){
 			if (price.match == null){
 				$scope.nuevoMatch = { codes:[{
-											terminal: $rootScope.dataUser.terminal,
+											terminal: loginService.getInfo().terminal,
 											codes: []}],
 									id: price.id
 									};
@@ -102,13 +104,13 @@ function matchPricesCtrl($scope, priceFactory, $rootScope, $dialogs, $timeout){
 				"unit": $scope.unidad,
 				"currency": $scope.moneda,
 				"_id": $scope.codigo,
-				"terminal": $rootScope.dataUser.terminal
+				"terminal": loginService.getInfo().terminal
 			};
 
 			priceFactory.addPrice(formData, function(nuevoPrecio){
 
 				var nuevoMatch = { codes:[{
-					terminal: $rootScope.dataUser.terminal,
+					terminal: loginService.getInfo().terminal,
 					codes: []}],
 					id: nuevoPrecio.id
 				};

@@ -14,7 +14,7 @@ myapp.service('loginService', function () {
 			return sessionStorage.getItem('token');
 		},
 		setToken: function (value) {
-			sessionStorage.setItem('token', value)
+			sessionStorage.setItem('token', value);
 		},
 		getType: function () {
 			return sessionStorage.getItem('type');
@@ -22,10 +22,14 @@ myapp.service('loginService', function () {
 		setType: function (value) {
 			sessionStorage.setItem('type', value);
 		},
+		setInfo: function (value) {
+			sessionStorage.userData = JSON.stringify(value);
+		},
+		getInfo: function () {
+			return JSON.parse(sessionStorage.userData);
+		},
 		unsetLogin: function(){
-			sessionStorage.removeItem('loginStatus');
-			sessionStorage.removeItem('token');
-			sessionStorage.removeItem('type');
+			sessionStorage.clear();
 		}
 	};
 });
