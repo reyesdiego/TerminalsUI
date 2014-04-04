@@ -32,10 +32,7 @@ function in_array(needle, haystack, argStrict){
 	return false;
 }
 
-//var serverUrl = 'http://10.0.0.223:8080'; // Diego
-var serverUrl = 'http://200.123.104.182:8081'; // Ip externa de desaweb02
-//var serverUrl = 'http://200.123.104.179:8080'; // Ip externa de produccion cuidado!!
-//var serverUrl = 'http://10.1.0.55:8080'; // Ip interna desaweb02
+var serverUrl = config.url();
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute','dialogs']);
 

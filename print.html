@@ -12,6 +12,14 @@
 			.container { border:4px solid green }
 		}
 	</style>
+	<script src="includes/js/utils/config.js" type="text/javascript" language="JavaScript"></script>
+
+
+	<script>
+		window.onload = function(){
+			document.getElementsByClassName("container")[0].innerHTML = config.url();
+		}
+	</script>
 </head>
 <body>
 
