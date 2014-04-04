@@ -11,6 +11,7 @@ function navigationCtrl($scope, $rootScope, $state, loginService){
 	$scope.menuControl = !$rootScope.esControl;
 
 	if (loginService.getStatus()){
+		//Por ahora solo se tienen en cuenta las terminales
 		$rootScope.esTerminal = true;
 	}
 

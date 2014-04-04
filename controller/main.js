@@ -169,7 +169,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 myapp.run(function($rootScope, $state, loginService){
 	"use strict";
-	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches'];
+	var rutasTerminales = ['tarifario', 'invoices', 'invoices.detail', 'matches'];
 	var rutasControl = ['tarifario', 'control', 'correlativo', 'cdiario'];
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 
@@ -190,6 +190,9 @@ myapp.run(function($rootScope, $state, loginService){
 						}
 						break;
 				}
+			} else {
+				event.preventDefault();
+				$state.transitionTo('forbidden');
 			}
 		}
 	})
