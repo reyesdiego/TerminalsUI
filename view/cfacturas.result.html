@@ -1,0 +1,67 @@
+<!--<input type="text" ng-model="search" class="search-query" placeholder="Search">>-->
+
+	<div class="row" ng-hide="onOffResult">
+		<div class="row">
+			<div class="col-lg-11">
+				<div class="xpage-header">
+					<h1 id="forms">Control de correlatividad</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-11 well">
+			<div class="panel {{ cartel }}">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{ titulo[0] }}</h3>
+				</div>
+				<div class="panel-body">
+					<p>{{ mensaje[0] }}</p>
+					<p>{{ faltantes }}</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-11">
+				<div class="xpage-header">
+					<h1>Control de códigos</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-11 well">
+			<div class="panel {{ cartel }}">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{ titulo[1] }}</h3>
+				</div>
+				<div class="panel-body">
+					<p>{{ mensaje[1] }}</p>
+					<p>{{ faltantes }}</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-11">
+				<div class="xpage-header">
+					<h1>Control de tasa a las cargas</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-11 well">
+			<div class="panel {{ cartel }}">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{ titulo[2] }}</h3>
+				</div>
+				<div class="panel-body">
+					<p>{{ mensaje[2] }}</p>
+					<p>{{ faltantes }}</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-11">
+			<button class="btn btn-primary" ng-click="volver()">Volver</button>
+		</div>
+	</div>

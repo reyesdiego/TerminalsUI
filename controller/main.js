@@ -32,6 +32,11 @@ function in_array(needle, haystack, argStrict){
 	return false;
 }
 
+function es_substring(needle, haystack){
+	var posicion = haystack.indexOf(needle);
+	return posicion != -1;
+}
+
 var serverUrl = config.url();
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute','dialogs']);
@@ -130,13 +135,13 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				}
 			}
 		})
-		.state('correlativo', {
-			url: "/correlatividad",
-			templateUrl: "view/correlatividad.html",
-			controller: correlativoCtrl
+		.state('cfacturas', {
+			url: "/cfacturas",
+			templateUrl: "view/cfacturas.html",
+			controller: cfacturasCtrl
 		})
-		.state('correlativo.result', {
-			templateUrl: "view/correlatividad.result.html"
+		.state('cfacturas.result', {
+			templateUrl: "view/cfacturas.result.html"
 		})
 		.state('cdiario', {
 			url: "/controldia",
@@ -166,8 +171,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 myapp.run(function($rootScope, $state, loginService){
 	"use strict";
-	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches', 'control', 'correlativo', 'correlativo.result', 'gates', 'gates.result'];
-	var rutasControl = ['tarifario', 'control', 'correlativo', 'cdiario'];
+	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches', 'control', 'cfacturas', 'cfacturas.result', 'gates', 'gates.result'];
+	var rutasControl = ['tarifario', 'control', 'cfacturas', 'cfacturas.result', 'gates', 'gates.result', 'cdiario'];
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
