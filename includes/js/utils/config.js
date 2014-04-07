@@ -1,13 +1,13 @@
 /**
- * Created by diego on 4/4/14.
+ * Created by leo on 07/04/14.
  */
 
 /**
  * Funciones estaticas de configuracion
-**/
+ **/
 var config = {
 	url : function(){
-		return "http://localhost:8080";
+		return "http://10.1.0.55:8080";
 	}
 }
 
