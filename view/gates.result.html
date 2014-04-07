@@ -15,6 +15,7 @@
 					<th style="text-align: center">Inicio del turno</th>
 					<th style="text-align: center">Fin del turno</th>
 					<th style="text-align: center">Movimiento</th>
+					<th style="text-align: center">Facturas</th>
 				</tr>
 				<tr ng-repeat="gat in gate">
 					<td>{{ gat.buque }}</td>
@@ -26,6 +27,7 @@
 					<td>{{ gat.turnoInicio | date: 'HH:mm' }}</td>
 					<td>{{ gat.turnoFin | date: 'HH:mm' }}</td>
 					<td>{{ gat.mov }}</td>
+					<td><button class="btn btn-primary" ui-sref="">Ver</button></td>
 				</tr>
 			</table>
 		</div>
