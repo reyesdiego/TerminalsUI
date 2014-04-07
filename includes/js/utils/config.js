@@ -7,7 +7,7 @@
 **/
 var config = {
 	url : function(){
-		return "http://10.1.0.55:8080";
+		return "http://200.123.104.182:8081";
 	}
 }
 

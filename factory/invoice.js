@@ -21,7 +21,7 @@ myapp.factory('invoiceFactory', function($http, loginService){
 
 	factory.getByDate = function(page, desde, hasta, terminal, callback) {
 		//Por ahora trabaja solo con un mock
-		$http.get('correlativo.json')
+		$http.get('mocks/correlativo.json')
 			.success(function (data){
 				callback(data);
 			}).error(function(){

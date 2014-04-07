@@ -12,6 +12,7 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	var page = {skip:0, limit: $scope.itemsPerPage};
 
 	invoiceFactory.getInvoice(page, function(data){
+		console.log(data);
 		$scope.invoices = data;
 
 		$scope.totalItems = $scope.invoices.totalCount;
