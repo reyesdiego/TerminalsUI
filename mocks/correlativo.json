@@ -1,0 +1,588 @@
+{"totalCount": 45,
+	"data": [
+		{
+			"_id": "53080784f3436d0d697ffb48",
+			"terminal": "BACTSSA",
+			"nroComprob": 1,
+			"razon": "Razon 1",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.292Z"
+			},
+			"importe": {
+				"total": 1001,
+				"iva": 210.21
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb49",
+			"terminal": "BACTSSA",
+			"nroComprob": 2,
+			"razon": "Razon 2",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.292Z"
+			},
+			"importe": {
+				"total": 1002,
+				"iva": 210.42
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb4a",
+			"terminal": "BACTSSA",
+			"nroComprob": 3,
+			"razon": "Razon 3",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.293Z"
+			},
+			"importe": {
+				"total": 1003,
+				"iva": 210.63
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb4b",
+			"terminal": "BACTSSA",
+			"nroComprob": 4,
+			"razon": "Razon 4",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.293Z"
+			},
+			"importe": {
+				"total": 1004,
+				"iva": 210.84
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb4d",
+			"terminal": "BACTSSA",
+			"nroComprob": 6,
+			"razon": "Razon 6",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.293Z"
+			},
+			"importe": {
+				"total": 1006,
+				"iva": 211.26
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb4e",
+			"terminal": "BACTSSA",
+			"nroComprob": 7,
+			"razon": "Razon 7",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.293Z"
+			},
+			"importe": {
+				"total": 1007,
+				"iva": 211.47
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb4f",
+			"terminal": "BACTSSA",
+			"nroComprob": 8,
+			"razon": "Razon 8",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.293Z"
+			},
+			"importe": {
+				"total": 1008,
+				"iva": 211.68
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb50",
+			"terminal": "BACTSSA",
+			"nroComprob": 9,
+			"razon": "Razon 9",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.293Z"
+			},
+			"importe": {
+				"total": 1009,
+				"iva": 211.89
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb51",
+			"terminal": "BACTSSA",
+			"nroComprob": 10,
+			"razon": "Razon 10",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.293Z"
+			},
+			"importe": {
+				"total": 1010,
+				"iva": 212.1
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb53",
+			"terminal": "BACTSSA",
+			"nroComprob": 12,
+			"razon": "Razon 12",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.294Z"
+			},
+			"importe": {
+				"total": 1012,
+				"iva": 212.52
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb54",
+			"terminal": "BACTSSA",
+			"nroComprob": 13,
+			"razon": "Razon 13",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.294Z"
+			},
+			"importe": {
+				"total": 1013,
+				"iva": 212.73
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb55",
+			"terminal": "BACTSSA",
+			"nroComprob": 14,
+			"razon": "Razon 14",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.294Z"
+			},
+			"importe": {
+				"total": 1014,
+				"iva": 212.94
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb56",
+			"terminal": "BACTSSA",
+			"nroComprob": 15,
+			"razon": "Razon 15",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.295Z"
+			},
+			"importe": {
+				"total": 1015,
+				"iva": 213.15
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb57",
+			"terminal": "BACTSSA",
+			"nroComprob": 16,
+			"razon": "Razon 16",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.295Z"
+			},
+			"importe": {
+				"total": 1016,
+				"iva": 213.36
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb58",
+			"terminal": "BACTSSA",
+			"nroComprob": 17,
+			"razon": "Razon 17",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.295Z"
+			},
+			"importe": {
+				"total": 1017,
+				"iva": 213.57
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb5a",
+			"terminal": "BACTSSA",
+			"nroComprob": 19,
+			"razon": "Razon 19",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.296Z"
+			},
+			"importe": {
+				"total": 1019,
+				"iva": 213.99
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb5b",
+			"terminal": "BACTSSA",
+			"nroComprob": 20,
+			"razon": "Razon 20",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.296Z"
+			},
+			"importe": {
+				"total": 1020,
+				"iva": 214.2
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb5c",
+			"terminal": "BACTSSA",
+			"nroComprob": 21,
+			"razon": "Razon 21",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.296Z"
+			},
+			"importe": {
+				"total": 1021,
+				"iva": 214.41
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb5d",
+			"terminal": "BACTSSA",
+			"nroComprob": 22,
+			"razon": "Razon 22",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.296Z"
+			},
+			"importe": {
+				"total": 1022,
+				"iva": 214.62
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb5e",
+			"terminal": "BACTSSA",
+			"nroComprob": 23,
+			"razon": "Razon 23",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.297Z"
+			},
+			"importe": {
+				"total": 1023,
+				"iva": 214.83
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb5f",
+			"terminal": "BACTSSA",
+			"nroComprob": 24,
+			"razon": "Razon 24",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.297Z"
+			},
+			"importe": {
+				"total": 1024,
+				"iva": 215.04
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb60",
+			"terminal": "BACTSSA",
+			"nroComprob": 25,
+			"razon": "Razon 25",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.297Z"
+			},
+			"importe": {
+				"total": 1025,
+				"iva": 215.25
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb61",
+			"terminal": "BACTSSA",
+			"nroComprob": 26,
+			"razon": "Razon 26",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.298Z"
+			},
+			"importe": {
+				"total": 1026,
+				"iva": 215.46
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb62",
+			"terminal": "BACTSSA",
+			"nroComprob": 27,
+			"razon": "Razon 27",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.298Z"
+			},
+			"importe": {
+				"total": 1027,
+				"iva": 215.67
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb63",
+			"terminal": "BACTSSA",
+			"nroComprob": 28,
+			"razon": "Razon 28",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.298Z"
+			},
+			"importe": {
+				"total": 1028,
+				"iva": 215.88
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb64",
+			"terminal": "BACTSSA",
+			"nroComprob": 29,
+			"razon": "Razon 29",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.298Z"
+			},
+			"importe": {
+				"total": 1029,
+				"iva": 216.09
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb65",
+			"terminal": "BACTSSA",
+			"nroComprob": 30,
+			"razon": "Razon 30",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.299Z"
+			},
+			"importe": {
+				"total": 1030,
+				"iva": 216.3
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb66",
+			"terminal": "BACTSSA",
+			"nroComprob": 31,
+			"razon": "Razon 31",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.299Z"
+			},
+			"importe": {
+				"total": 1031,
+				"iva": 216.51
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb67",
+			"terminal": "BACTSSA",
+			"nroComprob": 32,
+			"razon": "Razon 32",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.299Z"
+			},
+			"importe": {
+				"total": 1032,
+				"iva": 216.72
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb68",
+			"terminal": "BACTSSA",
+			"nroComprob": 33,
+			"razon": "Razon 33",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.299Z"
+			},
+			"importe": {
+				"total": 1033,
+				"iva": 216.93
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb69",
+			"terminal": "BACTSSA",
+			"nroComprob": 34,
+			"razon": "Razon 34",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.328Z"
+			},
+			"importe": {
+				"total": 1034,
+				"iva": 217.14
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb6a",
+			"terminal": "BACTSSA",
+			"nroComprob": 35,
+			"razon": "Razon 35",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.329Z"
+			},
+			"importe": {
+				"total": 1035,
+				"iva": 217.35
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb6b",
+			"terminal": "BACTSSA",
+			"nroComprob": 36,
+			"razon": "Razon 36",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.329Z"
+			},
+			"importe": {
+				"total": 1036,
+				"iva": 217.56
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb6c",
+			"terminal": "BACTSSA",
+			"nroComprob": 37,
+			"razon": "Razon 37",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.329Z"
+			},
+			"importe": {
+				"total": 1037,
+				"iva": 217.77
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb6d",
+			"terminal": "BACTSSA",
+			"nroComprob": 38,
+			"razon": "Razon 38",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.329Z"
+			},
+			"importe": {
+				"total": 1038,
+				"iva": 217.98
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb6e",
+			"terminal": "BACTSSA",
+			"nroComprob": 39,
+			"razon": "Razon 39",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.330Z"
+			},
+			"importe": {
+				"total": 1039,
+				"iva": 218.19
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb6f",
+			"terminal": "BACTSSA",
+			"nroComprob": 40,
+			"razon": "Razon 40",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.330Z"
+			},
+			"importe": {
+				"total": 1040,
+				"iva": 218.4
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb70",
+			"terminal": "BACTSSA",
+			"nroComprob": 41,
+			"razon": "Razon 41",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.330Z"
+			},
+			"importe": {
+				"total": 1041,
+				"iva": 218.61
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb71",
+			"terminal": "BACTSSA",
+			"nroComprob": 42,
+			"razon": "Razon 42",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.331Z"
+			},
+			"importe": {
+				"total": 1042,
+				"iva": 218.82
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb72",
+			"terminal": "BACTSSA",
+			"nroComprob": 43,
+			"razon": "Razon 43",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.331Z"
+			},
+			"importe": {
+				"total": 1043,
+				"iva": 219.03
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb73",
+			"terminal": "BACTSSA",
+			"nroComprob": 44,
+			"razon": "Razon 44",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.348Z"
+			},
+			"importe": {
+				"total": 1044,
+				"iva": 219.24
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb74",
+			"terminal": "BACTSSA",
+			"nroComprob": 45,
+			"razon": "Razon 45",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.367Z"
+			},
+			"importe": {
+				"total": 1045,
+				"iva": 219.45
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb75",
+			"terminal": "BACTSSA",
+			"nroComprob": 46,
+			"razon": "Razon 46",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.367Z"
+			},
+			"importe": {
+				"total": 1046,
+				"iva": 219.66
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb76",
+			"terminal": "BACTSSA",
+			"nroComprob": 47,
+			"razon": "Razon 47",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.368Z"
+			},
+			"importe": {
+				"total": 1047,
+				"iva": 219.87
+			}
+		},
+		{
+			"_id": "53080784f3436d0d697ffb77",
+			"terminal": "BACTSSA",
+			"nroComprob": 48,
+			"razon": "Razon 48",
+			"fecha": {
+				"emision": "2014-02-22T02:12:20.368Z"
+			},
+			"importe": {
+				"total": 1048,
+				"iva": 220.08
+			}
+		}
+	]}

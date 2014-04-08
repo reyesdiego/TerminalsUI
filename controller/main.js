@@ -32,6 +32,11 @@ function in_array(needle, haystack, argStrict){
 	return false;
 }
 
+function es_substring(needle, haystack){
+	var posicion = haystack.indexOf(needle);
+	return posicion != -1;
+}
+
 var serverUrl = config.url();
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute','dialogs']);
@@ -162,6 +167,14 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					templateUrl: "view/cdiario.result2.html"
 				}
 			}
+		})
+		.state('cfacturas', {
+			url: "/cfacturas",
+			templateUrl: "view/cfacturas.html",
+			controller: cfacturasCtrl
+		})
+		.state('cfacturas.result', {
+			templateUrl: "view/cfacturas.result.html"
 		})
 		.state('changepass', {
 			url: "/cambiarpass",
