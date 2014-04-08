@@ -56,7 +56,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 			$scope.result = data.data;
 
 			$scope.control = 0;
-			$scope.faltantes = [];
+			$scope.facturasFaltantes = [];
+			$scope.codigosFaltantes = [];
+			$scope.facturasRotas = [];
 			$scope.mensaje = ["No se hallaron anormalidades.", "Todos los códigos se encuentran asociados correctamente.", "Todas las facturas tienen alguna tarifa de tasa a las cargas."];
 			$scope.cartel = ["panel-success", "panel-success", "panel-success"];
 			$scope.titulo = ["Éxito", "Éxito", "Éxito"];
@@ -90,14 +92,22 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 						$scope.control += 1;
 						if ($scope.control != factura.nroComprob){
 							$scope.faltantes.push($scope.control);
-							$scope.mensaje = "Se hallaron facturas faltantes: ";
 							$scope.control = factura.nroComprob;
-							$scope.cartel = "panel-danger";
-							$scope.titulo = "Error"
+							$scope.mensaje[0] = "Se hallaron facturas faltantes: ";
+							$scope.cartel[0] = "panel-danger";
+							$scope.titulo[0] = "Error"
 						}
 					}
 
 					//Aca control de codigos
+					factura.detalle.items.forEach(function(item){
+						if (!in_array(item.id, $scope.codigosTerminal)){
+							$scope.codigosFaltantes.push(item.id + " en la factura " + factura.id);
+							$scope.mensaje[1] = "Se hallaron códigos sin asociar: ";
+							$scope.cartel[1] = "panel-danger";
+							$scope.titulo[1] = "Error"
+						}
+					})
 
 					//aca control de tasa a las cargas
 				})
