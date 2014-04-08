@@ -130,6 +130,16 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				}
 			}
 		})
+		.state('gates.result.container', {
+			views: {
+				"fecha1" : {
+					templateUrl: "view/gates.result.container.html"
+				}
+			}
+		})
+		.state('invoicesgates', {
+			templateUrl: "view/invoices.html"
+		})
 		.state('correlativo', {
 			url: "/correlatividad",
 			templateUrl: "view/correlatividad.html",
@@ -166,7 +176,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 myapp.run(function($rootScope, $state, loginService){
 	"use strict";
-	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches', 'control', 'gates', 'gates.result'];
+	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches', 'control', 'gates', 'gates.result', 'gates.result.container', 'invoicesgates'];
 	var rutasControl = ['tarifario', 'control', 'correlativo', 'cdiario'];
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 

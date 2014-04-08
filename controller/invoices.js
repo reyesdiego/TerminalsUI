@@ -38,10 +38,6 @@ function invoicesCtrl ($scope, invoiceFactory) {
 			//$scope.filteredInvoices = $scope.invoices;
 		};
 
-		$scope.cargar = function(factura){
-			$scope.verDetalle = factura;
-		};
-
 	});
 
 }
