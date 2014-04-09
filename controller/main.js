@@ -123,6 +123,14 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/control.html",
 			controller: controlCtrl
 		})
+		.state('cfacturas', {
+			url: "/cfacturas",
+			templateUrl: "view/cfacturas.html",
+			controller: cfacturasCtrl
+		})
+		.state('cfacturas.result', {
+			templateUrl: "view/cfacturas.result.html"
+		})
 		.state('gates', {
 			url: "/gates",
 			templateUrl: "view/gates.html",
@@ -145,14 +153,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('invoicesgates', {
 			templateUrl: "view/invoices.html"
 		})
-		.state('correlativo', {
-			url: "/correlatividad",
-			templateUrl: "view/correlatividad.html",
-			controller: cfacturasCtrl
-		})
-		.state('correlativo.result', {
-			templateUrl: "view/correlatividad.result.html"
-		})
 		.state('cdiario', {
 			url: "/controldia",
 			templateUrl: "view/cdiario.html",
@@ -167,14 +167,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					templateUrl: "view/cdiario.result2.html"
 				}
 			}
-		})
-		.state('cfacturas', {
-			url: "/cfacturas",
-			templateUrl: "view/cfacturas.html",
-			controller: cfacturasCtrl
-		})
-		.state('cfacturas.result', {
-			templateUrl: "view/cfacturas.result.html"
 		})
 		.state('changepass', {
 			url: "/cambiarpass",
