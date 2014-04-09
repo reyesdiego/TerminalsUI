@@ -17,7 +17,6 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	$scope.maxSize = 5;
 
 	priceFactory.getMatchPrices(loginService.getInfo().terminal, function (data){
-		console.log(data);
 		$scope.pricelist = data;
 		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 
@@ -42,13 +41,17 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 				$scope.nuevoMatch = { codes:[{
 											terminal: loginService.getInfo().terminal,
 											codes: []}],
-									id: price.id
+									id: price.id,
+									flagGuardar: true,
+									claseFila: "success"
 									};
 				$scope.nuevoMatch.codes[0].codes.push(price.new);
 				price.match = $scope.nuevoMatch;
 			} else {
 				if (!price.match.codes[0].codes.contains(price.new) && !(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
 					price.match.codes[0].codes.push(price.new);
+					price.match.flagGuardar = true;
+					price.match.claseFila = "success";
 				}
 			}
 			$scope.flagCambios = true;
@@ -58,6 +61,8 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 		$scope.borrar = function(price, codigo){
 			var pos = price.match.codes[0].codes.indexOf(codigo);
 			pos > -1 && price.match.codes[0].codes.splice( pos, 1 );
+			price.match.claseFila = "warning";
+			price.match.flagGuardar = true;
 			$scope.flagCambios = true;
 		}
 
@@ -75,14 +80,14 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 			$scope.match = [];
 			var prices = $scope.filteredPrices;
 			prices.forEach(function(item){
-				if (item.match != null){
-					if (item.match.codes[0].codes.length>0){
-						item.match._id = item.match.id;
-						$scope.match.push(item.match);
-					}
+				if (item.match != null && item.match.flagGuardar){
+					item.match._id = item.match.id;
+					$scope.match.push(item.match);
 				}
 			});
-			if ($scope.match.length > 0 && $scope.flagCambios){
+			if ($scope.flagCambios){
+				console.log("manda a guardar");
+				console.log($scope.match);
 				priceFactory.addMatchPrice($scope.match, function(datos){
 					$scope.flagGuardado = false;
 					$timeout(function(){

@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="col-lg-11 well">
-			<div class="panel {{ cartel }}">
+			<div class="panel {{ cartel[0] }}">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{ titulo[0] }}</h3>
 				</div>
@@ -30,35 +30,78 @@
 		</div>
 
 		<div class="col-lg-11 well">
-			<div class="panel {{ cartel }}">
+			<div class="panel {{ cartel[1] }}">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{ titulo[1] }}</h3>
 				</div>
 				<div class="panel-body">
 					<p>{{ mensaje[1] }}</p>
-					<p>{{ faltantes }}</p>
+					<p>{{ codigosFaltantes }}</p>
 				</div>
 			</div>
+
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+				<tr>
+					<th>Comprobante</th>
+					<th>Razon Social</th>
+					<th>Fecha</th>
+					<th>Importe Total</th>
+					<th>Detalles</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="factura in facturasRotas">
+					<td>{{ invoice.nroComprob }}</td>
+					<td>{{ invoice.razon }}</td>
+					<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+					<td>${{ invoice.importe.total }}</td>
+					<td><button ui-sref="invoices.result" class="btn btn-primary" type="button" ng-click="cargar(invoice); $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>
+				</tr>
+				</tbody>
+			</table>
+
 		</div>
 
 		<div class="row">
 			<div class="col-lg-11">
 				<div class="xpage-header">
-					<h1>Control de tasa a las cargas</h1>
+					<h1>Control de Tasa a las cargas</h1>
 				</div>
 			</div>
 		</div>
 
 		<div class="col-lg-11 well">
-			<div class="panel {{ cartel }}">
+			<div class="panel {{ cartel[2] }}">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{ titulo[2] }}</h3>
 				</div>
 				<div class="panel-body">
 					<p>{{ mensaje[2] }}</p>
-					<p>{{ faltantes }}</p>
 				</div>
 			</div>
+
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+				<tr>
+					<th>Comprobante</th>
+					<th>Razon Social</th>
+					<th>Fecha</th>
+					<th>Importe Total</th>
+					<th>Detalles</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="factura in sinTasaCargas">
+					<td>{{ invoice.nroComprob }}</td>
+					<td>{{ invoice.razon }}</td>
+					<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+					<td>${{ invoice.importe.total }}</td>
+					<td><button ui-sref="invoices.result" class="btn btn-primary" type="button" ng-click="cargar(invoice); $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>
+				</tr>
+				</tbody>
+			</table>
+
 		</div>
 
 		<div class="col-lg-11">
