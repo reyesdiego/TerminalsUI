@@ -58,8 +58,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 			$scope.control = 0;
 			$scope.facturasFaltantes = [];
 			$scope.codigosFaltantes = [];
-			$scope.facturasRotas = [];
-			$scope.mensaje = ["No se hallaron anormalidades.", "Todos los códigos se encuentran asociados correctamente.", "Todas las facturas tienen alguna tarifa de tasa a las cargas."];
+			$scope.mensaje = ["No se hallaron anormalidades.", "Todos los códigos se encuentran asociados correctamente.", "Todas las facturas presentan tasas a las cargas."];
 			$scope.cartel = ["panel-success", "panel-success", "panel-success"];
 			$scope.titulo = ["Éxito", "Éxito", "Éxito"];
 
