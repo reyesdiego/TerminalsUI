@@ -69,11 +69,8 @@ function gatesCtrl($scope, controlPanelFactory, invoiceFactory){
 	};
 
 	$scope.cargar = function(){
-		var fechaDesde = new Date($scope.fechaDesde);
-		var fechaD = fechaDesde.getFullYear() + '-' + fechaDesde.getMonth() + '-' + fechaDesde.getDate();
-		var fechaHasta = new Date($scope.fechaHasta);
-		var fechaH = fechaHasta.getFullYear() + '-' + fechaHasta.getMonth() + '-' + fechaHasta.getDate();
-		var datos = {contenedor : $scope.contenedor, fechaDesde : fechaD, fechaHasta : fechaH};
+		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
+
 		controlPanelFactory.getGateByDayOrContainer(datos, function(data){
 			$scope.gatesAux = data;
 			$scope.gatesAux = $scope.gatesAux.sort(function(a,b){ // Ordena el array
