@@ -2,7 +2,7 @@
  * Created by leo on 31/03/14.
  */
 
-function gatesCtrl($scope, controlPanelFactory){
+function gatesCtrl($scope, controlPanelFactory, invoiceFactory){
 	'use strict';
 	$scope.maxSize = 5;
 	$scope.control = {};
@@ -88,4 +88,11 @@ function gatesCtrl($scope, controlPanelFactory){
 		});
 
 	};
+
+	$scope.ver = function(container){
+		$scope.containerHide = !$scope.containerHide;
+		invoiceFactory.getInvoiceByContainer(container, function(data){
+			$scope.invoices = data;
+		})
+	}
 }

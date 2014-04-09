@@ -135,13 +135,23 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				}
 			}
 		})
-		.state('cfacturas', {
-			url: "/cfacturas",
-			templateUrl: "view/cfacturas.html",
+		.state('gates.result.container', {
+			views: {
+				"fecha1" : {
+					templateUrl: "view/gates.result.container.html"
+				}
+			}
+		})
+		.state('invoicesgates', {
+			templateUrl: "view/invoices.html"
+		})
+		.state('correlativo', {
+			url: "/correlatividad",
+			templateUrl: "view/correlatividad.html",
 			controller: cfacturasCtrl
 		})
-		.state('cfacturas.result', {
-			templateUrl: "view/cfacturas.result.html"
+		.state('correlativo.result', {
+			templateUrl: "view/correlatividad.result.html"
 		})
 		.state('cdiario', {
 			url: "/controldia",
@@ -158,6 +168,14 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				}
 			}
 		})
+		.state('cfacturas', {
+			url: "/cfacturas",
+			templateUrl: "view/cfacturas.html",
+			controller: cfacturasCtrl
+		})
+		.state('cfacturas.result', {
+			templateUrl: "view/cfacturas.result.html"
+		})
 		.state('changepass', {
 			url: "/cambiarpass",
 			templateUrl: "view/newpass.html",
@@ -171,8 +189,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 myapp.run(function($rootScope, $state, loginService){
 	"use strict";
-	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches', 'control', 'cfacturas', 'cfacturas.result', 'gates', 'gates.result'];
-	var rutasControl = ['tarifario', 'control', 'cfacturas', 'cfacturas.result', 'gates', 'gates.result', 'cdiario'];
+	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches', 'control', 'gates', 'gates.result', 'gates.result.container', 'invoicesgates'];
+	var rutasControl = ['tarifario', 'control', 'correlativo', 'cdiario'];
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){

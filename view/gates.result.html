@@ -1,7 +1,9 @@
-<div class="container row">
+<div class="container row" ng-init="containerHide = false" ng-hide="containerHide">
 	<div class="col-lg-11" ng-repeat="gate in gates">
 		<div class="control-label row">
-			<button ng-click="fechaHide = !fechaHide" class="btn btn-default"><span><strong>D&iacute;a: {{ gate[0].gateTimestamp | date: 'dd/MM/yyyy' }}</strong></span></button>
+			<button ng-click="fechaHide = !fechaHide" class="btn btn-default">
+				<span><strong>D&iacute;a: {{ gate[0].gateTimestamp | date: 'dd/MM/yyyy' }}</strong></span>
+			</button>
 		</div>
 		<div ng-init="fechaHide = false" ng-hide="fechaHide" class="row">
 			<table class="table table-bordered table-hover" style="text-align: center">
@@ -27,9 +29,12 @@
 					<td>{{ gat.turnoInicio | date: 'HH:mm' }}</td>
 					<td>{{ gat.turnoFin | date: 'HH:mm' }}</td>
 					<td>{{ gat.mov }}</td>
-					<td><button class="btn btn-primary" ui-sref="">Ver</button></td>
+					<td><button class="btn btn-primary" ng-click="ver(gat.contenedor)" ui-sref="invoicesgates">Ver</button></td>
 				</tr>
 			</table>
 		</div>
 	</div>
+</div>
+<div ng-hide="!containerHide">
+	<div ui-view></div>
 </div>
