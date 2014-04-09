@@ -23,15 +23,21 @@
 				<div class="form-group">
 					<label for="fechaHasta">Fecha Hasta</label>
 					<p class="input-group">
-						<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="fechaHasta"  is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+						<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="fechaHasta"  is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" required="true" />
 						<span class="input-group-btn">
 							<button class="btn btn-default" ng-click="open($event, 'fechaHasta')"><i class="glyphicon glyphicon-calendar"></i></button>
 						</span>
 					</p>
 				</div>
 				<div class="form-group">
+					<label for="contenedor">Contenedor</label>
+					<p class="input-group">
+						<input type="text" class="form-control" id="contenedor" ng-model="contenedor">
+					</p>
+				</div>
+				<div class="form-group">
 					<button class="btn btn-default" ui-sref="control">Volver</button>
-					<button class="btn btn-primary" ui-sref="gates.result" ng-click="cargar(fecha1); onOff1 = true">Cargar</button>
+					<button class="btn btn-primary" ui-sref="gates.result" ng-click="cargar(fecha1); onOff1 = !onOff1">Cargar</button>
 				</div>
 			</div>
 		</div>
@@ -42,7 +48,7 @@
 			<div class="well">
 				<div ui-view="fecha1"></div>
 				<div>
-					<button class="btn btn-primary" ng-click="onOff1 = false">Volver</button>
+					<button class="btn btn-primary" ng-click="onOff1 = !onOff1; containerHide = false">Volver</button>
 				</div>
 			</div>
 		</div>

@@ -7,7 +7,10 @@ function gatesCtrl($scope, controlPanelFactory, invoiceFactory){
 	$scope.maxSize = 5;
 	$scope.control = {};
 	$scope.gates = {};
+	$scope.itemsPerPage = 10;
+	$scope.currentPage = 1;
 	//$scope.fecha = {};
+	var page = {skip:0, limit: $scope.itemsPerPage};
 
 	$scope.today = function() {
 		$scope.fechaDesde = new Date();
@@ -66,8 +69,12 @@ function gatesCtrl($scope, controlPanelFactory, invoiceFactory){
 	};
 
 	$scope.cargar = function(){
-		var fecha = {desde:$scope.fechaDesde, hasta: $scope.fechaHasta};
-		controlPanelFactory.getGateByDay(fecha, function(data){
+		var fechaDesde = new Date($scope.fechaDesde);
+		var fechaD = fechaDesde.getFullYear() + '-' + fechaDesde.getMonth() + '-' + fechaDesde.getDate();
+		var fechaHasta = new Date($scope.fechaHasta);
+		var fechaH = fechaHasta.getFullYear() + '-' + fechaHasta.getMonth() + '-' + fechaHasta.getDate();
+		var datos = {contenedor : $scope.contenedor, fechaDesde : fechaD, fechaHasta : fechaH};
+		controlPanelFactory.getGateByDayOrContainer(datos, function(data){
 			$scope.gatesAux = data;
 			$scope.gatesAux = $scope.gatesAux.sort(function(a,b){ // Ordena el array
 				return a['gateTimestamp'] > b['gateTimestamp'];
@@ -84,15 +91,35 @@ function gatesCtrl($scope, controlPanelFactory, invoiceFactory){
 				$scope.gates[i].push(datos);
 				fechaAux = new Date(datos['gateTimestamp']);
 			});
-			$scope.fecha = fecha.desde;
 		});
 
 	};
 
 	$scope.ver = function(container){
 		$scope.containerHide = !$scope.containerHide;
-		invoiceFactory.getInvoiceByContainer(container, function(data){
+
+		invoiceFactory.getInvoiceByContainer(container, page, function(data){
 			$scope.invoices = data;
-		})
-	}
+			$scope.totalItems = $scope.invoices.totalCount;
+
+			$scope.$watch('currentPage + itemsPerPage', function(){
+				var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+				page.skip = skip;
+				invoiceFactory.getInvoiceByContainer(container,page, function(data){
+					$scope.invoices = data;
+				})
+				$scope.filtro = '';
+			});
+
+			console.log($scope.invoices);
+		});
+	};
+
+	$scope.setPage = function (pageNo){
+		$scope.currentPage = pageNo;
+	};
+
+	$scope.numPages = function (){
+		return Math.ceil($scope.totalItems / $scope.itemsPerPage);
+	};
 }
