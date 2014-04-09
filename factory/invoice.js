@@ -19,14 +19,14 @@ myapp.factory('invoiceFactory', function($http, loginService){
 			});
 	};
 
-	factory.getInvoiceByContainer = function(container, callback) {
-		//var inserturl = serverUrl + '/invoicescontainer/' + container; // El que se va a usar
-		var inserturl = 'mocks/Invoices.json';
+	factory.getInvoiceByContainer = function(container, page, callback) {
+		//var inserturl = serverUrl + '/invoices?contenedor=' + container; // El que se va a usar
+		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit;
 		$http({
 			method: 'GET',
-			url: inserturl//,
-			//headers:
-			//{token: loginService.getToken()}
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
 		}).success(function(data) {
 			callback(data);
 		}).error(function(response) {

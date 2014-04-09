@@ -14,31 +14,27 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	invoiceFactory.getInvoice(page, function(data){
 		console.log(data);
 		$scope.invoices = data;
-
 		$scope.totalItems = $scope.invoices.totalCount;
-
-		$scope.setPage = function (pageNo){
-			$scope.currentPage = pageNo;
-		};
-
-		$scope.numPages = function (){
-			return Math.ceil($scope.totalItems / $scope.itemsPerPage);
-		};
-
-		$scope.$watch('currentPage + itemsPerPage', function(){
-			var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-			page.skip = skip;
-			invoiceFactory.getInvoice(page, function(data){
-				$scope.invoices = data;
-			})
-			$scope.filtro = '';
-		});
-
-		// init the filtered items
-		$scope.search = function (){
-			//$scope.filteredInvoices = $scope.invoices;
-		};
-
 	});
 
+	$scope.setPage = function (pageNo){
+		$scope.currentPage = pageNo;
+	};
+
+	$scope.numPages = function (){
+		return Math.ceil($scope.totalItems / $scope.itemsPerPage);
+	};
+
+	$scope.$watch('currentPage + itemsPerPage', function(){
+		var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		page.skip = skip;
+		invoiceFactory.getInvoice(page, function(data){
+			$scope.invoices = data;
+		});
+		$scope.filtro = '';
+	});
+
+	$scope.search = function (){
+		//$scope.filteredInvoices = $scope.invoices;
+	};
 }
