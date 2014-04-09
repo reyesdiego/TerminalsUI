@@ -148,7 +148,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('correlativo', {
 			url: "/correlatividad",
 			templateUrl: "view/correlatividad.html",
-			controller: correlativoCtrl
+			controller: cfacturasCtrl
 		})
 		.state('correlativo.result', {
 			templateUrl: "view/correlatividad.result.html"
