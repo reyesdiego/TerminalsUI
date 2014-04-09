@@ -83,11 +83,11 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 				if (item.match != null && item.match.flagGuardar){
 					item.match._id = item.match.id;
 					$scope.match.push(item.match);
+					item.match.flagGuardar = false;
+					item.match.claseFila = "";
 				}
 			});
 			if ($scope.flagCambios){
-				console.log("manda a guardar");
-				console.log($scope.match);
 				priceFactory.addMatchPrice($scope.match, function(datos){
 					$scope.flagGuardado = false;
 					$timeout(function(){
