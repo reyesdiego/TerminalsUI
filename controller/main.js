@@ -150,9 +150,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				}
 			}
 		})
-		.state('invoicesgates', {
-			templateUrl: "view/invoices.html"
-		})
 		.state('correlativo', {
 			url: "/correlatividad",
 			templateUrl: "view/correlatividad.html",

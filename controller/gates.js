@@ -72,22 +72,26 @@ function gatesCtrl($scope, controlPanelFactory, invoiceFactory){
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
 
 		controlPanelFactory.getGateByDayOrContainer(datos, function(data){
-			$scope.gatesAux = data;
-			$scope.gatesAux = $scope.gatesAux.sort(function(a,b){ // Ordena el array
-				return a['gateTimestamp'] > b['gateTimestamp'];
-			});
-			var i = 0;
-			var fechaAux = new Date($scope.gatesAux[i]['gateTimestamp']);
-			$scope.gates[i] = new Array();
-			$scope.gatesAux.forEach(function(datos){
-				var fechaDatos = new Date(datos['gateTimestamp']);
-				if(fechaAux.getFullYear() != fechaDatos.getFullYear() || fechaAux.getMonth() != fechaDatos.getMonth() || fechaAux.getDate() != fechaDatos.getDate()){
-					i++;
-					$scope.gates[i] = new Array();
-				}
-				$scope.gates[i].push(datos);
-				fechaAux = new Date(datos['gateTimestamp']);
-			});
+			if(data.length > 1){
+				$scope.gatesAux = data;
+				$scope.gatesAux = $scope.gatesAux.sort(function(a,b){ // Ordena el array
+					return a['gateTimestamp'] > b['gateTimestamp'];
+				});
+				var i = 0;
+				var fechaAux = new Date($scope.gatesAux[i]['gateTimestamp']);
+				$scope.gates[i] = new Array();
+				$scope.gatesAux.forEach(function(datos){
+					var fechaDatos = new Date(datos['gateTimestamp']);
+					if(fechaAux.getFullYear() != fechaDatos.getFullYear() || fechaAux.getMonth() != fechaDatos.getMonth() || fechaAux.getDate() != fechaDatos.getDate()){
+						i++;
+						$scope.gates[i] = new Array();
+					}
+					$scope.gates[i].push(datos);
+					fechaAux = new Date(datos['gateTimestamp']);
+				});
+			} else{
+				console.log(data.length);
+			}
 		});
 
 	};
