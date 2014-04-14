@@ -29,12 +29,12 @@
 					<td>{{ gat.turnoInicio | date: 'HH:mm' }}</td>
 					<td>{{ gat.turnoFin | date: 'HH:mm' }}</td>
 					<td>{{ gat.mov }}</td>
-					<td><button class="btn btn-primary" ng-click="ver(gat.contenedor)" ui-sref="gates.result.invoicesgates">Ver</button></td>
+					<td><button class="btn btn-primary" ng-click="ver(gat.contenedor)" ui-sref=".invoices">Ver</button></td>
 				</tr>
 			</table>
 		</div>
 	</div>
 </div>
 <div ng-hide="!containerHide">
-	<div ui-view="invoicesGates"></div>
+	<div ui-view></div>
 </div>

@@ -137,21 +137,13 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			controller: gatesCtrl
 		})
 		.state('gates.result', {
-			views: {
-				"fecha1" : {
-					templateUrl: "view/gates.result.html"
-				}
-			}
+			templateUrl: "view/gates.result.html"
 		})
-		.state('gates.result.invoicesgates', {
-			views: {
-				"invoicesGates" : {
-					templateUrl: "view/invoices.html"
-				}
-			}
-		})
-		.state('invoicesgates', {
+		.state('gates.result.invoices', {
 			templateUrl: "view/invoices.html"
+		})
+		.state('gates.result.invoices.result', {
+			templateUrl: "view/invoices.result.html"
 		})
 		.state('correlativo', {
 			url: "/correlatividad",
@@ -189,7 +181,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 myapp.run(function($rootScope, $state, loginService){
 	"use strict";
-	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches', 'control', 'cfacturas', 'cfacturas.result', 'gates', 'gates.result', 'gates.result.container', 'gates.result.invoicesgates'];
+	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches', 'control', 'cfacturas', 'cfacturas.result', 'gates', 'gates.result', 'gates.result.container', 'gates.result.invoices', 'gates.result.invoices.result'];
 	var rutasControl = ['tarifario', 'control', 'correlativo', 'cdiario'];
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 

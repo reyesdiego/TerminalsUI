@@ -13,10 +13,10 @@ myapp.factory('invoiceFactory', function($http, loginService){
 			{token: loginService.getToken()}
 		}).success(function(data) {
 			callback(data);
-			}).error(function(response) {
-				console.log(response);
-				console.log("Error al cargar la lista Invoice");
-			});
+		}).error(function(response) {
+			console.log(response);
+			console.log("Error al cargar la lista Invoice");
+		});
 	};
 
 	factory.getInvoiceByContainer = function(container, page, callback) {
@@ -45,9 +45,20 @@ myapp.factory('invoiceFactory', function($http, loginService){
 			});
 	};
 
-	factory.searchInvoice = function(page, param, terminal, callback){
-
-	}
+	factory.searchInvoice = function(invoice, callback){
+		var inserturl = serverUrl + '/invoices?search=' + invoice; // El que se va a usar
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function(data) {
+			callback(data);
+		}).error(function(response) {
+			console.log(response);
+			console.log("Error al buscar Invoice");
+		});
+	};
 
 	return factory;
 

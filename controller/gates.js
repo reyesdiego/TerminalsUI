@@ -2,7 +2,7 @@
  * Created by leo on 31/03/14.
  */
 
-function gatesCtrl($scope, controlPanelFactory, invoiceFactory){
+function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	'use strict';
 	$scope.maxSize = 5;
 	$scope.control = {};
@@ -71,7 +71,7 @@ function gatesCtrl($scope, controlPanelFactory, invoiceFactory){
 	$scope.cargar = function(){
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
 
-		controlPanelFactory.getGateByDayOrContainer(datos, function(data){
+		gatesFactory.getGateByDayOrContainer(datos, function(data){
 			if(data.length > 1){
 				$scope.gatesAux = data;
 				$scope.gatesAux = $scope.gatesAux.sort(function(a,b){ // Ordena el array
