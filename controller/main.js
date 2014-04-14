@@ -153,14 +153,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('invoicesgates', {
 			templateUrl: "view/invoices.html"
 		})
-		.state('correlativo', {
-			url: "/correlatividad",
-			templateUrl: "view/correlatividad.html",
-			controller: cfacturasCtrl
-		})
-		.state('correlativo.result', {
-			templateUrl: "view/correlatividad.result.html"
-		})
 		.state('cdiario', {
 			url: "/controldia",
 			templateUrl: "view/cdiario.html",
