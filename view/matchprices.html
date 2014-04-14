@@ -12,7 +12,7 @@
 			<div class="col-lg-11">
 				<div class="alert alert-dismissable alert-success">
 					<button type="button" class="close" ng-click="esconderAlerta()">×</button>
-					<strong>Éxito</strong> - Se han guardado los códigos de la página anterior.</a>.
+					<strong>Éxito</strong> - Se han guardado los códigos de la página anterior.
 				</div>
 			</div>
 		</div>
@@ -88,14 +88,27 @@
 							<div class="form-group">
 								<label for="inputUnidad" class="col-lg-2 control-label">Unidad</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" ng-model="unidad" id="inputUnidad" placeholder="Ingresar unidad" ng-required="true">
+									<select class="form-control" id="inputUnidad" ng-model="unidad" ng-required="true">
+										<option value="CONTAINER">Contenedor</option>
+										<option value="TN">tn</option>
+										<option value="BOX">cajón</option>
+									</select>
 								</div>
+								<!--<div class="col-lg-10">
+									<input type="text" class="form-control" ng-model="unidad" id="inputUnidad" placeholder="Ingresar unidad" ng-required="true">
+								</div>-->
 							</div>
 							<div class="form-group">
 								<label for="inputMoneda" class="col-lg-2 control-label">Moneda</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" ng-model="moneda" id="inputMoneda" placeholder="Ingresar moneda" ng-required="true">
+									<select class="form-control" id="inputMoneda" ng-model="moneda" ng-required="true">
+										<option value="DOL">U$S</option>
+										<option value="PES">$ARG</option>
+									</select>
 								</div>
+								<!--<div class="col-lg-10">
+									<input type="text" class="form-control" ng-model="moneda" id="inputMoneda" placeholder="Ingresar moneda" ng-required="true">
+								</div>-->
 							</div>
 							<div class="form-group">
 								<label for="inputPrecio" class="col-lg-2 control-label">Precio</label>
