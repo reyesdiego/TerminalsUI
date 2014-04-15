@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', function($http){
+myapp.factory('priceFactory', function($http, loginService){
 	var factory = {};
 
 	factory.getPrice = function(token, callback) {
@@ -10,7 +10,7 @@ myapp.factory('priceFactory', function($http){
 			method: 'GET',
 			url: inserturl,
 			headers: {
-				token: token
+				token: loginService.getToken()
 			}
 		}).success(function (data){
 			callback(data);
@@ -35,7 +35,7 @@ myapp.factory('priceFactory', function($http){
 			method: "POST",
 			url: inserturl,
 			data: JSON.stringify(data),
-			headers:{"Content-Type":"application/json"}
+			headers:{"Content-Type":"application/json", token: loginService.getToken()}
 		}).success(function (response) {
 				console.log("success");
 				callback(response);
@@ -49,7 +49,10 @@ myapp.factory('priceFactory', function($http){
 		$http({
 			method: 'POST',
 			url: inserturl,
-			data: data
+			data: data,
+			headers:{
+				token: loginService.getToken()
+			}
 		}).
 			success(function(response) {
 				console.log("success");
