@@ -5,11 +5,9 @@
 function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	'use strict';
 	$scope.maxSize = 5;
-	$scope.control = {};
 	$scope.gates = {};
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
-	//$scope.fecha = {};
 	var page = {skip:0, limit: $scope.itemsPerPage};
 
 	$scope.today = function() {
@@ -70,31 +68,28 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 
 	$scope.cargar = function(){
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
-
-		gatesFactory.getGateByDayOrContainer(datos, function(data){
-			if(data.length > 1){
-				$scope.gatesAux = data;
-				$scope.gatesAux = $scope.gatesAux.sort(function(a,b){ // Ordena el array
+		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
+			$scope.gates = data;
+			$scope.totalItems = $scope.gates.totalCount;
+			/*if(data.length > 1){
+				$scope.gates = $scope.gates.sort(function(a,b){ // Ordena el array
 					return a['gateTimestamp'] > b['gateTimestamp'];
-				});
-				var i = 0;
-				var fechaAux = new Date($scope.gatesAux[i]['gateTimestamp']);
-				$scope.gates[i] = new Array();
-				$scope.gatesAux.forEach(function(datos){
-					var fechaDatos = new Date(datos['gateTimestamp']);
-					if(fechaAux.getFullYear() != fechaDatos.getFullYear() || fechaAux.getMonth() != fechaDatos.getMonth() || fechaAux.getDate() != fechaDatos.getDate()){
-						i++;
-						$scope.gates[i] = new Array();
-					}
-					$scope.gates[i].push(datos);
-					fechaAux = new Date(datos['gateTimestamp']);
 				});
 			} else{
 				console.log(data.length);
-			}
+			}*/
 		});
 
 	};
+
+	$scope.$watch('currentPage + itemsPerPage', function(){
+		var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		page.skip = skip;
+		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
+		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
+			$scope.gates = data;
+		});
+	});
 
 	$scope.ver = function(container){
 		$scope.containerHide = !$scope.containerHide;

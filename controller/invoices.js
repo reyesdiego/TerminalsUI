@@ -4,7 +4,6 @@
 
 function invoicesCtrl ($scope, invoiceFactory) {
 	'use strict';
-	$scope.filteredInvoices = []
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
 	$scope.maxSize = 5;

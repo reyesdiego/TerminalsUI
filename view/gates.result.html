@@ -1,13 +1,9 @@
 <div class="container row" ng-hide="containerHide">
-	<div class="col-lg-11" ng-repeat="gate in gates">
-		<div class="control-label row">
-			<button ng-click="fechaHide = !fechaHide" class="btn btn-default">
-				<span><strong>D&iacute;a: {{ gate[0].gateTimestamp | date: 'dd/MM/yyyy' }}</strong></span>
-			</button>
-		</div>
-		<div ng-init="fechaHide = false" ng-hide="fechaHide" class="row">
+	<div class="col-lg-11">
+		<div class="row">
 			<table class="table table-bordered table-hover" style="text-align: center">
 				<tr>
+					<th style="text-align: center">Fecha</th>
 					<th style="text-align: center">Buque</th>
 					<th style="text-align: center">Viaje</th>
 					<th style="text-align: center">Contenedor</th>
@@ -19,19 +15,21 @@
 					<th style="text-align: center">Movimiento</th>
 					<th style="text-align: center">Facturas</th>
 				</tr>
-				<tr ng-repeat="gat in gate">
-					<td>{{ gat.buque }}</td>
-					<td>{{ gat.viaje }}</td>
-					<td>{{ gat.contenedor }}</td>
-					<td>{{ gat.patenteCamion }}</td>
-					<td>{{ gat.tipo }}</td>
-					<td ng-init="colorH = colorHorario(gat)" ng-style="{'color': colorH}">{{ gat.gateTimestamp | date: 'HH:mm' }}</td>
-					<td>{{ gat.turnoInicio | date: 'HH:mm' }}</td>
-					<td>{{ gat.turnoFin | date: 'HH:mm' }}</td>
-					<td>{{ gat.mov }}</td>
-					<td><button class="btn btn-primary" ng-click="ver(gat.contenedor)" ui-sref=".invoices">Ver</button></td>
+				<tr ng-repeat="gate in gates">
+					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ gate.buque }}</td>
+					<td>{{ gate.viaje }}</td>
+					<td>{{ gate.contenedor }}</td>
+					<td>{{ gate.patenteCamion }}</td>
+					<td>{{ gate.tipo }}</td>
+					<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
+					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
+					<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
+					<td>{{ gate.mov }}</td>
+					<td><button class="btn btn-primary" ng-click="ver(gate.contenedor)" ui-sref=".invoices">Ver</button></td>
 				</tr>
 			</table>
+			<a href="" ><pagination href="" boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" page="currentPage" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></a>
 		</div>
 	</div>
 </div>

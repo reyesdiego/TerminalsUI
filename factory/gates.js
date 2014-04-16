@@ -4,8 +4,9 @@
 myapp.factory('gatesFactory', function($http){
 	var factory = {};
 
-	factory.getGateByDayOrContainer = function(datos, callback){
-		var inserturl = serverUrl + '/gates?fechaDesde=' + datos.fechaDesde + '&fechaHasta=' + datos.fechaHasta; // El que realmente se va a usar
+	factory.getGateByDayOrContainer = function(datos, page, callback){
+		var inserturl = serverUrl + '/gates/' + page.skip + '/' + page.limit;
+		inserturl = inserturl + '?fechaDesde=' + datos.fechaDesde + '&fechaHasta=' + datos.fechaHasta;
 		if(angular.isDefined(datos.contenedor)){
 			inserturl = inserturl + '&contenedor=' + datos.contenedor;
 		}
