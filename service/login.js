@@ -16,11 +16,17 @@ myapp.service('loginService', function () {
 		setToken: function (value) {
 			sessionStorage.setItem('token', value);
 		},
+		setType: function (value) {
+			sessionStorage.setItem('type', value);
+		},
 		getType: function () {
 			return sessionStorage.getItem('type');
 		},
-		setType: function (value) {
-			sessionStorage.setItem('type', value);
+		setAcceso: function(value) {
+			sessionStorage.acceso = JSON.stringify(value);
+		},
+		getAcceso: function() {
+			return JSON.parse(sessionStorage.acceso);
 		},
 		setInfo: function (value) {
 			sessionStorage.userData = JSON.stringify(value);

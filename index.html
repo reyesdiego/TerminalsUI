@@ -60,11 +60,11 @@
 		<div class="navbar-collapse collapse" id="navbar-main">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a ui-sref="login">Ingreso</a></li>
-				<li ng-hide="menuTerminal"><a ui-sref="tarifario">Tarifario</a></li>
-				<li ng-hide="menuTerminal"><a ui-sref="matches">Asociar</a></li>
-				<li ng-hide="menuTerminal"><a ui-sref="invoices">Facturas</a></li>
-				<li ng-hide="menuTerminal"><a ui-sref="control">Control</a></li>
-				<li ng-hide="menuTerminal" ng-click="salir()"><a href="">Salir</a></li>
+				<li ng-show="acceso=='terminal'"><a ui-sref="tarifario">Tarifario</a></li>
+				<li ng-show="acceso=='terminal'"><a ui-sref="matches">Asociar</a></li>
+				<li ng-show="acceso=='terminal'"><a ui-sref="invoices">Facturas</a></li>
+				<li ng-show="acceso=='control'"><a ui-sref="control">Control</a></li>
+				<li ng-show="acceso!=''" ng-click="salir()"><a href="">Salir</a></li>
 			</ul>
 		</div>
 	</div>

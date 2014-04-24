@@ -4,23 +4,17 @@
 
 function navigationCtrl($scope, $rootScope, $state, loginService){
 	"use strict";
-	$rootScope.esTerminal = false;
-	$rootScope.esControl = false;
+	$rootScope.esUsuario = '';
 
-	$scope.menuTerminal = !$rootScope.esTerminal;
-	$scope.menuControl = !$rootScope.esControl;
+	$scope.acceso = '';
 
-	if (loginService.getStatus()){
-		//Por ahora solo se tienen en cuenta las terminales
-		$rootScope.esTerminal = true;
-	}
+	$scope.$watch('esUsuario', function() {
+		$scope.acceso = $rootScope.esUsuario;
 
-	$scope.$watch('esTerminal', function() {
-		$scope.menuTerminal = !$rootScope.esTerminal;
 	});
 
 	$scope.salir = function(){
-		$rootScope.esTerminal = false;
+		$rootScope.esUsuario = '';
 		$state.transitionTo('login');
 		loginService.unsetLogin();
 	}

@@ -184,27 +184,14 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 myapp.run(function($rootScope, $state, loginService){
 	"use strict";
-	var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'invoices.search', 'matches', 'control', 'cfacturas', 'cfacturas.result', 'gates', 'gates.result', 'gates.result.container', 'gates.result.invoices', 'gates.result.invoices.result'];
-	//var rutasTerminales = ['tarifario', 'invoices', 'invoices.result', 'matches']; // El que se utiliza en producción
-	var rutasControl = ['tarifario', 'control', 'correlativo', 'cdiario'];
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if (!in_array(toState.name, rutasComunes)){
 			if (loginService.getStatus()){
-				switch (loginService.getType()){
-					case 'terminal':
-						if(!in_array(toState.name, rutasTerminales)){
-							event.preventDefault();
-							$state.transitionTo('forbidden');
-						}
-						break;
-					case 'control':
-						if(!in_array(toState.name, rutasControl)){
-							event.preventDefault();
-							$state.transitionTo('forbidden');
-						}
-						break;
+				if(!in_array(toState.name, loginService.getAcceso())){
+					event.preventDefault();
+					$state.transitionTo('forbidden');
 				}
 			} else {
 				event.preventDefault();
