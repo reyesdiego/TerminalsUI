@@ -10,6 +10,7 @@ function loginCtrl($scope, $rootScope, userFactory, $state, $dialogs, loginServi
 				$rootScope.esTerminal = false;
 				$dialogs.error('Los datos de inicio de sesión son incorrectos');
 			} else {
+				console.log(data);
 				loginService.setInfo(data);
 				loginService.setStatus(true);
 				loginService.setType(data.role);
@@ -21,5 +22,4 @@ function loginCtrl($scope, $rootScope, userFactory, $state, $dialogs, loginServi
 			}
 		}
 	)}
-
 }

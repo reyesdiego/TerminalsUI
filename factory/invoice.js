@@ -35,7 +35,7 @@ myapp.factory('invoiceFactory', function($http, loginService){
 		});
 	};
 
-	factory.getByDate = function(desde, hasta, terminal, callback) {
+	factory.getByDate = function(desde, hasta, terminal, tipocomprob, callback) {
 		//Por ahora trabaja solo con un mock
 		$http.get('mocks/correlativo.json')
 			.success(function (data){
@@ -44,6 +44,16 @@ myapp.factory('invoiceFactory', function($http, loginService){
 				console.log("Error al cargar la lista PriceList")
 			});
 	};
+
+	factory.getSinTasaCargas = function(desde, hasta, terminal, callback){
+		"use strict";
+		$http.get('mocks/correlativo.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(){
+				console.log("Error al cargar la lista PriceList")
+			});
+	}
 
 	factory.searchInvoice = function(invoice, callback){
 		var inserturl = serverUrl + '/invoices?search=' + invoice; // El que se va a usar
