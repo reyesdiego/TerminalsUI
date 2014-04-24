@@ -11,7 +11,12 @@
 
 	<div class="row" ng-init="onOff = false" ng-hide="onOff">
 		<div class="col-lg-11">
-			<!--<input type="text" ng-model="filtro" ng-change="search()" class="form-control search-query" size="20" placeholder="Search">-->
+			<p class="input-group">
+				<input type="text" ng-model="filtro" class="form-control search-query" size="20" placeholder="Buscar">
+				<span class="input-group-btn">
+					<button ui-sref=".search" ng-click="search(filtro)" class="btn btn-primary">Buscar</button>
+				</span>
+			</p>
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
 				<tr>
@@ -28,7 +33,7 @@
 					<td>{{ invoice.razon }}</td>
 					<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 					<td>${{ invoice.importe.total }}</td>
-					<td><button ui-sref="invoices.result" class="btn btn-primary" type="button" ng-click="$parent.verDetalle = invoice; $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>
+					<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice; $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>
 				</tr>
 				</tbody>
 			</table>

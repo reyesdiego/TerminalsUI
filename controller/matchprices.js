@@ -112,8 +112,10 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 				"terminal": loginService.getInfo().terminal
 			};
 
+			console.log('Antes de entrar al factory de add price');
 			priceFactory.addPrice(formData, function(nuevoPrecio){
 
+				console.log('Entro');
 				var nuevoMatch = { codes:[{
 					terminal: loginService.getInfo().terminal,
 					codes: []}],
@@ -128,6 +130,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 				$scope.match.push(nuevoPrecio.match);
 
 				priceFactory.addMatchPrice($scope.match, function(trash){
+					console.log('entro al add match');
 					console.log(trash);
 					$scope.pricelist.push(nuevoPrecio);
 					$dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
