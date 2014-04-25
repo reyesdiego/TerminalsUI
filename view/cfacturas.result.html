@@ -1,67 +1,73 @@
 <!--<input type="text" ng-model="search" class="search-query" placeholder="Search">>-->
 
 	<div class="row" ng-hide="onOffResult">
-		<div class="row">
-			<div class="col-lg-11">
-				<div class="xpage-header">
-					<h1 id="forms">Control de correlatividad</h1>
-				</div>
-			</div>
-		</div>
 
-		<div class="col-lg-11 well">
-			<div class="panel {{ cartel[0] }}">
-				<div class="panel-heading">
-					<h3 class="panel-title">{{ titulo[0] }}</h3>
-				</div>
-				<div class="panel-body">
-					<p>{{ mensaje[0] }}</p>
-					<p>{{ faltantes }}</p>
-				</div>
-			</div>
-		</div>
+		<tabset>
+			<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
 
-		<div class="row">
-			<div class="col-lg-11">
-				<div class="xpage-header">
-					<h1>Control de códigos</h1>
+				<div class="row">
+					<div class="col-lg-11">
+						<div class="xpage-header">
+							<h1 id="forms">Control de correlatividad</h1>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
 
-		<div class="col-lg-11 well">
-			<div class="panel {{ cartel[1] }}">
-				<div class="panel-heading">
-					<h3 class="panel-title">{{ titulo[1] }}</h3>
+				<div class="col-lg-11 well">
+					<div class="panel {{ tab.cartelCorrelativo }}">
+						<div class="panel-heading">
+							<h3 class="panel-title">{{ tab.tituloCorrelativo }}</h3>
+						</div>
+						<div class="panel-body">
+							<p>{{ tab.mensajeCorrelativo }}</p>
+							<p>{{ tab.resultadoCorrelativo }}</p>
+						</div>
+					</div>
+					<!--<progressbar max="{{ tab.totalFacturas }}" value="{{ tab.totalFaltantes }}"><span style="color:black; white-space:nowrap;">{{ tab.totalFaltantes }} / {{ tab.totalFacturas }}</span></progressbar>-->
 				</div>
-				<div class="panel-body">
-					<p>{{ mensaje[1] }}</p>
-					<p>{{ codigosFaltantes }}</p>
+
+				<div class="row">
+					<div class="col-lg-11">
+						<div class="xpage-header">
+							<h1>Control de códigos</h1>
+						</div>
+					</div>
 				</div>
-			</div>
 
-			<table class="table table-striped table-bordered table-hover">
-				<thead>
-				<tr>
-					<th>Comprobante</th>
-					<th>Razon Social</th>
-					<th>Fecha</th>
-					<th>Importe Total</th>
-					<th>Detalles</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr ng-repeat="factura in facturasRotas">
-					<td>{{ invoice.nroComprob }}</td>
-					<td>{{ invoice.razon }}</td>
-					<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-					<td>${{ invoice.importe.total }}</td>
-					<td><button ui-sref="invoices.result" class="btn btn-primary" type="button" ng-click="cargar(invoice); $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>
-				</tr>
-				</tbody>
-			</table>
+				<div class="col-lg-11 well">
+					<div class="panel {{ tab.cartelCodigos }}">
+						<div class="panel-heading">
+							<h3 class="panel-title">{{ tab.tituloCodigos }}</h3>
+						</div>
+						<div class="panel-body">
+							<p>{{ tab.mensajeCodigos }}</p>
+							<p>{{ tab.resultadoCodigos }}</p>
+						</div>
+					</div>
 
-		</div>
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+						<tr>
+							<th>Comprobante</th>
+							<th>Razon Social</th>
+							<th>Fecha</th>
+							<th>Importe Total</th>
+							<!--<th>Detalles</th>-->
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="factura in tab.facturasRotas">
+							<td>{{ factura.nroComprob }}</td>
+							<td>{{ factura.razon }}</td>
+							<td>{{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+							<td>${{ factura.importe.total }}</td>
+							<!--<td><button ui-sref="invoices.result" class="btn btn-primary" type="button" ng-click="cargar(invoice); $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>-->
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</tab>
+		</tabset>
 
 		<div class="row">
 			<div class="col-lg-11">

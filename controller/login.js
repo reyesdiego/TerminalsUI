@@ -6,20 +6,19 @@ function loginCtrl($scope, $rootScope, userFactory, $state, $dialogs, loginServi
 
 	$scope.login = function(){
 		userFactory.login($scope.email, $scope.password, function(data){
-			if (data.error == 'AuthError'){
-				$rootScope.esTerminal = false;
-				$dialogs.error('Los datos de inicio de sesión son incorrectos');
-			} else {
-				console.log(data);
-				loginService.setInfo(data);
-				loginService.setStatus(true);
-				loginService.setType(data.role);
-				loginService.setToken(data.token.token);
-				loginService.setAcceso(data.acceso);
-				$state.transitionTo('tarifario');
+				if (data.error == 'AuthError'){
+					$rootScope.esTerminal = false;
+					$dialogs.error('Los datos de inicio de sesión son incorrectos');
+				} else {
+					loginService.setInfo(data);
+					loginService.setStatus(true);
+					loginService.setType(data.role);
+					loginService.setToken(data.token.token);
+					loginService.setAcceso(data.acceso);
+					$state.transitionTo('tarifario');
 
-				$rootScope.esUsuario = loginService.getType();
+					$rootScope.esUsuario = loginService.getType();
+				}
 			}
-		}
-	)}
+		)}
 }
