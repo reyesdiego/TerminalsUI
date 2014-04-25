@@ -55,8 +55,8 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 			});
 	}
 
-	factory.searchInvoice = function(datos, callback){
-		var inserturl = serverUrl + '/invoices?'; // El que se va a usar
+	factory.searchInvoice = function(datos, page, callback){
+		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		if(angular.isDefined(datos.nroComprobante)){
 			inserturl = inserturl + 'nroComprobante=' + datos.nroComprobante;
 		}

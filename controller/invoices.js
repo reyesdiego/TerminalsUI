@@ -70,7 +70,7 @@ function invoicesCtrl ($scope, invoiceFactory) {
 			'documentoCliente': $scope.documentoCliente,
 			'fecha': $scope.fechaDesde
 		}
-		invoiceFactory.searchInvoice(datos, function(data){
+		invoiceFactory.searchInvoice(datos, page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 			}
