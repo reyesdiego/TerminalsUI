@@ -8,6 +8,10 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	$scope.gates = {};
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
+	$scope.horarioDesde = new Date();
+	$scope.horarioHasta = new Date();
+	$scope.hstep = 1;
+	$scope.mstep = 1;
 	var page = {skip:0, limit: $scope.itemsPerPage};
 
 	$scope.today = function() {
@@ -67,19 +71,19 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	};
 
 	$scope.cargar = function(){
+		// Setea las fechas para las horas y minutos
+		$scope.fechaDesde.setHours($scope.horarioDesde.getHours());
+		$scope.fechaDesde.setMinutes($scope.horarioDesde.getMinutes());
+		$scope.fechaHasta.setHours($scope.horarioHasta.getHours());
+		$scope.fechaHasta.setMinutes($scope.horarioHasta.getMinutes());
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
 		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
-			$scope.gates = data;
-			$scope.totalItems = $scope.gates.totalCount;
-			/*if(data.length > 1){
-				$scope.gates = $scope.gates.sort(function(a,b){ // Ordena el array
-					return a['gateTimestamp'] > b['gateTimestamp'];
-				});
-			} else{
-				console.log(data.length);
-			}*/
+			if (data.status === "OK"){
+				$scope.gates = data.data.data;
+				console.log(data.data);
+				$scope.totalItems = data.totalCount;
+			}
 		});
-
 	};
 
 	$scope.$watch('currentPage + itemsPerPage', function(){
@@ -87,7 +91,9 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		page.skip = skip;
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
 		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
-			$scope.gates = data;
+			if(data.status === 'OK'){
+				$scope.gates = data.data.data;
+			}
 		});
 	});
 
@@ -95,16 +101,18 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		$scope.containerHide = !$scope.containerHide;
 
 		invoiceFactory.getInvoiceByContainer(container, page, function(data){
-			$scope.invoices = data;
-			$scope.totalItems = $scope.invoices.totalCount;
-
+			if(data.status === 'OK'){
+				$scope.invoices = data.data.data;
+				$scope.totalItems = data.totalCount;
+			}
 			$scope.$watch('currentPage + itemsPerPage', function(){
 				var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 				page.skip = skip;
 				invoiceFactory.getInvoiceByContainer(container,page, function(data){
-					$scope.invoices = data;
+					if(data.status === 'OK'){
+						$scope.invoices = data.data.data;
+					}
 				})
-				$scope.filtro = '';
 			});
 
 			console.log($scope.invoices);

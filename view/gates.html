@@ -9,28 +9,47 @@
 	</div>
 
 	<div class="row" ng-init="onOff1 = false" ng-hide="onOff1">
-		<div class="col-lg-4">
+		<div class="col-lg-3">
 			<div class="well">
+				<legend>Fecha Desde</legend>
 				<div class="form-group">
-					<label for="fechaDesde" class="control-label">Fecha Desde</label>
+					<label>D&iacute;a</label>
 					<p class="input-group">
-						<input type="text"  id="fechaDesde" class="form-control" datepicker-popup="{{format}}" ng-model="fechaDesde"  is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+						<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" required="true" />
 						<span class="input-group-btn">
 							<button class="btn btn-default" ng-click="open($event, 'fechaDesde')"><i class="glyphicon glyphicon-calendar"></i></button>
 						</span>
 					</p>
 				</div>
 				<div class="form-group">
-					<label for="fechaHasta">Fecha Hasta</label>
+					<label>Horario</label>
+					<timepicker id="horarioDesde" ng-model="horarioDesde" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="well">
+				<legend>Fecha Hasta</legend>
+				<div class="form-group">
+					<label>D&iacute;a</label>
 					<p class="input-group">
-						<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="fechaHasta"  is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" required="true" />
+						<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="fechaHasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" required="true" />
 						<span class="input-group-btn">
 							<button class="btn btn-default" ng-click="open($event, 'fechaHasta')"><i class="glyphicon glyphicon-calendar"></i></button>
 						</span>
 					</p>
 				</div>
 				<div class="form-group">
-					<label for="contenedor">Contenedor</label>
+					<label>Horario</label>
+					<timepicker id="horarioHasta" ng-model="horarioHasta" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="well">
+				<legend>Contenedor</legend>
+				<div class="form-group">
+					<label>Filtrar por nombre</label>
 					<p class="input-group">
 						<input type="text" class="form-control" id="contenedor" ng-model="contenedor">
 					</p>

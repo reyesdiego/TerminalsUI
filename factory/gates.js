@@ -1,12 +1,13 @@
 /**
  * Created by leo on 14/04/14.
  */
-myapp.factory('gatesFactory', function($http){
+myapp.factory('gatesFactory', function($http, formatDate){
 	var factory = {};
 
 	factory.getGateByDayOrContainer = function(datos, page, callback){
 		var inserturl = serverUrl + '/gates/' + page.skip + '/' + page.limit;
-		inserturl = inserturl + '?fechaDesde=' + datos.fechaDesde + '&fechaHasta=' + datos.fechaHasta;
+		inserturl = inserturl + '?fechaInicio=' + formatDate.formatearFechaHorasMinutos(datos.fechaDesde);
+		inserturl = inserturl + '&fechaFin=' + formatDate.formatearFechaHorasMinutos(datos.fechaHasta);
 		if(angular.isDefined(datos.contenedor)){
 			inserturl = inserturl + '&contenedor=' + datos.contenedor;
 		}

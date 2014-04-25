@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http, loginService){
+myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 	var factory = {};
 
 	factory.getInvoice = function(page, callback) {
@@ -55,8 +55,24 @@ myapp.factory('invoiceFactory', function($http, loginService){
 			});
 	}
 
-	factory.searchInvoice = function(invoice, callback){
-		var inserturl = serverUrl + '/invoices?search=' + invoice; // El que se va a usar
+	factory.searchInvoice = function(datos, callback){
+		var inserturl = serverUrl + '/invoices?'; // El que se va a usar
+		if(angular.isDefined(datos.nroComprobante)){
+			inserturl = inserturl + 'nroComprobante=' + datos.nroComprobante;
+		}
+		if(angular.isDefined(datos.razonSocial)){
+			if(inserturl != serverUrl + '/invoices?'){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'razonSocial=' + datos.razonSocial;
+		}
+		if(angular.isDefined(datos.documentoCliente)){
+			if(inserturl != serverUrl + '/invoices?'){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'documentoCliente=' + datos.documentoCliente;
+		}
+		if(angular.isDefined(datos.fecha)){
+			if(inserturl != serverUrl + '/invoices?'){ inserturl = inserturl + '&'}
+			var fecha = formatDate.formatearFecha(datos.fecha);
+			inserturl = inserturl + 'fechaInicio=' + fecha;
+		}
 		$http({
 			method: 'GET',
 			url: inserturl,
