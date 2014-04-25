@@ -6,16 +6,19 @@ myapp.factory('formatDate', function(){
 	var factory = {};
 
 	factory.formatearFecha = function(fecha){
-		var fechaAux = fecha.getFullYear() + '-';
-		if ((fecha.getMonth() + 1) < 10){
-			fechaAux = fechaAux + '0';
+		if (fecha != '' && fecha != null){
+			console.log(fecha);
+			var fechaAux = fecha.getFullYear() + '-';
+			if ((fecha.getMonth() + 1) < 10){
+				fechaAux = fechaAux + '0';
+			}
+			fechaAux = fechaAux + (fecha.getMonth() + 1) + '-';
+			if (fecha.getDate() < 10){
+				fechaAux = fechaAux + '0';
+			}
+			fechaAux = fechaAux + fecha.getDate();
+			return fechaAux;
 		}
-		fechaAux = fechaAux + (fecha.getMonth() + 1) + '-';
-		if (fecha.getDate() < 10){
-			fechaAux = fechaAux + '0';
-		}
-		fechaAux = fechaAux + fecha.getDate();
-		return fechaAux
 	};
 
 	factory.formatearFechaHorasMinutos = function(fecha){
@@ -28,8 +31,8 @@ myapp.factory('formatDate', function(){
 			fechaAux = fechaAux + '0';
 		}
 		fechaAux = fechaAux + fecha.getMinutes() + ' -0000';
-		return fechaAux
+		return fechaAux;
 	};
 
 	return factory;
-})
+});

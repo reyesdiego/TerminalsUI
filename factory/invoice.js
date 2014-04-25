@@ -53,7 +53,7 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 			}).error(function(){
 				console.log("Error al cargar la lista PriceList")
 			});
-	}
+	};
 
 	factory.searchInvoice = function(datos, page, callback){
 		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
@@ -61,17 +61,19 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 			inserturl = inserturl + 'nroComprobante=' + datos.nroComprobante;
 		}
 		if(angular.isDefined(datos.razonSocial)){
-			if(inserturl != serverUrl + '/invoices?'){ inserturl = inserturl + '&'}
+			if(inserturl != serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'razonSocial=' + datos.razonSocial;
 		}
 		if(angular.isDefined(datos.documentoCliente)){
-			if(inserturl != serverUrl + '/invoices?'){ inserturl = inserturl + '&'}
+			if(inserturl != serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'documentoCliente=' + datos.documentoCliente;
 		}
-		if(angular.isDefined(datos.fecha)){
-			if(inserturl != serverUrl + '/invoices?'){ inserturl = inserturl + '&'}
-			var fecha = formatDate.formatearFecha(datos.fecha);
-			inserturl = inserturl + 'fechaInicio=' + fecha;
+		if(angular.isDefined(datos.fecha) && datos.fecha != null){
+			if(inserturl != serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFecha(datos.fecha);
+			var fechaFin = new Date(datos.fecha);
+			fechaFin.setDate(fechaFin.getDate() + 1);
+			inserturl = inserturl + '&fechaFin=' + formatDate.formatearFecha(fechaFin);
 		}
 		$http({
 			method: 'GET',
