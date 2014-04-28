@@ -12,12 +12,12 @@
 					<th style="text-align: center">Movimiento</th>
 				</tr>
 				<tr ng-repeat="gate in gates">
-					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ gate.inicio | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ gate.buque }}</td>
 					<td>{{ gate.viaje }}</td>
 					<td>{{ gate.contenedor }}</td>
-					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
-					<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
+					<td>{{ gate.inicio | date: 'HH:mm' }}</td>
+					<td>{{ gate.fin | date: 'HH:mm' }}</td>
 					<td>{{ gate.mov }}</td>
 				</tr>
 			</table>

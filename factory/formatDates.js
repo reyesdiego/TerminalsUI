@@ -7,7 +7,6 @@ myapp.factory('formatDate', function(){
 
 	factory.formatearFecha = function(fecha){
 		if (fecha != '' && fecha != null){
-			console.log(fecha);
 			var fechaAux = fecha.getFullYear() + '-';
 			if ((fecha.getMonth() + 1) < 10){
 				fechaAux = fechaAux + '0';

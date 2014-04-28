@@ -47,6 +47,13 @@
 		</div>
 		<div class="col-lg-3">
 			<div class="well">
+				<legend>Contenedor</legend>
+				<div class="form-group">
+					<label>Filtrar por nombre</label>
+					<p class="input-group">
+						<input type="text" class="form-control" id="contenedor" ng-model="contenedor">
+					</p>
+				</div>
 				<div class="form-group">
 					<button class="btn btn-default" ui-sref="control">Volver</button>
 					<button class="btn btn-primary" ui-sref=".result" ng-click="cargar(fecha1); onOff1 = !onOff1">Cargar</button>

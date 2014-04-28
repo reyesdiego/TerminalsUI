@@ -1,7 +1,7 @@
 /**
  * Created by leo on 28/04/14.
  */
-function turnosCtrl($scope){
+function turnosCtrl($scope, turnosFactory){
 	'use strict';
 
 	// Paginacion
@@ -64,25 +64,25 @@ function turnosCtrl($scope){
 		$scope.fechaDesde.setMinutes($scope.horarioDesde.getMinutes());
 		$scope.fechaHasta.setHours($scope.horarioHasta.getHours());
 		$scope.fechaHasta.setMinutes($scope.horarioHasta.getMinutes());
-		/*var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
-		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
+		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
+		turnosFactory.getTurnosByDates(datos, page, function(data){
 			if (data.status === "OK"){
 				$scope.gates = data.data.data;
 				console.log(data.data);
 				$scope.totalItems = data.totalCount;
 			}
-		});*/
+		});
 	};
 
 	$scope.$watch('currentPage + itemsPerPage', function(){
-		/*var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		page.skip = skip;
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fechaDesde, fechaHasta : $scope.fechaHasta};
-		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
+		turnosFactory.getTurnosByDates(datos, page, function(data){
 			if(data.status === 'OK'){
 				$scope.gates = data.data.data;
 			}
-		});*/
+		});
 	});
 
 }
