@@ -2,6 +2,8 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
+google.load('visualization', '1', {packages: ['corechart']});
+
 Array.prototype.contains = function (item) {
 	var result = false;
 	this.forEach(function (data) {
