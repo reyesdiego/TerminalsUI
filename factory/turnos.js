@@ -4,7 +4,7 @@
 myapp.factory('turnosFactory', function($http, formatDate){
 	var factory = {};
 
-	factory.getTurnosByDates = function(datos, page, callback){
+	factory.getTurnosByDatesOrContainer = function(datos, page, callback){
 		var inserturl = serverUrl + '/appointments/' + page.skip + '/' + page.limit;
 		inserturl = inserturl + '?fechaInicio=' + formatDate.formatearFechaHorasMinutos(datos.fechaDesde);
 		inserturl = inserturl + '&fechaFin=' + formatDate.formatearFechaHorasMinutos(datos.fechaHasta);

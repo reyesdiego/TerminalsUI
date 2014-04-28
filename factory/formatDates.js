@@ -17,20 +17,22 @@ myapp.factory('formatDate', function(){
 			}
 			fechaAux = fechaAux + fecha.getDate();
 			return fechaAux;
-		}
+		}else return null;
 	};
 
 	factory.formatearFechaHorasMinutos = function(fecha){
-		var fechaAux = this.formatearFecha(fecha) + ' ';
-		if(fecha.getHours() < 10){
-			fechaAux = fechaAux + '0';
-		}
-		fechaAux = fechaAux + fecha.getHours() + ':';
-		if(fecha.getMinutes() < 10){
-			fechaAux = fechaAux + '0';
-		}
-		fechaAux = fechaAux + fecha.getMinutes() + ' -0000';
-		return fechaAux;
+		if (fecha != '' && fecha != null){
+			var fechaAux = this.formatearFecha(fecha) + ' ';
+			if(fecha.getHours() < 10){
+				fechaAux = fechaAux + '0';
+			}
+			fechaAux = fechaAux + fecha.getHours() + ':';
+			if(fecha.getMinutes() < 10){
+				fechaAux = fechaAux + '0';
+			}
+			fechaAux = fechaAux + fecha.getMinutes() + ' -0000';
+			return fechaAux;
+		}else return null;
 	};
 
 	return factory;
