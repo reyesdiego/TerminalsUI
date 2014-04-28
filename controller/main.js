@@ -156,20 +156,13 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('correlativo.result', {
 			templateUrl: "view/correlatividad.result.html"
 		})
-		.state('cdiario', {
-			url: "/controldia",
-			templateUrl: "view/cdiario.html",
-			controller: cdiarioCtrl
+		.state('turnos', {
+			url: "/turnos",
+			templateUrl: "view/turnos.html",
+			controller: turnosCtrl
 		})
-		.state('cdiario.result', {
-			views: {
-				"fecha1" : {
-					templateUrl: "view/cdiario.result1.html"
-				},
-				"fecha2" : {
-					templateUrl: "view/cdiario.result2.html"
-				}
-			}
+		.state('turnos.result', {
+			templateUrl: "view/turnos.result.html"
 		})
 		.state('changepass', {
 			url: "/cambiarpass",
