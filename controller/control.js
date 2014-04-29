@@ -6,8 +6,6 @@ function controlCtrl($scope, datosGrafico, controlPanelFactory){
 	'use strict';
 	var fecha = new Date();
 
-	console.log(datosGrafico);
-
 	$scope.chartTitle = "Datos enviados";
 	$scope.chartWidth = 500;
 	$scope.chartHeight = 320;

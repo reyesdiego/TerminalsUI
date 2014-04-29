@@ -71,8 +71,6 @@ myapp.directive('columnChart', function ($timeout) {
 		},
 		link: function($scope, $elm, $attr) {
 
-			console.log($scope.data);
-
 			var data = new google.visualization.arrayToDataTable($scope.data);
 			var chart = new google.visualization.ColumnChart($elm[0]);
 

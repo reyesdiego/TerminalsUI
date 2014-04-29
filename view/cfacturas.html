@@ -1,8 +1,4 @@
-<div class="container" ng-hide="onOff">
-
-	<!-- Tables
-	================================================== -->
-	<!--<div class="bs-docs-section">-->
+<div class="container">
 
 	<div class="row">
 		<div class="col-lg-11">
@@ -12,21 +8,21 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row" ng-init="onOff = false" ng-hide="onOff">
 		<div class="col-lg-6">
 			<div class="well">
 				<form ng-submit="cargar()" class="bs-example form-horizontal">
 					<fieldset>
 						<label for="fechaDesde">Desde</label>
 						<p class="input-group">
-							<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openDesde" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+							<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
 							<span class="input-group-btn">
 								<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
 							</span>
 						</p>
 						<label for="fechaHasta">Hasta</label>
 						<p class="input-group">
-							<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="hasta"  is-open="openHasta" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+							<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="hasta"  is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
 							<span class="input-group-btn">
 								<button class="btn btn-default" ng-click="open($event, 'hasta')"><i class="glyphicon glyphicon-calendar"></i></button>
 							</span>
@@ -45,7 +41,7 @@
 						<div class="form-group">
 							<div class="col-lg-6">
 								<button class="btn btn-default" ui-sref="control">Volver</button>
-								<button class="btn btn-primary" ui-sref="cfacturas.result" ng-click="cargar()">Cargar</button>
+								<button class="btn btn-primary" ui-sref=".result" ng-click="cargar(); onOff = !onOff">Cargar</button>
 							</div>
 						</div>
 					</fieldset>
@@ -53,6 +49,12 @@
 			</div>
 		</div>
 	</div>
-	<!--</div>-->
+
+	<div ng-hide="!onOff">
+		<div ui-view></div>
+		<div>
+			<button class="btn btn-primary" ng-click="onOff = !onOff">Volver</button>
+		</div>
+	</div>
+
 </div>
-<div ui-view></div>

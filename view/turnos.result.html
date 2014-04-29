@@ -11,14 +11,14 @@
 					<th style="text-align: center">Fin del turno</th>
 					<th style="text-align: center">Movimiento</th>
 				</tr>
-				<tr ng-repeat="gate in gates">
-					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-					<td>{{ gate.buque }}</td>
-					<td>{{ gate.viaje }}</td>
-					<td>{{ gate.contenedor }}</td>
-					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
-					<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
-					<td>{{ gate.mov }}</td>
+				<tr ng-repeat="turno in turnos">
+					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ turno.buque }}</td>
+					<td>{{ turno.viaje }}</td>
+					<td>{{ turno.contenedor }}</td>
+					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
+					<td>{{ turno.fin | date: 'HH:mm' }}</td>
+					<td>{{ turno.mov }}</td>
 				</tr>
 			</table>
 			<a href="" ><pagination href="" boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" page="currentPage" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></a>

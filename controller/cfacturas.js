@@ -4,54 +4,21 @@
 
 function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	'use strict';
-	$scope.onOff = false;
-	$scope.onOffResult = true;
 
-	$scope.today = function() {
-		$scope.desde = new Date();
-		$scope.hasta = new Date();
-	};
-
-	$scope.today();
-
-	$scope.showWeeks = true;
-	$scope.toggleWeeks = function () {
-		$scope.showWeeks = ! $scope.showWeeks;
-	};
-
-	$scope.clear = function () {
-		$scope.dt = null;
-	};
-
-	$scope.toggleMin = function() {
-		$scope.minDate = ( $scope.minDate ) ? null : new Date();
-	};
-
-	$scope.toggleMin();
-
+	// Fecha (dia y hora)
+	$scope.desde = new Date();
+	$scope.hasta = new Date();
+	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
+	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
+	$scope.format = $scope.formats[1];
 	$scope.open = function($event, fecha) {
 		$event.preventDefault();
 		$event.stopPropagation();
-
-		if (fecha === 'desde'){
-			$scope.openDesde = true;
-			$scope.openHasta = false;
-		}else{
-			$scope.openHasta = true;
-			$scope.openDesde = false;
-		}
+		$scope.openFechaDesde = (fecha === 'desde');
+		$scope.openFechaHasta = (fecha === 'hasta');
 	};
-
-	$scope.dateOptions = {
-		'year-format': "'yy'",
-		'starting-day': 1
-	};
-
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
-	$scope.format = $scope.formats[1];
 
 	$scope.cargar = function(){
-
 		//Traigo todos los códigos de la terminal y me los guardo
 		priceFactory.getMatchPrices($scope.terminal, function(data){
 			$scope.matchPrices = data;
@@ -63,7 +30,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 						$scope.codigosTerminal.push(codigo);
 					});
 				}
-			})
+			});
 
 			$scope.tabs = [];
 
@@ -102,7 +69,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 								$scope.control = factura.nroComprob;
 								tab.mensajeCorrelativo = "Se hallaron facturas faltantes: ";
 								tab.cartelCorrelativo = "panel-danger";
-								tab.tituloCorrelativo = "Error"
+								tab.tituloCorrelativo = "Error";
 								tab.totalFaltantes += 1;
 							}
 						}
@@ -116,26 +83,19 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 								tab.tituloCodigos = "Error";
 							}
 						})*/
-					})
+					});
 
 					console.log(tab.totalFaltantes);
 					$scope.tabs.push(tab);
-				})
+				});
 
-				$scope.onOff = true;
-				$scope.onOffResult = false;
-
-			})
+			});
 
 			/*Acá control de tasa a las cargas
 			invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, function(data){
 				$scope.sinTasaCargas = data;
 			})*/
 
-			$scope.volver = function(){
-				$scope.onOff = false;
-				$scope.onOffResult = true;
-			}
 		})
 	};
 

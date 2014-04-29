@@ -12,6 +12,7 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
+			console.log(data);
 			callback(data);
 		}).error(function(response) {
 			console.log(response);
@@ -28,6 +29,7 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
+			console.log(data);
 			callback(data);
 		}).error(function(response) {
 			console.log(response);
@@ -57,19 +59,20 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 
 	factory.searchInvoice = function(datos, page, callback){
 		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
+		var insertAux = inserturl;
 		if(angular.isDefined(datos.nroComprobante)){
 			inserturl = inserturl + 'nroComprobante=' + datos.nroComprobante;
 		}
 		if(angular.isDefined(datos.razonSocial)){
-			if(inserturl != serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'){ inserturl = inserturl + '&'}
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'razonSocial=' + datos.razonSocial;
 		}
 		if(angular.isDefined(datos.documentoCliente)){
-			if(inserturl != serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'){ inserturl = inserturl + '&'}
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'documentoCliente=' + datos.documentoCliente;
 		}
 		if(angular.isDefined(datos.fecha) && datos.fecha != null){
-			if(inserturl != serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'){ inserturl = inserturl + '&'}
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFecha(datos.fecha);
 			var fechaFin = new Date(datos.fecha);
 			fechaFin.setDate(fechaFin.getDate() + 1);
@@ -81,6 +84,7 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
+			console.log(data);
 			callback(data);
 		}).error(function(response) {
 			console.log(response);
