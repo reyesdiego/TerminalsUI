@@ -21,7 +21,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 
 	$scope.filteredPrices = [];
 
-	priceFactory.getMatchPrices(function (data){
+	priceFactory.getMatchPrices(loginService.getInfo().terminal, function (data){
 		$scope.pricelist = data;
 		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 
