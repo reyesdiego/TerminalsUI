@@ -8,6 +8,10 @@ function navigationCtrl($scope, $rootScope, $state, loginService){
 
 	$scope.acceso = '';
 
+	if (loginService.getStatus()){
+		$rootScope.esUsuario = loginService.getType();
+	}
+
 	$scope.$watch('esUsuario', function() {
 		$scope.acceso = $rootScope.esUsuario;
 

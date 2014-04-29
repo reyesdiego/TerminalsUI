@@ -15,5 +15,26 @@ myapp.factory('controlPanelFactory', function($http){
 			});
 	};
 
+	factory.getTotales = function(fecha, callback){
+		//Por ahora trabaja solo con un mock
+		$http.get('mocks/totales.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(){
+				console.log("Error al cargar la lista PriceList")
+			});
+
+	};
+
+	factory.getTotales2 = function(){
+		//Por ahora trabaja solo con un mock
+		$http.get('mocks/totales.json')
+			.success(function (data){
+				return data;
+			}).error(function(){
+				console.log("Error al cargar la lista PriceList")
+			});
+	};
+
 	return factory;
 });

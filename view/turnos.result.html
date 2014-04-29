@@ -1,0 +1,30 @@
+<div class="container row" ng-hide="containerHide">
+	<div class="col-lg-11">
+		<div class="row">
+			<table class="table table-bordered table-hover" style="text-align: center">
+				<tr>
+					<th style="text-align: center">Fecha</th>
+					<th style="text-align: center">Buque</th>
+					<th style="text-align: center">Viaje</th>
+					<th style="text-align: center">Contenedor</th>
+					<th style="text-align: center">Inicio del turno</th>
+					<th style="text-align: center">Fin del turno</th>
+					<th style="text-align: center">Movimiento</th>
+				</tr>
+				<tr ng-repeat="gate in gates">
+					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ gate.buque }}</td>
+					<td>{{ gate.viaje }}</td>
+					<td>{{ gate.contenedor }}</td>
+					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
+					<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
+					<td>{{ gate.mov }}</td>
+				</tr>
+			</table>
+			<a href="" ><pagination href="" boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" page="currentPage" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></a>
+		</div>
+	</div>
+</div>
+<div ng-hide="!containerHide">
+	<div ui-view></div>
+</div>

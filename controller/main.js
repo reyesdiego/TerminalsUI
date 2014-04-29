@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-google.load('visualization', '1', {packages: ['corechart']});
+google.load("visualization", "1", {packages:["corechart"]});
 
 Array.prototype.contains = function (item) {
 	var result = false;
@@ -126,7 +126,29 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('control', {
 			url: "/control",
 			templateUrl: "view/control.html",
-			controller: controlCtrl
+			controller: controlCtrl,
+			resolve: {
+				datosGrafico: function(controlPanelFactory, $q){
+					var defer = $q.defer();
+
+					var fecha = new Date();
+					controlPanelFactory.getTotales(fecha, function(graf){
+						var base = [
+							['Datos', 'Facturas', 'Gates', 'Turnos', { role: 'annotation' } ],
+							['BACTSSA', 0, 0, 0, ''],
+							['TRP', 0, 0, 0, ''],
+							['TERMINAL 4', 0, 0, 0, '']
+						];
+						var i = 1;
+						graf.terminales.forEach(function(terminal){
+							base[i] = [terminal.nombre, terminal.invoices, terminal.gates, terminal.turnos, ''];
+							i++;
+						});
+						defer.resolve(base);
+					})
+					return defer.promise;
+				}
+			}
 		})
 		.state('cfacturas', {
 			url: "/cfacturas",
@@ -158,20 +180,13 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('correlativo.result', {
 			templateUrl: "view/correlatividad.result.html"
 		})
-		.state('cdiario', {
-			url: "/controldia",
-			templateUrl: "view/cdiario.html",
-			controller: cdiarioCtrl
+		.state('turnos', {
+			url: "/turnos",
+			templateUrl: "view/turnos.html",
+			controller: turnosCtrl
 		})
-		.state('cdiario.result', {
-			views: {
-				"fecha1" : {
-					templateUrl: "view/cdiario.result1.html"
-				},
-				"fecha2" : {
-					templateUrl: "view/cdiario.result2.html"
-				}
-			}
+		.state('turnos.result', {
+			templateUrl: "view/turnos.result.html"
 		})
 		.state('changepass', {
 			url: "/cambiarpass",

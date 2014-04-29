@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 1/23/14.
  */
 function loginCtrl($scope, $rootScope, userFactory, $state, $dialogs, loginService){
-	'use strict'
+	'use strict';
 
 	$scope.login = function(){
 		userFactory.login($scope.email, $scope.password, function(data){
