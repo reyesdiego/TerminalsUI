@@ -18,17 +18,15 @@ function turnosCtrl($scope, turnosFactory){
 
 	// Fecha (dia y hora)
 	$scope.fecha = {
-		dia: {
-			desde: new Date(),
-			hasta: new Date()
-		},
-		horario: {
-			desde: new Date(),
-			hasta: new Date()
-		}
+		desde: new Date(),
+		hasta: new Date()
 	};
-	$scope.hstep = 1;
-	$scope.mstep = 1;
+	$scope.horario = {
+		desde: new Date(),
+		hasta: new Date()
+	};
+	$scope.horario.desde.setMinutes(0);
+	$scope.horario.hasta.setMinutes(0);
 	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
@@ -45,11 +43,9 @@ function turnosCtrl($scope, turnosFactory){
 	// Carga los turnos por fechas
 	$scope.cargar = function(){
 		// Setea las fechas para las horas y minutos
-		$scope.fecha.dia.desde.setHours($scope.fecha.horario.desde.getHours());
-		$scope.fecha.dia.desde.setMinutes($scope.fecha.horario.desde.getMinutes());
-		$scope.fecha.dia.hasta.setHours($scope.fecha.horario.hasta.getHours());
-		$scope.fecha.dia.hasta.setMinutes($scope.fecha.horario.hasta.getMinutes());
-		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.dia.desde, fechaHasta : $scope.fecha.dia.hasta};
+		$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
+		$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
+		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
 		turnosFactory.getTurnosByDatesOrContainer(datos, page0, function(data){
 			if (data.status === "OK"){
 				$scope.turnos = data.data;
@@ -60,7 +56,7 @@ function turnosCtrl($scope, turnosFactory){
 
 	$scope.$watch('currentPage + itemsPerPage', function(){
 		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.dia.desde, fechaHasta : $scope.fecha.dia.hasta};
+		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
 		turnosFactory.getTurnosByDatesOrContainer(datos, page, function(data){
 			if(data.status === 'OK'){
 				$scope.turnos = data.data;

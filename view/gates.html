@@ -16,7 +16,7 @@
 					<div class="form-group">
 						<label for="fechaDesde">D&iacute;a</label>
 						<p class="input-group">
-							<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="fecha.dia.desde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" required />
+							<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="fecha.desde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" required />
 						<span class="input-group-btn">
 							<button class="btn btn-default" ng-click="open($event, 'fechaDesde'); openFechaDesde = true; openFechaHasta = false"><i class="glyphicon glyphicon-calendar"></i></button>
 						</span>
@@ -24,7 +24,7 @@
 					</div>
 					<div class="form-group">
 						<label>Horario</label>
-						<timepicker id="horarioDesde" ng-model="fecha.horario.desde" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+						<timepicker id="horarioDesde" ng-model="horario.desde" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
 					</div>
 				</fieldset>
 			</div>
@@ -36,7 +36,7 @@
 					<div class="form-group">
 						<label for="fechaHasta">D&iacute;a</label>
 						<p class="input-group">
-							<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="fecha.dia.hasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" required="true" />
+							<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="fecha.hasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" required="true" />
 						<span class="input-group-btn">
 							<button class="btn btn-default" ng-click="open($event, 'fechaHasta'); openFechaHasta = true; openFechaDesde = false"><i class="glyphicon glyphicon-calendar"></i></button>
 						</span>
@@ -44,7 +44,7 @@
 					</div>
 					<div class="form-group">
 						<label>Horario</label>
-						<timepicker id="horarioHasta" ng-model="fecha.horario.hasta" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
+						<timepicker id="horarioHasta" ng-model="horario.hasta" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
 					</div>
 				</fieldset>
 			</div>
