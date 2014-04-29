@@ -8,7 +8,11 @@ function turnosCtrl($scope, turnosFactory){
 	$scope.maxSize = 5;
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
-	var page = {skip:0, limit: $scope.itemsPerPage};
+	var page0 = {
+		skip:0,
+		limit: $scope.itemsPerPage
+	};
+	var page = page0;
 	$scope.setPage = function (pageNo){ $scope.currentPage = pageNo; };
 	$scope.numPages = function (){ return Math.ceil($scope.totalItems / $scope.itemsPerPage); };
 
@@ -38,6 +42,7 @@ function turnosCtrl($scope, turnosFactory){
 	// Variable para almacenar la info principal que trae del factory
 	$scope.turnos = {};
 
+	// Carga los turnos por fechas
 	$scope.cargar = function(){
 		// Setea las fechas para las horas y minutos
 		$scope.fecha.dia.desde.setHours($scope.fecha.horario.desde.getHours());
@@ -45,22 +50,20 @@ function turnosCtrl($scope, turnosFactory){
 		$scope.fecha.dia.hasta.setHours($scope.fecha.horario.hasta.getHours());
 		$scope.fecha.dia.hasta.setMinutes($scope.fecha.horario.hasta.getMinutes());
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.dia.desde, fechaHasta : $scope.fecha.dia.hasta};
-		turnosFactory.getTurnosByDatesOrContainer(datos, page, function(data){
+		turnosFactory.getTurnosByDatesOrContainer(datos, page0, function(data){
 			if (data.status === "OK"){
-				$scope.gates = data.data.data;
-				console.log(data.data);
+				$scope.turnos = data.data;
 				$scope.totalItems = data.totalCount;
 			}
 		});
 	};
 
 	$scope.$watch('currentPage + itemsPerPage', function(){
-		var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		page.skip = skip;
+		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.dia.desde, fechaHasta : $scope.fecha.dia.hasta};
 		turnosFactory.getTurnosByDatesOrContainer(datos, page, function(data){
 			if(data.status === 'OK'){
-				$scope.gates = data.data.data;
+				$scope.turnos = data.data;
 			}
 		});
 	});

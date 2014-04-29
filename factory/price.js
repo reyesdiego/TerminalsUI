@@ -19,8 +19,8 @@ myapp.factory('priceFactory', function($http, loginService){
 		});
 	};
 
-	factory.getMatchPrices = function(terminal, callback) {
-		var inserturl = serverUrl + '/agp/matchprices/' + terminal;
+	factory.getMatchPrices = function(callback) {
+		var inserturl = serverUrl + '/agp/matchprices/' + loginService.getInfo().terminal;
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -58,7 +58,7 @@ myapp.factory('priceFactory', function($http, loginService){
 				console.log("success");
 				callback(response);
 			}).
-			error(function(response) {
+			error(function() {
 				console.log("error");
 			});
 	};
