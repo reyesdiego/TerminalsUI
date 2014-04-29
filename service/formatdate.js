@@ -1,11 +1,10 @@
 /**
- * Created by leo on 25/04/14.
+ * Created by leo on 29/04/14.
  */
 
-myapp.factory('formatDate', function(){
-	var factory = {};
+myapp.service('formatDate', function () {
 
-	factory.formatearFecha = function(fecha){
+	this.formatearFecha = function(fecha){
 		if (fecha != '' && fecha != null){
 			var fechaAux = fecha.getFullYear() + '-';
 			if ((fecha.getMonth() + 1) < 10){
@@ -17,10 +16,11 @@ myapp.factory('formatDate', function(){
 			}
 			fechaAux = fechaAux + fecha.getDate();
 			return fechaAux;
-		}else return null;
+		}else
+			return null;
 	};
 
-	factory.formatearFechaHorasMinutos = function(fecha){
+	this.formatearFechaHorasMinutos = function(fecha){
 		if (fecha != '' && fecha != null){
 			var fechaAux = this.formatearFecha(fecha) + ' ';
 			if(fecha.getHours() < 10){
@@ -32,8 +32,8 @@ myapp.factory('formatDate', function(){
 			}
 			fechaAux = fechaAux + fecha.getMinutes() + ' -0000';
 			return fechaAux;
-		}else return null;
+		}else
+			return null;
 	};
 
-	return factory;
 });
