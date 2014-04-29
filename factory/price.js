@@ -4,7 +4,7 @@
 myapp.factory('priceFactory', function($http, loginService){
 	var factory = {};
 
-	factory.getPrice = function(token, callback) {
+	factory.getPrice = function(callback) {
 		var inserturl = serverUrl + '/agp/prices';
 		$http({
 			method: 'GET',
@@ -19,8 +19,8 @@ myapp.factory('priceFactory', function($http, loginService){
 		});
 	};
 
-	factory.getMatchPrices = function(callback) {
-		var inserturl = serverUrl + '/agp/matchprices/' + loginService.getInfo().terminal;
+	factory.getMatchPrices = function(terminal, callback) {
+		var inserturl = serverUrl + '/agp/matchprices/' + terminal;
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
