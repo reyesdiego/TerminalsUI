@@ -8,6 +8,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
 	$scope.hasta = new Date();
+	$scope.terminoCarga = false;
 	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
@@ -51,7 +52,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 						"cartelCodigos": "panel-success",
 						"resultadoCodigos": [],
 						"totalFacturas": tipoComprobante.data.length,
-						"totalFaltantes": 0
+						"totalFaltantes": 0,
+						"active": 0,
+						"mostrarResultado": 0
 					};
 
 					$scope.control = 0;
@@ -81,22 +84,30 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 								tab.mensajeCodigos = "Se hallaron códigos sin asociar: ";
 								tab.cartelCodigos = "panel-danger";
 								tab.tituloCodigos = "Error";
+								tab.mostrarResultado = 1;
 							}
 						})*/
 					});
 
-					console.log(tab.totalFaltantes);
 					$scope.tabs.push(tab);
 				});
-
+				$scope.tabs[0].active = 1;
 			});
-
-			/*Acá control de tasa a las cargas
-			invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, function(data){
-				$scope.sinTasaCargas = data;
-			})*/
-
+			$scope.terminoCarga = true;
 		})
+
+		$scope.tasaCargas = {
+			"titulo":"Éxito",
+			"cartel": "panel-success",
+			"mensaje": "No se hallaron facturas sin tasa a las cargas",
+			"resultado": [],
+			"mostrarResultado": 0
+		}
+
+		/*Acá control de tasa a las cargas
+		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, function(data){
+		 $scope.sinTasaCargas = data;
+		 })*/
 	};
 
 }
