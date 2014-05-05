@@ -1,7 +1,6 @@
 /**
  * Created by leo on 31/03/14.
  */
-
 function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	'use strict';
 
