@@ -1,7 +1,7 @@
 <div class="row">
 
-	<tabset ng-show="terminoCarga">
-		<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active">
+	<tabset ng-show="terminoCarga" justified="true">
+		<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" >
 
 			<div class="row">
 				<div class="col-lg-11">
@@ -63,6 +63,7 @@
 					</tbody>
 				</table>
 			</div>
+
 		</tab>
 
 		<tab heading="Tasa a las cargas">
@@ -106,6 +107,14 @@
 				</table>
 			</div>
 		</tab>
+
 	</tabset>
+
+	<div class="row" style="float: right">
+		<pie-chart3d data="chartData" title="{{chartTitle}}"
+		           width="{{chartWidth}}" height="{{chartHeight}}"
+		           select="selectRow(selectedRowIndex)"></pie-chart3d>
+	</div>
+
 
 </div>

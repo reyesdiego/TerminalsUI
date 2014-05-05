@@ -12,12 +12,21 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
+
 	$scope.open = function($event, fecha) {
 		$event.preventDefault();
 		$event.stopPropagation();
 		$scope.openFechaDesde = (fecha === 'desde');
 		$scope.openFechaHasta = (fecha === 'hasta');
 	};
+
+	//Datos para los gráficos
+	$scope.chartTitle = "Tipos comprobantes";
+	$scope.chartWidth = 500;
+	$scope.chartHeight = 320;
+	$scope.chartData = [
+		['Tipo de comprobante', 'Total']
+	];
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
@@ -37,7 +46,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 
 			invoiceFactory.getByDate($scope.desde, $scope.hasta, $scope.terminal, function(data) {
 
-				console.log(data);
 				$scope.result = data;
 
 				$scope.result.tipoComprob.forEach(function(tipoComprobante){
@@ -57,12 +65,15 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 						"mostrarResultado": 0
 					};
 
+					var columnaChart = [tipoComprobante.id, 0];
+					var contador = 0;
 					$scope.control = 0;
 
 					//Por ahora se esta realizando el chequeo contra el mock, el algoritmo está hecho suponiendo que
 					//el rango de facturas por fecha viene ordenado, tampoco hay nada que me permita comprobar que el primer
 					//comprobante sea el correcto...
 					tipoComprobante.data.forEach(function(factura){
+						contador+=1;
 						if ($scope.control == 0) {
 							$scope.control = factura.nroComprob;
 						} else {
@@ -89,7 +100,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 						})*/
 					});
 
+					columnaChart[1] = contador;
 					$scope.tabs.push(tab);
+					$scope.chartData.push(columnaChart);
 				});
 				$scope.tabs[0].active = 1;
 			});
@@ -106,8 +119,21 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 
 		/*Acá control de tasa a las cargas
 		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, function(data){
-		 $scope.sinTasaCargas = data;
+		    $scope.tasaCargas.resultado = data;
 		 })*/
+
 	};
 
+	$scope.deleteRow = function (index) {
+		$scope.chartData.splice(index, 1);
+	};
+	$scope.addRow = function () {
+		$scope.chartData.push([]);
+	};
+	$scope.selectRow = function (index) {
+		$scope.selected = index;
+	};
+	$scope.rowClass = function (index) {
+		return ($scope.selected === index) ? "selected" : "";
+	};
 }
