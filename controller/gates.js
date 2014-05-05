@@ -1,7 +1,7 @@
 /**
  * Created by leo on 31/03/14.
  */
-function gatesCtrl($scope, gatesFactory, invoiceFactory){
+function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory){
 	'use strict';
 
 	// Paginacion
@@ -48,16 +48,20 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 
 	// Carga los gates por fechas
 	$scope.cargar = function(){
-		// Setea las fechas para las horas y minutos
-		$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
-		$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
-		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
-		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
-			if (data.status === "OK"){
-				$scope.gates = data.data;
-				$scope.totalItems = data.totalCount;
-			}
-		});
+		if ($scope.myForm.$valid){
+			// Setea las fechas para las horas y minutos
+			$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
+			$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
+			var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
+			gatesFactory.getGateByDayOrContainer(datos, page, function(data){
+				if (data.status === "OK"){
+					$scope.gates = data.data;
+					$scope.totalItems = data.totalCount;
+				}
+			});
+		} else {
+			$dialogs.error('Ingrese fechas validas');
+		}
 	};
 
 	// Carga las facturas de un gate
