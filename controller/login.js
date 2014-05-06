@@ -1,14 +1,15 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-function loginCtrl($scope, $rootScope, userFactory, $state, $dialogs, loginService){
+function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
 	'use strict';
+	$scope.entrando = false;
 
 	$scope.login = function(){
-		userFactory.login($scope.email, $scope.password, function(data){
-				if (data.error == 'AuthError'){
-					$rootScope.esTerminal = false;
-					$dialogs.error('Los datos de inicio de sesión son incorrectos');
+		$scope.entrando = true;
+		userFactory.login($scope.email, $scope.password, function(data, error){
+				if (error){
+					$scope.entrando = false;
 				} else {
 					loginService.setInfo(data);
 					loginService.setStatus(true);
