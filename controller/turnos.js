@@ -30,11 +30,9 @@ function turnosCtrl($scope, turnosFactory){
 	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
-	$scope.open = function($event, fecha) {
+	$scope.open = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();
-		$scope.openFechaDesde = (fecha === 'fechaDesde');
-		$scope.openFechaHasta = (fecha === 'fechaHasta');
 	};
 
 	// Variable para almacenar la info principal que trae del factory
