@@ -24,13 +24,14 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	$scope.chartTitle = "Tipos comprobantes";
 	$scope.chartWidth = 500;
 	$scope.chartHeight = 320;
-	$scope.chartData = [
-		['Tipo de comprobante', 'Total']
-	];
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
 		priceFactory.getMatchPrices($scope.terminal, function(data){
+			$scope.chartData = [
+				['Tipo de comprobante', 'Total']
+			];
+
 			$scope.matchPrices = data;
 			$scope.codigosTerminal = [];
 
@@ -136,4 +137,5 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	$scope.rowClass = function (index) {
 		return ($scope.selected === index) ? "selected" : "";
 	};
+
 }
