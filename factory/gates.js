@@ -1,7 +1,7 @@
 /**
  * Created by leo on 14/04/14.
  */
-myapp.factory('gatesFactory', function($http, formatDate){
+myapp.factory('gatesFactory', function($http, $dialogs, formatDate){
 	var factory = {};
 
 	factory.getGateByDayOrContainer = function(datos, page, callback){
@@ -15,8 +15,9 @@ myapp.factory('gatesFactory', function($http, formatDate){
 			.success(function(data){
 				console.log(data);
 				callback(data);
-			}).error(function(){
-				console.log('Error al cargar Gates')
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista de Gates');
 			});
 	};
 

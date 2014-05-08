@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http){
+myapp.factory('controlPanelFactory', function($http, $dialogs){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -10,8 +10,9 @@ myapp.factory('controlPanelFactory', function($http){
 		$http.get(inserturl)
 			.success(function(data){
 				callback(data);
-			}).error(function(){
-				console.log('Error al cargar lista por día')
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar lista por día');
 			});
 	};
 
@@ -20,8 +21,9 @@ myapp.factory('controlPanelFactory', function($http){
 		$http.get('mocks/totales.json')
 			.success(function (data){
 				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista PriceList');
 			});
 
 	};
@@ -31,8 +33,9 @@ myapp.factory('controlPanelFactory', function($http){
 		$http.get('mocks/totales.json')
 			.success(function (data){
 				return data;
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista PriceList');
 			});
 	};
 

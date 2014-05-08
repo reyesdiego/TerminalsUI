@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http, loginService, formatDate){
+myapp.factory('invoiceFactory', function($http, $dialogs, loginService, formatDate){
 	var factory = {};
 
 	factory.getInvoice = function(page, callback) {
@@ -14,9 +14,9 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 		}).success(function(data) {
 			console.log(data);
 			callback(data);
-		}).error(function(response) {
-			console.log(response);
-			console.log("Error al cargar la lista Invoice");
+		}).error(function(errorText) {
+			console.log(errorText);
+			$dialogs.error('Error al cargar la lista Invoice');
 		});
 	};
 
@@ -31,9 +31,9 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 		}).success(function(data) {
 			console.log(data);
 			callback(data);
-		}).error(function(response) {
-			console.log(response);
-			console.log("Error al cargar la lista Invoice");
+		}).error(function(errorText) {
+			console.log(errorText);
+			$dialogs.error('Error al cargar la lista Invoice');
 		});
 	};
 
@@ -42,8 +42,9 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 		$http.get('mocks/correlativo.json')
 			.success(function (data){
 				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error("Error al cargar la lista PriceList");
 			});
 	};
 
@@ -52,8 +53,9 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 		$http.get('mocks/correlativo.json')
 			.success(function (data){
 				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error("Error al cargar la lista PriceList");
 			});
 	};
 
@@ -86,9 +88,9 @@ myapp.factory('invoiceFactory', function($http, loginService, formatDate){
 		}).success(function(data) {
 			console.log(data);
 			callback(data);
-		}).error(function(response) {
-			console.log(response);
-			console.log("Error al buscar Invoice");
+		}).error(function(errorText) {
+			console.log(errorText);
+			$dialogs.error("Error al buscar Invoice");
 		});
 	};
 
