@@ -1,7 +1,7 @@
 /**
  * Created by leo on 28/04/14.
  */
-function turnosCtrl($scope, turnosFactory){
+function turnosCtrl($scope, $dialogs, turnosFactory){
 	'use strict';
 
 	// Paginacion
@@ -40,16 +40,20 @@ function turnosCtrl($scope, turnosFactory){
 
 	// Carga los turnos por fechas
 	$scope.cargar = function(){
-		// Setea las fechas para las horas y minutos
-		$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
-		$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
-		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
-		turnosFactory.getTurnosByDatesOrContainer(datos, page0, function(data){
-			if (data.status === "OK"){
-				$scope.turnos = data.data;
-				$scope.totalItems = data.totalCount;
-			}
-		});
+		if ($scope.myForm.$valid){
+			// Setea las fechas para las horas y minutos
+			$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
+			$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
+			var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
+			turnosFactory.getTurnosByDatesOrContainer(datos, page0, function(data){
+				if (data.status === "OK"){
+					$scope.turnos = data.data;
+					$scope.totalItems = data.totalCount;
+				}
+			});
+		} else {
+			$dialogs.error('Ingrese fechas validas');
+		}
 	};
 
 	$scope.$watch('currentPage + itemsPerPage', function(){

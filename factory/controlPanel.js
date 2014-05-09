@@ -10,8 +10,9 @@ myapp.factory('controlPanelFactory', function($http){
 		$http.get(inserturl)
 			.success(function(data){
 				callback(data);
-			}).error(function(){
-				console.log('Error al cargar lista por día')
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar lista por día');
 			});
 	};
 
@@ -20,8 +21,9 @@ myapp.factory('controlPanelFactory', function($http){
 		$http.get('mocks/totales.json')
 			.success(function (data){
 				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista PriceList');
 			});
 
 	};

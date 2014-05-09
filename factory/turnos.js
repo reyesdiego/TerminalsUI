@@ -1,7 +1,7 @@
 /**
  * Created by leo on 28/04/14.
  */
-myapp.factory('turnosFactory', function($http, formatDate){
+myapp.factory('turnosFactory', function($http, $dialogs, formatDate){
 	var factory = {};
 
 	factory.getTurnosByDatesOrContainer = function(datos, page, callback){
@@ -15,8 +15,9 @@ myapp.factory('turnosFactory', function($http, formatDate){
 			.success(function(data){
 				console.log(data);
 				callback(data);
-			}).error(function(){
-				console.log('Error al cargar Gates')
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista de Turnos');
 			});
 	};
 
