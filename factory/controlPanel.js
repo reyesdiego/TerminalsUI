@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http){
+myapp.factory('controlPanelFactory', function($http, $dialogs){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
