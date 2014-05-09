@@ -13,22 +13,11 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 				token: loginService.getToken()
 			}
 		}).success(function (data){
-			callback(data);
+			callback(data.data);
 		}).error(function(errorText){
 			console.log(errorText);
 			$dialogs.error('Error al cargar la lista');
 		});
-	};
-
-	factory.getMatchPrices = function(terminal, callback) {
-		var inserturl = serverUrl + '/agp/matchprices/' + terminal;
-		$http.get(inserturl)
-			.success(function (data){
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				$dialogs.error('Error al cargar la lista');
-			});
 	};
 
 	factory.addMatchPrice = function (data, callback) {
