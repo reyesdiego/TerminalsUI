@@ -123,6 +123,9 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/matchprices.html",
 			controller: matchPricesCtrl
 		})
+		.state('matches.search',{
+			templateUrl: "view/matchprices.html"
+		})
 		.state('control', {
 			url: "/control",
 			templateUrl: "view/control.html",

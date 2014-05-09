@@ -154,4 +154,17 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 		$scope.flagGuardado = true;
 	};
 
+	// Busca la Tarifa por cualquiera de los datos ingresados
+	$scope.search = function (){
+		var datos = {
+			'codigo': $scope.codigo,
+			'codigoAsociado': $scope.codigoAsociado
+		};
+		priceFactory.searchInvoice(datos, function(data){
+			if(data.status === 'OK'){
+				$scope.pricelist = data.data;
+			}
+		})
+	};
+
 }

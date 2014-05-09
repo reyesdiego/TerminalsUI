@@ -65,6 +65,30 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 		});
 	};
 
+	factory.searchMatch = function(data, callback){
+		var inserturl = serverUrl + '/matchprice/' + '?'; // El que se va a usar
+		var insertAux = inserturl;
+		if(angular.isDefined(datos.codigo)){
+			inserturl = inserturl + 'codigo=' + datos.nroComprobante;
+		}
+		if(angular.isDefined(datos.codigoAsociado)){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'codigoAsociado=' + datos.razonSocial;
+		}
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function(data) {
+			console.log(data);
+			callback(data);
+		}).error(function(errorText) {
+			console.log(errorText);
+			$dialogs.error("Error al buscar la Tarifa");
+		});
+	};
+
 	return factory;
 
 });
