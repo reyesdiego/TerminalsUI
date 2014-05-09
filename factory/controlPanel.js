@@ -28,16 +28,5 @@ myapp.factory('controlPanelFactory', function($http, $dialogs){
 
 	};
 
-	factory.getTotales2 = function(){
-		//Por ahora trabaja solo con un mock
-		$http.get('mocks/totales.json')
-			.success(function (data){
-				return data;
-			}).error(function(errorText){
-				console.log(errorText);
-				$dialogs.error('Error al cargar la lista PriceList');
-			});
-	};
-
 	return factory;
 });
