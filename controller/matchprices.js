@@ -37,18 +37,18 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 
 	$scope.agregarCodigo = function(price){
 		if (price.match == null){
-			$scope.nuevoMatch = { codes:[{
+			$scope.nuevoMatch = {
 				terminal: loginService.getInfo().terminal,
-				codes: []}],
+				codes: []},
 				id: price.id,
 				flagGuardar: true,
 				claseFila: "success"
 			};
-			$scope.nuevoMatch.codes[0].codes.push(price.new);
+			$scope.nuevoMatch.codes.push(price.new);
 			price.match = $scope.nuevoMatch;
 		} else {
-			if (!price.match.codes[0].codes.contains(price.new) && !(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
-				price.match.codes[0].codes.push(price.new);
+			if (!price.match.codes.contains(price.new) && !(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
+				price.match.codes.push(price.new);
 				price.match.flagGuardar = true;
 				price.match.claseFila = "success";
 			}
