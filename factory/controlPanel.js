@@ -28,5 +28,38 @@ myapp.factory('controlPanelFactory', function($http, $dialogs){
 
 	};
 
+	factory.getFacturasMeses = function(callback){
+		$http.get('mocks/mesesFacturas.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista PriceList');
+			});
+
+	}
+
+	factory.getGatesMeses = function(callback){
+		$http.get('mocks/mesesGates.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista PriceList');
+			});
+
+	}
+
+	factory.getTurnosMeses = function(callback){
+		$http.get('mocks/mesesTurnos.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista PriceList');
+			});
+
+	}
+
 	return factory;
 });
