@@ -22,14 +22,13 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
 	$scope.format = $scope.formats[1];
-	$scope.open = function($event, fecha) {
+	$scope.open = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();
-		$scope.openFechaDesde = (fecha === 'fechaDesde');
 	};
 
 	// Trae las facturas disponibles
-	invoiceFactory.getInvoice(page0, function(data){
+	invoiceFactory.getInvoice('', page0, function(data){
 		if(data.status === 'OK'){
 			$scope.invoices = data.data;
 			$scope.totalItems = data.totalCount;
@@ -44,7 +43,7 @@ function invoicesCtrl ($scope, invoiceFactory) {
 			'documentoCliente': $scope.documentoCliente,
 			'fecha': $scope.fechaDesde
 		};
-		invoiceFactory.searchInvoice(datos, page0, function(data){
+		invoiceFactory.getInvoice(datos, page0, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 			}
@@ -53,7 +52,7 @@ function invoicesCtrl ($scope, invoiceFactory) {
 
 	$scope.$watch('currentPage + itemsPerPage', function(){
 		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		invoiceFactory.getInvoice(page, function(data){
+		invoiceFactory.getInvoice('', page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 			}

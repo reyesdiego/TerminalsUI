@@ -4,65 +4,23 @@
 myapp.factory('invoiceFactory', function($http, $dialogs, loginService, formatDate){
 	var factory = {};
 
-	factory.getInvoice = function(page, callback) {
-		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit;
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data) {
-			console.log(data);
-			callback(data);
-		}).error(function(errorText) {
-			console.log(errorText);
-			$dialogs.error('Error al cargar la lista Invoice');
-		});
-	};
-
-	factory.getInvoiceByContainer = function(container, page, callback) {
-		//var inserturl = serverUrl + '/invoices?contenedor=' + container; // El que se va a usar
-		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit;
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data) {
-			console.log(data);
-			callback(data);
-		}).error(function(errorText) {
-			console.log(errorText);
-			$dialogs.error('Error al cargar la lista Invoice');
-		});
-	};
-
-	factory.getByDate = function(desde, hasta, terminal, callback) {
-		//Por ahora trabaja solo con un mock
-		$http.get('mocks/correlativo.json')
-			.success(function (data){
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				$dialogs.error("Error al cargar la lista PriceList");
-			});
-	};
-
-	factory.getSinTasaCargas = function(desde, hasta, terminal, callback){
-		"use strict";
-		$http.get('mocks/correlativo.json')
-			.success(function (data){
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				$dialogs.error("Error al cargar la lista PriceList");
-			});
-	};
-
-	factory.searchInvoice = function(datos, page, callback){
+	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		var insertAux = inserturl;
+		if(angular.isDefined(datos.codigo)){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'codigo=' + datos.codigo;
+		}
+		if(angular.isDefined(datos.codigoAsociado)){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'codigoAsociado=' + datos.codigoAsociado;
+		}
+		if(angular.isDefined(datos.contenedor)){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'contenedor=' + datos.contenedor;
+		}
 		if(angular.isDefined(datos.nroComprobante)){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'nroComprobante=' + datos.nroComprobante;
 		}
 		if(angular.isDefined(datos.razonSocial)){
@@ -90,8 +48,29 @@ myapp.factory('invoiceFactory', function($http, $dialogs, loginService, formatDa
 			callback(data);
 		}).error(function(errorText) {
 			console.log(errorText);
-			$dialogs.error("Error al buscar Invoice");
+			$dialogs.error('Error al cargar la lista Invoice');
 		});
+	};
+
+	factory.getByDate = function(desde, hasta, terminal, callback) {
+		//Por ahora trabaja solo con un mock
+		$http.get('mocks/correlativo.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error("Error al cargar la lista PriceList");
+			});
+	};
+
+	factory.getSinTasaCargas = function(desde, hasta, terminal, callback){
+		$http.get('mocks/correlativo.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error("Error al cargar la lista PriceList");
+			});
 	};
 
 	return factory;

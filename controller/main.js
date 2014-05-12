@@ -115,16 +115,10 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('invoices.result', {
 			templateUrl: "view/invoices.result.html"
 		})
-		.state('invoices.search', {
-			templateUrl: "view/invoices.html"
-		})
 		.state('matches', {
 			url: "/match",
 			templateUrl: "view/matchprices.html",
 			controller: matchPricesCtrl
-		})
-		.state('matches.search',{
-			templateUrl: "view/matchprices.html"
 		})
 		.state('control', {
 			url: "/control",
