@@ -49,7 +49,7 @@
 							<td>{{ price._id }}</td>
 							<td>{{ price.description }}</td>
 							<td>
-								<span ng-repeat="codigo in price.match[0].codes track by $index"><a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a><span ng-show="!$last">, </span></span>
+								<span ng-repeat="codigo in price.match.codes track by $index"><a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a><span ng-show="!$last">, </span></span>
 							</td>
 							<td>
 								<div class="col-lg-9">

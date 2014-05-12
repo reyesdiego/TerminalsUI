@@ -39,8 +39,8 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 		if (price.match == null){
 			$scope.nuevoMatch = {
 				terminal: loginService.getInfo().terminal,
-				codes: []},
-				id: price.id,
+				codes: [],
+				_id: price._id,
 				flagGuardar: true,
 				claseFila: "success"
 			};
@@ -80,7 +80,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 		var prices = $scope.filteredPrices;
 		prices.forEach(function(item){
 			if (item.match != null && item.match.flagGuardar){
-				item.match._id = item.match.id;
+				item.match._id = item.match._id;
 				$scope.match.push(item.match);
 				item.match.flagGuardar = false;
 				item.match.claseFila = "";
@@ -118,14 +118,14 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 			var nuevoMatch = { codes:[{
 				terminal: loginService.getInfo().terminal,
 				codes: []}],
-				id: nuevoPrecio.id
+				_id: nuevoPrecio._id
 			};
 
-			nuevoMatch.codes[0].codes.push($scope.codigo);
+			nuevoMatch.codes.push($scope.codigo);
 			nuevoPrecio.match = nuevoMatch;
 
 			$scope.match = [];
-			nuevoPrecio.match._id = nuevoPrecio.match.id;
+			nuevoPrecio.match._id = nuevoPrecio.match._id;
 			$scope.match.push(nuevoPrecio.match);
 
 			priceFactory.addMatchPrice($scope.match, function(trash){
