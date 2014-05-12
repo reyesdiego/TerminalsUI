@@ -2,14 +2,29 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function controlCtrl($scope, datosGrafico, controlPanelFactory){
+function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, controlPanelFactory){
 	'use strict';
 	var fecha = new Date();
 
 	$scope.chartTitle = "Datos enviados";
-	$scope.chartWidth = 500;
+	$scope.chartWidth = 360;
 	$scope.chartHeight = 320;
 	$scope.chartData = datosGrafico;
+
+	$scope.chartTitleFacturas = "Facturas";
+	$scope.chartWidthFacturas = 580;
+	$scope.chartHeightFacturas = 320;
+	$scope.chartDataFacturas = datosGraficoFacturas;
+
+	$scope.chartTitleGates = "Gates";
+	$scope.chartWidthGates = 580;
+	$scope.chartHeightGates = 320;
+	$scope.chartDataGates = datosGraficoGates;
+
+	$scope.chartTitleTurnos = "Turnos";
+	$scope.chartWidthTurnos = 580;
+	$scope.chartHeightTurnos = 320;
+	$scope.chartDataTurnos = datosGraficoTurnos;
 
 	$scope.deleteRow = function (index) {
 		$scope.chartData.splice(index, 1);

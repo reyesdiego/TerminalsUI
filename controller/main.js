@@ -144,6 +144,66 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 						defer.resolve(base);
 					})
 					return defer.promise;
+				},
+				datosGraficoFacturas: function (controlPanelFactory, $q){
+					var defer = $q.defer();
+					controlPanelFactory.getFacturasMeses(function(graf){
+						var base = [
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+						];
+						var i = 1;
+						graf.data.forEach(function(datosMes){
+							var fila = [datosMes.mes, 0, 0, 0, ''];
+							datosMes.datos.forEach(function(terminal){
+								fila[i] = terminal.facturas;
+								i++;
+							})
+							base.push(fila);
+							i = 1;
+						})
+						defer.resolve(base);
+					})
+					return defer.promise;
+				},
+				datosGraficoGates: function (controlPanelFactory, $q){
+					var defer = $q.defer();
+					controlPanelFactory.getGatesMeses(function(graf){
+						var base = [
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+						];
+						var i = 1;
+						graf.data.forEach(function(datosMes){
+							var fila = [datosMes.mes, 0, 0, 0, ''];
+							datosMes.datos.forEach(function(terminal){
+								fila[i] = terminal.gates;
+								i++;
+							})
+							base.push(fila);
+							i = 1;
+						})
+						defer.resolve(base);
+					})
+					return defer.promise;
+				},
+				datosGraficoTurnos: function (controlPanelFactory, $q){
+					var defer = $q.defer();
+					controlPanelFactory.getTurnosMeses(function(graf){
+						var base = [
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+						];
+						var i = 1;
+						graf.data.forEach(function(datosMes){
+							var fila = [datosMes.mes, 0, 0, 0, ''];
+							datosMes.datos.forEach(function(terminal){
+								fila[i] = terminal.turnos;
+								i++;
+							})
+							base.push(fila);
+							i = 1;
+						})
+						defer.resolve(base);
+					})
+					return defer.promise;
 				}
 			}
 		})

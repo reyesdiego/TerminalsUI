@@ -1,0 +1,63 @@
+{
+	"data": [{
+		"mes": "Enero",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"facturas": 1584
+		},{
+			"terminal": "TRP",
+			"facturas": 1305
+		},{
+			"terminal": "Terminal 4",
+			"facturas": 1749
+		}]
+	},{
+		"mes": "Febrero",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"facturas": 2489
+		},{
+			"terminal": "TRP",
+			"facturas": 1896
+		},{
+			"terminal": "Terminal 4",
+			"facturas": 1345
+		}]
+	},{
+		"mes": "Marzo",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"facturas": 1147
+		},{
+			"terminal": "TRP",
+			"facturas": 2568
+		},{
+			"terminal": "Terminal 4",
+			"facturas": 1684
+		}]
+	},{
+		"mes": "Abril",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"facturas": 1830
+		},{
+			"terminal": "TRP",
+			"facturas": 2048
+		},{
+			"terminal": "Terminal 4",
+			"facturas": 1023
+		}]
+	}, {
+		"mes": "Mayo",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"facturas": 348
+		},{
+			"terminal": "TRP",
+			"facturas": 483
+		},{
+			"terminal": "Terminal 4",
+			"facturas": 687
+		}]
+	}]
+}

@@ -1,0 +1,63 @@
+{
+	"data": [{
+		"mes": "Enero",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"turnos": 764
+		},{
+			"terminal": "TRP",
+			"turnos": 540
+		},{
+			"terminal": "Terminal 4",
+			"turnos": 860
+		}]
+	},{
+		"mes": "Febrero",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"turnos": 865
+		},{
+			"terminal": "TRP",
+			"turnos": 990
+		},{
+			"terminal": "Terminal 4",
+			"turnos": 575
+		}]
+	},{
+		"mes": "Marzo",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"turnos": 650
+		},{
+			"terminal": "TRP",
+			"turnos": 300
+		},{
+			"terminal": "Terminal 4",
+			"turnos": 900
+		}]
+	},{
+		"mes": "Abril",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"turnos": 420
+		},{
+			"terminal": "TRP",
+			"turnos": 950
+		},{
+			"terminal": "Terminal 4",
+			"turnos": 600
+		}]
+	}, {
+		"mes": "Mayo",
+		"datos": [{
+			"terminal": "BACTSSA",
+			"turnos": 1250
+		},{
+			"terminal": "TRP",
+			"turnos": 800
+		},{
+			"terminal": "Terminal 4",
+			"turnos": 860
+		}]
+	}]
+}
