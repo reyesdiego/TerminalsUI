@@ -15,7 +15,7 @@ function pricelistCtrl($scope, priceFactory){
 	$scope.filteredPrices = [];
 
 	priceFactory.getPrice(function (data) {
-		$scope.pricelist = data;
+		$scope.pricelist = data.data;
 		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 		$scope.totalItems = $scope.pricelist.length;
 

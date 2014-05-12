@@ -9,11 +9,10 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 		$http({
 			method: 'GET',
 			url: inserturl,
-			headers: {
-				token: loginService.getToken()
-			}
+			headers: { token: loginService.getToken() }
 		}).success(function (data){
-			callback(data.data);
+			console.log(data);
+			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);
 			$dialogs.error('Error al cargar la lista');
@@ -54,21 +53,20 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 		});
 	};
 
-	factory.searchMatch = function(data, callback){
-		var inserturl = serverUrl + '/matchprice/' + '?'; // El que se va a usar
+	factory.searchMatch = function(datos, callback){
+		var inserturl = serverUrl + '/agp/prices' + '?'; // El que se va a usar
 		var insertAux = inserturl;
 		if(angular.isDefined(datos.codigo)){
-			inserturl = inserturl + 'codigo=' + datos.nroComprobante;
+			inserturl = inserturl + 'code=' + datos.codigo;
 		}
 		if(angular.isDefined(datos.codigoAsociado)){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'codigoAsociado=' + datos.razonSocial;
+			inserturl = inserturl + 'matchCode=' + datos.codigoAsociado;
 		}
 		$http({
 			method: 'GET',
 			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
+			headers: {token: loginService.getToken()}
 		}).success(function(data) {
 			console.log(data);
 			callback(data);

@@ -115,16 +115,10 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('invoices.result', {
 			templateUrl: "view/invoices.result.html"
 		})
-		.state('invoices.search', {
-			templateUrl: "view/invoices.html"
-		})
 		.state('matches', {
 			url: "/match",
 			templateUrl: "view/matchprices.html",
 			controller: matchPricesCtrl
-		})
-		.state('matches.search',{
-			templateUrl: "view/matchprices.html"
 		})
 		.state('control', {
 			url: "/control",
@@ -147,6 +141,66 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 							base[i] = [terminal.nombre, terminal.invoices, terminal.gates, terminal.turnos, ''];
 							i++;
 						});
+						defer.resolve(base);
+					})
+					return defer.promise;
+				},
+				datosGraficoFacturas: function (controlPanelFactory, $q){
+					var defer = $q.defer();
+					controlPanelFactory.getFacturasMeses(function(graf){
+						var base = [
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+						];
+						var i = 1;
+						graf.data.forEach(function(datosMes){
+							var fila = [datosMes.mes, 0, 0, 0, ''];
+							datosMes.datos.forEach(function(terminal){
+								fila[i] = terminal.facturas;
+								i++;
+							})
+							base.push(fila);
+							i = 1;
+						})
+						defer.resolve(base);
+					})
+					return defer.promise;
+				},
+				datosGraficoGates: function (controlPanelFactory, $q){
+					var defer = $q.defer();
+					controlPanelFactory.getGatesMeses(function(graf){
+						var base = [
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+						];
+						var i = 1;
+						graf.data.forEach(function(datosMes){
+							var fila = [datosMes.mes, 0, 0, 0, ''];
+							datosMes.datos.forEach(function(terminal){
+								fila[i] = terminal.gates;
+								i++;
+							})
+							base.push(fila);
+							i = 1;
+						})
+						defer.resolve(base);
+					})
+					return defer.promise;
+				},
+				datosGraficoTurnos: function (controlPanelFactory, $q){
+					var defer = $q.defer();
+					controlPanelFactory.getTurnosMeses(function(graf){
+						var base = [
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+						];
+						var i = 1;
+						graf.data.forEach(function(datosMes){
+							var fila = [datosMes.mes, 0, 0, 0, ''];
+							datosMes.datos.forEach(function(terminal){
+								fila[i] = terminal.turnos;
+								i++;
+							})
+							base.push(fila);
+							i = 1;
+						})
 						defer.resolve(base);
 					})
 					return defer.promise;

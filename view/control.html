@@ -58,9 +58,29 @@
 		</div>
 
 		<div class="col-lg-3">
-			<column-chart data="chartData" title="{{chartTitle}}"
+			<column-chart-stack data="chartData" title="{{chartTitle}}"
 			           width="{{chartWidth}}" height="{{chartHeight}}"
-			           select="selectRow(selectedRowIndex)"></column-chart>
+			           select="selectRow(selectedRowIndex)"></column-chart-stack>
+		</div>
+
+		<div class="col-lg-6">
+			<column-chart data="chartDataFacturas" title="{{chartTitleFacturas}}"
+			              width="{{chartWidthFacturas}}" height="{{chartHeightFacturas}}"
+			              select="selectRow(selectedRowIndexFacturas)"></column-chart>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6">
+			<column-chart data="chartDataGates" title="{{chartTitleGates}}"
+			              width="{{chartWidthGates}}" height="{{chartHeightGates}}"
+			              select="selectRow(selectedRowIndexGates)"></column-chart>
+		</div>
+
+		<div class="col-lg-3">
+			<column-chart data="chartDataTurnos" title="{{chartTitleTurnos}}"
+			              width="{{chartWidthTurnos}}" height="{{chartHeightTurnos}}"
+			              select="selectRow(selectedRowIndexTurnos)"></column-chart>
 		</div>
 	</div>
 

@@ -22,7 +22,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	$scope.filteredPrices = [];
 
 	priceFactory.getPrice(function (data) {
-		$scope.pricelist = data;
+		$scope.pricelist = data.data;
 		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 
 		$scope.totalItems = $scope.pricelist.length;
@@ -160,9 +160,9 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 			'codigo': $scope.codigo,
 			'codigoAsociado': $scope.codigoAsociado
 		};
-		priceFactory.searchInvoice(datos, function(data){
-			if(data.status === 'OK'){
-				$scope.pricelist = data.data;
+		priceFactory.searchMatch(datos, function(data){
+			if(data.status === 'OK' || data.status == 200){
+				$scope.filteredPrices = data.data;
 			}
 		})
 	};
