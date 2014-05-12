@@ -67,10 +67,14 @@ function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory){
 	// Carga las facturas de un gate
 	$scope.ver = function(container){
 		$scope.containerHide = !$scope.containerHide;
-		invoiceFactory.getInvoiceByContainer(container, page0, function(data){
+		var datos = {
+			'contenedor': container
+		};
+		invoiceFactory.getInvoice(datos, page0, function(data){
 			if(data.status === 'OK'){
-				$scope.gates = data.data;
+				$scope.invoices = data.data;
 				$scope.totalItems = data.totalCount;
+				$scope.busquedaContenedor = true;
 			}
 		});
 	};
