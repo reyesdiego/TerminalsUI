@@ -70,6 +70,7 @@ function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory){
 		var datos = {
 			'contenedor': container
 		};
+		$scope.contenedor = container;
 		invoiceFactory.getInvoice(datos, page0, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;

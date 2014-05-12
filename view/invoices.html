@@ -1,7 +1,7 @@
 <!--<input type="text" ng-model="search" class="search-query" placeholder="Search">>-->
 <div class="container">
 
-	<div class="row hidden-print">
+	<div class="row hidden-print" ng-hide="busquedaContenedor">
 		<div class="col-lg-11">
 			<div class="xpage-header">
 				<h1 id="forms">Facturas</h1>
@@ -35,6 +35,9 @@
 						<button type="button" class="btn btn-primary" ng-click="search()">Buscar</button>
 					</div>
 				</div>
+			</div>
+			<div ng-show="busquedaContenedor">
+				<legend>Facturas del contenedor {{ contenedor }}</legend>
 			</div>
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
