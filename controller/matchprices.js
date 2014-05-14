@@ -20,36 +20,49 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	$scope.nuevoConcepto = true;
 
 	$scope.filteredPrices = [];
+	$scope.matchesTerminal = [];
 
 	buscar(null);
 
 	$scope.agregarCodigo = function(price){
-		if (price.match == null){
-			$scope.nuevoMatch = {
-				terminal: loginService.getInfo().terminal,
-				codes: [],
-				_id: price._id,
-				flagGuardar: true,
-				claseFila: "success"
-			};
-			$scope.nuevoMatch.codes.push(price.new);
-			price.match = $scope.nuevoMatch;
-		} else {
-			if (!price.match.codes.contains(price.new) && !(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
-				price.match.codes.push(price.new);
-				price.match.flagGuardar = true;
-				price.match.claseFila = "success";
+		price.new = price.new.toUpperCase();
+		if (!$scope.matchesTerminal.contains(price.new)){
+			if (price.matches == null){
+				$scope.nuevoMatch = [{
+					terminal: loginService.getInfo().terminal,
+					match: [],
+					price: price._id,
+					flagGuardar: true,
+					claseFila: "success"
+				}];
+				$scope.nuevoMatch[0].match.push(price.new);
+				price.matches = $scope.nuevoMatch;
+			} else {
+				if (!(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
+					price.matches[0].match.push(price.new);
+					price.matches[0].flagGuardar = true;
+					price.matches[0].claseFila = "success";
+				}
 			}
+			$scope.matchesTerminal.push(price.new);
+			$scope.flagCambios = true;
+		} else{
+			$dialogs.notify("Asociar","El código ingresado ya se encuentra asociado a otra tarifa");
 		}
-		$scope.flagCambios = true;
 		price.new = ''
 	};
 
 	$scope.borrar = function(price, codigo){
-		var pos = price.match.codes[0].codes.indexOf(codigo);
-		pos > -1 && price.match.codes[0].codes.splice( pos, 1 );
-		price.match.claseFila = "warning";
-		price.match.flagGuardar = true;
+		//Elimino el código del match
+		var pos = price.matches[0].match.indexOf(codigo);
+		price.matches[0].match.splice( pos, 1 );
+
+		//Elimino el código de la lista de todos los códigos asociados
+		pos = $scope.matchesTerminal.indexOf(codigo);
+		$scope.matchesTerminal.splice(pos, 1);
+
+		price.matches[0].claseFila = "warning";
+		price.matches[0].flagGuardar = true;
 		$scope.flagCambios = true;
 	};
 
@@ -159,6 +172,17 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	function buscar(datos){
 		priceFactory.getMatchPrices(loginService.getInfo().terminal, datos, function (data) {
 			$scope.pricelist = data.data;
+
+			//Cargo todos los códigos ya asociados de la terminal para control
+			$scope.pricelist.forEach(function(price){
+				if (price.matches != null){
+					price.matches[0].match.forEach(function(codigo){
+						$scope.matchesTerminal.push(codigo);
+					})
+				}
+			})
+
+			console.log($scope.matchesTerminal);
 			$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 
 			$scope.totalItems = $scope.pricelist.length;

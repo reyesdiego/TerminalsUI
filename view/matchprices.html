@@ -45,7 +45,7 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr ng-repeat="price in filteredPrices" class="{{ price.match.claseFila }}">
+						<tr ng-repeat="price in filteredPrices" class="{{ price.matches[0].claseFila }}">
 							<td>{{ price.code }}</td>
 							<td>{{ price.description }}</td>
 							<td>
