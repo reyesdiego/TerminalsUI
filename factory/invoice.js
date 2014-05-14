@@ -7,31 +7,23 @@ myapp.factory('invoiceFactory', function($http, $dialogs, loginService, formatDa
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		var insertAux = inserturl;
-		if(angular.isDefined(datos.codigo)){
+		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'codigo=' + datos.codigo;
+			inserturl = inserturl + 'contenedor=' + datos.contenedor.toUpperCase();
 		}
-		if(angular.isDefined(datos.codigoAsociado)){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'codigoAsociado=' + datos.codigoAsociado;
-		}
-		if(angular.isDefined(datos.contenedor)){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'contenedor=' + datos.contenedor;
-		}
-		if(angular.isDefined(datos.nroComprobante)){
+		if(angular.isDefined(datos.nroComprobante) && datos.nroComprobante != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'nroComprobante=' + datos.nroComprobante;
 		}
-		if(angular.isDefined(datos.razonSocial)){
+		if(angular.isDefined(datos.razonSocial) && datos.razonSocial != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'razonSocial=' + datos.razonSocial;
+			inserturl = inserturl + 'razonSocial=' + datos.razonSocial.toUpperCase();
 		}
-		if(angular.isDefined(datos.documentoCliente)){
+		if(angular.isDefined(datos.documentoCliente) && datos.documentoCliente != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'documentoCliente=' + datos.documentoCliente;
 		}
-		if(angular.isDefined(datos.fecha) && datos.fecha != null){
+		if(angular.isDefined(datos.fecha) && datos.fecha != null && datos.fecha != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFecha(datos.fecha);
 			var fechaFin = new Date(datos.fecha);

@@ -5,11 +5,18 @@ myapp.factory('gatesFactory', function($http, $dialogs, formatDate){
 	var factory = {};
 
 	factory.getGateByDayOrContainer = function(datos, page, callback){
-		var inserturl = serverUrl + '/gates/' + page.skip + '/' + page.limit;
-		inserturl = inserturl + '?fechaInicio=' + formatDate.formatearFechaHorasMinutos(datos.fechaDesde);
-		inserturl = inserturl + '&fechaFin=' + formatDate.formatearFechaHorasMinutos(datos.fechaHasta);
-		if(angular.isDefined(datos.contenedor)){
-			inserturl = inserturl + '&contenedor=' + datos.contenedor;
+		var inserturl = serverUrl + '/gates/' + page.skip + '/' + page.limit + '?';
+		var insertAux = inserturl;
+		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != ''){
+			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutos(datos.fechaDesde);
+		}
+		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != ''){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'fechaFin=' + formatDate.formatearFechaHorasMinutos(datos.fechaHasta);
+		}
+		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'contenedor=' + datos.contenedor.toUpperCase();
 		}
 		$http.get(inserturl)
 			.success(function(data){
