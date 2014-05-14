@@ -80,11 +80,11 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 		$scope.match = [];
 		var prices = $scope.filteredPrices;
 		prices.forEach(function(item){
-			if (item.matches != null && item.matches[0].flagGuardar){
+			if (item.matches != null && item.matches.length > 0 && item.matches[0].flagGuardar){
 				//item.match._id = item.match._id;
 				$scope.match.push(item.matches[0]);
-				item.match.flagGuardar = false;
-				item.match.claseFila = "";
+				item.matches[0].flagGuardar = false;
+				item.matches[0].claseFila = "";
 			}
 		});
 		if ($scope.flagCambios){
@@ -175,7 +175,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 
 			//Cargo todos los códigos ya asociados de la terminal para control
 			$scope.pricelist.forEach(function(price){
-				if (price.matches != null && prices.matches.length > 0){
+				if (price.matches != null && price.matches.length > 0){
 					price.matches[0].match.forEach(function(codigo){
 						$scope.matchesTerminal.push(codigo);
 					})
