@@ -19,6 +19,32 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 		});
 	};
 
+	factory.getMatchPrices = function(terminal, datos, callback) {
+		var inserturl = serverUrl + '/agp/matchprices/' + terminal;
+
+		if (datos && datos != null){
+			inserturl += '?'
+			if(angular.isDefined(datos.codigo)){
+				inserturl = inserturl + 'code=' + datos.codigo;
+			}
+			if(angular.isDefined(datos.codigoAsociado)){
+				if(inserturl != insertAux){ inserturl = inserturl + '&'}
+				inserturl = inserturl + 'matchCode=' + datos.codigoAsociado;
+			}
+		}
+
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers: { token: loginService.getToken() }
+		}).success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				$dialogs.error('Error al cargar la lista');
+			});
+	};
+
 	factory.addMatchPrice = function (data, callback) {
 		var inserturl = serverUrl + '/agp/matchprice';
 		$http({
