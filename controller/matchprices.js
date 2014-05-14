@@ -80,9 +80,9 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 		$scope.match = [];
 		var prices = $scope.filteredPrices;
 		prices.forEach(function(item){
-			if (item.match != null && item.match.flagGuardar){
-				item.match._id = item.match._id;
-				$scope.match.push(item.match);
+			if (item.matches != null && item.matches[0].flagGuardar){
+				//item.match._id = item.match._id;
+				$scope.match.push(item.matches[0]);
 				item.match.flagGuardar = false;
 				item.match.claseFila = "";
 			}
@@ -175,14 +175,13 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 
 			//Cargo todos los códigos ya asociados de la terminal para control
 			$scope.pricelist.forEach(function(price){
-				if (price.matches != null){
+				if (price.matches != null && prices.matches.length > 0){
 					price.matches[0].match.forEach(function(codigo){
 						$scope.matchesTerminal.push(codigo);
 					})
 				}
 			})
 
-			console.log($scope.matchesTerminal);
 			$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 
 			$scope.totalItems = $scope.pricelist.length;
