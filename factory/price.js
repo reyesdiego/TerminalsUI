@@ -20,24 +20,23 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 	};
 
 	factory.getMatchPrices = function(terminal, datos, callback) {
-		var inserturl = serverUrl + '/agp/matchprices/' + terminal;
-
+		var inserturl = serverUrl + '/agp/matchprices/' + terminal + '?';
+		var insertAux = inserturl;
 		if (datos && datos != null){
-			inserturl += '?'
-			if(angular.isDefined(datos.codigo)){
+			if(angular.isDefined(datos.codigo) && datos.codigo != ''){
 				inserturl = inserturl + 'code=' + datos.codigo;
 			}
-			if(angular.isDefined(datos.codigoAsociado)){
+			if(angular.isDefined(datos.codigoAsociado) && datos.codigoAsociado != ''){
 				if(inserturl != insertAux){ inserturl = inserturl + '&'}
 				inserturl = inserturl + 'matchCode=' + datos.codigoAsociado;
 			}
 		}
-
 		$http({
 			method: 'GET',
 			url: inserturl,
 			headers: { token: loginService.getToken() }
 		}).success(function (data){
+				console.log(data);
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
@@ -67,38 +66,13 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 			method: 'POST',
 			url: inserturl,
 			data: data,
-			headers:{
-				token: loginService.getToken()
-			}
+			headers:{ token: loginService.getToken() }
 		}).success(function(response) {
 			console.log("success");
 			callback(response);
 		}).error(function(errorText) {
 			console.log(errorText);
 			$dialogs.error('Error al añadir el Precio en la base');
-		});
-	};
-
-	factory.searchMatch = function(datos, callback){
-		var inserturl = serverUrl + '/agp/prices' + '?'; // El que se va a usar
-		var insertAux = inserturl;
-		if(angular.isDefined(datos.codigo)){
-			inserturl = inserturl + 'code=' + datos.codigo;
-		}
-		if(angular.isDefined(datos.codigoAsociado)){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'matchCode=' + datos.codigoAsociado;
-		}
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers: {token: loginService.getToken()}
-		}).success(function(data) {
-			console.log(data);
-			callback(data);
-		}).error(function(errorText) {
-			console.log(errorText);
-			$dialogs.error("Error al buscar la Tarifa");
 		});
 	};
 
