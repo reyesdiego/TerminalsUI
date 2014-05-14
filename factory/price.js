@@ -24,11 +24,11 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 		var insertAux = inserturl;
 		if (datos && datos != null){
 			if(angular.isDefined(datos.codigo) && datos.codigo != ''){
-				inserturl = inserturl + 'code=' + datos.codigo;
+				inserturl = inserturl + 'code=' + datos.codigo.toUpperCase();
 			}
 			if(angular.isDefined(datos.codigoAsociado) && datos.codigoAsociado != ''){
 				if(inserturl != insertAux){ inserturl = inserturl + '&'}
-				inserturl = inserturl + 'matchCode=' + datos.codigoAsociado;
+				inserturl = inserturl + 'matchCode=' + datos.codigoAsociado.toUpperCase();
 			}
 		}
 		$http({
