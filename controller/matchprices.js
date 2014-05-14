@@ -27,11 +27,12 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	$scope.agregarCodigo = function(price){
 		price.new = price.new.toUpperCase();
 		if (!$scope.matchesTerminal.contains(price.new)){
-			if (price.matches == null){
+			if (price.matches == null || price.matches.length == 0){
 				$scope.nuevoMatch = [{
 					terminal: loginService.getInfo().terminal,
 					match: [],
-					price: price._id,
+					_idPrice: price._id,
+					code: price.code,
 					flagGuardar: true,
 					claseFila: "success"
 				}];
@@ -105,17 +106,14 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 		var formData = {
 			"description":$scope.descripcion,
 			"topPrice":$scope.precio,
-			"match": null,
+			"matches": null,
 			"unit": $scope.unidad,
 			"currency": $scope.moneda,
-			"_id": $scope.codigo,
-			"terminal": loginService.getInfo().terminal
+			"code": $scope.codigo,
+			"terminal": "AGP"
 		};
 
-		console.log('Antes de entrar al factory de add price');
 		priceFactory.addPrice(formData, function(nuevoPrecio){
-
-			console.log('Entro');
 			var nuevoMatch = { codes:[{
 				terminal: loginService.getInfo().terminal,
 				codes: []}],
