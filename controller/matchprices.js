@@ -43,7 +43,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	$scope.agregarCodigo = function(price){
 		price.new = price.new.toUpperCase();
 		if (!$scope.matchesTerminal.contains(price.new)){
-			if (price.matches == null || price.matches.length == 0){
+			if (price.matches == null || price.matches.length === 0){
 				$scope.nuevoMatch = [{
 					terminal: loginService.getInfo().terminal,
 					match: [],
@@ -56,6 +56,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 				price.matches = $scope.nuevoMatch;
 			} else {
 				if (!(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
+					price.matches[0]._idPrice= price._id;
 					price.matches[0].match.push(price.new);
 					price.matches[0].flagGuardar = true;
 					price.matches[0].claseFila = "success";
@@ -73,6 +74,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 		//Elimino el código del match
 		var pos = price.matches[0].match.indexOf(codigo);
 		price.matches[0].match.splice( pos, 1 );
+		price.matches[0]._idPrice = price._id;
 
 		//Elimino el código de la lista de todos los códigos asociados
 		pos = $scope.matchesTerminal.indexOf(codigo);
