@@ -40,6 +40,12 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 
 		$scope.totalItems = $scope.pricelist.length;
 
+		$scope.$watch('currentPage + itemsPerPage', function(){
+			$scope.guardar();
+			$scope.flagCambios = false;
+			$scope.filtro = '';
+		});
+
 	});
 
 	$scope.agregarCodigo = function(price){
@@ -190,7 +196,6 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 //			}
 //		})
 	};
-
 
 	function buscar(datos){
 		priceFactory.getMatchPrices(loginService.getInfo().terminal, datos, function (data) {
