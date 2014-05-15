@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-function invoicesCtrl ($scope, invoiceFactory) {
+function invoicesCtrl ($scope, invoiceFactory, loginService) {
 	'use strict';
 
 	// Paginacion
@@ -26,6 +26,8 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		$event.preventDefault();
 		$event.stopPropagation();
 	};
+
+	$scope.dataUser = loginService.getInfo();
 
 	// Trae las facturas disponibles
 	invoiceFactory.getInvoice('', page0, function(data){

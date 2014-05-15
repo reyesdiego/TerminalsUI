@@ -1,7 +1,7 @@
 /**
  * Created by leo on 28/04/14.
  */
-function turnosCtrl($scope, $dialogs, turnosFactory){
+function turnosCtrl($scope, $dialogs, turnosFactory, loginService){
 	'use strict';
 
 	// Paginacion
@@ -37,6 +37,8 @@ function turnosCtrl($scope, $dialogs, turnosFactory){
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.turnos = {};
+
+	$scope.dataUser = loginService.getInfo();
 
 	// Carga los turnos por fechas
 	$scope.cargar = function(){

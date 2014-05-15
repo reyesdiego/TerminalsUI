@@ -1,7 +1,7 @@
 /**
  * Created by leo on 31/03/14.
  */
-function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory){
+function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory, loginService){
 	'use strict';
 
 	// Paginacion
@@ -38,6 +38,8 @@ function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory){
 	// Variable para almacenar la info principal que trae del factory
 	$scope.gates = {};
 
+	$scope.dataUser = loginService.getInfo();
+
 	// Funciones propias del controlador
 	$scope.colorHorario = function(gate){
 		var horarioGate = new Date(gate.gateTimestamp);
@@ -53,7 +55,7 @@ function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory){
 			$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
 			$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
 			var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
-			gatesFactory.getGateByDayOrContainer(datos, page, function(data){
+			gatesFactory.getGateByDayOrContainer(datos, page0, function(data){
 				if (data.status === "OK"){
 					$scope.gates = data.data;
 					$scope.totalItems = data.totalCount;
@@ -70,7 +72,7 @@ function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory){
 		var datos = {
 			'contenedor': container
 		};
-		$scope.contenedor = container;
+		$scope.container = container;
 		invoiceFactory.getInvoice(datos, page0, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
