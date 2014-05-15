@@ -1,4 +1,4 @@
-{
+/*{
 	"terminales": [{
 		"nombre": "BACTSSA",
 		"invoices": 156,
@@ -15,4 +15,27 @@
 		"gates": 54,
 		"turnos": 68
 	}]
+}
+*/
+{
+	"terminales": [
+					{
+					"_id": {
+						"terminal": "BACTSSA"
+						},
+					"invoicesCount": 3
+					},
+					{
+					"_id": {
+					"terminal": "TERMINAL4"
+					},
+					"invoicesCount": 2
+					},
+					{
+					"_id": {
+					"terminal": "TRP"
+					},
+					"invoicesCount": 1
+					}
+	]
 }

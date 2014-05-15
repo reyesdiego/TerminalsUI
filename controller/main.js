@@ -131,14 +131,20 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					var fecha = new Date();
 					controlPanelFactory.getTotales(fecha, function(graf){
 						var base = [
-							['Datos', 'Facturas', 'Gates', 'Turnos', { role: 'annotation' } ],
-							['BACTSSA', 0, 0, 0, ''],
-							['TRP', 0, 0, 0, ''],
-							['TERMINAL 4', 0, 0, 0, '']
+//							['Datos', 'Facturas', 'Gates', 'Turnos', { role: 'annotation' } ],
+							['Datos', 'Facturas', { role: 'annotation' } ],
+//							['BACTSSA', 0, 0, 0, ''],
+//							['TRP', 0, 0, 0, ''],
+//							['TERMINAL 4', 0, 0, 0, '']
+							['BACTSSA', 0, ''],
+							['TRP', 0, ''],
+							['TERMINAL 4', 0, '']
 						];
 						var i = 1;
-						graf.terminales.forEach(function(terminal){
-							base[i] = [terminal.nombre, terminal.invoices, terminal.gates, terminal.turnos, ''];
+						graf.forEach(function(terminal){
+//							base[i] = [terminal.nombre, terminal.invoices, terminal.gates, terminal.turnos, ''];
+//							base[i] = [terminal._id.terminal, terminal.invoicesCount, terminal.invoicesCount, terminal.invoicesCount, ''];
+							base[i] = [terminal._id.terminal, terminal.invoicesCount,''];
 							i++;
 						});
 						defer.resolve(base);

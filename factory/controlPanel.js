@@ -18,9 +18,11 @@ myapp.factory('controlPanelFactory', function($http, $dialogs){
 
 	factory.getTotales = function(fecha, callback){
 		//Por ahora trabaja solo con un mock
-		$http.get('mocks/totales.json')
+		var inserturl = serverUrl + '/aggregate';
+		$http.get(inserturl)
+//		$http.get('mocks/totales.json')
 			.success(function (data){
-				callback(data);
+				callback(data.data);
 			}).error(function(errorText){
 				console.log(errorText);
 				$dialogs.error('Error al cargar la lista PriceList');
@@ -29,7 +31,7 @@ myapp.factory('controlPanelFactory', function($http, $dialogs){
 	};
 
 	factory.getFacturasMeses = function(callback){
-		$http.get('mocks/mesesFacturas.json')
+			$http.get('mocks/mesesFacturas.json')
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
