@@ -22,7 +22,23 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	$scope.filteredPrices = [];
 	$scope.matchesTerminal = [];
 
-	buscar(null);
+	priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function (data) {
+		$scope.pricelist = data.data;
+
+		//Cargo todos los códigos ya asociados de la terminal para control
+		$scope.pricelist.forEach(function(price){
+			if (price.matches != null && price.matches.length > 0){
+				price.matches[0].match.forEach(function(codigo){
+					$scope.matchesTerminal.push(codigo);
+				})
+			}
+		})
+
+		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
+
+		$scope.totalItems = $scope.pricelist.length;
+
+	});
 
 	$scope.agregarCodigo = function(price){
 		price.new = price.new.toUpperCase();
@@ -167,28 +183,14 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 //		})
 	};
 
+
 	function buscar(datos){
 		priceFactory.getMatchPrices(loginService.getInfo().terminal, datos, function (data) {
 			$scope.pricelist = data.data;
 
-			//Cargo todos los códigos ya asociados de la terminal para control
-			$scope.pricelist.forEach(function(price){
-				if (price.matches != null && price.matches.length > 0){
-					price.matches[0].match.forEach(function(codigo){
-						$scope.matchesTerminal.push(codigo);
-					})
-				}
-			})
-
 			$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 
 			$scope.totalItems = $scope.pricelist.length;
-
-			$scope.$watch('currentPage + itemsPerPage', function(){
-				$scope.guardar();
-				$scope.flagCambios = false;
-				$scope.filtro = '';
-			});
 
 		});
 	}
