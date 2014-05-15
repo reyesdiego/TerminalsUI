@@ -1,7 +1,7 @@
 /**
  * Created by leo on 28/04/14.
  */
-myapp.factory('turnosFactory', function($http, $dialogs, formatDate){
+myapp.factory('turnosFactory', function($http, $dialogs, formatDate, loginService){
 	var factory = {};
 
 	factory.getTurnosByDatesOrContainer = function(datos, page, callback){
@@ -18,7 +18,11 @@ myapp.factory('turnosFactory', function($http, $dialogs, formatDate){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'contenedor=' + datos.contenedor.toUpperCase();
 		}
-		$http.get(inserturl)
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers: { token: loginService.getToken() }
+		})
 			.success(function(data){
 				console.log(data);
 				callback(data);
