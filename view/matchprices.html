@@ -53,9 +53,9 @@
 							</td>
 							<td>
 								<div class="col-lg-9">
-									<input type="text" class="form-control" ng-model="price.new" size=10 ng-keyup="hitEnter($event, price)">
+									<input type="text" class="form-control" ng-model="price.new" size=10 ng-keyup="hitEnter($event, price)" toupper>
 								</div>
-								<input class="btn btn-primary" type="button" value="+" ng-click="agregarCodigo(price, $index)">
+								<input class="btn btn-primary" type="button" value="+" ng-click="agregarCodigo(price, $index)" ng-init="price.disabled = true" ng-disabled="price.disabled">
 							</td>
 						</tr>
 						</tbody>

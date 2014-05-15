@@ -22,6 +22,8 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	$scope.filteredPrices = [];
 	$scope.matchesTerminal = [];
 
+	$scope.codigoVacio = true;
+
 	priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function (data) {
 		$scope.pricelist = data.data;
 
@@ -41,29 +43,28 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	});
 
 	$scope.agregarCodigo = function(price){
-		price.new = price.new.toUpperCase();
 		if (!$scope.matchesTerminal.contains(price.new)){
-			if (price.matches == null || price.matches.length === 0){
-				$scope.nuevoMatch = [{
-					terminal: loginService.getInfo().terminal,
-					match: [],
-					_idPrice: price._id,
-					code: price.code,
-					flagGuardar: true,
-					claseFila: "success"
-				}];
-				$scope.nuevoMatch[0].match.push(price.new);
-				price.matches = $scope.nuevoMatch;
-			} else {
-				if (!(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
+			if (!(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
+				if ((price.matches == null || price.matches.length === 0)){
+					$scope.nuevoMatch = [{
+						terminal: loginService.getInfo().terminal,
+						match: [],
+						_idPrice: price._id,
+						code: price.code,
+						flagGuardar: true,
+						claseFila: "success"
+					}];
+					$scope.nuevoMatch[0].match.push(price.new);
+					price.matches = $scope.nuevoMatch;
+				} else {
 					price.matches[0]._idPrice= price._id;
 					price.matches[0].match.push(price.new);
 					price.matches[0].flagGuardar = true;
 					price.matches[0].claseFila = "success";
 				}
+				$scope.matchesTerminal.push(price.new);
+				$scope.flagCambios = true;
 			}
-			$scope.matchesTerminal.push(price.new);
-			$scope.flagCambios = true;
 		} else{
 			$dialogs.notify("Asociar","El código ingresado ya se encuentra asociado a otra tarifa");
 		}
@@ -88,6 +89,11 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 	$scope.hitEnter = function(evt, price){
 		if(angular.equals(evt.keyCode,13))
 			$scope.agregarCodigo(price);
+		if (angular.isDefined(price.new) && price.new != ''){
+			price.disabled = false;
+		} else {
+			price.disabled = true;
+		}
 	}; // end hitEnter
 
 	$scope.abrirNuevoConcepto = function(){
