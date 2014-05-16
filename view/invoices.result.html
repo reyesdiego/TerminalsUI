@@ -20,11 +20,9 @@
 		<table class="table">
 			<tr>
 				<td>
-					<div><strong><span>Buque: {{ verDetalle.buque.name }}</span></strong></div>
 					<div><span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy' }}</span></div>
 				</td>
 				<td>
-					<div><span>Viaje: {{ verDetalle.buque.viaje }}</span></div>
 					<div><span>Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span></div>
 				</td>
 			</tr>
@@ -46,8 +44,14 @@
 		</table>
 		<table class="table table-striped" ng-repeat="contenedor in verDetalle.detalle" style="text-align: center">
 			<tr>
-				<td colspan="4" style="text-align: left">
+				<td colspan="2" style="text-align: left">
 					<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
+				</td>
+				<td style="text-align: left">
+					<span>Buque: {{ contenedor.buque.nombre }}</span>
+				</td>
+				<td style="text-align: left">
+					<span>Viaje: {{ contenedor.buque.viaje }}</span>
 				</td>
 			</tr>
 			<tr ng-repeat="item in contenedor.items">
