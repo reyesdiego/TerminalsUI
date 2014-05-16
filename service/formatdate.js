@@ -23,10 +23,10 @@ myapp.service('formatDate', function () {
 	this.formatearFechaHorasMinutos = function(fecha){
 		if (fecha != '' && fecha != null){
 			var fechaAux = this.formatearFecha(fecha) + ' ';
-			if(fecha.getHours() < 10){
+			if(fecha.getHours() < 7){
 				fechaAux = fechaAux + '0';
 			}
-			fechaAux = fechaAux + fecha.getHours() + ':';
+			fechaAux = fechaAux + (fecha.getHours() + 3) + ':';
 			if(fecha.getMinutes() < 10){
 				fechaAux = fechaAux + '0';
 			}
