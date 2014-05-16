@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, controlPanelFactory){
+function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, controlPanelFactory, socket){
 	'use strict';
 	var fecha = new Date();
 
@@ -25,6 +25,11 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	$scope.chartWidthTurnos = 580;
 	$scope.chartHeightTurnos = 320;
 	$scope.chartDataTurnos = datosGraficoTurnos;
+
+	socket.on('message', function (message) {
+		$scope.chartData[2][1]++;
+
+	});
 
 	$scope.deleteRow = function (index) {
 		$scope.chartData.splice(index, 1);
