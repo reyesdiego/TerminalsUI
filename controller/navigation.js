@@ -5,16 +5,17 @@
 function navigationCtrl($scope, $rootScope, $state, loginService){
 	"use strict";
 	$rootScope.esUsuario = '';
-
+	$rootScope.terminal = '';
 	$scope.acceso = '';
 
 	if (loginService.getStatus()){
 		$rootScope.esUsuario = loginService.getType();
+		$rootScope.terminal = loginService.getInfo();
 	}
 
-	$scope.$watch('esUsuario', function() {
+	$scope.$watch(function() {
 		$scope.acceso = $rootScope.esUsuario;
-
+		$scope.terminal = $rootScope.terminal;
 	});
 
 	$scope.salir = function(){

@@ -19,6 +19,7 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
 					$state.transitionTo('tarifario');
 
 					$rootScope.esUsuario = loginService.getType();
+					$rootScope.terminal = loginService.getInfo();
 				}
 			}
 		)}
