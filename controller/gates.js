@@ -83,10 +83,12 @@ function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory, loginService)
 	};
 
 	$scope.$watch('currentPage + itemsPerPage', function(){
+		console.log("cambiamos la pag");
 		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
 		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
 			if(data.status === 'OK'){
+				console.log(data);
 				$scope.gates = data.data;
 			}
 		});
