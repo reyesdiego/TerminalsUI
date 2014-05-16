@@ -1,98 +1,88 @@
 <div class="container well" style="width: 800px; text-align: center">
 	<div>
-		<div><h4><strong>Factura tipo {{ verDetalle.codTipoComprob }} número: {{ verDetalle.nroComprob }}</strong></h4></div>
-		<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
-		<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
-		<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
 		<table class="table">
 			<tr>
 				<td>
-					<div class="infos">
-						<div><strong><span>Raz&oacute;n Social: {{ verDetalle.razon }}</span></strong></div>
-						<div><span>Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
-					</div>
-				</td>
-				<td>
-					<div><span>Documento cliente: {{ verDetalle.nroDoc }}</span></div>
+					<div><h3><strong>Factura tipo {{ verDetalle.codTipoComprob }}</strong></h3></div>
+					<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
+					<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
+					<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
+					<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
 				</td>
 			</tr>
-		</table>
-		<table class="table">
 			<tr>
 				<td>
-					<div><span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy' }}</span></div>
+					<div><span><strong>Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
+					<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
 				</td>
+			</tr>
+			<tr>
 				<td>
-					<div><span>Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span></div>
+					<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span><strong>Detalle</strong></span>
 				</td>
 			</tr>
 		</table>
-		<table>
-			<tr>
-				<td style="text-align: center">
-					<div><span><strong>Detalle</strong></span></div>
-				</td>
-			</tr>
-		</table>
-		<table class="table table-striped" style="text-align: center">
-			<tr style="text-align: center">
-				<th style="text-align:center; width: 25%">Item</th>
-				<th style="text-align:center; width: 25%">Cantidad</th>
-				<th style="text-align:center; width: 25%">Unidad</th>
-				<th style="text-align:right; width: 25%">Total</th>
-			</tr>
-		</table>
-		<table class="table table-striped" ng-repeat="contenedor in verDetalle.detalle" style="text-align: center">
-			<tr>
-				<td colspan="2" style="text-align: left">
-					<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
-				</td>
-				<td style="text-align: left">
-					<span>Buque: {{ contenedor.buque.nombre }}</span>
-				</td>
-				<td style="text-align: left">
-					<span>Viaje: {{ contenedor.buque.viaje }}</span>
-				</td>
-			</tr>
-			<tr ng-repeat="item in contenedor.items">
-				<td style="width: 25%">
-					<span>{{ item.id }}</span>
-				</td>
-				<td style="width: 25%">
-					<span>{{ item.cnt }}</span>
-				</td>
-				<td style="width: 25%">
-					<span>{{ item.uniMed }}</span>
-				</td>
-				<td style="text-align:right; width: 25%">
-					<span>{{ item.impTot | currency }}</span>
-				</td>
-			</tr>
-		</table>
-		<table class="table table-striped">
-			<tr>
-				<td colspan="2" style="text-align: right;">Subtotal</td>
-				<td colspan="2" style="text-align: right;">{{ verDetalle.importe.subtotal | currency }}</td>
-			</tr>
-			<tr>
-				<td colspan="2" style="text-align:right;">IVA</td>
-				<td colspan="2" style="text-align:right;">{{ verDetalle.importe.iva | currency }}</td>
-			</tr>
-			<tr>
-				<td colspan="2" style="text-align: right">Otros Tributos</td>
-				<td colspan="2" style="text-align: right">{{ verDetalle.importe.otrosTributos | currency }}</td>
-			</tr>
-			<tr>
-				<td colspan="2" style="text-align: right">Total</td>
-				<td colspan="2" style="text-align: right">{{ verDetalle.importe.total | currency }}</td>
-			</tr>
+		<table class="table table-striped table-bordered" style="text-align: center">
+			<thead>
+				<tr style="text-align: center">
+					<th>Item</th>
+					<th>Cantidad</th>
+					<th>Unidad</th>
+					<th style="text-align:right">Total</th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="contenedor in verDetalle.detalle">
+				<tr>
+					<td colspan="4" style="text-align: left">
+						<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
+						<span> - Buque: {{ contenedor.buque.nombre }}</span>
+						<span> - Viaje: {{ contenedor.buque.viaje }}</span>
+					</td>
+				</tr>
+				<tr ng-repeat="item in contenedor.items">
+					<td>
+						<span>{{ item.id }}</span>
+					</td>
+					<td>
+						<span>{{ item.cnt }}</span>
+					</td>
+					<td>
+						<span>{{ item.uniMed }}</span>
+					</td>
+					<td style="text-align:right">
+						<span>{{ item.impTot | currency }}</span>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot style="text-align: right;">
+				<tr>
+					<td colspan="2">Subtotal</td>
+					<td colspan="2">{{ verDetalle.importe.subtotal | currency }}</td>
+				</tr>
+				<tr>
+					<td colspan="2">IVA</td>
+					<td colspan="2">{{ verDetalle.importe.iva | currency }}</td>
+				</tr>
+				<tr>
+					<td colspan="2">Otros Tributos</td>
+					<td colspan="2">{{ verDetalle.importe.otrosTributos | currency }}</td>
+				</tr>
+				<tr>
+					<td colspan="2">Total</td>
+					<td colspan="2">{{ verDetalle.importe.total | currency }}</td>
+				</tr>
+			</tfoot>
 		</table>
 		<div>
-			<span>
-				Monto Gravado {{ verDetalle.importe.gravado | currency }};
-				Monto No Gravado {{ verDetalle.importe.noGravado | currency }};
-				Exento {{ verDetalle.importe.exento | currency }}
-			</span>
+			<span>Monto Gravado {{ verDetalle.importe.gravado | currency }};</span>
+			<span>Monto No Gravado {{ verDetalle.importe.noGravado | currency }};</span>
+			<span>Exento {{ verDetalle.importe.exento | currency }};</span>
+			<span>Cotizaci&oacute;n Moneda U$s1 = ${{ verDetalle.cotiMoneda }}</span>
 		</div>
 	</div>
 	<div class="hidden-print">
