@@ -28,6 +28,7 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 
 	socket.on('message', function (message) {
 		$scope.chartData[2][1]++;
+		$scope.control.invoicesCount++;
 
 	});
 
