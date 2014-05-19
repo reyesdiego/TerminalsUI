@@ -26,7 +26,7 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	$scope.chartHeightTurnos = 320;
 	$scope.chartDataTurnos = datosGraficoTurnos;
 
-	socket.on('message', function (message) {
+	socket.on('invoice', function (message) {
 		$scope.chartData[2][1]++;
 		$scope.control.invoicesCount++;
 	});
