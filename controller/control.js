@@ -29,8 +29,13 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	socket.on('message', function (message) {
 		$scope.chartData[2][1]++;
 		$scope.control.invoicesCount++;
-
 	});
+
+	$scope.cambiarDatos = function(){
+		$scope.chartData[2][1] += 1000;
+		$scope.chartDataFacturas = datosGraficoTurnos;
+		$scope.control.invoicesCount++;
+	};
 
 	$scope.deleteRow = function (index) {
 		$scope.chartData.splice(index, 1);
