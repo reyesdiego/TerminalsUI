@@ -32,5 +32,5 @@
             </div>
         </div>
     </div>
-	<a href="" ><pagination href="" boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" page="currentPage" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></a>
+	<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="Anterior" next-text="Siguiente"></pagination>
 </div>

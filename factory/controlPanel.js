@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http, $dialogs){
+myapp.factory('controlPanelFactory', function($http, dialogs){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -12,34 +12,30 @@ myapp.factory('controlPanelFactory', function($http, $dialogs){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				$dialogs.error('Error al cargar lista por día');
+				dialogs.error('Error', 'Error al cargar lista por día');
 			});
 	};
 
 	factory.getTotales = function(fecha, callback){
-		//Por ahora trabaja solo con un mock
 		var inserturl = serverUrl + '/aggregate';
 		$http.get(inserturl)
-//		$http.get('mocks/totales.json')
 			.success(function (data){
 				callback(data.data);
 			}).error(function(errorText){
 				console.log(errorText);
-				$dialogs.error('Error al cargar la lista PriceList');
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
-
 	};
 
 	factory.getFacturasMeses = function(callback){
-			$http.get('mocks/mesesFacturas.json')
+		$http.get('mocks/mesesFacturas.json')
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				$dialogs.error('Error al cargar la lista PriceList');
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
-
-	}
+	};
 
 	factory.getGatesMeses = function(callback){
 		$http.get('mocks/mesesGates.json')
@@ -47,10 +43,9 @@ myapp.factory('controlPanelFactory', function($http, $dialogs){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				$dialogs.error('Error al cargar la lista PriceList');
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
-
-	}
+	};
 
 	factory.getTurnosMeses = function(callback){
 		$http.get('mocks/mesesTurnos.json')
@@ -58,10 +53,9 @@ myapp.factory('controlPanelFactory', function($http, $dialogs){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				$dialogs.error('Error al cargar la lista PriceList');
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
-
-	}
+	};
 
 	return factory;
 });

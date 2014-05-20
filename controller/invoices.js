@@ -6,7 +6,6 @@ function invoicesCtrl ($scope, invoiceFactory, loginService) {
 	'use strict';
 
 	// Paginacion
-	$scope.maxSize = 5;
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
 	var page0 = {
@@ -14,8 +13,6 @@ function invoicesCtrl ($scope, invoiceFactory, loginService) {
 		limit: $scope.itemsPerPage
 	};
 	var page = page0;
-	$scope.setPage = function (pageNo){ $scope.currentPage = pageNo; };
-	$scope.numPages = function (){ return Math.ceil($scope.totalItems / $scope.itemsPerPage); };
 
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
@@ -48,6 +45,7 @@ function invoicesCtrl ($scope, invoiceFactory, loginService) {
 		invoiceFactory.getInvoice(datos, page0, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
+				$scope.totalItems = data.totalCount;
 			}
 		})
 	};

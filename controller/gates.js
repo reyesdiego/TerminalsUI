@@ -1,11 +1,10 @@
 /**
  * Created by leo on 31/03/14.
  */
-function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory, loginService){
+function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 	'use strict';
 
 	// Paginacion
-	$scope.maxSize = 5;
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
 	var page0 = {
@@ -13,8 +12,6 @@ function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory, loginService)
 		limit: $scope.itemsPerPage
 	};
 	var page = page0;
-	$scope.setPage = function (pageNo){ $scope.currentPage = pageNo; };
-	$scope.numPages = function (){ return Math.ceil($scope.totalItems / $scope.itemsPerPage); };
 
 	// Fecha (dia y hora)
 	$scope.fecha = {
@@ -62,7 +59,7 @@ function gatesCtrl($scope, $dialogs, gatesFactory, invoiceFactory, loginService)
 				}
 			});
 		} else {
-			$dialogs.error('Ingrese fechas validas');
+			dialogs.error('Error con las fechas','Ingrese fechas validas');
 		}
 	};
 

@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', function($http, $dialogs, loginService){
+myapp.factory('priceFactory', function($http, dialogs, loginService){
 	var factory = {};
 
 	factory.getPrice = function(callback) {
@@ -15,7 +15,7 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);
-			$dialogs.error('Error al cargar la lista');
+			dialogs.error('Error', 'Error al cargar la lista');
 		});
 	};
 
@@ -36,12 +36,12 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 			url: inserturl,
 			headers: { token: loginService.getToken() }
 		}).success(function (data){
-				console.log(data);
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				$dialogs.error('Error al cargar la lista');
-			});
+			console.log(data);
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			dialogs.error('Error', 'Error al cargar la lista');
+		});
 	};
 
 	factory.addMatchPrice = function (data, callback) {
@@ -56,7 +56,7 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 			callback(response);
 		}).error(function(errorText) {
 			console.log(errorText);
-			$dialogs.error('Error al añadir el Match en la base');
+			dialogs.error('Error', 'Error al añadir el Match en la base');
 		});
 	};
 
@@ -72,7 +72,7 @@ myapp.factory('priceFactory', function($http, $dialogs, loginService){
 			callback(response);
 		}).error(function(errorText) {
 			console.log(errorText);
-			$dialogs.error('Error al añadir el Precio en la base');
+			dialogs.error('Error', 'Error al añadir el Precio en la base');
 		});
 	};
 

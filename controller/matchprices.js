@@ -1,15 +1,12 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService){
+function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	'use strict';
 
 	// Paginacion
-	$scope.maxSize = 5;
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
-	$scope.setPage = function (pageNo){ $scope.currentPage = pageNo; };
-	$scope.numPages = function (){ return Math.ceil($scope.totalItems / $scope.itemsPerPage); };
 
 	$scope.dataUser = loginService.getInfo();
 
@@ -34,7 +31,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 					$scope.matchesTerminal.push(codigo);
 				})
 			}
-		})
+		});
 
 		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 
@@ -72,7 +69,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 				$scope.flagCambios = true;
 			}
 		} else{
-			$dialogs.notify("Asociar","El código ingresado ya se encuentra asociado a otra tarifa");
+			dialogs.notify("Asociar","El código ingresado ya se encuentra asociado a otra tarifa");
 		}
 		price.new = ''
 	};
@@ -161,7 +158,7 @@ function matchPricesCtrl($scope, priceFactory, $dialogs, $timeout, loginService)
 				console.log('entro al add match');
 				console.log(trash);
 				$scope.pricelist.push(nuevoPrecio);
-				$dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
+				dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
 				$scope.listaMatch = false;
 				$scope.nuevoConcepto = true;
 			});

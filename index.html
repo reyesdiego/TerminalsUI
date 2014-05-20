@@ -3,10 +3,12 @@
 
 <head>
 	<title>Administraci&oacute;n General de Puertos S.E.</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="less/bootstrap.css" media="screen">
 	<link rel="stylesheet" href="less/bootswatch.min.css">
+	<link rel="stylesheet" href="less/dialog.css">
 	<link rel="stylesheet" type="text/css" media="print" href="less/invoicesprint.css">
 	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]-->
@@ -16,9 +18,9 @@
 	<script src="angular/angular.js"></script>
 	<script src="angular/angular-resource.js"></script>
 	<script src="angular/angular-route.min.js"></script>
-	<script src="angular/angular-sanitize.min.js.map"></script>
+	<script src="angular/angular-sanitize.min.js"></script>
 	<script src="angular/angular-ui-router.js"></script>
-	<script src="angular/ui-bootstrap-tpls-min-0.10.0.js" type="text/javascript"></script>
+	<script src="angular/ui-bootstrap-tpls-min.js" type="text/javascript"></script>
 	<!-- Google charts -->
 	<script type="text/javascript" src="angular/jsapi.js"></script>
 	<!-- App Script -->
@@ -40,7 +42,7 @@
 	<!-- Controles Angular-->
 	<script src="controller/cfacturas.js"></script>
 	<script src="controller/control.js"></script>
-	<script src="controller/dialogsLib.js"></script>
+	<script src="controller/dialogs.js"></script>
 	<script src="controller/gates.js"></script>
 	<script src="controller/invoices.js"></script>
 	<script src="controller/login.js"></script>
@@ -49,6 +51,7 @@
 	<script src="controller/newpass.js"></script>
 	<script src="controller/pricelist.js"></script>
 	<script src="controller/turnos.js"></script>
+
 </head>
 
 <body class="container">
@@ -86,5 +89,9 @@
 </div>
 
 </body>
+
+<!-- Jquery y otros de bootstrap -->
+<script src="includes/js/jquery.min.js"></script>
+<script src="angular/bootstrap.min.js"></script>
 
 </html>

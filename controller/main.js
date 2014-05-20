@@ -41,7 +41,7 @@ function es_substring(needle, haystack){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngRoute','dialogs']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ui.bootstrap.modal', 'ngRoute', 'ngSanitize']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -148,7 +148,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 							i++;
 						});
 						defer.resolve(base);
-					})
+					});
 					return defer.promise;
 				},
 				datosGraficoFacturas: function (controlPanelFactory, $q){
@@ -163,12 +163,12 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 							datosMes.datos.forEach(function(terminal){
 								fila[i] = terminal.facturas;
 								i++;
-							})
+							});
 							base.push(fila);
 							i = 1;
-						})
+						});
 						defer.resolve(base);
-					})
+					});
 					return defer.promise;
 				},
 				datosGraficoGates: function (controlPanelFactory, $q){
@@ -183,12 +183,12 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 							datosMes.datos.forEach(function(terminal){
 								fila[i] = terminal.gates;
 								i++;
-							})
+							});
 							base.push(fila);
 							i = 1;
-						})
+						});
 						defer.resolve(base);
-					})
+					});
 					return defer.promise;
 				},
 				datosGraficoTurnos: function (controlPanelFactory, $q){
@@ -203,12 +203,12 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 							datosMes.datos.forEach(function(terminal){
 								fila[i] = terminal.turnos;
 								i++;
-							})
+							});
 							base.push(fila);
 							i = 1;
-						})
+						});
 						defer.resolve(base);
-					})
+					});
 					return defer.promise;
 				}
 			}

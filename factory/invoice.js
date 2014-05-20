@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http, $dialogs, loginService, formatDate){
+myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDate){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
@@ -40,7 +40,7 @@ myapp.factory('invoiceFactory', function($http, $dialogs, loginService, formatDa
 			callback(data);
 		}).error(function(errorText) {
 			console.log(errorText);
-			$dialogs.error('Error al cargar la lista Invoice');
+			dialogs.error('Error', 'Error al cargar la lista Invoice');
 		});
 	};
 
@@ -51,7 +51,7 @@ myapp.factory('invoiceFactory', function($http, $dialogs, loginService, formatDa
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				$dialogs.error("Error al cargar la lista PriceList");
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
 	};
 
@@ -61,7 +61,7 @@ myapp.factory('invoiceFactory', function($http, $dialogs, loginService, formatDa
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				$dialogs.error("Error al cargar la lista PriceList");
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
 	};
 
