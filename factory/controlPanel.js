@@ -5,11 +5,21 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
-		//var inserturl = serverUrl + '/controlDia/' + dia; // El que realmente se va a usar
-		var inserturl = 'mocks/controlday.json';
+		var inserturl = serverUrl + '/aggregate?2014-05-20';
 		$http.get(inserturl)
 			.success(function(data){
-				callback(data);
+				var result = [];
+				if (data.status === 'OK'){
+					var total = 0;
+					for (var i = 0, len=data.data.length; i< len; i++){
+						total += data.data[i].invoicesCount;
+					}
+					result = [
+						{"invoicesCount": total}
+					];
+				}
+				callback(result);
+
 			}).error(function(errorText){
 				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar lista por día');
