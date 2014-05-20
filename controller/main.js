@@ -155,15 +155,18 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					var defer = $q.defer();
 					controlPanelFactory.getFacturasMeses(function(graf){
 						var base = [
-							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
 						];
 						var i = 1;
 						graf.data.forEach(function(datosMes){
-							var fila = [datosMes.mes, 0, 0, 0, ''];
+							var fila = [datosMes.mes, 0, 0, 0, 0, ''];
+							var acum = 0;
 							datosMes.datos.forEach(function(terminal){
 								fila[i] = terminal.facturas;
 								i++;
+								acum += terminal.facturas;
 							});
+							fila[4] = acum/3;
 							base.push(fila);
 							i = 1;
 						});
@@ -175,15 +178,18 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					var defer = $q.defer();
 					controlPanelFactory.getGatesMeses(function(graf){
 						var base = [
-							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
 						];
 						var i = 1;
 						graf.data.forEach(function(datosMes){
-							var fila = [datosMes.mes, 0, 0, 0, ''];
+							var fila = [datosMes.mes, 0, 0, 0, 0, ''];
+							var acum = 0;
 							datosMes.datos.forEach(function(terminal){
 								fila[i] = terminal.gates;
 								i++;
+								acum += terminal.gates;
 							});
+							fila[4] = acum/3;
 							base.push(fila);
 							i = 1;
 						});
@@ -195,15 +201,16 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					var defer = $q.defer();
 					controlPanelFactory.getTurnosMeses(function(graf){
 						var base = [
-							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', { role: 'annotation'} ]
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
 						];
 						var i = 1;
 						graf.data.forEach(function(datosMes){
-							var fila = [datosMes.mes, 0, 0, 0, ''];
+							var fila = [datosMes.mes, 0, 0, 0, 0, ''];
+							var acum = 0;
 							datosMes.datos.forEach(function(terminal){
 								fila[i] = terminal.turnos;
 								i++;
-							});
+							})
 							base.push(fila);
 							i = 1;
 						});

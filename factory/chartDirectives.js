@@ -125,10 +125,15 @@ myapp.directive('columnChartStack', function ($timeout) {
 							'title': $scope.title,
 							'width': $scope.width,
 							'height': $scope.height,
+							'animation':{
+								duration: 1000,
+								easing: 'out'
+							},
 							'legend': { position: 'top', maxLines: 3 },
 							'bar': { groupWidth: '75%' },
 							'isStacked': true
 						};
+						data = new google.visualization.arrayToDataTable($scope.data);
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
@@ -151,7 +156,7 @@ myapp.directive('columnChart', function ($timeout) {
 		},
 		link: function($scope, $elm, $attr) {
 
-			var data = new google.visualization.arrayToDataTable($scope.data);
+			var data; //= new google.visualization.arrayToDataTable($scope.data);
 			var chart = new google.visualization.ColumnChart($elm[0]);
 
 			draw();
@@ -189,9 +194,15 @@ myapp.directive('columnChart', function ($timeout) {
 							'title': $scope.title,
 							'width': $scope.width,
 							'height': $scope.height,
+							'series': {3: {type: "line"}},
+							'animation':{
+								duration: 1000,
+								easing: 'out'
+							},
 							'legend': { position: 'top', maxLines: 3 },
 							'bar': { groupWidth: '75%' }
 						};
+						data = new google.visualization.arrayToDataTable($scope.data);
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
