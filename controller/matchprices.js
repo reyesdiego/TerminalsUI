@@ -92,11 +92,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.hitEnter = function(evt, price){
 		if(angular.equals(evt.keyCode,13))
 			$scope.agregarCodigo(price);
-		if (angular.isDefined(price.new) && price.new != ''){
-			price.disabled = false;
-		} else {
-			price.disabled = true;
-		}
+		price.disabled = !(angular.isDefined(price.new) && price.new != '');
 	}; // end hitEnter
 
 	$scope.abrirNuevoConcepto = function(){
@@ -151,7 +147,6 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			nuevoPrecio.match = nuevoMatch;
 
 			$scope.match = [];
-			nuevoPrecio.match._id = nuevoPrecio.match._id;
 			$scope.match.push(nuevoPrecio.match);
 
 			priceFactory.addMatchPrice($scope.match, function(trash){
@@ -186,23 +181,11 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			'codigo': $scope.codigo,
 			'codigoAsociado': $scope.codigoAsociado
 		};
-		buscar(datos);
-//		priceFactory.searchMatch(datos, function(data){
-//			if(data.status === 'OK' || data.status == 200){
-//				$scope.filteredPrices = data.data;
-//			}
-//		})
-	};
-
-	function buscar(datos){
 		priceFactory.getMatchPrices(loginService.getInfo().terminal, datos, function (data) {
 			$scope.pricelist = data.data;
-
 			$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
-
 			$scope.totalItems = $scope.pricelist.length;
-
 		});
-	}
+	};
 
 }

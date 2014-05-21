@@ -1,7 +1,9 @@
 <div class="container">
+
 	<div ng-hide="listaMatch">
+
 		<div class="row">
-			<div class="col-lg-11">
+			<div class="col-lg-12">
 				<div class="xpage-header">
 					<h1 id="forms">Tarifario - {{ dataUser.full_name }}</h1>
 				</div>
@@ -9,7 +11,7 @@
 		</div>
 
 		<div class="row" ng-hide="flagGuardado">
-			<div class="col-lg-12">
+			<div class="col-lg-6">
 				<div class="alert alert-dismissable alert-success">
 					<button type="button" class="close" ng-click="esconderAlerta()">×</button>
 					<strong>Éxito</strong> - Se han guardado los códigos de la página anterior.
@@ -18,17 +20,17 @@
 		</div>
 
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="well">
-					<div class="form-group">
-						<legend>Buscar Tarifa por</legend>
-						<div class="form-group">
-							<div class="col-lg-4">
-								<input type="text" ng-model="codigo" class="form-control" placeholder="Codigo" toupper>
-							</div>
-							<div class="col-lg-4">
-								<input type="text" ng-model="codigoAsociado" class="form-control" placeholder="Codigo Asociado" toupper>
-							</div>
+			<div class="col-lg-6">
+				<div class="panel panel-default">
+					<div class="panel-heading"><strong>Buscar Tarifa por</strong></div>
+					<div class="panel-body">
+						<div class="col-lg-5">
+							<input type="text" ng-model="codigo" class="form-control" placeholder="Codigo" toupper>
+						</div>
+						<div class="col-lg-5">
+							<input type="text" ng-model="codigoAsociado" class="form-control" placeholder="Codigo Asociado" toupper>
+						</div>
+						<div class="col-lg-2">
 							<button type="button" class="btn btn-primary" ng-click="search()">Buscar</button>
 						</div>
 					</div>
@@ -43,9 +45,9 @@
 						<thead>
 						<tr>
 							<th>Código</th>
-							<th width="60%">Tarifa</th>
-							<th width="15%">Cod. Asociado</th>
-							<th width="20%">Cargar</th>
+							<th>Tarifa</th>
+							<th>Cod. Asociado</th>
+							<th>Cargar</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -53,31 +55,39 @@
 							<td>{{ price.code }}</td>
 							<td>{{ price.description }}</td>
 							<td>
-								<span ng-repeat="codigo in price.matches[0].match track by $index"><a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a><span ng-show="!$last">, </span></span>
+								<span ng-repeat="codigo in price.matches[0].match track by $index">
+									<a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a>
+									<span ng-show="!$last">, </span>
+								</span>
 							</td>
-							<td>
-								<div class="col-lg-9">
-									<input type="text" class="form-control" ng-model="price.new" size=10 ng-keyup="hitEnter($event, price)" toupper>
+							<td class="col-lg-2">
+								<div class="input-group">
+									<input type="text" class="form-control" ng-model="price.new" ng-keyup="hitEnter($event, price)" toupper>
+									<span class="input-group-btn">
+										<input type="button" class="btn btn-primary" value="+" ng-click="agregarCodigo(price, $index)" ng-init="price.disabled = true" ng-disabled="price.disabled">
+									</span>
 								</div>
-								<input class="btn btn-primary" type="button" value="+" ng-click="agregarCodigo(price, $index)" ng-init="price.disabled = true" ng-disabled="price.disabled">
 							</td>
 						</tr>
 						</tbody>
 					</table>
-				</div><!-- /example -->
+				</div>
 			</div>
 		</div>
+
 		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="Anterior" next-text="Siguiente"></pagination>
+
 		<div class="row">
 			<div class="col-lg-12">
 				<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
 				<button class="btn" ng-click="abrirNuevoConcepto()">Nuevo concepto</button>
 			</div>
 		</div>
+
 	</div>
-    <!--</div>-->
 
 	<div ng-hide="nuevoConcepto">
+
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="xpage-header">
@@ -113,9 +123,6 @@
 										<option value="BOX">cajón</option>
 									</select>
 								</div>
-								<!--<div class="col-lg-10">
-									<input type="text" class="form-control" ng-model="unidad" id="inputUnidad" placeholder="Ingresar unidad" ng-required="true">
-								</div>-->
 							</div>
 							<div class="form-group">
 								<label for="inputMoneda" class="col-lg-2 control-label">Moneda</label>
@@ -125,9 +132,6 @@
 										<option value="PES">$ARG</option>
 									</select>
 								</div>
-								<!--<div class="col-lg-10">
-									<input type="text" class="form-control" ng-model="moneda" id="inputMoneda" placeholder="Ingresar moneda" ng-required="true">
-								</div>-->
 							</div>
 							<div class="form-group">
 								<label for="inputPrecio" class="col-lg-2 control-label">Precio</label>
@@ -146,6 +150,7 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
 </div>
 <br>
