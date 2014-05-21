@@ -210,7 +210,9 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 							datosMes.datos.forEach(function(terminal){
 								fila[i] = terminal.turnos;
 								i++;
+								acum += terminal.turnos;
 							})
+							fila[4] = acum/3;
 							base.push(fila);
 							i = 1;
 						});

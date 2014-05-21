@@ -7,12 +7,12 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	var fecha = new Date();
 
 	$scope.chartTitle = "Datos enviados";
-	$scope.chartWidth = 360;
-	$scope.chartHeight = 320;
+	$scope.chartWidth = 300;
+	$scope.chartHeight = 370;
 	$scope.chartData = datosGrafico;
 
-	$scope.chartTitleFacturas = "Facturas";
-	$scope.chartWidthFacturas = 580;
+	$scope.chartTitleFacturas = "Facturado por mes";
+	$scope.chartWidthFacturas = 410;
 	$scope.chartHeightFacturas = 320;
 	$scope.chartDataFacturas = datosGraficoFacturas;
 
