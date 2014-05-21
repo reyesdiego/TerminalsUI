@@ -153,7 +153,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				},
 				datosGraficoFacturas: function (controlPanelFactory, $q){
 					var defer = $q.defer();
-					controlPanelFactory.getFacturasMeses(function(graf){
+					var fecha = new Date()
+					controlPanelFactory.getFacturasMeses(fecha.getMonth()+1, function(graf){
 						var base = [
 							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
 						];
@@ -176,7 +177,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				},
 				datosGraficoGates: function (controlPanelFactory, $q){
 					var defer = $q.defer();
-					controlPanelFactory.getGatesMeses(function(graf){
+					var fecha = new Date();
+					controlPanelFactory.getGatesMeses(fecha.getMonth()+1, function(graf){
 						var base = [
 							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
 						];
@@ -199,7 +201,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				},
 				datosGraficoTurnos: function (controlPanelFactory, $q){
 					var defer = $q.defer();
-					controlPanelFactory.getTurnosMeses(function(graf){
+					var fecha = new Date();
+					controlPanelFactory.getTurnosMeses(fecha.getMonth()+1, function(graf){
 						var base = [
 							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
 						];
@@ -211,6 +214,30 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 								fila[i] = terminal.turnos;
 								i++;
 								acum += terminal.turnos;
+							})
+							fila[4] = acum/3;
+							base.push(fila);
+							i = 1;
+						});
+						defer.resolve(base);
+					});
+					return defer.promise;
+				},
+				datosFacturadoPorDia: function (controlPanelFactory, $q){
+					var defer = $q.defer();
+					var fecha = new Date();
+					controlPanelFactory.getFacturadoPorDia(fecha, function(graf){
+						var base = [
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
+						];
+						var i = 1;
+						graf.data.forEach(function(datosDia){
+							var fila = [datosDia.dia, 0, 0, 0, 0, ''];
+							var acum = 0;
+							datosDia.datos.forEach(function(terminal){
+								fila[i] = terminal.monto;
+								i++;
+								acum += terminal.monto;
 							})
 							fila[4] = acum/3;
 							base.push(fila);

@@ -56,26 +56,27 @@
 		</div>
 
 		<div class="col-lg-4">
-			<select class="form-control" id="select" ng-model="terminal">
-				<option value="BACTSSA" ng-selected="true" >BACTSSA</option>
-				<option value="TRP">TERMINAL RIO DE LA PLATA</option>
-				<option value="TERMINAL4">TERMINAL 4</option>
-			</select>
-			<column-chart data="chartDataFacturas" title="{{chartTitleFacturas}}"
-			              width="{{chartWidthFacturas}}" height="{{chartHeightFacturas}}"
-			              select="selectRow(selectedRowIndexFacturas)"></column-chart>
-		</div>
-
-		<div class="col-lg-5">
 			<p class="input-group">
-				<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
+				<input type="text" class="form-control" id="mesDesde" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" is-open="openMesDesde" datepicker-options="dateOptions" />
 				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
+					<button class="btn btn-default" ng-click="open($event, 'mesDesde')"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
 			</p>
 			<column-chart data="chartDataFacturas" title="{{chartTitleFacturas}}"
 			              width="{{chartWidthFacturas}}" height="{{chartHeightFacturas}}"
 			              select="selectRow(selectedRowIndexFacturas)"></column-chart>
+		</div>
+
+		<div class="col-lg-4">
+			<p class="input-group">
+				<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" datepicker-options="dateOptions" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</p>
+			<column-chart data="chartDataFacturado" title="{{chartTitleFacturado}}"
+			              width="{{chartWidthFacturado}}" height="{{chartHeightFacturado}}"
+			              select="selectRow(selectedRowIndexFacturado)"></column-chart>
 
 		</div>
 	</div>

@@ -37,7 +37,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 	};
 
-	factory.getFacturasMeses = function(callback){
+	factory.getFacturasMeses = function(mes, callback){
 		$http.get('mocks/mesesFacturas.json')
 			.success(function (data){
 				callback(data);
@@ -47,7 +47,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 	};
 
-	factory.getGatesMeses = function(callback){
+	factory.getGatesMeses = function(mes, callback){
 		$http.get('mocks/mesesGates.json')
 			.success(function (data){
 				callback(data);
@@ -57,7 +57,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 	};
 
-	factory.getTurnosMeses = function(callback){
+	factory.getTurnosMeses = function(mes, callback){
 		$http.get('mocks/mesesTurnos.json')
 			.success(function (data){
 				callback(data);
@@ -67,5 +67,16 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 	};
 
+	factory.getFacturadoPorDia = function(fecha, callback)
+	{
+		$http.get('mocks/facturadoDia.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
+			});
+
+	}
 	return factory;
 });
