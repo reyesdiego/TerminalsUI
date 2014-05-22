@@ -57,7 +57,7 @@
 
 		<div class="col-lg-4">
 			<p class="input-group">
-				<input type="text" class="form-control" id="mesDesde" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" is-open="openMesDesde" datepicker-options="dateOptions" />
+				<input type="text" class="form-control" id="mesDesde" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" is-open="openMesDesde" show-button-bar="false" datepicker-options="dateOptionsMes" />
 				<span class="input-group-btn">
 					<button class="btn btn-default" ng-click="open($event, 'mesDesde')"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
@@ -69,7 +69,7 @@
 
 		<div class="col-lg-4">
 			<p class="input-group">
-				<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" datepicker-options="dateOptions" />
+				<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" show-button-bar="false" datepicker-options="dateOptions" />
 				<span class="input-group-btn">
 					<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
