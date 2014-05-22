@@ -25,8 +25,7 @@ function turnosCtrl($scope, dialogs, turnosFactory, loginService){
 	$scope.horario.desde.setMinutes(0);
 	$scope.horario.hasta.setMinutes(0);
 	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
-	$scope.format = $scope.formats[1];
+	$scope.format = $scope.formats['yyyy-MM-dd'];
 	$scope.open = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();

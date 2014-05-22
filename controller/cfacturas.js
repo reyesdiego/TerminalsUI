@@ -10,8 +10,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	$scope.hasta = new Date();
 	$scope.terminoCarga = false;
 	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
-	$scope.format = $scope.formats[1];
+	$scope.format = $scope.formats['yyyy-MM-dd'];
 
 	$scope.open = function($event, fecha) {
 		$event.preventDefault();
