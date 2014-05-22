@@ -15,8 +15,8 @@ function invoicesCtrl ($scope, invoiceFactory, loginService) {
 
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
-	$scope.dateOptions = { 'startingDay': 1 };
-	$scope.format = $scope.formats['yyyy-MM-dd'];
+	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
+	$scope.format = 'yyyy-MM-dd';
 	$scope.open = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();

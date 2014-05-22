@@ -24,8 +24,8 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 	};
 	$scope.horario.desde.setMinutes(0);
 	$scope.horario.hasta.setMinutes(0);
-	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
-	$scope.format = $scope.formats['yyyy-MM-dd'];
+	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
+	$scope.format = 'yyyy-MM-dd';
 	$scope.open = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();
