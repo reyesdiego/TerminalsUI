@@ -38,7 +38,7 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	$scope.calendarMode = 'month';
 	$scope.dateOptionsMes = { 'datepickerMode': "'month'" };
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
-	$scope.format = $scope.formats[1];
+	$scope.format = $scope.formats['yyyy-MM-dd'];
 	$scope.formatSoloMes = $scope.formats[3];
 
 	$scope.open = function($event, fecha) {

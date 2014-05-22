@@ -7,11 +7,7 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 	// Paginacion
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
-	var page0 = {
-		skip:0,
-		limit: $scope.itemsPerPage
-	};
-	var page = page0;
+	var page = { skip:0, limit: $scope.itemsPerPage };
 
 	// Fecha (dia y hora)
 	$scope.fecha = {
@@ -24,9 +20,8 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 	};
 	$scope.horario.desde.setMinutes(0);
 	$scope.horario.hasta.setMinutes(0);
-	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
-	$scope.format = $scope.formats[1];
+	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
+	$scope.format = 'yyyy-MM-dd';
 	$scope.open = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();
@@ -51,13 +46,7 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 			// Setea las fechas para las horas y minutos
 			$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
 			$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
-			var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
-			gatesFactory.getGateByDayOrContainer(datos, page0, function(data){
-				if (data.status === "OK"){
-					$scope.gates = data.data;
-					$scope.totalItems = data.totalCount;
-				}
-			});
+			cargaGates(cargaDatos());
 		} else {
 			dialogs.error('Error con las fechas','Ingrese fechas validas');
 		}
@@ -66,11 +55,9 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 	// Carga las facturas de un gate
 	$scope.ver = function(container){
 		$scope.containerHide = !$scope.containerHide;
-		var datos = {
-			'contenedor': container
-		};
+		var datos = { 'contenedor': container };
 		$scope.container = container;
-		invoiceFactory.getInvoice(datos, page0, function(data){
+		invoiceFactory.getInvoice(datos, {skip:0, limit: $scope.itemsPerPage }, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.totalItems = data.totalCount;
@@ -79,14 +66,22 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 		});
 	};
 
-	$scope.$watch('currentPage + itemsPerPage', function(){
+	$scope.$watch('currentPage', function(){
 		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
-		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
-			if(data.status === 'OK'){
-				$scope.gates = data.data;
-			}
-		});
+		cargaGates(cargaDatos(), page);
 	});
 
+	function cargaDatos(){
+		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }
+	}
+
+	function cargaGates(datos, page){
+		page = page || { skip:0, limit: $scope.itemsPerPage };
+		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
+			if (data.status === "OK"){
+				$scope.gates = data.data;
+				$scope.totalItems = data.totalCount;
+			}
+		});
+	}
 }

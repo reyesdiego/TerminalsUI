@@ -9,9 +9,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	$scope.desde = new Date();
 	$scope.hasta = new Date();
 	$scope.terminoCarga = false;
-	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate'];
-	$scope.format = $scope.formats[1];
+	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
+	$scope.format = 'yyyy-MM-dd';
 
 	$scope.open = function($event, fecha) {
 		$event.preventDefault();
@@ -108,7 +107,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 				$scope.tabs[0].active = 1;
 			});
 			$scope.terminoCarga = true;
-		})
+		});
 
 		$scope.tasaCargas = {
 			"titulo":"Éxito",
@@ -116,7 +115,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 			"mensaje": "No se hallaron facturas sin tasa a las cargas",
 			"resultado": [],
 			"mostrarResultado": 0
-		}
+		};
 
 		/*Acá control de tasa a las cargas
 		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, function(data){
