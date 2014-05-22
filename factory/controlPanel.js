@@ -5,7 +5,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
-		var inserturl = serverUrl + '/aggregate?2014-05-20';
+		var inserturl = serverUrl + '/aggregate?fecha=' + dia;
 		$http.get(inserturl)
 			.success(function(data){
 				var result = [];
@@ -47,6 +47,18 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 	};
 
+	//Método hecho para probar actualización en gráfico
+	factory.getFacturasMeses2 = function(mes, callback){
+		$http.get('mocks/mesesFacturas2.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
+			});
+	};
+	//Borrar al tener terminado el original
+
 	factory.getGatesMeses = function(mes, callback){
 		$http.get('mocks/mesesGates.json')
 			.success(function (data){
@@ -78,5 +90,20 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 
 	}
+
+	//Método hecho para probar actualización en gráfico
+	factory.getFacturadoPorDia2 = function(fecha, callback)
+	{
+		$http.get('mocks/facturadoDia2.json')
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
+			});
+
+	}
+	//Borrar al tener terminado el original
+
 	return factory;
 });

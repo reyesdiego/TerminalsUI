@@ -3,8 +3,8 @@
  */
 
 myapp.service('formatDate', function () {
-
-	this.formatearFecha = function(fecha){
+	return {
+		formatearFecha : function(fecha){
 		if (fecha != '' && fecha != null){
 			var fechaAux = fecha.getFullYear() + '-';
 			if ((fecha.getMonth() + 1) < 10){
@@ -18,9 +18,8 @@ myapp.service('formatDate', function () {
 			return fechaAux;
 		}else
 			return null;
-	};
-
-	this.formatearFechaHorasMinutos = function(fecha){
+		},
+		formatearFechaHorasMinutos : function(fecha){
 		if (fecha != '' && fecha != null){
 			var fechaAux = this.formatearFecha(fecha) + ' ';
 			if(fecha.getHours() < 7){
@@ -34,6 +33,6 @@ myapp.service('formatDate', function () {
 			return fechaAux;
 		}else
 			return null;
+		}
 	};
-
 });

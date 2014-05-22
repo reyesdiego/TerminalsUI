@@ -2,9 +2,8 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, datosFacturadoPorDia, controlPanelFactory, socket){
-	'use strict';
-	var fecha = new Date();
+function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, datosFacturadoPorDia, controlPanelFactory, socket, formatDate){
+	var fecha = formatDate.formatearFecha(new Date());
 
 	$scope.chartTitle = "Datos enviados";
 	$scope.chartWidth = 300;
@@ -35,8 +34,9 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	$scope.desde = new Date();
 	$scope.mesDesde = new Date();
 	$scope.terminoCarga = false;
-	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 1 };
-	$scope.dateOptionsMes = { 'datepickerMode':"'month'" };
+	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 0, 'showWeeks': false };
+	$scope.calendarMode = 'month';
+	$scope.dateOptionsMes = { 'datepickerMode': "'month'" };
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
 	$scope.format = $scope.formats[1];
 	$scope.formatSoloMes = $scope.formats[3];
@@ -76,5 +76,49 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 		$scope.control = data[0];
 		$scope.fecha = fecha;
 	});
+
+	$scope.traerDatosFacturadoMes = function(){
+		controlPanelFactory.getFacturasMeses2($scope.mesDesde.getMonth()+1, function(graf){
+			var base = [
+				['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
+			];
+			var i = 1;
+			graf.data.forEach(function(datosMes){
+				var fila = [datosMes.mes, 0, 0, 0, 0, ''];
+				var acum = 0;
+				datosMes.datos.forEach(function(terminal){
+					fila[i] = terminal.facturas;
+					i++;
+					acum += terminal.facturas;
+				});
+				fila[4] = acum/3;
+				base.push(fila);
+				i = 1;
+			});
+			$scope.chartDataFacturas = base;
+		});
+	}
+
+	$scope.traerDatosFacturadoDia = function(){
+		controlPanelFactory.getFacturadoPorDia2($scope.fecha, function(graf){
+			var base = [
+				['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
+			];
+			var i = 1;
+			graf.data.forEach(function(datosDia){
+				var fila = [datosDia.dia, 0, 0, 0, 0, ''];
+				var acum = 0;
+				datosDia.datos.forEach(function(terminal){
+					fila[i] = terminal.monto;
+					i++;
+					acum += terminal.monto;
+				})
+				fila[4] = acum/3;
+				base.push(fila);
+				i = 1;
+			});
+			$scope.chartDataFacturado = base;
+		});
+	}
 
 }
