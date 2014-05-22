@@ -7,11 +7,7 @@ function turnosCtrl($scope, dialogs, turnosFactory, loginService){
 	// Paginacion
 	$scope.itemsPerPage = 10;
 	$scope.currentPage = 1;
-	var page0 = {
-		skip:0,
-		limit: $scope.itemsPerPage
-	};
-	var page = page0;
+	var page = { skip:0, limit: $scope.itemsPerPage };
 
 	// Fecha (dia y hora)
 	$scope.fecha = {
@@ -42,13 +38,7 @@ function turnosCtrl($scope, dialogs, turnosFactory, loginService){
 			// Setea las fechas para las horas y minutos
 			$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
 			$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
-			var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
-			turnosFactory.getTurnosByDatesOrContainer(datos, page0, function(data){
-				if (data.status === "OK"){
-					$scope.turnos = data.data;
-					$scope.totalItems = data.totalCount;
-				}
-			});
+			cargaTurnos(cargaDatos());
 		} else {
 			dialogs.error('Error con las fechas','Ingrese fechas validas');
 		}
@@ -56,12 +46,20 @@ function turnosCtrl($scope, dialogs, turnosFactory, loginService){
 
 	$scope.$watch('currentPage + itemsPerPage', function(){
 		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		var datos = {contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta};
-		turnosFactory.getTurnosByDatesOrContainer(datos, page, function(data){
-			if(data.status === 'OK'){
-				$scope.turnos = data.data;
-			}
-		});
+		cargaTurnos(cargaDatos(), page);
 	});
 
+	function cargaDatos(){
+		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }
+	}
+
+	function cargaTurnos(datos, page){
+		page = page || { skip:0, limit: $scope.itemsPerPage };
+		turnosFactory.getTurnos(datos, page, function(data){
+			if (data.status === "OK"){
+				$scope.turnos = data.data;
+				$scope.totalItems = data.totalCount;
+			}
+		});
+	}
 }

@@ -4,7 +4,7 @@
 myapp.factory('turnosFactory', function($http, dialogs, formatDate, loginService){
 	var factory = {};
 
-	factory.getTurnosByDatesOrContainer = function(datos, page, callback){
+	factory.getTurnos = function(datos, page, callback){
 		var inserturl = serverUrl + '/appointments/' + page.skip + '/' + page.limit + '?';
 		var insertAux = inserturl;
 		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != ''){
