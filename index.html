@@ -91,12 +91,7 @@
 					<li ng-show="acceso=='terminal' && isCollapsed"><a ui-sref="matches" ng-click="isCollapsed = !isCollapsed">Asociar</a></li>
 					<li ng-show="acceso=='terminal' && isCollapsed"><a ui-sref="invoices" ng-click="isCollapsed = !isCollapsed">Facturas</a></li>
 					<li ng-show="acceso=='control' && isCollapsed"><a ui-sref="control" ng-click="isCollapsed = !isCollapsed">Control</a></li>
-					<li ng-show="acceso!='' && isCollapsed" class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" ng-init="isCollapsed2" ng-click="isCollapsed2 = !isCollapsed2">{{ terminal.full_name }}<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li ng-click="salir()"><a href="" ng-click="isCollapsed = !isCollapsed">Salir</a></li>
-						</ul>
-					</li>
+					<li ng-show="acceso!='' && isCollapsed" ng-click="salir()"><a href="">Salir</a></li>
 				</ul>
 			</nav>
 		</div>
