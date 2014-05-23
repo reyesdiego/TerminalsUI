@@ -33,7 +33,7 @@
 							</div>
 						</div>
 						<div class="col-lg-1">
-							<button type="button" class="btn btn-primary" ng-click="search()">Buscar</button>
+							<button type="button" class="btn btn-primary" ng-click="search()"><span class="glyphicon glyphicon-search"></span> Buscar</button>
 						</div>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 						<td>{{ invoice.razon }}</td>
 						<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 						<td>${{ invoice.importe.total }}</td>
-						<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice; $parent.onOff = !$parent.onOff">M&aacute;s detalles</button></td>
+						<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice; $parent.onOff = !$parent.onOff"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 					</tr>
 					</tbody>
 				</table>

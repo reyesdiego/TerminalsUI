@@ -24,14 +24,14 @@
 				<div class="panel panel-default">
 					<div class="panel-heading"><strong>Buscar Tarifa por</strong></div>
 					<div class="panel-body">
-						<div class="col-lg-5">
+						<div class="col-lg-4">
 							<input type="text" ng-model="codigo" class="form-control" placeholder="Codigo" toupper>
 						</div>
-						<div class="col-lg-5">
+						<div class="col-lg-4">
 							<input type="text" ng-model="codigoAsociado" class="form-control" placeholder="Codigo Asociado" toupper>
 						</div>
-						<div class="col-lg-2">
-							<button type="button" class="btn btn-primary" ng-click="search()">Buscar</button>
+						<div class="col-lg-4 text-center">
+							<button type="button" class="btn btn-primary" ng-click="search()"><span class="glyphicon glyphicon-search"></span> Buscar</button>
 						</div>
 					</div>
 				</div>
@@ -64,7 +64,7 @@
 								<div class="input-group">
 									<input type="text" class="form-control" ng-model="price.new" ng-keyup="hitEnter($event, price)" toupper>
 									<span class="input-group-btn">
-										<input type="button" class="btn btn-primary" value="+" ng-click="agregarCodigo(price, $index)" ng-init="price.disabled = true" ng-disabled="price.disabled">
+										<button type="button" class="btn btn-primary" ng-click="agregarCodigo(price, $index)" ng-init="price.disabled = true" ng-disabled="price.disabled"><span class="glyphicon glyphicon-plus"></span></button>
 									</span>
 								</div>
 							</td>
@@ -79,8 +79,8 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
-				<button class="btn" ng-click="abrirNuevoConcepto()">Nuevo concepto</button>
+				<button class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+				<button class="btn" ng-click="abrirNuevoConcepto()"><span class="glyphicon glyphicon-asterisk"></span> Nuevo concepto</button>
 			</div>
 		</div>
 

@@ -63,8 +63,8 @@
 								<input type="text" class="form-control" id="contenedor" ng-model="contenedor" toupper>
 							</div>
 							<div class="form-group">
-								<button class="btn btn-default" ui-sref="control">Volver</button>
-								<button class="btn btn-primary" ui-sref=".result" ng-click="cargar(); onOff1 = !onOff1" ng-disabled="myForm.$invalid || fecha.desde > fecha.hasta">Cargar</button>
+								<button class="btn btn-default" ui-sref="control"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+								<button class="btn btn-primary" ui-sref=".result" ng-click="cargar(); onOff1 = !onOff1" ng-disabled="myForm.$invalid || fecha.desde > fecha.hasta"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button>
 							</div>
 						</fieldset>
 					</div>
@@ -80,7 +80,7 @@
 			<div ng-hide="containerHide">
 				<pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 				<div>
-					<button class="btn btn-primary hidden-print" ng-click="onOff1 = !onOff1; containerHide = false">Volver</button>
+					<button class="btn btn-default hidden-print" ng-click="onOff1 = !onOff1; containerHide = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 				</div>
 			</div>
 		</div>
