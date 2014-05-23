@@ -78,7 +78,7 @@
 					<li ng-show="acceso=='terminal'"><a ui-sref="invoices">Facturas</a></li>
 					<li ng-show="acceso=='control'"><a ui-sref="control">Control</a></li>
 					<li ng-show="acceso!=''" class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown">{{ terminal.full_name }}<b class="caret"></b></a>
+						<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ terminal.full_name }}<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li ng-click="salir()"><a href="">Salir</a></li>
 						</ul>
