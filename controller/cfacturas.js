@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function cfacturasCtrl($scope, invoiceFactory, priceFactory){
+function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 	'use strict';
 
 	// Fecha (dia y hora)
@@ -26,17 +26,17 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
-		priceFactory.getMatchPrices($scope.terminal, function(data){
+		priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function(data){
 			$scope.chartData = [
 				['Tipo de comprobante', 'Total']
 			];
 
-			$scope.matchPrices = data;
+			$scope.matchPrices = data.data;
 			$scope.codigosTerminal = [];
 
 			$scope.matchPrices.forEach(function(match){
-				if (match.match != null){
-					match.match.codes.forEach(function(codigo){
+				if (match.matches != null && match.matches.length > 0){
+					match.matches[0].match.forEach(function(codigo){
 						$scope.codigosTerminal.push(codigo);
 					});
 				}
