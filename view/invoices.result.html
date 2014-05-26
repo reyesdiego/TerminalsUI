@@ -1,4 +1,4 @@
-<div class="container well" style="width: 800px; text-align: center">
+<div class="container well col-lg-10 col-lg-offset-1" style="text-align: center">
 	<div>
 		<table class="table">
 			<tr>
@@ -29,51 +29,45 @@
 		</table>
 		<table class="table table-striped table-bordered" style="text-align: center">
 			<thead>
-				<tr style="text-align: center">
-					<th>Item</th>
-					<th>Cantidad</th>
-					<th>Unidad</th>
-					<th style="text-align:right">Total</th>
+				<tr>
+					<th style="text-align: right">Item</th>
+					<th style="text-align: left">Descripci&oacute;n</th>
+					<th style="text-align: right">Cantidad</th>
+					<th style="text-align: right">Unidad</th>
+					<th style="text-align: right">Total</th>
 				</tr>
 			</thead>
 			<tbody ng-repeat="contenedor in verDetalle.detalle">
 				<tr>
-					<td colspan="4" style="text-align: left">
+					<td colspan="5" style="text-align: left">
 						<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
 						<span> - Buque: {{ contenedor.buque.nombre }}</span>
 						<span> - Viaje: {{ contenedor.buque.viaje }}</span>
 					</td>
 				</tr>
-				<tr ng-repeat="item in contenedor.items">
-					<td>
-						<span>{{ item.id }}</span>
-					</td>
-					<td>
-						<span>{{ item.cnt }}</span>
-					</td>
-					<td>
-						<span>{{ item.uniMed }}</span>
-					</td>
-					<td style="text-align:right">
-						<span>{{ item.impTot | currency }}</span>
-					</td>
+				<tr style="text-align: right" ng-repeat="item in contenedor.items">
+					<td>{{ item.id }}</td>
+					<td style="text-align: left">{{ item.descripcion | maxLength : 180 }}<a ng-show="(item.descripcion.length > 130)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
+					<td>{{ item.cnt }}</td>
+					<td>{{ item.uniMed }}</td>
+					<td>{{ item.impTot | currency }}</td>
 				</tr>
 			</tbody>
 			<tfoot style="text-align: right;">
 				<tr>
-					<td colspan="3">Subtotal</td>
+					<td colspan="4">Subtotal</td>
 					<td>{{ verDetalle.importe.subtotal | currency }}</td>
 				</tr>
 				<tr>
-					<td colspan="3">IVA</td>
+					<td colspan="4">IVA</td>
 					<td>{{ verDetalle.importe.iva | currency }}</td>
 				</tr>
 				<tr>
-					<td colspan="3">Otros Tributos</td>
+					<td colspan="4">Otros Tributos</td>
 					<td>{{ verDetalle.importe.otrosTributos | currency }}</td>
 				</tr>
 				<tr>
-					<td colspan="3">Total</td>
+					<td colspan="4">Total</td>
 					<td>{{ verDetalle.importe.total | currency }}</td>
 				</tr>
 			</tfoot>

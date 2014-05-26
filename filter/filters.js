@@ -9,3 +9,15 @@ myapp.filter('formatCurrency', function(){
 		else return null;
 	}
 });
+
+myapp.filter("maxLength", function(){
+	return function(text,max){
+		if(text != null){
+			if(text.length > max){
+				return text.substring(0,max);
+			}
+			else
+				return text;
+		}
+	}
+});
