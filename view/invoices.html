@@ -8,7 +8,7 @@
 		</div>
 	</div>
 
-	<div ng-init="onOff = false" ng-hide="onOff">
+	<div data-ng-show="$state.includes('invoices')" data-ng-hide="$state.includes('invoices.result')">
 
 		<div class="row">
 			<div class="col-lg-12">
@@ -63,7 +63,7 @@
 						<td>{{ invoice.razon }}</td>
 						<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 						<td>${{ invoice.importe.total }}</td>
-						<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice; $parent.onOff = !$parent.onOff"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
+						<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 					</tr>
 					</tbody>
 				</table>
@@ -75,7 +75,7 @@
 
 	</div>
 
-	<div ng-hide="!onOff">
+	<div data-ng-show="$state.includes('invoices.result')">
 		<div ui-view></div>
 	</div>
 
