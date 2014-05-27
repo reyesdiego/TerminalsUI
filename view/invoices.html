@@ -16,17 +16,17 @@
 					<div class="panel-heading"><strong>Buscar Facturas por</strong></div>
 					<div class="panel-body">
 						<div class="col-lg-2">
-							<input type="text" ng-keyup="hitEnter($event, price)" ng-model="nroComprobante" class="form-control" placeholder="N° Comprobante"/>
+							<input type="text" ng-keyup="hitEnter($event)" ng-model="nroComprobante" class="form-control" placeholder="N° Comprobante"/>
 						</div>
 						<div class="col-lg-3">
-							<input type="text" ng-keyup="hitEnter($event, price)" ng-model="razonSocial" class="form-control" placeholder="Raz&oacute;n Social" toupper/>
+							<input type="text" ng-keyup="hitEnter($event)" ng-model="razonSocial" class="form-control" placeholder="Raz&oacute;n Social" toupper/>
 						</div>
 						<div class="col-lg-3">
-							<input type="text" ng-keyup="hitEnter($event, price)" ng-model="documentoCliente" class="form-control" placeholder="Documento del Cliente"/>
+							<input type="text" ng-keyup="hitEnter($event)" ng-model="documentoCliente" class="form-control" placeholder="Documento del Cliente"/>
 						</div>
 						<div class="col-lg-3">
 							<div class="input-group">
-								<input type="text" ng-keyup="hitEnter($event, price)" class="form-control" datepicker-popup="{{format}}" ng-model="fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" />
+								<input type="text" ng-keyup="hitEnter($event)" class="form-control" datepicker-popup="{{format}}" ng-model="fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="open($event); openFechaDesde = true;"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>
