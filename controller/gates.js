@@ -60,7 +60,6 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 		invoiceFactory.getInvoice(datos, {skip:0, limit: $scope.itemsPerPage }, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
-				$scope.totalItems = data.totalCount;
 				$scope.busquedaContenedor = true;
 			}
 		});
