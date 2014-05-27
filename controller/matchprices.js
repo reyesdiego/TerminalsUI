@@ -133,30 +133,32 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			"unit": $scope.unidad,
 			"currency": $scope.moneda,
 			"code": $scope.codigo,
-			"terminal": "AGP"
+			"terminal": loginService.getInfo().terminal
 		};
 
 		priceFactory.addPrice(formData, function(nuevoPrecio){
-			var nuevoMatch = { codes:[{
-				terminal: loginService.getInfo().terminal,
-				codes: []}],
-				_id: nuevoPrecio._id
-			};
 
-			nuevoMatch.codes.push($scope.codigo);
-			nuevoPrecio.match = nuevoMatch;
+			if (nuevoPrecio.status === 'OK'){
+				var nuevoMatch = {
+					code: nuevoPrecio.data.code,
+					terminal: nuevoPrecio.data.terminal,
+					_idPrice: nuevoPrecio.data._id,
+					match:[]
+				};
+				nuevoMatch.match.push(nuevoPrecio.data.code);
 
-			$scope.match = [];
-			$scope.match.push(nuevoPrecio.match);
+				$scope.match = [];
+				$scope.match.push(nuevoMatch);
 
-			priceFactory.addMatchPrice($scope.match, function(trash){
-				console.log('entro al add match');
-				console.log(trash);
-				$scope.pricelist.push(nuevoPrecio);
-				dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
-				$scope.listaMatch = false;
-				$scope.nuevoConcepto = true;
-			});
+				priceFactory.addMatchPrice($scope.match, function(trash){
+					console.log('entro al add match');
+					console.log(trash);
+					$scope.pricelist.push(nuevoPrecio);
+					dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
+					$scope.listaMatch = false;
+					$scope.nuevoConcepto = true;
+				});
+			}
 		})
 	};
 
