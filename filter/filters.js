@@ -19,5 +19,7 @@ myapp.filter("maxLength", function(){
 			else
 				return text;
 		}
+		else
+			return null;
 	}
 });

@@ -23,7 +23,7 @@
 					<tbody>
 					<tr style="height:60px" ng-repeat="price in filteredPrices">
 						<td class="col-lg-1">{{ price.code }}</td>
-						<td class="col-lg-9">{{ price.description | maxLength : 240 }}<a ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+						<td class="col-lg-9">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td class="col-lg-1">{{ price.unit}}</td>
 						<td class="col-lg-1">{{ price.currency | formatCurrency }}{{ price.topPrice }}</td>
 					</tr>

@@ -53,7 +53,7 @@
 						<tbody>
 						<tr style="height:60px" ng-repeat="price in filteredPrices" class="{{ price.matches[0].claseFila }}">
 							<td class="col-lg-1">{{ price.code }}</td>
-							<td class="col-lg-7">{{ price.description | maxLength : 190 }}<a ng-show="(price.description.length > 190)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+							<td class="col-lg-7">{{ price.description | maxLength : 190 }}<a href="" ng-show="(price.description.length > 190)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 							<td class="col-lg-2">
 								<span ng-repeat="codigo in price.matches[0].match track by $index">
 									<a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a>

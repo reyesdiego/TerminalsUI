@@ -47,7 +47,7 @@
 				</tr>
 				<tr style="text-align: right" ng-repeat="item in contenedor.items">
 					<td>{{ item.id }}</td>
-					<td style="text-align: left">{{ item.descripcion | maxLength : 180 }}<a ng-show="(item.descripcion.length > 130)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
+					<td style="text-align: left">{{ item.descripcion | maxLength : 180 }}<a href="" ng-show="(item.descripcion.length > 130)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
 					<td>{{ item.cnt }}</td>
 					<td>{{ item.uniMed }}</td>
 					<td>{{ item.impTot | currency }}</td>
