@@ -47,7 +47,8 @@
 				</tr>
 				<tr style="text-align: right" ng-repeat="item in contenedor.items">
 					<td>{{ item.id }}</td>
-					<td style="text-align: left">{{ item.descripcion | maxLength : 180 }}<a href="" ng-show="(item.descripcion.length > 130)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
+					<td style="text-align: left" class="hidden-print">{{ item.descripcion | maxLength : 180 }}<a href="" ng-show="(item.descripcion.length > 130)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
+					<td style="text-align: left" class="visible-print">{{ item.descripcion }}</td>
 					<td>{{ item.cnt }}</td>
 					<td>{{ item.uniMed }}</td>
 					<td>{{ item.impTot | currency }}</td>
@@ -80,7 +81,7 @@
 		</div>
 	</div>
 	<div class="hidden-print">
+		<button class="btn btn-default" ng-click="$state.go('^')"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 		<a href="javascript:window.print()" class="btn btn-primary" ng-click="window.print();"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
-		<button class="btn btn-primary" ng-click="$parent.onOff = !$parent.onOff"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 	</div>
 </div>
