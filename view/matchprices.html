@@ -25,14 +25,14 @@
 					<div class="panel-heading"><strong>Buscar Tarifa por</strong></div>
 					<div class="panel-body">
 						<div class="col-lg-4">
-							<input type="text" ng-model="codigo" class="form-control" placeholder="Codigo" toupper>
+							<input type="text" ng-model="search" class="form-control" placeholder="Codigo" toupper>
 						</div>
-						<div class="col-lg-4">
-							<input type="text" ng-model="codigoAsociado" class="form-control" placeholder="Codigo Asociado" toupper>
+						<!--<div class="col-lg-4">
+							<input type="text" ng-model="search.matches[0].match" class="form-control" placeholder="Codigo Asociado" toupper>
 						</div>
-						<div class="col-lg-4 text-center">
+						<!--<div class="col-lg-4 text-center">
 							<button type="button" class="btn btn-primary" ng-click="search()"><span class="glyphicon glyphicon-search"></span> Buscar</button>
-						</div>
+						</div>-->
 					</div>
 				</div>
 			</div>
@@ -51,7 +51,8 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr style="height:60px" ng-repeat="price in filteredPrices" class="{{ price.matches[0].claseFila }}">
+						<!--<tr style="height:60px" ng-repeat="price in filteredPrices" class="{{ price.matches[0].claseFila }}">-->
+						<tr style="height:60px" ng-repeat="price in filtrado = (pricelist | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage | filter:search)" class="{{ price.matches[0].claseFila }}">
 							<td class="col-lg-1">{{ price.code }}</td>
 							<td class="col-lg-7">{{ price.description | maxLength : 190 }}<a href="" ng-show="(price.description.length > 190)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 							<td class="col-lg-2">
