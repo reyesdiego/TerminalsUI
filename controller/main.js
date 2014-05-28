@@ -302,9 +302,17 @@ myapp.run(function($rootScope, $state, loginService){
 	"use strict";
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 	$rootScope.$state = $state;
-	// Paginacion
+	// Variables Globales de Paginacion
 	$rootScope.itemsPerPage = 10;
 	$rootScope.currentPage = 1;
+	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
+	// Variables Globales de Fecha
+	$rootScope.dateOptions = { 'showWeeks': false };
+	$rootScope.formatDate = 'yyyy-MM-dd';
+	$rootScope.openDate = function($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+	};
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if (!in_array(toState.name, rutasComunes)){

@@ -19,9 +19,9 @@
 							<div class="form-group">
 								<label for="fechaDesde">D&iacute;a</label>
 								<p class="input-group">
-									<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="fecha.desde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" required />
+									<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{formatDate}}" ng-model="fecha.desde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" required />
 									<span class="input-group-btn">
-										<button class="btn btn-default" ng-click="open($event); openFechaDesde = true; openFechaHasta = false"><i class="glyphicon glyphicon-calendar"></i></button>
+										<button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde"><i class="glyphicon glyphicon-calendar"></i></button>
 									</span>
 								</p>
 							</div>
@@ -40,9 +40,9 @@
 							<div class="form-group">
 								<label for="fechaHasta">D&iacute;a</label>
 								<p class="input-group">
-									<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="fecha.hasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
+									<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{formatDate}}" ng-model="fecha.hasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
 									<span class="input-group-btn">
-										<button class="btn btn-default" ng-click="open($event); openFechaHasta = true; openFechaDesde = false"><i class="glyphicon glyphicon-calendar"></i></button>
+										<button class="btn btn-default" ng-click="openDate($event); openFechaHasta = !openFechaHasta"><i class="glyphicon glyphicon-calendar"></i></button>
 									</span>
 								</p>
 							</div>

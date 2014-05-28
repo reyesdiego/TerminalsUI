@@ -5,32 +5,20 @@
 function invoicesCtrl ($scope, invoiceFactory) {
 	'use strict';
 
-	// Paginacion
-	var page = {
-		skip:0,
-		limit: $scope.itemsPerPage
-	};
-
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
-	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
-	$scope.format = 'yyyy-MM-dd';
-	$scope.open = function($event) {
-		$event.preventDefault();
-		$event.stopPropagation();
-	};
 
 	// Trae las facturas disponibles
-	cargaFacturas(cargaDatos());
+	cargaFacturas();
 
 	// Busca las facturas por cualquiera de los datos ingresados
 	$scope.search = function (){
-		cargaFacturas(cargaDatos());
+		cargaFacturas();
 	};
 
 	$scope.$watch('currentPage', function(){
-		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		cargaFacturas(cargaDatos(), page);
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		cargaFacturas($scope.page);
 	});
 
 	function cargaDatos(){
@@ -42,9 +30,9 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		};
 	}
 
-	function cargaFacturas(datos,page){
+	function cargaFacturas(page){
 		page = page || { skip:0, limit: $scope.itemsPerPage };
-		invoiceFactory.getInvoice(datos, page, function(data){
+		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				// ***** TO DO Agregar la descripcion desde la base

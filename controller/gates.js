@@ -4,9 +4,6 @@
 function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 	'use strict';
 
-	// Paginacion
-	var page = { skip:0, limit: $scope.itemsPerPage };
-
 	// Fecha (dia y hora)
 	$scope.fecha = {
 		desde: new Date(),
@@ -18,12 +15,6 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 	};
 	$scope.horario.desde.setMinutes(0);
 	$scope.horario.hasta.setMinutes(0);
-	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
-	$scope.format = 'yyyy-MM-dd';
-	$scope.open = function($event) {
-		$event.preventDefault();
-		$event.stopPropagation();
-	};
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.gates = {};
@@ -42,7 +33,8 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 			// Setea las fechas para las horas y minutos
 			$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
 			$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
-			cargaGates(cargaDatos());
+			$scope.currentPage = 1;
+			cargaGates();
 		} else {
 			dialogs.error('Error con las fechas','Ingrese fechas validas');
 		}
@@ -62,17 +54,17 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 	};
 
 	$scope.$watch('currentPage', function(){
-		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		cargaGates(cargaDatos(), page);
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		cargaGates($scope.page);
 	});
 
 	function cargaDatos(){
 		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }
 	}
 
-	function cargaGates(datos, page){
+	function cargaGates(page){
 		page = page || { skip:0, limit: $scope.itemsPerPage };
-		gatesFactory.getGateByDayOrContainer(datos, page, function(data){
+		gatesFactory.getGateByDayOrContainer(cargaDatos(), page, function(data){
 			if (data.status === "OK"){
 				$scope.gates = data.data;
 				$scope.totalItems = data.totalCount;

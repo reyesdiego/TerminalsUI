@@ -4,9 +4,6 @@
 function turnosCtrl($scope, dialogs, turnosFactory){
 	'use strict';
 
-	// Paginacion
-	var page = { skip:0, limit: $scope.itemsPerPage };
-
 	// Fecha (dia y hora)
 	$scope.fecha = {
 		desde: new Date(),
@@ -18,12 +15,6 @@ function turnosCtrl($scope, dialogs, turnosFactory){
 	};
 	$scope.horario.desde.setMinutes(0);
 	$scope.horario.hasta.setMinutes(0);
-	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
-	$scope.format = 'yyyy-MM-dd';
-	$scope.open = function($event) {
-		$event.preventDefault();
-		$event.stopPropagation();
-	};
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.turnos = {};
@@ -34,24 +25,29 @@ function turnosCtrl($scope, dialogs, turnosFactory){
 			// Setea las fechas para las horas y minutos
 			$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
 			$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
-			cargaTurnos(cargaDatos());
+			$scope.currentPage = 1;
+			cargaTurnos();
 		} else {
-			dialogs.error('Error con las fechas','Ingrese fechas validas');
+			dialogs.error('Error con las fechas','Ingrese fechas válidas');
 		}
 	};
 
 	$scope.$watch('currentPage', function(){
-		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		cargaTurnos(cargaDatos(), page);
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		cargaTurnos($scope.page);
 	});
 
 	function cargaDatos(){
-		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }
+		return {
+			contenedor : $scope.contenedor,
+			fechaDesde : $scope.fecha.desde,
+			fechaHasta : $scope.fecha.hasta
+		}
 	}
 
-	function cargaTurnos(datos, page){
+	function cargaTurnos(page){
 		page = page || { skip:0, limit: $scope.itemsPerPage };
-		turnosFactory.getTurnos(datos, page, function(data){
+		turnosFactory.getTurnos(cargaDatos(), page, function(data){
 			if (data.status === "OK"){
 				$scope.turnos = data.data;
 				$scope.totalItems = data.totalCount;

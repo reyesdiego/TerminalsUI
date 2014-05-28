@@ -8,7 +8,7 @@ function changePassCtrl ($scope, $http, $dialogs) {
 	$scope.changePass = function(){
 
 		if ($scope.newPass != $scope.confirmPass){
-			$dialogs.notify("Cambiar contraseña","Las contraseñas no coinciden");
+			$dialogs.notify('Cambiar contraseña', 'Las contraseñas no coinciden');
 			return;
 		}
 
@@ -28,13 +28,13 @@ function changePassCtrl ($scope, $http, $dialogs) {
 				console.log("success");
 				$scope.codeStatus = response.data;
 				console.log($scope.codeStatus);
-				$dialogs.notify("Cambiar contraseña","La contraseña ha sido modificada con éxito.");
+				$dialogs.notify('Cambiar contraseña', 'La contraseña ha sido modificada con éxito.');
 
 			}).error(function(response) {
 				console.log("error");
 				$scope.codeStatus = response || "Request failed";
 				console.log($scope.codeStatus);
-				$dialogs.error('Se ha producido un error al intentar cambiar la contraseña. Inténtelo nuevamente más tarde.');
+				$dialogs.error('Error al cambiar la contraseña', 'Se ha producido un error. Inténtelo nuevamente más tarde.');
 			});
 
 	}
