@@ -5,7 +5,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
-		var inserturl = serverUrl + '/aggregate?fecha=' + dia;
+		var inserturl = serverUrl + '/counts?fecha=' + dia;
 		$http.get(inserturl)
 			.success(function(data){
 				var result = [];
@@ -27,7 +27,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 	};
 
 	factory.getTotales = function(fecha, callback){
-		var inserturl = serverUrl + '/aggregate';
+		var inserturl = serverUrl + '/counts';
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data.data);
