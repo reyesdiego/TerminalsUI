@@ -22,5 +22,10 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
 					$rootScope.terminal = loginService.getInfo();
 				}
 			}
-		)}
+		)};
+
+	$scope.hitEnter = function(evt){
+		if(angular.equals(evt.keyCode,13))
+			$scope.login();
+	}; // end hitEnter
 }

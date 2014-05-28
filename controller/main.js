@@ -301,7 +301,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 myapp.run(function($rootScope, $state, loginService){
 	"use strict";
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
-
+	$rootScope.$state = $state;
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if (!in_array(toState.name, rutasComunes)){
 			if (loginService.getStatus()){
@@ -315,4 +315,4 @@ myapp.run(function($rootScope, $state, loginService){
 			}
 		}
 	})
-})
+});

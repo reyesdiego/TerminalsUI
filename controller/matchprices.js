@@ -16,6 +16,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.listaMatch = false;
 	$scope.nuevoConcepto = true;
 
+	$scope.pricelist = [];
 	$scope.filteredPrices = [];
 	$scope.matchesTerminal = [];
 
@@ -33,14 +34,26 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			}
 		});
 
-		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
-
 		$scope.totalItems = $scope.pricelist.length;
 
-		$scope.$watch('currentPage + itemsPerPage', function(){
+		$scope.$watch('currentPage', function(){
 			$scope.guardar();
 			$scope.flagCambios = false;
 			$scope.filtro = '';
+		});
+
+		$scope.$watch('search', function(){
+			if ($scope.search != "" && $scope.search != null){
+				$scope.totalItems = $scope.filteredPrices.length;
+				if ($scope.search.length <= 1){
+					$scope.itemsPerPage = 10;
+				} else {
+					$scope.itemsPerPage = $scope.pricelist.length;
+				}
+			} else {
+				$scope.totalItems = $scope.pricelist.length;
+				$scope.itemsPerPage = 10;
+			}
 		});
 
 	});
@@ -105,7 +118,6 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		var prices = $scope.filteredPrices;
 		prices.forEach(function(item){
 			if (item.matches != null && item.matches.length > 0 && item.matches[0].flagGuardar){
-				//item.match._id = item.match._id;
 				$scope.match.push(item.matches[0]);
 				item.matches[0].flagGuardar = false;
 				item.matches[0].claseFila = "";
@@ -116,11 +128,9 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 				$scope.flagGuardado = false;
 				$timeout(function(){
 					$scope.flagGuardado = true;
+					$scope.flagCambios = false;
 				}, 3000);
-				$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 			});
-		} else {
-			$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 		}
 	};
 
@@ -175,19 +185,6 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.esconderAlerta = function(){
 		$scope.flagGuardado = true;
-	};
-
-	// Busca la Tarifa por cualquiera de los datos ingresados
-	$scope.search = function (){
-		var datos = {
-			'codigo': $scope.codigo,
-			'codigoAsociado': $scope.codigoAsociado
-		};
-		priceFactory.getMatchPrices(loginService.getInfo().terminal, datos, function (data) {
-			$scope.pricelist = data.data;
-			$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
-			$scope.totalItems = $scope.pricelist.length;
-		});
 	};
 
 }

@@ -64,4 +64,9 @@ function invoicesCtrl ($scope, invoiceFactory, loginService) {
 			}
 		});
 	}
+
+	$scope.hitEnter = function(evt){
+		if(angular.equals(evt.keyCode,13))
+			$scope.search();
+	}; // end hitEnter
 }

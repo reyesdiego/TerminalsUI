@@ -1,4 +1,4 @@
-<div class="container row" ng-hide="containerHide">
+<div class="container row"  data-ng-show="$state.includes('gates.result')" data-ng-hide="$state.includes('gates.result.invoices')">
 	<div class="col-lg-12">
 		<div class="row">
 			<table class="table table-bordered table-hover" style="text-align: center">
@@ -32,6 +32,6 @@
 		</div>
 	</div>
 </div>
-<div ng-hide="!containerHide">
+<div  data-ng-show="$state.includes('gates.result.invoices')">
 	<div ui-view></div>
 </div>
