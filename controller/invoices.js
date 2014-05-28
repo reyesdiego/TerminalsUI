@@ -2,12 +2,10 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-function invoicesCtrl ($scope, invoiceFactory, loginService) {
+function invoicesCtrl ($scope, invoiceFactory) {
 	'use strict';
 
 	// Paginacion
-	$scope.itemsPerPage = 10;
-	$scope.currentPage = 1;
 	var page = {
 		skip:0,
 		limit: $scope.itemsPerPage
@@ -21,8 +19,6 @@ function invoicesCtrl ($scope, invoiceFactory, loginService) {
 		$event.preventDefault();
 		$event.stopPropagation();
 	};
-
-	$scope.dataUser = loginService.getInfo();
 
 	// Trae las facturas disponibles
 	cargaFacturas(cargaDatos());

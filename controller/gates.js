@@ -1,12 +1,10 @@
 /**
  * Created by leo on 31/03/14.
  */
-function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
+function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 	'use strict';
 
 	// Paginacion
-	$scope.itemsPerPage = 10;
-	$scope.currentPage = 1;
 	var page = { skip:0, limit: $scope.itemsPerPage };
 
 	// Fecha (dia y hora)
@@ -29,8 +27,6 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory, loginService){
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.gates = {};
-
-	$scope.dataUser = loginService.getInfo();
 
 	// Funciones propias del controlador
 	$scope.colorHorario = function(gate){
