@@ -4,10 +4,6 @@
 function pricelistCtrl($scope, priceFactory){
 	'use strict';
 
-	// Paginacion
-	$scope.itemsPerPage = 10;
-	$scope.currentPage = 1;
-
 	// Variable para almacenar la info principal que trae del factory
 	$scope.filteredPrices = [];
 
@@ -16,9 +12,8 @@ function pricelistCtrl($scope, priceFactory){
 		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 		$scope.totalItems = $scope.pricelist.length;
 
-		$scope.$watch('currentPage + itemsPerPage', function() {
+		$scope.$watch('currentPage', function() {
 			$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
-			$scope.filtro = '';
 		});
 	});
 

@@ -1,12 +1,10 @@
 /**
  * Created by leo on 28/04/14.
  */
-function turnosCtrl($scope, dialogs, turnosFactory, loginService){
+function turnosCtrl($scope, dialogs, turnosFactory){
 	'use strict';
 
 	// Paginacion
-	$scope.itemsPerPage = 10;
-	$scope.currentPage = 1;
 	var page = { skip:0, limit: $scope.itemsPerPage };
 
 	// Fecha (dia y hora)
@@ -30,8 +28,6 @@ function turnosCtrl($scope, dialogs, turnosFactory, loginService){
 	// Variable para almacenar la info principal que trae del factory
 	$scope.turnos = {};
 
-	$scope.dataUser = loginService.getInfo();
-
 	// Carga los turnos por fechas
 	$scope.cargar = function(){
 		if ($scope.myForm.$valid){
@@ -44,7 +40,7 @@ function turnosCtrl($scope, dialogs, turnosFactory, loginService){
 		}
 	};
 
-	$scope.$watch('currentPage + itemsPerPage', function(){
+	$scope.$watch('currentPage', function(){
 		page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		cargaTurnos(cargaDatos(), page);
 	});

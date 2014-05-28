@@ -302,6 +302,10 @@ myapp.run(function($rootScope, $state, loginService){
 	"use strict";
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 	$rootScope.$state = $state;
+	// Paginacion
+	$rootScope.itemsPerPage = 10;
+	$rootScope.currentPage = 1;
+
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if (!in_array(toState.name, rutasComunes)){
 			if (loginService.getStatus()){

@@ -4,12 +4,6 @@
 function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	'use strict';
 
-	// Paginacion
-	$scope.itemsPerPage = 10;
-	$scope.currentPage = 1;
-
-	$scope.dataUser = loginService.getInfo();
-
 	$scope.flagGuardado = true;
 	$scope.flagCambios = false;
 
@@ -41,7 +35,6 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		$scope.$watch('currentPage', function(){
 			$scope.guardar();
 			$scope.flagCambios = false;
-			$scope.filtro = '';
 		});
 
 		$scope.$watch('search', function(){
