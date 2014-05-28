@@ -30,23 +30,17 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	$scope.chartHeightFacturado = 320;
 	$scope.chartDataFacturado = datosFacturadoPorDia;
 
+	$scope.isCollapsedMonth = true;
+	$scope.isCollapsedDay = true;
+
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
 	$scope.mesDesde = new Date();
+	$scope.monthMode = 'month';
 	$scope.terminoCarga = false;
-	$scope.dateOptions = { 'year-format': "'yy'", 'starting-day': 0, 'showWeeks': false };
-	$scope.calendarMode = 'month';
-	$scope.dateOptionsMes = { 'datepickerMode': "'month'" };
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
 	$scope.format = $scope.formats['yyyy-MM-dd'];
 	$scope.formatSoloMes = $scope.formats[3];
-
-	$scope.open = function($event, fecha) {
-		$event.preventDefault();
-		$event.stopPropagation();
-		$scope.openFechaDesde = (fecha === 'desde');
-		$scope.openMesDesde = (fecha === 'mesDesde');
-	};
 
 	socket.on('invoice', function (message) {
 		$scope.chartData[2][1]++;
@@ -78,6 +72,7 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	});
 
 	$scope.traerDatosFacturadoMes = function(){
+		$scope.isCollapsedMonth = !$scope.isCollapsedMonth;
 		controlPanelFactory.getFacturasMeses2($scope.mesDesde.getMonth()+1, function(graf){
 			var base = [
 				['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
@@ -100,6 +95,7 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	}
 
 	$scope.traerDatosFacturadoDia = function(){
+		$scope.isCollapsedDay = !$scope.isCollapsedDay;
 		controlPanelFactory.getFacturadoPorDia2($scope.fecha, function(graf){
 			var base = [
 				['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
@@ -120,5 +116,9 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 			$scope.chartDataFacturado = base;
 		});
 	}
+
+	/*$scope.$watch("mesDesde", function(){
+		$scope.traerDatosFacturadoMes();
+	})*/
 
 }
