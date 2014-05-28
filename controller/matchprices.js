@@ -22,6 +22,8 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.codigoVacio = true;
 
+	$scope.search = "";
+
 	priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function (data) {
 		$scope.pricelist = data.data;
 
@@ -167,6 +169,12 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 					dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
 					$scope.listaMatch = false;
 					$scope.nuevoConcepto = true;
+
+					$scope.descripcion = "";
+					$scope.precio = "";
+					$scope.unidad = "";
+					$scope.moneda = "";
+					$scope.codigo = "";
 				});
 			}
 		})
