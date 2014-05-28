@@ -57,27 +57,40 @@
 
 		<div class="col-lg-4">
 			<p class="input-group">
-				<input type="text" class="form-control" id="mesDesde" ng-change="traerDatosFacturadoMes()" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" is-open="openMesDesde" show-button-bar="false" datepicker-options="dateOptions" />
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" />
 				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="open($event, 'mesDesde')"><i class="glyphicon glyphicon-calendar"></i></button>
+					<button class="btn btn-default" ng-click="isCollapsedMonth = !isCollapsedMonth"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
 			</p>
-			<column-chart data="chartDataFacturas" title="{{chartTitleFacturas}}"
-			              width="{{chartWidthFacturas}}" height="{{chartHeightFacturas}}"
-			              select="selectRow(selectedRowIndexFacturas)"></column-chart>
+			<div collapse="isCollapsedMonth">
+				<div class="well well-lg">
+					<datepicker ng-model="mesDesde" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosFacturadoMes()"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedMonth">
+				<column-chart data="chartDataFacturas" title="{{chartTitleFacturas}}"
+				              width="{{chartWidthFacturas}}" height="{{chartHeightFacturas}}"
+				              select="selectRow(selectedRowIndexFacturas)"></column-chart>
+			</div>
 		</div>
 
 		<div class="col-lg-4">
 			<p class="input-group">
-				<input type="text" class="form-control" id="fechaDesde" ng-change="traerDatosFacturadoDia()" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" show-button-bar="false" datepicker-options="dateOptions" />
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
 				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
+					<button class="btn btn-default" ng-click="isCollapsedDay = !isCollapsedDay"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
 			</p>
-			<column-chart data="chartDataFacturado" title="{{chartTitleFacturado}}"
-			              width="{{chartWidthFacturado}}" height="{{chartHeightFacturado}}"
-			              select="selectRow(selectedRowIndexFacturado)"></column-chart>
-
+			<div collapse="isCollapsedDay">
+				<div class="well well-lg">
+					<datepicker ng-model="desde" show-weeks="false" ng-change="traerDatosFacturadoDia()"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedDay">
+				<column-chart data="chartDataFacturado" title="{{chartTitleFacturado}}"
+				              width="{{chartWidthFacturado}}" height="{{chartHeightFacturado}}"
+				              select="selectRow(selectedRowIndexFacturado)"></column-chart>
+			</div>
 		</div>
 	</div>
 
