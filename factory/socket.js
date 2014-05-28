@@ -4,7 +4,7 @@
 
 myapp.factory('socket', function($rootScope, loginService){
 
-	var socket = io.connect('http://10.0.0.223:8080');
+	var socket = io.connect(serverUrl);
 
 	return {
 		on: function (eventName, callback) {
