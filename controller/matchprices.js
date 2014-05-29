@@ -39,14 +39,18 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 		$scope.$watch('search', function(){
 			if ($scope.search != "" && $scope.search != null){
-				$scope.totalItems = 1; //$scope.filteredPrices.length;
+				//Se supone que siempre que busca se limiten los resultados a una sola página, por eso seteo
+				//el totalItems en 1
+				$scope.totalItems = 1;
 				if ($scope.search.length <= 1){
+					//Una búsqueda con un solo caracter producía demasiados resultados, por lo que solo muestro los 10 primeros
 					$scope.itemsPerPage = 10;
 				} else {
+					//Si los resultados estaban originalmente en una página distinta de la currentPage no se veían,
+					//de este modo todos los resultados van hasta la única página
 					$scope.itemsPerPage = $scope.pricelist.length;
 				}
 			} else {
-				console.log('entro en el else');
 				$scope.totalItems = $scope.pricelist.length;
 				$scope.itemsPerPage = 10;
 			}
@@ -98,11 +102,12 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		$scope.flagCambios = true;
 	};
 
+	//El hitEnter para el cuadro donde ponen los códigos nuevos
 	$scope.hitEnter = function(evt, price){
 		if(angular.equals(evt.keyCode,13))
 			$scope.agregarCodigo(price);
 		price.disabled = !(angular.isDefined(price.new) && price.new != '');
-	}; // end hitEnter
+	};
 
 	$scope.abrirNuevoConcepto = function(){
 		$scope.listaMatch = true;
@@ -112,6 +117,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.guardar = function(){
 		$scope.match = [];
 		var prices = $scope.filteredPrices;
+		//Guardo todos matches en un array nuevo, siempre y cuando hayan sufrido cambios
 		prices.forEach(function(item){
 			if (item.matches != null && item.matches.length > 0 && item.matches[0].flagGuardar){
 				$scope.match.push(item.matches[0]);
@@ -119,9 +125,11 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 				item.matches[0].claseFila = "";
 			}
 		});
+		//Envío la información al servidor
 		if ($scope.flagCambios){
 			priceFactory.addMatchPrice($scope.match, function(){
 				$scope.flagGuardado = false;
+				//Muestro cartel con el resultado de la operación y desaparece después de 3 segundos
 				$timeout(function(){
 					$scope.flagGuardado = true;
 					$scope.flagCambios = false;

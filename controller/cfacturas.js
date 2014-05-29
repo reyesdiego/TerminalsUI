@@ -6,8 +6,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 	'use strict';
 
 	// Fecha (dia y hora)
-	$scope.desde = new Date();
 	$scope.hasta = new Date();
+	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 	$scope.terminoCarga = false;
 	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
 	$scope.format = 'yyyy-MM-dd';
@@ -26,7 +26,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
-		priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function(data){
+		priceFactory.getMatchPrices($scope.terminal, null, function(data){
 			$scope.chartData = [
 				['Tipo de comprobante', 'Total']
 			];
@@ -138,4 +138,5 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 		return ($scope.selected === index) ? "selected" : "";
 	};
 
+	$scope.cargar();
 }
