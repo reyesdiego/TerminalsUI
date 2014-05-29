@@ -55,9 +55,14 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 			});
 	};
 
-	factory.getSinTasaCargas = function(desde, hasta, terminal, callback){
-		$http.get('mocks/correlativo.json')
-			.success(function (data){
+	factory.getSinTasaCargas = function(desde, hasta, terminal, page, callback){
+		var inserturl = serverUrl + '/agp/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
