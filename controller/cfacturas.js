@@ -11,6 +11,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 	$scope.terminoCarga = false;
 	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
 	$scope.format = 'yyyy-MM-dd';
+	$scope.terminal = "BACTSSA";
 
 	$scope.open = function($event, fecha) {
 		$event.preventDefault();
@@ -25,6 +26,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 	$scope.chartHeight = 320;
 
 	$scope.cargar = function(){
+		console.log('se llamo a cargar');
 		//Traigo todos los códigos de la terminal y me los guardo
 		priceFactory.getMatchPrices($scope.terminal, null, function(data){
 			$scope.chartData = [
@@ -43,10 +45,13 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 			});
 
 			$scope.tabs = [];
-
+			console.log($scope.tabs);
 			invoiceFactory.getByDate($scope.desde, $scope.hasta, $scope.terminal, function(data) {
 
+				console.log('el result es');
+
 				$scope.result = data;
+				console.log($scope.result);
 
 				$scope.result.tipoComprob.forEach(function(tipoComprobante){
 					var tab = {
@@ -120,7 +125,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 		/*Acá control de tasa a las cargas*/
 		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, $scope.page, function(data){
 		    $scope.tasaCargas.resultado = data;
-			 console.log($scope.tasaCargas.resultado);
+			console.log($scope.tasaCargas.resultado);
 		 })
 
 	};

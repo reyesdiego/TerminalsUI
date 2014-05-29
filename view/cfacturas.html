@@ -7,46 +7,42 @@
 			</div>
 		</div>
 
-		<div class="col-lg-8 well" ng-init="onOff = false" ng-hide="onOff">
-			<form ng-submit="cargar()" class="bs-example form-horizontal">
-				<fieldset>
-					<div class="row">
-						<div class="col-lg-6">
-							<label for="fechaDesde">Desde</label>
-							<p class="input-group">
-								<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
-									<span class="input-group-btn">
-										<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
-									</span>
-							</p>
-						</div>
-						<div class="col-lg-6">
-							<label for="fechaHasta">Hasta</label>
-							<p class="input-group">
-								<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="hasta"  is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
-									<span class="input-group-btn">
-										<button class="btn btn-default" ng-click="open($event, 'hasta')"><i class="glyphicon glyphicon-calendar"></i></button>
-									</span>
-							</p>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-lg-8">
-							<label for="select" >Terminal</label>
-							<select class="form-control" id="select" ng-model="terminal">
-								<option value="BACTSSA" ng-selected="true" >BACTSSA</option>
-								<option value="TRP">TERMINAL RIO DE LA PLATA</option>
-								<option value="TERMINAL4">TERMINAL 4</option>
-							</select>
-						</div>
-						<div class="col-lg-4">
-							<br>
-							<button class="btn btn-default" ui-sref="control"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
-							<button class="btn btn-primary" ng-click="cargar(); onOff = !onOff"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button>
-						</div>
-					</div>
-				</fieldset>
-			</form>
+		<div class="col-lg-8 well">
+			<div class="row">
+				<div class="col-lg-6">
+					<label for="fechaDesde">Desde</label>
+					<p class="input-group">
+						<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
+							<span class="input-group-btn">
+								<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+					</p>
+				</div>
+				<div class="col-lg-6">
+					<label for="fechaHasta">Hasta</label>
+					<p class="input-group">
+						<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="hasta"  is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
+							<span class="input-group-btn">
+								<button class="btn btn-default" ng-click="open($event, 'hasta')"><i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8">
+					<label for="select" >Terminal</label>
+					<select class="form-control" id="select" ng-model="terminal">
+						<option value="BACTSSA" ng-selected="true" >BACTSSA</option>
+						<option value="TRP">TERMINAL RIO DE LA PLATA</option>
+						<option value="TERMINAL4">TERMINAL 4</option>
+					</select>
+				</div>
+				<div class="col-lg-4">
+					<br>
+					<button class="btn btn-default" ui-sref="control"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+					<button class="btn btn-primary" ng-click="cargar()"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -54,7 +50,6 @@
 
 		<tabset ng-show="terminoCarga" justified="true">
 			<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" >
-
 				<div class="row">
 					<div class="col-lg-11">
 						<div class="xpage-header">
