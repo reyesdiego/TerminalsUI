@@ -5,15 +5,9 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 	'use strict';
 
 	// Fecha (dia y hora)
-	$scope.fecha = {
-		desde: new Date(),
-		hasta: new Date()
-	};
-	$scope.horario = {
-		desde: new Date(),
-		hasta: new Date()
-	};
-	$scope.horario.desde.setMinutes(0);
+	$scope.fecha = { desde: new Date(), hasta: new Date() };
+	$scope.horario = { desde: new Date(), hasta: new Date() };
+	$scope.horario.desde.setHours(0,0);
 	$scope.horario.hasta.setMinutes(0);
 
 	// Variable para almacenar la info principal que trae del factory
@@ -42,13 +36,11 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 
 	// Carga las facturas de un gate
 	$scope.ver = function(container){
-		$scope.containerHide = !$scope.containerHide;
 		var datos = { 'contenedor': container };
 		$scope.container = container;
 		invoiceFactory.getInvoice(datos, {skip:0, limit: $scope.itemsPerPage }, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
-				$scope.busquedaContenedor = true;
 			}
 		});
 	};
