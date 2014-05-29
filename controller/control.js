@@ -117,8 +117,4 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 		});
 	}
 
-	/*$scope.$watch("mesDesde", function(){
-		$scope.traerDatosFacturadoMes();
-	})*/
-
 }

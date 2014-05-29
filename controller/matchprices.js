@@ -39,13 +39,14 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 		$scope.$watch('search', function(){
 			if ($scope.search != "" && $scope.search != null){
-				$scope.totalItems = $scope.filteredPrices.length;
+				$scope.totalItems = 1; //$scope.filteredPrices.length;
 				if ($scope.search.length <= 1){
 					$scope.itemsPerPage = 10;
 				} else {
 					$scope.itemsPerPage = $scope.pricelist.length;
 				}
 			} else {
+				console.log('entro en el else');
 				$scope.totalItems = $scope.pricelist.length;
 				$scope.itemsPerPage = 10;
 			}

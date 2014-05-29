@@ -117,10 +117,11 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 			"mostrarResultado": 0
 		};
 
-		/*Acá control de tasa a las cargas
-		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, function(data){
+		/*Acá control de tasa a las cargas*/
+		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, $scope.page, function(data){
 		    $scope.tasaCargas.resultado = data;
-		 })*/
+			 console.log($scope.tasaCargas.resultado);
+		 })
 
 	};
 
