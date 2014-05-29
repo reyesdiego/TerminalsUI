@@ -5,15 +5,9 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 	'use strict';
 
 	// Fecha (dia y hora)
-	$scope.fecha = {
-		desde: new Date(2014,3,1),
-		hasta: new Date()
-	};
-	$scope.horario = {
-		desde: new Date(),
-		hasta: new Date()
-	};
-	$scope.horario.desde.setMinutes(0);
+	$scope.fecha = { desde: new Date(), hasta: new Date() };
+	$scope.horario = { desde: new Date(), hasta: new Date() };
+	$scope.horario.desde.setHours(0,0)
 	$scope.horario.hasta.setMinutes(0);
 
 	// Variable para almacenar la info principal que trae del factory
