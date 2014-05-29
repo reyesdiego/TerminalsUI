@@ -8,12 +8,9 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
 
-	// Trae las facturas disponibles
-	cargaFacturas();
-
-	// Busca las facturas por cualquiera de los datos ingresados
-	$scope.search = function (){
-		cargaFacturas();
+	$scope.hitEnter = function(evt){
+		if(angular.equals(evt.keyCode,13))
+			cargaFacturas();
 	};
 
 	$scope.$watch('currentPage', function(){
@@ -49,8 +46,4 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		});
 	}
 
-	$scope.hitEnter = function(evt){
-		if(angular.equals(evt.keyCode,13))
-			$scope.search();
-	}; // end hitEnter
 }

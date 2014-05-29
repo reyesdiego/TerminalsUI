@@ -33,7 +33,7 @@
 							</div>
 						</div>
 						<div class="col-lg-1">
-							<button type="button" class="btn btn-primary" ng-click="search()"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+							<button type="button" class="btn btn-primary" ng-click="cargaFacturas()"><span class="glyphicon glyphicon-search"></span> Buscar</button>
 						</div>
 					</div>
 				</div>
@@ -62,7 +62,7 @@
 						<td>{{ invoice.nroComprob }}</td>
 						<td>{{ invoice.razon }}</td>
 						<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-						<td>${{ invoice.importe.total }}</td>
+						<td>{{ invoice.codMoneda | formatCurrency }} {{ invoice.importe.total | currency }}</td>
 						<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 					</tr>
 					</tbody>
