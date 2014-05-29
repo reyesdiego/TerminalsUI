@@ -262,13 +262,10 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/gates.html",
 			controller: gatesCtrl
 		})
-		.state('gates.result', {
-			templateUrl: "view/gates.result.html"
-		})
-		.state('gates.result.invoices', {
+		.state('gates.invoices', {
 			templateUrl: "view/invoices.html"
 		})
-		.state('gates.result.invoices.result', {
+		.state('gates.invoices.result', {
 			templateUrl: "view/invoices.result.html"
 		})
 		.state('correlativo', {

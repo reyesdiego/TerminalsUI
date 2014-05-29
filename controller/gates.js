@@ -6,7 +6,7 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 
 	// Fecha (dia y hora)
 	$scope.fecha = {
-		desde: new Date(),
+		desde: new Date(2014,3,1),
 		hasta: new Date()
 	};
 	$scope.horario = {
