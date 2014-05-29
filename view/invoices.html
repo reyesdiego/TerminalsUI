@@ -1,6 +1,6 @@
 <div class="container">
 
-	<div class="row hidden-print" ng-hide="busquedaContenedor">
+	<div class="row hidden-print" data-ng-hide="$state.includes('gates.invoices')">
 		<div class="col-lg-12">
 			<div class="xpage-header">
 				<h1 id="forms">Facturas - {{ terminal.full_name }}</h1>
@@ -12,7 +12,7 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="panel panel-default" ng-hide="busquedaContenedor">
+				<div class="panel panel-default" ng-hide="$state.includes('gates.invoices')">
 					<div class="panel-heading"><strong>Buscar Facturas por</strong></div>
 					<div class="panel-body">
 						<div class="col-lg-2">
