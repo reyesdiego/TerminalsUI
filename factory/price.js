@@ -11,10 +11,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 			url: inserturl,
 			headers: { token: loginService.getToken() }
 		}).success(function (data){
-			console.log(data);
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
 			dialogs.error('Error', 'Error al cargar la lista');
 		});
 	};
@@ -36,10 +34,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 			url: inserturl,
 			headers: { token: loginService.getToken() }
 		}).success(function (data){
-			console.log(data);
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
 			dialogs.error('Error', 'Error al cargar la lista');
 		});
 	};
@@ -52,10 +48,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 			data: JSON.stringify(data),
 			headers:{"Content-Type":"application/json", token: loginService.getToken()}
 		}).success(function (response) {
-			console.log("success");
 			callback(response);
 		}).error(function(errorText) {
-			console.log(errorText);
 			dialogs.error('Error', 'Error al añadir el Match en la base');
 		});
 	};
@@ -68,10 +62,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 			data: data,
 			headers:{ token: loginService.getToken() }
 		}).success(function(response) {
-			console.log("success");
 			callback(response);
 		}).error(function(errorText) {
-			console.log(errorText);
 			dialogs.error('Error', 'Error al añadir el Precio en la base');
 		});
 	};

@@ -36,10 +36,8 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
-			console.log(data);
 			callback(data);
 		}).error(function(errorText) {
-			console.log(errorText);
 			dialogs.error('Error', 'Error al cargar la lista Invoice');
 		});
 	};
@@ -50,12 +48,12 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
 	};
 
 	factory.getSinTasaCargas = function(desde, hasta, terminal, page, callback){
+		console.log("factory");
 		var inserturl = serverUrl + '/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
 		$http({
 			method: "GET",
@@ -65,7 +63,6 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
 	};

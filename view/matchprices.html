@@ -90,26 +90,26 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="well">
-					<form ng-submit="guardarNuevoConcepto()" class="bs-example form-horizontal">
+					<form ng-submit="guardarNuevoConcepto()" class="bs-example form-horizontal" name="cargaNuevoConcepto">
 						<fieldset>
 							<legend>Tarifa</legend>
 							<div class="form-group">
 								<label for="inputCodigo" class="col-lg-2 control-label">Código</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" ng-model="codigo" id="inputCodigo" placeholder="Ingresar código" ng-required="true" toupper>
+									<input type="text" class="form-control" ng-model="codigo" id="inputCodigo" placeholder="Ingresar código" ng-required="esRequerido" toupper>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputDescri" class="col-lg-2 control-label">Descripción</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" ng-model="descripcion" id="inputDescri" placeholder="Ingresar descripcion" ng-required="true">
+									<input type="text" class="form-control" ng-model="descripcion" id="inputDescri" placeholder="Ingresar descripcion" ng-required="esRequerido">
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputUnidad" class="col-lg-2 control-label">Unidad</label>
 								<div class="col-lg-10">
-									<select class="form-control" id="inputUnidad" ng-model="unidad" ng-required="true">
-										<option value="CONTAINER">Contenedor</option>
+									<select class="form-control" id="inputUnidad" ng-model="unidad" ng-required="esRequerido">
+										<option value="CONTAINER" ng-selected="true">Contenedor</option>
 										<option value="TN">tn</option>
 										<option value="BOX">cajón</option>
 									</select>
@@ -118,21 +118,21 @@
 							<div class="form-group">
 								<label for="inputMoneda" class="col-lg-2 control-label">Moneda</label>
 								<div class="col-lg-10">
-									<select class="form-control" id="inputMoneda" ng-model="moneda" ng-required="true">
+									<select class="form-control" id="inputMoneda" ng-model="moneda" ng-required="esRequerido">
 										<option value="DOL">U$S</option>
-										<option value="PES">$ARG</option>
+										<option value="PES" ng-selected="true">$ARG</option>
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPrecio" class="col-lg-2 control-label">Precio</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" ng-model="precio" id="inputPrecio" placeholder="Ingresar precio" ng-required="true">
+									<input type="text" class="form-control" ng-model="precio" id="inputPrecio" placeholder="Ingresar precio" ng-required="esRequerido">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-2">
-									<button class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+									<button class="btn btn-default" ng-click="salir()">Cancelar</button>
 									<button type="submit" class="btn btn-primary">Agregar</button>
 								</div>
 							</div>
