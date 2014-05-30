@@ -144,7 +144,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 						graf.forEach(function(terminal){
 //							base[i] = [terminal.nombre, terminal.invoices, terminal.gates, terminal.turnos, ''];
 //							base[i] = [terminal._id.terminal, terminal.invoicesCount, terminal.invoicesCount, terminal.invoicesCount, ''];
-							base[i] = [terminal._id.terminal, terminal.invoicesCount,''];
+							base[i] = [terminal._id.terminal, terminal.cnt,''];
 							i++;
 						});
 						defer.resolve(base);
