@@ -79,8 +79,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 	};
 
-	factory.getFacturadoPorDia = function(fecha, callback)
-	{
+	factory.getFacturadoPorDia = function(fecha, callback){
 		$http.get('mocks/facturadoDia.json')
 			.success(function (data){
 				callback(data);
