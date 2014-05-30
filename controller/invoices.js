@@ -10,24 +10,15 @@ function invoicesCtrl ($scope, invoiceFactory) {
 
 	$scope.hitEnter = function(evt){
 		if(angular.equals(evt.keyCode,13))
-			cargaFacturas();
+			$scope.cargaFacturas();
 	};
 
 	$scope.$watch('currentPage', function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		cargaFacturas($scope.page);
+		$scope.cargaFacturas($scope.page);
 	});
 
-	function cargaDatos(){
-		return {
-			'nroComprobante': $scope.nroComprobante,
-			'razonSocial': $scope.razonSocial,
-			'documentoCliente': $scope.documentoCliente,
-			'fecha': $scope.fechaDesde
-		};
-	}
-
-	function cargaFacturas(page){
+	$scope.cargaFacturas = function(page){
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
 			if(data.status === 'OK'){
@@ -44,6 +35,15 @@ function invoicesCtrl ($scope, invoiceFactory) {
 				$scope.totalItems = data.totalCount;
 			}
 		});
+	};
+
+	function cargaDatos(){
+		return {
+			'nroComprobante': $scope.nroComprobante,
+			'razonSocial': $scope.razonSocial,
+			'documentoCliente': $scope.documentoCliente,
+			'fecha': $scope.fechaDesde
+		};
 	}
 
 }
