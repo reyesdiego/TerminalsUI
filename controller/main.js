@@ -278,9 +278,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/turnos.html",
 			controller: turnosCtrl
 		})
-		.state('turnos.result', {
-			templateUrl: "view/turnos.result.html"
-		})
 		.state('changepass', {
 			url: "/cambiarpass",
 			templateUrl: "view/newpass.html",

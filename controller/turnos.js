@@ -5,16 +5,9 @@ function turnosCtrl($scope, dialogs, turnosFactory){
 	'use strict';
 
 	// Fecha (dia y hora)
-	$scope.fecha = {
-		desde: new Date(),
-		hasta: new Date()
-	};
-	$scope.horario = {
-		desde: new Date(),
-		hasta: new Date()
-	};
-	$scope.horario.desde.setMinutes(0);
-	$scope.horario.hasta.setMinutes(0);
+	$scope.fecha = { desde: new Date(), hasta: new Date() };
+	$scope.fecha.desde.setHours(0,0);
+	$scope.fecha.hasta.setMinutes(0);
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.turnos = {};
@@ -22,9 +15,6 @@ function turnosCtrl($scope, dialogs, turnosFactory){
 	// Carga los turnos por fechas
 	$scope.cargar = function(){
 		if ($scope.myForm.$valid){
-			// Setea las fechas para las horas y minutos
-			$scope.fecha.desde.setHours($scope.horario.desde.getHours(), $scope.horario.desde.getMinutes());
-			$scope.fecha.hasta.setHours($scope.horario.hasta.getHours(), $scope.horario.hasta.getMinutes());
 			$scope.currentPage = 1;
 			cargaTurnos();
 		} else {
