@@ -1,70 +1,5 @@
-/*{
+{
 	"data": [
-		{
-			"dia": "17/05/2014",
-			"datos": [{
-							"terminal": "BACTSSA",
-							"monto": 7865
-						},{
-							"terminal": "TRP",
-							"monto": 10486
-						},{
-							"terminal": "Terminal 4",
-							"monto": 16845
-						}]
-		},
-		{
-		"dia": "18/05/2014",
-		"datos": [{
-			"terminal": "BACTSSA",
-			"monto": 16853
-		},{
-			"terminal": "TRP",
-			"monto": 17865
-		},{
-			"terminal": "Terminal 4",
-			"monto": 12354
-		}]
-	},{
-		"dia": "19/05/2014",
-		"datos": [{
-			"terminal": "BACTSSA",
-			"monto": 18567
-		},{
-			"terminal": "TRP",
-			"monto": 11568
-		},{
-			"terminal": "Terminal 4",
-			"monto": 15658
-		}]
-	},{
-		"dia": "20/05/2014",
-		"datos": [{
-			"terminal": "BACTSSA",
-			"monto": 14759
-		},{
-			"terminal": "TRP",
-			"monto": 16852
-		},{
-			"terminal": "Terminal 4",
-			"monto": 18657
-		}]
-	}, {
-		"dia": "21/05/2014",
-		"datos": [{
-			"terminal": "BACTSSA",
-			"monto": 18296
-		},{
-			"terminal": "TRP",
-			"monto": 14852
-		},{
-			"terminal": "Terminal 4",
-			"monto": 16873
-		}]
-	}]
-}*/
-
-[
 	{
 		"_id": {
 			"terminal": "BACTSSA",
@@ -186,3 +121,4 @@
 		"cnt": 183
 	}
 ]
+}

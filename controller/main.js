@@ -228,20 +228,28 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					var fecha = new Date();
 					controlPanelFactory.getFacturadoPorDia(fecha, function(graf){
 						var base = [
-							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
+							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ],
+							['', 0, 0, 0, 0, ''],
+							['', 0, 0, 0, 0, ''],
+							['', 0, 0, 0, 0, ''],
+							['', 0, 0, 0, 0, '']
 						];
 						var i = 1;
+						var contarTerminal = 1;
+						var acum = 0;
 						graf.data.forEach(function(datosDia){
-							var fila = [datosDia.dia, 0, 0, 0, 0, ''];
-							var acum = 0;
-							datosDia.datos.forEach(function(terminal){
-								fila[i] = terminal.monto;
-								i++;
-								acum += terminal.monto;
-							})
-							fila[4] = acum/3;
-							base.push(fila);
-							i = 1;
+							if (contarTerminal == 1){
+								base[i][0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
+							}
+							base[i][contarTerminal] = datosDia.cnt;
+							acum += datosDia.cnt;
+							if (contarTerminal == 3){
+								base[i][4] = acum/3;
+								i++
+								contarTerminal = 0;
+								acum = 0;
+							}
+							contarTerminal++;
 						});
 						defer.resolve(base);
 					});
