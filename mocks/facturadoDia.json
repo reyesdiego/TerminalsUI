@@ -1,17 +1,19 @@
-{
-	"data": [{
-		"dia": "17/05/2014",
-		"datos": [{
-			"terminal": "BACTSSA",
-			"monto": 7865
-		},{
-			"terminal": "TRP",
-			"monto": 10486
-		},{
-			"terminal": "Terminal 4",
-			"monto": 16845
-		}]
-	},{
+/*{
+	"data": [
+		{
+			"dia": "17/05/2014",
+			"datos": [{
+							"terminal": "BACTSSA",
+							"monto": 7865
+						},{
+							"terminal": "TRP",
+							"monto": 10486
+						},{
+							"terminal": "Terminal 4",
+							"monto": 16845
+						}]
+		},
+		{
 		"dia": "18/05/2014",
 		"datos": [{
 			"terminal": "BACTSSA",
@@ -60,4 +62,127 @@
 			"monto": 16873
 		}]
 	}]
-}
+}*/
+
+[
+	{
+		"_id": {
+			"terminal": "BACTSSA",
+			"year": 2014,
+			"month": 5,
+			"day": 29,
+			"date": "2014-05-29T03:00:00.000Z"
+		},
+		"cnt": 177
+	},
+	{
+		"_id": {
+			"terminal": "TRP",
+			"year": 2014,
+			"month": 5,
+			"day": 29,
+			"date": "2014-05-29T03:00:00.000Z"
+		},
+		"cnt": 428
+	},
+	{
+		"_id": {
+			"terminal": "TERMINAL4",
+			"year": 2014,
+			"month": 5,
+			"day": 29,
+			"date": "2014-05-29T00:00:00.000Z"
+		},
+		"cnt": 182
+	},
+	{
+		"_id": {
+			"terminal": "BACTSSA",
+			"year": 2014,
+			"month": 5,
+			"day": 28,
+			"date": "2014-05-28T03:00:00.000Z"
+		},
+		"cnt": 210
+	},
+	{
+		"_id": {
+			"terminal": "TRP",
+			"year": 2014,
+			"month": 5,
+			"day": 28,
+			"date": "2014-05-28T03:00:00.000Z"
+		},
+		"cnt": 469
+	},
+	{
+		"_id": {
+			"terminal": "TERMINAL4",
+			"year": 2014,
+			"month": 5,
+			"day": 28,
+			"date": "2014-05-28T00:00:00.000Z"
+		},
+		"cnt": 230
+	},
+	{
+		"_id": {
+			"terminal": "BACTSSA",
+			"year": 2014,
+			"month": 5,
+			"day": 27,
+			"date": "2014-05-27T03:00:00.000Z"
+		},
+		"cnt": 306
+	},
+	{
+		"_id": {
+			"terminal": "TRP",
+			"year": 2014,
+			"month": 5,
+			"day": 27,
+			"date": "2014-05-27T03:00:00.000Z"
+		},
+		"cnt": 544
+	},
+	{
+		"_id": {
+			"terminal": "TERMINAL4",
+			"year": 2014,
+			"month": 5,
+			"day": 27,
+			"date": "2014-05-27T00:00:00.000Z"
+		},
+		"cnt": 206
+	},
+	{
+		"_id": {
+			"terminal": "BACTSSA",
+			"year": 2014,
+			"month": 5,
+			"day": 26,
+			"date": "2014-05-26T03:00:00.000Z"
+		},
+		"cnt": 470
+	},
+	{
+		"_id": {
+			"terminal": "TRP",
+			"year": 2014,
+			"month": 5,
+			"day": 26,
+			"date": "2014-05-26T03:00:00.000Z"
+		},
+		"cnt": 598
+	},
+	{
+		"_id": {
+			"terminal": "TERMINAL4",
+			"year": 2014,
+			"month": 5,
+			"day": 26,
+			"date": "2014-05-26T00:00:00.000Z"
+		},
+		"cnt": 183
+	}
+]
