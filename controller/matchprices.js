@@ -18,44 +18,53 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.search = "";
 
-	priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function (data) {
-		$scope.pricelist = data.data;
+	$scope.esRequerido = true;
+	$scope.flagNuevoConcepto = true;
+	$scope.unidad = "CONTAINER";
+	$scope.moneda = "PES";
 
-		//Cargo todos los códigos ya asociados de la terminal para control
-		$scope.pricelist.forEach(function(price){
-			if (price.matches != null && price.matches.length > 0){
-				price.matches[0].match.forEach(function(codigo){
-					$scope.matchesTerminal.push(codigo);
-				})
-			}
-		});
+	$scope.prepararDatos = function(){
+		priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function (data) {
+			$scope.pricelist = data.data;
 
-		$scope.totalItems = $scope.pricelist.length;
-
-		$scope.$watch('currentPage', function(){
-			$scope.guardar();
-			$scope.flagCambios = false;
-		});
-
-		$scope.$watch('search', function(){
-			if ($scope.search != "" && $scope.search != null){
-				//Se supone que siempre que busca se limiten los resultados a una sola página, por eso seteo
-				//el totalItems en 1
-				$scope.totalItems = 1;
-				if ($scope.search.length <= 1){
-					//Una búsqueda con un solo caracter producía demasiados resultados, por lo que solo muestro los 10 primeros
-					$scope.itemsPerPage = 10;
-				} else {
-					//Si los resultados estaban originalmente en una página distinta de la currentPage no se veían,
-					//de este modo todos los resultados van hasta la única página
-					$scope.itemsPerPage = $scope.pricelist.length;
+			//Cargo todos los códigos ya asociados de la terminal para control
+			$scope.pricelist.forEach(function(price){
+				if (price.matches != null && price.matches.length > 0){
+					price.matches[0].match.forEach(function(codigo){
+						$scope.matchesTerminal.push(codigo);
+					})
 				}
-			} else {
-				$scope.totalItems = $scope.pricelist.length;
-				$scope.itemsPerPage = 10;
-			}
-		});
+			});
 
+			$scope.totalItems = $scope.pricelist.length;
+
+		});
+	};
+
+	$scope.prepararDatos();
+
+	$scope.$watch('currentPage', function(){
+		$scope.guardar();
+		$scope.flagCambios = false;
+	});
+
+	$scope.$watch('search', function(){
+		if ($scope.search != "" && $scope.search != null){
+			//Se supone que siempre que busca se limiten los resultados a una sola página, por eso seteo
+			//el totalItems en 1
+			$scope.totalItems = 1;
+			if ($scope.search.length <= 1){
+				//Una búsqueda con un solo caracter producía demasiados resultados, por lo que solo muestro los 10 primeros
+				$scope.itemsPerPage = 10;
+			} else {
+				//Si los resultados estaban originalmente en una página distinta de la currentPage no se veían,
+				//de este modo todos los resultados van hasta la única página
+				$scope.itemsPerPage = $scope.pricelist.length;
+			}
+		} else {
+			$scope.totalItems = $scope.pricelist.length;
+			$scope.itemsPerPage = 10;
+		}
 	});
 
 	$scope.agregarCodigo = function(price){
@@ -112,6 +121,8 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.abrirNuevoConcepto = function(){
 		$scope.listaMatch = true;
 		$scope.nuevoConcepto = false;
+		$scope.esRequerido = true;
+		$scope.flagNuevoConcepto = true;
 	};
 
 	$scope.guardar = function(){
@@ -139,58 +150,53 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	};
 
 	$scope.guardarNuevoConcepto = function(){
+		if ($scope.flagNuevoConcepto){
+			var formData = {
+				"description":$scope.descripcion,
+				"topPrice":$scope.precio,
+				"matches": null,
+				"unit": $scope.unidad,
+				"currency": $scope.moneda,
+				"code": $scope.codigo,
+				"terminal": loginService.getInfo().terminal
+			};
 
-		var formData = {
-			"description":$scope.descripcion,
-			"topPrice":$scope.precio,
-			"matches": null,
-			"unit": $scope.unidad,
-			"currency": $scope.moneda,
-			"code": $scope.codigo,
-			"terminal": loginService.getInfo().terminal
-		};
+			priceFactory.addPrice(formData, function(nuevoPrecio){
 
-		priceFactory.addPrice(formData, function(nuevoPrecio){
+				if (nuevoPrecio.status === 'OK'){
+					var nuevoMatch = {
+						code: nuevoPrecio.data.code,
+						terminal: nuevoPrecio.data.terminal,
+						_idPrice: nuevoPrecio.data._id,
+						match:[]
+					};
+					nuevoMatch.match.push(nuevoPrecio.data.code);
 
-			if (nuevoPrecio.status === 'OK'){
-				var nuevoMatch = {
-					code: nuevoPrecio.data.code,
-					terminal: nuevoPrecio.data.terminal,
-					_idPrice: nuevoPrecio.data._id,
-					match:[]
-				};
-				nuevoMatch.match.push(nuevoPrecio.data.code);
+					$scope.match = [];
+					$scope.match.push(nuevoMatch);
 
-				$scope.match = [];
-				$scope.match.push(nuevoMatch);
-
-				priceFactory.addMatchPrice($scope.match, function(trash){
-					console.log('entro al add match');
-					console.log(trash);
-					$scope.pricelist.push(nuevoPrecio);
-					dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
-					$scope.listaMatch = false;
-					$scope.nuevoConcepto = true;
-
-					$scope.descripcion = "";
-					$scope.precio = "";
-					$scope.unidad = "";
-					$scope.moneda = "";
-					$scope.codigo = "";
-				});
-			}
-		})
+					priceFactory.addMatchPrice($scope.match, function(trash){
+						dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
+						$scope.salir();
+						$scope.prepararDatos();
+					});
+				}
+			})
+		}
 	};
 
-	$scope.cancelar = function(){
+	$scope.salir = function(){
+		$scope.flagNuevoConcepto = false;
+		$scope.esRequerido = false;
+
+		$scope.listaMatch = false;
+		$scope.nuevoConcepto = true;
+
 		$scope.descripcion = "";
 		$scope.codigo = "";
 		$scope.unidad = "";
 		$scope.moneda = "";
 		$scope.precio = "";
-
-		$scope.listaMatch = false;
-		$scope.nuevoConcepto = true;
 	};
 
 	$scope.esconderAlerta = function(){
