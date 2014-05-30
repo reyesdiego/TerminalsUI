@@ -7,113 +7,114 @@
 				<h1 id="forms">Gates</h1>
 			</div>
 		</div>
-		<div class="col-lg-6" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
-			<div class="panel panel-default">
-				<div class="panel-heading">Filtrar</div>
-				<div class="panel-body">
-					<div class="form-group" ng-init="isCollapsed = true; collapsed = ''">
-						<span>Desde </span>{{ fecha.desde | date:'dd/MM/yyyy'}} {{ horario.desde | date:'HH:mm' }}
-						<span>Hasta </span>{{ fecha.hasta | date:'dd/MM/yyyy'}} {{ horario.hasta | date:'HH:mm' }}
-						<span>Contenedor </span> {{ contenedor }}
-						<span><button class="btn btn-primary" ng-click="isCollapsed = !isCollapsed"><span class="glyphicon glyphicon-zoom-in"></span></button></span>
+
+		<div data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
+			<div class="col-lg-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">Filtrar</div>
+					<div class="panel-body">
+						<div class="form-group" ng-init="isCollapsed = true; collapsed = ''">
+							<span>Desde </span>{{ fecha.desde | date:'dd/MM/yyyy HH:mm'}}
+							<span>Hasta </span>{{ fecha.hasta | date:'dd/MM/yyyy HH:mm'}}
+							<span>Contenedor </span> {{ contenedor }}
+							<span><button class="btn btn-primary" ng-click="isCollapsed = !isCollapsed"><span class="glyphicon glyphicon-zoom-in"></span></button></span>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-12" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
-			<form name="myForm" novalidate>
-				<div collapse="isCollapsed">
-					<div class="col-lg-5">
-						<div class="panel panel-default">
-							<div class="panel-heading">Desde</div>
-							<div class="panel-body">
-								<div class="form-group col-lg-8" style="padding-top: 40px">
-									<span>D&iacute;a</span>
+
+			<div class="col-lg-12">
+				<form name="myForm" novalidate>
+					<div collapse="isCollapsed">
+						<div class="col-lg-5">
+							<div class="panel panel-default">
+								<div class="panel-heading">Desde</div>
+								<div class="panel-body">
+									<div class="form-group col-lg-8" style="padding-top: 40px">
+										<span>D&iacute;a</span>
 								<span class="input-group">
 									<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{formatDate}}" ng-model="fecha.desde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
 									<span class="input-group-btn">
 										<button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde"><i class="glyphicon glyphicon-calendar"></i></button>
 									</span>
 								</span>
-								</div>
-								<div class="form-group col-lg-4">
-									<span>Horario</span>
-									<timepicker id="horarioDesde" ng-model="horario.desde" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+									</div>
+									<div class="form-group col-lg-4">
+										<span>Horario</span>
+										<timepicker id="horarioDesde" ng-model="fecha.desde" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-5">
-						<div class="panel panel-default">
-							<div class="panel-heading">Hasta</div>
-							<div class="panel-body">
-								<div class="form-group col-lg-8" style="padding-top: 40px">
-									<span>D&iacute;a</span>
+						<div class="col-lg-5">
+							<div class="panel panel-default">
+								<div class="panel-heading">Hasta</div>
+								<div class="panel-body">
+									<div class="form-group col-lg-8" style="padding-top: 40px">
+										<span>D&iacute;a</span>
 								<span class="input-group">
 									<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{formatDate}}" ng-model="fecha.hasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" ng-required="true" />
 									<span class="input-group-btn">
 										<button class="btn btn-default" ng-click="openDate($event); openFechaHasta = !openFechaHasta"><i class="glyphicon glyphicon-calendar"></i></button>
 									</span>
 								</span>
+									</div>
+									<div class="form-group col-lg-4">
+										<span>Horario</span>
+										<timepicker id="horarioHasta" ng-model="fecha.hasta" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+									</div>
 								</div>
-								<div class="form-group col-lg-4">
-									<span>Horario</span>
-									<timepicker id="horarioHasta" ng-model="horario.hasta" hour-step="1" minute-step="15" show-meridian="false"></timepicker>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<div class="panel panel-default">
+								<div class="panel-heading">Contenedor</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<input type="text" class="form-control" id="contenedor" ng-model="contenedor" toupper>
+									</div>
+									<div class="form-group">
+										<button class="btn btn-primary" ng-click="cargar(); isCollapsed = !isCollapsed" ng-disabled="myForm.$invalid || fecha.desde > fecha.hasta"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-2">
-						<div class="panel panel-default">
-							<div class="panel-heading">Contenedor</div>
-							<div class="panel-body">
-								<div class="form-group">
-									<input type="text" class="form-control" id="contenedor" ng-model="contenedor" toupper>
-								</div>
-								<div class="form-group">
-									<button class="btn btn-primary" ng-click="cargar(); isCollapsed = !isCollapsed" ng-disabled="myForm.$invalid || fecha.desde > fecha.hasta"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button>
-								</div>
-							</div>
-						</div>
-					</div>
+				</form>
+			</div>
+
+			<div class="col-lg-12">
+				<div class="row">
+					<table class="table table-bordered table-hover" style="text-align: center">
+						<tr>
+							<th style="text-align: center">Fecha</th>
+							<th style="text-align: center">Buque</th>
+							<th style="text-align: center">Viaje</th>
+							<th style="text-align: center">Contenedor</th>
+							<th style="text-align: center">Patente del cami&oacute;n</th>
+							<th style="text-align: center">Tipo</th>
+							<th style="text-align: center">Horario</th>
+							<th style="text-align: center">Inicio del turno</th>
+							<th style="text-align: center">Fin del turno</th>
+							<th style="text-align: center">Movimiento</th>
+							<th style="text-align: center">Facturas</th>
+						</tr>
+						<tr ng-repeat="gate in gates">
+							<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
+							<td>{{ gate.buque }}</td>
+							<td>{{ gate.viaje }}</td>
+							<td>{{ gate.contenedor }}</td>
+							<td>{{ gate.patenteCamion }}</td>
+							<td>{{ gate.tipo }}</td>
+							<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
+							<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
+							<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
+							<td>{{ gate.mov }}</td>
+							<td><button class="btn btn-primary" ng-click="ver(gate.contenedor)" ui-sref=".invoices"><span class="glyphicon glyphicon-zoom-in"></span> Ver</button></td>
+						</tr>
+					</table>
+					<pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 				</div>
-			</form>
-		</div>
-	</div>
-
-	<div class="row" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
-
-		<div class="col-lg-12">
-			<div class="row">
-				<table class="table table-bordered table-hover" style="text-align: center">
-					<tr>
-						<th style="text-align: center">Fecha</th>
-						<th style="text-align: center">Buque</th>
-						<th style="text-align: center">Viaje</th>
-						<th style="text-align: center">Contenedor</th>
-						<th style="text-align: center">Patente del cami&oacute;n</th>
-						<th style="text-align: center">Tipo</th>
-						<th style="text-align: center">Horario</th>
-						<th style="text-align: center">Inicio del turno</th>
-						<th style="text-align: center">Fin del turno</th>
-						<th style="text-align: center">Movimiento</th>
-						<th style="text-align: center">Facturas</th>
-					</tr>
-					<tr ng-repeat="gate in gates">
-						<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-						<td>{{ gate.buque }}</td>
-						<td>{{ gate.viaje }}</td>
-						<td>{{ gate.contenedor }}</td>
-						<td>{{ gate.patenteCamion }}</td>
-						<td>{{ gate.tipo }}</td>
-						<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
-						<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
-						<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
-						<td>{{ gate.mov }}</td>
-						<td><button class="btn btn-primary" ng-click="ver(gate.contenedor)" ui-sref=".invoices"><span class="glyphicon glyphicon-zoom-in"></span> Ver</button></td>
-					</tr>
-				</table>
-				<pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 			</div>
 		</div>
 	</div>
