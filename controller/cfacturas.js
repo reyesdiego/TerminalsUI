@@ -12,6 +12,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
 	$scope.format = 'yyyy-MM-dd';
 	$scope.terminal = "BACTSSA";
+	$scope.verDetalle = "";
 
 	$scope.open = function($event, fecha) {
 		$event.preventDefault();
@@ -120,6 +121,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 		/*Acá control de tasa a las cargas*/
 		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, $scope.page, function(data){
 		    $scope.tasaCargas.resultado = data;
+			console.log($scope.tasaCargas.resultado);
 			if ($scope.tasaCargas.resultado.length > 0){
 				$scope.tasaCargas.titulo = "Error";
 				$scope.tasaCargas.cartel = "panel-danger";
@@ -144,4 +146,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 	};
 
 	$scope.cargar();
+
+	$scope.mostrarDetalle = function(unaFactura){
+		$scope.verDetalle = unaFactura;
+	}
 }

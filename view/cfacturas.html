@@ -46,7 +46,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div data-ng-hide="$state.includes('cfacturas.result')" class="row">
 
 		<tabset ng-show="terminoCarga" justified="true">
 			<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" >
@@ -148,14 +148,13 @@
 							<td>{{ factura.razon }}</td>
 							<td>{{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 							<td>{{ factura.codMoneda | formatCurrency }} {{ factura.importe.total | currency }}</td>
-							<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = factura"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
+							<td><button ui-sref=".result" class="btn btn-primary" ng-click="mostrarDetalle(factura)"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 						</tr>
 						</tbody>
 					</table>
 
 				</div>
 			</tab>
-
 		</tabset>
 
 		<div class="row" style="float: right">
@@ -165,5 +164,10 @@
 		</div>
 
 	</div>
+
+	<div data-ng-show="$state.includes('cfacturas.result')">
+		<div ui-view></div>
+	</div>
+
 	<br>
 </div>
