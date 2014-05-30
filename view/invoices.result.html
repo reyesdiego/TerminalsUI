@@ -1,34 +1,35 @@
-<div class="container well col-lg-10 col-lg-offset-1" style="text-align: center">
-	<div>
-		<table class="table">
-			<tr>
-				<td>
-					<div><h3><strong>Tipo comprobante {{ verDetalle.codTipoComprob }}</strong></h3></div>
-					<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
-					<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
-					<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
-					<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div><span><strong>Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
-					<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span><strong>Detalle</strong></span>
-				</td>
-			</tr>
-		</table>
-		<table class="table table-striped table-bordered" style="text-align: center">
-			<thead>
+<div class="container">
+	<div class="well col-lg-10 col-lg-offset-1" style="text-align: center">
+		<div class="row">
+			<table class="table table-bordered" style="margin-bottom: 0">
+				<tr>
+					<td>
+						<div><h3><strong>Tipo comprobante {{ verDetalle.codTipoComprob }}</strong></h3></div>
+						<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
+						<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
+						<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
+						<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div><span><strong>Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
+						<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span><strong>Detalle</strong></span>
+					</td>
+				</tr>
+			</table>
+			<table class="table table-striped table-bordered" style="text-align: center">
+				<thead>
 				<tr>
 					<th class="col-lg-1" style="text-align: right">Item</th>
 					<th class="col-lg-7" style="text-align: left">Descripci&oacute;n</th>
@@ -36,8 +37,8 @@
 					<th class="col-lg-1" style="text-align: right">Unidad</th>
 					<th class="col-lg-2" style="text-align: right">Total</th>
 				</tr>
-			</thead>
-			<tbody ng-repeat="contenedor in verDetalle.detalle">
+				</thead>
+				<tbody ng-repeat="contenedor in verDetalle.detalle">
 				<tr>
 					<td colspan="5" style="text-align: left">
 						<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
@@ -53,8 +54,8 @@
 					<td>{{ item.uniMed }}</td>
 					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ item.impTot | currency }}</td>
 				</tr>
-			</tbody>
-			<tfoot style="text-align: right;">
+				</tbody>
+				<tfoot style="text-align: right;">
 				<tr>
 					<td colspan="4">Subtotal</td>
 					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.subtotal | currency }}</td>
@@ -71,17 +72,19 @@
 					<td colspan="4">Total</td>
 					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.total | currency }}</td>
 				</tr>
-			</tfoot>
-		</table>
-		<div>
-			<span>Monto Gravado {{ verDetalle.importe.gravado | currency }};</span>
-			<span>Monto No Gravado {{ verDetalle.importe.noGravado | currency }};</span>
-			<span>Exento {{ verDetalle.importe.exento | currency }};</span>
-			<span>Cotizaci&oacute;n Moneda U$s1 = ${{ verDetalle.cotiMoneda }}</span>
+				</tfoot>
+			</table>
+			<div>
+				<span>Monto Gravado {{ verDetalle.importe.gravado | currency }};</span>
+				<span>Monto No Gravado {{ verDetalle.importe.noGravado | currency }};</span>
+				<span>Exento {{ verDetalle.importe.exento | currency }};</span>
+				<span>Cotizaci&oacute;n Moneda U$s1 = ${{ verDetalle.cotiMoneda }}</span>
+			</div>
 		</div>
-	</div>
-	<div class="hidden-print">
-		<button class="btn btn-default" ng-click="$state.go('^')"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
-		<a href="javascript:window.print()" class="btn btn-primary" ng-click="window.print();"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+
+		<div class="row hidden-print">
+			<button class="btn btn-default" ng-click="$state.go('^')"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+			<a href="javascript:window.print()" class="btn btn-primary" ng-click="window.print();"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+		</div>
 	</div>
 </div>
