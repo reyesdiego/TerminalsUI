@@ -254,6 +254,9 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/cfacturas.html",
 			controller: cfacturasCtrl
 		})
+		.state('cfacturas.result', {
+			templateUrl: "view/invoices.result.html"
+		})
 		.state('gates', {
 			url: "/gates",
 			templateUrl: "view/gates.html",

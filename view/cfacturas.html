@@ -147,11 +147,12 @@
 							<td>{{ factura.nroComprob }}</td>
 							<td>{{ factura.razon }}</td>
 							<td>{{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-							<td>${{ factura.importe.total }}</td>
-							<td><button ui-sref="invoices.result" class="btn btn-primary" type="button" ng-click="cargar(factura); $parent.onOff = !$parent.onOff"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
+							<td>{{ factura.codMoneda | formatCurrency }} {{ factura.importe.total | currency }}</td>
+							<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = factura"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 						</tr>
 						</tbody>
 					</table>
+
 				</div>
 			</tab>
 

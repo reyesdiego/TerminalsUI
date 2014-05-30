@@ -26,7 +26,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 	$scope.chartHeight = 320;
 
 	$scope.cargar = function(){
-		console.log('se llamo a cargar');
 		//Traigo todos los códigos de la terminal y me los guardo
 		priceFactory.getMatchPrices($scope.terminal, null, function(data){
 			$scope.chartData = [
@@ -45,13 +44,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 			});
 
 			$scope.tabs = [];
-			console.log($scope.tabs);
 			invoiceFactory.getByDate($scope.desde, $scope.hasta, $scope.terminal, function(data) {
 
-				console.log('el result es');
-
 				$scope.result = data;
-				console.log($scope.result);
 
 				$scope.result.tipoComprob.forEach(function(tipoComprobante){
 					var tab = {
@@ -125,7 +120,12 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 		/*Acá control de tasa a las cargas*/
 		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, $scope.page, function(data){
 		    $scope.tasaCargas.resultado = data;
-			console.log($scope.tasaCargas.resultado);
+			if ($scope.tasaCargas.resultado.length > 0){
+				$scope.tasaCargas.titulo = "Error";
+				$scope.tasaCargas.cartel = "panel-danger";
+				$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
+				$scope.tasaCargas.mostrarResultado = 1;
+			}
 		 })
 
 	};
