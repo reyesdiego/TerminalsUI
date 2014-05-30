@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
+function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	'use strict';
 
 	// Fecha (dia y hora)
@@ -11,7 +11,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 	$scope.terminoCarga = false;
 	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
 	$scope.format = 'yyyy-MM-dd';
-	$scope.terminal = "BACTSSA";
+	$scope.terminalFacturas = "BACTSSA";
 	$scope.verDetalle = "";
 
 	$scope.open = function($event, fecha) {
@@ -28,7 +28,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
-		priceFactory.getMatchPrices($scope.terminal, null, function(data){
+		priceFactory.getMatchPrices($scope.terminalFacturas, null, function(data){
 			$scope.chartData = [
 				['Tipo de comprobante', 'Total']
 			];
@@ -45,7 +45,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 			});
 
 			$scope.tabs = [];
-			invoiceFactory.getByDate($scope.desde, $scope.hasta, $scope.terminal, function(data) {
+			invoiceFactory.getByDate($scope.desde, $scope.hasta, $scope.terminalFacturas, function(data) {
 
 				$scope.result = data;
 
@@ -119,7 +119,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, loginService){
 		};
 
 		/*Acá control de tasa a las cargas*/
-		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminal, $scope.page, function(data){
+		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
 		    $scope.tasaCargas.resultado = data;
 			console.log($scope.tasaCargas.resultado);
 			if ($scope.tasaCargas.resultado.length > 0){
