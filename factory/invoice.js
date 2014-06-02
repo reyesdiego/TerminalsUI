@@ -38,6 +38,7 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 		}).success(function(data) {
 			callback(data);
 		}).error(function(errorText) {
+			console.log(errorText);
 			dialogs.error('Error', 'Error al cargar la lista Invoice');
 		});
 	};
@@ -48,6 +49,7 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
+				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
 	};
@@ -63,6 +65,7 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
+				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
 	};

@@ -22,12 +22,8 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 
 	// Carga los gates por fechas
 	$scope.cargar = function(){
-		if ($scope.myForm.$valid){
-			$scope.currentPage = 1;
-			cargaGates();
-		} else {
-			dialogs.error('Error con las fechas','Ingrese fechas validas');
-		}
+		$scope.currentPage = 1;
+		$scope.cargaGates();
 	};
 
 	// Carga las facturas de un gate
@@ -41,22 +37,23 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 		});
 	};
 
+	$scope.cargaGates = function(page){
+		page = page || { skip:0, limit: $scope.itemsPerPage };
+		gatesFactory.getGate(cargaDatos(), page, function(data){
+			if (data.status === "OK"){
+				$scope.gates = data.data;
+				$scope.totalItems = data.totalCount;
+			}
+		});
+	};
+
 	$scope.$watch('currentPage', function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		cargaGates($scope.page);
+		$scope.cargaGates($scope.page);
 	});
 
 	function cargaDatos(){
 		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }
 	}
 
-	function cargaGates(page){
-		page = page || { skip:0, limit: $scope.itemsPerPage };
-		gatesFactory.getGateByDayOrContainer(cargaDatos(), page, function(data){
-			if (data.status === "OK"){
-				$scope.gates = data.data;
-				$scope.totalItems = data.totalCount;
-			}
-		});
-	}
 }
