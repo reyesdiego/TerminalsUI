@@ -20,8 +20,8 @@
 							</div>
 							<div>
 								<span>Contenedor {{ contenedor }}</span>
-								<span><button class="btn btn-default" ng-click="cargar(); isCollapsed = !isCollapsed"><span class="glyphicon glyphicon-zoom-in"></span></button></span>
-								<span><button class="btn btn-primary" ng-click="cargar(); isCollapsed = true" ng-disabled="myForm.$invalid || fecha.desde > fecha.hasta"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button></span>
+								<span ng-show="isCollapsed"><button class="btn btn-default" ng-click="isCollapsed = !isCollapsed"><span class="glyphicon glyphicon-zoom-in"></span></button></span>
+								<span ng-show="!isCollapsed"><button class="btn btn-primary" ng-click="cargar(); isCollapsed = !isCollapsed" ng-disabled="myForm.$invalid || fecha.desde > fecha.hasta"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button></span>
 							</div>
 						</div>
 					</div>
