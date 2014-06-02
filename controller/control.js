@@ -37,21 +37,16 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	$scope.desde = new Date();
 	$scope.mesDesde = new Date();
 	$scope.monthMode = 'month';
-	$scope.terminoCarga = false;
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
 	$scope.format = $scope.formats['yyyy-MM-dd'];
 	$scope.formatSoloMes = $scope.formats[3];
+	//Flag para mostrar los tabs con los resultados una vez recibidos los datos
+	$scope.terminoCarga = false;
 
 	socket.on('invoice', function (message) {
 		$scope.chartData[2][1]++;
 		$scope.control.invoicesCount++;
 	});
-
-	$scope.cambiarDatos = function(){
-		$scope.chartData[2][1] += 1000;
-		$scope.chartDataFacturas = datosGraficoTurnos;
-		$scope.control.invoicesCount++;
-	};
 
 	$scope.deleteRow = function (index) {
 		$scope.chartData.splice(index, 1);
@@ -96,23 +91,41 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 
 	$scope.traerDatosFacturadoDia = function(){
 		$scope.isCollapsedDay = !$scope.isCollapsedDay;
-		controlPanelFactory.getFacturadoPorDia2($scope.fecha, function(graf){
+		controlPanelFactory.getFacturadoPorDia($scope.desde, function(graf){
+			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 			var base = [
-				['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
+				['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ],
+				['', 0, 0, 0, 0, ''],
+				['', 0, 0, 0, 0, ''],
+				['', 0, 0, 0, 0, ''],
+				['', 0, 0, 0, 0, '']
 			];
+			//Para cambiar entre filas
 			var i = 1;
-			graf.data.forEach(function(datosDia){
-				var fila = [datosDia.dia, 0, 0, 0, 0, ''];
-				var acum = 0;
-				datosDia.datos.forEach(function(terminal){
-					fila[i] = terminal.monto;
+			//Para cambiar entre columnas
+			var contarTerminal = 1;
+			//Para cargar promedio
+			var acum = 0;
+			//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
+			//ordenados por fecha, y siguiendo el orden de terminales "BACTSSA", "TRP", "TERMINAL 4"
+			graf.forEach(function(datosDia){
+				if (contarTerminal == 1){
+					//Cargo el día en la primer iteración de las 3 bases
+					//se supone que siempre van a llegar los datos de   todas las terminales
+					base[i][0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
+				}
+				base[i][contarTerminal] = datosDia.cnt;
+				acum += datosDia.cnt;
+				if (contarTerminal == 3){
+					//Al llegar a la tercer terminal cargo el promedio de ese día, avanzo una fila y reseteo las columnas
+					base[i][4] = acum/3;
 					i++;
-					acum += terminal.monto;
-				})
-				fila[4] = acum/3;
-				base.push(fila);
-				i = 1;
+					contarTerminal = 0;
+					acum = 0;
+				}
+				contarTerminal++;
 			});
+			//Finalmente asigno los datos a la variable que usa el chart para los datos
 			$scope.chartDataFacturado = base;
 		});
 	}

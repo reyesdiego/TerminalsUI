@@ -124,7 +124,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			url: "/control",
 			templateUrl: "view/control.html",
 			controller: controlCtrl,
-			resolve: {
+			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
+				//Datos para el gráfico de los totales de comprobantes
 				datosGrafico: function(controlPanelFactory, $q){
 					var defer = $q.defer();
 
@@ -151,6 +152,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					});
 					return defer.promise;
 				},
+				//Datos de gráfico facturado por mes
 				datosGraficoFacturas: function (controlPanelFactory, $q){
 					var defer = $q.defer();
 					var fecha = new Date()
@@ -175,6 +177,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					});
 					return defer.promise;
 				},
+				//Datos de gráfico de gates cargados
 				datosGraficoGates: function (controlPanelFactory, $q){
 					var defer = $q.defer();
 					var fecha = new Date();
@@ -199,6 +202,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					});
 					return defer.promise;
 				},
+				//Datos de gráfico de turnos otorgados
 				datosGraficoTurnos: function (controlPanelFactory, $q){
 					var defer = $q.defer();
 					var fecha = new Date();
@@ -223,6 +227,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 					});
 					return defer.promise;
 				},
+				//Datos de gráfico de facturación por día
 				datosFacturadoPorDia: function (controlPanelFactory, $q){
 					var defer = $q.defer();
 					var fecha = new Date();
@@ -237,7 +242,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 						var i = 1;
 						var contarTerminal = 1;
 						var acum = 0;
-						graf.data.forEach(function(datosDia){
+						graf.forEach(function(datosDia){
 							if (contarTerminal == 1){
 								base[i][0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
 							}

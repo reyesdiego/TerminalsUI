@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http, dialogs){
+myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -79,8 +79,10 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 	};
 
+	//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
 	factory.getFacturadoPorDia = function(fecha, callback){
-		$http.get('mocks/facturadoDia.json')
+		var inserturl = serverUrl + '/countsByDate?fecha=' + formatDate.formatearFecha(fecha);
+		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
@@ -89,20 +91,6 @@ myapp.factory('controlPanelFactory', function($http, dialogs){
 			});
 
 	}
-
-	//Método hecho para probar actualización en gráfico
-	factory.getFacturadoPorDia2 = function(fecha, callback)
-	{
-		$http.get('mocks/facturadoDia2.json')
-			.success(function (data){
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
-			});
-
-	}
-	//Borrar al tener terminado el original
 
 	return factory;
 });
