@@ -2,26 +2,26 @@
 
 	<div class="row hidden-print">
 		<br>
-		<div class="col-lg-8">
+		<div class="col-lg-7">
 			<div class="xpage-header">
 				<h1 id="forms">Turnos</h1>
 			</div>
 		</div>
 
 		<div>
-			<div class="col-lg-4">
+			<div class="col-lg-5">
 				<div class="panel panel-default">
 					<div class="panel-heading">Filtrar</div>
 					<div class="panel-body">
-						<div class="form-group" ng-init="isCollapsed = true; collapsed = ''">
+						<div class="form-group" ng-init="isCollapsed = true">
 							<div>
-								<span>Desde </span>{{ fecha.desde | date:'dd/MM/yyyy HH:mm'}}
-								<span>Hasta </span>{{ fecha.hasta | date:'dd/MM/yyyy HH:mm'}}
+								<span>Desde </span>{{ fecha.desde | date:'dd/MM/yyyy HH:mm'}}hs
+								<span>Hasta </span>{{ fecha.hasta | date:'dd/MM/yyyy HH:mm'}}hs
 							</div>
 							<div>
-								<span>Contenedor </span> {{ contenedor }}
-								<span><button class="btn btn-primary" ng-click="cargar(); isCollapsed = !isCollapsed"><span class="glyphicon glyphicon-zoom-in"></span></button></span>
-								<span><button class="btn btn-primary" ng-click="cargar(); isCollapsed = !isCollapsed" ng-disabled="myForm.$invalid || fecha.desde > fecha.hasta"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button></span>
+								<span>Contenedor {{ contenedor }}</span>
+								<span ng-show="isCollapsed"><button class="btn btn-primary" ng-click="isCollapsed = !isCollapsed"><span class="glyphicon glyphicon-zoom-in"></span></button></span>
+								<span ng-show="!isCollapsed"><button class="btn btn-primary" ng-click="cargar(); isCollapsed = !isCollapsed" ng-disabled="myForm.$invalid || fecha.desde > fecha.hasta"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button></span>
 							</div>
 						</div>
 					</div>

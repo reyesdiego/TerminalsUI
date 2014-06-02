@@ -14,17 +14,23 @@ function turnosCtrl($scope, dialogs, turnosFactory){
 
 	// Carga los turnos por fechas
 	$scope.cargar = function(){
-		if ($scope.myForm.$valid){
-			$scope.currentPage = 1;
-			cargaTurnos();
-		} else {
-			dialogs.error('Error con las fechas','Ingrese fechas válidas');
-		}
+		$scope.currentPage = 1;
+		$scope.cargaTurnos();
+	};
+
+	$scope.cargaTurnos = function(page){
+		page = page || { skip:0, limit: $scope.itemsPerPage };
+		turnosFactory.getTurnos(cargaDatos(), page, function(data){
+			if (data.status === "OK"){
+				$scope.turnos = data.data;
+				$scope.totalItems = data.totalCount;
+			}
+		});
 	};
 
 	$scope.$watch('currentPage', function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		cargaTurnos($scope.page);
+		$scope.cargaTurnos($scope.page);
 	});
 
 	function cargaDatos(){
@@ -33,15 +39,5 @@ function turnosCtrl($scope, dialogs, turnosFactory){
 			fechaDesde : $scope.fecha.desde,
 			fechaHasta : $scope.fecha.hasta
 		}
-	}
-
-	function cargaTurnos(page){
-		page = page || { skip:0, limit: $scope.itemsPerPage };
-		turnosFactory.getTurnos(cargaDatos(), page, function(data){
-			if (data.status === "OK"){
-				$scope.turnos = data.data;
-				$scope.totalItems = data.totalCount;
-			}
-		});
 	}
 }
