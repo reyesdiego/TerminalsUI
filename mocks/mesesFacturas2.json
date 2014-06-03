@@ -3,61 +3,61 @@
 		"mes": "Agosto",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"facturas": 1867
+			"total": 1867
 		},{
 			"terminal": "TRP",
-			"facturas": 1963
+			"total": 1963
 		},{
 			"terminal": "Terminal 4",
-			"facturas": 1225
+			"total": 1225
 		}]
 	},{
 		"mes": "Septiembre",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"facturas": 1532
+			"total": 1532
 		},{
 			"terminal": "TRP",
-			"facturas": 1475
+			"total": 1475
 		},{
 			"terminal": "Terminal 4",
-			"facturas": 1965
+			"total": 1965
 		}]
 	},{
 		"mes": "Octubre",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"facturas": 2357
+			"total": 2357
 		},{
 			"terminal": "TRP",
-			"facturas": 1028
+			"total": 1028
 		},{
 			"terminal": "Terminal 4",
-			"facturas": 2238
+			"total": 2238
 		}]
 	},{
 		"mes": "Noviembre",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"facturas": 1759
+			"total": 1759
 		},{
 			"terminal": "TRP",
-			"facturas": 1963
+			"total": 1963
 		},{
 			"terminal": "Terminal 4",
-			"facturas": 1258
+			"total": 1258
 		}]
 	}, {
 		"mes": "Diciembre",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"facturas": 2684
+			"total": 2684
 		},{
 			"terminal": "TRP",
-			"facturas": 2489
+			"total": 2489
 		},{
 			"terminal": "Terminal 4",
-			"facturas": 2996
+			"total": 2996
 		}]
 	}]
 }

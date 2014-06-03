@@ -3,61 +3,61 @@
 		"mes": "Enero",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"turnos": 764
+			"total": 764
 		},{
 			"terminal": "TRP",
-			"turnos": 540
+			"total": 540
 		},{
 			"terminal": "Terminal 4",
-			"turnos": 860
+			"total": 860
 		}]
 	},{
 		"mes": "Febrero",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"turnos": 865
+			"total": 865
 		},{
 			"terminal": "TRP",
-			"turnos": 990
+			"total": 990
 		},{
 			"terminal": "Terminal 4",
-			"turnos": 575
+			"total": 575
 		}]
 	},{
 		"mes": "Marzo",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"turnos": 650
+			"total": 650
 		},{
 			"terminal": "TRP",
-			"turnos": 300
+			"total": 300
 		},{
 			"terminal": "Terminal 4",
-			"turnos": 900
+			"total": 900
 		}]
 	},{
 		"mes": "Abril",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"turnos": 420
+			"total": 420
 		},{
 			"terminal": "TRP",
-			"turnos": 950
+			"total": 950
 		},{
 			"terminal": "Terminal 4",
-			"turnos": 600
+			"total": 600
 		}]
 	}, {
 		"mes": "Mayo",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"turnos": 1250
+			"total": 1250
 		},{
 			"terminal": "TRP",
-			"turnos": 800
+			"total": 800
 		},{
 			"terminal": "Terminal 4",
-			"turnos": 860
+			"total": 860
 		}]
 	}]
 }

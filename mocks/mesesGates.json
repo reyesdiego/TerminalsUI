@@ -3,61 +3,61 @@
 		"mes": "Enero",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"gates": 754
+			"total": 754
 		},{
 			"terminal": "TRP",
-			"gates": 532
+			"total": 532
 		},{
 			"terminal": "Terminal 4",
-			"gates": 852
+			"total": 852
 		}]
 	},{
 		"mes": "Febrero",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"gates": 863
+			"total": 863
 		},{
 			"terminal": "TRP",
-			"gates": 987
+			"total": 987
 		},{
 			"terminal": "Terminal 4",
-			"gates": 572
+			"total": 572
 		}]
 	},{
 		"mes": "Marzo",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"gates": 648
+			"total": 648
 		},{
 			"terminal": "TRP",
-			"gates": 234
+			"total": 234
 		},{
 			"terminal": "Terminal 4",
-			"gates": 842
+			"total": 842
 		}]
 	},{
 		"mes": "Abril",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"gates": 354
+			"total": 354
 		},{
 			"terminal": "TRP",
-			"gates": 946
+			"total": 946
 		},{
 			"terminal": "Terminal 4",
-			"gates": 584
+			"total": 584
 		}]
 	}, {
 		"mes": "Mayo",
 		"datos": [{
 			"terminal": "BACTSSA",
-			"gates": 1248
+			"total": 1248
 		},{
 			"terminal": "TRP",
-			"gates": 753
+			"total": 753
 		},{
 			"terminal": "Terminal 4",
-			"gates": 846
+			"total": 846
 		}]
 	}]
 }

@@ -2,7 +2,8 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, datosFacturadoPorDia, controlPanelFactory, socket, formatDate){
+var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, datosFacturadoPorDia, controlPanelFactory, socket, formatDate){
+
 	var fecha = formatDate.formatearFecha(new Date());
 
 	$scope.chartTitle = "Datos enviados";
@@ -69,65 +70,135 @@ function controlCtrl($scope, datosGrafico, datosGraficoFacturas, datosGraficoGat
 	$scope.traerDatosFacturadoMes = function(){
 		$scope.isCollapsedMonth = !$scope.isCollapsedMonth;
 		controlPanelFactory.getFacturasMeses2($scope.mesDesde.getMonth()+1, function(graf){
-			var base = [
-				['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
-			];
-			var i = 1;
-			graf.data.forEach(function(datosMes){
-				var fila = [datosMes.mes, 0, 0, 0, 0, ''];
-				var acum = 0;
-				datosMes.datos.forEach(function(terminal){
-					fila[i] = terminal.facturas;
-					i++;
-					acum += terminal.facturas;
-				});
-				fila[4] = acum/3;
-				base.push(fila);
-				i = 1;
-			});
-			$scope.chartDataFacturas = base;
+			$scope.chartDataFacturas = controlCtrl.prepararDatos(graf);
 		});
 	}
 
 	$scope.traerDatosFacturadoDia = function(){
 		$scope.isCollapsedDay = !$scope.isCollapsedDay;
 		controlPanelFactory.getFacturadoPorDia($scope.desde, function(graf){
-			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
-			var base = [
-				['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ],
-				['', 0, 0, 0, 0, ''],
-				['', 0, 0, 0, 0, ''],
-				['', 0, 0, 0, 0, ''],
-				['', 0, 0, 0, 0, '']
-			];
-			//Para cambiar entre filas
-			var i = 1;
-			//Para cambiar entre columnas
-			var contarTerminal = 1;
-			//Para cargar promedio
-			var acum = 0;
-			//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
-			//ordenados por fecha, y siguiendo el orden de terminales "BACTSSA", "TRP", "TERMINAL 4"
-			graf.forEach(function(datosDia){
-				if (contarTerminal == 1){
-					//Cargo el día en la primer iteración de las 3 bases
-					//se supone que siempre van a llegar los datos de   todas las terminales
-					base[i][0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
-				}
-				base[i][contarTerminal] = datosDia.cnt;
-				acum += datosDia.cnt;
-				if (contarTerminal == 3){
-					//Al llegar a la tercer terminal cargo el promedio de ese día, avanzo una fila y reseteo las columnas
-					base[i][4] = acum/3;
-					i++;
-					contarTerminal = 0;
-					acum = 0;
-				}
-				contarTerminal++;
-			});
-			//Finalmente asigno los datos a la variable que usa el chart para los datos
-			$scope.chartDataFacturado = base;
+			$scope.chartDataFacturado = controlCtrl.prepararDatosFacturadoDia(graf);
 		});
 	}
+});
 
+controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
+	var defer = $q.defer();
+
+	var fecha = new Date();
+	controlPanelFactory.getTotales(fecha, function(graf){
+		var base = [
+//							['Datos', 'Facturas', 'Gates', 'Turnos', { role: 'annotation' } ],
+			['Datos', 'Facturas', { role: 'annotation' } ],
+//							['BACTSSA', 0, 0, 0, ''],
+//							['TRP', 0, 0, 0, ''],
+//							['TERMINAL 4', 0, 0, 0, '']
+			['BACTSSA', 0, ''],
+			['TRP', 0, ''],
+			['TERMINAL 4', 0, '']
+		];
+		var i = 1;
+		graf.forEach(function(terminal){
+//							base[i] = [terminal.nombre, terminal.invoices, terminal.gates, terminal.turnos, ''];
+//							base[i] = [terminal._id.terminal, terminal.invoicesCount, terminal.invoicesCount, terminal.invoicesCount, ''];
+			base[i] = [terminal._id.terminal, terminal.cnt,''];
+			i++;
+		});
+		defer.resolve(base);
+	});
+	return defer.promise;
+};
+
+controlCtrl.primerCargaFacturadoMes = function (controlPanelFactory, $q){
+	var defer = $q.defer();
+	var fecha = new Date()
+	controlPanelFactory.getFacturasMeses(fecha.getMonth()+1, function(graf){
+		defer.resolve(controlCtrl.prepararDatos(graf));
+	});
+	return defer.promise;
+};
+
+controlCtrl.primerCargaGates = function (controlPanelFactory, $q){
+	var defer = $q.defer();
+	var fecha = new Date();
+	controlPanelFactory.getGatesMeses(fecha.getMonth()+1, function(graf){
+		defer.resolve(controlCtrl.prepararDatos(graf));
+	});
+	return defer.promise;
+}
+
+controlCtrl.primerCargaTurnos = function (controlPanelFactory, $q){
+	var defer = $q.defer();
+	var fecha = new Date();
+	controlPanelFactory.getTurnosMeses(fecha.getMonth()+1, function(graf){
+		defer.resolve(controlCtrl.prepararDatos(graf));
+	});
+	return defer.promise;
+}
+
+controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
+	var defer = $q.defer();
+	var fecha = new Date();
+	controlPanelFactory.getFacturadoPorDia(fecha, function(graf){
+		defer.resolve(controlCtrl.prepararDatosFacturadoDia(graf));
+	});
+	return defer.promise;
+}
+
+controlCtrl.prepararDatos = function(datosGrafico){
+	var base = [
+		['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
+	];
+	var i = 1;
+	datosGrafico.data.forEach(function(datosMes){
+		var fila = [datosMes.mes, 0, 0, 0, 0, ''];
+		var acum = 0;
+		datosMes.datos.forEach(function(terminal){
+			fila[i] = terminal.total;
+			i++;
+			acum += terminal.total;
+		});
+		fila[4] = acum/3;
+		base.push(fila);
+		i = 1;
+	});
+	return base;
+};
+
+controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
+	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
+	var base = [
+		['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ],
+		['', 0, 0, 0, 0, ''],
+		['', 0, 0, 0, 0, ''],
+		['', 0, 0, 0, 0, ''],
+		['', 0, 0, 0, 0, '']
+	];
+	//Para cambiar entre filas
+	var i = 1;
+	//Para cambiar entre columnas
+	var contarTerminal = 1;
+	//Para cargar promedio
+	var acum = 0;
+	//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
+	//ordenados por fecha, y siguiendo el orden de terminales "BACTSSA", "TRP", "TERMINAL 4"
+	datosGrafico.forEach(function(datosDia){
+		if (contarTerminal == 1){
+			//Cargo el día en la primer iteración de las 3 bases
+			//se supone que siempre van a llegar los datos de   todas las terminales
+			base[i][0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
+		}
+		base[i][contarTerminal] = datosDia.cnt;
+		acum += datosDia.cnt;
+		if (contarTerminal == 3){
+			//Al llegar a la tercer terminal cargo el promedio de ese día, avanzo una fila y reseteo las columnas
+			base[i][4] = acum/3;
+			i++;
+			contarTerminal = 0;
+			acum = 0;
+		}
+		contarTerminal++;
+	});
+	//Finalmente devuelvo la matriz generada con los datos para su asignación
+	return base;
 }

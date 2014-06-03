@@ -123,143 +123,18 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('control', {
 			url: "/control",
 			templateUrl: "view/control.html",
-			controller: controlCtrl,
+			controller: "ControlCtrl",
 			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
 				//Datos para el gráfico de los totales de comprobantes
-				datosGrafico: function(controlPanelFactory, $q){
-					var defer = $q.defer();
-
-					var fecha = new Date();
-					controlPanelFactory.getTotales(fecha, function(graf){
-						var base = [
-//							['Datos', 'Facturas', 'Gates', 'Turnos', { role: 'annotation' } ],
-							['Datos', 'Facturas', { role: 'annotation' } ],
-//							['BACTSSA', 0, 0, 0, ''],
-//							['TRP', 0, 0, 0, ''],
-//							['TERMINAL 4', 0, 0, 0, '']
-							['BACTSSA', 0, ''],
-							['TRP', 0, ''],
-							['TERMINAL 4', 0, '']
-						];
-						var i = 1;
-						graf.forEach(function(terminal){
-//							base[i] = [terminal.nombre, terminal.invoices, terminal.gates, terminal.turnos, ''];
-//							base[i] = [terminal._id.terminal, terminal.invoicesCount, terminal.invoicesCount, terminal.invoicesCount, ''];
-							base[i] = [terminal._id.terminal, terminal.cnt,''];
-							i++;
-						});
-						defer.resolve(base);
-					});
-					return defer.promise;
-				},
+				datosGrafico: controlCtrl.primerCargaComprobantes,
 				//Datos de gráfico facturado por mes
-				datosGraficoFacturas: function (controlPanelFactory, $q){
-					var defer = $q.defer();
-					var fecha = new Date()
-					controlPanelFactory.getFacturasMeses(fecha.getMonth()+1, function(graf){
-						var base = [
-							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
-						];
-						var i = 1;
-						graf.data.forEach(function(datosMes){
-							var fila = [datosMes.mes, 0, 0, 0, 0, ''];
-							var acum = 0;
-							datosMes.datos.forEach(function(terminal){
-								fila[i] = terminal.facturas;
-								i++;
-								acum += terminal.facturas;
-							});
-							fila[4] = acum/3;
-							base.push(fila);
-							i = 1;
-						});
-						defer.resolve(base);
-					});
-					return defer.promise;
-				},
+				datosGraficoFacturas: controlCtrl.primerCargaFacturadoMes,
 				//Datos de gráfico de gates cargados
-				datosGraficoGates: function (controlPanelFactory, $q){
-					var defer = $q.defer();
-					var fecha = new Date();
-					controlPanelFactory.getGatesMeses(fecha.getMonth()+1, function(graf){
-						var base = [
-							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
-						];
-						var i = 1;
-						graf.data.forEach(function(datosMes){
-							var fila = [datosMes.mes, 0, 0, 0, 0, ''];
-							var acum = 0;
-							datosMes.datos.forEach(function(terminal){
-								fila[i] = terminal.gates;
-								i++;
-								acum += terminal.gates;
-							});
-							fila[4] = acum/3;
-							base.push(fila);
-							i = 1;
-						});
-						defer.resolve(base);
-					});
-					return defer.promise;
-				},
+				datosGraficoGates: controlCtrl.primerCargaGates,
 				//Datos de gráfico de turnos otorgados
-				datosGraficoTurnos: function (controlPanelFactory, $q){
-					var defer = $q.defer();
-					var fecha = new Date();
-					controlPanelFactory.getTurnosMeses(fecha.getMonth()+1, function(graf){
-						var base = [
-							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
-						];
-						var i = 1;
-						graf.data.forEach(function(datosMes){
-							var fila = [datosMes.mes, 0, 0, 0, 0, ''];
-							var acum = 0;
-							datosMes.datos.forEach(function(terminal){
-								fila[i] = terminal.turnos;
-								i++;
-								acum += terminal.turnos;
-							})
-							fila[4] = acum/3;
-							base.push(fila);
-							i = 1;
-						});
-						defer.resolve(base);
-					});
-					return defer.promise;
-				},
+				datosGraficoTurnos: controlCtrl.primerCargaTurnos,
 				//Datos de gráfico de facturación por día
-				datosFacturadoPorDia: function (controlPanelFactory, $q){
-					var defer = $q.defer();
-					var fecha = new Date();
-					controlPanelFactory.getFacturadoPorDia(fecha, function(graf){
-						var base = [
-							['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ],
-							['', 0, 0, 0, 0, ''],
-							['', 0, 0, 0, 0, ''],
-							['', 0, 0, 0, 0, ''],
-							['', 0, 0, 0, 0, '']
-						];
-						var i = 1;
-						var contarTerminal = 1;
-						var acum = 0;
-						graf.forEach(function(datosDia){
-							if (contarTerminal == 1){
-								base[i][0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
-							}
-							base[i][contarTerminal] = datosDia.cnt;
-							acum += datosDia.cnt;
-							if (contarTerminal == 3){
-								base[i][4] = acum/3;
-								i++
-								contarTerminal = 0;
-								acum = 0;
-							}
-							contarTerminal++;
-						});
-						defer.resolve(base);
-					});
-					return defer.promise;
-				}
+				datosFacturadoPorDia:controlCtrl.primerCargaFacturadoDia
 			}
 		})
 		.state('cfacturas', {
