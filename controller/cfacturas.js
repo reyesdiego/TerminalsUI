@@ -124,17 +124,16 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 
 		/*Acá control de tasa a las cargas*/
 		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
-		    $scope.tasaCargas.resultado = data;
+		    $scope.tasaCargas.resultado = data.data;
 			console.log($scope.tasaCargas.resultado);
 			if ($scope.tasaCargas.resultado.length > 0){
-				$scope.totalItemsTasaCargas = $scope.tasaCargas.resultado.length;
+				$scope.totalItemsTasaCargas = data.totalCount;
 				$scope.tasaCargas.titulo = "Error";
 				$scope.tasaCargas.cartel = "panel-danger";
 				$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
 				$scope.tasaCargas.mostrarResultado = 1;
 			}
 		 })
-
 	};
 
 	$scope.deleteRow = function (index) {
@@ -157,12 +156,13 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	}
 
 	$scope.$watch('currentPageTasaCargas', function(){
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		console.log("aca en el watch");
+		$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
 		invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
-			$scope.tasaCargas.resultado = data;
+			$scope.tasaCargas.resultado = data.data;
 			console.log($scope.tasaCargas.resultado);
 			if ($scope.tasaCargas.resultado.length > 0){
-				$scope.totalItemsTasaCargas = $scope.tasaCargas.resultado.length;
+				$scope.totalItemsTasaCargas = data.totalCount;
 				$scope.tasaCargas.titulo = "Error";
 				$scope.tasaCargas.cartel = "panel-danger";
 				$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
