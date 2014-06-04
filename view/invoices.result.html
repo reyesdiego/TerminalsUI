@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="well col-lg-10 col-lg-offset-1" style="text-align: center">
+	<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
 		<div class="row">
 			<table class="table table-bordered" style="margin-bottom: 0">
 				<tr>
@@ -57,20 +57,20 @@
 				</tbody>
 				<tfoot style="text-align: right;">
 				<tr>
-					<td colspan="4">Subtotal</td>
-					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.subtotal | currency }}</td>
+					<td colspan="2">Subtotal</td>
+					<td colspan="3">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.subtotal | currency }}</td>
 				</tr>
 				<tr>
-					<td colspan="4">IVA</td>
-					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.iva | currency }}</td>
+					<td colspan="2">IVA</td>
+					<td colspan="3">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.iva | currency }}</td>
 				</tr>
 				<tr>
-					<td colspan="4">Otros Tributos</td>
-					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | currency }}</td>
+					<td colspan="2">Otros Tributos</td>
+					<td colspan="3">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | currency }}</td>
 				</tr>
 				<tr>
-					<td colspan="4">Total</td>
-					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.total | currency }}</td>
+					<td colspan="2">Total</td>
+					<td colspan="3">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.total | currency }}</td>
 				</tr>
 				</tfoot>
 			</table>
