@@ -37,8 +37,9 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 			});
 	};
 
-	factory.getFacturasMeses = function(mes, callback){
-		$http.get('mocks/mesesFacturas.json')
+	factory.getFacturasMeses = function(fecha, callback){
+		var inserturl = serverUrl + '/invoices/countsByMonth?fecha=' + formatDate.formatearFecha(fecha);
+		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
@@ -46,18 +47,6 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
 	};
-
-	//Método hecho para probar actualización en gráfico
-	factory.getFacturasMeses2 = function(mes, callback){
-		$http.get('mocks/mesesFacturas2.json')
-			.success(function (data){
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
-			});
-	};
-	//Borrar al tener terminado el original
 
 	factory.getGatesMeses = function(mes, callback){
 		$http.get('mocks/mesesGates.json')

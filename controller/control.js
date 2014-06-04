@@ -36,7 +36,7 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
-	$scope.mesDesde = new Date();
+	$scope.mesDesde = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
 	$scope.monthMode = 'month';
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
 	$scope.format = $scope.formats['yyyy-MM-dd'];
@@ -69,7 +69,7 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 	$scope.traerDatosFacturadoMes = function(){
 		$scope.isCollapsedMonth = !$scope.isCollapsedMonth;
-		controlPanelFactory.getFacturasMeses2($scope.mesDesde.getMonth()+1, function(graf){
+		controlPanelFactory.getFacturasMeses($scope.mesDesde, function(graf){
 			$scope.chartDataFacturas = controlCtrl.prepararDatos(graf);
 		});
 	}
@@ -110,8 +110,9 @@ controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 
 controlCtrl.primerCargaFacturadoMes = function (controlPanelFactory, $q){
 	var defer = $q.defer();
-	var fecha = new Date();
-	controlPanelFactory.getFacturasMeses(fecha.getMonth()+1, function(graf){
+	var fechaActual = new Date();
+	var fecha = new Date(fechaActual.getFullYear() + '-' + (fechaActual.getMonth()+1) + '-01');
+	controlPanelFactory.getFacturasMeses(fecha, function(graf){
 		defer.resolve(controlCtrl.prepararDatos(graf));
 	});
 	return defer.promise;
