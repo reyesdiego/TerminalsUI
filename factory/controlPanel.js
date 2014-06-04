@@ -5,7 +5,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
-		var inserturl = serverUrl + '/counts?fecha=' + dia;
+		var inserturl = serverUrl + '/invoices/counts?fecha=' + dia;
 		$http.get(inserturl)
 			.success(function(data){
 				var result = [];
@@ -27,7 +27,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 	};
 
 	factory.getTotales = function(fecha, callback){
-		var inserturl = serverUrl + '/counts';
+		var inserturl = serverUrl + '/invoices/counts';
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data.data);
@@ -81,7 +81,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 
 	//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
 	factory.getFacturadoPorDia = function(fecha, callback){
-		var inserturl = serverUrl + '/countsByDate?fecha=' + formatDate.formatearFecha(fecha);
+		var inserturl = serverUrl + '/invoices/countsByDate?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
