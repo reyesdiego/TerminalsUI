@@ -1,7 +1,7 @@
 /**
  * Created by leo on 31/03/14.
  */
-function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
+function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	'use strict';
 
 	// Fecha (dia y hora)
@@ -12,7 +12,7 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 	// Variable para almacenar la info principal que trae del factory
 	$scope.gates = {};
 
-	// Funciones propias del controlador
+	// Pone estilo al horario de acuerdo si esta o no a tiempo
 	$scope.colorHorario = function(gate){
 		var horarioGate = new Date(gate.gateTimestamp);
 		var horarioInicio = new Date(gate.turnoInicio);
@@ -20,14 +20,13 @@ function gatesCtrl($scope, dialogs, gatesFactory, invoiceFactory){
 		if (horarioGate >= horarioInicio && horarioGate <= horarioFin) { return 'green' } else { return 'red' }
 	};
 
-	// Carga los gates por fechas
-	$scope.cargar = function(){
+	$scope.cargaGatesPorFiltros = function(){
+		$scope.isCollapsed = !$scope.isCollapsed;
 		$scope.currentPage = 1;
 		$scope.cargaGates();
 	};
 
-	// Carga las facturas de un gate
-	$scope.ver = function(container){
+	$scope.cargaFacturasPorContenedor = function(container){
 		var datos = { 'contenedor': container };
 		$scope.container = container;
 		invoiceFactory.getInvoice(datos, {skip:0, limit: $scope.itemsPerPage }, function(data){

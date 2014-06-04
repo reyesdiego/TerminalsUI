@@ -1,7 +1,7 @@
 /**
  * Created by leo on 28/04/14.
  */
-function turnosCtrl($scope, dialogs, turnosFactory){
+function turnosCtrl($scope, turnosFactory){
 	'use strict';
 
 	// Fecha (dia y hora)
@@ -13,7 +13,8 @@ function turnosCtrl($scope, dialogs, turnosFactory){
 	$scope.turnos = {};
 
 	// Carga los turnos por fechas
-	$scope.cargar = function(){
+	$scope.cargaTurnosPorFiltros = function(){
+		$scope.isCollapsed = !$scope.isCollapsed;
 		$scope.currentPage = 1;
 		$scope.cargaTurnos();
 	};
@@ -34,10 +35,6 @@ function turnosCtrl($scope, dialogs, turnosFactory){
 	});
 
 	function cargaDatos(){
-		return {
-			contenedor : $scope.contenedor,
-			fechaDesde : $scope.fecha.desde,
-			fechaHasta : $scope.fecha.hasta
-		}
+		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }
 	}
 }

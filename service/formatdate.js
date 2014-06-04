@@ -6,6 +6,7 @@ myapp.service('formatDate', function () {
 	return {
 		formatearFecha : function(fecha){
 		if (fecha != '' && fecha != null){
+			fecha = new Date(fecha);
 			var fechaAux = fecha.getFullYear() + '-';
 			if ((fecha.getMonth() + 1) < 10){
 				fechaAux = fechaAux + '0';
@@ -21,6 +22,7 @@ myapp.service('formatDate', function () {
 		},
 		formatearFechaHorasMinutos : function(fecha){
 		if (fecha != '' && fecha != null){
+			fecha = new Date(fecha);
 			var fechaAux = this.formatearFecha(fecha) + ' ';
 			if(fecha.getHours() < 7){
 				fechaAux = fechaAux + '0';
