@@ -84,7 +84,6 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 	var defer = $q.defer();
-
 	var fecha = new Date();
 	controlPanelFactory.getTotales(fecha, function(graf){
 		var base = [
@@ -111,7 +110,7 @@ controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 
 controlCtrl.primerCargaFacturadoMes = function (controlPanelFactory, $q){
 	var defer = $q.defer();
-	var fecha = new Date()
+	var fecha = new Date();
 	controlPanelFactory.getFacturasMeses(fecha.getMonth()+1, function(graf){
 		defer.resolve(controlCtrl.prepararDatos(graf));
 	});
