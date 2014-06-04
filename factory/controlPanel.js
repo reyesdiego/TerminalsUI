@@ -44,7 +44,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
+				dialogs.error('Error', 'Error al cargar los datos de la facturación por mes');
 			});
 	};
 
@@ -78,8 +78,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
-
-	}
+	};
 
 	return factory;
 });
