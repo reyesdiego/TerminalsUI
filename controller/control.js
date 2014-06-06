@@ -167,18 +167,10 @@ controlCtrl.prepararDatos = function(datosGrafico){
 };
 
 controlCtrl.prepararDatosFacturadoMes = function(datosGrafico){
-	console.log(datosGrafico);
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
-		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, '']
+		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 	];
-	//Para cambiar entre filas
-	var i = 1;
 	//Para cambiar entre columnas
 	var contarTerminal = 1;
 	//Para cargar promedio
@@ -187,74 +179,92 @@ controlCtrl.prepararDatosFacturadoMes = function(datosGrafico){
 	//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
 	//ordenados por fecha, y siguiendo el orden de terminales "BACTSSA", "Terminal 4", "TRP"???????
 	var flagPrimero = true;
+	var fechaAnterior;
+	var fila = ['', 0, 0, 0, 0, ''];
 	datosGrafico.forEach(function(datosDia){
 		if (flagPrimero){
 			flagPrimero = false;
-			base[i][0] = meses[datosDia._id.month - 1] + ' del ' + datosDia._id.year;
-		};
+			fila[0] = meses[datosDia._id.month - 1] + ' del ' + datosDia._id.year;
+			fechaAnterior = datosDia._id.month;
+		}
+		if (fechaAnterior != datosDia._id.month){
+			//Al llegar a la tercer terminal cargo el promedio de ese día, meto la fila en la matriz y reseteo las columnas
+			fila[4] = acum/3;
+			base.push(fila.slice());
+			//Meto la fila en la matriz y vuelvo a empezar
+			fila = ['', 0, 0, 0, 0, ''];
+			acum = 0;
+			fechaAnterior = datosDia._id.month;
+			fila[0] = meses[datosDia._id.month - 1] + ' del ' + datosDia._id.year;
+		}
 		switch (datosDia._id.terminal){
 			case "BACTSSA":
 				contarTerminal = 1;
 				break;
-			case "Terminal 4":
+			case "TERMINAL4":
 				contarTerminal = 2;
 				break;
 			case "TRP":
 				contarTerminal = 3;
 				break;
 		};
-		base[i][contarTerminal] = datosDia.cnt;
+		fila[contarTerminal] = datosDia.cnt;
 		acum += datosDia.cnt;
-		if (contarTerminal == 3){
-			//Al llegar a la tercer terminal cargo el promedio de ese día, avanzo una fila y reseteo las columnas
-			base[i][4] = acum/3;
-			i++;
-			contarTerminal = 0;
-			acum = 0;
-			flagPrimero = true;
-		}
-		contarTerminal++;
 	});
+	fila[4] = acum/3;
+	base.push(fila.slice());
 	//Finalmente devuelvo la matriz generada con los datos para su asignación
-	console.log(base);
 	return base;
 };
 
 controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
-	console.log(datosGrafico);
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
-		['Terminales', 'Terminal 4', 'BACTSSA', 'TRP', 'Promedio', { role: 'annotation'} ],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, '']
+		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 	];
-	//Para cambiar entre filas
-	var i = 1;
 	//Para cambiar entre columnas
 	var contarTerminal = 1;
 	//Para cargar promedio
 	var acum = 0;
+	var fila = ['', 0, 0, 0, 0, ''];
+	var flagPrimero = true;
+	var fechaAnterior;
 	//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
-	//ordenados por fecha, y siguiendo el orden de terminales "TERMINAL 4", "BACTSSA", "TRP" ???????
+	//ordenados por fecha
 	datosGrafico.forEach(function(datosDia){
-		if (contarTerminal == 1){
-			//Cargo el día en la primer iteración de las 3 bases
-			//se supone que siempre van a llegar los datos de todas las terminales
-			base[i][0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
+		if (flagPrimero){
+			//Primera iteración, cargo el día y lo establezco como fecha para comparar
+			fila[0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
+			fechaAnterior = datosDia._id.day;
+			flagPrimero = false;
 		}
-		base[i][contarTerminal] = datosDia.cnt;
-		acum += datosDia.cnt;
-		if (contarTerminal == 3){
-			//Al llegar a la tercer terminal cargo el promedio de ese día, avanzo una fila y reseteo las columnas
-			base[i][4] = acum/3;
-			i++;
-			contarTerminal = 0;
+		if (fechaAnterior != datosDia._id.day){
+			//Al haber un cambio en la fecha cargo el promedio de ese día, avanzo una fila y reseteo las columnas
+			fila[4] = acum/3;
+			base.push(fila.slice());
+			//Meto la fila en la matriz y vuelvo a empezar
+			fila = ['', 0, 0, 0, 0, ''];
+			fechaAnterior = datosDia._id.day;
+			fila[0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
 			acum = 0;
 		}
-		contarTerminal++;
+		switch (datosDia._id.terminal){
+			case "BACTSSA":
+				contarTerminal = 1;
+				break;
+			case "TERMINAL4":
+				contarTerminal = 2;
+				break;
+			case "TRP":
+				contarTerminal = 3;
+				break;
+		};
+		fila[contarTerminal] = datosDia.cnt;
+		acum += datosDia.cnt;
 	});
+	//Meto la última fila generada
+	fila[4] = acum/3;
+	base.push(fila.slice());
 	//Finalmente devuelvo la matriz generada con los datos para su asignación
 	return base;
 };

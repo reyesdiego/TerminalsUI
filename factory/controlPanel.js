@@ -49,12 +49,13 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 	};
 
 	factory.getGatesMeses = function(mes, callback){
-		$http.get('mocks/mesesGates.json')
+		var inserturl = serverUrl + '/gatesByMonth?fecha=' + formatDate.formatearFecha(fecha);
+		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
+				dialogs.error('Error', 'Error al traer los datos de los gates');
 			});
 	};
 
