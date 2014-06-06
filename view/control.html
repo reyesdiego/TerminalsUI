@@ -96,15 +96,41 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-			<column-chart data="chartDataGates" title="{{chartTitleGates}}"
+			<p class="input-group">
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeGates" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="isCollapsedGates = !isCollapsedGates"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</p>
+			<div collapse="isCollapsedGates">
+				<div class="well well-lg">
+					<datepicker ng-model="mesDesdeGates" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosGates()"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedGates">
+				<column-chart data="chartDataGates" title="{{chartTitleGates}}"
 			              width="{{chartWidthGates}}" height="{{chartHeightGates}}"
 			              select="selectRow(selectedRowIndexGates)"></column-chart>
+			</div>
 		</div>
 
 		<div class="col-lg-6">
-			<column-chart data="chartDataTurnos" title="{{chartTitleTurnos}}"
+			<p class="input-group">
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeTurnos" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="isCollapsedTurnos = !isCollapsedTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</p>
+			<div collapse="isCollapsedTurnos">
+				<div class="well well-lg">
+					<datepicker ng-model="mesDesdeTurnos" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosTurnos()"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedTurnos">
+				<column-chart data="chartDataTurnos" title="{{chartTitleTurnos}}"
 			              width="{{chartWidthTurnos}}" height="{{chartHeightTurnos}}"
 			              select="selectRow(selectedRowIndexTurnos)"></column-chart>
+			</div>
 		</div>
 	</div>
 

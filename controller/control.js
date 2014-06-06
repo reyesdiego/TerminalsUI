@@ -33,10 +33,15 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 	$scope.isCollapsedMonth = true;
 	$scope.isCollapsedDay = true;
+	$scope.isCollapsedGates = true;
+	$scope.isCollapsedTurnos = true;
 
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
 	$scope.mesDesde = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
+	$scope.mesDesdeGates = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
+	$scope.mesDesdeTurnos = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
+
 	$scope.monthMode = 'month';
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
 	$scope.format = $scope.formats['yyyy-MM-dd'];
@@ -70,7 +75,21 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.traerDatosFacturadoMes = function(){
 		$scope.isCollapsedMonth = !$scope.isCollapsedMonth;
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, function(graf){
-			$scope.chartDataFacturas = controlCtrl.prepararDatosFacturadoMes(graf);
+			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf);
+		});
+	}
+
+	$scope.traerDatosGates = function(){
+		$scope.isCollapsedGates = !$scope.isCollapsedGates;
+		controlPanelFactory.getGatesMeses($scope.mesDesdeGates, function(graf){
+			$scope.chartDataGates = controlCtrl.prepararDatosMes(graf);
+		});
+	}
+
+	$scope.traerDatosTurnos = function(){
+		$scope.isCollapsedTurnos = !$scope.isCollapsedTurnos;
+		controlPanelFactory.getTurnosMeses($scope.mesDesdeTurnos, function(graf){
+			$scope.chartDataTurnos = controlCtrl.prepararDatosMes(graf);
 		});
 	}
 
@@ -113,25 +132,27 @@ controlCtrl.primerCargaFacturadoMes = function (controlPanelFactory, $q){
 	var fechaActual = new Date();
 	var fecha = new Date(fechaActual.getFullYear() + '-' + (fechaActual.getMonth()+1) + '-01');
 	controlPanelFactory.getFacturasMeses(fecha, function(graf){
-		defer.resolve(controlCtrl.prepararDatosFacturadoMes(graf));
+		defer.resolve(controlCtrl.prepararDatosMes(graf));
 	});
 	return defer.promise;
 };
 
 controlCtrl.primerCargaGates = function (controlPanelFactory, $q){
 	var defer = $q.defer();
-	var fecha = new Date();
-	controlPanelFactory.getGatesMeses(fecha.getMonth()+1, function(graf){
-		defer.resolve(controlCtrl.prepararDatos(graf));
+	var fechaActual = new Date();
+	var fecha = new Date(fechaActual.getFullYear() + '-' + (fechaActual.getMonth()+1) + '-01');
+	controlPanelFactory.getGatesMeses(fecha, function(graf){
+		defer.resolve(controlCtrl.prepararDatosMes(graf));
 	});
 	return defer.promise;
 }
 
 controlCtrl.primerCargaTurnos = function (controlPanelFactory, $q){
 	var defer = $q.defer();
-	var fecha = new Date();
-	controlPanelFactory.getTurnosMeses(fecha.getMonth()+1, function(graf){
-		defer.resolve(controlCtrl.prepararDatos(graf));
+	var fechaActual = new Date();
+	var fecha = new Date(fechaActual.getFullYear() + '-' + (fechaActual.getMonth()+1) + '-01');
+	controlPanelFactory.getTurnosMeses(fecha, function(graf){
+		defer.resolve(controlCtrl.prepararDatosMes(graf));
 	});
 	return defer.promise;
 }
@@ -145,28 +166,7 @@ controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
 	return defer.promise;
 }
 
-controlCtrl.prepararDatos = function(datosGrafico){
-	console.log(datosGrafico);
-	var base = [
-		['Terminales', 'BACTSSA', 'TRP', 'Terminal 4', 'Promedio', { role: 'annotation'} ]
-	];
-	var i = 1;
-	datosGrafico.data.forEach(function(datosMes){
-		var fila = [datosMes.mes, 0, 0, 0, 0, ''];
-		var acum = 0;
-		datosMes.datos.forEach(function(terminal){
-			fila[i] = terminal.total;
-			i++;
-			acum += terminal.total;
-		});
-		fila[4] = acum/3;
-		base.push(fila);
-		i = 1;
-	});
-	return base;
-};
-
-controlCtrl.prepararDatosFacturadoMes = function(datosGrafico){
+controlCtrl.prepararDatosMes = function(datosGrafico){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
 		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]

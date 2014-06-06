@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
+myapp.factory('controlPanelFactory', function($http, dialogs, formatDate, loginService){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -48,20 +48,29 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate){
 			});
 	};
 
-	factory.getGatesMeses = function(mes, callback){
+	factory.getGatesMeses = function(fecha, callback){
 		var inserturl = serverUrl + '/gatesByMonth?fecha=' + formatDate.formatearFecha(fecha);
-		$http.get(inserturl)
-			.success(function (data){
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				dialogs.error('Error', 'Error al traer los datos de los gates');
+				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
 	};
 
-	factory.getTurnosMeses = function(mes, callback){
-		$http.get('mocks/mesesTurnos.json')
-			.success(function (data){
+	factory.getTurnosMeses = function(fecha, callback){
+		var inserturl = serverUrl + '/appointmentsByMonth?fecha=' + formatDate.formatearFecha(fecha);
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+				{token: loginService.getToken()}
+		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
