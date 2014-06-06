@@ -41,7 +41,7 @@ function es_substring(needle, haystack){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ui.bootstrap.modal', 'ngRoute', 'ngSanitize']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
