@@ -55,8 +55,7 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 	};
 
 	factory.getSinTasaCargas = function(desde, hasta, terminal, page, callback){
-		console.log("factory");
-		var inserturl = serverUrl + '/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
+		var inserturl = serverUrl + '/invoice/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -66,7 +65,7 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
+				dialogs.error('Error', 'Error al cargar los datos de facturas sin Tasa a las cargas');
 			});
 	};
 

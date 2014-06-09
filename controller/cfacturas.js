@@ -30,7 +30,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	$scope.totalItemsTasaCargas = 0;
 
 	$scope.cargar = function(){
-		console.log("hola");
 		//Traigo todos los códigos de la terminal y me los guardo
 		priceFactory.getMatchPrices($scope.terminalFacturas, null, function(data){
 			$scope.chartData = [
@@ -156,7 +155,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 	}
 
 	$scope.$watch('currentPageTasaCargas', function(){
-		console.log("aca en el watch");
 		$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
 		invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
 			$scope.tasaCargas.resultado = data.data;
