@@ -63,9 +63,14 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 			{token: loginService.getToken()}
 		}).success(function (data){
 				callback(data);
-			}).error(function(errorText){
+			}).error(function(errorText, status){
 				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar los datos de facturas sin Tasa a las cargas');
+				if (errorText.status === 'ERROR'){
+					dialogs.error('Error', errorText.data);
+				} else {
+					dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
+
+				}
 			});
 	};
 
