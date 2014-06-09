@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function cfacturasCtrl($scope, invoiceFactory, priceFactory){
+function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 	'use strict';
 
 	// Fecha (dia y hora)
@@ -31,6 +31,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory){
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
+		console.log($rootScope.vouchersType['6']);
 		priceFactory.getMatchPrices($scope.terminalFacturas, null, function(data){
 			$scope.chartData = [
 				['Tipo de comprobante', 'Total']
