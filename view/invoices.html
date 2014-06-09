@@ -51,6 +51,7 @@
 						<thead>
 						<tr>
 							<th>Comprobante</th>
+							<th>Nro</th>
 							<th>Razon Social</th>
 							<th>Fecha</th>
 							<th>Importe Total</th>
@@ -59,6 +60,7 @@
 						</thead>
 						<tbody>
 						<tr ng-repeat="invoice in invoices">
+							<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
 							<td>{{ invoice.nroComprob }}</td>
 							<td>{{ invoice.razon }}</td>
 							<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
