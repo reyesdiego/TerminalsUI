@@ -55,7 +55,7 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 	};
 
 	factory.getSinTasaCargas = function(desde, hasta, terminal, page, callback){
-		var inserturl = serverUrl + '/invoice/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
+		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
 		$http({
 			method: "GET",
 			url: inserturl,
