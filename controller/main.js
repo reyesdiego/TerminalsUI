@@ -180,7 +180,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 });
 
-myapp.run(function($rootScope, $state, loginService){
+myapp.run(function($rootScope, $state, loginService, $http){
 	"use strict";
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 	$rootScope.$state = $state;
@@ -195,6 +195,14 @@ myapp.run(function($rootScope, $state, loginService){
 		$event.preventDefault();
 		$event.stopPropagation();
 	};
+
+	$http({
+		method: 'GET',
+		url: serverUrl + '/voucherTypes'
+	}).success(function (data){
+		$rootScope.vouchersType = data.data;
+	}).error(function(errorText){
+	});
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if (!in_array(toState.name, rutasComunes)){
