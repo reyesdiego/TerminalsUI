@@ -24,4 +24,12 @@ function navigationCtrl($scope, $rootScope, $state, loginService){
 		loginService.unsetLogin();
 	}
 
+	$scope.irA = function(){
+		if (loginService.getStatus()){
+			$state.transitionTo('tarifario');
+		} else{
+			$state.transitionTo('login');
+		}
+	}
+
 }
