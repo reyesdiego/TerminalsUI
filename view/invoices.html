@@ -5,7 +5,8 @@
 			<br>
 			<div class="col-lg-6">
 				<div class="xpage-header">
-					<h1 id="forms">Facturas - {{ terminal.full_name }}</h1>
+					<h1 id="forms">Comprobantes</h1>
+					<h2>{{ terminal.full_name }}</h2>
 				</div>
 			</div>
 			<div class="col-lg-6" data-ng-hide="$state.includes('invoices.result')">
@@ -50,8 +51,10 @@
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 						<tr>
+							<th>Pto. Venta</th>
 							<th>Comprobante</th>
-							<th>Razon Social</th>
+							<th>Nro</th>
+							<th>Razón Social</th>
 							<th>Fecha</th>
 							<th>Importe Total</th>
 							<th>Detalles</th>
@@ -59,10 +62,12 @@
 						</thead>
 						<tbody>
 						<tr ng-repeat="invoice in invoices">
-							<td>{{ invoice.nroComprob }}</td>
+							<td style="text-align: right">{{ invoice.nroPtoVenta }}</td>
+							<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
+							<td style="text-align: right">{{ invoice.nroComprob }}</td>
 							<td>{{ invoice.razon }}</td>
 							<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-							<td>{{ invoice.codMoneda | formatCurrency }} {{ invoice.importe.total | currency }}</td>
+							<td style="text-align: right">{{ invoice.codMoneda | formatCurrency }} {{ invoice.importe.total | currency }}</td>
 							<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 						</tr>
 						</tbody>

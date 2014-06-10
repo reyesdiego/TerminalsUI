@@ -12,7 +12,7 @@ myapp.directive('pieChart', function ($timeout) {
 			data:     '=data',
 			selectFn: '&select'
 		},
-		link: function($scope, $elm, $attr) {
+		link: function ($scope, $elm) {
 
 			// Create the data table and instantiate the chart
 			var data = new google.visualization.DataTable();
@@ -85,8 +85,7 @@ myapp.directive('columnChartStack', function ($timeout) {
 			data:     '=data',
 			selectFn: '&select'
 		},
-		link: function($scope, $elm, $attr) {
-
+		link: function ($scope, $elm) {
 			var data = new google.visualization.arrayToDataTable($scope.data);
 			var chart = new google.visualization.ColumnChart($elm[0]);
 
@@ -154,8 +153,7 @@ myapp.directive('columnChart', function ($timeout) {
 			data:     '=data',
 			selectFn: '&select'
 		},
-		link: function($scope, $elm, $attr) {
-
+		link: function ($scope, $elm) {
 			var data; //= new google.visualization.arrayToDataTable($scope.data);
 			var chart = new google.visualization.ColumnChart($elm[0]);
 
@@ -223,7 +221,7 @@ myapp.directive('pieChart3d', function ($timeout) {
 			data:     '=data',
 			selectFn: '&select'
 		},
-		link: function($scope, $elm, $attr) {
+		link: function ($scope, $elm) {
 
 			// Create the data table and instantiate the chart
 			var data = new google.visualization.DataTable();
@@ -300,7 +298,7 @@ myapp.directive('toupper', function() {
 					}
 					return capitalized;
 				}
-			}
+			};
 			modelCtrl.$parsers.push(mayusculas);
 			mayusculas(scope[attrs.ngModel]);  // capitalize initial value
 		}
