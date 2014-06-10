@@ -22,7 +22,7 @@ function navigationCtrl($scope, $rootScope, $state, loginService){
 		$rootScope.esUsuario = '';
 		$state.transitionTo('login');
 		loginService.unsetLogin();
-	}
+	};
 
 	$scope.irA = function(){
 		if (loginService.getStatus()){

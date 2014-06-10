@@ -49,7 +49,7 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	//Flag para mostrar los tabs con los resultados una vez recibidos los datos
 	$scope.terminoCarga = false;
 
-	socket.on('invoice', function (message) {
+	socket.on('invoice', function () {
 		$scope.chartData[2][1]++;
 		$scope.control.invoicesCount++;
 	});
@@ -77,21 +77,21 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, function(graf){
 			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf);
 		});
-	}
+	};
 
 	$scope.traerDatosGates = function(){
 		$scope.isCollapsedGates = !$scope.isCollapsedGates;
 		controlPanelFactory.getGatesMeses($scope.mesDesdeGates, function(graf){
 			$scope.chartDataGates = controlCtrl.prepararDatosMes(graf);
 		});
-	}
+	};
 
 	$scope.traerDatosTurnos = function(){
 		$scope.isCollapsedTurnos = !$scope.isCollapsedTurnos;
 		controlPanelFactory.getTurnosMeses($scope.mesDesdeTurnos, function(graf){
 			$scope.chartDataTurnos = controlCtrl.prepararDatosMes(graf);
 		});
-	}
+	};
 
 	$scope.traerDatosFacturadoDia = function(){
 		$scope.isCollapsedDay = !$scope.isCollapsedDay;
@@ -145,7 +145,7 @@ controlCtrl.primerCargaGates = function (controlPanelFactory, $q){
 		defer.resolve(controlCtrl.prepararDatosMes(graf));
 	});
 	return defer.promise;
-}
+};
 
 controlCtrl.primerCargaTurnos = function (controlPanelFactory, $q){
 	var defer = $q.defer();
@@ -155,7 +155,7 @@ controlCtrl.primerCargaTurnos = function (controlPanelFactory, $q){
 		defer.resolve(controlCtrl.prepararDatosMes(graf));
 	});
 	return defer.promise;
-}
+};
 
 controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
 	var defer = $q.defer();
@@ -164,7 +164,7 @@ controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
 		defer.resolve(controlCtrl.prepararDatosFacturadoDia(graf));
 	});
 	return defer.promise;
-}
+};
 
 controlCtrl.prepararDatosMes = function(datosGrafico){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
@@ -175,7 +175,7 @@ controlCtrl.prepararDatosMes = function(datosGrafico){
 	var contarTerminal = 1;
 	//Para cargar promedio
 	var acum = 0;
-	var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre", "Diciembre");
+	var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre", "Diciembre"];
 	//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
 	//ordenados por fecha, y siguiendo el orden de terminales "BACTSSA", "Terminal 4", "TRP"???????
 	var flagPrimero = true;
@@ -207,7 +207,7 @@ controlCtrl.prepararDatosMes = function(datosGrafico){
 			case "TRP":
 				contarTerminal = 3;
 				break;
-		};
+		}
 		fila[contarTerminal] = datosDia.cnt;
 		acum += datosDia.cnt;
 	});
@@ -258,7 +258,7 @@ controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
 			case "TRP":
 				contarTerminal = 3;
 				break;
-		};
+		}
 		fila[contarTerminal] = datosDia.cnt;
 		acum += datosDia.cnt;
 	});

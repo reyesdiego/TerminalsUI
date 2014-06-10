@@ -153,7 +153,7 @@ function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 
 	$scope.mostrarDetalle = function(unaFactura){
 		$scope.verDetalle = unaFactura;
-	}
+	};
 
 	$scope.$watch('currentPageTasaCargas', function(){
 		$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
