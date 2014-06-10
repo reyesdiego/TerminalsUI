@@ -13,6 +13,7 @@ function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 	$scope.format = 'yyyy-MM-dd';
 	$scope.terminalFacturas = "BACTSSA";
 	$scope.verDetalle = "";
+	$scope.tipoComprobante = "0";
 
 	$scope.open = function($event, fecha) {
 		$event.preventDefault();
@@ -21,16 +22,12 @@ function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 		$scope.openFechaHasta = (fecha === 'hasta');
 	};
 
-	//Datos para los gráficos
-	$scope.chartTitle = "Tipos comprobantes";
-	$scope.chartWidth = 500;
-	$scope.chartHeight = 320;
-
 	$scope.currentPageTasaCargas = 1;
 	$scope.totalItemsTasaCargas = 0;
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
+		console.log($scope.tipoComprobante);
 		console.log($rootScope.vouchersType);
 		priceFactory.getMatchPrices($scope.terminalFacturas, null, function(data){
 			$scope.chartData = [
@@ -48,68 +45,58 @@ function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 				}
 			});
 
-			$scope.tabs = [];
-			invoiceFactory.getByDate($scope.desde, $scope.hasta, $scope.terminalFacturas, function(data) {
+			invoiceFactory.getByDate($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.tipoComprobante, function(dataComprob) {
 
-				$scope.result = data;
+				$scope.result = dataComprob;
 
-				$scope.result.tipoComprob.forEach(function(tipoComprobante){
-					var tab = {
-						"title":tipoComprobante.id,
-						"tituloCorrelativo":  "Éxito",
-						"mensajeCorrelativo": "No se hallaron facturas faltantes",
-						"cartelCorrelativo": "panel-success",
-						"resultadoCorrelativo": [],
-						"tituloCodigos": "Éxito",
-						"mensajeCodigos": "No se hallaron códigos sin asociar",
-						"cartelCodigos": "panel-success",
-						"resultadoCodigos": [],
-						"totalFacturas": tipoComprobante.data.length,
-						"totalFaltantes": 0,
-						"active": 0,
-						"mostrarResultado": 0
-					};
+				$scope.pantalla = {
+					"tituloCorrelativo":  "Éxito",
+					"mensajeCorrelativo": "No se hallaron facturas faltantes",
+					"cartelCorrelativo": "panel-success",
+					"resultadoCorrelativo": [],
+					"tituloCodigos": "Éxito",
+					"mensajeCodigos": "No se hallaron códigos sin asociar",
+					"cartelCodigos": "panel-success",
+					"resultadoCodigos": [],
+					"totalFacturas": $scope.result.data.length,
+					"totalFaltantes": 0,
+					"active": 0,
+					"mostrarResultado": 0
+				};
 
-					var columnaChart = [tipoComprobante.id, 0];
-					var contador = 0;
-					$scope.control = 0;
+				var contador = 0;
+				$scope.control = 0;
 
-					//Por ahora se esta realizando el chequeo contra el mock, el algoritmo está hecho suponiendo que
-					//el rango de facturas por fecha viene ordenado, tampoco hay nada que me permita comprobar que el primer
-					//comprobante sea el correcto...
-					tipoComprobante.data.forEach(function(factura){
-						contador+=1;
-						if ($scope.control == 0) {
-							$scope.control = factura.nroComprob;
-						} else {
-							$scope.control += 1;
-							if ($scope.control != factura.nroComprob){
-								tab.resultadoCorrelativo.push($scope.control);
-								$scope.control = factura.nroComprob;
-								tab.mensajeCorrelativo = "Se hallaron facturas faltantes: ";
-								tab.cartelCorrelativo = "panel-danger";
-								tab.tituloCorrelativo = "Error";
-								tab.totalFaltantes += 1;
-							}
+				//Por ahora se esta realizando el chequeo contra el mock, el algoritmo está hecho suponiendo que
+				//el rango de facturas por fecha viene ordenado, tampoco hay nada que me permita comprobar que el primer
+				//comprobante sea el correcto...
+				$scope.result.data.forEach(function(comprob){
+					contador+=1;
+					if ($scope.control == 0) {
+						$scope.control = comprob.nroComprob;
+					} else {
+						$scope.control += 1;
+						if ($scope.control != comprob.nroComprob){
+							$scope.pantalla.resultadoCorrelativo.push($scope.control);
+							$scope.control = comprob.nroComprob;
+							$scope.pantalla.mensajeCorrelativo = "Se hallaron facturas faltantes: ";
+							$scope.pantalla.cartelCorrelativo = "panel-danger";
+							$scope.pantalla.tituloCorrelativo = "Error";
+							$scope.pantalla.totalFaltantes += 1;
 						}
+					}
 
-						/*Aca control de codigos
-						factura.detalle.items.forEach(function(item){
-							if (!in_array(item.id, $scope.codigosTerminal)){
-								tab.resultadoCodigos.push(item.id + " en la factura " + factura.id);
-								tab.mensajeCodigos = "Se hallaron códigos sin asociar: ";
-								tab.cartelCodigos = "panel-danger";
-								tab.tituloCodigos = "Error";
-								tab.mostrarResultado = 1;
-							}
-						})*/
-					});
-
-					columnaChart[1] = contador;
-					$scope.tabs.push(tab);
-					$scope.chartData.push(columnaChart);
+					/*Aca control de codigos
+					 factura.detalle.items.forEach(function(item){
+					 if (!in_array(item.id, $scope.codigosTerminal)){
+					 tab.resultadoCodigos.push(item.id + " en la factura " + factura.id);
+					 tab.mensajeCodigos = "Se hallaron códigos sin asociar: ";
+					 tab.cartelCodigos = "panel-danger";
+					 tab.tituloCodigos = "Error";
+					 tab.mostrarResultado = 1;
+					 }
+					 })*/
 				});
-				$scope.tabs[0].active = 1;
 			});
 			$scope.terminoCarga = true;
 		});

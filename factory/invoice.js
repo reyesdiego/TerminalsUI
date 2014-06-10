@@ -43,14 +43,27 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 		});
 	};
 
-	factory.getByDate = function(desde, hasta, terminal, callback) {
+	factory.getByDate = function(desde, hasta, terminal, tipoComprobante, callback) {
 		//Por ahora trabaja solo con un mock
-		$http.get('mocks/correlativo.json')
+		var unaUrl;
+		switch (tipoComprobante){
+			case "0":
+				unaUrl = 'mocks/facturasA.json';
+				break;
+			case "5":
+				unaUrl = 'mocks/facturasB.json';
+				break;
+			case "10":
+				unaUrl = 'mocks/facturasC.json';
+				break;
+		}
+
+		$http.get(unaUrl)
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
+				dialogs.error('Error', 'Error al cargar la lista de comprobantes');
 			});
 	};
 
