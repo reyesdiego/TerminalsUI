@@ -31,7 +31,7 @@ function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
-		console.log($rootScope.vouchersType['6']);
+		console.log($rootScope.vouchersType);
 		priceFactory.getMatchPrices($scope.terminalFacturas, null, function(data){
 			$scope.chartData = [
 				['Tipo de comprobante', 'Total']
@@ -117,21 +117,28 @@ function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 		$scope.tasaCargas = {
 			"titulo":"Éxito",
 			"cartel": "panel-success",
-			"mensaje": "No se hallaron facturas sin tasa a las cargas",
+			"mensaje": "No se hallaron facturas sin tasa a las cargas.",
 			"resultado": [],
 			"mostrarResultado": 0
 		};
 
 		/*Acá control de tasa a las cargas*/
-		 invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
-		    $scope.tasaCargas.resultado = data.data;
-			console.log($scope.tasaCargas.resultado);
-			if ($scope.tasaCargas.resultado.length > 0){
-				$scope.totalItemsTasaCargas = data.totalCount;
+		invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
+			if (data.status == "ERROR"){
 				$scope.tasaCargas.titulo = "Error";
 				$scope.tasaCargas.cartel = "panel-danger";
-				$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
-				$scope.tasaCargas.mostrarResultado = 1;
+				$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
+				$scope.tasaCargas.mostrarResultado = 0;
+			} else {
+				$scope.tasaCargas.resultado = data.data;
+				console.log($scope.tasaCargas.resultado);
+				if ($scope.tasaCargas.resultado.length > 0){
+					$scope.totalItemsTasaCargas = data.totalCount;
+					$scope.tasaCargas.titulo = "Error";
+					$scope.tasaCargas.cartel = "panel-danger";
+					$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
+					$scope.tasaCargas.mostrarResultado = 1;
+				}
 			}
 		 })
 	};
@@ -158,15 +165,23 @@ function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 	$scope.$watch('currentPageTasaCargas', function(){
 		$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
 		invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
-			$scope.tasaCargas.resultado = data.data;
-			console.log($scope.tasaCargas.resultado);
-			if ($scope.tasaCargas.resultado.length > 0){
-				$scope.totalItemsTasaCargas = data.totalCount;
+			if (data.status == "ERROR"){
 				$scope.tasaCargas.titulo = "Error";
 				$scope.tasaCargas.cartel = "panel-danger";
-				$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
-				$scope.tasaCargas.mostrarResultado = 1;
+				$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
+				$scope.tasaCargas.mostrarResultado = 0;
+			} else {
+				$scope.tasaCargas.resultado = data.data;
+				console.log($scope.tasaCargas.resultado);
+				if ($scope.tasaCargas.resultado.length > 0){
+					$scope.totalItemsTasaCargas = data.totalCount;
+					$scope.tasaCargas.titulo = "Error";
+					$scope.tasaCargas.cartel = "panel-danger";
+					$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
+					$scope.tasaCargas.mostrarResultado = 1;
+				}
 			}
 		})
 	});
+
 }
