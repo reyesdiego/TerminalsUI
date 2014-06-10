@@ -63,10 +63,11 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 			{token: loginService.getToken()}
 		}).success(function (data){
 				callback(data);
-			}).error(function(errorText, status){
+			}).error(function(errorText){
 				console.log(errorText);
 				if (errorText.status === 'ERROR'){
-					dialogs.error('Error', errorText.data);
+					callback(errorText);
+					//dialogs.error('Error', errorText.data);
 				} else {
 					dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
 
