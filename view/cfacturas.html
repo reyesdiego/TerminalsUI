@@ -40,7 +40,7 @@
 				<div class="col-lg-4">
 					<label for="selectComprobante" >Tipo de comprobante</label>
 					<select class="form-control" id="selectComprobante" ng-model="tipoComprobante">
-						<option ng-repeat="comprobante in vouchersType" value="{{ $index }}" ng-selected="$first">{{ comprobante }}</option>
+						<option ng-repeat="comprobante in vouchersType" value="{{ comprobante._id }}" ng-selected="$first">{{ comprobante.description }}</option>
 					</select>
 				</div>
 				<div class="col-lg-4">

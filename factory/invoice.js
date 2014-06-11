@@ -56,6 +56,9 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 			case "10":
 				unaUrl = 'mocks/facturasC.json';
 				break;
+			default:
+				unaUrl = 'mocks/facturasC.json';
+				break;
 		}
 
 		$http.get(unaUrl)
