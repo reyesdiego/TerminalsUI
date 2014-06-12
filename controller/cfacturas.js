@@ -2,8 +2,11 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
+function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 	'use strict';
+	vouchersFactory.getVouchersType(function(data){
+		$scope.comprobantesTipos = data.data;
+	});
 
 	// Fecha (dia y hora)
 	$scope.hasta = new Date();
@@ -28,7 +31,7 @@ function cfacturasCtrl($rootScope, $scope, invoiceFactory, priceFactory){
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
 		console.log($scope.tipoComprobante);
-		console.log($rootScope.vouchersType);
+		console.log($scope.comprobantesTipos);
 		priceFactory.getMatchPrices($scope.terminalFacturas, null, function(data){
 			$scope.chartData = [
 				['Tipo de comprobante', 'Total']
