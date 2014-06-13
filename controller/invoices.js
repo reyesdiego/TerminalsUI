@@ -1,6 +1,6 @@
 /**
  * Created by Diego Reyes on 2/3/14.
- */
+*/
 
 function invoicesCtrl ($scope, invoiceFactory) {
 	'use strict';
@@ -22,6 +22,7 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
 			if(data.status === 'OK'){
+				console.log(data);
 				$scope.invoices = data.data;
 				// ***** TO DO Agregar la descripcion desde la base
 				data.data.forEach(function(factura){

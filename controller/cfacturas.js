@@ -17,6 +17,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 	$scope.terminalFacturas = "BACTSSA";
 	$scope.verDetalle = "";
 	$scope.tipoComprobante = "0";
+	$scope.flagWatch = false;
 
 	$scope.open = function($event, fecha) {
 		$event.preventDefault();
@@ -64,7 +65,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 					"totalFacturas": $scope.result.data.length,
 					"totalFaltantes": 0,
 					"active": 0,
-					"mostrarResultado": 0
+					"mostrarResultado": 0,
+					"comprobantesRotos":[]
 				};
 
 				var contador = 0;
@@ -74,6 +76,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 				//el rango de facturas por fecha viene ordenado, tampoco hay nada que me permita comprobar que el primer
 				//comprobante sea el correcto...
 				$scope.result.data.forEach(function(comprob){
+					comprob.codigosFaltantes = [];
 					contador+=1;
 					if ($scope.control == 0) {
 						$scope.control = comprob.nroComprob;
@@ -89,16 +92,27 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 						}
 					}
 
-					/*Aca control de codigos
-					 factura.detalle.items.forEach(function(item){
-					 if (!in_array(item.id, $scope.codigosTerminal)){
-					 tab.resultadoCodigos.push(item.id + " en la factura " + factura.id);
-					 tab.mensajeCodigos = "Se hallaron códigos sin asociar: ";
-					 tab.cartelCodigos = "panel-danger";
-					 tab.tituloCodigos = "Error";
-					 tab.mostrarResultado = 1;
-					 }
-					 })*/
+					var flagError = false;
+					/*Aca control de codigos*/
+					comprob.detalle.forEach(function(detalle){
+						detalle.items.forEach(function(item){
+							if (!in_array(item.id, $scope.codigosTerminal)){
+								if (!in_array(item.id, comprob.codigosFaltantes)){
+									comprob.codigosFaltantes.push(item.id);
+								}
+								$scope.pantalla.mensajeCodigos = "Se hallaron códigos sin asociar: ";
+								$scope.pantalla.cartelCodigos = "panel-danger";
+								$scope.pantalla.tituloCodigos = "Error";
+								$scope.pantalla.mostrarResultado = 1;
+								flagError = true;
+							}
+						})
+					})
+
+					if (flagError){
+						$scope.pantalla.comprobantesRotos.push(comprob);
+					}
+
 				});
 			});
 			$scope.terminoCarga = true;
@@ -133,19 +147,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 		 })
 	};
 
-	$scope.deleteRow = function (index) {
-		$scope.chartData.splice(index, 1);
-	};
-	$scope.addRow = function () {
-		$scope.chartData.push([]);
-	};
-	$scope.selectRow = function (index) {
-		$scope.selected = index;
-	};
-	$scope.rowClass = function (index) {
-		return ($scope.selected === index) ? "selected" : "";
-	};
-
 	$scope.cargar();
 
 	$scope.mostrarDetalle = function(unaFactura){
@@ -153,25 +154,29 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 	};
 
 	$scope.$watch('currentPageTasaCargas', function(){
-		$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
-		invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
-			if (data.status == "ERROR"){
-				$scope.tasaCargas.titulo = "Error";
-				$scope.tasaCargas.cartel = "panel-danger";
-				$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
-				$scope.tasaCargas.mostrarResultado = 0;
-			} else {
-				$scope.tasaCargas.resultado = data.data;
-				console.log($scope.tasaCargas.resultado);
-				if ($scope.tasaCargas.resultado.length > 0){
-					$scope.totalItemsTasaCargas = data.totalCount;
+		if ($scope.flagWatch){
+			$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
+			invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
+				if (data.status == "ERROR"){
 					$scope.tasaCargas.titulo = "Error";
 					$scope.tasaCargas.cartel = "panel-danger";
-					$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
-					$scope.tasaCargas.mostrarResultado = 1;
+					$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
+					$scope.tasaCargas.mostrarResultado = 0;
+				} else {
+					$scope.tasaCargas.resultado = data.data;
+					console.log($scope.tasaCargas.resultado);
+					if ($scope.tasaCargas.resultado.length > 0){
+						$scope.totalItemsTasaCargas = data.totalCount;
+						$scope.tasaCargas.titulo = "Error";
+						$scope.tasaCargas.cartel = "panel-danger";
+						$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
+						$scope.tasaCargas.mostrarResultado = 1;
+					}
 				}
-			}
-		})
+			});
+		} else {
+			$scope.flagWatch = true;
+		}
 	});
 
 }

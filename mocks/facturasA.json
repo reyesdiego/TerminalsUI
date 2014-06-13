@@ -12,7 +12,102 @@
 			"importe": {
 				"total": 1001,
 				"iva": 210.21
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}, {
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb49",
@@ -25,7 +120,55 @@
 			"importe": {
 				"total": 1002,
 				"iva": 210.42
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb4a",
@@ -38,7 +181,55 @@
 			"importe": {
 				"total": 1003,
 				"iva": 210.63
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb4b",
@@ -51,7 +242,55 @@
 			"importe": {
 				"total": 1004,
 				"iva": 210.84
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb4d",
@@ -64,7 +303,55 @@
 			"importe": {
 				"total": 1006,
 				"iva": 211.26
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb4e",
@@ -77,7 +364,55 @@
 			"importe": {
 				"total": 1007,
 				"iva": 211.47
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb4f",
@@ -90,7 +425,55 @@
 			"importe": {
 				"total": 1008,
 				"iva": 211.68
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb50",
@@ -103,7 +486,55 @@
 			"importe": {
 				"total": 1009,
 				"iva": 211.89
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb51",
@@ -116,7 +547,55 @@
 			"importe": {
 				"total": 1010,
 				"iva": 212.1
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb53",
@@ -129,7 +608,55 @@
 			"importe": {
 				"total": 1012,
 				"iva": 212.52
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb54",
@@ -142,7 +669,55 @@
 			"importe": {
 				"total": 1013,
 				"iva": 212.73
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb5d",
@@ -155,7 +730,55 @@
 			"importe": {
 				"total": 1022,
 				"iva": 214.62
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb5e",
@@ -168,7 +791,55 @@
 			"importe": {
 				"total": 1023,
 				"iva": 214.83
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb5f",
@@ -181,7 +852,55 @@
 			"importe": {
 				"total": 1024,
 				"iva": 215.04
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb60",
@@ -194,7 +913,55 @@
 			"importe": {
 				"total": 1025,
 				"iva": 215.25
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb61",
@@ -207,7 +974,55 @@
 			"importe": {
 				"total": 1026,
 				"iva": 215.46
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb62",
@@ -220,7 +1035,55 @@
 			"importe": {
 				"total": 1027,
 				"iva": 215.67
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb63",
@@ -233,7 +1096,55 @@
 			"importe": {
 				"total": 1028,
 				"iva": 215.88
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb64",
@@ -246,7 +1157,55 @@
 			"importe": {
 				"total": 1029,
 				"iva": 216.09
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb65",
@@ -259,7 +1218,55 @@
 			"importe": {
 				"total": 1030,
 				"iva": 216.3
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb66",
@@ -272,7 +1279,55 @@
 			"importe": {
 				"total": 1031,
 				"iva": 216.51
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb67",
@@ -285,7 +1340,55 @@
 			"importe": {
 				"total": 1032,
 				"iva": 216.72
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb68",
@@ -298,7 +1401,55 @@
 			"importe": {
 				"total": 1033,
 				"iva": 216.93
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb69",
@@ -311,7 +1462,55 @@
 			"importe": {
 				"total": 1034,
 				"iva": 217.14
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb6a",
@@ -324,7 +1523,55 @@
 			"importe": {
 				"total": 1035,
 				"iva": 217.35
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb6b",
@@ -337,7 +1584,55 @@
 			"importe": {
 				"total": 1036,
 				"iva": 217.56
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb6c",
@@ -350,7 +1645,55 @@
 			"importe": {
 				"total": 1037,
 				"iva": 217.77
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb6d",
@@ -363,7 +1706,55 @@
 			"importe": {
 				"total": 1038,
 				"iva": 217.98
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb6e",
@@ -376,7 +1767,55 @@
 			"importe": {
 				"total": 1039,
 				"iva": 218.19
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb6f",
@@ -389,7 +1828,55 @@
 			"importe": {
 				"total": 1040,
 				"iva": 218.4
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb70",
@@ -402,7 +1889,55 @@
 			"importe": {
 				"total": 1041,
 				"iva": 218.61
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb71",
@@ -415,7 +1950,55 @@
 			"importe": {
 				"total": 1042,
 				"iva": 218.82
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		},
 		{
 			"_id": "53080784f3436d0d697ffb72",
@@ -428,7 +2011,55 @@
 			"importe": {
 				"total": 1043,
 				"iva": 219.03
-			}
+			},
+			"detalle":[{
+				"_id": "784gfsdiuf9s8dfhb97g",
+				"buque": "BUQUE",
+				"contenedor": "456JHGH458",
+				"items":[{
+					"_id": "534bf5ff66cc04871d007ffa",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "153",
+					"impTot": 122,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff9",
+					"cnt": 21.5,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "4",
+					"impTot": 32.25,
+					"uniMed": "29"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff8",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "679",
+					"impTot": 8,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff7",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1",
+					"impTot": 25,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff6",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1050",
+					"impTot": 15,
+					"uniMed": "7"
+				}, {
+					"_id": "534bf5ff66cc04871d007ff5",
+					"cnt": 1,
+					"descripcion": "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F",
+					"id": "1150",
+					"impTot": 122,
+					"uniMed": "7"
+				}]
+			}]
 		}
 	]
 }
