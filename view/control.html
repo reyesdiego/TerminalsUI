@@ -33,11 +33,11 @@
 				</div>
 				<div class="col-lg-3 list-group-item">
 					<span>Cantidad de tasas AGP</span>
-					<span class="badge text-right">{{ control.tasasCount }}</span>
+					<span class="badge text-right">{{ control.ratesCount }}</span>
 				</div>
 				<div class="col-lg-3 list-group-item">
 					<span>Precio total tasas AGP</span>
-					<span class="badge text-right">{{ control.tasasPrice | currency }}</span>
+					<span class="badge text-right">{{ control.ratesTotal | currency }}</span>
 				</div>
 				<div class="col-lg-3 list-group-item">
 					<span>Precio total facturas</span>
@@ -53,6 +53,25 @@
 			<column-chart-stack data="chartData" title="{{chartTitle}}"
 			           width="{{chartWidth}}" height="{{chartHeight}}"
 			           select="selectRow(selectedRowIndex)"></column-chart-stack>
+		</div>
+
+		<div class="col-lg-4">
+			<p class="input-group">
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="isCollapsedDay = !isCollapsedDay"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</p>
+			<div collapse="isCollapsedDay">
+				<div class="well well-lg">
+					<datepicker ng-model="desde" show-weeks="false" ng-change="traerDatosFacturadoDia()"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedDay">
+				<column-chart-stack data="chartDataFacturado" title="{{chartTitleFacturado}}"
+				              width="{{chartWidthFacturado}}" height="{{chartHeightFacturado}}"
+				              select="selectRow(selectedRowIndexFacturado)"></column-chart-stack>
+			</div>
 		</div>
 
 		<div class="col-lg-4">
@@ -74,24 +93,6 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4">
-			<p class="input-group">
-				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
-				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="isCollapsedDay = !isCollapsedDay"><i class="glyphicon glyphicon-calendar"></i></button>
-				</span>
-			</p>
-			<div collapse="isCollapsedDay">
-				<div class="well well-lg">
-					<datepicker ng-model="desde" show-weeks="false" ng-change="traerDatosFacturadoDia()"></datepicker>
-				</div>
-			</div>
-			<div collapse="!isCollapsedDay">
-				<column-chart data="chartDataFacturado" title="{{chartTitleFacturado}}"
-				              width="{{chartWidthFacturado}}" height="{{chartHeightFacturado}}"
-				              select="selectRow(selectedRowIndexFacturado)"></column-chart>
-			</div>
-		</div>
 	</div>
 
 	<div class="row">

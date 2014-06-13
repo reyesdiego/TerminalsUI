@@ -12,19 +12,45 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate, loginS
 				if (data.status === 'OK'){
 					var total = 0;
 					for (var i = 0, len=data.data.length; i< len; i++){
-						total += data.data[i].invoicesCount;
+						total += data.data[i].cnt;
 					}
-					result = [
-						{"invoicesCount": total}
-					];
+					result = {"invoicesCount": total};
 				}
 				callback(result);
-
 			}).error(function(errorText){
 				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar lista por día');
 			});
 	};
+
+	factory.getTasas = function(fecha, callback){
+		var inserturl = serverUrl + '/invoices/ratesTotal?fecha=' + formatDate.formatearFecha(fecha);
+		$http.get(inserturl)
+			.success(function(data){
+				var result = {
+					"ratesCount": 0,
+					"ratesTotal": 0,
+					"dataGraf": []
+				};
+				if (data.length){
+					var total = 0;
+					var facturado = 0;
+					for (var i = 0, len=data.length; i< len; i++){
+						total += data[i].cnt;
+						facturado += data[i].total;
+					}
+					result = {
+						"ratesCount": total,
+						"ratesTotal": facturado,
+						"dataGraf": data
+					}
+				}
+				callback(result);
+			}).error(function(errorText){
+				console.log(errorText);
+				dialogs.error('Error', 'Error al cargar lista por día');
+			});
+	}
 
 	factory.getTotales = function(fecha, callback){
 		var inserturl = serverUrl + '/invoices/counts';

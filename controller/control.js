@@ -6,6 +6,12 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 	var fecha = formatDate.formatearFecha(new Date());
 
+	$scope.control = {
+		"invoicesCount": 0,
+		"ratesCount": 0,
+		"ratesTotal": 0
+	};
+
 	$scope.chartTitle = "Datos enviados";
 	$scope.chartWidth = 300;
 	$scope.chartHeight = 380;
@@ -26,10 +32,10 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.chartHeightTurnos = 320;
 	$scope.chartDataTurnos = datosGraficoTurnos;
 
-	$scope.chartTitleFacturado = "Facturado por día";
+	$scope.chartTitleFacturado = "Total de tasa a las cargas por día";
 	$scope.chartWidthFacturado = 410;
 	$scope.chartHeightFacturado = 320;
-	$scope.chartDataFacturado = datosFacturadoPorDia;
+	$scope.chartDataFacturado = datosFacturadoPorDia.dataGraf;
 
 	$scope.isCollapsedMonth = true;
 	$scope.isCollapsedDay = true;
@@ -48,6 +54,9 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.formatSoloMes = $scope.formats[3];
 	//Flag para mostrar los tabs con los resultados una vez recibidos los datos
 	$scope.terminoCarga = false;
+
+	$scope.control.ratesCount = datosFacturadoPorDia.ratesCount;
+	$scope.control.ratesTotal = datosFacturadoPorDia.ratesTotal;
 
 	socket.on('invoice', function () {
 		$scope.chartData[2][1]++;
@@ -68,7 +77,8 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	};
 
 	controlPanelFactory.getByDay(fecha, function(data){
-		$scope.control = data[0];
+		$scope.control.invoicesCount = data.invoicesCount;
+		console.log($scope.control);
 		$scope.fecha = fecha;
 	});
 
@@ -95,8 +105,11 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 	$scope.traerDatosFacturadoDia = function(){
 		$scope.isCollapsedDay = !$scope.isCollapsedDay;
-		controlPanelFactory.getFacturadoPorDia($scope.desde, function(graf){
-			$scope.chartDataFacturado = controlCtrl.prepararDatosFacturadoDia(graf);
+		controlPanelFactory.getTasas($scope.desde, function(graf){
+			var result = controlCtrl.prepararDatosFacturadoDia(graf, $scope.desde);
+			$scope.chartDataFacturado = result.dataGraf;
+			$scope.control.ratesCount = result.ratesCount;
+			$scope.control.ratesTotal = result.ratesTotal;
 		});
 	}
 });
@@ -157,11 +170,20 @@ controlCtrl.primerCargaTurnos = function (controlPanelFactory, $q){
 	return defer.promise;
 };
 
-controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
+/*controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
 	var defer = $q.defer();
 	var fecha = new Date();
 	controlPanelFactory.getFacturadoPorDia(fecha, function(graf){
 		defer.resolve(controlCtrl.prepararDatosFacturadoDia(graf));
+	});
+	return defer.promise;
+};*/
+
+controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
+	var defer = $q.defer();
+	var fecha = new Date();
+	controlPanelFactory.getTasas(fecha, function(graf){
+		defer.resolve(controlCtrl.prepararDatosFacturadoDia(graf, fecha));
 	});
 	return defer.promise;
 };
@@ -217,7 +239,40 @@ controlCtrl.prepararDatosMes = function(datosGrafico){
 	return base;
 };
 
-controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
+controlCtrl.prepararDatosFacturadoDia = function(datos, dia){
+	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
+	var base = [
+		['Datos', 'Facturado', { role: 'annotation' } ],
+		['BACTSSA', 0, ''],
+		['TERMINAL 4', 0, ''],
+		['TRP', 0, '']
+	];
+	//Para cambiar entre columnas
+	var contarTerminal = 1;
+	//Para cargar promedio
+	//Los datos vienen en objetos que incluyen la terminal, y la suma facturada(cnt)
+	if (datos.dataGraf.length){
+		datos.dataGraf.forEach(function(datosDia){
+			switch (datosDia._id.terminal){
+				case "BACTSSA":
+					contarTerminal = 1;
+					break;
+				case "TERMINAL4":
+					contarTerminal = 2;
+					break;
+				case "TRP":
+					contarTerminal = 3;
+					break;
+			}
+			base[contarTerminal][1] = datosDia.total;
+		});
+	}
+	datos.dataGraf = base;
+	//Finalmente devuelvo la matriz generada con los datos para su asignación
+	return datos;
+};
+
+/*controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
 		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -267,4 +322,4 @@ controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
 	base.push(fila.slice());
 	//Finalmente devuelvo la matriz generada con los datos para su asignación
 	return base;
-};
+};*/
