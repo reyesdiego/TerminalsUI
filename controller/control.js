@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, datosFacturadoPorDia, controlPanelFactory, socket, formatDate){
+var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, datosFacturadoPorDiaTasas, datosFacturadoPorDia, controlPanelFactory, socket, formatDate){
 
 	var fecha = formatDate.formatearFecha(new Date());
 
@@ -32,10 +32,15 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.chartHeightTurnos = 320;
 	$scope.chartDataTurnos = datosGraficoTurnos;
 
-	$scope.chartTitleFacturado = "Total de tasa a las cargas por día";
+	$scope.chartTitleFacturadoTasas = "Total de tasa a las cargas por día";
+	$scope.chartWidthFacturadoTasas = 410;
+	$scope.chartHeightFacturadoTasas = 320;
+	$scope.chartDataFacturadoTasas = datosFacturadoPorDiaTasas.dataGraf;
+
+	$scope.chartTitleFacturado = "Facturado por día";
 	$scope.chartWidthFacturado = 410;
 	$scope.chartHeightFacturado = 320;
-	$scope.chartDataFacturado = datosFacturadoPorDia.dataGraf;
+	$scope.chartDataFacturado = datosFacturadoPorDia;
 
 	$scope.isCollapsedMonth = true;
 	$scope.isCollapsedDay = true;
@@ -44,6 +49,7 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
+	$scope.desdeTasas = new Date();
 	$scope.mesDesde = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
 	$scope.mesDesdeGates = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
 	$scope.mesDesdeTurnos = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
@@ -78,7 +84,6 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 	controlPanelFactory.getByDay(fecha, function(data){
 		$scope.control.invoicesCount = data.invoicesCount;
-		console.log($scope.control);
 		$scope.fecha = fecha;
 	});
 
@@ -103,16 +108,68 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 		});
 	};
 
-	$scope.traerDatosFacturadoDia = function(){
+	$scope.traerDatosFacturadoDiaTasas = function(){
 		$scope.isCollapsedDay = !$scope.isCollapsedDay;
-		controlPanelFactory.getTasas($scope.desde, function(graf){
-			var result = controlCtrl.prepararDatosFacturadoDia(graf, $scope.desde);
+		controlPanelFactory.getTasas($scope.desdeTasas, function(graf){
+			var result = controlCtrl.prepararDatosFacturadoDiaTasas(graf);
 			$scope.chartDataFacturado = result.dataGraf;
 			$scope.control.ratesCount = result.ratesCount;
 			$scope.control.ratesTotal = result.ratesTotal;
 		});
-	}
+	};
+
+	$scope.traerDatosFacturadoDia = function(){
+		$scope.isCollapsedDay = !$scope.isCollapsedDay;
+		controlPanelFactory.getFacturadoPorDia($scope.desde, function(graf){
+			var result = controlCtrl.prepararDatosFacturadoDia(graf);
+			$scope.chartDataFacturado = result.dataGraf;
+			$scope.control.ratesCount = result.ratesCount;
+			$scope.control.ratesTotal = result.ratesTotal;
+		});
+	};
+
+	$scope.traerDatosFacturadoMes();
+	$scope.traerDatosGates();
+	$scope.traerDatosTurnos();
+	$scope.traerDatosFacturadoDiaTasas();
+	$scope.traerDatosFacturadoDia();
+
 });
+
+controlCtrl.prepararMatrizVacía = function($q){
+	var defer = $q.defer();
+	var base = [
+		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ],
+		['', 0, 0, 0, 0, ''],
+		['', 0, 0, 0, 0, ''],
+		['', 0, 0, 0, 0, ''],
+		['', 0, 0, 0, 0, '']
+	];
+	defer.resolve(base);
+	return defer.promise;
+};
+
+controlCtrl.prepararMatrizTasas = function($q){
+	var defer = $q.defer();
+
+	var result = {
+		"ratesCount": 0,
+		"ratesTotal": 0,
+		"dataGraf": []
+	};
+
+	var base = [
+		['Datos', 'Facturado', { role: 'annotation' } ],
+		['BACTSSA', 0, ''],
+		['TERMINAL 4', 0, ''],
+		['TRP', 0, '']
+	];
+
+	result.dataGraf = base;
+
+	defer.resolve(result);
+	return defer.promise;
+};
 
 controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 	var defer = $q.defer();
@@ -170,20 +227,20 @@ controlCtrl.primerCargaTurnos = function (controlPanelFactory, $q){
 	return defer.promise;
 };
 
-/*controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
+controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
 	var defer = $q.defer();
 	var fecha = new Date();
 	controlPanelFactory.getFacturadoPorDia(fecha, function(graf){
 		defer.resolve(controlCtrl.prepararDatosFacturadoDia(graf));
 	});
 	return defer.promise;
-};*/
+};
 
-controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
+controlCtrl.primerCargaFacturadoDiaTasas = function (controlPanelFactory, $q){
 	var defer = $q.defer();
 	var fecha = new Date();
 	controlPanelFactory.getTasas(fecha, function(graf){
-		defer.resolve(controlCtrl.prepararDatosFacturadoDia(graf, fecha));
+		defer.resolve(controlCtrl.prepararDatosFacturadoDiaTasas(graf));
 	});
 	return defer.promise;
 };
@@ -239,7 +296,7 @@ controlCtrl.prepararDatosMes = function(datosGrafico){
 	return base;
 };
 
-controlCtrl.prepararDatosFacturadoDia = function(datos, dia){
+controlCtrl.prepararDatosFacturadoDiaTasas = function(datos){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
 		['Datos', 'Facturado', { role: 'annotation' } ],
@@ -272,7 +329,7 @@ controlCtrl.prepararDatosFacturadoDia = function(datos, dia){
 	return datos;
 };
 
-/*controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
+controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
 		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -322,4 +379,4 @@ controlCtrl.prepararDatosFacturadoDia = function(datos, dia){
 	base.push(fila.slice());
 	//Finalmente devuelvo la matriz generada con los datos para su asignación
 	return base;
-};*/
+};

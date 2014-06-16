@@ -128,13 +128,15 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				//Datos para el gráfico de los totales de comprobantes
 				datosGrafico: controlCtrl.primerCargaComprobantes,
 				//Datos de gráfico facturado por mes
-				datosGraficoFacturas: controlCtrl.primerCargaFacturadoMes,
+				datosGraficoFacturas: controlCtrl.prepararMatrizVacía,
 				//Datos de gráfico de gates cargados
-				datosGraficoGates: controlCtrl.primerCargaGates,
+				datosGraficoGates: controlCtrl.prepararMatrizVacía,
 				//Datos de gráfico de turnos otorgados
-				datosGraficoTurnos: controlCtrl.primerCargaTurnos,
+				datosGraficoTurnos: controlCtrl.prepararMatrizVacía,
 				//Datos de gráfico de facturación por día
-				datosFacturadoPorDia:controlCtrl.primerCargaFacturadoDia
+				datosFacturadoPorDiaTasas: controlCtrl.prepararMatrizTasas,
+				//Datos de gráfico de facturación por día
+				datosFacturadoPorDia: controlCtrl.prepararMatrizVacía
 			}
 		})
 		.state('cfacturas', {

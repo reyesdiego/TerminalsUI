@@ -64,16 +64,38 @@
 			</p>
 			<div collapse="isCollapsedDay">
 				<div class="well well-lg">
+					<datepicker ng-model="desdeTasas" show-weeks="false" ng-change="traerDatosFacturadoDiaTasas()"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedDay">
+				<column-chart-stack data="chartDataFacturadoTasas" title="{{chartTitleFacturadoTasas}}"
+				              width="{{chartWidthFacturadoTasas}}" height="{{chartHeightFacturadoTasas}}"
+				              select="selectRow(selectedRowIndexFacturadoTasas)"></column-chart-stack>
+			</div>
+		</div>
+
+		<div class="col-lg-4">
+			<p class="input-group">
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="isCollapsedDay = !isCollapsedDay"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+			</p>
+			<div collapse="isCollapsedDay">
+				<div class="well well-lg">
 					<datepicker ng-model="desde" show-weeks="false" ng-change="traerDatosFacturadoDia()"></datepicker>
 				</div>
 			</div>
 			<div collapse="!isCollapsedDay">
-				<column-chart-stack data="chartDataFacturado" title="{{chartTitleFacturado}}"
-				              width="{{chartWidthFacturado}}" height="{{chartHeightFacturado}}"
-				              select="selectRow(selectedRowIndexFacturado)"></column-chart-stack>
+				<column-chart data="chartDataFacturado" title="{{chartTitleFacturado}}"
+				                    width="{{chartWidthFacturado}}" height="{{chartHeightFacturado}}"
+				                    select="selectRow(selectedRowIndexFacturado)"></column-chart>
 			</div>
 		</div>
 
+	</div>
+
+	<div class="row">
 		<div class="col-lg-4">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" />
@@ -93,10 +115,7 @@
 			</div>
 		</div>
 
-	</div>
-
-	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-4">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeGates" />
 				<span class="input-group-btn">
@@ -115,7 +134,7 @@
 			</div>
 		</div>
 
-		<div class="col-lg-6">
+		<div class="col-lg-4">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeTurnos" />
 				<span class="input-group-btn">
