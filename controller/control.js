@@ -23,12 +23,12 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.chartDataFacturas = datosGraficoFacturas;
 
 	$scope.chartTitleGates = "Gates";
-	$scope.chartWidthGates = 580;
+	$scope.chartWidthGates = 410;
 	$scope.chartHeightGates = 320;
 	$scope.chartDataGates = datosGraficoGates;
 
 	$scope.chartTitleTurnos = "Turnos";
-	$scope.chartWidthTurnos = 580;
+	$scope.chartWidthTurnos = 410;
 	$scope.chartHeightTurnos = 320;
 	$scope.chartDataTurnos = datosGraficoTurnos;
 
@@ -46,6 +46,7 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.isCollapsedDay = true;
 	$scope.isCollapsedGates = true;
 	$scope.isCollapsedTurnos = true;
+	$scope.isCollapsedDayTasas = true;
 
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
@@ -88,43 +89,40 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	});
 
 	$scope.traerDatosFacturadoMes = function(){
-		$scope.isCollapsedMonth = !$scope.isCollapsedMonth;
+		$scope.isCollapsedMonth = true;
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, function(graf){
 			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf);
 		});
 	};
 
 	$scope.traerDatosGates = function(){
-		$scope.isCollapsedGates = !$scope.isCollapsedGates;
+		$scope.isCollapsedGates = true;
 		controlPanelFactory.getGatesMeses($scope.mesDesdeGates, function(graf){
 			$scope.chartDataGates = controlCtrl.prepararDatosMes(graf);
 		});
 	};
 
 	$scope.traerDatosTurnos = function(){
-		$scope.isCollapsedTurnos = !$scope.isCollapsedTurnos;
+		$scope.isCollapsedTurnos = true;
 		controlPanelFactory.getTurnosMeses($scope.mesDesdeTurnos, function(graf){
 			$scope.chartDataTurnos = controlCtrl.prepararDatosMes(graf);
 		});
 	};
 
 	$scope.traerDatosFacturadoDiaTasas = function(){
-		$scope.isCollapsedDay = !$scope.isCollapsedDay;
+		$scope.isCollapsedDayTasas = true;
 		controlPanelFactory.getTasas($scope.desdeTasas, function(graf){
 			var result = controlCtrl.prepararDatosFacturadoDiaTasas(graf);
-			$scope.chartDataFacturado = result.dataGraf;
+			$scope.chartDataFacturadoTasas = result.dataGraf;
 			$scope.control.ratesCount = result.ratesCount;
 			$scope.control.ratesTotal = result.ratesTotal;
 		});
 	};
 
 	$scope.traerDatosFacturadoDia = function(){
-		$scope.isCollapsedDay = !$scope.isCollapsedDay;
+		$scope.isCollapsedDay = true;
 		controlPanelFactory.getFacturadoPorDia($scope.desde, function(graf){
-			var result = controlCtrl.prepararDatosFacturadoDia(graf);
-			$scope.chartDataFacturado = result.dataGraf;
-			$scope.control.ratesCount = result.ratesCount;
-			$scope.control.ratesTotal = result.ratesTotal;
+			$scope.chartDataFacturado = controlCtrl.prepararDatosFacturadoDia(graf);
 		});
 	};
 

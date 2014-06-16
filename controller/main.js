@@ -133,7 +133,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				datosGraficoGates: controlCtrl.prepararMatrizVacía,
 				//Datos de gráfico de turnos otorgados
 				datosGraficoTurnos: controlCtrl.prepararMatrizVacía,
-				//Datos de gráfico de facturación por día
+				//Datos de gráfico de facturación de tasas por día
 				datosFacturadoPorDiaTasas: controlCtrl.prepararMatrizTasas,
 				//Datos de gráfico de facturación por día
 				datosFacturadoPorDia: controlCtrl.prepararMatrizVacía

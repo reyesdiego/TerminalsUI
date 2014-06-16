@@ -57,17 +57,17 @@
 
 		<div class="col-lg-4">
 			<p class="input-group">
-				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desdeTasas" />
 				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="isCollapsedDay = !isCollapsedDay"><i class="glyphicon glyphicon-calendar"></i></button>
+					<button class="btn btn-default" ng-click="isCollapsedDayTasas = !isCollapsedDayTasas"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
 			</p>
-			<div collapse="isCollapsedDay">
+			<div collapse="isCollapsedDayTasas">
 				<div class="well well-lg">
 					<datepicker ng-model="desdeTasas" show-weeks="false" ng-change="traerDatosFacturadoDiaTasas()"></datepicker>
 				</div>
 			</div>
-			<div collapse="!isCollapsedDay">
+			<div collapse="!isCollapsedDayTasas">
 				<column-chart-stack data="chartDataFacturadoTasas" title="{{chartTitleFacturadoTasas}}"
 				              width="{{chartWidthFacturadoTasas}}" height="{{chartHeightFacturadoTasas}}"
 				              select="selectRow(selectedRowIndexFacturadoTasas)"></column-chart-stack>
