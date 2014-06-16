@@ -195,54 +195,6 @@ controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 	return defer.promise;
 };
 
-controlCtrl.primerCargaFacturadoMes = function (controlPanelFactory, $q){
-	var defer = $q.defer();
-	var fechaActual = new Date();
-	var fecha = new Date(fechaActual.getFullYear() + '-' + (fechaActual.getMonth()+1) + '-01');
-	controlPanelFactory.getFacturasMeses(fecha, function(graf){
-		defer.resolve(controlCtrl.prepararDatosMes(graf));
-	});
-	return defer.promise;
-};
-
-controlCtrl.primerCargaGates = function (controlPanelFactory, $q){
-	var defer = $q.defer();
-	var fechaActual = new Date();
-	var fecha = new Date(fechaActual.getFullYear() + '-' + (fechaActual.getMonth()+1) + '-01');
-	controlPanelFactory.getGatesMeses(fecha, function(graf){
-		defer.resolve(controlCtrl.prepararDatosMes(graf));
-	});
-	return defer.promise;
-};
-
-controlCtrl.primerCargaTurnos = function (controlPanelFactory, $q){
-	var defer = $q.defer();
-	var fechaActual = new Date();
-	var fecha = new Date(fechaActual.getFullYear() + '-' + (fechaActual.getMonth()+1) + '-01');
-	controlPanelFactory.getTurnosMeses(fecha, function(graf){
-		defer.resolve(controlCtrl.prepararDatosMes(graf));
-	});
-	return defer.promise;
-};
-
-controlCtrl.primerCargaFacturadoDia = function (controlPanelFactory, $q){
-	var defer = $q.defer();
-	var fecha = new Date();
-	controlPanelFactory.getFacturadoPorDia(fecha, function(graf){
-		defer.resolve(controlCtrl.prepararDatosFacturadoDia(graf));
-	});
-	return defer.promise;
-};
-
-controlCtrl.primerCargaFacturadoDiaTasas = function (controlPanelFactory, $q){
-	var defer = $q.defer();
-	var fecha = new Date();
-	controlPanelFactory.getTasas(fecha, function(graf){
-		defer.resolve(controlCtrl.prepararDatosFacturadoDiaTasas(graf));
-	});
-	return defer.promise;
-};
-
 controlCtrl.prepararDatosMes = function(datosGrafico){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
