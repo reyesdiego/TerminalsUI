@@ -136,7 +136,9 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				//Datos de gráfico de facturación de tasas por día
 				datosFacturadoPorDiaTasas: controlCtrl.prepararMatrizTasas,
 				//Datos de gráfico de facturación por día
-				datosFacturadoPorDia: controlCtrl.prepararMatrizVacía
+				datosFacturadoPorDia: controlCtrl.prepararMatrizVacía,
+				//Datos de gráfico de Gates y Turnos por día
+				datosGraficoGatesTurnosDias: controlCtrl.prepararMatrizVaciaGatesTurnos
 			}
 		})
 		.state('cfacturas', {

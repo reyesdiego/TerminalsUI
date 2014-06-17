@@ -50,7 +50,7 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate, loginS
 				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar lista por día');
 			});
-	}
+	};
 
 	factory.getTotales = function(fecha, callback){
 		var inserturl = serverUrl + '/invoices/counts';
@@ -114,6 +114,36 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate, loginS
 				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar la lista PriceList');
 			});
+	};
+
+	factory.getGatesDia = function(fecha, callback){
+		var inserturl = serverUrl + '/gatesByHour?fecha=' + formatDate.formatearFecha(fecha);
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			dialogs.error('Error', 'Error al cargar los Gates del dia');
+		});
+	};
+
+	factory.getTurnosDia = function(fecha, callback){
+		var inserturl = serverUrl + '/appointmentsByHour?fecha=' + formatDate.formatearFecha(fecha);
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			dialogs.error('Error', 'Error al cargar los Turnos del dia');
+		});
 	};
 
 	return factory;
