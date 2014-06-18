@@ -71,8 +71,8 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	//Flag para mostrar los tabs con los resultados una vez recibidos los datos
 	$scope.terminoCarga = false;
 
-	$scope.control.ratesCount = datosFacturadoPorDia.ratesCount;
-	$scope.control.ratesTotal = datosFacturadoPorDia.ratesTotal;
+	$scope.control.ratesCount = 0;
+	$scope.control.ratesTotal = 0;
 
 	socket.on('invoice', function () {
 		$scope.chartData[2][1]++;
