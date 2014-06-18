@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDate){
+myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginService, formatDate){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
@@ -36,6 +36,22 @@ myapp.factory('invoiceFactory', function($http, dialogs, loginService, formatDat
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
+			callback(data);
+		}).error(function(errorText) {
+			console.log(errorText);
+			dialogs.error('Error', 'Error al cargar la lista Invoice');
+		});
+	};
+
+	factory.getDescriptionItem = function(callback){
+		var inserturl = serverUrl + '/agp/matches/' + $rootScope.terminal.terminal;
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function(data) {
+			console.log(data);
 			callback(data);
 		}).error(function(errorText) {
 			console.log(errorText);

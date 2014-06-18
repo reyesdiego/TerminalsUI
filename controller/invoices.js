@@ -8,6 +8,11 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
 
+	// Se carga el array de la descripcion de los items de las facturas
+	invoiceFactory.getDescriptionItem(function(data){
+		$scope.itemsDescriptionInvoices = data.data;
+	});
+
 	$scope.hitEnter = function(evt){
 		if(angular.equals(evt.keyCode,13))
 			$scope.cargaFacturas();
@@ -18,21 +23,29 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		$scope.cargaFacturas($scope.page);
 	});
 
+	// Para mostrar el icono del alert en la desc
+	$scope.isDefinedAngular = function(itemId){
+		return angular.isDefined($scope.itemsDescriptionInvoices[itemId]);
+	};
+
 	$scope.cargaFacturas = function(page){
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
 			if(data.status === 'OK'){
-				console.log(data);
 				$scope.invoices = data.data;
-				// ***** TO DO Agregar la descripcion desde la base
+				// ***** TODO Verificar si se puede agregar esto en el factory *****
 				data.data.forEach(function(factura){
 					factura.detalle.forEach(function(detalles){
 						detalles.items.forEach(function(item){
-							item.descripcion = "Consolidacion de contenedores FCL de 40 pies por conveniencia del cargador. Incluye la recepcion del camion, el llenado del contenedor, estiba, trincado con los materiales necesarios para ello y apuntaje. Los gastos de manupuleo del contenedor en sí rigen por las tarifas T9C y T9F";
+							if (angular.isDefined($scope.itemsDescriptionInvoices[item.id])){
+								item.descripcion = $scope.itemsDescriptionInvoices[item.id];
+							}
+							else{
+								item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
+							}
 						})
 					})
 				});
-				// *****
 				$scope.totalItems = data.totalCount;
 			}
 		});

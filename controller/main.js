@@ -202,7 +202,7 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory){
 
 	vouchersFactory.getVouchersArray(function(data){
 		$rootScope.vouchersType = data.data;
-	})
+	});
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if (!in_array(toState.name, rutasComunes)){

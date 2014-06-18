@@ -20,6 +20,16 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		if (horarioGate >= horarioInicio && horarioGate <= horarioFin) { return 'green' } else { return 'red' }
 	};
 
+	// Se carga el array de la descripcion de los items de las facturas
+	invoiceFactory.getDescriptionItem(function(data){
+		$scope.itemsDescriptionInvoices = data.data;
+	});
+
+	// Para mostrar el icono del alert en la desc
+	$scope.isDefinedAngular = function(itemId){
+		return angular.isDefined($scope.itemsDescriptionInvoices[itemId]);
+	};
+
 	$scope.cargaGatesPorFiltros = function(){
 		$scope.isCollapsed = !$scope.isCollapsed;
 		$scope.currentPage = 1;
@@ -32,6 +42,18 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		invoiceFactory.getInvoice(datos, {skip:0, limit: $scope.itemsPerPage }, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
+				data.data.forEach(function(factura){
+					factura.detalle.forEach(function(detalles){
+						detalles.items.forEach(function(item){
+							if (angular.isDefined($scope.itemsDescriptionInvoices[item.id])){
+								item.descripcion = $scope.itemsDescriptionInvoices[item.id];
+							}
+							else{
+								item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
+							}
+						})
+					})
+				});
 			}
 		});
 	};
