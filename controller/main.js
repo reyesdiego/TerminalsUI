@@ -127,7 +127,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
 				datosGrafico: controlCtrl.primerCargaComprobantes,
 				datosGraficoPorMes: controlCtrl.prepararMatrizVacía,
-				datosFacturadoPorDiaTasas: controlCtrl.prepararMatrizTasas
+				datosFacturadoPorDiaTasas: controlCtrl.prepararMatrizTasas,
 				datosGraficoGatesTurnosDias: controlCtrl.prepararMatrizVaciaGatesTurnos
 			}
 		})
