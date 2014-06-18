@@ -128,6 +128,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 				datosGrafico: controlCtrl.primerCargaComprobantes,
 				datosGraficoPorMes: controlCtrl.prepararMatrizVacía,
 				datosFacturadoPorDiaTasas: controlCtrl.prepararMatrizTasas
+				datosGraficoGatesTurnosDias: controlCtrl.prepararMatrizVaciaGatesTurnos
 			}
 		})
 		.state('cfacturas', {

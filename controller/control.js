@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico, datosGraficoPorMes, datosFacturadoPorDiaTasas, controlPanelFactory, socket, formatDate){
+var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatDate){
 
 	var fecha = formatDate.formatearFecha(new Date());
 
@@ -11,6 +11,8 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 		"ratesCount": 0,
 		"ratesTotal": 0
 	};
+
+	$scope.radioModel = 'Gates';
 
 	$scope.chartTitle = "Datos enviados";
 	$scope.chartWidth = 300;
@@ -42,11 +44,17 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.chartHeightFacturado = 320;
 	$scope.chartDataFacturado = datosGraficoPorMes;
 
+	$scope.chartTitleDiaGatesTurnos = "Cantidad por día";
+	$scope.chartWidthDiaGatesTurnos = 1200;
+	$scope.chartHeightDiaGatesTurnos = 320;
+	$scope.chartDataDiaGatesTurnos = datosGraficoGatesTurnosDias;
+
 	$scope.isCollapsedMonth = true;
 	$scope.isCollapsedDay = true;
 	$scope.isCollapsedGates = true;
 	$scope.isCollapsedTurnos = true;
 	$scope.isCollapsedDayTasas = true;
+	$scope.isCollapsedDayGatesTurnos = true;
 
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
@@ -54,6 +62,7 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.mesDesde = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
 	$scope.mesDesdeGates = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
 	$scope.mesDesdeTurnos = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
+	$scope.diaGatesTurnos = new Date();
 
 	$scope.monthMode = 'month';
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
@@ -126,11 +135,30 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 		});
 	};
 
+	$scope.traerDatosGatesTurnosDia = function(){
+		console.log('entro');
+		$scope.isCollapsedDayGatesTurnos = true;
+		if ($scope.radioModel == 'Gates'){
+			console.log('gates');
+			controlPanelFactory.getGatesDia($scope.diaGatesTurnos, function(graf){
+				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
+			});
+		}
+		else if ($scope.radioModel == 'Turnos'){
+			console.log('turnos');
+			controlPanelFactory.getTurnosDia($scope.diaGatesTurnos, function(graf){
+				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
+			});
+		}
+		console.log($scope.radioModel);
+	};
+
 	$scope.traerDatosFacturadoMes();
 	$scope.traerDatosGates();
 	$scope.traerDatosTurnos();
 	$scope.traerDatosFacturadoDiaTasas();
 	$scope.traerDatosFacturadoDia();
+	$scope.traerDatosGatesTurnosDia();
 
 });
 
@@ -166,6 +194,20 @@ controlCtrl.prepararMatrizTasas = function($q){
 	result.dataGraf = base;
 
 	defer.resolve(result);
+	return defer.promise;
+};
+
+controlCtrl.prepararMatrizVaciaGatesTurnos = function($q){
+	var defer = $q.defer();
+	var base = [
+		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ],
+		['00', 0, 0, 0, 0, ''], ['01', 0, 0, 0, 0, ''], ['02', 0, 0, 0, 0, ''], ['03', 0, 0, 0, 0, ''], ['04', 0, 0, 0, 0, ''],
+		['05', 0, 0, 0, 0, ''], ['06', 0, 0, 0, 0, ''], ['07', 0, 0, 0, 0, ''], ['08', 0, 0, 0, 0, ''], ['09', 0, 0, 0, 0, ''],
+		['10', 0, 0, 0, 0, ''], ['11', 0, 0, 0, 0, ''], ['12', 0, 0, 0, 0, ''], ['13', 0, 0, 0, 0, ''], ['14', 0, 0, 0, 0, ''],
+		['15', 0, 0, 0, 0, ''], ['16', 0, 0, 0, 0, ''], ['17', 0, 0, 0, 0, ''], ['18', 0, 0, 0, 0, ''], ['19', 0, 0, 0, 0, ''],
+		['20', 0, 0, 0, 0, ''], ['21', 0, 0, 0, 0, ''], ['22', 0, 0, 0, 0, ''], ['23', 0, 0, 0, 0, '']
+	];
+	defer.resolve(base);
 	return defer.promise;
 };
 
@@ -329,4 +371,34 @@ controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
 	base.push(fila.slice());
 	//Finalmente devuelvo la matriz generada con los datos para su asignación
 	return base;
+};
+
+controlCtrl.prepararDatosGatesTurnosDia = function(datosGrafico){
+	var matAux = [];
+	matAux[0] = ['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ];
+	for (var i = 0; i <= 23; i++){
+		if (i<10){
+			matAux[i+1] = ['0' + i, 0, 0, 0, 0, ''];
+		}
+		else{
+			matAux[i+1] = [i, 0, 0, 0, 0, ''];
+		}
+	}
+	datosGrafico.forEach(function(datosDia){
+		switch (datosDia._id.terminal){
+			case "BACTSSA":
+				matAux[datosDia._id.hour+1][1] = datosDia.cnt;
+				break;
+			case "TERMINAL4":
+				matAux[datosDia._id.hour+1][2] = datosDia.cnt;
+				break;
+			case "TRP":
+				matAux[datosDia._id.hour+1][3] = datosDia.cnt;
+				break;
+		}
+	});
+	for (var e = 0; e <= 23; e++){
+		matAux[e+1][4] = (matAux[e+1][1] + matAux[e+1][2] + matAux[e+1][3]) / 3;
+	}
+	return matAux;
 };
