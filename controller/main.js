@@ -125,19 +125,9 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/control.html",
 			controller: "ControlCtrl",
 			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
-				//Datos para el gráfico de los totales de comprobantes
 				datosGrafico: controlCtrl.primerCargaComprobantes,
-				//Datos de gráfico facturado por mes
-				datosGraficoFacturas: controlCtrl.prepararMatrizVacía,
-				//Datos de gráfico de gates cargados
-				datosGraficoGates: controlCtrl.prepararMatrizVacía,
-				//Datos de gráfico de turnos otorgados
-				datosGraficoTurnos: controlCtrl.prepararMatrizVacía,
-				//Datos de gráfico de facturación de tasas por día
+				datosGraficoPorMes: controlCtrl.prepararMatrizVacía,
 				datosFacturadoPorDiaTasas: controlCtrl.prepararMatrizTasas,
-				//Datos de gráfico de facturación por día
-				datosFacturadoPorDia: controlCtrl.prepararMatrizVacía,
-				//Datos de gráfico de Gates y Turnos por día
 				datosGraficoGatesTurnosDias: controlCtrl.prepararMatrizVaciaGatesTurnos
 			}
 		})
@@ -181,6 +171,15 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('forbidden', {
 			url: "/forbidden",
 			templateUrl: "view/forbidden.html"
+		})
+		.state('reports', {
+			url: "/reportes",
+			templateUrl:"view/reportes.html",
+			controller: "ReportsCtrl",
+			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
+				matrizVaciaBarras: reportsCtrl.prepararMatrizVaciaBarras,
+				matrizVaciaTorta: reportsCtrl.prepararMatrizVaciaTorta
+			}
 		})
 });
 

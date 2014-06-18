@@ -1,0 +1,44 @@
+<div class="container">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="xpage-header">
+				<h1 id="forms">Reportes</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<tabset vertical="true">
+			<tab heading="Períodos de mayor facturación">Vertical content 2</tab>
+			<tab heading="Horarios de mayor tránsito">Vertical content 1</tab>
+			<tab heading="Porcentaje de cumplimientos de horarios">
+				<div class="row">
+					<column-chart-stack data="chartDataBarrasBactssa" title="{{chartTitleBarrasBactssa}}"
+					                    width="{{chartWidthBarrasBactssa}}" height="{{chartHeightBarrasBactssa}}"
+					                    select="selectRow(selectedRowIndexBarrasBactssa)"></column-chart-stack>
+					<pie-chart data="chartDataTortaBactssa" title="{{chartTitleTortaBactssa}}"
+					              width="{{chartWidthTortaBactssa}}" height="{{chartHeightTortaBactssa}}"
+					              select="selectRow(selectedRowIndexTortaBactssa)"></pie-chart>
+				</div>
+				<div class="row">
+					<column-chart-stack data="chartDataBarrasTerminal4" title="{{chartTitleBarrasTerminal4}}"
+					                    width="{{chartWidthBarrasTerminal4}}" height="{{chartHeightBarrasTerminal4}}"
+					                    select="selectRow(selectedRowIndexBarrasTerminal4)"></column-chart-stack>
+					<pie-chart data="chartDataTortaTerminal4" title="{{chartTitleTortaTerminal4}}"
+					           width="{{chartWidthTortaTerminal4}}" height="{{chartHeightTortaTerminal4}}"
+					           select="selectRow(selectedRowIndexTortaTerminal4)"></pie-chart>
+				</div>
+				<div class="row">
+					<column-chart-stack data="chartDataBarrasTrp" title="{{chartTitleBarrasTrp}}"
+					                    width="{{chartWidthBarrasTrp}}" height="{{chartHeightBarrasTrp}}"
+					                    select="selectRow(selectedRowIndexBarrasTrp)"></column-chart-stack>
+					<pie-chart data="chartDataTortaTrp" title="{{chartTitleTortaTrp}}"
+					           width="{{chartWidthTortaTrp}}" height="{{chartHeightTortaTrp}}"
+					           select="selectRow(selectedRowIndexTortaTrp)"></pie-chart>
+				</div>
+			</tab>
+		</tabset>
+	</div>
+
+</div>
