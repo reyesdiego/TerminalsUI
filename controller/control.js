@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico, datosGraficoFacturas, datosGraficoGates, datosGraficoTurnos, datosFacturadoPorDiaTasas, datosFacturadoPorDia, controlPanelFactory, socket, formatDate){
+var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico, datosGraficoPorMes, datosFacturadoPorDiaTasas, controlPanelFactory, socket, formatDate){
 
 	var fecha = formatDate.formatearFecha(new Date());
 
@@ -20,17 +20,17 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.chartTitleFacturas = "Facturado por mes";
 	$scope.chartWidthFacturas = 410;
 	$scope.chartHeightFacturas = 320;
-	$scope.chartDataFacturas = datosGraficoFacturas;
+	$scope.chartDataFacturas = datosGraficoPorMes;
 
 	$scope.chartTitleGates = "Gates";
 	$scope.chartWidthGates = 410;
 	$scope.chartHeightGates = 320;
-	$scope.chartDataGates = datosGraficoGates;
+	$scope.chartDataGates = datosGraficoPorMes;
 
 	$scope.chartTitleTurnos = "Turnos";
 	$scope.chartWidthTurnos = 410;
 	$scope.chartHeightTurnos = 320;
-	$scope.chartDataTurnos = datosGraficoTurnos;
+	$scope.chartDataTurnos = datosGraficoPorMes;
 
 	$scope.chartTitleFacturadoTasas = "Total de tasa a las cargas por día";
 	$scope.chartWidthFacturadoTasas = 410;
@@ -40,7 +40,7 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.chartTitleFacturado = "Facturado por día";
 	$scope.chartWidthFacturado = 410;
 	$scope.chartHeightFacturado = 320;
-	$scope.chartDataFacturado = datosFacturadoPorDia;
+	$scope.chartDataFacturado = datosGraficoPorMes;
 
 	$scope.isCollapsedMonth = true;
 	$scope.isCollapsedDay = true;
