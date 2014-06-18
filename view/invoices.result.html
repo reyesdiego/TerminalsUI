@@ -34,6 +34,7 @@
 					<th class="col-lg-1" style="text-align: right">Item</th>
 					<th class="col-lg-7" style="text-align: left">Descripci&oacute;n</th>
 					<th class="col-lg-1" style="text-align: right">Cantidad</th>
+					<th class="col-lg-1" style="text-align: right">P.Unitario</th>
 					<th class="col-lg-1" style="text-align: right">Unidad</th>
 					<th class="col-lg-2" style="text-align: right">Total</th>
 				</tr>
@@ -51,6 +52,7 @@
 					<td style="text-align: left" class="hidden-print"><span class="glyphicon glyphicon-warning-sign" ng-hide="isDefinedAngular(item.id)"></span> {{ item.descripcion | maxLength : 150 }}<a href="" ng-show="(item.descripcion.length > 150)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
 					<td style="text-align: left" class="visible-print"><span class="glyphicon glyphicon-warning-sign" ng-hide="isDefinedAngular(item.id)"></span> {{ item.descripcion }}</td>
 					<td>{{ item.cnt }}</td>
+					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ item.impUnit | currency }}</td>
 					<td>{{ item.uniMed }}</td>
 					<td>{{ verDetalle.codMoneda | formatCurrency }} {{ item.impTot | currency }}</td>
 				</tr>
