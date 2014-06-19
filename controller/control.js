@@ -21,6 +21,7 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 
 	$scope.chartsHeight = 320;
 	$scope.chartsWidth = 410;
+	$scope.chartSeries = {3: {type: "line"}};
 
 	$scope.chartTitleFacturas = "Facturado por mes";
 	$scope.chartDataFacturas = datosGraficoPorMes;
