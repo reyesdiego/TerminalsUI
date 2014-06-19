@@ -11,10 +11,9 @@ function pricelistCtrl($scope, priceFactory){
 		$scope.pricelist = data.data;
 		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
 		$scope.totalItems = $scope.pricelist.length;
-
-		$scope.$watch('currentPage', function() {
-			$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
-		});
 	});
 
+	$scope.pageChanged = function(){
+		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
+	};
 }

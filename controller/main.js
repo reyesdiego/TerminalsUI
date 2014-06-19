@@ -198,6 +198,9 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory){
 		$event.preventDefault();
 		$event.stopPropagation();
 	};
+	$rootScope.isDefined = function(element){
+		return angular.isDefined(element);
+	};
 
 	vouchersFactory.getVouchersArray(function(data){
 		$rootScope.vouchersType = data.data;

@@ -128,21 +128,17 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	};
 
 	$scope.traerDatosGatesTurnosDia = function(){
-		console.log('entro');
 		$scope.isCollapsedDayGatesTurnos = true;
 		if ($scope.radioModel == 'Gates'){
-			console.log('gates');
 			controlPanelFactory.getGatesDia($scope.diaGatesTurnos, function(graf){
 				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
 			});
 		}
 		else if ($scope.radioModel == 'Turnos'){
-			console.log('turnos');
 			controlPanelFactory.getTurnosDia($scope.diaGatesTurnos, function(graf){
 				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
 			});
 		}
-		console.log($scope.radioModel);
 	};
 
 	$scope.traerDatosFacturadoMes();
@@ -176,14 +172,12 @@ controlCtrl.prepararMatrizTasas = function($q){
 		"dataGraf": []
 	};
 
-	var base = [
+	result.dataGraf = [
 		['Datos', 'Facturado', { role: 'annotation' } ],
 		['BACTSSA', 0, ''],
 		['TERMINAL 4', 0, ''],
 		['TRP', 0, '']
 	];
-
-	result.dataGraf = base;
 
 	defer.resolve(result);
 	return defer.promise;
