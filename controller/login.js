@@ -5,6 +5,10 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
 	'use strict';
 	$scope.entrando = false;
 
+	if (loginService.getStatus()){
+		$state.transitionTo('tarifario');
+	}
+
 	$scope.login = function(){
 		$scope.entrando = true;
 		userFactory.login($scope.email, $scope.password, function(data, error){
@@ -15,6 +19,8 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
 					loginService.setStatus(true);
 					loginService.setType(data.role);
 					loginService.setToken(data.token.token);
+					console.log(data.acceso);
+					data.acceso.push("reports")
 					loginService.setAcceso(data.acceso);
 					$state.transitionTo('tarifario');
 
