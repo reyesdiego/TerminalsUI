@@ -63,7 +63,8 @@ myapp.directive('pieChart', function ($timeout) {
 						var options = {
 							'title': $scope.title,
 							'width': $scope.width,
-							'height': $scope.height
+							'height': $scope.height,
+							'is3D': true
 						};
 						chart.draw(data, options);
 						// No raw selected

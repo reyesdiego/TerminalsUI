@@ -5,33 +5,33 @@
 var reportsCtrl = myapp.controller('ReportsCtrl', function ($scope, reportsFactory){
 
 	$scope.chartTitleBarrasBactssa = "Detalle por mes BACTSSA";
-	$scope.chartWidthBarrasBactssa = 800;
+	$scope.chartWidthBarrasBactssa = 500;
 	$scope.chartHeightBarrasBactssa = 400;
 	$scope.chartDataBarrasBactssa = [];
 
 	$scope.chartTitleBarrasTerminal4 = "Detalle por mes TERMINAL 4";
-	$scope.chartWidthBarrasTerminal4 = 800;
+	$scope.chartWidthBarrasTerminal4 = 500;
 	$scope.chartHeightBarrasTerminal4 = 400;
 	$scope.chartDataBarrasTerminal4 = [];
 
 	$scope.chartTitleBarrasTrp = "Detalle por mes TRP";
-	$scope.chartWidthBarrasTrp = 800;
+	$scope.chartWidthBarrasTrp = 500;
 	$scope.chartHeightBarrasTrp = 400;
 	$scope.chartDataBarrasTrp = [];
 
 	$scope.chartTitleTortaBactssa = "Porcentaje anual BACTSSA";
-	$scope.chartWidthTortaBactssa = 400;
-	$scope.chartHeightTortaBactssa = 400;
+	$scope.chartWidthTortaBactssa = 700;
+	$scope.chartHeightTortaBactssa = 600;
 	$scope.chartDataTortaBactssa = [];
 
 	$scope.chartTitleTortaTerminal4 = "Porcentaje anual TERMINAL 4";
-	$scope.chartWidthTortaTerminal4 = 400;
-	$scope.chartHeightTortaTerminal4 = 400;
+	$scope.chartWidthTortaTerminal4 = 700;
+	$scope.chartHeightTortaTerminal4 = 600;
 	$scope.chartDataTortaTerminal4 = [];
 
 	$scope.chartTitleTortaTrp = "Porcentaje anual TRP";
-	$scope.chartWidthTortaTrp = 400;
-	$scope.chartHeightTortaTrp = 400;
+	$scope.chartWidthTortaTrp = 700;
+	$scope.chartHeightTortaTrp = 600;
 	$scope.chartDataTortaTrp = [];
 
 	$scope.desde = new Date();
@@ -59,7 +59,7 @@ var reportsCtrl = myapp.controller('ReportsCtrl', function ($scope, reportsFacto
 	$scope.cargarReporteHorarios = function(){
 		reportsFactory.getCumplimientoTurnos($scope.mesDesdeHorarios, function(data){
 			var graficoBarras = [
-				['Datos', 'Cumplidos', 'Ausencias', 'Tardes', 'Sin turno', { role: 'annotation' } ]
+				['Datos', 'Ausencias', 'Tardes', 'Sin turno', { role: 'annotation' } ]
 			];
 			var tortaBactssa = [
 				['Cumplidos', 0],
@@ -83,15 +83,14 @@ var reportsCtrl = myapp.controller('ReportsCtrl', function ($scope, reportsFacto
 			var barrasTerminal4 = graficoBarras.slice();
 			var barrasTrp = graficoBarras.slice();
 
-			var filaBarras = ['', 0, 0, 0, 0, ''];
+			var filaBarras = ['', 0, 0, 0, ''];
 			var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre", "Diciembre"];
 
 			data.data.forEach(function(datosHorarios){
 				filaBarras[0] = meses[datosHorarios.month - 1] + ' del ' + datosHorarios.year;
-				filaBarras[1] = datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
-				filaBarras[2] = datosHorarios.ausencias;
-				filaBarras[3] = datosHorarios.fueraDeHorario;
-				filaBarras[4] = datosHorarios.gatesSinTurno;
+				filaBarras[1] = datosHorarios.ausencias;
+				filaBarras[2] = datosHorarios.fueraDeHorario;
+				filaBarras[3] = datosHorarios.gatesSinTurno;
 				switch (datosHorarios.terminal){
 					case "BACTSSA":
 						barrasBactssa.push(filaBarras.slice());

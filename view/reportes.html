@@ -14,36 +14,105 @@
 			<tab heading="Horarios de mayor tránsito">Vertical content 1</tab>
 			<tab heading="Porcentaje de cumplimientos de horarios" select="cargarReporteHorarios()">
 				<div class="row">
-					<div class="col-lg-8">
-						<column-chart data="chartDataBarrasBactssa" title="{{chartTitleBarrasBactssa}}"
-						                    width="{{chartWidthBarrasBactssa}}" height="{{chartHeightBarrasBactssa}}"
-						                    select="selectRow(selectedRowIndexBarrasBactssa)"></column-chart>
+					<br>
+					<div class="col-lg-6">
+						<div class="row">
+							<table class="table table-bordered table-hover table-responsive">
+								<thead class="bg-info">
+								<th colspan="2">Turnos totales</th>
+								<th colspan="2">Turnos incumplidos</th>
+								</thead>
+								<thead class="bg-success">
+								<th>Programados</th>
+								<th>Sin programar</th>
+								<th>Ausencias</th>
+								<th>Tardes</th>
+								</thead>
+								<tr>
+									<td>{{ chartDataTortaBactssa[0][1] + chartDataTortaBactssa[1][1] + chartDataTortaBactssa[2][1] }}</td>
+									<td>{{ chartDataTortaBactssa[3][1] }}</td>
+									<td>{{ chartDataTortaBactssa[1][1] }}</td>
+									<td>{{ chartDataTortaBactssa[2][1] }}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="row">
+							<column-chart data="chartDataBarrasBactssa" title="{{chartTitleBarrasBactssa}}"
+							              width="{{chartWidthBarrasBactssa}}" height="{{chartHeightBarrasBactssa}}"
+							              select="selectRow(selectedRowIndexBarrasBactssa)"></column-chart>
+						</div>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 						<pie-chart data="chartDataTortaBactssa" title="{{chartTitleTortaBactssa}}"
-						              width="{{chartWidthTortaBactssa}}" height="{{chartHeightTortaBactssa}}"
-						              select="selectRow(selectedRowIndexTortaBactssa)"></pie-chart>
+						           width="{{chartWidthTortaBactssa}}" height="{{chartHeightTortaBactssa}}"
+						           select="selectRow(selectedRowIndexTortaBactssa)"></pie-chart>
 					</div>
 				</div>
+				<hr>
 				<div class="row">
-					<div class="col-lg-8">
-						<column-chart data="chartDataBarrasTerminal4" title="{{chartTitleBarrasTerminal4}}"
+					<div class="col-lg-6">
+						<div class=" row">
+							<table class="table table-bordered table-hover table-responsive">
+								<thead class="bg-info">
+								<th colspan="2">Turnos totales</th>
+								<th colspan="2">Turnos incumplidos</th>
+								</thead>
+								<thead class="bg-success">
+								<th>Programados</th>
+								<th>Sin programar</th>
+								<th>Ausencias</th>
+								<th>Tardes</th>
+								</thead>
+								<tr>
+									<td>{{ chartDataTortaTerminal4[0][1] + chartDataTortaTerminal4[1][1] + chartDataTortaTerminal4[2][1] }}</td>
+									<td>{{ chartDataTortaTerminal4[3][1] }}</td>
+									<td>{{ chartDataTortaTerminal4[1][1] }}</td>
+									<td>{{ chartDataTortaTerminal4[2][1] }}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="row">
+							<column-chart data="chartDataBarrasTerminal4" title="{{chartTitleBarrasTerminal4}}"
 						                    width="{{chartWidthBarrasTerminal4}}" height="{{chartHeightBarrasTerminal4}}"
 						                    select="selectRow(selectedRowIndexBarrasTerminal4)"></column-chart>
+						</div>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 						<pie-chart data="chartDataTortaTerminal4" title="{{chartTitleTortaTerminal4}}"
 						           width="{{chartWidthTortaTerminal4}}" height="{{chartHeightTortaTerminal4}}"
 						           select="selectRow(selectedRowIndexTortaTerminal4)"></pie-chart>
 					</div>
 				</div>
+				<hr>
 				<div class="row">
-					<div class="col-lg-8">
-						<column-chart data="chartDataBarrasTrp" title="{{chartTitleBarrasTrp}}"
+					<div class="col-lg-6">
+						<div class=" row">
+							<table class="table table-bordered table-hover table-responsive">
+								<thead class="bg-info">
+								<th colspan="2">Turnos totales</th>
+								<th colspan="2">Turnos incumplidos</th>
+								</thead>
+								<thead class="bg-success">
+								<th>Programados</th>
+								<th>Sin programar</th>
+								<th>Ausencias</th>
+								<th>Tardes</th>
+								</thead>
+								<tr>
+									<td>{{ chartDataTortaTrp[0][1] + chartDataTortaTrp[1][1] + chartDataTortaTrp[2][1] }}</td>
+									<td>{{ chartDataTortaTrp[3][1] }}</td>
+									<td>{{ chartDataTortaTrp[1][1] }}</td>
+									<td>{{ chartDataTortaTrp[2][1] }}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="row">
+							<column-chart data="chartDataBarrasTrp" title="{{chartTitleBarrasTrp}}"
 						                    width="{{chartWidthBarrasTrp}}" height="{{chartHeightBarrasTrp}}"
 						                    select="selectRow(selectedRowIndexBarrasTrp)"></column-chart>
+						</div>
 					</div>
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 						<pie-chart data="chartDataTortaTrp" title="{{chartTitleTortaTrp}}"
 						           width="{{chartWidthTortaTrp}}" height="{{chartHeightTortaTrp}}"
 						           select="selectRow(selectedRowIndexTortaTrp)"></pie-chart>
