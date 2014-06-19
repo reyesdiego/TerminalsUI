@@ -33,19 +33,6 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
-				// ***** TODO Verificar si se puede agregar esto en el factory *****
-				data.data.forEach(function(factura){
-					factura.detalle.forEach(function(detalles){
-						detalles.items.forEach(function(item){
-							if (angular.isDefined($scope.itemsDescriptionInvoices[item.id])){
-								item.descripcion = $scope.itemsDescriptionInvoices[item.id];
-							}
-							else{
-								item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
-							}
-						})
-					})
-				});
 				$scope.totalItems = data.totalCount;
 			}
 		});
