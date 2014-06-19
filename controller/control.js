@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatDate){
+var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatDate){
 
 	var fecha = formatDate.formatearFecha(new Date());
 

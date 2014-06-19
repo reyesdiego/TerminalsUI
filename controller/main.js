@@ -99,31 +99,27 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider
 		.state('login', {
 			url: "/login",
-			templateUrl: "view/login.html",
-			controller: loginCtrl
+			templateUrl: "view/login.html"
 		})
 		.state('tarifario', {
 			url: "/pricelist",
-			templateUrl: "view/pricelist.html",
-			controller: pricelistCtrl
+			templateUrl: "view/pricelist.html"
 		})
 		.state('invoices', {
 			url: "/invoices",
-			templateUrl: "view/invoices.html",
-			controller: invoicesCtrl
+			templateUrl: "view/invoices.html"
 		})
 		.state('invoices.result', {
 			templateUrl: "view/invoices.result.html"
 		})
 		.state('matches', {
 			url: "/match",
-			templateUrl: "view/matchprices.html",
-			controller: matchPricesCtrl
+			templateUrl: "view/matchprices.html"
 		})
 		.state('control', {
 			url: "/control",
 			templateUrl: "view/control.html",
-			controller: "ControlCtrl",
+			controller: "controlCtrl",
 			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
 				datosGrafico: controlCtrl.primerCargaComprobantes,
 				datosGraficoPorMes: controlCtrl.prepararMatrizVacía,
@@ -133,16 +129,14 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 		.state('cfacturas', {
 			url: "/cfacturas",
-			templateUrl: "view/cfacturas.html",
-			controller: cfacturasCtrl
+			templateUrl: "view/cfacturas.html"
 		})
 		.state('cfacturas.result', {
 			templateUrl: "view/invoices.result.html"
 		})
 		.state('gates', {
 			url: "/gates",
-			templateUrl: "view/gates.html",
-			controller: gatesCtrl
+			templateUrl: "view/gates.html"
 		})
 		.state('gates.invoices', {
 			templateUrl: "view/invoices.html"
@@ -150,23 +144,13 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('gates.invoices.result', {
 			templateUrl: "view/invoices.result.html"
 		})
-		.state('correlativo', {
-			url: "/correlatividad",
-			templateUrl: "view/correlatividad.html",
-			controller: cfacturasCtrl
-		})
-		.state('correlativo.result', {
-			templateUrl: "view/correlatividad.result.html"
-		})
 		.state('turnos', {
 			url: "/turnos",
-			templateUrl: "view/turnos.html",
-			controller: turnosCtrl
+			templateUrl: "view/turnos.html"
 		})
 		.state('changepass', {
 			url: "/cambiarpass",
-			templateUrl: "view/newpass.html",
-			controller: changePassCtrl
+			templateUrl: "view/newpass.html"
 		})
 		.state('forbidden', {
 			url: "/forbidden",
@@ -175,7 +159,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('reports', {
 			url: "/reportes",
 			templateUrl:"view/reportes.html",
-			controller: "ReportsCtrl",
+			controller: "reportsCtrl",
 			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
 				matrizVaciaBarras: reportsCtrl.prepararMatrizVaciaBarras,
 				matrizVaciaTorta: reportsCtrl.prepararMatrizVaciaTorta

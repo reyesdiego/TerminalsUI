@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 17/06/14.
 */
 
-var reportsCtrl = myapp.controller('ReportsCtrl', function ($scope, reportsFactory){
+var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory){
 
 	$scope.chartTitleBarrasBactssa = "Detalle por mes BACTSSA";
 	$scope.chartWidthBarrasBactssa = 500;
