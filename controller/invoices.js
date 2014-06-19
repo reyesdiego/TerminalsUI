@@ -13,10 +13,10 @@ function invoicesCtrl ($scope, invoiceFactory) {
 			$scope.cargaFacturas();
 	};
 
-	$scope.$watch('currentPage', function(){
+	$scope.pageChanged = function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.cargaFacturas($scope.page);
-	});
+	};
 
 	$scope.cargaFacturas = function(page){
 		page = page || { skip:0, limit: $scope.itemsPerPage };

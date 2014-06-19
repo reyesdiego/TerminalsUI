@@ -46,10 +46,10 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		});
 	};
 
-	$scope.$watch('currentPage', function(){
+	$scope.pageChanged = function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.cargaGates($scope.page);
-	});
+	};
 
 	function cargaDatos(){
 		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }

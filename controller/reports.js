@@ -132,7 +132,7 @@ reportsCtrl.prepararMatrizVaciaTorta = function($q){
 	];
 	defer.resolve(base);
 	return defer.promise;
-}
+};
 
 reportsCtrl.prepararDatosMes = function(datosGrafico){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales

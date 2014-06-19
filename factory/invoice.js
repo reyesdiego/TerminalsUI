@@ -36,15 +36,11 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
-			// Se carga el array de la descripcion de los items de las facturas
-			factory.getDescriptionItem(function(data){
-				itemsDescriptionInvoices = data.data;
-			});
 			data.data.forEach(function(factura){
 				factura.detalle.forEach(function(detalles){
 					detalles.items.forEach(function(item){
-						if (angular.isDefined(itemsDescriptionInvoices[item.id])){
-							item.descripcion = itemsDescriptionInvoices[item.id];
+						if (angular.isDefined($rootScope.itemsDescriptionInvoices[item.id])){
+							item.descripcion = $rootScope.itemsDescriptionInvoices[item.id];
 						}
 						else{
 							item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
@@ -67,7 +63,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
-			console.log(data);
 			callback(data);
 		}).error(function(errorText) {
 			console.log(errorText);

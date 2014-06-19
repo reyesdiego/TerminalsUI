@@ -43,10 +43,10 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.prepararDatos();
 
-	$scope.$watch('currentPage', function(){
+	$scope.pageChanged = function(){
 		$scope.guardar();
 		$scope.flagCambios = false;
-	});
+	};
 
 	$scope.$watch('search', function(){
 		if ($scope.search != "" && $scope.search != null){
@@ -175,7 +175,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 					$scope.match = [];
 					$scope.match.push(nuevoMatch);
 
-					priceFactory.addMatchPrice($scope.match, function(trash){
+					priceFactory.addMatchPrice($scope.match, function(){
 						dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
 						$scope.salir();
 						$scope.prepararDatos();
