@@ -19,34 +19,27 @@ var controlCtrl = myapp.controller('ControlCtrl', function ($scope, datosGrafico
 	$scope.chartHeight = 380;
 	$scope.chartData = datosGrafico;
 
+	$scope.chartsHeight = 320;
+	$scope.chartsWidth = 410;
+	$scope.chartSeries = {3: {type: "line"}};
+
 	$scope.chartTitleFacturas = "Facturado por mes";
-	$scope.chartWidthFacturas = 410;
-	$scope.chartHeightFacturas = 320;
 	$scope.chartDataFacturas = datosGraficoPorMes;
 
 	$scope.chartTitleGates = "Gates";
-	$scope.chartWidthGates = 410;
-	$scope.chartHeightGates = 320;
 	$scope.chartDataGates = datosGraficoPorMes;
 
 	$scope.chartTitleTurnos = "Turnos";
-	$scope.chartWidthTurnos = 410;
-	$scope.chartHeightTurnos = 320;
 	$scope.chartDataTurnos = datosGraficoPorMes;
 
 	$scope.chartTitleFacturadoTasas = "Total de tasa a las cargas por día";
-	$scope.chartWidthFacturadoTasas = 410;
-	$scope.chartHeightFacturadoTasas = 320;
 	$scope.chartDataFacturadoTasas = datosFacturadoPorDiaTasas.dataGraf;
 
 	$scope.chartTitleFacturado = "Facturado por día";
-	$scope.chartWidthFacturado = 410;
-	$scope.chartHeightFacturado = 320;
 	$scope.chartDataFacturado = datosGraficoPorMes;
 
 	$scope.chartTitleDiaGatesTurnos = "Cantidad por día";
 	$scope.chartWidthDiaGatesTurnos = 1200;
-	$scope.chartHeightDiaGatesTurnos = 320;
 	$scope.chartDataDiaGatesTurnos = datosGraficoGatesTurnosDias;
 
 	$scope.isCollapsedMonth = true;

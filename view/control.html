@@ -69,7 +69,7 @@
 			</div>
 			<div collapse="!isCollapsedDayTasas">
 				<column-chart-stack data="chartDataFacturadoTasas" title="{{chartTitleFacturadoTasas}}"
-									width="{{chartWidthFacturadoTasas}}" height="{{chartHeightFacturadoTasas}}"
+									width="{{chartsWidth}}" height="{{chartsHeight}}"
 									select="selectRow(selectedRowIndexFacturadoTasas)"></column-chart-stack>
 			</div>
 		</div>
@@ -88,8 +88,8 @@
 			</div>
 			<div collapse="!isCollapsedDay">
 				<column-chart data="chartDataFacturado" title="{{chartTitleFacturado}}"
-							  width="{{chartWidthFacturado}}" height="{{chartHeightFacturado}}"
-							  select="selectRow(selectedRowIndexFacturado)"></column-chart>
+							  width="{{chartsWidth}}" height="{{chartsHeight}}"
+							  select="selectRow(selectedRowIndexFacturado)" series="chartSeries"></column-chart>
 			</div>
 		</div>
 
@@ -110,8 +110,8 @@
 			</div>
 			<div collapse="!isCollapsedMonth">
 				<column-chart data="chartDataFacturas" title="{{chartTitleFacturas}}"
-							  width="{{chartWidthFacturas}}" height="{{chartHeightFacturas}}"
-							  select="selectRow(selectedRowIndexFacturas)"></column-chart>
+							  width="{{chartsWidth}}" height="{{chartsHeight}}"
+							  select="selectRow(selectedRowIndexFacturas)" series="chartSeries"></column-chart>
 			</div>
 		</div>
 
@@ -129,8 +129,8 @@
 			</div>
 			<div collapse="!isCollapsedGates">
 				<column-chart data="chartDataGates" title="{{chartTitleGates}}"
-							  width="{{chartWidthGates}}" height="{{chartHeightGates}}"
-							  select="selectRow(selectedRowIndexGates)"></column-chart>
+							  width="{{chartsWidth}}" height="{{chartsHeight}}"
+							  select="selectRow(selectedRowIndexGates)" series="chartSeries"></column-chart>
 			</div>
 		</div>
 
@@ -148,8 +148,8 @@
 			</div>
 			<div collapse="!isCollapsedTurnos">
 				<column-chart data="chartDataTurnos" title="{{chartTitleTurnos}}"
-							  width="{{chartWidthTurnos}}" height="{{chartHeightTurnos}}"
-							  select="selectRow(selectedRowIndexTurnos)"></column-chart>
+							  width="{{chartsWidth}}" height="{{chartsHeight}}"
+							  select="selectRow(selectedRowIndexTurnos)" series="chartSeries"></column-chart>
 			</div>
 		</div>
 	</div>
@@ -177,8 +177,8 @@
 		<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
 			<div class="table-responsive">
 				<column-chart data="chartDataDiaGatesTurnos" title="{{chartTitleDiaGatesTurnos}}"
-							  width="{{chartWidthDiaGatesTurnos}}" height="{{chartHeightDiaGatesTurnos}}"
-							  select="selectRow(selectedRowIndexFacturado)"></column-chart>
+							  width="{{chartWidthDiaGatesTurnos}}" height="{{chartsHeight}}"
+							  select="selectRow(selectedRowIndexFacturado)" series="chartSeries"></column-chart>
 			</div>
 		</div>
 	</div>

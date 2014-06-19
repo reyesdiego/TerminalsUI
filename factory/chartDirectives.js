@@ -151,7 +151,8 @@ myapp.directive('columnChart', function ($timeout) {
 			width:    '@width',
 			height:   '@height',
 			data:     '=data',
-			selectFn: '&select'
+			selectFn: '&select',
+			series:   '=series'
 		},
 		link: function ($scope, $elm) {
 			var data; //= new google.visualization.arrayToDataTable($scope.data);
@@ -192,7 +193,7 @@ myapp.directive('columnChart', function ($timeout) {
 							'title': $scope.title,
 							'width': $scope.width,
 							'height': $scope.height,
-							'series': {3: {type: "line"}},
+							'series': $scope.series,
 							'animation':{
 								duration: 1000,
 								easing: 'out'

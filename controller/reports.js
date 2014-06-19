@@ -5,33 +5,33 @@
 var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory){
 
 	$scope.chartTitleBarrasBactssa = "Detalle por mes BACTSSA";
-	$scope.chartWidthBarrasBactssa = 300;
-	$scope.chartHeightBarrasBactssa = 380;
+	$scope.chartWidthBarrasBactssa = 800;
+	$scope.chartHeightBarrasBactssa = 400;
 	$scope.chartDataBarrasBactssa = [];
 
 	$scope.chartTitleBarrasTerminal4 = "Detalle por mes TERMINAL 4";
-	$scope.chartWidthBarrasTerminal4 = 300;
-	$scope.chartHeightBarrasTerminal4 = 380;
+	$scope.chartWidthBarrasTerminal4 = 800;
+	$scope.chartHeightBarrasTerminal4 = 400;
 	$scope.chartDataBarrasTerminal4 = [];
 
 	$scope.chartTitleBarrasTrp = "Detalle por mes TRP";
-	$scope.chartWidthBarrasTrp = 300;
-	$scope.chartHeightBarrasTrp = 380;
+	$scope.chartWidthBarrasTrp = 800;
+	$scope.chartHeightBarrasTrp = 400;
 	$scope.chartDataBarrasTrp = [];
 
 	$scope.chartTitleTortaBactssa = "Porcentaje anual BACTSSA";
-	$scope.chartWidthTortaBactssa = 300;
-	$scope.chartHeightTortaBactssa = 380;
+	$scope.chartWidthTortaBactssa = 400;
+	$scope.chartHeightTortaBactssa = 400;
 	$scope.chartDataTortaBactssa = [];
 
 	$scope.chartTitleTortaTerminal4 = "Porcentaje anual TERMINAL 4";
-	$scope.chartWidthTortaTerminal4 = 300;
-	$scope.chartHeightTortaTerminal4 = 380;
+	$scope.chartWidthTortaTerminal4 = 400;
+	$scope.chartHeightTortaTerminal4 = 400;
 	$scope.chartDataTortaTerminal4 = [];
 
 	$scope.chartTitleTortaTrp = "Porcentaje anual TRP";
-	$scope.chartWidthTortaTrp = 300;
-	$scope.chartHeightTortaTrp = 380;
+	$scope.chartWidthTortaTrp = 400;
+	$scope.chartHeightTortaTrp = 400;
 	$scope.chartDataTortaTrp = [];
 
 	$scope.desde = new Date();
@@ -61,7 +61,19 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 			var graficoBarras = [
 				['Datos', 'Cumplidos', 'Ausencias', 'Tardes', 'Sin turno', { role: 'annotation' } ]
 			];
-			var graficoTorta = [
+			var tortaBactssa = [
+				['Cumplidos', 0],
+				['Ausencias', 0],
+				['Tardes', 0],
+				['Sin turno', 0]
+			];
+			var tortaTerminal4 = [
+				['Cumplidos', 0],
+				['Ausencias', 0],
+				['Tardes', 0],
+				['Sin turno', 0]
+			];
+			var tortaTrp = [
 				['Cumplidos', 0],
 				['Ausencias', 0],
 				['Tardes', 0],
@@ -70,9 +82,6 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 			var barrasBactssa = graficoBarras.slice();
 			var barrasTerminal4 = graficoBarras.slice();
 			var barrasTrp = graficoBarras.slice();
-			var tortaBactssa = graficoTorta.slice();
-			var tortaTerminal4 = graficoTorta.slice();
-			var tortaTrp = graficoTorta.slice();
 
 			var filaBarras = ['', 0, 0, 0, 0, ''];
 			var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre", "Diciembre"];
@@ -107,7 +116,14 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 						break;
 				}
 			})
-		})
+			$scope.chartDataBarrasBactssa = barrasBactssa.slice();
+			$scope.chartDataBarrasTerminal4 = barrasTerminal4.slice();
+			$scope.chartDataBarrasTrp = barrasTrp.slice();
+
+			$scope.chartDataTortaBactssa = tortaBactssa.slice();
+			$scope.chartDataTortaTerminal4 = tortaTerminal4.slice();
+			$scope.chartDataTortaTrp = tortaTrp.slice();
+		});
 
 	};
 });
