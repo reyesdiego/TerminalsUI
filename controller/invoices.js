@@ -8,11 +8,6 @@ function invoicesCtrl ($scope, invoiceFactory) {
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
 
-	// Se carga el array de la descripcion de los items de las facturas
-	invoiceFactory.getDescriptionItem(function(data){
-		$scope.itemsDescriptionInvoices = data.data;
-	});
-
 	$scope.hitEnter = function(evt){
 		if(angular.equals(evt.keyCode,13))
 			$scope.cargaFacturas();
@@ -22,11 +17,6 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.cargaFacturas($scope.page);
 	});
-
-	// Para mostrar el icono del alert en la desc
-	$scope.isDefinedAngular = function(itemId){
-		return angular.isDefined($scope.itemsDescriptionInvoices[itemId]);
-	};
 
 	$scope.cargaFacturas = function(page){
 		page = page || { skip:0, limit: $scope.itemsPerPage };

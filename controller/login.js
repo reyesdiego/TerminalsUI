@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
+function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, loginService){
 	'use strict';
 	$scope.entrando = false;
 
@@ -20,6 +20,11 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
 
 					$rootScope.esUsuario = loginService.getType();
 					$rootScope.terminal = loginService.getInfo();
+
+					// Se carga el array de la descripcion de los items de las facturas
+					invoiceFactory.getDescriptionItem(function(data){
+						$rootScope.itemsDescriptionInvoices = data.data;
+					});
 				}
 			}
 		)};

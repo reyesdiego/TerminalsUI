@@ -20,16 +20,6 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		if (horarioGate >= horarioInicio && horarioGate <= horarioFin) { return 'green' } else { return 'red' }
 	};
 
-	// Se carga el array de la descripcion de los items de las facturas
-	invoiceFactory.getDescriptionItem(function(data){
-		$scope.itemsDescriptionInvoices = data.data;
-	});
-
-	// Para mostrar el icono del alert en la desc
-	$scope.isDefinedAngular = function(itemId){
-		return angular.isDefined($scope.itemsDescriptionInvoices[itemId]);
-	};
-
 	$scope.cargaGatesPorFiltros = function(){
 		$scope.isCollapsed = !$scope.isCollapsed;
 		$scope.currentPage = 1;

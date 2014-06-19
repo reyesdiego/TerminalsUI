@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 
-function navigationCtrl($scope, $rootScope, $state, loginService){
+function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService){
 	"use strict";
 	$rootScope.esUsuario = '';
 	$rootScope.terminal = '';
@@ -11,6 +11,10 @@ function navigationCtrl($scope, $rootScope, $state, loginService){
 	if (loginService.getStatus()){
 		$rootScope.esUsuario = loginService.getType();
 		$rootScope.terminal = loginService.getInfo();
+		// Se carga el array de la descripcion de los items de las facturas
+		invoiceFactory.getDescriptionItem(function(data){
+			$rootScope.itemsDescriptionInvoices = data.data;
+		});
 	}
 
 	$scope.$watch(function() {
