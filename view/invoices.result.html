@@ -41,7 +41,7 @@
 				</thead>
 				<tbody ng-repeat="contenedor in verDetalle.detalle">
 				<tr>
-					<td colspan="5" style="text-align: left">
+					<td colspan="6" style="text-align: left">
 						<strong><span>Contenedor: {{ contenedor.contenedor }}</span></strong>
 						<span> - Buque: {{ contenedor.buque.nombre }}</span>
 						<span> - Viaje: {{ contenedor.buque.viaje }}</span>
@@ -60,19 +60,19 @@
 				<tfoot style="text-align: right;">
 				<tr>
 					<td colspan="2">Subtotal</td>
-					<td colspan="3">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.subtotal | currency }}</td>
+					<td colspan="4">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.subtotal | currency }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">IVA</td>
-					<td colspan="3">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.iva | currency }}</td>
+					<td colspan="4">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.iva | currency }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">Otros Tributos</td>
-					<td colspan="3">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | currency }}</td>
+					<td colspan="4">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | currency }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">Total</td>
-					<td colspan="3">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.total | currency }}</td>
+					<td colspan="4">{{ verDetalle.codMoneda | formatCurrency }} {{ verDetalle.importe.total | currency }}</td>
 				</tr>
 				</tfoot>
 			</table>
