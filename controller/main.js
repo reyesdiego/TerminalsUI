@@ -119,7 +119,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('control', {
 			url: "/control",
 			templateUrl: "view/control.html",
-			controller: "ControlCtrl",
 			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
 				datosGrafico: controlCtrl.primerCargaComprobantes,
 				datosGraficoPorMes: controlCtrl.prepararMatrizVacía,
