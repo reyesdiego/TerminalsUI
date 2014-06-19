@@ -119,6 +119,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('control', {
 			url: "/control",
 			templateUrl: "view/control.html",
+			controller: "controlCtrl",
 			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
 				datosGrafico: controlCtrl.primerCargaComprobantes,
 				datosGraficoPorMes: controlCtrl.prepararMatrizVacía,
@@ -158,6 +159,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('reports', {
 			url: "/reportes",
 			templateUrl:"view/reportes.html",
+			controller: "reportsCtrl",
 			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
 				matrizVaciaBarras: reportsCtrl.prepararMatrizVaciaBarras,
 				matrizVaciaTorta: reportsCtrl.prepararMatrizVaciaTorta
