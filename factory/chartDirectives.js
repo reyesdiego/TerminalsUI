@@ -64,6 +64,7 @@ myapp.directive('pieChart', function ($timeout) {
 							'title': $scope.title,
 							'width': $scope.width,
 							'height': $scope.height,
+							'backgroundColor': {'fill': 'transparent'},
 							'is3D': true
 						};
 						chart.draw(data, options);
@@ -125,6 +126,7 @@ myapp.directive('columnChartStack', function ($timeout) {
 							'title': $scope.title,
 							'width': $scope.width,
 							'height': $scope.height,
+							'backgroundColor': {'fill': 'transparent'},
 							'animation':{
 								duration: 1000,
 								easing: 'out'
@@ -195,6 +197,7 @@ myapp.directive('columnChart', function ($timeout) {
 							'width': $scope.width,
 							'height': $scope.height,
 							'series': $scope.series,
+							'backgroundColor': {'fill': 'transparent'},
 							'animation':{
 								duration: 1000,
 								easing: 'out'

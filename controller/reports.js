@@ -4,34 +4,24 @@
 
 var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory){
 
-	$scope.chartTitleBarrasBactssa = "Detalle por mes BACTSSA";
-	$scope.chartWidthBarrasBactssa = 500;
-	$scope.chartHeightBarrasBactssa = 400;
+	$scope.chartTitleBarrasHorarios = "Detalle por mes";
+	$scope.chartWidthBarrasHorarios = 500;
+	$scope.chartHeightBarrasHorarios = 400;
+
 	$scope.chartDataBarrasBactssa = [];
 
-	$scope.chartTitleBarrasTerminal4 = "Detalle por mes TERMINAL 4";
-	$scope.chartWidthBarrasTerminal4 = 500;
-	$scope.chartHeightBarrasTerminal4 = 400;
 	$scope.chartDataBarrasTerminal4 = [];
 
-	$scope.chartTitleBarrasTrp = "Detalle por mes TRP";
-	$scope.chartWidthBarrasTrp = 500;
-	$scope.chartHeightBarrasTrp = 400;
 	$scope.chartDataBarrasTrp = [];
 
-	$scope.chartTitleTortaBactssa = "Porcentaje anual BACTSSA";
-	$scope.chartWidthTortaBactssa = 700;
-	$scope.chartHeightTortaBactssa = 600;
+	$scope.chartTitleTortaHorarios = "Porcentaje anual";
+	$scope.chartWidthTortaHorarios = 550;
+	$scope.chartHeightTortaHorarios = 530;
+
 	$scope.chartDataTortaBactssa = [];
 
-	$scope.chartTitleTortaTerminal4 = "Porcentaje anual TERMINAL 4";
-	$scope.chartWidthTortaTerminal4 = 700;
-	$scope.chartHeightTortaTerminal4 = 600;
 	$scope.chartDataTortaTerminal4 = [];
 
-	$scope.chartTitleTortaTrp = "Porcentaje anual TRP";
-	$scope.chartWidthTortaTrp = 700;
-	$scope.chartHeightTortaTrp = 600;
 	$scope.chartDataTortaTrp = [];
 
 	$scope.desde = new Date();
