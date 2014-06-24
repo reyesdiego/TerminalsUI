@@ -123,7 +123,7 @@
 		<div class="col-lg-4" ng-show="loadingGates">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingGates">
+		<div class="col-lg-4" ng-show="!loadingGates" style="visibility: {{ visibleGates }}">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeGates" />
 				<span class="input-group-btn">
@@ -145,7 +145,7 @@
 		<div class="col-lg-4" ng-show="loadingTurnos">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingTurnos">
+		<div class="col-lg-4" ng-show="!loadingTurnos" style="visibility: {{ visibleTurnos }}">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeTurnos" />
 				<span class="input-group-btn">
@@ -167,9 +167,9 @@
 
 	<div class="row">
 		<div class="col-lg-4" ng-show="loadingGatesTurnos">
-			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+			<img class="media-object" style="margin-left: 480px; margin-top: 75px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4 col-lg-offset-3" ng-hide="loadingGatesTurnos">
+		<div class="col-lg-4 col-lg-offset-3" ng-show="!loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="diaGatesTurnos" />
 				<span class="input-group-btn">
@@ -182,14 +182,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-2" ng-hide="loadingGatesTurnos">
+		<div class="col-lg-2" ng-show="!loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
 			<div class="btn-group">
 				<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Gates'" ng-change="traerDatosGatesTurnosDia()">Gates</label>
 				<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Turnos'" ng-change="traerDatosGatesTurnosDia()">Turnos</label>
 			</div>
 		</div>
 		<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
-			<div class="table-responsive" ng-hide="loadingGatesTurnos">
+			<div class="table-responsive" ng-show="!loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
 				<column-chart data="chartDataDiaGatesTurnos" title="{{chartTitleDiaGatesTurnos}}"
 							  width="{{chartWidthDiaGatesTurnos}}" height="{{chartsHeight}}"
 							  select="selectRow(selectedRowIndexFacturado)" series="chartSeries"></column-chart>

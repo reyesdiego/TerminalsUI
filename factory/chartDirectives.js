@@ -64,13 +64,12 @@ myapp.directive('pieChart', function ($timeout) {
 							'title': $scope.title,
 							'width': $scope.width,
 							'height': $scope.height,
-							'backgroundColor': {'fill': 'transparent'},
-							'is3D': true
+							'backgroundColor': {'fill': 'transparent'}
 						};
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
-					}, 0, true);
+					}, 3000, true);
 				}
 			}
 		}
@@ -139,7 +138,7 @@ myapp.directive('columnChartStack', function ($timeout) {
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
-					}, 30, true);
+					}, 100, true);
 				}
 			}
 		}
@@ -209,7 +208,7 @@ myapp.directive('columnChart', function ($timeout) {
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
-					}, 30, true);
+					}, 100, true);
 				}
 			}
 		}
@@ -278,12 +277,13 @@ myapp.directive('pieChart3d', function ($timeout) {
 							'title': $scope.title,
 							'width': $scope.width,
 							'height': $scope.height,
+							'backgroundColor': {'fill': 'transparent'},
 							'is3D': true
 						};
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
-					}, 0, true);
+					}, 100, true);
 				}
 			}
 		}

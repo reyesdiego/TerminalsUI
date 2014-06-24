@@ -67,12 +67,15 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 	$scope.control.ratesCount = 0;
 	$scope.control.ratesTotal = 0;
 
-	$scope.loadingTasas = true;
-	$scope.loadingFacturadoDia = true;
-	$scope.loadingFacturadoMes = true;
-	$scope.loadingGates = true;
-	$scope.loadingTurnos = true;
-	$scope.loadingGatesTurnos = true;
+	$scope.loadingTasas = false;
+	$scope.loadingFacturadoDia = false;
+	$scope.loadingFacturadoMes = false;
+	$scope.loadingGates = false;
+	$scope.loadingTurnos = false;
+	$scope.loadingGatesTurnos = false;
+	$scope.visibleTurnos = 'hidden';
+	$scope.visibleGates = 'hidden';
+	$scope.visibleGatesTurnos = 'hidden';
 
 	socket.on('invoice', function () {
 		$scope.chartData[2][1]++;
@@ -101,26 +104,30 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 		$scope.isCollapsedMonth = true;
 		$scope.loadingFacturadoMes = true;
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, function(graf){
-			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf);
 			$scope.loadingFacturadoMes = false;
+			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf);
 		});
 	};
 
 	$scope.traerDatosGates = function(){
 		$scope.isCollapsedGates = true;
 		$scope.loadingGates = true;
+		$scope.visibleGates = 'hidden';
 		controlPanelFactory.getGatesMeses($scope.mesDesdeGates, function(graf){
-			$scope.chartDataGates = controlCtrl.prepararDatosMes(graf);
 			$scope.loadingGates = false;
+			$scope.visibleGates = 'block';
+			$scope.chartDataGates = controlCtrl.prepararDatosMes(graf);
 		});
 	};
 
 	$scope.traerDatosTurnos = function(){
 		$scope.isCollapsedTurnos = true;
 		$scope.loadingTurnos = true;
+		$scope.visibleTurnos = 'hidden';
 		controlPanelFactory.getTurnosMeses($scope.mesDesdeTurnos, function(graf){
-			$scope.chartDataTurnos = controlCtrl.prepararDatosMes(graf);
 			$scope.loadingTurnos = false;
+			$scope.visibleTurnos = 'block';
+			$scope.chartDataTurnos = controlCtrl.prepararDatosMes(graf);
 		});
 	};
 
@@ -128,11 +135,11 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 		$scope.loadingTasas = true;
 		$scope.isCollapsedDayTasas = true;
 		controlPanelFactory.getTasas($scope.desdeTasas, function(graf){
+			$scope.loadingTasas = false;
 			var result = controlCtrl.prepararDatosFacturadoDiaTasas(graf);
 			$scope.chartDataFacturadoTasas = result.dataGraf;
 			$scope.control.ratesCount = result.ratesCount;
 			$scope.control.ratesTotal = result.ratesTotal;
-			$scope.loadingTasas = false;
 		});
 	};
 
@@ -140,28 +147,27 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 		$scope.isCollapsedDay = true;
 		$scope.loadingFacturadoDia = true;
 		controlPanelFactory.getFacturadoPorDia($scope.desde, function(graf){
-			$scope.chartDataFacturado = controlCtrl.prepararDatosFacturadoDia(graf);
 			$scope.loadingFacturadoDia = false;
+			$scope.chartDataFacturado = controlCtrl.prepararDatosFacturadoDia(graf);
 		});
 	};
 
 	$scope.traerDatosGatesTurnosDia = function(){
 		$scope.isCollapsedDayGatesTurnos = true;
 		$scope.loadingGatesTurnos = true;
+		$scope.visibleGatesTurnos = 'hidden';
 		if ($scope.radioModel == 'Gates'){
 			controlPanelFactory.getGatesDia($scope.diaGatesTurnos, function(graf){
-				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
-				console.log("hola que tal gates");
 				$scope.loadingGatesTurnos = false;
-				console.log($scope.loadingGatesTurnos);
+				$scope.visibleGatesTurnos = 'block';
+				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
 			});
 		}
 		else if ($scope.radioModel == 'Turnos'){
 			controlPanelFactory.getTurnosDia($scope.diaGatesTurnos, function(graf){
-				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
-				console.log("hola que tal turnos");
 				$scope.loadingGatesTurnos = false;
-				console.log($scope.loadingGatesTurnos);
+				$scope.visibleGatesTurnos = 'block';
+				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
 			});
 		}
 	};
@@ -178,11 +184,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 controlCtrl.prepararMatrizVacía = function($q){
 	var defer = $q.defer();
 	var base = [
-		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, ''],
-		['', 0, 0, 0, 0, '']
+		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 	];
 	defer.resolve(base);
 	return defer.promise;
