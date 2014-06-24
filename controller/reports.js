@@ -2,16 +2,14 @@
  * Created by kolesnikov-a on 17/06/14.
 */
 
-var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory){
+var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory){
 
 	$scope.chartTitleBarrasHorarios = "Detalle por mes";
 	$scope.chartWidthBarrasHorarios = 500;
 	$scope.chartHeightBarrasHorarios = 400;
 
 	$scope.chartDataBarrasBactssa = [];
-
 	$scope.chartDataBarrasTerminal4 = [];
-
 	$scope.chartDataBarrasTrp = [];
 
 	$scope.chartTitleTortaHorarios = "Porcentaje anual";
@@ -19,10 +17,12 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.chartHeightTortaHorarios = 530;
 
 	$scope.chartDataTortaBactssa = [];
-
 	$scope.chartDataTortaTerminal4 = [];
-
 	$scope.chartDataTortaTrp = [];
+
+	$scope.chartDataTarifasBactssa = [];
+	$scope.chartDataTarifasTerminal4 = [];
+	$scope.chartDataTarifasTrp = [];
 
 	$scope.desde = new Date();
 	$scope.mesDesdeHorarios = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
@@ -44,6 +44,56 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 	$scope.rowClass = function (index) {
 		return ($scope.selected === index) ? "selected" : "";
+	};
+
+	$scope.cargarReporteTarifas = function(){
+		var arrayTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
+		var arrayCodigos = [];
+		var arrayCantidad = [];
+		var graficoArmado = [];
+		var filaGrafico = [];
+		//Los array de código y cantidad se cargan por separado para facilitar la tarea, respetando que la posición en un array
+		//se corresponden con los datos en el otro en la misma posición
+
+		arrayTerminales.forEach(function(unaTerminal){
+			invoiceFactory.getByDate($scope.desde, $scope.hasta, unaTerminal, $scope.tipoComprobante, function(dataComprob){
+
+				$scope.result = dataComprob;
+
+				$scope.result.data.forEach(function(comprob){
+					comprob.detalle.forEach(function(detalle){
+						detalle.items.forEach(function(item){
+							if (!in_array(item.id, arrayCodigos)){
+								arrayCodigos.push(item.id)
+								arrayCantidad.push(0);
+							}
+							var pos = arrayCodigos.indexOf(item.id);
+							arrayCantidad[pos] += 1;
+						});
+					});
+				});
+
+				var i;
+				for (i = 0; i <= 9; i++){
+					filaGrafico = [arrayCodigos[i], arrayCantidad[i]];
+					graficoArmado.push(filaGrafico.slice());
+				}
+
+				switch (unaTerminal){
+					case 'BACTSSA':
+						$scope.chartDataTarifasBactssa = graficoArmado.slice();
+						break;
+					case 'TERMINAL4':
+						$scope.chartDataTarifasTerminal4 = graficoArmado.slice();
+						break;
+					case 'TRP':
+						$scope.chartDataTarifasTrp = graficoArmado.slice();
+						break;
+				}
+
+			});
+		})
+
 	};
 
 	$scope.cargarReporteHorarios = function(){

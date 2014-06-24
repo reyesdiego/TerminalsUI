@@ -69,7 +69,7 @@ myapp.directive('pieChart', function ($timeout) {
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
-					}, 3000, true);
+					}, 100, true);
 				}
 			}
 		}
