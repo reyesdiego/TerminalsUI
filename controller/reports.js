@@ -2,7 +2,11 @@
  * Created by kolesnikov-a on 17/06/14.
 */
 
-var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory){
+var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory){
+
+	vouchersFactory.getVouchersType(function(data){
+		$scope.comprobantesTipos = data.data;
+	});
 
 	$scope.chartTitleBarrasHorarios = "Detalle por mes";
 	$scope.chartWidthBarrasHorarios = 500;
@@ -24,8 +28,13 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.chartDataTarifasTerminal4 = [];
 	$scope.chartDataTarifasTrp = [];
 
-	$scope.desde = new Date();
-	$scope.mesDesdeHorarios = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
+	$scope.resultadosTarifasBactssa = [];
+	$scope.resultadosTarifasTerminal4 = [];
+	$scope.resultadosTarifasTrp = [];
+
+	$scope.hasta = new Date();
+	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
+	$scope.mesDesdeHorarios = new Date($scope.hasta.getFullYear() + '-' + ($scope.hasta.getMonth() + 1) + '-01' );
 
 	$scope.monthMode = 'month';
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
@@ -76,6 +85,17 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				var i;
 				for (i = 0; i <= 9; i++){
 					filaGrafico = [arrayCodigos[i], arrayCantidad[i]];
+					switch (unaTerminal){
+						case 'BACTSSA':
+							$scope.resultadosTarifasBactssa.push(filaGrafico.slice());
+							break;
+						case 'TERMINAL4':
+							$scope.resultadosTarifasTerminal4.push(filaGrafico.slice());
+							break;
+						case 'TRP':
+							$scope.resultadosTarifasTrp.push(filaGrafico.slice());
+							break;
+					}
 					graficoArmado.push(filaGrafico.slice());
 				}
 
@@ -92,7 +112,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				}
 
 			});
-		})
+		});
 
 	};
 

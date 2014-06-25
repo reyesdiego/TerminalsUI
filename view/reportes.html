@@ -1,9 +1,45 @@
 <div class="container">
 
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-4">
 			<div class="xpage-header">
 				<h1 id="forms">Reportes</h1>
+			</div>
+		</div>
+
+		<div class="col-lg-8 well">
+			<div class="row">
+				<div class="col-lg-6">
+					<label for="fechaDesde">Desde</label>
+					<p class="input-group">
+						<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
+						<span class="input-group-btn">
+							<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+				<div class="col-lg-6">
+					<label for="fechaHasta">Hasta</label>
+					<p class="input-group">
+						<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="hasta"  is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
+						<span class="input-group-btn">
+							<button class="btn btn-default" ng-click="open($event, 'hasta')"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<label for="selectComprobante" >Tipo de comprobante</label>
+					<select class="form-control" id="selectComprobante" ng-model="tipoComprobante">
+						<option ng-repeat="comprobante in comprobantesTipos" value="{{ comprobante._id }}" ng-selected="$first">{{ comprobante.description }}</option>
+					</select>
+				</div>
+				<div class="col-lg-6">
+					<br>
+					<button class="btn btn-default" ui-sref="control"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+					<button class="btn btn-primary" ng-click="cargar()"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -11,7 +47,84 @@
 	<div class="row">
 		<tabset>
 			<tab heading="Períodos de mayor facturación">Vertical content 2</tab>
-			<tab heading="Tarifas más utilizadas">Vertical content 1</tab>
+			<tab heading="Tarifas más utilizadas">
+				<div class="row well">
+					<div class="row col-lg-12" style="text-align: center"><h1>BACTSSA</h1></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<br>
+							<table class="table table-bordered table-hover table-responsive">
+								<thead class="bg-info">
+								<th>Códigos</th>
+								<th>Cantidad</th>
+								</thead>
+								<tbody>
+								<tr ng-repeat="codigo in resultadosTarifasBactssa | orderBy: codigo[1]">
+									<td>{{ codigo[0] }}</td>
+									<td>{{ codigo[1] }}</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-lg-8">
+							<pie-chart3d data="chartDataTarifasBactssa" title="{{chartTitleTortaHorarios}}"
+							             width="{{chartWidthTortaHorarios}}" height="{{chartHeightTortaHorarios}}"
+							             select="selectRow(selectedRowIndexTarifasBactssa)"></pie-chart3d>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="row well">
+					<div class="row col-lg-12" style="text-align: center"><h1>TERMINAL 4</h1></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<br>
+							<table class="table table-bordered table-hover table-responsive">
+								<thead class="bg-info">
+								<th>Códigos</th>
+								<th>Cantidad</th>
+								</thead>
+								<tbody>
+								<tr ng-repeat="codigo in resultadosTarifasTerminal4 | orderBy: codigo[1]">
+									<td>{{ codigo[0] }}</td>
+									<td>{{ codigo[1] }}</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-lg-8">
+							<pie-chart3d data="chartDataTarifasTerminal4" title="{{chartTitleTortaHorarios}}"
+							             width="{{chartWidthTortaHorarios}}" height="{{chartHeightTortaHorarios}}"
+							             select="selectRow(selectedRowIndexTarifasTerminal4)"></pie-chart3d>
+						</div>
+					</div>
+				</div>
+				<div class="row well">
+					<div class="row col-lg-12" style="text-align: center"><h1>Terminal Río de la Plata</h1></div>
+					<div class="row">
+						<div class="col-lg-4">
+							<br>
+							<table class="table table-bordered table-hover table-responsive">
+								<thead class="bg-info">
+								<th>Códigos</th>
+								<th>Cantidad</th>
+								</thead>
+								<tbody>
+								<tr ng-repeat="codigo in resultadosTarifasTrp | orderBy: codigo[1]">
+									<td>{{ codigo[0] }}</td>
+									<td>{{ codigo[1] }}</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-lg-8">
+							<pie-chart3d data="chartDataTarifasTrp" title="{{chartTitleTortaHorarios}}"
+							             width="{{chartWidthTortaHorarios}}" height="{{chartHeightTortaHorarios}}"
+							             select="selectRow(selectedRowIndexTarifasTrp)"></pie-chart3d>
+						</div>
+					</div>
+				</div>
+			</tab>
 			<tab heading="Porcentaje de cumplimientos de horarios" select="cargarReporteHorarios()">
 				<div class="row well">
 					<div class="row col-lg-12" style="text-align: center"><h1>BACTSSA</h1></div>
