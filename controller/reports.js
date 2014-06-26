@@ -32,6 +32,10 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.resultadosTarifasTerminal4 = [];
 	$scope.resultadosTarifasTrp = [];
 
+	$scope.matchesBactssa = [];
+	$scope.matchesTerminal4 = [];
+	$scope.matchesTrp = [];
+
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 	$scope.mesDesdeHorarios = new Date($scope.hasta.getFullYear() + '-' + ($scope.hasta.getMonth() + 1) + '-01' );
@@ -41,6 +45,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.format = $scope.formats['yyyy-MM-dd'];
 	$scope.formatSoloMes = $scope.formats[3];
 	$scope.terminoCarga = false;
+	$scope.tipoComprobante = "0";
 
 	$scope.deleteRow = function (index) {
 		$scope.chartData.splice(index, 1);
@@ -55,35 +60,42 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 		return ($scope.selected === index) ? "selected" : "";
 	};
 
-	$scope.cargarReporteTarifas = function(){
-		var arrayTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
+	$scope.cargarReporteTarifasTerminal = function(unaTerminal){
 		var arrayCodigos = [];
 		var arrayCantidad = [];
 		var graficoArmado = [];
 		var filaGrafico = [];
 		//Los array de código y cantidad se cargan por separado para facilitar la tarea, respetando que la posición en un array
 		//se corresponden con los datos en el otro en la misma posición
+		invoiceFactory.getByDate($scope.desde, $scope.hasta, unaTerminal, $scope.tipoComprobante, function(dataComprob){
+			console.log(dataComprob);
+			$scope.result = dataComprob;
 
-		arrayTerminales.forEach(function(unaTerminal){
-			invoiceFactory.getByDate($scope.desde, $scope.hasta, unaTerminal, $scope.tipoComprobante, function(dataComprob){
-
-				$scope.result = dataComprob;
-
-				$scope.result.data.forEach(function(comprob){
-					comprob.detalle.forEach(function(detalle){
-						detalle.items.forEach(function(item){
-							if (!in_array(item.id, arrayCodigos)){
-								arrayCodigos.push(item.id)
-								arrayCantidad.push(0);
-							}
-							var pos = arrayCodigos.indexOf(item.id);
-							arrayCantidad[pos] += 1;
-						});
+			$scope.result.data.forEach(function(comprob){
+				comprob.detalle.forEach(function(detalle){
+					detalle.items.forEach(function(item){
+						if (!in_array(item.id, arrayCodigos)){
+							arrayCodigos.push(item.id)
+							arrayCantidad.push(0);
+						}
+						var pos = arrayCodigos.indexOf(item.id);
+						console.log(item.id);
+						console.log(pos);
+						arrayCantidad[pos] += 1;
 					});
 				});
+			});
 
+			invoiceFactory.getDescriptionItem(unaTerminal, function(losMatches){
 				var i;
-				for (i = 0; i <= 9; i++){
+				var tope;
+
+				if (arrayCodigos.length > 9){
+					tope = 9;
+				}else{
+					tope = arrayCodigos.length - 1
+				}
+				for (i = 0; i <= tope; i++){
 					filaGrafico = [arrayCodigos[i], arrayCantidad[i]];
 					switch (unaTerminal){
 						case 'BACTSSA':
@@ -102,16 +114,28 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				switch (unaTerminal){
 					case 'BACTSSA':
 						$scope.chartDataTarifasBactssa = graficoArmado.slice();
+						$scope.matchesBactssa = losMatches;
 						break;
 					case 'TERMINAL4':
 						$scope.chartDataTarifasTerminal4 = graficoArmado.slice();
+						$scope.matchesTerminal4 = losMatches;
 						break;
 					case 'TRP':
 						$scope.chartDataTarifasTrp = graficoArmado.slice();
+						$scope.matchesTrp = losMatches;
 						break;
 				}
+			})
 
-			});
+		});
+
+	};
+
+	$scope.cargarReporteTarifas = function(){
+		var arrayTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
+
+		arrayTerminales.forEach(function(unaTerminal){
+			$scope.cargarReporteTarifasTerminal(unaTerminal);
 		});
 
 	};

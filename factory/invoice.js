@@ -55,8 +55,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
-	factory.getDescriptionItem = function(callback){
-		var inserturl = serverUrl + '/agp/matches/' + $rootScope.terminal.terminal;
+	factory.getDescriptionItem = function(terminal, callback){
+		var inserturl = serverUrl + '/agp/matches/' + terminal;
 		$http({
 			method: 'GET',
 			url: inserturl,

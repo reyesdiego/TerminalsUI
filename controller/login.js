@@ -19,7 +19,6 @@ function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, logi
 					loginService.setStatus(true);
 					loginService.setType(data.role);
 					loginService.setToken(data.token.token);
-					console.log(data.acceso);
 					data.acceso.push("reports")
 					loginService.setAcceso(data.acceso);
 					$state.transitionTo('tarifario');
@@ -28,7 +27,7 @@ function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, logi
 					$rootScope.terminal = loginService.getInfo();
 
 					// Se carga el array de la descripcion de los items de las facturas
-					invoiceFactory.getDescriptionItem(function(data){
+					invoiceFactory.getDescriptionItem(loginService.getInfo.terminal, function(data){
 						$rootScope.itemsDescriptionInvoices = data.data;
 					});
 				}

@@ -47,7 +47,7 @@
 	<div class="row">
 		<tabset>
 			<tab heading="Períodos de mayor facturación">Vertical content 2</tab>
-			<tab heading="Tarifas más utilizadas">
+			<tab heading="Tarifas más utilizadas" select="cargarReporteTarifas()">
 				<div class="row well">
 					<div class="row col-lg-12" style="text-align: center"><h1>BACTSSA</h1></div>
 					<div class="row">
@@ -55,12 +55,14 @@
 							<br>
 							<table class="table table-bordered table-hover table-responsive">
 								<thead class="bg-info">
-								<th>Códigos</th>
+								<th>Código</th>
+								<th>Descripción</th>
 								<th>Cantidad</th>
 								</thead>
 								<tbody>
 								<tr ng-repeat="codigo in resultadosTarifasBactssa | orderBy: codigo[1]">
 									<td>{{ codigo[0] }}</td>
+									<td>{{ matchesBactssa[codigo[0]] }}</td>
 									<td>{{ codigo[1] }}</td>
 								</tr>
 								</tbody>
@@ -81,12 +83,14 @@
 							<br>
 							<table class="table table-bordered table-hover table-responsive">
 								<thead class="bg-info">
-								<th>Códigos</th>
+								<th>Código</th>
+								<th>Descripción</th>
 								<th>Cantidad</th>
 								</thead>
 								<tbody>
 								<tr ng-repeat="codigo in resultadosTarifasTerminal4 | orderBy: codigo[1]">
 									<td>{{ codigo[0] }}</td>
+									<td>{{ matchesTerminal4[codigo[0]] }}</td>
 									<td>{{ codigo[1] }}</td>
 								</tr>
 								</tbody>
@@ -106,12 +110,14 @@
 							<br>
 							<table class="table table-bordered table-hover table-responsive">
 								<thead class="bg-info">
-								<th>Códigos</th>
+								<th>Código</th>
+								<th>Descripción</th>
 								<th>Cantidad</th>
 								</thead>
 								<tbody>
 								<tr ng-repeat="codigo in resultadosTarifasTrp | orderBy: codigo[1]">
 									<td>{{ codigo[0] }}</td>
+									<td>{{ matchesTrp[codigo[0]] }}</td>
 									<td>{{ codigo[1] }}</td>
 								</tr>
 								</tbody>
