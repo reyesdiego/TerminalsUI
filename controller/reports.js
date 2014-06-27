@@ -62,6 +62,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 
 	$scope.cargarReporteTarifasTerminal = function(unaTerminal){
 		var arrayCodigos = [];
+		var arrayDescripcion = [];
 		var arrayCantidad = [];
 		var graficoArmado = [];
 		var filaGrafico = [];
@@ -95,8 +96,17 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				}else{
 					tope = arrayCodigos.length - 1
 				}
+
 				for (i = 0; i <= tope; i++){
-					filaGrafico = [arrayCodigos[i], arrayCantidad[i]];
+
+					if (angular.isDefined(losMatches[arrayCodigos[i]])){
+						arrayDescripcion.push(losMatches[arrayCodigos[i]])
+					}
+					else{
+						arrayDescripcion.push("No se halló la descripción, verifique que el código esté asociado");
+					}
+
+					filaGrafico = [arrayCodigos[i], arrayDescripcion[i], arrayCantidad[i]];
 					switch (unaTerminal){
 						case 'BACTSSA':
 							$scope.resultadosTarifasBactssa.push(filaGrafico.slice());

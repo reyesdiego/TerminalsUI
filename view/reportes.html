@@ -60,10 +60,10 @@
 								<th>Cantidad</th>
 								</thead>
 								<tbody>
-								<tr ng-repeat="codigo in resultadosTarifasBactssa | orderBy: codigo[1]">
+								<tr ng-repeat="codigo in resultadosTarifasBactssa | orderBy: codigo[2]">
 									<td>{{ codigo[0] }}</td>
-									<td>{{ matchesBactssa[codigo[0]] }}</td>
 									<td>{{ codigo[1] }}</td>
+									<td>{{ codigo[2] }}</td>
 								</tr>
 								</tbody>
 							</table>
