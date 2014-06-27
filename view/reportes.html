@@ -51,7 +51,7 @@
 				<div class="row well">
 					<div class="row col-lg-12" style="text-align: center"><h1>BACTSSA</h1></div>
 					<div class="row">
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<br>
 							<table class="table table-bordered table-hover table-responsive">
 								<thead class="bg-info">
@@ -68,7 +68,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="col-lg-8">
+						<div class="col-lg-6">
 							<pie-chart3d data="chartDataTarifasBactssa" title="{{chartTitleTortaHorarios}}"
 							             width="{{chartWidthTortaHorarios}}" height="{{chartHeightTortaHorarios}}"
 							             select="selectRow(selectedRowIndexTarifasBactssa)"></pie-chart3d>
@@ -79,7 +79,7 @@
 				<div class="row well">
 					<div class="row col-lg-12" style="text-align: center"><h1>TERMINAL 4</h1></div>
 					<div class="row">
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<br>
 							<table class="table table-bordered table-hover table-responsive">
 								<thead class="bg-info">
@@ -88,15 +88,15 @@
 								<th>Cantidad</th>
 								</thead>
 								<tbody>
-								<tr ng-repeat="codigo in resultadosTarifasTerminal4 | orderBy: codigo[1]">
+								<tr ng-repeat="codigo in resultadosTarifasTerminal4 | orderBy: codigo[2]">
 									<td>{{ codigo[0] }}</td>
-									<td>{{ matchesTerminal4[codigo[0]] }}</td>
 									<td>{{ codigo[1] }}</td>
+									<td>{{ codigo[2] }}</td>
 								</tr>
 								</tbody>
 							</table>
 						</div>
-						<div class="col-lg-8">
+						<div class="col-lg-6">
 							<pie-chart3d data="chartDataTarifasTerminal4" title="{{chartTitleTortaHorarios}}"
 							             width="{{chartWidthTortaHorarios}}" height="{{chartHeightTortaHorarios}}"
 							             select="selectRow(selectedRowIndexTarifasTerminal4)"></pie-chart3d>
@@ -106,7 +106,7 @@
 				<div class="row well">
 					<div class="row col-lg-12" style="text-align: center"><h1>Terminal Río de la Plata</h1></div>
 					<div class="row">
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<br>
 							<table class="table table-bordered table-hover table-responsive">
 								<thead class="bg-info">
@@ -115,15 +115,15 @@
 								<th>Cantidad</th>
 								</thead>
 								<tbody>
-								<tr ng-repeat="codigo in resultadosTarifasTrp | orderBy: codigo[1]">
+								<tr ng-repeat="codigo in resultadosTarifasTrp | orderBy: codigo[2]">
 									<td>{{ codigo[0] }}</td>
-									<td>{{ matchesTrp[codigo[0]] }}</td>
 									<td>{{ codigo[1] }}</td>
+									<td>{{ codigo[2] }}</td>
 								</tr>
 								</tbody>
 							</table>
 						</div>
-						<div class="col-lg-8">
+						<div class="col-lg-6">
 							<pie-chart3d data="chartDataTarifasTrp" title="{{chartTitleTortaHorarios}}"
 							             width="{{chartWidthTortaHorarios}}" height="{{chartHeightTortaHorarios}}"
 							             select="selectRow(selectedRowIndexTarifasTrp)"></pie-chart3d>

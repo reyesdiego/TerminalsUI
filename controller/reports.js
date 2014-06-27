@@ -69,7 +69,6 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 		//Los array de código y cantidad se cargan por separado para facilitar la tarea, respetando que la posición en un array
 		//se corresponden con los datos en el otro en la misma posición
 		invoiceFactory.getByDate($scope.desde, $scope.hasta, unaTerminal, $scope.tipoComprobante, function(dataComprob){
-			console.log(dataComprob);
 			$scope.result = dataComprob;
 
 			$scope.result.data.forEach(function(comprob){
@@ -80,8 +79,6 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 							arrayCantidad.push(0);
 						}
 						var pos = arrayCodigos.indexOf(item.id);
-						console.log(item.id);
-						console.log(pos);
 						arrayCantidad[pos] += 1;
 					});
 				});
@@ -118,6 +115,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 							$scope.resultadosTarifasTrp.push(filaGrafico.slice());
 							break;
 					}
+					filaGrafico = [arrayCodigos[i], arrayCantidad[i]];
 					graficoArmado.push(filaGrafico.slice());
 				}
 
@@ -142,6 +140,10 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 
 	$scope.cargarReporteTarifas = function(){
+		$scope.resultadosTarifasBactssa = [];
+		$scope.resultadosTarifasTerminal4 = [];
+		$scope.resultadosTarifasTrp = [];
+
 		var arrayTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
 
 		arrayTerminales.forEach(function(unaTerminal){

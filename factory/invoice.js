@@ -118,6 +118,17 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 	};
 
+	factory.getTarifasTerminal = function(terminal, callback){
+		var inserturl = serverUrl + '/invoices/algo/' + terminal;
+		$http.get('mocks/tarifasTerminal.json')
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+				dialogs.error('Error', 'Error al traer los datos de las tarifas');
+			});
+	};
+
 	return factory;
 
 });
