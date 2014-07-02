@@ -19,17 +19,27 @@ function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, logi
 					loginService.setStatus(true);
 					loginService.setType(data.role);
 					loginService.setToken(data.token.token);
-					data.acceso.push("reports")
+					data.acceso.push("reports");
 					loginService.setAcceso(data.acceso);
 					$state.transitionTo('tarifario');
 
 					$rootScope.esUsuario = loginService.getType();
 					$rootScope.terminal = loginService.getInfo();
 
+					//Si el rol es terminal, queda como filtro de si misma para las consultas
+					//De lo contrario, dejo a BACTSSA como filtro por default
+					if (data.role == 'terminal'){
+						loginService.setFiltro(data.terminal);
+					} else {
+						loginService.setFiltro('BACTSSA');
+					}
+
 					// Se carga el array de la descripcion de los items de las facturas
 					invoiceFactory.getDescriptionItem(loginService.getInfo.terminal, function(data){
 						$rootScope.itemsDescriptionInvoices = data.data;
 					});
+					// Se carga el filtro de terminal para el usuario admin
+					$rootScope.filtroTerminal = "BACTSSA";
 				}
 			}
 		)};

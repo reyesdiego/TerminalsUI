@@ -34,6 +34,12 @@ myapp.service('loginService', function () {
 		getInfo: function () {
 			return JSON.parse(sessionStorage.userData);
 		},
+		setFiltro: function(value) {
+			sessionStorage.setItem('filtro', value);
+		},
+		getFiltro: function() {
+			return sessionStorage.getItem('filtro');
+		},
 		unsetLogin: function(){
 			sessionStorage.clear();
 		}

@@ -10,7 +10,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 		$http({
 			method: 'GET',
 			url: inserturl,
-			headers: { token: loginService.getTo1ken() }
+			headers: { token: loginService.getToken() }
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){

@@ -26,7 +26,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.acceso = loginService.getType();
 
 	$scope.prepararDatos = function(){
-		priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function (data) {
+		priceFactory.getMatchPrices(loginService.getFiltro(), null, function (data) {
 			$scope.pricelist = data.data;
 
 			//Cargo todos los códigos ya asociados de la terminal para control

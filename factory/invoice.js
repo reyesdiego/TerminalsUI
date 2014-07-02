@@ -5,7 +5,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
-		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
+		var inserturl = serverUrl + '/invoices/' + $rootScope.filtroTerminal + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		var insertAux = inserturl;
 		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
@@ -113,7 +113,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 					//dialogs.error('Error', errorText.data);
 				} else {
 					dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
-
 				}
 			});
 	};

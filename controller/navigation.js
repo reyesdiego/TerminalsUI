@@ -7,6 +7,7 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 	$rootScope.esUsuario = '';
 	$rootScope.terminal = '';
 	$scope.acceso = '';
+	$scope.filtroTerminal = 'BACTSSA';
 
 	if (loginService.getStatus()){
 		$rootScope.esUsuario = loginService.getType();
@@ -34,6 +35,10 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		} else{
 			$state.transitionTo('login');
 		}
-	}
+	};
 
+	$scope.setearTerminal = function(terminal){
+		$scope.filtroTerminal = terminal;
+		loginService.setFiltro(terminal);
+	};
 }
