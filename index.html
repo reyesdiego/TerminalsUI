@@ -73,13 +73,21 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-show="acceso=='terminal'"><a ui-sref="tarifario" ng-click="isCollapsed = false">Tarifario</a></li>
 				<li ng-show="acceso=='terminal'"><a ui-sref="matches" ng-click="isCollapsed = false">Asociar</a></li>
-				<li ng-show="acceso=='terminal'"><a ui-sref="invoices" ng-click="isCollapsed = false">Facturas</a></li>
+				<li ng-show="acceso=='terminal'"><a ui-sref="invoices" ng-click="isCollapsed = false">Comprobantes</a></li>
 				<li ng-show="acceso=='control'"><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
 				<li ng-show="acceso=='control'"><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
 				<li ng-show="acceso!=''" class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-info-sign"></span> Filtrar Terminal<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#" ng-click="isCollapsed = false; setearTerminal('BACTSSA')"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li><a href="#" ng-click="isCollapsed = false; setearTerminal('TRP')"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li><a href="#" ng-click="isCollapsed = false; setearTerminal('TERMINAL4')"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+					</ul>
+				</li>
+				<li ng-show="acceso!=''" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-user"></span> {{ terminal.email }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-click="salir()"><a href="" ng-click="isCollapsed = false">Salir</a></li>
+						<li ng-click="salir()"><a href="" ng-click="isCollapsed = false"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
 					</ul>
 				</li>
 			</ul>

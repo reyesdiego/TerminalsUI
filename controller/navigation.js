@@ -15,6 +15,7 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		invoiceFactory.getDescriptionItem(loginService.getInfo.terminal, function(data){
 			$rootScope.itemsDescriptionInvoices = data.data;
 		});
+		$rootScope.filtroTerminal = "BACTSSA";
 	}
 
 	$scope.$watch(function() {
@@ -34,6 +35,9 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		} else{
 			$state.transitionTo('login');
 		}
-	}
+	};
 
+	$scope.setearTerminal = function(terminal){
+		$rootScope.filtroTerminal = terminal;
+	};
 }

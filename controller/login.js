@@ -19,7 +19,7 @@ function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, logi
 					loginService.setStatus(true);
 					loginService.setType(data.role);
 					loginService.setToken(data.token.token);
-					data.acceso.push("reports")
+					data.acceso.push("reports");
 					loginService.setAcceso(data.acceso);
 					$state.transitionTo('tarifario');
 
@@ -30,6 +30,8 @@ function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, logi
 					invoiceFactory.getDescriptionItem(loginService.getInfo.terminal, function(data){
 						$rootScope.itemsDescriptionInvoices = data.data;
 					});
+					// Se carga el filtro de terminal para el usuario admin
+					$rootScope.filtroTerminal = "BACTSSA";
 				}
 			}
 		)};
