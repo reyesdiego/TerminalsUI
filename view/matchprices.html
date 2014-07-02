@@ -72,7 +72,7 @@
 
 		<pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 
-		<div class="row">
+		<div class="row" ng-show="acceso=='terminal'">
 			<div class="col-lg-12">
 				<button class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
 				<button class="btn" ng-click="abrirNuevoConcepto()"><span class="glyphicon glyphicon-asterisk"></span> Nuevo concepto</button>
