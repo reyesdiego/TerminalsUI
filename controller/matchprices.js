@@ -23,6 +23,8 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.unidad = "CONTAINER";
 	$scope.moneda = "PES";
 
+	$scope.acceso = loginService.getType();
+
 	$scope.prepararDatos = function(){
 		priceFactory.getMatchPrices(loginService.getInfo().terminal, null, function (data) {
 			$scope.pricelist = data.data;

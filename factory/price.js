@@ -4,12 +4,13 @@
 myapp.factory('priceFactory', function($http, dialogs, loginService){
 	var factory = {};
 
-	factory.getPrice = function(callback) {
-		var inserturl = serverUrl + '/agp/prices';
+	factory.getPrice = function(terminal, callback) {
+		var inserturl = serverUrl + '/prices/' + terminal;
+		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
-			headers: { token: loginService.getToken() }
+			headers: { token: loginService.getTo1ken() }
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
@@ -18,7 +19,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 	};
 
 	factory.getMatchPrices = function(terminal, datos, callback) {
-		var inserturl = serverUrl + '/agp/matchprices/' + terminal + '?';
+		var inserturl = serverUrl + '/matchprices/' + terminal + '?';
 		var insertAux = inserturl;
 		if (datos && datos != null){
 			if(angular.isDefined(datos.codigo) && datos.codigo != ''){
@@ -41,7 +42,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 	};
 
 	factory.addMatchPrice = function (data, callback) {
-		var inserturl = serverUrl + '/agp/matchprice';
+		var inserturl = serverUrl + '/matchprice';
 		$http({
 			method: "POST",
 			url: inserturl,
@@ -55,7 +56,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 	};
 
 	factory.addPrice = function (data, callback) {
-		var inserturl = serverUrl + '/agp/price';
+		var inserturl = serverUrl + '/price';
 		$http({
 			method: 'POST',
 			url: inserturl,

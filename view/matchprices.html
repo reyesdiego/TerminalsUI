@@ -37,7 +37,7 @@
 							<th>Código</th>
 							<th>Tarifa</th>
 							<th>Cod. Asociado</th>
-							<th>Cargar</th>
+							<th ng-show="acceso=='terminal'">Cargar</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -46,12 +46,16 @@
 							<td class="col-lg-1">{{ price.code }}</td>
 							<td class="col-lg-7">{{ price.description | maxLength : 190 }}<a href="" ng-show="(price.description.length > 190)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 							<td class="col-lg-2">
-								<span ng-repeat="codigo in price.matches[0].match track by $index">
+								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="acceso=='terminal'">
+									<a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a>
+									<span ng-show="!$last">, </span>
+								</span>
+								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="acceso=='agp'">
 									<a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a>
 									<span ng-show="!$last">, </span>
 								</span>
 							</td>
-							<td class="col-lg-2">
+							<td class="col-lg-2" ng-show="acceso=='terminal'">
 								<div class="input-group">
 									<input type="text" class="form-control" ng-model="price.new" ng-keyup="hitEnter($event, price)" toupper>
 									<span class="input-group-btn">

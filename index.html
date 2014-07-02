@@ -71,11 +71,11 @@
 		</div>
 		<div class="navbar-collapse collapse" id="navbar-main" collapse="!isCollapsed">
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-show="acceso=='terminal'"><a ui-sref="tarifario" ng-click="isCollapsed = false">Tarifario</a></li>
-				<li ng-show="acceso=='terminal'"><a ui-sref="matches" ng-click="isCollapsed = false">Asociar</a></li>
-				<li ng-show="acceso=='terminal'"><a ui-sref="invoices" ng-click="isCollapsed = false">Facturas</a></li>
-				<li ng-show="acceso=='control'"><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
-				<li ng-show="acceso=='control'"><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
+				<li ng-show="acceso!=''"><a ui-sref="tarifario" ng-click="isCollapsed = false">Tarifario</a></li>
+				<li ng-show="acceso!=''"><a ui-sref="matches" ng-click="isCollapsed = false">Asociar</a></li>
+				<li ng-show="acceso!=''"><a ui-sref="invoices" ng-click="isCollapsed = false">Comprobantes</a></li>
+				<li ng-show="acceso=='agp'"><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
+				<li ng-show="acceso=='agp'"><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
 				<li ng-show="acceso!=''" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-user"></span> {{ terminal.email }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">

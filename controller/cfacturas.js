@@ -130,7 +130,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 										flagErrorTarifas = true;
 									}
 								}
-
 							})
 						});
 
