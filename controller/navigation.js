@@ -14,7 +14,7 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		$rootScope.esUsuario = loginService.getType();
 		$rootScope.terminal = loginService.getInfo();
 		// Se carga el array de la descripcion de los items de las facturas
-		invoiceFactory.getDescriptionItem(loginService.getInfo.terminal, function(data){
+		invoiceFactory.getDescriptionItem(loginService.getFiltro(), function(data){
 			$rootScope.itemsDescriptionInvoices = data.data;
 		});
 		if (loginService.getType() == 'agp'){

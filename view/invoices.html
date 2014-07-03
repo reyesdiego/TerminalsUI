@@ -6,7 +6,7 @@
 			<div class="col-lg-6">
 				<div class="xpage-header">
 					<h1 id="forms">Comprobantes</h1>
-					<h2>{{ terminal.full_name }}</h2>
+					<h2 ng-show="acceso=='terminal'">{{ terminal.full_name }}</h2>
 				</div>
 			</div>
 			<div class="col-lg-6" data-ng-hide="$state.includes('invoices.result')">
