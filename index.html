@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="less/bootstrap.css" media="all">
 	<link rel="stylesheet" href="less/bootswatch.min.css" media="all">
 	<link rel="stylesheet" href="less/dialog.css">
+	<link rel="stylesheet" href="less/estilosTerminal.css">
 	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]-->
 	<script src="angular/html5.js"></script>
@@ -76,12 +77,12 @@
 				<li ng-show="acceso!=''"><a ui-sref="invoices" ng-click="isCollapsed = false">Comprobantes</a></li>
 				<li ng-show="acceso=='agp'"><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
 				<li ng-show="acceso=='agp'"><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
-				<li ng-show="acceso=='agp'" class="dropdown">
+				<li ng-show="acceso=='agp'" class="dropdown" href>
 					<a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-info-sign"></span> Filtrar Terminal<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="#" ng-click="isCollapsed = false; setearTerminal('BACTSSA')"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
-						<li><a href="#" ng-click="isCollapsed = false; setearTerminal('TRP')"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
-						<li><a href="#" ng-click="isCollapsed = false; setearTerminal('TERMINAL4')"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li><a href ng-click="isCollapsed = false; setearTerminal('BACTSSA'); irA()"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li><a href ng-click="isCollapsed = false; setearTerminal('TRP'); irA()"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li><a href ng-click="isCollapsed = false; setearTerminal('TERMINAL4'); irA()"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso!=''" class="dropdown">
@@ -95,7 +96,7 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row terminal-{{ estiloTerminal }}">
 	<div ui-view>
 	</div>
 </div>

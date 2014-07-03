@@ -32,6 +32,8 @@ function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, logi
 						loginService.setFiltro(data.terminal);
 					} else {
 						loginService.setFiltro('BACTSSA');
+						$rootScope.estiloTerminal = 'bactssa';
+						$rootScope.filtroTerminal = 'BACTSSA';
 					}
 
 					// Se carga el array de la descripcion de los items de las facturas

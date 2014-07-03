@@ -7,7 +7,8 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 	$rootScope.esUsuario = '';
 	$rootScope.terminal = '';
 	$scope.acceso = '';
-	$scope.filtroTerminal = 'BACTSSA';
+	$rootScope.filtroTerminal = '';
+	$rootScope.estiloTerminal = '';
 
 	if (loginService.getStatus()){
 		$rootScope.esUsuario = loginService.getType();
@@ -16,6 +17,10 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		invoiceFactory.getDescriptionItem(loginService.getInfo.terminal, function(data){
 			$rootScope.itemsDescriptionInvoices = data.data;
 		});
+		if (loginService.getType() == 'agp'){
+			$rootScope.filtroTerminal = loginService.getFiltro();
+			$rootScope.estiloTerminal = loginService.getFiltro().toLowerCase();
+		}
 	}
 
 	$scope.$watch(function() {
@@ -27,18 +32,22 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		$rootScope.esUsuario = '';
 		$state.transitionTo('login');
 		loginService.unsetLogin();
+		$rootScope.filtroTerminal = '';
+		$rootScope.estiloTerminal = '';
 	};
 
 	$scope.irA = function(){
 		if (loginService.getStatus()){
-			$state.transitionTo('tarifario');
+			$state.transitionTo($state.current.name);
+			window.location.reload();
 		} else{
 			$state.transitionTo('login');
 		}
 	};
 
 	$scope.setearTerminal = function(terminal){
-		$scope.filtroTerminal = terminal;
+		$rootScope.filtroTerminal = terminal;
+		$rootScope.estiloTerminal = terminal.toLowerCase();
 		loginService.setFiltro(terminal);
 	};
 }
