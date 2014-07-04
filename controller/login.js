@@ -37,17 +37,10 @@ function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, logi
 					}
 
 					// Se carga el array de la descripcion de los items de las facturas
-					invoiceFactory.getDescriptionItem(loginService.getInfo.terminal, function(data){
+					invoiceFactory.getDescriptionItem(function(data){
 						$rootScope.itemsDescriptionInvoices = data.data;
 					});
-					// Se carga el filtro de terminal para el usuario admin
-					$rootScope.filtroTerminal = "BACTSSA";
 				}
 			}
 		)};
-
-	$scope.hitEnter = function(evt){
-		if(angular.equals(evt.keyCode,13))
-			$scope.login();
-	}; // end hitEnter
 }

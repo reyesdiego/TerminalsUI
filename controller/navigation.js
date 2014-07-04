@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 
-function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService){
+function navigationCtrl($scope, $rootScope, $state, loginService){
 	"use strict";
 	$rootScope.esUsuario = '';
 	$rootScope.terminal = '';
@@ -13,10 +13,7 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 	if (loginService.getStatus()){
 		$rootScope.esUsuario = loginService.getType();
 		$rootScope.terminal = loginService.getInfo();
-		// Se carga el array de la descripcion de los items de las facturas
-		invoiceFactory.getDescriptionItem(loginService.getFiltro(), function(data){
-			$rootScope.itemsDescriptionInvoices = data.data;
-		});
+
 		if (loginService.getType() == 'agp'){
 			$rootScope.filtroTerminal = loginService.getFiltro();
 			$rootScope.estiloTerminal = loginService.getFiltro().toLowerCase();
