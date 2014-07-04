@@ -3,10 +3,13 @@
 	<div class="hidden-print">
 		<div class="row" data-ng-hide="$state.includes('gates.invoices')">
 			<br>
-			<div class="col-lg-6">
+			<div class="col-lg-1">
+				<img src="images/comprobantes.png" height="130" width="128">
+			</div>
+			<div class="col-lg-5">
 				<div class="xpage-header">
-					<h1 id="forms">Comprobantes</h1>
-					<h2 ng-show="acceso=='terminal'">{{ terminal.full_name }}</h2>
+					<h1 id="forms" style="margin-top: 30px; margin-left: 30px">Comprobantes</h1>
+					<h2 ng-show="acceso=='terminal'" style="margin-top: 30px">{{ terminal.full_name }}</h2>
 				</div>
 			</div>
 			<div class="col-lg-6" data-ng-hide="$state.includes('invoices.result')">
