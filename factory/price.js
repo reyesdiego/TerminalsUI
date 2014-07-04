@@ -6,7 +6,6 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 
 	factory.getPrice = function(terminal, callback) {
 		var inserturl = serverUrl + '/prices/' + terminal;
-		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,

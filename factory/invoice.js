@@ -30,12 +30,15 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			fechaFin.setDate(fechaFin.getDate() + 1);
 			inserturl = inserturl + '&fechaFin=' + formatDate.formatearFecha(fechaFin);
 		}
+		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
+			console.log('llegó al success');
+			console.log(data);
 			data.data.forEach(function(factura){
 				factura.detalle.forEach(function(detalles){
 					detalles.items.forEach(function(item){
