@@ -37,4 +37,6 @@ function invoicesCtrl ($scope, invoiceFactory) {
 		};
 	}
 
+	$scope.cargaFacturas();
+
 }

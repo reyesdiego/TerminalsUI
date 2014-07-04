@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, loginService){
+function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
 	'use strict';
 	$scope.entrando = false;
 
@@ -35,11 +35,6 @@ function loginCtrl($scope, $rootScope, userFactory, $state, invoiceFactory, logi
 						$rootScope.estiloTerminal = 'bactssa';
 						$rootScope.filtroTerminal = 'BACTSSA';
 					}
-
-					// Se carga el array de la descripcion de los items de las facturas
-					invoiceFactory.getDescriptionItem(function(data){
-						$rootScope.itemsDescriptionInvoices = data.data;
-					});
 				}
 			}
 		)};
