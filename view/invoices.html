@@ -28,12 +28,14 @@
 							<div class="col-lg-6">
 								<input type="text" ng-keyup="hitEnter($event)" ng-model="documentoCliente" class="form-control" placeholder="Documento del Cliente"/>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-lg-4">
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 									<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" />
-									<span class="input-group-btn"><button class="btn btn-primary" ng-click="cargaFacturas()"><span class="glyphicon glyphicon-search"></span></button></span>
 								</div>
+							</div>
+							<div class="col-lg-1">
+								<button class="btn btn-primary" ng-click="cargaFacturas()"><span class="glyphicon glyphicon-search"></span></button>
 							</div>
 						</div>
 					</div>
