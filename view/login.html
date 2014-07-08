@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="xpage-header">
-				<h1 id="forms">Ingreso</h1>
+				<h1 id="forms"><img src="images/Acceso.gif" height="64" width="64"> Acceso</h1>
 			</div>
 		</div>
 	</div>
@@ -15,21 +15,21 @@
 					<fieldset>
 						<legend>Usuario</legend>
 						<div class="form-group">
-							<label for="inputEmail" class="col-lg-2 control-label">Email</label>
-							<div class="col-lg-10">
-								<input type="email" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar correo electrónico" ng-required="true" autocomplete="off">
+							<label for="inputEmail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-user"></span> Usuario</label>
+							<div class="col-lg-9">
+								<input type="email" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar usuario o correo electrónico" ng-required="true" autocomplete="off">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="inputPassword" class="col-lg-2 control-label">Password</label>
-							<div class="col-lg-10">
-								<input type="password" class="form-control" ng-keyup="hitEnter($event, price)" ng-model="password" id="inputPassword" placeholder="Ingresar clave" ng-required="true" autocomplete="off">
+							<label for="inputPassword" class="col-lg-3 control-label"><span class="glyphicon glyphicon-asterisk"></span> Contraseña</label>
+							<div class="col-lg-9">
+								<input type="password" class="form-control" ng-keyup="hitEnter($event, price)" ng-model="password" id="inputPassword" placeholder="Ingresar contraseña" ng-required="true" autocomplete="off">
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-lg-10 col-lg-offset-2">
-								<button type="submit" class="btn btn-primary" ng-disabled="entrando"><span class="glyphicon glyphicon-log-in"></span> Entrar</button>
-								<button type="button" ui-sref="changepass" class="btn"><span class="glyphicon glyphicon-lock"></span> Cambiar password</button>
+							<div class="col-lg-12 text-right">
+								<button type="submit" class="btn btn-primary" ng-disabled="entrando"><span class="glyphicon glyphicon-log-in"></span> Ingresar</button>
+								<button type="button" ui-sref="changepass" class="btn"><span class="glyphicon glyphicon-lock"></span> Cambiar contraseña</button>
 							</div>
 						</div>
 					</fieldset>
