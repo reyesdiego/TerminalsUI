@@ -5,7 +5,7 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 	var factory = {};
 
 	factory.getGate = function(datos, page, callback){
-		var inserturl = serverUrl + '/gates/' + page.skip + '/' + page.limit + '?';
+		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
 		var insertAux = inserturl;
 		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != ''){
 			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutos(datos.fechaDesde);
