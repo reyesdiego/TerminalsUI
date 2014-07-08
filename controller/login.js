@@ -26,6 +26,7 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService, invoic
 					$rootScope.esUsuario = loginService.getType();
 					$rootScope.terminal = loginService.getInfo();
 
+					//En el login debe cargar las descripciones asociadas
 					invoiceFactory.getDescriptionItem(function(data){
 						$rootScope.itemsDescriptionInvoices = data.data;
 					});

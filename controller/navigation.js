@@ -13,7 +13,7 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 	if (loginService.getStatus()){
 		$rootScope.esUsuario = loginService.getType();
 		$rootScope.terminal = loginService.getInfo();
-		// Se carga el array de la descripcion de los items de las facturas
+		//Esta carga se realiza en el caso de haber actualizado la página
 		invoiceFactory.getDescriptionItem(function(data){
 			$rootScope.itemsDescriptionInvoices = data.data;
 		});
