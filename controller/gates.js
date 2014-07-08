@@ -55,4 +55,6 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }
 	}
 
+	// Carga los gates del día hasta la hora del usuario
+	$scope.cargaGates();
 }
