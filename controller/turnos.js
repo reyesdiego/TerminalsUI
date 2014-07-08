@@ -37,4 +37,7 @@ function turnosCtrl($scope, turnosFactory){
 	function cargaDatos(){
 		return { contenedor : $scope.contenedor, fechaDesde : $scope.fecha.desde, fechaHasta : $scope.fecha.hasta }
 	}
+
+	// Carga los turnos del día hasta la hora del usuario
+	$scope.cargaTurnos();
 }
