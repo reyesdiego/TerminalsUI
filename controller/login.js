@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
+function loginCtrl($scope, $rootScope, userFactory, $state, loginService, invoiceFactory){
 	'use strict';
 	$scope.entrando = false;
 
@@ -25,6 +25,10 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService){
 
 					$rootScope.esUsuario = loginService.getType();
 					$rootScope.terminal = loginService.getInfo();
+
+					invoiceFactory.getDescriptionItem(function(data){
+						$rootScope.itemsDescriptionInvoices = data.data;
+					});
 
 					//Si el rol es terminal, queda como filtro de si misma para las consultas
 					//De lo contrario, dejo a BACTSSA como filtro por default
