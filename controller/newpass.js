@@ -2,13 +2,13 @@
  * Created by Artiom on 11/03/14.
  */
 
-function changePassCtrl ($scope, $http, $dialogs) {
+function changePassCtrl ($scope, userFactory, dialogs) {
 	'use strict';
 
 	$scope.changePass = function(){
 
 		if ($scope.newPass != $scope.confirmPass){
-			$dialogs.notify('Cambiar contraseña', 'Las contraseñas no coinciden');
+			dialogs.notify('Cambiar contraseña', 'Las contraseñas no coinciden');
 			return;
 		}
 
@@ -19,23 +19,10 @@ function changePassCtrl ($scope, $http, $dialogs) {
 			"confirmPass": $scope.confirmPass
 		};
 
-		var inserturl = serverUrl + '/agp/password';
-		$http({
-			method: 'PUT',
-			url: inserturl,
-			data: formData
-		}).success(function(response) {
-				console.log("success");
-				$scope.codeStatus = response.data;
-				console.log($scope.codeStatus);
-				$dialogs.notify('Cambiar contraseña', 'La contraseña ha sido modificada con éxito.');
-
-			}).error(function(response) {
-				console.log("error");
-				$scope.codeStatus = response || "Request failed";
-				console.log($scope.codeStatus);
-				$dialogs.error('Error al cambiar la contraseña', 'Se ha producido un error. Inténtelo nuevamente más tarde.');
-			});
+		userFactory.cambiarContraseña(formData, function(data){
+			$scope.codStatus = data.data;
+			dialogs.notify('Cambiar contraseña', 'La contraseña ha sido modificada con éxito.');
+		});
 
 	}
 

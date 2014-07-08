@@ -16,7 +16,7 @@ myapp.factory('userFactory', function($http, dialogs){
 			url: inserturl,
 			data: formData
 		}).success(function(data) {
-			callback(data, false)
+			callback(data, false);
 		}).error(function(errorText, errorNumber, data) {
 			if (errorNumber === 403){
 				dialogs.error('Error al iniciar sesión', 'Usuario o clave incorrectos.');
@@ -26,6 +26,20 @@ myapp.factory('userFactory', function($http, dialogs){
 			callback(data, true);
 		});
 	};
+
+	factory.cambiarContraseña = function(formData, callback){
+		var inserturl = serverUrl + '/agp/password';
+		$http({
+			method: 'PUT',
+			url: inserturl,
+			data: formData
+		}).success(function(data) {
+				callback(data);
+			}).error(function() {
+				dialogs.error('Error al cambiar la contraseña', 'Se ha producido un error. Inténtelo nuevamente más tarde.');
+			});
+
+	}
 
 	return factory;
 });
