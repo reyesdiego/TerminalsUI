@@ -35,10 +35,10 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 						<tr>
-							<th>Código</th>
-							<th>Tarifa</th>
-							<th>Cod. Asociado</th>
-							<th ng-show="acceso=='terminal'">Cargar</th>
+							<th><span class="glyphicon glyphicon-bookmark"></span> Código</th>
+							<th><span class="glyphicon glyphicon-credit-card"></span> Tarifa</th>
+							<th><span class="glyphicon glyphicon-check"></span> Código asociado</th>
+							<th ng-show="acceso=='terminal'"><span class="glyphicon glyphicon-plus-sign"></span> Agregar</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -52,7 +52,7 @@
 									<span ng-show="!$last">, </span>
 								</span>
 								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="acceso=='agp'">
-									<a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a>
+									<span>{{ codigo }}</span>
 									<span ng-show="!$last">, </span>
 								</span>
 							</td>
