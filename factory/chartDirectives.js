@@ -145,6 +145,81 @@ myapp.directive('columnChartStack', function ($timeout) {
 	};
 });
 
+myapp.directive('columnChartStackCurrency', function ($timeout) {
+	return {
+		restrict: 'E',
+		scope: {
+			title:    '@title',
+			width:    '@width',
+			height:   '@height',
+			data:     '=data',
+			selectFn: '&select'
+		},
+		link: function ($scope, $elm) {
+			var data = new google.visualization.arrayToDataTable($scope.data);
+			var chart = new google.visualization.ColumnChart($elm[0]);
+			/*var formatter = new google.visualization.NumberFormat(
+				{pattern: '$###,##'});*/
+
+			draw();
+
+			// Watches, to refresh the chart when its data, title or dimensions change
+			$scope.$watch('data', function() {
+				draw();
+			}, true); // true is for deep object equality checking
+			$scope.$watch('title', function() {
+				draw();
+			});
+			$scope.$watch('width', function() {
+				draw();
+			});
+			$scope.$watch('height', function() {
+				draw();
+			});
+
+			// Chart selection handler
+			google.visualization.events.addListener(chart, 'select', function () {
+				var selectedItem = chart.getSelection()[0];
+				if (selectedItem) {
+					$scope.$apply(function () {
+						$scope.selectFn({selectedRowIndex: selectedItem.row});
+					});
+				}
+			});
+
+			function draw() {
+				if (!draw.triggered) {
+					draw.triggered = true;
+					$timeout(function () {
+						draw.triggered = false;
+						var options = {
+							'title': $scope.title,
+							'width': $scope.width,
+							'height': $scope.height,
+							'backgroundColor': {'fill': 'transparent'},
+							'vAxis': {format:'u$s###,###,###.##'},
+							'animation':{
+								duration: 1000,
+								easing: 'out'
+							},
+							'legend': { position: 'top', maxLines: 3 },
+							'bar': { groupWidth: '75%' },
+							'isStacked': true
+						};
+						data = new google.visualization.arrayToDataTable($scope.data);
+						var formatter = new google.visualization.NumberFormat(
+							{prefix: 'u$s', negativeColor: 'red', negativeParens: true});
+						formatter.format(data, 1);
+						chart.draw(data, options);
+						// No raw selected
+						$scope.selectFn({selectedRowIndex: undefined});
+					}, 100, true);
+				}
+			}
+		}
+	};
+});
+
 myapp.directive('columnChart', function ($timeout) {
 	return {
 		restrict: 'E',
@@ -205,6 +280,83 @@ myapp.directive('columnChart', function ($timeout) {
 							'bar': { groupWidth: '75%' }
 						};
 						data = new google.visualization.arrayToDataTable($scope.data);
+						chart.draw(data, options);
+						// No raw selected
+						$scope.selectFn({selectedRowIndex: undefined});
+					}, 100, true);
+				}
+			}
+		}
+	};
+});
+
+myapp.directive('columnChartCurrency', function ($timeout) {
+	return {
+		restrict: 'E',
+		scope: {
+			title:    '@title',
+			width:    '@width',
+			height:   '@height',
+			data:     '=data',
+			selectFn: '&select',
+			series:   '=series'
+		},
+		link: function ($scope, $elm) {
+			var data; //= new google.visualization.arrayToDataTable($scope.data);
+			var chart = new google.visualization.ColumnChart($elm[0]);
+
+			draw();
+
+			// Watches, to refresh the chart when its data, title or dimensions change
+			$scope.$watch('data', function() {
+				draw();
+			}, true); // true is for deep object equality checking
+			$scope.$watch('title', function() {
+				draw();
+			});
+			$scope.$watch('width', function() {
+				draw();
+			});
+			$scope.$watch('height', function() {
+				draw();
+			});
+
+			// Chart selection handler
+			google.visualization.events.addListener(chart, 'select', function () {
+				var selectedItem = chart.getSelection()[0];
+				if (selectedItem) {
+					$scope.$apply(function () {
+						$scope.selectFn({selectedRowIndex: selectedItem.row});
+					});
+				}
+			});
+
+			function draw() {
+				if (!draw.triggered) {
+					draw.triggered = true;
+					$timeout(function () {
+						draw.triggered = false;
+						var options = {
+							'title': $scope.title,
+							'width': $scope.width,
+							'height': $scope.height,
+							'series': $scope.series,
+							'backgroundColor': {'fill': 'transparent'},
+							'vAxis': {format:'u$s###,###,###.##'},
+							'animation':{
+								duration: 1000,
+								easing: 'out'
+							},
+							'legend': { position: 'top', maxLines: 3 },
+							'bar': { groupWidth: '75%' }
+						};
+						data = new google.visualization.arrayToDataTable($scope.data);
+						var formatter = new google.visualization.NumberFormat(
+							{prefix: 'u$s', negativeColor: 'red', negativeParens: true});
+						formatter.format(data, 1);
+						formatter.format(data, 2);
+						formatter.format(data, 3);
+						formatter.format(data, 4);
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
