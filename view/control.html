@@ -33,7 +33,7 @@
 				</div>
 				<div class="col-lg-3 list-group-item">
 					<span>Precio total tasas AGP</span>
-					<span class="badge text-right">{{ control.ratesTotal | currency }}</span>
+					<span class="badge text-right">u$s {{ control.ratesTotal | currency }}</span>
 				</div>
 				<div class="col-lg-3 list-group-item">
 					<span>Precio total facturas</span>
@@ -68,17 +68,17 @@
 				</div>
 			</div>
 			<div collapse="!isCollapsedDayTasas">
-				<column-chart-stack data="chartDataFacturadoTasas" title="{{chartTitleFacturadoTasas}}"
+				<column-chart-stack-currency data="chartDataFacturadoTasas" title="{{chartTitleFacturadoTasas}}"
 									width="{{chartsWidth}}" height="{{chartsHeight}}"
-									select="selectRow(selectedRowIndexFacturadoTasas)"></column-chart-stack>
+									select="selectRow(selectedRowIndexFacturadoTasas)"></column-chart-stack-currency>
 			</div>
 		</div>
 
-		<div class="col-lg-4" ng-show="loadingFacturadoDia">
+		<div class="col-lg-5" ng-show="loadingFacturadoDia">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingFacturadoDia">
-			<p class="input-group">
+		<div class="col-lg-5" ng-hide="loadingFacturadoDia">
+			<p class="input-group col-lg-8 col-lg-offset-1">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
 				<span class="input-group-btn">
 					<button class="btn btn-default" ng-click="isCollapsedDay = !isCollapsedDay"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -90,9 +90,9 @@
 				</div>
 			</div>
 			<div collapse="!isCollapsedDay">
-				<column-chart data="chartDataFacturado" title="{{chartTitleFacturado}}"
+				<column-chart-currency data="chartDataFacturado" title="{{chartTitleFacturado}}"
 							  width="{{chartsWidth}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexFacturado)" series="chartSeries"></column-chart>
+							  select="selectRow(selectedRowIndexFacturado)" series="chartSeries"></column-chart-currency>
 			</div>
 		</div>
 	</div>
@@ -114,9 +114,9 @@
 				</div>
 			</div>
 			<div collapse="!isCollapsedMonth">
-				<column-chart data="chartDataFacturas" title="{{chartTitleFacturas}}"
+				<column-chart-currency data="chartDataFacturas" title="{{chartTitleFacturas}}"
 							  width="{{chartsWidth}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexFacturas)" series="chartSeries"></column-chart>
+							  select="selectRow(selectedRowIndexFacturas)" series="chartSeries"></column-chart-currency>
 			</div>
 		</div>
 

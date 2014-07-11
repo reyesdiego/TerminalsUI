@@ -26,10 +26,10 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 	$scope.chartTitleFacturas = "Facturado por mes";
 	$scope.chartDataFacturas = datosGraficoPorMes;
 
-	$scope.chartTitleGates = "Gates";
+	$scope.chartTitleGates = "Gates cargados";
 	$scope.chartDataGates = datosGraficoPorMes;
 
-	$scope.chartTitleTurnos = "Turnos";
+	$scope.chartTitleTurnos = "Turnos cargados";
 	$scope.chartDataTurnos = datosGraficoPorMes;
 
 	$scope.chartTitleFacturadoTasas = "Total de tasa a las cargas por día";
