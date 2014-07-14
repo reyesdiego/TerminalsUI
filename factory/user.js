@@ -28,14 +28,15 @@ myapp.factory('userFactory', function($http, dialogs){
 	};
 
 	factory.cambiarContraseña = function(formData, callback){
+		"use strict";
 		var inserturl = serverUrl + '/agp/password';
 		$http({
-			method: 'PUT',
+			method: 'POST',
 			url: inserturl,
 			data: formData
 		}).success(function(data) {
 				callback(data);
-			}).error(function() {
+			}).error(function(errorText, errorNumber, data) {
 				dialogs.error('Error al cambiar la contraseña', 'Se ha producido un error. Inténtelo nuevamente más tarde.');
 			});
 
