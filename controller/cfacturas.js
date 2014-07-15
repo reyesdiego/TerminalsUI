@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
+function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, loginService){
 	'use strict';
 	vouchersFactory.getVouchersType(function(data){
 		$scope.comprobantesTipos = data.data;
@@ -14,7 +14,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 	$scope.terminoCarga = false;
 	$scope.dateOptions = { 'startingDay': 0, 'showWeeks': false };
 	$scope.format = 'yyyy-MM-dd';
-	$scope.terminalFacturas = "BACTSSA";
 	$scope.verDetalle = "";
 	$scope.tipoComprobante = "0";
 	$scope.flagWatch = false;
@@ -32,10 +31,10 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
 
-		invoiceFactory.getTarifasTerminal($scope.terminalFacturas, function(dataTarifas){
+		invoiceFactory.getTarifasTerminal(loginService.getFiltro(), function(dataTarifas){
 			$scope.tarifasTerminal = dataTarifas;
 
-			priceFactory.getMatchPrices($scope.terminalFacturas, null, function(data){
+			priceFactory.getMatchPrices(loginService.getFiltro(), null, function(data){
 				$scope.chartData = [
 					['Tipo de comprobante', 'Total']
 				];
@@ -51,7 +50,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 					}
 				});
 
-				invoiceFactory.getByDate($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.tipoComprobante, function(dataComprob) {
+				invoiceFactory.getByDate($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.tipoComprobante, function(dataComprob) {
 
 					$scope.result = dataComprob;
 
@@ -155,7 +154,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 			};
 
 			/*Acá control de tasa a las cargas*/
-			invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
+			invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.page, function(data){
 				if (data.status == "ERROR"){
 					$scope.tasaCargas.titulo = "Error";
 					$scope.tasaCargas.cartel = "panel-danger";
@@ -163,7 +162,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 					$scope.tasaCargas.mostrarResultado = 0;
 				} else {
 					$scope.tasaCargas.resultado = data.data;
-					console.log($scope.tasaCargas.resultado);
 					if ($scope.tasaCargas.resultado.length > 0){
 						$scope.totalItemsTasaCargas = data.totalCount;
 						$scope.tasaCargas.titulo = "Error";
@@ -185,7 +183,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 	$scope.$watch('currentPageTasaCargas', function(){
 		if ($scope.flagWatch){
 			$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
-			invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, $scope.terminalFacturas, $scope.page, function(data){
+			invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.page, function(data){
 				if (data.status == "ERROR"){
 					$scope.tasaCargas.titulo = "Error";
 					$scope.tasaCargas.cartel = "panel-danger";
@@ -193,7 +191,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory){
 					$scope.tasaCargas.mostrarResultado = 0;
 				} else {
 					$scope.tasaCargas.resultado = data.data;
-					console.log($scope.tasaCargas.resultado);
 					if ($scope.tasaCargas.resultado.length > 0){
 						$scope.totalItemsTasaCargas = data.totalCount;
 						$scope.tasaCargas.titulo = "Error";

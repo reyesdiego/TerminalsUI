@@ -84,7 +84,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				});
 			});
 
-			invoiceFactory.getDescriptionItem(unaTerminal, function(losMatches){
+			invoiceFactory.getDescriptionItem(function(losMatches){
 				var i;
 				var tope;
 
@@ -243,55 +243,4 @@ reportsCtrl.prepararMatrizVaciaTorta = function($q){
 	];
 	defer.resolve(base);
 	return defer.promise;
-};
-
-reportsCtrl.prepararDatosMes = function(datosGrafico){
-	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
-	var base = [
-		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
-	];
-	//Para cambiar entre columnas
-	var contarTerminal = 1;
-	//Para cargar promedio
-	var acum = 0;
-	var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre", "Diciembre"];
-	//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
-	//ordenados por fecha, y siguiendo el orden de terminales "BACTSSA", "Terminal 4", "TRP"???????
-	var flagPrimero = true;
-	var fechaAnterior;
-	var fila = ['', 0, 0, 0, 0, ''];
-	datosGrafico.forEach(function(datosDia){
-		if (flagPrimero){
-			flagPrimero = false;
-			fila[0] = meses[datosDia._id.month - 1] + ' del ' + datosDia._id.year;
-			fechaAnterior = datosDia._id.month;
-		}
-		if (fechaAnterior != datosDia._id.month){
-			//Al llegar a la tercer terminal cargo el promedio de ese día, meto la fila en la matriz y reseteo las columnas
-			fila[4] = acum/3;
-			base.push(fila.slice());
-			//Meto la fila en la matriz y vuelvo a empezar
-			fila = ['', 0, 0, 0, 0, ''];
-			acum = 0;
-			fechaAnterior = datosDia._id.month;
-			fila[0] = meses[datosDia._id.month - 1] + ' del ' + datosDia._id.year;
-		}
-		switch (datosDia._id.terminal){
-			case "BACTSSA":
-				contarTerminal = 1;
-				break;
-			case "TERMINAL4":
-				contarTerminal = 2;
-				break;
-			case "TRP":
-				contarTerminal = 3;
-				break;
-		}
-		fila[contarTerminal] = datosDia.cnt;
-		acum += datosDia.cnt;
-	});
-	fila[4] = acum/3;
-	base.push(fila.slice());
-	//Finalmente devuelvo la matriz generada con los datos para su asignación
-	return base;
 };

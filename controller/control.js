@@ -103,9 +103,11 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 	$scope.traerDatosFacturadoMes = function(){
 		$scope.isCollapsedMonth = true;
 		$scope.loadingFacturadoMes = true;
+		console.log("traer lo facturado por mes");
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, function(graf){
 			$scope.loadingFacturadoMes = false;
-			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf);
+			console.log(graf);
+			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf, true);
 		});
 	};
 
@@ -116,7 +118,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 		controlPanelFactory.getGatesMeses($scope.mesDesdeGates, function(graf){
 			$scope.loadingGates = false;
 			$scope.visibleGates = 'block';
-			$scope.chartDataGates = controlCtrl.prepararDatosMes(graf);
+			$scope.chartDataGates = controlCtrl.prepararDatosMes(graf, false);
 		});
 	};
 
@@ -127,7 +129,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 		controlPanelFactory.getTurnosMeses($scope.mesDesdeTurnos, function(graf){
 			$scope.loadingTurnos = false;
 			$scope.visibleTurnos = 'block';
-			$scope.chartDataTurnos = controlCtrl.prepararDatosMes(graf);
+			$scope.chartDataTurnos = controlCtrl.prepararDatosMes(graf, false);
 		});
 	};
 
@@ -250,7 +252,8 @@ controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 	return defer.promise;
 };
 
-controlCtrl.prepararDatosMes = function(datosGrafico){
+controlCtrl.prepararDatosMes = function(datosGrafico, traerTotal){
+	console.log("entro en preparar datos por mes");
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
 		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -292,8 +295,15 @@ controlCtrl.prepararDatosMes = function(datosGrafico){
 				contarTerminal = 3;
 				break;
 		}
-		fila[contarTerminal] = datosDia.cnt;
-		acum += datosDia.cnt;
+		if (traerTotal){
+			console.log("hay que traer el total");
+			fila[contarTerminal] = datosDia.total;
+			acum += datosDia.total;
+		} else {
+			console.log("hay que traer el conteo");
+			fila[contarTerminal] = datosDia.cnt;
+			acum += datosDia.cnt;
+		}
 	});
 	fila[4] = acum/3;
 	base.push(fila.slice());
@@ -376,8 +386,8 @@ controlCtrl.prepararDatosFacturadoDia = function(datosGrafico){
 				contarTerminal = 3;
 				break;
 		}
-		fila[contarTerminal] = datosDia.cnt;
-		acum += datosDia.cnt;
+		fila[contarTerminal] = datosDia.total;
+		acum += datosDia.total;
 	});
 	//Meto la última fila generada
 	fila[4] = acum/3;

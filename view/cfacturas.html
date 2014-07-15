@@ -29,21 +29,13 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-4">
-					<label for="selectTerminal" >Terminal</label>
-					<select class="form-control" id="selectTerminal" ng-model="terminalFacturas">
-						<option value="BACTSSA" ng-selected="true" >BACTSSA</option>
-						<option value="TRP">TERMINAL RIO DE LA PLATA</option>
-						<option value="TERMINAL4">TERMINAL 4</option>
-					</select>
-				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-6">
 					<label for="selectComprobante" >Tipo de comprobante</label>
 					<select class="form-control" id="selectComprobante" ng-model="tipoComprobante">
 						<option ng-repeat="comprobante in comprobantesTipos" value="{{ comprobante._id }}" ng-selected="$first">{{ comprobante.description }}</option>
 					</select>
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-6">
 					<br>
 					<button class="btn btn-default" ui-sref="control"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 					<button class="btn btn-primary" ng-click="cargar()"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button>
