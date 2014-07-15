@@ -21,6 +21,16 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 			$rootScope.filtroTerminal = loginService.getFiltro();
 			$rootScope.estiloTerminal = loginService.getFiltro().toLowerCase();
 		}
+		// Carga el tema de la terminal
+		if ($rootScope.terminal == 'bactssa'){
+			$scope.switchTheme('cerulean')
+		}
+		if ($rootScope.terminal == 'trp'){
+			$scope.switchTheme('flaty')
+		}
+		if ($rootScope.terminal == 'terminal4'){
+			$scope.switchTheme('united')
+		}
 	}
 
 	$scope.$watch(function() {
@@ -49,5 +59,14 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		$rootScope.filtroTerminal = terminal;
 		$rootScope.estiloTerminal = terminal.toLowerCase();
 		loginService.setFiltro(terminal);
+	};
+
+	$scope.switchTheme = function(title){
+		var i, a;
+		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+			if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
+				a.disabled = a.getAttribute("title") != title;
+			}
+		}
 	};
 }
