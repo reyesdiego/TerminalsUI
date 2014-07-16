@@ -103,10 +103,8 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 	$scope.traerDatosFacturadoMes = function(){
 		$scope.isCollapsedMonth = true;
 		$scope.loadingFacturadoMes = true;
-		console.log("traer lo facturado por mes");
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, function(graf){
 			$scope.loadingFacturadoMes = false;
-			console.log(graf);
 			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf, true);
 		});
 	};
@@ -253,7 +251,6 @@ controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 };
 
 controlCtrl.prepararDatosMes = function(datosGrafico, traerTotal){
-	console.log("entro en preparar datos por mes");
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 	var base = [
 		['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -296,11 +293,9 @@ controlCtrl.prepararDatosMes = function(datosGrafico, traerTotal){
 				break;
 		}
 		if (traerTotal){
-			console.log("hay que traer el total");
 			fila[contarTerminal] = datosDia.total;
 			acum += datosDia.total;
 		} else {
-			console.log("hay que traer el conteo");
 			fila[contarTerminal] = datosDia.cnt;
 			acum += datosDia.cnt;
 		}
