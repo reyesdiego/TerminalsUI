@@ -190,6 +190,15 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory){
 		$rootScope.vouchersType = data.data;
 	});
 
+	$rootScope.switchTheme = function(title){
+		var i, a;
+		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+			if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
+				a.disabled = a.getAttribute("title") != title;
+			}
+		}
+	};
+
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if (!in_array(toState.name, rutasComunes)){
 			if (loginService.getStatus()){
