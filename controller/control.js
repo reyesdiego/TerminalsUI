@@ -19,6 +19,12 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 	$scope.chartHeight = 380;
 	$scope.chartData = datosGrafico;
 
+	$scope.chartsWidthTasas = 400;
+
+	$scope.chartsWidthFacturado = 460;
+
+	$scope.chartsWidthFacturadoMes = 380;
+
 	$scope.chartsHeight = 320;
 	$scope.chartsWidth = 410;
 	$scope.chartSeries = {3: {type: "line"}};
