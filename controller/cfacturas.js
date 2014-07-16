@@ -28,6 +28,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.currentPageTasaCargas = 1;
 	$scope.totalItemsTasaCargas = 0;
 
+	$scope.currentPageCodigos = 1;
+	$scope.totalItemsCodigos = 0;
+
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
 
@@ -141,6 +144,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 						}
 
 					});
+					$scope.totalItemsCodigos = $scope.pantalla.comprobantesRotos.length;
+					$scope.filteredComprobantesRotos = $scope.pantalla.comprobantesRotos.slice(($scope.currentPageCodigos - 1) * $scope.itemsPerPage, $scope.currentPageCodigos * $scope.itemsPerPage - 1)
 				});
 				$scope.terminoCarga = true;
 			});
@@ -204,5 +209,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 			$scope.flagWatch = true;
 		}
 	});
+
+	$scope.pageChangedCodigos = function(){
+		$scope.filteredComprobantesRotos = $scope.pantalla.comprobantesRotos.slice(($scope.currentPageCodigos - 1) * $scope.itemsPerPage, $scope.currentPageCodigos * $scope.itemsPerPage - 1)
+	};
 
 }
