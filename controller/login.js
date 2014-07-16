@@ -37,30 +37,15 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService, invoic
 						loginService.setFiltro(data.terminal);
 					} else {
 						loginService.setFiltro('BACTSSA');
-						$rootScope.estiloTerminal = 'bactssa';
 						$rootScope.filtroTerminal = 'BACTSSA';
 					}
 
 					// Carga el tema de la terminal
-					if ($rootScope.terminal.terminal == 'BACTSSA'){
-						$scope.switchTheme('cerulean')
-					}
-					if ($rootScope.terminal.terminal == 'TRP'){
-						$scope.switchTheme('flaty')
-					}
-					if ($rootScope.terminal.terminal == 'TERMINAL4'){
-						$scope.switchTheme('united')
+					if ($rootScope.terminal.terminal == 'BACTSSA' || $rootScope.terminal.terminal == 'TRP' || $rootScope.terminal.terminal == 'TERMINAL4'){
+						$rootScope.switchTheme($rootScope.terminal.terminal)
 					}
 				}
 			}
 		)};
 
-	$scope.switchTheme = function(title){
-		var i, a;
-		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-			if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
-				a.disabled = a.getAttribute("title") != title;
-			}
-		}
-	};
 }
