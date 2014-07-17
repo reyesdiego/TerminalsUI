@@ -41,9 +41,7 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService, invoic
 					}
 
 					// Carga el tema de la terminal
-					if ($rootScope.terminal.terminal == 'BACTSSA' || $rootScope.terminal.terminal == 'TRP' || $rootScope.terminal.terminal == 'TERMINAL4'){
-						$rootScope.switchTheme($rootScope.terminal.terminal)
-					}
+					$rootScope.switchTheme(loginService.getFiltro());
 				}
 			}
 		)};
