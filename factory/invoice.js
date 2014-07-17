@@ -71,7 +71,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.getByDate = function(desde, hasta, terminal, tipoComprobante, callback) {
-		//Por ahora trabaja solo con un mock
+//		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
+		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + '0' + '/' + '10' + '?';
 		var unaUrl;
 		switch (tipoComprobante){
 			case "0":
@@ -88,8 +89,12 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				break;
 		}
 
-		$http.get(unaUrl)
-			.success(function (data){
+		$http({
+			method: 'GET',
+			url: inserturl+'codTipoComprob='+tipoComprobante,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
