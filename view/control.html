@@ -92,7 +92,7 @@
 			<div collapse="!isCollapsedDay">
 				<column-chart-currency data="chartDataFacturado" title="{{chartTitleFacturado}}"
 							  width="{{chartsWidthFacturado}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexFacturado)" series="chartSeries"></column-chart-currency>
+							  select="selectRow(selectedRowIndexFacturado)" series="chartSeries" colors="barColors"></column-chart-currency>
 			</div>
 		</div>
 	</div>
@@ -116,7 +116,7 @@
 			<div collapse="!isCollapsedMonth">
 				<column-chart-currency data="chartDataFacturas" title="{{chartTitleFacturas}}"
 							  width="{{chartsWidthFacturadoMes}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexFacturas)" series="chartSeries"></column-chart-currency>
+							  select="selectRow(selectedRowIndexFacturas)" series="chartSeries" colors="barColors"></column-chart-currency>
 			</div>
 		</div>
 
@@ -138,7 +138,7 @@
 			<div collapse="!isCollapsedGates">
 				<column-chart data="chartDataGates" title="{{chartTitleGates}}"
 							  width="{{chartsWidth}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexGates)" series="chartSeries"></column-chart>
+							  select="selectRow(selectedRowIndexGates)" series="chartSeries" colors="barColors"></column-chart>
 			</div>
 		</div>
 
@@ -160,7 +160,7 @@
 			<div collapse="!isCollapsedTurnos">
 				<column-chart data="chartDataTurnos" title="{{chartTitleTurnos}}"
 							  width="{{chartsWidth}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexTurnos)" series="chartSeries"></column-chart>
+							  select="selectRow(selectedRowIndexTurnos)" series="chartSeries" colors="barColors"></column-chart>
 			</div>
 		</div>
 	</div>
@@ -191,7 +191,7 @@
 		<div class="col-lg-12 table-responsive" collapse="!isCollapsedDayGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
 			<column-chart data="chartDataDiaGatesTurnos" title="{{chartTitleDiaGatesTurnos}}"
 						width="{{chartWidthDiaGatesTurnos}}" height="{{chartsHeight}}"
-						select="selectRow(selectedRowIndexFacturado)" series="chartSeries"></column-chart>
+						select="selectRow(selectedRowIndexFacturado)" series="chartSeries" colors="barColors"></column-chart>
 		</div>
 	</div>
 </div>

@@ -169,6 +169,46 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory){
 	"use strict";
+	$rootScope.colorBactssa = '';
+	$rootScope.colorTerminal4 = '';
+	$rootScope.colorTrp = '';
+
+	var styles=document.styleSheets;
+	for(var i=0,l=styles.length; i<l; ++i){
+		var sheet=styles[i];
+
+		if(sheet.title === "BACTSSA"){
+			var rules=sheet.cssRules;
+			for(var j=0, l2=rules.length; j<l2; j++){
+				var rule=rules[j];
+
+				if('.navbar-default' === rule.selectorText){
+					$rootScope.colorBactssa = rule.style['background-color'];
+				};
+			};
+		};
+		if(sheet.title === "TRP"){
+			var rules=sheet.cssRules;
+			for(var j=0, l2=rules.length; j<l2; j++){
+				var rule=rules[j];
+
+				if('.navbar-default' === rule.selectorText){
+					$rootScope.colorTrp = rule.style['background-color'];
+				};
+			};
+		};
+		if(sheet.title === "TERMINAL4"){
+			var rules=sheet.cssRules;
+			for(var j=0, l2=rules.length; j<l2; j++){
+				var rule=rules[j];
+
+				if('.navbar-default' === rule.selectorText){
+					$rootScope.colorTerminal4 = rule.style['background-color'];
+				};
+			};
+		};
+	};
+
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 	$rootScope.$state = $state;
 	// Variables Globales de Paginacion

@@ -12,6 +12,12 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 		"ratesTotal": 0
 	};
 
+	$scope.barColors = {
+		"bactssa":$scope.colorBactssa,
+		"terminal4": $scope.colorTerminal4,
+		"trp": $scope.colorTrp
+	}
+
 	$scope.radioModel = 'Gates';
 
 	$scope.chartTitle = "Datos enviados";

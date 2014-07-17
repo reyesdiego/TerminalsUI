@@ -229,9 +229,11 @@ myapp.directive('columnChart', function ($timeout) {
 			height:   '@height',
 			data:     '=data',
 			selectFn: '&select',
-			series:   '=series'
+			series:   '=series',
+			colors:   '=colors'
 		},
 		link: function ($scope, $elm) {
+
 			var data; //= new google.visualization.arrayToDataTable($scope.data);
 			var chart = new google.visualization.ColumnChart($elm[0]);
 
@@ -272,6 +274,7 @@ myapp.directive('columnChart', function ($timeout) {
 							'height': $scope.height,
 							'series': $scope.series,
 							'backgroundColor': {'fill': 'transparent'},
+							'colors': [$scope.colors.bactssa, $scope.colors.terminal4, $scope.colors.trp, 'green'],
 							'animation':{
 								duration: 1000,
 								easing: 'out'
@@ -299,9 +302,11 @@ myapp.directive('columnChartCurrency', function ($timeout) {
 			height:   '@height',
 			data:     '=data',
 			selectFn: '&select',
-			series:   '=series'
+			series:   '=series',
+			colors:   '=colors'
 		},
 		link: function ($scope, $elm) {
+
 			var data; //= new google.visualization.arrayToDataTable($scope.data);
 			var chart = new google.visualization.ColumnChart($elm[0]);
 
@@ -343,6 +348,7 @@ myapp.directive('columnChartCurrency', function ($timeout) {
 							'series': $scope.series,
 							'backgroundColor': {'fill': 'transparent'},
 							'vAxis': {format:'u$s###,###,###.##'},
+							'colors': [$scope.colors.bactssa, $scope.colors.terminal4, $scope.colors.trp, 'green'],
 							'animation':{
 								duration: 1000,
 								easing: 'out'
