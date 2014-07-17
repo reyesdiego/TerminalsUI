@@ -35,21 +35,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			url: inserturl,
 			headers:
 			{token: loginService.getToken()}
-		}).success(function(data) {
-			data.data.forEach(function(factura){
-				factura.detalle.forEach(function(detalles){
-					detalles.items.forEach(function(item){
-						if (angular.isDefined($rootScope.itemsDescriptionInvoices[item.id])){
-							item.descripcion = $rootScope.itemsDescriptionInvoices[item.id];
-						}
-						else{
-							item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
-						}
-					})
-				})
-			});
-			callback(data);
-		}).error(function(errorText) {
+		}).success(function(data){
+			callback(factory.ponerDescripcionComprobantes(data));
+		}).error(function(errorText){
 			console.log(errorText);
 			dialogs.error('Error', 'Error al cargar la lista Invoice');
 		});
@@ -95,7 +83,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-				callback(data);
+				callback(factory.ponerDescripcionComprobantes(data));
 			}).error(function(errorText){
 				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar la lista de comprobantes');
@@ -110,7 +98,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-				callback(data);
+				callback(factory.ponerDescripcionComprobantes(data));
 			}).error(function(errorText){
 				console.log(errorText);
 				if (errorText.status === 'ERROR'){
@@ -131,6 +119,21 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				console.log(errorText);
 				dialogs.error('Error', 'Error al traer los datos de las tarifas');
 			});
+	};
+
+	factory.ponerDescripcionComprobantes = function(data){
+		data.data.forEach(function(factura){
+			factura.detalle.forEach(function(detalles){
+				detalles.items.forEach(function(item){
+					if (angular.isDefined($rootScope.itemsDescriptionInvoices[item.id])){
+						item.descripcion = $rootScope.itemsDescriptionInvoices[item.id];
+					} else {
+						item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
+					}
+				})
+			})
+		});
+		return data;
 	};
 
 	return factory;

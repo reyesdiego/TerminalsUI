@@ -109,7 +109,6 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate, loginS
 		var inserturl = serverUrl + '/invoices/countsByDate?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
-				console.log(data);
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);

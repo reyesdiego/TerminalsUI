@@ -25,7 +25,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 	$scope.chartHeight = 380;
 	$scope.chartData = datosGrafico;
 
-	$scope.chartsWidthTasas = 400;
+	$scope.chartsWidthTasas = 390;
 
 	$scope.chartsWidthFacturado = 460;
 
