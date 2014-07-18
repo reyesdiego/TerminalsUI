@@ -217,11 +217,14 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		}
 	};
 
-	$scope.editado = function(tarifa){
-		if (angular.equals(tarifa.codigo, '') || angular.equals(tarifa.descripcion,'')){
-			dialogs.error('El código y la descripción de la tarifa no pueden ser vacíos');
+	$scope.editado = function(price){
+		console.log(price)
+		if (!(angular.equals(price.code, '') || angular.equals(price.description,''))){
+			price.editar = false;
+			price.matches[0].claseFila = "info";
+			price.matches[0].flagGuardar = true;
 		} else {
-			tarifa.editar = false;
+			dialogs.error('Error', 'El código y la descripción de la tarifa no pueden ser vacíos');
 		}
 	};
 
