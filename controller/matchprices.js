@@ -28,7 +28,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.prepararDatos = function(){
 		priceFactory.getMatchPrices(loginService.getFiltro(), null, function (data) {
 			$scope.pricelist = data.data;
-
+			console.log($scope.pricelist);
 			//Cargo todos los códigos ya asociados de la terminal para control
 			$scope.pricelist.forEach(function(price){
 				if (price.matches != null && price.matches.length > 0){
@@ -121,6 +121,11 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		price.disabled = !(angular.isDefined(price.new) && price.new != '');
 	};
 
+	$scope.hitEnterEditar = function(evt, price){
+		if(angular.equals(evt.keyCode,13))
+			$scope.editado(price);
+	};
+
 	$scope.abrirNuevoConcepto = function(){
 		$scope.listaMatch = true;
 		$scope.nuevoConcepto = false;
@@ -204,6 +209,20 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.esconderAlerta = function(){
 		$scope.flagGuardado = true;
+	};
+
+	$scope.editarTarifa = function(tarifa){
+		if (tarifa.terminal != 'AGP' && loginService.getType() == 'terminal'){
+			tarifa.editar = true;
+		}
+	};
+
+	$scope.editado = function(tarifa){
+		if (angular.equals(tarifa.codigo, '') || angular.equals(tarifa.descripcion,'')){
+			dialogs.error('El código y la descripción de la tarifa no pueden ser vacíos');
+		} else {
+			tarifa.editar = false;
+		}
 	};
 
 }
