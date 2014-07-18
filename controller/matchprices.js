@@ -103,6 +103,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		var pos = price.matches[0].match.indexOf(codigo);
 		price.matches[0].match.splice( pos, 1 );
 		price.matches[0]._idPrice = price._id;
+		price.new = codigo;
 
 		//Elimino el código de la lista de todos los códigos asociados
 		pos = $scope.matchesTerminal.indexOf(codigo);
