@@ -107,9 +107,15 @@
 						</div>
 						<div class="panel-body">
 							<p>{{ pantalla.mensajeCodigos }}</p>
-							<span ng-repeat="numero in pantalla.resultadoCodigos">{{ numero }}<span ng-show="!$last"> - </span></span>
+							<span ng-repeat="numero in pantalla.resultadoCodigos"><a title="Filtrar por:" href ng-click="filtrarCodigo(numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
 						</div>
 					</div>
+
+					<div ng-show="hayFiltros">
+						<span class="col-lg-8">Filtrado por el código {{ codigoFiltrado }}</span>
+						<a  class="col-lg-4" href ng-click="quitarFiltro()"><span>Sacar filtro</span></a>
+					</div>
+
 
 					<table ng-show="pantalla.mostrarResultado" class="table table-striped table-bordered table-hover">
 						<thead>
@@ -117,21 +123,22 @@
 							<th>Comprobante</th>
 							<th>Razon Social</th>
 							<th>Fecha</th>
-							<th>Códigos faltantes</th>
+							<th>Importe total</th>
 							<th>Detalles</th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr ng-repeat="comprobante in pantalla.comprobantesRotos">
-							<td>{{ comprobante._id.nroComprob }}</td>
-							<td>{{ comprobante._id.razon }}</td>
-							<td>{{ comprobante._id.fecha | date: 'dd/MM/yyyy' }}</td>
-							<td>{{ comprobante._id.impTot }}</td>
+							<td>{{ comprobante.nroComprob }}</td>
+							<td>{{ comprobante.razon }}</td>
+							<td>{{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+							<td>{{ comprobante.importe.total }}</td>
 							<td><button ui-sref=".result" class="btn btn-primary" type="button" ng-click="mostrarDetalle(comprobante)"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 						</tr>
 						</tbody>
 					</table>
-					<pagination boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="5" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+					<pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="5" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+					<pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="5" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 				</div>
 
 			</tab>

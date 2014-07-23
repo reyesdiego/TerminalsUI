@@ -124,19 +124,17 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				dialogs.error('Error', 'Error en la carga de comprobantes sin códigos asociados.');
 			}
 		});
-	}
+	};
 
 	factory.invoiceById = function(id, callback){
 		var inserturl = serverUrl + '/invoice/' + id;
-		console.log(inserturl);
 		$http({
 			method: "GET",
 			url: inserturl,
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-			console.log(data);
-			callback(data);
+			callback(factory.ponerDescripcionComprobante(data.data));
 		}).error(function(errorText){
 			console.log(errorText);
 			if (errorText.status === 'ERROR'){
@@ -148,17 +146,43 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
+	factory.getByCode = function(page, code, callback){
+		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?code=' + code;
+		console.log(inserturl);
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(factory.ponerDescripcionComprobantes(data));
+		}).error(function(errorText){
+			console.log(errorText);
+			if (errorText.status === 'ERROR'){
+				callback(errorText);
+				//dialogs.error('Error', errorText.data);
+			} else {
+				dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
+			}
+		});
+	};
+
+	factory.ponerDescripcionComprobante = function(comprobante){
+		comprobante.detalle.forEach(function(detalles){
+			detalles.items.forEach(function(item){
+				if (angular.isDefined($rootScope.itemsDescriptionInvoices[item.id])){
+					item.descripcion = $rootScope.itemsDescriptionInvoices[item.id];
+				} else {
+					item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
+				}
+			})
+		})
+		return comprobante;
+	};
+
 	factory.ponerDescripcionComprobantes = function(data){
 		data.data.forEach(function(factura){
-			factura.detalle.forEach(function(detalles){
-				detalles.items.forEach(function(item){
-					if (angular.isDefined($rootScope.itemsDescriptionInvoices[item.id])){
-						item.descripcion = $rootScope.itemsDescriptionInvoices[item.id];
-					} else {
-						item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
-					}
-				})
-			})
+			factory.ponerDescripcionComprobante(factura);
 		});
 		return data;
 	};

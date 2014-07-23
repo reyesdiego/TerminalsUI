@@ -35,6 +35,15 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		limit: $scope.itemsPerPage
 	};
 
+	$scope.hayFiltros = false;
+	$scope.currentPageFiltros = 1;
+	$scope.totalItemsFiltros = 0;
+	$scope.pageFiltros = {
+		skip:0,
+		limit: $scope.itemsPerPage
+	};
+	$scope.codigoFiltrado = '';
+
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
 
@@ -99,7 +108,15 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 							$scope.pantalla.mostrarResultado = 1;
 
 							invoiceFactory.getInvoicesNoMatches($scope.pageCodigos, function(invoicesNoMatches){
-								$scope.pantalla.comprobantesRotos = invoicesNoMatches.data;
+								invoicesNoMatches.data.forEach(function(unComprobante){
+									unComprobante._id.fecha = {
+										emision: unComprobante._id.fecha
+									};
+									unComprobante._id.importe = {
+										total: unComprobante._id.impTot
+									};
+									$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+								});
 								//$scope.totalItemsCodigos = invoicesNoMatches.totalCount;
 							});
 						}
@@ -186,9 +203,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.cargar();
 
 	$scope.mostrarDetalle = function(unaFactura){
-		invoiceFactory.invoiceById(unaFactura._id._id, function(data){
-			console.log(data);
-			$scope.verDetalle = unaFactura;
+		invoiceFactory.invoiceById(unaFactura._id, function(comprobante){
+			$scope.verDetalle = comprobante;
 		});
 	};
 
@@ -203,7 +219,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 					$scope.tasaCargas.mostrarResultado = 0;
 				} else {
 					$scope.tasaCargas.resultado = data.data;
-					if ($scope.tasaCargas.resultado.length > 0){
+					if ($scope.tasaCargas.resultado.length > 0) {
 						$scope.totalItemsTasaCargas = data.totalCount;
 						$scope.tasaCargas.titulo = "Error";
 						$scope.tasaCargas.cartel = "panel-danger";
@@ -220,8 +236,47 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.pageChangedCodigos = function(){
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
 		invoiceFactory.getInvoicesNoMatches($scope.pageCodigos, function(data){
-			$scope.pantalla.comprobantesRotos = data;
+			data.data.forEach(function(unComprobante){
+				unComprobante._id.fecha = {
+					emision: unComprobante._id.fecha
+				};
+				unComprobante._id.importe = {
+					total: unComprobante._id.impTot
+				};
+				$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+			});
 		});
 	};
+
+	$scope.filtrarCodigo = function(codigo){
+		$scope.codigoFiltrado = codigo;
+		$scope.hayFiltros = true;
+		invoiceFactory.getByCode($scope.pageFiltros, codigo, function(data){
+			$scope.totalItemsFiltros = data.totalCount;
+			$scope.pantalla.comprobantesRotos = data.data;
+		});
+	};
+
+	$scope.pageChangedFiltros = function(){
+		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
+		$scope.filtrarCodigo($scope.codigoFiltrado);
+	};
+
+	$scope.quitarFiltro = function () {
+		$scope.codigoFiltrado = '';
+		$scope.pantalla.comprobantesRotos = [];
+		invoiceFactory.getInvoicesNoMatches($scope.pageCodigos, function(data){
+			data.data.forEach(function(unComprobante){
+				unComprobante._id.fecha = {
+					emision: unComprobante._id.fecha
+				};
+				unComprobante._id.importe = {
+					total: unComprobante._id.impTot
+				};
+				$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+			});
+			$scope.hayFiltros = false;
+		});
+	}
 
 }
