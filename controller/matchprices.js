@@ -33,7 +33,6 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.prepararDatos = function(){
 		priceFactory.getMatchPrices(loginService.getFiltro(), null, function (data) {
 			$scope.pricelist = data.data;
-			console.log($scope.pricelist);
 			//Cargo todos los códigos ya asociados de la terminal para control
 			$scope.pricelist.forEach(function(price){
 				if (price.matches != null && price.matches.length > 0){

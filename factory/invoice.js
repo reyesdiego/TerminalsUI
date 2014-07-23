@@ -148,7 +148,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getByCode = function(page, code, callback){
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?code=' + code;
-		console.log(inserturl);
 		$http({
 			method: "GET",
 			url: inserturl,
