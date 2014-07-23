@@ -61,25 +61,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getByDate = function(desde, hasta, terminal, tipoComprobante, callback) {
 //		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + '0' + '/' + '10' + '?';
-		var unaUrl;
-		switch (tipoComprobante){
-			case "0":
-				unaUrl = 'mocks/facturasA.json';
-				break;
-			case "5":
-				unaUrl = 'mocks/facturasB.json';
-				break;
-			case "10":
-				unaUrl = 'mocks/facturasC.json';
-				break;
-			default:
-				unaUrl = 'mocks/facturasC.json';
-				break;
-		}
 
 		$http({
 			method: 'GET',
-			url: inserturl+'codTipoComprob='+tipoComprobante,
+			url: inserturl + 'codTipoComprob=' + tipoComprobante,
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
@@ -119,6 +104,48 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				console.log(errorText);
 				dialogs.error('Error', 'Error al traer los datos de las tarifas');
 			});
+	};
+
+	factory.getInvoicesNoMatches = function(page, callback){
+		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			if (errorText.status === 'ERROR'){
+				callback(errorText);
+				//dialogs.error('Error', errorText.data);
+			} else {
+				dialogs.error('Error', 'Error en la carga de comprobantes sin códigos asociados.');
+			}
+		});
+	}
+
+	factory.invoiceById = function(id, callback){
+		var inserturl = serverUrl + '/invoice/' + id;
+		console.log(inserturl);
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			console.log(data);
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			if (errorText.status === 'ERROR'){
+				callback(errorText);
+				//dialogs.error('Error', errorText.data);
+			} else {
+				dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
+			}
+		});
 	};
 
 	factory.ponerDescripcionComprobantes = function(data){

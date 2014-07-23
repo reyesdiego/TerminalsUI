@@ -30,6 +30,10 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	$scope.currentPageCodigos = 1;
 	$scope.totalItemsCodigos = 0;
+	$scope.pageCodigos = {
+		skip: 0,
+		limit: $scope.itemsPerPage
+	};
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
@@ -82,6 +86,25 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 					var contador = 0;
 					$scope.control = 0;
 
+					var flagErrorTarifas = false;
+					var tarifa;
+
+					priceFactory.noMatches(function(dataNoMatches){
+
+						$scope.pantalla.resultadoCodigos = dataNoMatches.data;
+						if ($scope.pantalla.resultadoCodigos.length > 0){
+							$scope.pantalla.mensajeCodigos = "Se hallaron códigos sin asociar: ";
+							$scope.pantalla.cartelCodigos = "panel-danger";
+							$scope.pantalla.tituloCodigos = "Error";
+							$scope.pantalla.mostrarResultado = 1;
+
+							invoiceFactory.getInvoicesNoMatches($scope.pageCodigos, function(invoicesNoMatches){
+								$scope.pantalla.comprobantesRotos = invoicesNoMatches.data;
+								//$scope.totalItemsCodigos = invoicesNoMatches.totalCount;
+							});
+						}
+					});
+
 					//Por ahora se esta realizando el chequeo contra el mock, el algoritmo está hecho suponiendo que
 					//el rango de facturas por fecha viene ordenado, tampoco hay nada que me permita comprobar que el primer
 					//comprobante sea el correcto...
@@ -103,22 +126,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 							}
 						}
 
-						var flagError = false;
-						var flagErrorTarifas = false;
-						var tarifa;
-						/*Aca control de codigos y de tarifas*/
+						/*Aca control de tarifas*/
 						comprob.detalle.forEach(function(detalle){
 							detalle.items.forEach(function(item){
-								if (!in_array(item.id, $scope.codigosTerminal)){
-									if (!in_array(item.id, comprob.codigosFaltantes)){
-										comprob.codigosFaltantes.push(item.id);
-									}
-									$scope.pantalla.mensajeCodigos = "Se hallaron códigos sin asociar: ";
-									$scope.pantalla.cartelCodigos = "panel-danger";
-									$scope.pantalla.tituloCodigos = "Error";
-									$scope.pantalla.mostrarResultado = 1;
-									flagError = true;
-								}
 
 								if (angular.isDefined($scope.tarifasTerminal[item.id])){
 									tarifa = $scope.tarifasTerminal[item.id] * item.cnt;
@@ -135,17 +145,11 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 							})
 						});
 
-						if (flagError){
-							$scope.pantalla.comprobantesRotos.push(comprob);
-						}
-
 						if (flagErrorTarifas){
 							$scope.pantalla.comprobantesMalCobrados.push(comprob);
 						}
 
 					});
-					$scope.totalItemsCodigos = $scope.pantalla.comprobantesRotos.length;
-					$scope.filteredComprobantesRotos = $scope.pantalla.comprobantesRotos.slice(($scope.currentPageCodigos - 1) * $scope.itemsPerPage, $scope.currentPageCodigos * $scope.itemsPerPage - 1)
 				});
 				$scope.terminoCarga = true;
 			});
@@ -182,7 +186,10 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.cargar();
 
 	$scope.mostrarDetalle = function(unaFactura){
-		$scope.verDetalle = unaFactura;
+		invoiceFactory.invoiceById(unaFactura._id._id, function(data){
+			console.log(data);
+			$scope.verDetalle = unaFactura;
+		});
 	};
 
 	$scope.$watch('currentPageTasaCargas', function(){
@@ -211,7 +218,10 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	});
 
 	$scope.pageChangedCodigos = function(){
-		$scope.filteredComprobantesRotos = $scope.pantalla.comprobantesRotos.slice(($scope.currentPageCodigos - 1) * $scope.itemsPerPage, $scope.currentPageCodigos * $scope.itemsPerPage - 1)
+		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
+		invoiceFactory.getInvoicesNoMatches($scope.pageCodigos, function(data){
+			$scope.pantalla.comprobantesRotos = data;
+		});
 	};
 
 }
