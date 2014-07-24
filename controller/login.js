@@ -26,11 +26,6 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService, invoic
 					$rootScope.esUsuario = loginService.getType();
 					$rootScope.terminal = loginService.getInfo();
 
-					//En el login debe cargar las descripciones asociadas
-					invoiceFactory.getDescriptionItem(function(data){
-						$rootScope.itemsDescriptionInvoices = data.data;
-					});
-
 					//Si el rol es terminal, queda como filtro de si misma para las consultas
 					//De lo contrario, dejo a BACTSSA como filtro por default
 					if (data.role == 'terminal'){
@@ -39,6 +34,11 @@ function loginCtrl($scope, $rootScope, userFactory, $state, loginService, invoic
 						loginService.setFiltro('BACTSSA');
 						$rootScope.filtroTerminal = 'BACTSSA';
 					}
+
+					//En el login debe cargar las descripciones asociadas
+					invoiceFactory.getDescriptionItem(function(data){
+						$rootScope.itemsDescriptionInvoices = data.data;
+					});
 
 					// Carga el tema de la terminal
 					$rootScope.switchTheme(loginService.getFiltro());
