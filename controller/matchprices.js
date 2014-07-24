@@ -217,12 +217,25 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		$scope.flagGuardado = true;
 	};
 
-	$scope.editarTarifa = function(tarifa){
+	$scope.editarTarifa = function(tarifa, campo){
 		if($scope.flagEditando){
 			$scope.cancelarEditado($scope.tarifaEditando);
 		}
 
 		if (tarifa.terminal != 'AGP' && loginService.getType() == 'terminal'){
+			var elemento;
+
+			switch (campo) {
+				case 'code':
+					elemento = document.getElementById(tarifa.code);
+					break;
+				case 'description':
+					elemento = document.getElementById(tarifa.description);
+					break;
+			}
+			$timeout(function(){
+				elemento.focus();
+			},500);
 			$scope.flagEditando = true;
 			tarifa.editar = true;
 			$scope.anteriorDescripcion = tarifa.description;
