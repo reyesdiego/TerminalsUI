@@ -54,6 +54,19 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 		});
 	};
 
+	factory.noMatches = function (callback){
+		var inserturl = serverUrl + '/noMatches/' + loginService.getFiltro();
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers: { token: loginService.getToken() }
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al cargar la lista');
+		});
+	};
+
 	factory.addPrice = function (data, callback) {
 		var inserturl = serverUrl + '/price';
 		$http({

@@ -61,25 +61,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getByDate = function(desde, hasta, terminal, tipoComprobante, callback) {
 //		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + '0' + '/' + '10' + '?';
-		var unaUrl;
-		switch (tipoComprobante){
-			case "0":
-				unaUrl = 'mocks/facturasA.json';
-				break;
-			case "5":
-				unaUrl = 'mocks/facturasB.json';
-				break;
-			case "10":
-				unaUrl = 'mocks/facturasC.json';
-				break;
-			default:
-				unaUrl = 'mocks/facturasC.json';
-				break;
-		}
 
 		$http({
 			method: 'GET',
-			url: inserturl+'codTipoComprob='+tipoComprobante,
+			url: inserturl + 'codTipoComprob=' + tipoComprobante,
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
@@ -121,17 +106,82 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 	};
 
+	factory.getInvoicesNoMatches = function(page, callback){
+		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			if (errorText.status === 'ERROR'){
+				callback(errorText);
+				//dialogs.error('Error', errorText.data);
+			} else {
+				dialogs.error('Error', 'Error en la carga de comprobantes sin códigos asociados.');
+			}
+		});
+	};
+
+	factory.invoiceById = function(id, callback){
+		var inserturl = serverUrl + '/invoice/' + id;
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(factory.ponerDescripcionComprobante(data.data));
+		}).error(function(errorText){
+			console.log(errorText);
+			if (errorText.status === 'ERROR'){
+				callback(errorText);
+				//dialogs.error('Error', errorText.data);
+			} else {
+				dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
+			}
+		});
+	};
+
+	factory.getByCode = function(page, code, callback){
+		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?code=' + code;
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(factory.ponerDescripcionComprobantes(data));
+		}).error(function(errorText){
+			console.log(errorText);
+			if (errorText.status === 'ERROR'){
+				callback(errorText);
+				//dialogs.error('Error', errorText.data);
+			} else {
+				dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
+			}
+		});
+	};
+
+	factory.ponerDescripcionComprobante = function(comprobante){
+		comprobante.detalle.forEach(function(detalles){
+			detalles.items.forEach(function(item){
+				if (angular.isDefined($rootScope.itemsDescriptionInvoices[item.id])){
+					item.descripcion = $rootScope.itemsDescriptionInvoices[item.id];
+				} else {
+					item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
+				}
+			})
+		})
+		return comprobante;
+	};
+
 	factory.ponerDescripcionComprobantes = function(data){
 		data.data.forEach(function(factura){
-			factura.detalle.forEach(function(detalles){
-				detalles.items.forEach(function(item){
-					if (angular.isDefined($rootScope.itemsDescriptionInvoices[item.id])){
-						item.descripcion = $rootScope.itemsDescriptionInvoices[item.id];
-					} else {
-						item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
-					}
-				})
-			})
+			factory.ponerDescripcionComprobante(factura);
 		});
 		return data;
 	};

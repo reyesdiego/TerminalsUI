@@ -25,10 +25,14 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.acceso = loginService.getType();
 
+	$scope.anteriorDescripcion = '';
+	$scope.anteriorCodigo = '';
+	$scope.tarifaEditando = '';
+	$scope.flagEditando = false;
+
 	$scope.prepararDatos = function(){
 		priceFactory.getMatchPrices(loginService.getFiltro(), null, function (data) {
 			$scope.pricelist = data.data;
-			console.log($scope.pricelist);
 			//Cargo todos los códigos ya asociados de la terminal para control
 			$scope.pricelist.forEach(function(price){
 				if (price.matches != null && price.matches.length > 0){
@@ -124,6 +128,8 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.hitEnterEditar = function(evt, price){
 		if(angular.equals(evt.keyCode,13))
 			$scope.editado(price);
+		if(angular.equals(evt.keyCode, 27))
+			$scope.cancelarEditado(price);
 	};
 
 	$scope.abrirNuevoConcepto = function(){
@@ -211,21 +217,56 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		$scope.flagGuardado = true;
 	};
 
-	$scope.editarTarifa = function(tarifa){
+	$scope.editarTarifa = function(tarifa, campo){
+		if($scope.flagEditando){
+			$scope.cancelarEditado($scope.tarifaEditando);
+		}
+
 		if (tarifa.terminal != 'AGP' && loginService.getType() == 'terminal'){
+			var elemento;
+
+			switch (campo) {
+				case 'code':
+					elemento = document.getElementById(tarifa.code);
+					break;
+				case 'description':
+					elemento = document.getElementById(tarifa.description);
+					break;
+			}
+			$timeout(function(){
+				elemento.focus();
+			},500);
+			$scope.flagEditando = true;
 			tarifa.editar = true;
+			$scope.anteriorDescripcion = tarifa.description;
+			$scope.anteriorCodigo = tarifa.code;
+			$scope.tarifaEditando = tarifa;
 		}
 	};
 
 	$scope.editado = function(price){
-		console.log(price)
+		var flagCodigo = false;
+		var flagDescripcion = false;
+
 		if (!(angular.equals(price.code, '') || angular.equals(price.description,''))){
+			$scope.pricelist.forEach(function(tarifa){
+				if (price.code == tarifa.code) flagCodigo = true;
+				if (price.description == tarifa.description) flagDescripcion = true;
+			})
 			price.editar = false;
 			price.matches[0].claseFila = "info";
 			price.matches[0].flagGuardar = true;
+			$scope.flagEditando = false;
 		} else {
-			dialogs.error('Error', 'El código y la descripción de la tarifa no pueden ser vacíos');
+			dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden ser vacíos.');
 		}
+	};
+
+	$scope.cancelarEditado = function(price){
+		price.code = $scope.anteriorCodigo;
+		price.description = $scope.anteriorDescripcion;
+		price.editar = false;
+		$scope.flagEditando = false;
 	};
 
 }

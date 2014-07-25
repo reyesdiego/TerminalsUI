@@ -5,8 +5,6 @@
       <list>
         <ServerConfiguration>
           <option name="label" value="DLR" />
-          <option name="serverName" value="200.41.137.88" />
-          <option name="serverPort" value="27017" />
           <option name="userDatabase" value="terapi" />
         </ServerConfiguration>
       </list>
