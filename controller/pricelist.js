@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 1/29/14.
  */
 function pricelistCtrl($scope, priceFactory, loginService){
-	'use strict'
+	'use strict';
 	// Variable para almacenar la info principal que trae del factory
 	$scope.filteredPrices = [];
 

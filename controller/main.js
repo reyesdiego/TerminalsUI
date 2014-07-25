@@ -41,7 +41,7 @@ function es_substring(needle, haystack){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -167,8 +167,16 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 });
 
-myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory){
+myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, authFactory){
 	"use strict";
+
+	// Carga la sesion por cookies
+	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
+		authFactory.login().then(function(){
+			$rootScope.estaLogeado = true;
+		});
+	}
+
 	$rootScope.colorBactssa = '';
 	$rootScope.colorTerminal4 = '';
 	$rootScope.colorTrp = '';
@@ -240,16 +248,29 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory){
 	};
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
+		if (!loginService.getStatus() && authFactory.userEstaLogeado()){
+			authFactory.login().then(function(){
+				$rootScope.verificaRutas(event, toState);
+			});
+		} else {
+			$rootScope.verificaRutas(event, toState);
+		}
+	});
+
+	$rootScope.verificaRutas = function(event, toState){
 		if (!in_array(toState.name, rutasComunes)){
 			if (loginService.getStatus()){
 				if(!in_array(toState.name, loginService.getAcceso())){
-					event.preventDefault();
-					$state.transitionTo('forbidden');
+					$rootScope.usuarioNoAutorizado(event);
 				}
 			} else {
-				event.preventDefault();
-				$state.transitionTo('forbidden');
+				$rootScope.usuarioNoAutorizado(event);
 			}
 		}
-	})
+	};
+
+	$rootScope.usuarioNoAutorizado = function(event){
+		event.preventDefault();
+		$state.transitionTo('forbidden');
+	};
 });
