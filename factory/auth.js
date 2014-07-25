@@ -10,7 +10,7 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 		this.login(user, pass).then(function(){
 			$cookies.username = user;
 			$cookies.password = pass;
-			$cookies.themeTerminal = 'BACTSSA';
+			$cookies.themeTerminal = loginService.getFiltro();
 		});
 	};
 
