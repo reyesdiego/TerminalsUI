@@ -106,8 +106,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 	};
 
-	factory.getInvoicesNoMatches = function(page, callback){
-		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+	factory.getInvoicesNoMatches = function(desde, hasta, page, callback){
+		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?fechaInicio=' + formatDate.formatearFecha(desde) + '&fechaFin=' + formatDate.formatearFecha(hasta);
+		console.log(inserturl);
 		$http({
 			method: "GET",
 			url: inserturl,

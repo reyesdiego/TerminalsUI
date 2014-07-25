@@ -54,8 +54,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService){
 		});
 	};
 
-	factory.noMatches = function (callback){
-		var inserturl = serverUrl + '/noMatches/' + loginService.getFiltro();
+	factory.noMatches = function (desde, hasta, callback){
+		var inserturl = serverUrl + '/noMatches/' + loginService.getFiltro() + '?fechaInicio=' + desde + '&fechaFin=' + hasta;
 		$http({
 			method: 'GET',
 			url: inserturl,
