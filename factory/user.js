@@ -36,11 +36,11 @@ myapp.factory('userFactory', function($http, dialogs){
 			data: formData
 		}).success(function(data) {
 				callback(data);
-			}).error(function(errorText, errorNumber, data) {
+			}).error(function() {
 				dialogs.error('Error al cambiar la contraseña', 'Se ha producido un error. Inténtelo nuevamente más tarde.');
 			});
 
-	}
+	};
 
 	return factory;
 });

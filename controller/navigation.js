@@ -2,14 +2,16 @@
  * Created by Artiom on 14/03/14.
  */
 
-function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService){
+function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService, authFactory){
 	"use strict";
+
 	$rootScope.esUsuario = '';
 	$rootScope.terminal = '';
 	$scope.acceso = '';
 	$rootScope.filtroTerminal = '';
 
 	$scope.salir = function(){
+		authFactory.logout();
 		$rootScope.esUsuario = '';
 		$state.transitionTo('login');
 		loginService.unsetLogin();
@@ -52,6 +54,7 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		$rootScope.filtroTerminal = terminal;
 		loginService.setFiltro(terminal);
 		$rootScope.switchTheme(terminal);
+		authFactory.setTheme(terminal);
 		$scope.irA();
 	};
 
