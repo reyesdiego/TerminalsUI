@@ -82,6 +82,7 @@
 				<li ng-show="acceso!=''"><a ui-sref="matches" ng-click="isCollapsed = false">Asociar</a></li>
 				<li ng-show="acceso!=''"><a ui-sref="invoices" ng-click="isCollapsed = false">Comprobantes</a></li>
 				<li ng-show="acceso=='agp'"><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
+				<li ng-show="acceso!='agp'"><a ui-sref="cfacturas" ng-click="isCollapsed = false">Control de comprobantes</a></li>
 				<li ng-show="false"><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
 				<li ng-show="acceso=='agp'" class="dropdown">
 					<a href class="dropdown-toggle" data-toggle="dropdown" ><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
