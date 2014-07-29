@@ -43,7 +43,7 @@
 						</thead>
 						<tbody>
 						<!--<tr style="height:60px" ng-repeat="price in filteredPrices" class="{{ price.matches[0].claseFila }}">-->
-						<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage | filter:search)" class="{{ price.matches[0].claseFila }}">
+						<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage | filter:search)" class="{{ price.claseFila }}">
 							<td class="col-lg-1" ng-init="price.editar = false" ng-click="editarTarifa(price, 'code')">
 								<span ng-hide="price.editar">{{ price.code }}</span>
 								<div ng-show="price.editar">

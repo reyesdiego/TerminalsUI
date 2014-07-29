@@ -81,17 +81,17 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 						terminal: loginService.getInfo().terminal,
 						match: [],
 						_idPrice: price._id,
-						code: price.code,
-						flagGuardar: true,
-						claseFila: "success"
+						code: price.code
 					}];
+					price.flagGuardar= true;
+					price.claseFila= "success";
 					$scope.nuevoMatch[0].match.push(price.new);
 					price.matches = $scope.nuevoMatch;
 				} else {
 					price.matches[0]._idPrice= price._id;
 					price.matches[0].match.push(price.new);
-					price.matches[0].flagGuardar = true;
-					price.matches[0].claseFila = "success";
+					price.flagGuardar = true;
+					price.claseFila = "success";
 				}
 				$scope.matchesTerminal.push(price.new);
 				$scope.flagCambios = true;
@@ -113,8 +113,8 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		pos = $scope.matchesTerminal.indexOf(codigo);
 		$scope.matchesTerminal.splice(pos, 1);
 
-		price.matches[0].claseFila = "warning";
-		price.matches[0].flagGuardar = true;
+		price.claseFila = "warning";
+		price.flagGuardar = true;
 		$scope.flagCambios = true;
 	};
 
@@ -144,10 +144,10 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		var prices = $scope.filteredPrices;
 		//Guardo todos matches en un array nuevo, siempre y cuando hayan sufrido cambios
 		prices.forEach(function(item){
-			if (item.matches != null && item.matches.length > 0 && item.matches[0].flagGuardar){
+			if (item.matches != null && item.matches.length > 0 && item.flagGuardar){
 				$scope.match.push(item.matches[0]);
-				item.matches[0].flagGuardar = false;
-				item.matches[0].claseFila = "";
+				item.flagGuardar = false;
+				item.claseFila = "";
 			}
 		});
 		//Envío la información al servidor
@@ -253,9 +253,10 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 				if (price.code == tarifa.code) flagCodigo = true;
 				if (price.description == tarifa.description) flagDescripcion = true;
 			})
+			console.log(price);
 			price.editar = false;
-			price.matches[0].claseFila = "info";
-			price.matches[0].flagGuardar = true;
+			price.claseFila = "info";
+			price.flagGuardar = true;
 			$scope.flagEditando = false;
 		} else {
 			dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden ser vacíos.');
