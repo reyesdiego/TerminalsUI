@@ -191,7 +191,7 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 				var rule=rules[j];
 
 				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorBactssa = rule.style['background-color'];
+					$rootScope.colorBactssa = rule.style['backgroundColor'];
 				};
 			};
 		};
@@ -201,7 +201,7 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 				var rule=rules[j];
 
 				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorTrp = rule.style['background-color'];
+					$rootScope.colorTrp = rule.style['backgroundColor'];
 				};
 			};
 		};
@@ -211,7 +211,7 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 				var rule=rules[j];
 
 				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorTerminal4 = rule.style['background-color'];
+					$rootScope.colorTerminal4 = rule.style['backgroundColor'];
 				};
 			};
 		};

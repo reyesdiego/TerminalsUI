@@ -16,7 +16,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 		"bactssa":$scope.colorBactssa,
 		"terminal4": $scope.colorTerminal4,
 		"trp": $scope.colorTrp
-	}
+	};
 
 	$scope.radioModel = 'Gates';
 
@@ -64,9 +64,9 @@ var controlCtrl = myapp.controller('controlCtrl', function ($scope, datosGrafico
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
 	$scope.desdeTasas = new Date();
-	$scope.mesDesde = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
-	$scope.mesDesdeGates = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
-	$scope.mesDesdeTurnos = new Date($scope.desde.getFullYear() + '-' + ($scope.desde.getMonth() + 1) + '-01' );
+	$scope.mesDesde = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth() + 1), '01' );
+	$scope.mesDesdeGates = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth() + 1), '01' );
+	$scope.mesDesdeTurnos = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth() + 1), '01' );
 	$scope.diaGatesTurnos = new Date();
 
 	$scope.monthMode = 'month';
