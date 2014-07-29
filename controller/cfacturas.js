@@ -79,9 +79,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.controlDeCodigos = function(){
-		console.log("hola");
-		console.log($scope.desdeCodigos);
-		console.log($scope.hastaCodigos);
+		$scope.pantalla.comprobantesRotos = [];
 		priceFactory.noMatches($scope.desdeCodigos, $scope.hastaCodigos, function(dataNoMatches){
 			$scope.pantalla.resultadoCodigos = dataNoMatches.data;
 			if ($scope.pantalla.resultadoCodigos.length > 0){
@@ -92,7 +90,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 				invoiceFactory.getInvoicesNoMatches($scope.desde, $scope.hasta, $scope.pageCodigos, function(invoicesNoMatches){
 					console.log(invoicesNoMatches);
-					invoicesNoMatches.data.forEach(function(unComprobante){
+					invoicesNoMatches.data.data.forEach(function(unComprobante){
 						unComprobante._id.fecha = {
 							emision: unComprobante._id.fecha
 						};
@@ -101,7 +99,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 						};
 						$scope.pantalla.comprobantesRotos.push(unComprobante._id);
 					});
-					$scope.totalItemsCodigos = invoicesNoMatches.totalCount;
+					$scope.totalItemsCodigos = invoicesNoMatches.data.totalCount;
 				});
 			}
 		});
@@ -231,8 +229,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	$scope.pageChangedCodigos = function(){
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
-		invoiceFactory.getInvoicesNoMatches($scope.pageCodigos, function(data){
-			data.data.forEach(function(unComprobante){
+		invoiceFactory.getInvoicesNoMatches($scope.desde, $scope.hasta, $scope.pageCodigos, function(data){
+			data.data.data.forEach(function(unComprobante){
 				unComprobante._id.fecha = {
 					emision: unComprobante._id.fecha
 				};
@@ -259,10 +257,11 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.quitarFiltro = function () {
+		$scope.hayFiltros = false;
 		$scope.codigoFiltrado = '';
 		$scope.pantalla.comprobantesRotos = [];
-		invoiceFactory.getInvoicesNoMatches($scope.pageCodigos, function(data){
-			data.data.forEach(function(unComprobante){
+		invoiceFactory.getInvoicesNoMatches($scope.desde, $scope.hasta, $scope.pageCodigos, function(data){
+			data.data.data.forEach(function(unComprobante){
 				unComprobante._id.fecha = {
 					emision: unComprobante._id.fecha
 				};
@@ -271,7 +270,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				};
 				$scope.pantalla.comprobantesRotos.push(unComprobante._id);
 			});
-			$scope.hayFiltros = false;
 		});
 	}
 
