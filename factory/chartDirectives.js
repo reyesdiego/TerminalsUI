@@ -231,9 +231,11 @@ myapp.directive('dynamicChart', function($timeout){
 							'is3D': $scope.is3D,
 							'isStacked': $scope.stacked
 						};
-						if (!$scope.stacked){
-							options.series = $scope.series;
+						if (!angular.equals($scope.colors, undefined)){
 							options.colors = [$scope.colors.bactssa, $scope.colors.terminal4, $scope.colors.trp, 'green'];
+						}
+						if (!angular.equals($scope.stacked, undefined)){
+							options.series = $scope.series;
 						}
 						data = new google.visualization.arrayToDataTable($scope.data);
 						if ($scope.currency){

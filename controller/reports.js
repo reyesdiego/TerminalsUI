@@ -8,6 +8,16 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 		$scope.comprobantesTipos = data.data;
 	});
 
+	$scope.barColors = {
+		"bactssa":$scope.colorBactssa,
+		"terminal4": $scope.colorTerminal4,
+		"trp": $scope.colorTrp
+	};
+	$scope.chartSeries = {3: {type: "line"}};
+
+	$scope.columnChart = 'column';
+	$scope.pieChart = 'pie';
+
 	$scope.chartTitleBarrasHorarios = "Detalle por mes";
 	$scope.chartWidthBarrasHorarios = 500;
 	$scope.chartHeightBarrasHorarios = 400;
@@ -158,22 +168,22 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				['Datos', 'Ausencias', 'Tardes', 'Sin turno', { role: 'annotation' } ]
 			];
 			var tortaBactssa = [
-				['Cumplidos', 0],
 				['Ausencias', 0],
 				['Tardes', 0],
-				['Sin turno', 0]
+				['Sin turno', 0],
+				['Cumplidos', 0]
 			];
 			var tortaTerminal4 = [
-				['Cumplidos', 0],
 				['Ausencias', 0],
 				['Tardes', 0],
-				['Sin turno', 0]
+				['Sin turno', 0],
+				['Cumplidos', 0]
 			];
 			var tortaTrp = [
-				['Cumplidos', 0],
 				['Ausencias', 0],
 				['Tardes', 0],
-				['Sin turno', 0]
+				['Sin turno', 0],
+				['Cumplidos', 0]
 			];
 			var barrasBactssa = graficoBarras.slice();
 			var barrasTerminal4 = graficoBarras.slice();
@@ -190,24 +200,24 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				switch (datosHorarios.terminal){
 					case "BACTSSA":
 						barrasBactssa.push(filaBarras.slice());
-						tortaBactssa[0][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
-						tortaBactssa[1][1] += datosHorarios.ausencias;
-						tortaBactssa[2][1] += datosHorarios.fueraDeHorario;
-						tortaBactssa[3][1] += datosHorarios.gatesSinTurno;
+						tortaBactssa[0][1] += datosHorarios.ausencias;
+						tortaBactssa[1][1] += datosHorarios.fueraDeHorario;
+						tortaBactssa[2][1] += datosHorarios.gatesSinTurno;
+						tortaBactssa[3][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
 						break;
 					case "TERMINAL4":
 						barrasTerminal4.push(filaBarras.slice());
-						tortaTerminal4[0][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
-						tortaTerminal4[1][1] += datosHorarios.ausencias;
-						tortaTerminal4[2][1] += datosHorarios.fueraDeHorario;
-						tortaTerminal4[3][1] += datosHorarios.gatesSinTurno;
+						tortaTerminal4[0][1] += datosHorarios.ausencias;
+						tortaTerminal4[1][1] += datosHorarios.fueraDeHorario;
+						tortaTerminal4[2][1] += datosHorarios.gatesSinTurno;
+						tortaTerminal4[3][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
 						break;
 					case "TRP":
 						barrasTrp.push(filaBarras.slice());
-						tortaTrp[0][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
-						tortaTrp[1][1] += datosHorarios.ausencias;
-						tortaTrp[2][1] += datosHorarios.fueraDeHorario;
-						tortaTrp[3][1] += datosHorarios.gatesSinTurno;
+						tortaTrp[0][1] += datosHorarios.ausencias;
+						tortaTrp[1][1] += datosHorarios.fueraDeHorario;
+						tortaTrp[2][1] += datosHorarios.gatesSinTurno;
+						tortaTrp[3][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
 						break;
 				}
 			})
@@ -226,8 +236,8 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 reportsCtrl.prepararMatrizVaciaBarras = function($q){
 	var defer = $q.defer();
 	var base = [
-		['Datos', 'Cumplidos', 'Ausencias', 'Tardes', 'Sin turno', { role: 'annotation' } ]
-		['', 0, 0, 0, 0, '']
+		['Datos', 'Ausencias', 'Tardes', 'Sin turno', { role: 'annotation' } ]
+		['', 0, 0, 0, '']
 	];
 	defer.resolve(base);
 	return defer.promise;
@@ -236,10 +246,10 @@ reportsCtrl.prepararMatrizVaciaBarras = function($q){
 reportsCtrl.prepararMatrizVaciaTorta = function($q){
 	var defer = $q.defer();
 	var base = [
-		['Cumplidos', 0],
 		['Ausencias', 0],
 		['Tardes', 0],
-		['Sin turno', 0]
+		['Sin turno', 0],
+		['Cumplidos', 0]
 	];
 	defer.resolve(base);
 	return defer.promise;

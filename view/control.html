@@ -245,9 +245,19 @@
 			</div>
 		</div>
 		<div class="col-lg-12 table-responsive" collapse="!isCollapsedDayGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
-			<column-chart data="chartDataDiaGatesTurnos" title="{{chartTitleDiaGatesTurnos}}"
-						width="{{chartWidthDiaGatesTurnos}}" height="{{chartsHeight}}"
-						select="selectRow(selectedRowIndexFacturado)" series="chartSeries" colors="barColors"></column-chart>
+			<dynamic-chart
+					data="chartDataDiaGatesTurnos"
+					title="{{chartTitleDiaGatesTurnos}}"
+					width="{{chartWidthDiaGatesTurnos}}"
+					height="{{chartsHeight}}"
+					select="selectRow(selectedRowIndexFacturado)"
+					series="chartSeries"
+					colors="barColors"
+					type="{{columnChart}}"
+					currency="false"
+					stacked="false"
+					is3-d="false">
+			</dynamic-chart>
 		</div>
 	</div>
 </div>
