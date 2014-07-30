@@ -89,7 +89,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				$scope.pantalla.mostrarResultado = 1;
 
 				invoiceFactory.getInvoicesNoMatches($scope.desde, $scope.hasta, $scope.pageCodigos, function(invoicesNoMatches){
-					console.log(invoicesNoMatches);
 					invoicesNoMatches.data.data.forEach(function(unComprobante){
 						unComprobante._id.fecha = {
 							emision: unComprobante._id.fecha
@@ -133,7 +132,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 			$scope.tarifasTerminal = dataTarifas;
 
 				invoiceFactory.getByDate($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.tipoComprobante, function(dataComprob) {
-
+					console.log(dataComprob);
 					$scope.result = dataComprob;
 					$scope.totalFacturas= $scope.result.data.length;
 

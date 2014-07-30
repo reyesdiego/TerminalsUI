@@ -34,11 +34,6 @@ function in_array(needle, haystack, argStrict){
 	return false;
 }
 
-function es_substring(needle, haystack){
-	var posicion = haystack.indexOf(needle);
-	return posicion != -1;
-}
-
 var serverUrl = config.url();
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies']);

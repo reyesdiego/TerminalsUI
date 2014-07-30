@@ -215,13 +215,23 @@ myapp.directive('dynamicChart', function($timeout){
 					draw.triggered = true;
 					$timeout(function () {
 						draw.triggered = false;
+						if ($scope.type == 'pie'){
+							var label, value;
+							data.removeRows(0, data.getNumberOfRows());
+							angular.forEach($scope.data, function(row) {
+								label = row[0];
+								value = parseFloat(row[1], 10);
+								if (!isNaN(value)) {
+									data.addRow([row[0], value]);
+								}
+							});
+						}
 						var options = {
 							'title': $scope.title,
 							'width': $scope.width,
 							'height': $scope.height,
 							'series': $scope.series,
 							'backgroundColor': {'fill': 'transparent'},
-							'vAxis': {format:'u$s###,###,###.##'},
 							'animation':{
 								duration: 1000,
 								easing: 'out'
@@ -237,8 +247,11 @@ myapp.directive('dynamicChart', function($timeout){
 						if (!angular.equals($scope.stacked, undefined)){
 							options.series = $scope.series;
 						}
-						data = new google.visualization.arrayToDataTable($scope.data);
+						if ($scope.type == 'column'){
+							data = new google.visualization.arrayToDataTable($scope.data);
+						}
 						if ($scope.currency){
+							options.vAxis= {format:'u$s###,###,###.##'};
 							var formatter = new google.visualization.NumberFormat(
 								{prefix: 'u$s', negativeColor: 'red', negativeParens: true});
 							formatter.format(data, 1);
