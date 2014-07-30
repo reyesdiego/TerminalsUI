@@ -46,9 +46,17 @@
 	<div class="row">
 		<br>
 		<div class="col-lg-3" ng-hide="loadingTotales">
-			<column-chart-stack data="chartData" title="{{chartTitle}}"
-								width="{{chartWidth}}" height="{{chartHeight}}"
-								select="selectRow(selectedRowIndex)"></column-chart-stack>
+			<dynamic-chart
+					data="chartData"
+					title="{{chartTitle}}"
+					width="{{chartWidth}}"
+					height="{{chartHeight}}"
+					select="selectRow(selectedRowIndex)"
+					type="{{columnChart}}"
+					is3-d="false"
+					stacked="true"
+					currency="false">
+			</dynamic-chart>
 		</div>
 
 
@@ -68,9 +76,17 @@
 				</div>
 			</div>
 			<div collapse="!isCollapsedDayTasas">
-				<column-chart-stack-currency data="chartDataFacturadoTasas" title="{{chartTitleFacturadoTasas}}"
-									width="{{chartsWidthTasas}}" height="{{chartsHeight}}"
-									select="selectRow(selectedRowIndexFacturadoTasas)"></column-chart-stack-currency>
+				<dynamic-chart
+						data="chartDataFacturadoTasas"
+						title="{{chartTitleFacturadoTasas}}"
+						width="{{chartsWidthTasas}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexFacturadoTasas)"
+						type="{{columnChart}}"
+						stacked="true"
+						currency="true"
+						is3-d="false">
+				</dynamic-chart>
 			</div>
 		</div>
 
@@ -90,9 +106,19 @@
 				</div>
 			</div>
 			<div collapse="!isCollapsedDay">
-				<column-chart-currency data="chartDataFacturado" title="{{chartTitleFacturado}}"
-							  width="{{chartsWidthFacturado}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexFacturado)" series="chartSeries" colors="barColors"></column-chart-currency>
+				<dynamic-chart
+						data="chartDataFacturado"
+						title="{{chartTitleFacturado}}"
+						width="{{chartsWidthFacturado}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexFacturado)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						stacked="false"
+						currency="true"
+						is3-d="false">
+				</dynamic-chart>
 			</div>
 		</div>
 	</div>
@@ -114,9 +140,19 @@
 				</div>
 			</div>
 			<div collapse="!isCollapsedMonth">
-				<column-chart-currency data="chartDataFacturas" title="{{chartTitleFacturas}}"
-							  width="{{chartsWidthFacturadoMes}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexFacturas)" series="chartSeries" colors="barColors"></column-chart-currency>
+				<dynamic-chart
+						data="chartDataFacturas"
+						title="{{chartTitleFacturas}}"
+						width="{{chartsWidthFacturadoMes}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexFacturas)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						stacked="false"
+						currency="true"
+						is3-d="false">
+				</dynamic-chart>
 			</div>
 		</div>
 
@@ -136,9 +172,19 @@
 				</div>
 			</div>
 			<div collapse="!isCollapsedGates">
-				<column-chart data="chartDataGates" title="{{chartTitleGates}}"
-							  width="{{chartsWidth}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexGates)" series="chartSeries" colors="barColors"></column-chart>
+				<dynamic-chart
+						data="chartDataGates"
+						title="{{chartTitleGates}}"
+						width="{{chartsWidth}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexGates)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						stacked="false"
+						currency="false"
+						is3-d="false">
+				</dynamic-chart>
 			</div>
 		</div>
 
@@ -158,9 +204,19 @@
 				</div>
 			</div>
 			<div collapse="!isCollapsedTurnos">
-				<column-chart data="chartDataTurnos" title="{{chartTitleTurnos}}"
-							  width="{{chartsWidth}}" height="{{chartsHeight}}"
-							  select="selectRow(selectedRowIndexTurnos)" series="chartSeries" colors="barColors"></column-chart>
+				<dynamic-chart
+						data="chartDataTurnos"
+						title="{{chartTitleTurnos}}"
+						width="{{chartsWidth}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexTurnos)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						stacked="false"
+						currency="false"
+						is3-d="false">
+				</dynamic-chart>
 			</div>
 		</div>
 	</div>
