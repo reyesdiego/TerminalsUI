@@ -55,7 +55,7 @@
 								<div class="input-group" ng-show="price.editar">
 									<input id="{{ price.description }}" type="text" class="form-control" ng-model="price.description" ng-keyup="hitEnterEditar($event, price)">
 									<span class="input-group-btn">
-										<button type="button" class="btn btn-primary" ng-click="editado(price, $index)" ng-init="price.disabled = true" ng-disabled="price.disabled"><span class="glyphicon glyphicon-plus"></span></button>
+										<button type="button" class="btn btn-primary" ng-click="editado(price)"><span class="glyphicon glyphicon-plus"></span></button>
 									</span>
 								</div>
 							</td>

@@ -29,6 +29,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.anteriorCodigo = '';
 	$scope.tarifaEditando = '';
 	$scope.flagEditando = false;
+	$scope.volviendoEditar = false;
 
 	$scope.prepararDatos = function(){
 		priceFactory.getMatchPrices(loginService.getFiltro(), null, function (data) {
@@ -74,6 +75,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	});
 
 	$scope.agregarCodigo = function(price){
+		$scope.cancelarEditado(price);
 		if (!$scope.matchesTerminal.contains(price.new)){
 			if (!(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
 				if ((price.matches == null || price.matches.length === 0)){
@@ -100,14 +102,17 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			dialogs.notify("Asociar","El código ingresado ya se encuentra asociado a otra tarifa");
 		}
 		price.new = ''
+		price.disabled = true;
 	};
 
 	$scope.borrar = function(price, codigo){
+		$scope.cancelarEditado(price);
 		//Elimino el código del match
 		var pos = price.matches[0].match.indexOf(codigo);
 		price.matches[0].match.splice( pos, 1 );
 		price.matches[0]._idPrice = price._id;
 		price.new = codigo;
+		price.disabled = false;
 
 		//Elimino el código de la lista de todos los códigos asociados
 		pos = $scope.matchesTerminal.indexOf(codigo);
@@ -128,6 +133,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.hitEnterEditar = function(evt, price){
 		if(angular.equals(evt.keyCode,13))
 			$scope.editado(price);
+			$scope.volviendoEditar = false;
 		if(angular.equals(evt.keyCode, 27))
 			$scope.cancelarEditado(price);
 	};
@@ -218,46 +224,49 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	};
 
 	$scope.editarTarifa = function(tarifa, campo){
-		if($scope.flagEditando){
-			$scope.cancelarEditado($scope.tarifaEditando);
-		}
-
-		if (tarifa.terminal != 'AGP' && loginService.getType() == 'terminal'){
-			var elemento;
-
-			switch (campo) {
-				case 'code':
-					elemento = document.getElementById(tarifa.code);
-					break;
-				case 'description':
-					elemento = document.getElementById(tarifa.description);
-					break;
+		if (!$scope.volviendoEditar){
+			if($scope.flagEditando){
+				$scope.cancelarEditado($scope.tarifaEditando);
 			}
-			$timeout(function(){
-				elemento.focus();
-			},500);
-			$scope.flagEditando = true;
-			tarifa.editar = true;
-			$scope.anteriorDescripcion = tarifa.description;
-			$scope.anteriorCodigo = tarifa.code;
-			$scope.tarifaEditando = tarifa;
+
+			if (tarifa.terminal != 'AGP' && loginService.getType() == 'terminal'){
+				var elemento;
+
+				switch (campo) {
+					case 'code':
+						elemento = document.getElementById(tarifa.code);
+						break;
+					case 'description':
+						elemento = document.getElementById(tarifa.description);
+						break;
+				}
+				$timeout(function(){
+					elemento.focus();
+				},500);
+				$scope.flagEditando = true;
+				tarifa.editar = true;
+				$scope.anteriorDescripcion = tarifa.description;
+				$scope.anteriorCodigo = tarifa.code;
+				$scope.tarifaEditando = tarifa;
+			}
+		} else {
+			$scope.volviendoEditar = false;
 		}
 	};
 
 	$scope.editado = function(price){
 		var flagCodigo = false;
 		var flagDescripcion = false;
-
 		if (!(angular.equals(price.code, '') || angular.equals(price.description,''))){
 			$scope.pricelist.forEach(function(tarifa){
 				if (price.code == tarifa.code) flagCodigo = true;
 				if (price.description == tarifa.description) flagDescripcion = true;
 			})
-			console.log(price);
 			price.editar = false;
 			price.claseFila = "info";
 			price.flagGuardar = true;
 			$scope.flagEditando = false;
+			$scope.volviendoEditar = true;
 		} else {
 			dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden ser vacíos.');
 		}
