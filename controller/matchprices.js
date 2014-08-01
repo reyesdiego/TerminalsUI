@@ -273,10 +273,12 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	};
 
 	$scope.cancelarEditado = function(price){
-		price.code = $scope.anteriorCodigo;
-		price.description = $scope.anteriorDescripcion;
-		price.editar = false;
-		$scope.flagEditando = false;
+		if ($scope.flagEditando){
+			price.code = $scope.anteriorCodigo;
+			price.description = $scope.anteriorDescripcion;
+			price.editar = false;
+			$scope.flagEditando = false;
+		}
 	};
 
 }
