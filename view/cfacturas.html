@@ -179,8 +179,8 @@
 						</tr>
 						</tbody>
 					</table>
-					<div class="text-center"><pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="20" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					<div class="text-center"><pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="20" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="text-center" ng-show="pantalla.mostrarResultado"><pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="20" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="text-center" ng-show="pantalla.mostrarResultado"><pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="20" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
 
 			</tab>
