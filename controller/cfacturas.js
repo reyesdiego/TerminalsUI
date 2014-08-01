@@ -92,7 +92,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 				invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(invoicesNoMatches){
 					if (invoicesNoMatches.data != null){
-						invoicesNoMatches.data.data.forEach(function(unComprobante){
+						invoicesNoMatches.data.forEach(function(unComprobante){
 							unComprobante._id.fecha = {
 								emision: unComprobante._id.fecha
 							};
@@ -101,7 +101,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 							};
 							$scope.pantalla.comprobantesRotos.push(unComprobante._id);
 						});
-						$scope.totalItemsCodigos = invoicesNoMatches.data.totalCount;
+						$scope.totalItemsCodigos = invoicesNoMatches.totalCount;
 					}
 				});
 			} else {
@@ -239,7 +239,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		$scope.pantalla.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
 		invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(data){
-			data.data.data.forEach(function(unComprobante){
+			data.data.forEach(function(unComprobante){
 				unComprobante._id.fecha = {
 					emision: unComprobante._id.fecha
 				};
