@@ -79,6 +79,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.controlDeCodigos = function(){
+		$scope.hayFiltros = false;
+		$scope.codigoFiltrado = '';
 		$scope.pantalla.comprobantesRotos = [];
 		priceFactory.noMatches($scope.desdeCodigos, $scope.hastaCodigos, function(dataNoMatches){
 			$scope.pantalla.resultadoCodigos = dataNoMatches.data;
@@ -88,19 +90,26 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				$scope.pantalla.tituloCodigos = "Error";
 				$scope.pantalla.mostrarResultado = 1;
 
-				invoiceFactory.getInvoicesNoMatches($scope.desde, $scope.hasta, $scope.pageCodigos, function(invoicesNoMatches){
-					console.log(invoicesNoMatches);
-					invoicesNoMatches.data.data.forEach(function(unComprobante){
-						unComprobante._id.fecha = {
-							emision: unComprobante._id.fecha
-						};
-						unComprobante._id.importe = {
-							total: unComprobante._id.impTot
-						};
-						$scope.pantalla.comprobantesRotos.push(unComprobante._id);
-					});
-					$scope.totalItemsCodigos = invoicesNoMatches.data.totalCount;
+				invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(invoicesNoMatches){
+					if (invoicesNoMatches.data != null){
+						invoicesNoMatches.data.data.forEach(function(unComprobante){
+							unComprobante._id.fecha = {
+								emision: unComprobante._id.fecha
+							};
+							unComprobante._id.importe = {
+								total: unComprobante._id.impTot
+							};
+							$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+						});
+						$scope.totalItemsCodigos = invoicesNoMatches.data.totalCount;
+					}
 				});
+			} else {
+				$scope.pantalla.mensajeCodigos = "No se hallaron códigos sin asociar";
+				$scope.pantalla.cartelCodigos = "panel-success";
+				$scope.pantalla.tituloCodigos = "Éxito";
+				$scope.pantalla.mostrarResultado = 0;
+				$scope.totalItemsCodigos = 0;
 			}
 		});
 	};
@@ -133,7 +142,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 			$scope.tarifasTerminal = dataTarifas;
 
 				invoiceFactory.getByDate($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.tipoComprobante, function(dataComprob) {
-					console.log(dataComprob);
 					$scope.result = dataComprob;
 					$scope.totalFacturas= $scope.result.data.length;
 
