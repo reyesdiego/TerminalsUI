@@ -230,7 +230,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.pageChangedCodigos = function(){
 		$scope.pantalla.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
-		invoiceFactory.getInvoicesNoMatches($scope.desde, $scope.hasta, $scope.pageCodigos, function(data){
+		invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(data){
 			data.data.data.forEach(function(unComprobante){
 				unComprobante._id.fecha = {
 					emision: unComprobante._id.fecha
@@ -261,7 +261,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		$scope.hayFiltros = false;
 		$scope.codigoFiltrado = '';
 		$scope.pantalla.comprobantesRotos = [];
-		invoiceFactory.getInvoicesNoMatches($scope.desde, $scope.hasta, $scope.pageCodigos, function(data){
+		invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(data){
 			data.data.data.forEach(function(unComprobante){
 				unComprobante._id.fecha = {
 					emision: unComprobante._id.fecha
