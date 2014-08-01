@@ -27,6 +27,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.anteriorDescripcion = '';
 	$scope.anteriorCodigo = '';
+	$scope.anteriorId = '';
 	$scope.tarifaEditando = '';
 	$scope.flagEditando = false;
 	$scope.volviendoEditar = false;
@@ -130,7 +131,8 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		price.disabled = !(angular.isDefined(price.new) && price.new != '');
 	};
 
-	$scope.hitEnterEditar = function(evt, price){
+	//Toma el enter para guardar los cambios realizados, o el escape para volver los cambios atrás
+	$scope.hitKeyEditar = function(evt, price){
 		if(angular.equals(evt.keyCode,13))
 			$scope.editado(price);
 			$scope.volviendoEditar = false;
@@ -225,19 +227,18 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.editarTarifa = function(tarifa, campo){
 		if (!$scope.volviendoEditar){
-			if($scope.flagEditando){
+			if($scope.flagEditando && tarifa._id != $scope.anteriorId){
 				$scope.cancelarEditado($scope.tarifaEditando);
 			}
-
-			if (tarifa.terminal != 'AGP' && loginService.getType() == 'terminal'){
+			if (tarifa.terminal != 'AGP' && loginService.getType() == 'terminal' && !$scope.flagEditando){
 				var elemento;
-
+				//Determino sobre qué campo se hizo el click para ponerle el foco al mostrarlo para editar
 				switch (campo) {
 					case 'code':
-						elemento = document.getElementById(tarifa.code);
+						elemento = document.getElementById(tarifa._id + 'code');
 						break;
 					case 'description':
-						elemento = document.getElementById(tarifa.description);
+						elemento = document.getElementById(tarifa._id + 'description');
 						break;
 				}
 				$timeout(function(){
@@ -247,6 +248,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 				tarifa.editar = true;
 				$scope.anteriorDescripcion = tarifa.description;
 				$scope.anteriorCodigo = tarifa.code;
+				$scope.anteriorId = tarifa._id;
 				$scope.tarifaEditando = tarifa;
 			}
 		} else {
@@ -257,16 +259,33 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.editado = function(price){
 		var flagCodigo = false;
 		var flagDescripcion = false;
+		//Chequeo que la descripción ni el código no sean vacíos
 		if (!(angular.equals(price.code, '') || angular.equals(price.description,''))){
-			$scope.pricelist.forEach(function(tarifa){
-				if (price.code == tarifa.code) flagCodigo = true;
-				if (price.description == tarifa.description) flagDescripcion = true;
-			});
-			price.editar = false;
-			price.claseFila = "info";
-			price.flagGuardar = true;
-			$scope.flagEditando = false;
-			$scope.volviendoEditar = true;
+			//Me fijo si efectivamente se produjeron cambios
+			if (price.code != $scope.anteriorCodigo || price.description != $scope.anteriorDescripcion){
+				//Luego comparo que con los cambios hechos, no coincidan ni la descripción ni el código con otra tarifa de la lista
+				var pos = $scope.pricelist.indexOf(price);
+				var listaSinCodigo = $scope.pricelist.slice();
+				listaSinCodigo.splice(pos, 1);
+				listaSinCodigo.forEach(function(tarifa){
+					if (price.code == tarifa.code) flagCodigo = true;
+					if (price.description == tarifa.description) flagDescripcion = true;
+				});
+				//Si hubo coincidencia muestro mensaje de error
+				if (flagCodigo || flagDescripcion){
+					dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden coincidir con el de una tarifa existente.');
+				} else {
+					price.editar = false;
+					price.claseFila = "info";
+					price.flagGuardar = true;
+					$scope.flagEditando = false;
+					$scope.volviendoEditar = true;
+				}
+			} else {
+				price.editar = false;
+				$scope.flagEditando = false;
+				$scope.volviendoEditar = true;
+			}
 		} else {
 			dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden ser vacíos.');
 		}
