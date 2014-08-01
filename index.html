@@ -72,13 +72,13 @@
 		<div class="navbar-header">
 			<a href ng-click="irA()" class="navbar-brand visible-xs"><img src="images/LogoPUERTO.png" width="30" height="30"> AGP S.E.</a>
 			<a href ng-click="irA()" class="navbar-brand hidden-xs"><img src="images/LogoPUERTO.png" width="30" height="30"> Administración General de Puertos</a>
-			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main" ng-show="acceso!=''" ng-click="isCollapsed = !isCollapsed">
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse" ng-show="acceso!=''" ng-click="isCollapsed = !isCollapsed">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
 		</div>
-		<div class="navbar-collapse collapse" id="navbar-main" collapse="!isCollapsed">
+		<div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-show="acceso!=''"><a ui-sref="tarifario" ng-click="isCollapsed = false">Tarifario</a></li>
 				<li ng-show="acceso!=''"><a ui-sref="matches" ng-click="isCollapsed = false">Asociar</a></li>
