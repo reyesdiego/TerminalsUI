@@ -88,18 +88,20 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				$scope.pantalla.tituloCodigos = "Error";
 				$scope.pantalla.mostrarResultado = 1;
 
-				invoiceFactory.getInvoicesNoMatches($scope.desde, $scope.hasta, $scope.pageCodigos, function(invoicesNoMatches){
+				invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(invoicesNoMatches){
 					console.log(invoicesNoMatches);
-					invoicesNoMatches.data.data.forEach(function(unComprobante){
-						unComprobante._id.fecha = {
-							emision: unComprobante._id.fecha
-						};
-						unComprobante._id.importe = {
-							total: unComprobante._id.impTot
-						};
-						$scope.pantalla.comprobantesRotos.push(unComprobante._id);
-					});
-					$scope.totalItemsCodigos = invoicesNoMatches.data.totalCount;
+					if (invoicesNoMatches.data != null){
+						invoicesNoMatches.data.data.forEach(function(unComprobante){
+							unComprobante._id.fecha = {
+								emision: unComprobante._id.fecha
+							};
+							unComprobante._id.importe = {
+								total: unComprobante._id.impTot
+							};
+							$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+						});
+						$scope.totalItemsCodigos = invoicesNoMatches.data.totalCount;
+					}
 				});
 			}
 		});
