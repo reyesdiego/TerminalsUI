@@ -101,7 +101,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		} else{
 			dialogs.notify("Asociar","El código ingresado ya se encuentra asociado a otra tarifa");
 		}
-		price.new = ''
+		price.new = '';
 		price.disabled = true;
 	};
 
@@ -261,7 +261,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			$scope.pricelist.forEach(function(tarifa){
 				if (price.code == tarifa.code) flagCodigo = true;
 				if (price.description == tarifa.description) flagDescripcion = true;
-			})
+			});
 			price.editar = false;
 			price.claseFila = "info";
 			price.flagGuardar = true;
