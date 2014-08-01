@@ -42,18 +42,17 @@
 						</tr>
 						</thead>
 						<tbody>
-						<!--<tr style="height:60px" ng-repeat="price in filteredPrices" class="{{ price.matches[0].claseFila }}">-->
 						<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage | filter:search)" class="{{ price.claseFila }}">
 							<td class="col-lg-1" ng-init="price.editar = false" ng-click="editarTarifa(price, 'code')">
 								<span ng-hide="price.editar">{{ price.code }}</span>
 								<div ng-show="price.editar">
-									<input id="{{ price.code }}" type="text" class="form-control" ng-model="price.code" ng-keyup="hitEnterEditar($event, price)">
+									<input id="{{ price._id }}code" type="text" class="form-control" ng-model="price.code" ng-keyup="hitKeyEditar($event, price)">
 								</div>
 							</td>
 							<td class="col-lg-7" ng-click="editarTarifa(price, 'description')">
 								<span ng-hide="price.editar">{{ price.description | maxLength : 190 }}</span><a href="" ng-show="(price.description.length > 190) && !price.editar" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
 								<div class="input-group" ng-show="price.editar">
-									<input id="{{ price.description }}" type="text" class="form-control" ng-model="price.description" ng-keyup="hitEnterEditar($event, price)">
+									<input id="{{ price._id }}description" type="text" class="form-control" ng-model="price.description" ng-keyup="hitKeyEditar($event, price)">
 									<span class="input-group-btn">
 										<button type="button" class="btn btn-primary" ng-click="editado(price)"><span class="glyphicon glyphicon-plus"></span></button>
 									</span>
