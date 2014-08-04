@@ -38,7 +38,7 @@
 							<td>{{ factura.nroComprob }}</td>
 							<td>{{ factura.razon }}</td>
 							<td>{{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-							<td>{{ factura.codMoneda | formatCurrency }} {{ factura.importe.total | currency }}</td>
+							<td>{{ moneda | formatCurrency }} {{ conversionMoneda(factura.importe.total, factura.codMoneda, factura.cotiMoneda) | currency }}</td>
 							<td><button ui-sref=".result" class="btn btn-primary" ng-click="mostrarDetalle(factura)"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 						</tr>
 						</tbody>
@@ -174,7 +174,7 @@
 							<td>{{ comprobante.nroComprob }}</td>
 							<td>{{ comprobante.razon }}</td>
 							<td>{{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-							<td>{{ factura.codMoneda | formatCurrency }} {{ comprobante.importe.total }}</td>
+							<td>{{ moneda | formatCurrency }} {{ conversionMoneda(comprobante.importe.total, comprobante.importe.codMoneda, comprobante.importe.cotiMoneda) | currency }}</td>
 							<td><button ui-sref=".result" class="btn btn-primary" type="button" ng-click="mostrarDetalle(comprobante)"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 						</tr>
 						</tbody>

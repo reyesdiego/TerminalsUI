@@ -187,9 +187,9 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 
 				if('.navbar-default' === rule.selectorText){
 					$rootScope.colorBactssa = rule.style['backgroundColor'];
-				};
-			};
-		};
+				}
+			}
+		}
 		if(sheet.title === "TRP"){
 			var rules=sheet.cssRules;
 			for(var j=0, l2=rules.length; j<l2; j++){
@@ -197,9 +197,9 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 
 				if('.navbar-default' === rule.selectorText){
 					$rootScope.colorTrp = rule.style['backgroundColor'];
-				};
-			};
-		};
+				}
+			}
+		}
 		if(sheet.title === "TERMINAL4"){
 			var rules=sheet.cssRules;
 			for(var j=0, l2=rules.length; j<l2; j++){
@@ -207,10 +207,12 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 
 				if('.navbar-default' === rule.selectorText){
 					$rootScope.colorTerminal4 = rule.style['backgroundColor'];
-				};
-			};
-		};
-	};
+				}
+			}
+		}
+	}
+
+	$rootScope.moneda = "PESOS";
 
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 	$rootScope.$state = $state;

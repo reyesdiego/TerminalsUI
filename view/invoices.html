@@ -72,7 +72,7 @@
 							<td style="text-align: right">{{ invoice.nroComprob }}</td>
 							<td>{{ invoice.razon }}</td>
 							<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-							<td style="text-align: right">{{ invoice.codMoneda | formatCurrency }} {{ invoice.importe.total | currency }}</td>
+							<td style="text-align: right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
 							<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 						</tr>
 						</tbody>
