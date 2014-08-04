@@ -78,7 +78,14 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		"mostrarResultado": 0
 	};
 
+	$scope.loadingControlCodigos = true;
+	$scope.cargandoPaginaComprobantes = true;
+	$scope.anteriorCargaCodigos = [];
+
+	$scope.loadingTasaCargas = true;
+
 	$scope.controlDeCodigos = function(){
+		$scope.loadingControlCodigos = true;
 		$scope.hayFiltros = false;
 		$scope.codigoFiltrado = '';
 		$scope.pantalla.comprobantesRotos = [];
@@ -89,6 +96,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				$scope.pantalla.cartelCodigos = "panel-danger";
 				$scope.pantalla.tituloCodigos = "Error";
 				$scope.pantalla.mostrarResultado = 1;
+				$scope.cargandoPaginaComprobantes = true;
 
 				invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(invoicesNoMatches){
 					if (invoicesNoMatches.data != null){
@@ -103,6 +111,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 						});
 						$scope.totalItemsCodigos = invoicesNoMatches.totalCount;
 					}
+					$scope.cargandoPaginaComprobantes = false;
+					$scope.loadingControlCodigos = false;
 				});
 			} else {
 				$scope.pantalla.mensajeCodigos = "No se hallaron códigos sin asociar";
@@ -110,12 +120,15 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				$scope.pantalla.tituloCodigos = "Éxito";
 				$scope.pantalla.mostrarResultado = 0;
 				$scope.totalItemsCodigos = 0;
+				$scope.loadingControlCodigos = false;
+				$scope.cargandoPaginaComprobantes = false;
 			}
 		});
 	};
 
 	$scope.controlTasaCargas = function(){
 		/*Acá control de tasa a las cargas*/
+		$scope.loadingTasaCargas = true;
 		invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.page, function(data){
 			if (data.status == "ERROR"){
 				$scope.tasaCargas.titulo = "Error";
@@ -132,8 +145,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 					$scope.tasaCargas.mostrarResultado = 1;
 				}
 			}
-		})
-	}
+			$scope.loadingTasaCargas = false;
+		});
+	};
 
 	$scope.cargar = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
@@ -236,6 +250,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	});
 
 	$scope.pageChangedCodigos = function(){
+		$scope.cargandoPaginaComprobantes = true;
 		$scope.pantalla.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
 		invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(data){
@@ -248,10 +263,12 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				};
 				$scope.pantalla.comprobantesRotos.push(unComprobante._id);
 			});
+			$scope.cargandoPaginaComprobantes = false;
 		});
 	};
 
 	$scope.filtrarCodigo = function(codigo){
+		$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
 		$scope.codigoFiltrado = codigo;
 		$scope.hayFiltros = true;
 		invoiceFactory.getByCode($scope.pageFiltros, codigo, function(data){
@@ -262,24 +279,15 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	$scope.pageChangedFiltros = function(){
 		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
-		$scope.filtrarCodigo($scope.codigoFiltrado);
+		invoiceFactory.getByCode($scope.pageFiltros, $scope.codigoFiltrado, function(data){
+			$scope.pantalla.comprobantesRotos = data.data;
+		});
 	};
 
 	$scope.quitarFiltro = function () {
 		$scope.hayFiltros = false;
 		$scope.codigoFiltrado = '';
-		$scope.pantalla.comprobantesRotos = [];
-		invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(data){
-			data.data.data.forEach(function(unComprobante){
-				unComprobante._id.fecha = {
-					emision: unComprobante._id.fecha
-				};
-				unComprobante._id.importe = {
-					total: unComprobante._id.impTot
-				};
-				$scope.pantalla.comprobantesRotos.push(unComprobante._id);
-			});
-		});
-	}
+		$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
+	};
 
 }
