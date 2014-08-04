@@ -51,7 +51,6 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 	});
 
 	$scope.setearMoneda = function(moneda){
-		$scope.monedaT = !$scope.monedaT;
 		$rootScope.moneda = moneda;
 	};
 
