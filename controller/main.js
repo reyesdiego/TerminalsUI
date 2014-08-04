@@ -102,7 +102,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 		.state('invoices', {
 			url: "/invoices",
-			templateUrl: "view/invoices.html"
+			templateUrl: "view/invoices.html",
+			controller: "invoicesCtrl"
 		})
 		.state('invoices.result', {
 			templateUrl: "view/invoices.result.html"
