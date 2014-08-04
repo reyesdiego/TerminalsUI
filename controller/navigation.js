@@ -50,6 +50,11 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		$scope.terminal = $rootScope.terminal;
 	});
 
+	$scope.setearMoneda = function(moneda){
+		$scope.monedaT = !$scope.monedaT;
+		$rootScope.moneda = moneda;
+	};
+
 	$scope.setearTerminal = function(terminal){
 		$rootScope.filtroTerminal = terminal;
 		loginService.setFiltro(terminal);

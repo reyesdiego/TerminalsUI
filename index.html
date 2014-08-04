@@ -95,6 +95,13 @@
 					</ul>
 				</li>
 				<li ng-show="acceso!=''" class="dropdown">
+					<a href class="dropdown-toggle" data-toggle="dropdown" ><span class="glyphicon glyphicon-usd"></span> Moneda: {{ moneda | formatCurrency }}<b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href ng-click="setearMoneda('PESOS');"><span ng-show="moneda == 'PESOS'" class="glyphicon glyphicon-ok-sign"></span> Pesos</a></li>
+						<li><a href ng-click="setearMoneda('DOLARES');"><span ng-show="moneda == 'DOLARES'" class="glyphicon glyphicon-ok-sign"></span> D&oacute;lares</a></li>
+					</ul>
+				</li>
+				<li ng-show="acceso!=''" class="dropdown">
 					<a href class="dropdown-toggle" data-toggle="dropdown" ><span class="glyphicon glyphicon-user"></span> {{ terminal.user }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li ng-click="salir();"><a href ng-click="isCollapsed = false"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
