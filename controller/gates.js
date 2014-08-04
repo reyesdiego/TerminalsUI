@@ -46,6 +46,16 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		});
 	};
 
+	$scope.conversionMoneda = function(importe, codMoneda, cotiMoneda){
+		if ($scope.moneda == 'PESOS' && codMoneda == 'DOL'){
+			return (importe * cotiMoneda);
+		} else if ($scope.moneda == 'DOLARES' && codMoneda == 'PES'){
+			return (importe / cotiMoneda);
+		} else {
+			return (importe);
+		}
+	};
+
 	$scope.pageChanged = function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.cargaGates($scope.page);
