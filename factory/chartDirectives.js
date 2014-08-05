@@ -67,7 +67,6 @@ myapp.directive('dynamicChart', function($timeout, $rootScope){
 					draw.triggered = true;
 					$timeout(function () {
 						draw.triggered = false;
-						console.log($scope.money);
 						switch ($scope.money){
 							case 'PES':
 								prefijo = 'AR$';
