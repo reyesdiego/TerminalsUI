@@ -48,16 +48,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.isCollapsedDesdeCodigos = true;
 	$scope.isCollapsedHastaCodigos = true;
 
-	$scope.conversionMoneda = function(importe, codMoneda, cotiMoneda){
-		if ($scope.moneda == 'PESOS' && codMoneda == 'DOL'){
-			return (importe * cotiMoneda);
-		} else if ($scope.moneda == 'DOLARES' && codMoneda == 'PES'){
-			return (importe / cotiMoneda);
-		} else {
-			return (importe);
-		}
-	};
-
 	$scope.pantalla = {
 		"tituloCorrelativo":  "Éxito",
 		"mensajeCorrelativo": "No se hallaron facturas faltantes",

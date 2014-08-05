@@ -232,6 +232,16 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 		return angular.isDefined(element);
 	};
 
+	$rootScope.conversionMoneda = function(importe, codMoneda, cotiMoneda){
+		if ($rootScope.moneda == 'PES' && codMoneda == 'DOL'){
+			return (importe * cotiMoneda);
+		} else if ($rootScope.moneda == 'DOL' && codMoneda == 'PES'){
+			return (importe / cotiMoneda);
+		} else {
+			return (importe);
+		}
+	};
+
 	vouchersFactory.getVouchersArray(function(data){
 		$rootScope.vouchersType = data.data;
 	});
