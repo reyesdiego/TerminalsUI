@@ -213,7 +213,7 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 		}
 	}
 
-	$rootScope.moneda = "PESOS";
+	$rootScope.moneda = "PES";
 
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 	$rootScope.$state = $state;

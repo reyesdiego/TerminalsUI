@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http, dialogs, formatDate, loginService){
+myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, formatDate, loginService){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -24,7 +24,8 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate, loginS
 	};
 
 	factory.getTasas = function(fecha, callback){
-		var inserturl = serverUrl + '/invoices/ratesTotal?fecha=' + formatDate.formatearFecha(fecha);
+
+		var inserturl = serverUrl + '/invoices/ratesTotal/'+$rootScope.moneda+'/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function(data){
 				var result = {
@@ -33,14 +34,14 @@ myapp.factory('controlPanelFactory', function($http, dialogs, formatDate, loginS
 					"dataGraf": []
 				};
 				if (data.length){
-					var total = 0;
+					var cnt = 0;
 					var facturado = 0;
 					for (var i = 0, len=data.length; i< len; i++){
-						total += data[i].cnt;
+						cnt += data[i].cnt;
 						facturado += data[i].total;
 					}
 					result = {
-						"ratesCount": total,
+						"ratesCount": cnt,
 						"ratesTotal": facturado,
 						"dataGraf": data
 					}
