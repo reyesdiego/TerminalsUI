@@ -25,7 +25,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 
 	factory.getTasas = function(fecha, callback){
 
-		var inserturl = serverUrl + '/invoices/ratesTotal/'+$rootScope.moneda+'/?fecha=' + formatDate.formatearFecha(fecha);
+		var inserturl = serverUrl + '/invoices/ratesTotal/' + $rootScope.moneda + '/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function(data){
 				var result = {
@@ -65,7 +65,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getFacturasMeses = function(fecha, callback){
-		var inserturl = serverUrl + '/invoices/countsByMonth?fecha=' + formatDate.formatearFecha(fecha);
+		var inserturl = serverUrl + '/invoices/countsByMonth/' + $rootScope.moneda + '/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -107,7 +107,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 
 	//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
 	factory.getFacturadoPorDia = function(fecha, callback){
-		var inserturl = serverUrl + '/invoices/countsByDate?fecha=' + formatDate.formatearFecha(fecha);
+		var inserturl = serverUrl + '/invoices/countsByDate/' + $rootScope.moneda +'/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
