@@ -45,7 +45,7 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		$rootScope.switchTheme('BACTSSA');
 	}
 
-	$scope.$watch(function() {
+	$scope.$watch(function(){
 		$scope.acceso = $rootScope.esUsuario;
 		$scope.terminal = $rootScope.terminal;
 	});
