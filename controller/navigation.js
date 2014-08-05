@@ -50,8 +50,12 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		$scope.terminal = $rootScope.terminal;
 	});
 
-	$scope.setearMoneda = function(moneda){
-		$rootScope.moneda = moneda;
+	$scope.switchMoneda = function(){
+		if ($rootScope.moneda == 'PES'){
+			$rootScope.moneda = 'DOL';
+		} else if ($rootScope.moneda == 'DOL'){
+			$rootScope.moneda = 'PES';
+		}
 	};
 
 	$scope.setearTerminal = function(terminal){
