@@ -90,12 +90,33 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.control.ratesCount = 0;
 	$scope.control.ratesTotal = 0;
 
+	$scope.loadingTotales = false;
+	$scope.errorTotales = false;
+	$scope.mensajeErrorTotales = '';
+
 	$scope.loadingTasas = false;
+	$scope.errorCargaTasas = false;
+	$scope.mensajeErrorCargaTasas = '';
+
 	$scope.loadingFacturadoDia = false;
+	$scope.errorFacturadoDia = false;
+	$scope.mensajeErrorFacturadoDia = '';
+
 	$scope.loadingFacturadoMes = false;
+	$scope.errorFacturadoMes = false;
+	$scope.mensajeErrorFacturadoMes = '';
+
 	$scope.loadingGates = false;
+	$scope.errorGates = false;
+	$scope.mensajeErrorGates = '';
+
 	$scope.loadingTurnos = false;
+	$scope.errorTurnos = false;
+	$scope.mensajeErrorTurnos = '';
+
 	$scope.loadingGatesTurnos = false;
+	$scope.errorGatesTurnos = false;
+	$scope.mensajeErrorGatesTurnos = '';
 	$scope.visibleTurnos = 'hidden';
 	$scope.visibleGates = 'hidden';
 	$scope.visibleGatesTurnos = 'hidden';
@@ -118,12 +139,22 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 		return ($scope.selected === index) ? "selected" : "";
 	};
 
-	controlPanelFactory.getByDay(fecha, function(data){
-		$scope.control.invoicesCount = data.invoicesCount;
-		$scope.fecha = fecha;
-	});
+	$scope.traerTotales = function(){
+		$scope.errorTotales = false;
+		$scope.loadingTotales = true;
+		controlPanelFactory.getByDay(fecha, function(data){
+			$scope.loadingTotales = false
+			$scope.control.invoicesCount = data.invoicesCount;
+			$scope.fecha = fecha;
+		}, function (err) {
+			$scope.loadingTotales = false;
+			$scope.errorTotales = true;
+			$scope.mensajeErrorTotales = err;
+		});
+	}
 
 	$scope.traerDatosFacturadoMes = function(){
+		$scope.errorFacturadoMes = false;
 		$scope.isCollapsedMonth = true;
 		$scope.loadingFacturadoMes = true;
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, $rootScope.moneda, function(graf){
@@ -138,6 +169,10 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 					break;
 			}
 			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf, true);
+		}, function(err){
+			$scope.loadingFacturadoMes = false;
+			$scope.errorFacturadoMes = true;
+			$scope.mensajeErrorFacturadoMes = err;
 		});
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, $scope.otraMoneda, function(graf){
 			var datosPreparados = controlCtrl.prepararDatosMes(graf, true);
@@ -149,10 +184,11 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 					$scope.chartDataFacturasUS = datosPreparados;
 					break;
 			}
-		});
+		}, function(err){});
 	};
 
 	$scope.traerDatosGates = function(){
+		$scope.errorGates = false;
 		$scope.isCollapsedGates = true;
 		$scope.loadingGates = true;
 		$scope.visibleGates = 'hidden';
@@ -160,10 +196,15 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.loadingGates = false;
 			$scope.visibleGates = 'block';
 			$scope.chartDataGates = controlCtrl.prepararDatosMes(graf, false);
+		}, function (err) {
+			$scope.loadingGates = false;
+			$scope.errorGates = true;
+			$scope.mensajeErrorGates = err;
 		});
 	};
 
 	$scope.traerDatosTurnos = function(){
+		$scope.errorTurnos = false;
 		$scope.isCollapsedTurnos = true;
 		$scope.loadingTurnos = true;
 		$scope.visibleTurnos = 'hidden';
@@ -171,13 +212,19 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.loadingTurnos = false;
 			$scope.visibleTurnos = 'block';
 			$scope.chartDataTurnos = controlCtrl.prepararDatosMes(graf, false);
+		}, function (err) {
+			$scope.loadingTurnos = false;
+			$scope.errorTurnos = true;
+			$scope.mensajeErrorTurnos = err;
 		});
 	};
 
 	$scope.traerDatosFacturadoDiaTasas = function(){
+		$scope.errorCargaTasas = false;
 		$scope.loadingTasas = true;
 		$scope.isCollapsedDayTasas = true;
 		controlPanelFactory.getTasas($scope.desdeTasas, $rootScope.moneda, function(graf){
+
 			$scope.loadingTasas = false;
 			var result = controlCtrl.prepararDatosFacturadoDiaTasas(graf);
 			switch ($rootScope.moneda){
@@ -191,6 +238,11 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.chartDataFacturadoTasas = result.dataGraf;
 			$scope.control.ratesCount = result.ratesCount;
 			$scope.control.ratesTotal = result.ratesTotal;
+
+		}, function(err){
+			$scope.loadingTasas = false;
+			$scope.errorCargaTasas = true;
+			$scope.mensajeErrorCargaTasas = err;
 		});
 		controlPanelFactory.getTasas($scope.desdeTasas, $scope.otraMoneda, function(graf){
 			var result = controlCtrl.prepararDatosFacturadoDiaTasas(graf);
@@ -202,10 +254,11 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 					$scope.chartDataFacturadoTasasUS = result.dataGraf;
 					break;
 			}
-		});
+		}, function(err){});
 	};
 
 	$scope.traerDatosFacturadoDia = function(){
+		$scope.errorFacturadoDia = false;
 		$scope.isCollapsedDay = true;
 		$scope.loadingFacturadoDia = true;
 		controlPanelFactory.getFacturadoPorDia($scope.desde, $rootScope.moneda, function(graf){
@@ -219,6 +272,10 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 					$scope.chartDataFacturadoUS = datosPreparados;
 			}
 			$scope.chartDataFacturado = datosPreparados;
+		}, function(err){
+			$scope.loadingFacturadoDia = false;
+			$scope.errorFacturadoDia = true;
+			$scope.mensajeErrorFacturadoDia = err;
 		});
 		controlPanelFactory.getFacturadoPorDia($scope.desde, $scope.otraMoneda, function(graf){
 			var datosPreparados = controlCtrl.prepararDatosFacturadoDia(graf)
@@ -229,10 +286,11 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 				case 'DOL':
 					$scope.chartDataFacturadoUS = datosPreparados;
 			}
-		});
+		}, function(err){});
 	};
 
 	$scope.traerDatosGatesTurnosDia = function(){
+		$scope.errorGatesTurnos = false;
 		$scope.isCollapsedDayGatesTurnos = true;
 		$scope.loadingGatesTurnos = true;
 		$scope.visibleGatesTurnos = 'hidden';
@@ -241,6 +299,10 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 				$scope.loadingGatesTurnos = false;
 				$scope.visibleGatesTurnos = 'block';
 				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
+			}, function(err){
+				$scope.loadingGatesTurnos = false;
+				$scope.errorGatesTurnos = true;
+				$scope.mensajeErrorGatesTurnos = err;
 			});
 		}
 		else if ($scope.radioModel == 'Turnos'){
@@ -248,6 +310,10 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 				$scope.loadingGatesTurnos = false;
 				$scope.visibleGatesTurnos = 'block';
 				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
+			}, function (err) {
+				$scope.loadingGatesTurnos = false;
+				$scope.errorGatesTurnos = true;
+				$scope.mensajeErrorGatesTurnos = err;
 			});
 		}
 	};
@@ -271,9 +337,13 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 		}
 	});
 
+	$scope.traerTotales();
 	$scope.traerDatosFacturadoMes();
 	$scope.traerDatosFacturadoDiaTasas();
 	$scope.traerDatosFacturadoDia();
+	$scope.traerDatosGates();
+	$scope.traerDatosTurnos();
+	$scope.traerDatosGatesTurnosDia();
 
 });
 

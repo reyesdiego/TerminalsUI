@@ -45,7 +45,10 @@
 
 	<div class="row">
 		<br>
-		<div class="col-lg-3" ng-hide="loadingTotales">
+		<div class="col-lg-4" ng-show="loadingTotales">
+			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+		</div>
+		<div class="col-lg-3" ng-hide="loadingTotales || errorTotales">
 			<dynamic-chart
 					data="chartData"
 					title="{{chartTitle}}"
@@ -58,12 +61,19 @@
 					currency="false">
 			</dynamic-chart>
 		</div>
+		<div class="col-lg-4" ng-show="errorTotales">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de las facturadas enviadas.
+				<h6>{{mensajeErrorTotales}}</h6>
+				<span>Presione <a href ng-click="traerDatosFacturadoDiaTasas()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
 
 
 		<div class="col-lg-4" ng-show="loadingTasas">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingTasas">
+		<div class="col-lg-4" ng-hide="loadingTasas || errorCargaTasas">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desdeTasas" />
 				<span class="input-group-btn">
@@ -90,11 +100,18 @@
 				</dynamic-chart>
 			</div>
 		</div>
+		<div class="col-lg-4" ng-show="errorCargaTasas">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los facturado por tasas a las cargas.
+				<h6>{{mensajeErrorCargaTasas}}</h6>
+				<span>Presione <a href ng-click="traerDatosFacturadoDiaTasas()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
 
 		<div class="col-lg-5" ng-show="loadingFacturadoDia">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-5" ng-hide="loadingFacturadoDia">
+		<div class="col-lg-5" ng-hide="loadingFacturadoDia || errorFacturadoDia">
 			<p class="input-group col-lg-8 col-lg-offset-1">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
 				<span class="input-group-btn">
@@ -123,13 +140,20 @@
 				</dynamic-chart>
 			</div>
 		</div>
+		<div class="col-lg-4" ng-show="errorFacturadoDia">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los facturado por día.
+				<h6>{{mensajeErrorFacturadoDia}}</h6>
+				<span>Presione <a href ng-click="traerDatosFacturadoDia()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-4" ng-show="loadingFacturadoMes">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingFacturadoMes">
+		<div class="col-lg-4" ng-hide="loadingFacturadoMes || errorFacturadoMes">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" />
 				<span class="input-group-btn">
@@ -158,11 +182,18 @@
 				</dynamic-chart>
 			</div>
 		</div>
+		<div class="col-lg-4" ng-show="errorFacturadoMes">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los facturado por mes.
+				<h6>{{mensajeErrorFacturadoMes}}</h6>
+				<span>Presione <a href ng-click="traerDatosFacturadoMes()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
 
 		<div class="col-lg-4" ng-show="loadingGates">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-show="!loadingGates" style="visibility: {{ visibleGates }}">
+		<div class="col-lg-4" ng-show="!loadingGates || errorGates" style="visibility: {{ visibleGates }}">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeGates" />
 				<span class="input-group-btn">
@@ -190,11 +221,18 @@
 				</dynamic-chart>
 			</div>
 		</div>
+		<div class="col-lg-4" ng-show="errorGates">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los gates.
+				<h6>{{mensajeErrorGates}}</h6>
+				<span>Presione <a href ng-click="traerDatosGates()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
 
 		<div class="col-lg-4" ng-show="loadingTurnos">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-show="!loadingTurnos" style="visibility: {{ visibleTurnos }}">
+		<div class="col-lg-4" ng-hide="loadingTurnos || errorTurnos" style="visibility: {{ visibleTurnos }}">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeTurnos" />
 				<span class="input-group-btn">
@@ -222,13 +260,20 @@
 				</dynamic-chart>
 			</div>
 		</div>
+		<div class="col-lg-4" ng-show="errorTurnos">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los turnos.
+				<h6>{{mensajeErrorTurnos}}</h6>
+				<span>Presione <a href ng-click="traerDatosTurnos()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-4" ng-show="loadingGatesTurnos">
 			<img class="media-object" style="margin-left: 480px; margin-top: 75px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4 col-lg-offset-3" ng-show="!loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
+		<div class="col-lg-4 col-lg-offset-3" ng-hide="loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="diaGatesTurnos" />
 				<span class="input-group-btn">
@@ -241,7 +286,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-2" ng-show="!loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
+		<div class="col-lg-2" ng-hide="loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
 			<div class="btn-group">
 				<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Gates'" ng-change="traerDatosGatesTurnosDia()">Gates</label>
 				<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Turnos'" ng-change="traerDatosGatesTurnosDia()">Turnos</label>
@@ -261,6 +306,13 @@
 					stacked="false"
 					is3-d="false">
 			</dynamic-chart>
+		</div>
+		<div class="col-lg-4" ng-show="errorGatesTurnos">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los turnos.
+				<h6>{{mensajeErrorGatesTurnos}}</h6>
+				<span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
+			</div>
 		</div>
 	</div>
 </div>

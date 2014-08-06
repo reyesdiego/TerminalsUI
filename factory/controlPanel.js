@@ -4,7 +4,7 @@
 myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, formatDate, loginService){
 	var factory = {};
 
-	factory.getByDay = function(dia, callback){
+	factory.getByDay = function(dia, callback, errCallBack){
 		var inserturl = serverUrl + '/invoices/counts?fecha=' + dia;
 		$http.get(inserturl)
 			.success(function(data){
@@ -18,12 +18,11 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 				}
 				callback(result);
 			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar lista por día');
+				errCallBack(errorText);
 			});
 	};
 
-	factory.getTasas = function(fecha, moneda, callback){
+	factory.getTasas = function(fecha, moneda, callback, errCallBack){
 		var inserturl = serverUrl + '/invoices/ratesTotal/' + moneda + '/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function(data){
@@ -47,8 +46,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 				}
 				callback(result);
 			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar lista por día');
+				errCallBack(errorText);
 			});
 	};
 
@@ -63,18 +61,17 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			});
 	};
 
-	factory.getFacturasMeses = function(fecha, moneda, callback){
+	factory.getFacturasMeses = function(fecha, moneda, callback, errCallBack){
 		var inserturl = serverUrl + '/invoices/countsByMonth/' + moneda + '/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar los datos de la facturación por mes');
+				errCallBack(errorText);
 			});
 	};
 
-	factory.getGatesMeses = function(fecha, callback){
+	factory.getGatesMeses = function(fecha, callback, errCallBack){
 		var inserturl = serverUrl + '/gatesByMonth?fecha=' + formatDate.formatearFecha(fecha);
 		$http({
 			method: "GET",
@@ -84,12 +81,11 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
+				errCallBack(errorText);
 			});
 	};
 
-	factory.getTurnosMeses = function(fecha, callback){
+	factory.getTurnosMeses = function(fecha, callback, errCallBack){
 		var inserturl = serverUrl + '/appointmentsByMonth?fecha=' + formatDate.formatearFecha(fecha);
 		$http({
 			method: "GET",
@@ -99,24 +95,22 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
+				errCallBack(errorText);
 			});
 	};
 
 	//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
-	factory.getFacturadoPorDia = function(fecha, moneda, callback){
+	factory.getFacturadoPorDia = function(fecha, moneda, callback, errCallBack){
 		var inserturl = serverUrl + '/invoices/countsByDate/' + moneda +'/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
+				errCallBack(errorText);
 			});
 	};
 
-	factory.getGatesDia = function(fecha, callback){
+	factory.getGatesDia = function(fecha, callback, errCallBack){
 		var inserturl = serverUrl + '/gatesByHour?fecha=' + formatDate.formatearFecha(fecha);
 		$http({
 			method: "GET",
@@ -126,12 +120,11 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
-			dialogs.error('Error', 'Error al cargar los Gates del dia');
+			errCallBack(errorText);
 		});
 	};
 
-	factory.getTurnosDia = function(fecha, callback){
+	factory.getTurnosDia = function(fecha, callback, errCallBack){
 		var inserturl = serverUrl + '/appointmentsByHour?fecha=' + formatDate.formatearFecha(fecha);
 		$http({
 			method: "GET",
@@ -141,8 +134,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
-			dialogs.error('Error', 'Error al cargar los Turnos del dia');
+			errCallBack(errorText);
 		});
 	};
 
