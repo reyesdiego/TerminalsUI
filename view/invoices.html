@@ -34,7 +34,7 @@
 									<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" />
 								</div>
 							</div>
-							<div class="col-lg-1">
+							<div class="col-lg-2">
 								<button class="btn btn-primary" ng-click="cargaFacturas()"><span class="glyphicon glyphicon-search"></span></button>
 							</div>
 						</div>
@@ -73,7 +73,7 @@
 							<td>{{ invoice.razon }}</td>
 							<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 							<td style="text-align: right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-							<td><button ui-sref=".result" class="btn btn-primary" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
+							<td><button ui-sref=".result" class="btn btn-info" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
 						</tr>
 						</tbody>
 					</table>
