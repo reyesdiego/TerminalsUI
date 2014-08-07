@@ -17,21 +17,38 @@
 					<div class="panel-heading"><strong>Buscar Facturas por</strong></div>
 					<div class="panel-body form-horizontal">
 						<div class="form-group">
-							<div class="col-lg-6">
-								<input type="text" ng-keyup="hitEnter($event)" ng-model="nroComprobante" class="form-control" placeholder="N° Comprobante"/>
-							</div>
-							<div class="col-lg-6">
-								<input type="text" ng-keyup="hitEnter($event)" ng-model="razonSocial" class="form-control" placeholder="Raz&oacute;n Social" toupper/>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-6">
-								<input type="text" ng-keyup="hitEnter($event)" ng-model="documentoCliente" class="form-control" placeholder="Documento del Cliente"/>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<input type="text" ng-keyup="hitEnter($event)" ng-model="nroComprobante" class="form-control" placeholder="N° Comprobante"/>
+									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.nroComprobante();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+								</div>
 							</div>
 							<div class="col-lg-4">
 								<div class="input-group">
+									<input type="text" ng-model="vouchersType[codTipoComprob]" class="form-control" placeholder="Tipo Comprobante" toupper disabled/>
+									<input type="hidden" ng-model="codTipoComprob" class="form-control"/>
+									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.codComprobante();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="input-group">
+									<input type="text" ng-keyup="hitEnter($event)" ng-model="razonSocial" class="form-control" placeholder="Raz&oacute;n Social" toupper/>
+									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.razonSocial();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-5">
+								<div class="input-group">
+									<input type="text" ng-keyup="hitEnter($event)" ng-model="documentoCliente" class="form-control" placeholder="Documento Cliente"/>
+									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.documentoCliente();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+								</div>
+							</div>
+							<div class="col-lg-5">
+								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 									<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" />
+									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.fechaDesde();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 								</div>
 							</div>
 							<div class="col-lg-2">
@@ -56,24 +73,24 @@
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 						<tr>
-							<th>Pto. Venta</th>
+							<th class="col-lg-1" style="text-align: right">Pto. Venta</th>
 							<th>Comprobante</th>
-							<th>Nro</th>
-							<th>Razón Social</th>
-							<th>Fecha</th>
-							<th>Importe Total</th>
-							<th>Detalles</th>
+							<th style="text-align: right" class="col-lg-1">Nro</th>
+							<th >Razón Social</th>
+							<th style="text-align: center">Fecha</th>
+							<th style="text-align: right">Importe Total</th>
+							<th class="col-lg-1" style="text-align: center">Detalles</th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr ng-repeat="invoice in invoices">
 							<td style="text-align: right">{{ invoice.nroPtoVenta }}</td>
-							<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
-							<td style="text-align: right">{{ invoice.nroComprob }}</td>
-							<td>{{ invoice.razon }}</td>
-							<td>{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+							<td><a href ng-click="filtrar.codComprobante(invoice.codTipoComprob)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
+							<td style="text-align: right"><a href ng-click="filtrar.nroComprobante(invoice.nroComprob)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+							<td><a href ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+							<td style="text-align: center"><a href ng-click="filtrar.fechaDesde(invoice.fecha.emision)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 							<td style="text-align: right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-							<td><button ui-sref=".result" class="btn btn-info" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span> M&aacute;s detalles</button></td>
+							<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 						</tr>
 						</tbody>
 					</table>

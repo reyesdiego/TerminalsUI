@@ -15,6 +15,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'nroComprobante=' + datos.nroComprobante;
 		}
+		if(angular.isDefined(datos.codTipoComprob) && datos.codTipoComprob != ''){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'codTipoComprob=' + datos.codTipoComprob;
+		}
 		if(angular.isDefined(datos.razonSocial) && datos.razonSocial != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'razonSocial=' + datos.razonSocial.toUpperCase();
@@ -26,9 +30,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		if(angular.isDefined(datos.fecha) && datos.fecha != null && datos.fecha != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFecha(datos.fecha);
-			var fechaFin = new Date(datos.fecha);
-			fechaFin.setDate(fechaFin.getDate() + 1);
-			inserturl = inserturl + '&fechaFin=' + formatDate.formatearFecha(fechaFin);
+			//var fechaFin = new Date(datos.fecha);
+			//fechaFin.setDate(fechaFin.getDate() + 1);
+			inserturl = inserturl + '&fechaFin=' + formatDate.formatearFecha(datos.fecha);
 		}
 		$http({
 			method: 'GET',
