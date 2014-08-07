@@ -30,9 +30,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		if(angular.isDefined(datos.fecha) && datos.fecha != null && datos.fecha != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFecha(datos.fecha);
-			//var fechaFin = new Date(datos.fecha);
-			//fechaFin.setDate(fechaFin.getDate() + 1);
-			inserturl = inserturl + '&fechaFin=' + formatDate.formatearFecha(datos.fecha);
+			var fechaFin = new Date(datos.fecha);
+			fechaFin.setDate(fechaFin.getDate() + 1);
+			inserturl = inserturl + '&fechaFin=' + formatDate.formatearFecha(fechaFin);
 		}
 		$http({
 			method: 'GET',
@@ -100,7 +100,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.getTarifasTerminal = function(terminal, callback){
-		var inserturl = serverUrl + '/invoices/algo/' + terminal;
+		//var inserturl = serverUrl + '/invoices/algo/' + terminal;
 		$http.get('mocks/tarifasTerminal.json')
 			.success(function(data){
 				callback(data);
@@ -179,7 +179,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 					item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
 				}
 			})
-		})
+		});
 		return comprobante;
 	};
 
