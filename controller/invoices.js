@@ -18,7 +18,7 @@ function invoicesCtrl($scope, invoiceFactory) {
 			$scope.cargaFacturas();
 		},
 		razonSocial : function(filtro){
-			$scope.razonSocial = filtro;
+			$scope.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
 			$scope.cargaFacturas();
 		},
 		documentoCliente : function(filtro){
@@ -50,6 +50,22 @@ function invoicesCtrl($scope, invoiceFactory) {
 				$scope.totalItems = data.totalCount;
 			}
 		});
+	};
+
+	$scope.filtrarCaracteresInvalidos = function(palabra){
+		if (angular.isDefined(palabra) && palabra.length > 0){
+			var palabraFiltrada;
+			var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
+			palabraFiltrada = palabra;
+			for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
+				if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
+					palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
+				}
+			}
+			return palabraFiltrada.toUpperCase();
+		} else {
+			return palabra;
+		}
 	};
 
 	function cargaDatos(){
