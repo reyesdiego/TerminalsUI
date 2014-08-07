@@ -160,6 +160,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 		$scope.errorFacturadoMes = false;
 		$scope.isCollapsedMonth = true;
 		$scope.loadingFacturadoMes = true;
+		$scope.recargarFacturadoMes = false;
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, $rootScope.moneda, function(graf){
 			$scope.loadingFacturadoMes = false;
 			var datosPreparados = controlCtrl.prepararDatosMes(graf, true);
@@ -176,9 +177,9 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.loadingFacturadoMes = false;
 			$scope.errorFacturadoMes = true;
 			$scope.mensajeErrorFacturadoMes = err;
+			$scope.recargarFacturadoMes = true;
 		});
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, $scope.otraMoneda, function(graf){
-			$scope.recargarFacturadoMes = false;
 			var datosPreparados = controlCtrl.prepararDatosMes(graf, true);
 			switch ($scope.otraMoneda){
 				case 'PES':
@@ -229,8 +230,8 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 		$scope.errorCargaTasas = false;
 		$scope.loadingTasas = true;
 		$scope.isCollapsedDayTasas = true;
+		$scope.recargarTasas = false;
 		controlPanelFactory.getTasas($scope.desdeTasas, $rootScope.moneda, function(graf){
-
 			$scope.loadingTasas = false;
 			var result = controlCtrl.prepararDatosFacturadoDiaTasas(graf);
 			switch ($rootScope.moneda){
@@ -249,9 +250,9 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.loadingTasas = false;
 			$scope.errorCargaTasas = true;
 			$scope.mensajeErrorCargaTasas = err;
+			$scope.recargarTasas = true;
 		});
 		controlPanelFactory.getTasas($scope.desdeTasas, $scope.otraMoneda, function(graf){
-			$scope.recargarTasas = false;
 			var result = controlCtrl.prepararDatosFacturadoDiaTasas(graf);
 			switch ($scope.otraMoneda){
 				case 'PES':
@@ -270,6 +271,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 		$scope.errorFacturadoDia = false;
 		$scope.isCollapsedDay = true;
 		$scope.loadingFacturadoDia = true;
+		$scope.recargarFacturadoDia = false;
 		controlPanelFactory.getFacturadoPorDia($scope.desde, $rootScope.moneda, function(graf){
 			$scope.loadingFacturadoDia = false;
 			var datosPreparados = controlCtrl.prepararDatosFacturadoDia(graf)
@@ -285,9 +287,9 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.loadingFacturadoDia = false;
 			$scope.errorFacturadoDia = true;
 			$scope.mensajeErrorFacturadoDia = err;
+			$scope.recargarFacturadoDia = true;
 		});
 		controlPanelFactory.getFacturadoPorDia($scope.desde, $scope.otraMoneda, function(graf){
-			$scope.recargarFacturadoDia = false;
 			var datosPreparados = controlCtrl.prepararDatosFacturadoDia(graf)
 			switch ($scope.otraMoneda){
 				case 'PES':
