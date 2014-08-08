@@ -2,11 +2,23 @@
  * Created by kolesnikov-a on 17/06/14.
 */
 
-var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory){
+var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, loginService){
 
 	vouchersFactory.getVouchersType(function(data){
 		$scope.comprobantesTipos = data.data;
 	});
+
+	$scope.filteredPrices = [];
+
+	priceFactory.getPrice(loginService.getFiltro(), function (data) {
+		$scope.pricelist = data.data;
+		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
+		$scope.totalItems = $scope.pricelist.length;
+	});
+
+	$scope.pageChanged = function(){
+		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
+	};
 
 	$scope.barColors = {
 		"bactssa":$scope.colorBactssa,
