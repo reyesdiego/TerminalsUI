@@ -31,6 +31,8 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 		$scope.paginaAnterior = $scope.currentPage;
 	};
 
+	$scope.mostrarGrafico = false;
+
 	$scope.barColors = {
 		"bactssa":$scope.colorBactssa,
 		"terminal4": $scope.colorTerminal4,
@@ -40,6 +42,11 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 
 	$scope.columnChart = 'column';
 	$scope.pieChart = 'pie';
+
+	$scope.chartTitleReporteTarifas = "Conteo de tarifas por código";
+	$scope.chartWidthReporteTarifas = 500;
+	$scope.chartHeightReporteTarifas = 600;
+	$scope.chartDataReporteTarifas = [];
 
 	$scope.chartTitleBarrasHorarios = "Detalle por mes";
 	$scope.chartWidthBarrasHorarios = 500;
@@ -99,7 +106,21 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				$scope.tarifasGraficar.push(price);
 			}
 		});
-		console.log($scope.tarifasGraficar);
+		var base = [
+			['Tarifas'],
+			['Cantidad']
+		];
+		reportsFactory.getReporteTarifas($scope.tarifasGraficar, function(data){
+			$scope.tarifasGraficar.forEach(function(tarifa){
+				var code = tarifa.code;
+				base[0].push(code);
+				base[1].push(data.data[code]);
+			});
+			$scope.chartDataReporteTarifas = base;
+			$scope.chartWidthReporteTarifas = 250 * $scope.tarifasGraficar.length;
+			$scope.mostrarGrafico = true;
+			$scope.tarifasGraficar = [];
+		});
 	};
 	
 	$scope.cargarReporteTarifasTerminal = function(unaTerminal){
@@ -253,6 +274,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 						break;
 				}
 			})
+			console.log(barrasBactssa);
 			$scope.chartDataBarrasBactssa = barrasBactssa.slice();
 			$scope.chartDataBarrasTerminal4 = barrasTerminal4.slice();
 			$scope.chartDataBarrasTrp = barrasTrp.slice();
@@ -264,25 +286,3 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 
 	};
 });
-
-reportsCtrl.prepararMatrizVaciaBarras = function($q){
-	var defer = $q.defer();
-	var base = [
-		['Datos', 'Ausencias', 'Tardes', 'Sin turno', { role: 'annotation' } ]
-		['', 0, 0, 0, '']
-	];
-	defer.resolve(base);
-	return defer.promise;
-};
-
-reportsCtrl.prepararMatrizVaciaTorta = function($q){
-	var defer = $q.defer();
-	var base = [
-		['Ausencias', 0],
-		['Tardes', 0],
-		['Sin turno', 0],
-		['Cumplidos', 0]
-	];
-	defer.resolve(base);
-	return defer.promise;
-};

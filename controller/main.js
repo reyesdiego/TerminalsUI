@@ -155,11 +155,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		.state('reports', {
 			url: "/reportes",
 			templateUrl:"view/reportes.html",
-			controller: "reportsCtrl",
-			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
-				matrizVaciaBarras: reportsCtrl.prepararMatrizVaciaBarras,
-				matrizVaciaTorta: reportsCtrl.prepararMatrizVaciaTorta
-			}
+			controller: "reportsCtrl"
 		})
 });
 
