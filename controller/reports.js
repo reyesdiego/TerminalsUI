@@ -8,16 +8,27 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 		$scope.comprobantesTipos = data.data;
 	});
 
+	$scope.paginaAnterior = 1;
+
 	$scope.filteredPrices = [];
+	$scope.tarifasGraficar = [];
 
 	priceFactory.getPrice(loginService.getFiltro(), function (data) {
 		$scope.pricelist = data.data;
-		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
+		$scope.pricelist.forEach(function (price) {
+			price.graficar = false;
+		});
+		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage);
 		$scope.totalItems = $scope.pricelist.length;
 	});
 
 	$scope.pageChanged = function(){
-		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage - 1);
+		$scope.filteredPrices.forEach(function(price){
+			var pos = $scope.filteredPrices.indexOf(price);
+			$scope.pricelist[($scope.paginaAnterior-1)*$scope.itemsPerPage + pos].graficar = price.graficar;
+		});
+		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage);
+		$scope.paginaAnterior = $scope.currentPage;
 	};
 
 	$scope.barColors = {
@@ -81,7 +92,16 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.rowClass = function (index) {
 		return ($scope.selected === index) ? "selected" : "";
 	};
-
+	
+	$scope.armarGraficoTarifas = function () {
+		$scope.pricelist.forEach(function (price) {
+			if (price.graficar){
+				$scope.tarifasGraficar.push(price);
+			}
+		});
+		console.log($scope.tarifasGraficar);
+	};
+	
 	$scope.cargarReporteTarifasTerminal = function(unaTerminal){
 		var arrayCodigos = [];
 		var arrayDescripcion = [];
