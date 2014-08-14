@@ -1,45 +1,9 @@
 <div class="container agp">
 
 	<div class="row">
-		<div class="col-lg-4">
+		<div class="col-lg-12">
 			<div class="xpage-header">
 				<h1 id="forms">Reportes</h1>
-			</div>
-		</div>
-
-		<div class="col-lg-8 well">
-			<div class="row">
-				<div class="col-lg-6">
-					<label for="fechaDesde">Desde</label>
-					<p class="input-group">
-						<input type="text" class="form-control" id="fechaDesde" datepicker-popup="{{format}}" ng-model="desde"  is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
-						<span class="input-group-btn">
-							<button class="btn btn-default" ng-click="open($event, 'desde')"><i class="glyphicon glyphicon-calendar"></i></button>
-						</span>
-					</p>
-				</div>
-				<div class="col-lg-6">
-					<label for="fechaHasta">Hasta</label>
-					<p class="input-group">
-						<input type="text" class="form-control" id="fechaHasta" datepicker-popup="{{format}}" ng-model="hasta"  is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" show-weeks="false" ng-required="true" />
-						<span class="input-group-btn">
-							<button class="btn btn-default" ng-click="open($event, 'hasta')"><i class="glyphicon glyphicon-calendar"></i></button>
-						</span>
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-6">
-					<label for="selectComprobante" >Tipo de comprobante</label>
-					<select class="form-control" id="selectComprobante" ng-model="tipoComprobante">
-						<option ng-repeat="comprobante in comprobantesTipos" value="{{ comprobante._id }}" ng-selected="$first">{{ comprobante.description }}</option>
-					</select>
-				</div>
-				<div class="col-lg-6">
-					<br>
-					<button class="btn btn-default" ui-sref="control"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
-					<button class="btn btn-primary" ng-click="cargar()"><span class="glyphicon glyphicon-asterisk"></span> Cargar</button>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -73,23 +37,41 @@
 
 				<div class="row" ng-hide="$parent.mostrarGrafico">
 					<div class="col-lg-10"><pagination boundary-links="true" total-items="totalItems" ng-model="$parent.currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					<div class=" col-lg-2 text-right">
+					<div class=" col-lg-2 text-right" style="margin-top: 20px">
 						<button class="btn btn-primary" ng-click="armarGraficoTarifas()"><span class="glyphicon glyphicon-asterisk"></span> Cargar gráfico</button>
 					</div>
 				</div>
 
 				<div class="row" ng-show="$parent.mostrarGrafico">
-					<dynamic-chart
-							data="chartDataReporteTarifas"
-							title="{{chartTitleReporteTarifas}}"
-							width="{{chartWidthReporteTarifas}}"
-							height="{{chartHeightReporteTarifas}}"
-							select="selectRow(selectedRowIndexReporteTarifas)"
-							type="{{columnChart}}"
-							currency="false"
-							stacked="false"
-							is3-d="false">
-					</dynamic-chart>
+					<div class="col-lg-9">
+						<dynamic-chart
+								data="chartDataReporteTarifas"
+								title="{{chartTitleReporteTarifas}}"
+								width="{{chartWidthReporteTarifas}}"
+								height="{{chartHeightReporteTarifas}}"
+								select="selectRow(selectedRowIndexReporteTarifas)"
+								type="{{columnChart}}"
+								currency="false"
+								stacked="false"
+								is3-d="false">
+						</dynamic-chart>
+					</div>
+					<div class="col-lg-3">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+							<tr>
+								<th><span class="glyphicon glyphicon-credit-card"></span> Tarifa</th>
+								<th><span class="glyphicon glyphicon-plus-sign"></span> Cantidad</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="tarifa in tarifasGraficar">
+								<td class="col-lg-6 text-center">{{ tarifa.code }}</td>
+								<td class="col-lg-6 text-center">{{ tarifa.conteo }}</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
 				<div class="row" ng-show="$parent.mostrarGrafico">

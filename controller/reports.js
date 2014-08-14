@@ -101,6 +101,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 	
 	$scope.armarGraficoTarifas = function () {
+		$scope.tarifasGraficar = [];
 		$scope.pricelist.forEach(function (price) {
 			if (price.graficar){
 				$scope.tarifasGraficar.push(price);
@@ -115,11 +116,11 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				var code = tarifa.code;
 				base[0].push(code);
 				base[1].push(data.data[code]);
+				tarifa.conteo = data.data[code];
 			});
 			$scope.chartDataReporteTarifas = base;
 			$scope.chartWidthReporteTarifas = 250 * $scope.tarifasGraficar.length;
 			$scope.mostrarGrafico = true;
-			$scope.tarifasGraficar = [];
 		});
 	};
 	
