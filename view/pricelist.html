@@ -10,6 +10,14 @@
 		</div>
 	</div>
 
+	<div class="col-lg-12">
+		<div class="input-group">
+			<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+		<br>
+	</div>
+
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="bs-example table-responsive">
@@ -23,7 +31,7 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" ng-repeat="price in filteredPrices">
+					<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage | filter:search)">
 						<td class="col-lg-1">{{ price.code }}</td>
 						<td class="col-lg-9">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td class="col-lg-1">{{ price.unit}}</td>
@@ -35,6 +43,6 @@
 		</div>
 	</div>
 
-	<div class="text-center"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+	<div class="text-center"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 
 </div>
