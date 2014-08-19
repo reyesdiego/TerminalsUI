@@ -4,6 +4,7 @@
 function pricelistCtrl($scope, priceFactory, loginService){
 	'use strict';
 	// Variable para almacenar la info principal que trae del factory
+	$scope.pricelist = [];
 	$scope.filteredPrices = [];
 
 	priceFactory.getPrice(loginService.getFiltro(), function (data) {
