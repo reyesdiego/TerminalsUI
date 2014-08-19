@@ -146,7 +146,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 		$scope.errorTotales = false;
 		$scope.loadingTotales = true;
 		controlPanelFactory.getByDay(fecha, function(data){
-			$scope.loadingTotales = false
+			$scope.loadingTotales = false;
 			$scope.control.invoicesCount = data.invoicesCount;
 			$scope.fecha = fecha;
 		}, function (err) {

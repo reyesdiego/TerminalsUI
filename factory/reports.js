@@ -16,7 +16,18 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 	};
 
 	factory.getReporteTarifas = function(tarifas, callback){
-		var insertUrl = serverUrl + '/' + loginService.getFiltro() + '/'; // El que se va a usar
+		var inserturl = serverUrl + '/' + loginService.getFiltro() + '/'; // El que se va a usar
+		//El método que se va a usar para mandar la información
+		/*$http({
+			method: "GET",
+			url: inserturl,
+			data: JSON.stringify(tarifas),
+			headers:{"Content-Type":"application/json", token: loginService.getToken()}
+		}).success(function (response) {
+			callback(response);
+		}).error(function(errorText) {
+			dialogs.error('Error', 'Error al añadir el Match en la base');
+		});*/
 
 		$http.get('mocks/tarifasCount.json')
 			.success(function(data){

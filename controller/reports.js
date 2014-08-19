@@ -11,7 +11,11 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.paginaAnterior = 1;
 
 	$scope.filteredPrices = [];
-	$scope.tarifasGraficar = [];
+	$scope.tarifasGraficar = {
+		"field": "code",
+		"data": []
+	};
+	$scope.tablaGrafico = [];
 
 	priceFactory.getPrice(loginService.getFiltro(), function (data) {
 		$scope.pricelist = data.data;
@@ -44,7 +48,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.pieChart = 'pie';
 
 	$scope.chartTitleReporteTarifas = "Conteo de tarifas por código";
-	$scope.chartWidthReporteTarifas = 500;
+	$scope.chartWidthReporteTarifas = 1200;
 	$scope.chartHeightReporteTarifas = 600;
 	$scope.chartDataReporteTarifas = [];
 
@@ -101,25 +105,55 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 	
 	$scope.armarGraficoTarifas = function () {
-		$scope.tarifasGraficar = [];
+		$scope.tarifasGraficar = {
+			"field": "code",
+			"data": []
+		};
+		$scope.tablaGrafico = {
+			"terminales": [],
+			"data": []
+		};
 		$scope.pricelist.forEach(function (price) {
 			if (price.graficar){
-				$scope.tarifasGraficar.push(price);
+				$scope.tarifasGraficar.data.push(price.code);
+				$scope.tablaGrafico.data.push(price);
 			}
 		});
 		var base = [
-			['Tarifas'],
-			['Cantidad']
+			['Códigos']
 		];
+		var nuevaLinea = [];
+		var contarTerminales = 0;
+		var terminales = [];
 		reportsFactory.getReporteTarifas($scope.tarifasGraficar, function(data){
-			$scope.tarifasGraficar.forEach(function(tarifa){
+			contarTerminales = data.data.length;
+			data.data.forEach(function(resultado){
+				nuevaLinea.push(resultado.terminal);
+				base.push(nuevaLinea.slice());
+				terminales.push(resultado.terminal);
+				nuevaLinea = [];
+			});
+			var i = 1;
+			$scope.tablaGrafico.terminales = terminales;
+			$scope.tablaGrafico.data.forEach(function(tarifa){
+				var total = 0;
 				var code = tarifa.code;
+				tarifa.conteo = [];
+				tarifa.porcentaje = [];
 				base[0].push(code);
-				base[1].push(data.data[code]);
-				tarifa.conteo = data.data[code];
+				for (i=1; i<=contarTerminales; i++){
+					base[i].push(data.data[i-1].data[code]);
+					tarifa.conteo.push(data.data[i-1].data[code]);
+					total += data.data[i-1].data[code];
+				}
+				tarifa.conteo.push(total);
+				for (i=0; i<=contarTerminales-1; i++){
+					var cuenta = (tarifa.conteo[i]*100)/tarifa.conteo[contarTerminales];
+					console.log(cuenta);
+					tarifa.porcentaje.push(cuenta);
+				}
 			});
 			$scope.chartDataReporteTarifas = base;
-			$scope.chartWidthReporteTarifas = 250 * $scope.tarifasGraficar.length;
 			$scope.mostrarGrafico = true;
 		});
 	};
@@ -139,7 +173,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				comprob.detalle.forEach(function(detalle){
 					detalle.items.forEach(function(item){
 						if (!in_array(item.id, arrayCodigos)){
-							arrayCodigos.push(item.id)
+							arrayCodigos.push(item.id);
 							arrayCantidad.push(0);
 						}
 						var pos = arrayCodigos.indexOf(item.id);
