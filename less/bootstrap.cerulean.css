@@ -6287,3 +6287,9 @@ button.close {
 .panel-info .panel-title {
   color: #fff;
 }
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
