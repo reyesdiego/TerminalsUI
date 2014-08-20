@@ -77,7 +77,10 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	};
 
 	$scope.mostrarDetalle = function(comprobante){
-		$scope.comprobantesVistos.push(comprobante);
+		var pos = $scope.comprobantesVistos.indexOf(comprobante);
+		if (pos == -1){
+			$scope.comprobantesVistos.push(comprobante);
+		}
 		$scope.verDetalle = comprobante;
 	};
 
