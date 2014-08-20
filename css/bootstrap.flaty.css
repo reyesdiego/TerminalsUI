@@ -6174,9 +6174,6 @@ button.close {
   background-color: #fff;
   color: #18bc9c;
 }
-.navbar-brand {
-  padding: 18.5px 15px 20.5px;
-}
 .btn:active {
   -webkit-box-shadow: none;
   box-shadow: none;
