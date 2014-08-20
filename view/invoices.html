@@ -6,54 +6,52 @@
 			<div class="col-lg-1">
 				<img src="images/comprobantes.png" height="110" width="108">
 			</div>
-			<div class="col-lg-5">
-				<div class="xpage-header">
-					<h1 id="forms" class="text-center">Comprobantes</h1>
-					<h2 class="text-center">{{ terminal.full_name }}</h2>
-					<h2 ng-show="acceso=='agp'" class="text-center">{{ nombre }}</h2>
+			<div class="col-lg-11">
+				<div class="row xpage-header">
+					<h1 id="forms">Comprobantes - {{ terminal.full_name }}<span ng-show="acceso=='agp'" style="margin-left: 30px">({{ nombre }})</span></h1>
 				</div>
 			</div>
-			<div class="col-lg-6" data-ng-hide="$state.includes('invoices.result')">
+		</div>
+		<div class="row">
+			<div class="col-lg-12" data-ng-hide="$state.includes('invoices.result')">
 				<div class="panel panel-default">
 					<div class="panel-heading"><strong>Buscar por:</strong></div>
 					<div class="panel-body form-horizontal">
 						<div class="form-group">
-							<div class="col-lg-6">
+							<div class="col-lg-4">
 								<div class="input-group">
 									<input type="text" ng-keyup="hitEnter($event)" ng-model="nroComprobante" class="form-control" placeholder="N° Comprobante"/>
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.nroComprobante();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 								</div>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-lg-4">
 								<div class="input-group">
 									<input type="text" ng-model="vouchersType[codTipoComprob]" class="form-control" placeholder="Tipo Comprobante" toupper disabled/>
 									<input type="hidden" ng-model="codTipoComprob" class="form-control"/>
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.codComprobante();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-6">
+							<div class="col-lg-4">
 								<div class="input-group">
 									<input type="text" ng-keyup="hitEnter($event)" ng-model="razonSocial" class="form-control" placeholder="Raz&oacute;n Social" toupper/>
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.razonSocial();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 								</div>
 							</div>
-							<div class="col-lg-6">
+						</div>
+						<div class="form-group">
+							<div class="col-lg-4">
 								<div class="input-group">
 									<input type="text" ng-keyup="hitEnter($event)" ng-model="documentoCliente" class="form-control" placeholder="Documento Cliente"/>
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.documentoCliente();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-5">
+							<div class="col-lg-4">
 								<div class="input-group">
 									<input type="text" ng-keyup="hitEnter($event)" ng-model="contenedor" class="form-control" placeholder="Contenedor">
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.contenedor();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 								</div>
 							</div>
-							<div class="col-lg-5">
+							<div class="col-lg-3">
 								<div class="input-group">
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 									<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" />
@@ -69,11 +67,46 @@
 			</div>
 		</div>
 
+		<accordion ng-show="comprobantesVistos.length > 0" href="">
+			<accordion-group is-open="status.open">
+				<accordion-heading>
+					Comprobantes vistos <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+				</accordion-heading>
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+						<tr>
+							<th class="col-lg-1 text-right">Pto. Venta</th>
+							<th>Comprobante</th>
+							<th class="col-lg-1 text-right">Nro</th>
+							<th>Razón Social</th>
+							<th class="text-center">Fecha</th>
+							<th class="text-right">Importe Total</th>
+							<th class="col-lg-1 text-center">Detalles</th>
+							<th class="col-lg-1 text-center">Quitar</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="invoice in comprobantesVistos">
+							<td class="text-right">{{ invoice.nroPtoVenta }}</td>
+							<td><a href ng-click="filtrar.codComprobante(invoice.codTipoComprob)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
+							<td class="text-right"><a href ng-click="filtrar.nroComprobante(invoice.nroComprob)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+							<td><a href ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+							<td class="text-center"><a href ng-click="filtrar.fechaDesde(invoice.fecha.emision)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+							<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+							<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+							<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</accordion-group>
+		</accordion>
+
 		<div class="row" data-ng-show="$state.includes('gates.invoices')">
 			<fieldset>
 				<legend>Facturas del contenedor {{ container }}</legend>
 			</fieldset>
-
 		</div>
 
 		<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result')">
@@ -99,7 +132,7 @@
 							<td><a href ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
 							<td style="text-align: center"><a href ng-click="filtrar.fechaDesde(invoice.fecha.emision)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 							<td style="text-align: right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-							<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+							<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="$parent.mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 						</tr>
 						</tbody>
 					</table>

@@ -8,6 +8,8 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
 
+	$scope.comprobantesVistos = [];
+
 	$scope.nombre = loginService.getFiltro();
 
 	$scope.filtrar = {
@@ -72,6 +74,16 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		} else {
 			return palabra;
 		}
+	};
+
+	$scope.mostrarDetalle = function(comprobante){
+		$scope.comprobantesVistos.push(comprobante);
+		$scope.verDetalle = comprobante;
+	};
+
+	$scope.quitarVista = function(comprobante){
+		var pos = $scope.comprobantesVistos.indexOf(comprobante);
+		$scope.comprobantesVistos.splice(pos, 1);
 	};
 
 	function cargaDatos(){
