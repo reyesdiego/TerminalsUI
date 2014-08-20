@@ -4,17 +4,18 @@
 		<div class="row" data-ng-hide="$state.includes('gates.invoices')">
 			<br>
 			<div class="col-lg-1">
-				<img src="images/comprobantes.png" height="130" width="128">
+				<img src="images/comprobantes.png" height="110" width="108">
 			</div>
 			<div class="col-lg-5">
 				<div class="xpage-header">
-					<h1 id="forms" style="margin-top: 30px; margin-left: 30px">Comprobantes</h1>
-					<h2 ng-show="acceso=='terminal'" style="margin-top: 30px">{{ terminal.full_name }}</h2>
+					<h1 id="forms" class="text-center">Comprobantes</h1>
+					<h2 class="text-center">{{ terminal.full_name }}</h2>
+					<h2 ng-show="acceso=='agp'" class="text-center">{{ nombre }}</h2>
 				</div>
 			</div>
 			<div class="col-lg-6" data-ng-hide="$state.includes('invoices.result')">
 				<div class="panel panel-default">
-					<div class="panel-heading"><strong>Buscar Facturas por</strong></div>
+					<div class="panel-heading"><strong>Buscar por:</strong></div>
 					<div class="panel-body form-horizontal">
 						<div class="form-group">
 							<div class="col-lg-6">
