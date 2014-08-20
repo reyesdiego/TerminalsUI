@@ -30,6 +30,10 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		fechaDesde : function(filtro){
 			$scope.fechaDesde = filtro;
 			$scope.cargaFacturas();
+		},
+		contenedor : function(filtro){
+			$scope.contenedor = filtro;
+			$scope.cargaFacturas();
 		}
 	};
 
@@ -76,7 +80,8 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 			'nroComprobante': $scope.nroComprobante,
 			'razonSocial': $scope.razonSocial,
 			'documentoCliente': $scope.documentoCliente,
-			'fecha': $scope.fechaDesde
+			'fecha': $scope.fechaDesde,
+			'contenedor': $scope.contenedor
 		};
 	}
 
