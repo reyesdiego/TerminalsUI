@@ -2,11 +2,13 @@
  * Created by Diego Reyes on 2/3/14.
 */
 
-function invoicesCtrl($scope, invoiceFactory) {
+function invoicesCtrl($scope, invoiceFactory, loginService) {
 	'use strict';
 
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
+
+	$scope.nombre = loginService.getFiltro();
 
 	$scope.filtrar = {
 		codComprobante : function(filtro){

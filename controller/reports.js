@@ -91,6 +91,9 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.terminoCarga = false;
 	$scope.tipoComprobante = "0";
 
+	$scope.isCollapsedDesde = true;
+	$scope.isCollapsedHasta = true;
+
 	$scope.deleteRow = function (index) {
 		$scope.chartData.splice(index, 1);
 	};
@@ -149,7 +152,6 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				tarifa.conteo.push(total);
 				for (i=0; i<=contarTerminales-1; i++){
 					var cuenta = (tarifa.conteo[i]*100)/tarifa.conteo[contarTerminales];
-					console.log(cuenta);
 					tarifa.porcentaje.push(cuenta);
 				}
 			});
@@ -308,8 +310,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 						tortaTrp[3][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
 						break;
 				}
-			})
-			console.log(barrasBactssa);
+			});
 			$scope.chartDataBarrasBactssa = barrasBactssa.slice();
 			$scope.chartDataBarrasTerminal4 = barrasTerminal4.slice();
 			$scope.chartDataBarrasTrp = barrasTrp.slice();
