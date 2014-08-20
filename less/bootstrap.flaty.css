@@ -6364,3 +6364,9 @@ input:focus {
 .popover {
   color: #2c3e50;
 }
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+  cursor: pointer;
+}
