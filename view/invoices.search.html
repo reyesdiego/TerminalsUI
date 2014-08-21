@@ -4,32 +4,32 @@
 			<strong>Buscar por</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 		</accordion-heading>
 		<div class="row">
-			<div class="form-group col-lg-4">
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0">
 				<div class="input-group">
 					<input type="text" ng-keyup="hitEnter($event)" ng-model="nroComprobante" class="form-control" placeholder="N° Comprobante"/>
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.nroComprobante();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
-			<div class="form-group col-lg-4">
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0">
 				<div class="input-group">
 					<input type="text" ng-model="vouchersType[codTipoComprob]" class="form-control" placeholder="Tipo Comprobante" toupper disabled/>
 					<input type="hidden" ng-model="codTipoComprob" class="form-control"/>
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.codComprobante();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
-			<div class="form-group col-lg-4">
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
 				<div class="input-group">
 					<input type="text" ng-keyup="hitEnter($event)" ng-model="razonSocial" class="form-control" placeholder="Raz&oacute;n Social" toupper/>
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.razonSocial();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
-			<div class="form-group col-lg-4">
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('documentoCliente', 0) >= 0">
 				<div class="input-group">
 					<input type="text" ng-keyup="hitEnter($event)" ng-model="documentoCliente" class="form-control" placeholder="Documento Cliente"/>
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.documentoCliente();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
-			<div class="form-group col-lg-4">
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
 				<div class="input-group">
 					<input type="text" ng-keyup="hitEnter($event)" ng-model="contenedor" class="form-control" placeholder="Contenedor">
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.contenedor();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
