@@ -8,6 +8,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		$scope.comprobantesTipos = data.data;
 	});
 
+	$scope.control = '';
+
 	// Fecha (dia y hora)
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
@@ -84,6 +86,83 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	$scope.loadingTasaCargas = true;
 
+	$scope.filtrar = {
+		codigo : function(filtro){
+			$scope.codigoFiltrado = filtro;
+			switch ($scope.control){
+				case 'codigos':
+					$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
+					$scope.hayFiltros = true;
+					invoiceFactory.getInvoice($scope.pageFiltros, cargaDatos(), function(data){
+						$scope.totalItemsFiltros = data.totalCount;
+						$scope.pantalla.comprobantesRotos = data.data;
+					});
+			}
+			$scope.cargaFacturas();
+		},
+
+		codComprobante : function(filtro){
+			$scope.codTipoComprob = filtro;
+			switch ($scope.control){
+				case 'codigos':
+					$scope.filtrarCodigo($scope.codigoFiltrado);
+					break;
+			}
+			$scope.cargaFacturas();
+		},
+		nroComprobante : function(filtro){
+			$scope.nroComprobante = filtro;
+			switch ($scope.control){
+
+			}
+			$scope.cargaFacturas();
+		},
+		razonSocial : function(filtro){
+			$scope.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
+			switch ($scope.control){
+
+			}
+			$scope.cargaFacturas();
+		},
+		documentoCliente : function(filtro){
+			$scope.documentoCliente = filtro;
+			switch ($scope.control){
+
+			}
+			$scope.cargaFacturas();
+		},
+		fechaDesde : function(filtro){
+			$scope.fechaDesde = filtro;
+			switch ($scope.control){
+
+			}
+			$scope.cargaFacturas();
+		},
+		contenedor : function(filtro){
+			$scope.contenedor = filtro;
+			switch ($scope.control){
+
+			}
+			$scope.cargaFacturas();
+		}
+	};
+
+	$scope.filtrarCaracteresInvalidos = function(palabra){
+		if (angular.isDefined(palabra) && palabra.length > 0){
+			var palabraFiltrada;
+			var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
+			palabraFiltrada = palabra;
+			for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
+				if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
+					palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
+				}
+			}
+			return palabraFiltrada.toUpperCase();
+		} else {
+			return palabra;
+		}
+	};
+
 	$scope.controlDeCodigos = function(){
 		$scope.loadingControlCodigos = true;
 		$scope.hayFiltros = false;
@@ -99,6 +178,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				$scope.cargandoPaginaComprobantes = true;
 
 				invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(invoicesNoMatches){
+					console.log(invoicesNoMatches.data);
 					if (invoicesNoMatches.data != null){
 						invoicesNoMatches.data.forEach(function(unComprobante){
 							unComprobante._id.fecha = {
@@ -218,7 +298,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.controlTasaCargas();
 	$scope.cargar();
 
-	$scope.mostrarDetalle = function(unaFactura){
+	$scope.mostrarDetalle = function(unaFactura, control){
+		$scope.control = control;
 		invoiceFactory.invoiceById(unaFactura._id, function(comprobante){
 			$scope.verDetalle = comprobante;
 		});
@@ -271,10 +352,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
 		$scope.codigoFiltrado = codigo;
 		$scope.hayFiltros = true;
-		var datos = {
-			'codigo': codigo
-		};
-		invoiceFactory.getInvoice($scope.pageFiltros, datos, function(data){
+		invoiceFactory.getInvoice($scope.pageFiltros, cargaDatos(), function(data){
 			$scope.totalItemsFiltros = data.totalCount;
 			$scope.pantalla.comprobantesRotos = data.data;
 		});
@@ -291,6 +369,18 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		$scope.hayFiltros = false;
 		$scope.codigoFiltrado = '';
 		$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
+	};
+
+	function cargaDatos(){
+		return {
+			'codigo': $scope.codigoFiltrado,
+			'codTipoComprob': $scope.codTipoComprob,
+			'nroComprobante': $scope.nroComprobante,
+			'razonSocial': $scope.razonSocial,
+			'documentoCliente': $scope.documentoCliente,
+			'fecha': $scope.fechaDesde,
+			'contenedor': $scope.contenedor
+		};
 	};
 
 }

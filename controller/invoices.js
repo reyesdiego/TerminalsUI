@@ -103,7 +103,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 			'fecha': $scope.fechaDesde,
 			'contenedor': $scope.contenedor
 		};
-	}
+	};
 
 	$scope.cargaFacturas();
 
