@@ -139,7 +139,8 @@
 					</table>
 				</div>
 				<div data-ng-hide="$state.includes('gates.invoices')">
-					<div class="text-center"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
 				<div data-ng-show="$state.includes('gates.invoices')">
 					<button class="btn btn-default" ng-click="$state.go('^')"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>

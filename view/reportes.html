@@ -68,7 +68,8 @@
 				</div>
 
 				<div class="row" ng-hide="$parent.mostrarGrafico">
-					<div class="col-lg-10"><pagination boundary-links="true" total-items="totalItems" ng-model="$parent.currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="col-lg-10 hidden-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="$parent.currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="col-lg-10 visible-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="$parent.currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class=" col-lg-2 text-right" style="margin-top: 20px">
 						<button class="btn btn-primary" ng-click="armarGraficoTarifas()"><span class="glyphicon glyphicon-asterisk"></span> Cargar gráfico</button>
 					</div>
