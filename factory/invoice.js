@@ -6,34 +6,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
-		var insertAux = inserturl;
-		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'contenedor=' + datos.contenedor.toUpperCase();
-		}
-		if(angular.isDefined(datos.nroComprobante) && datos.nroComprobante != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'nroComprobante=' + datos.nroComprobante;
-		}
-		if(angular.isDefined(datos.codTipoComprob) && datos.codTipoComprob != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'codTipoComprob=' + datos.codTipoComprob;
-		}
-		if(angular.isDefined(datos.razonSocial) && datos.razonSocial != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'razonSocial=' + datos.razonSocial.toUpperCase();
-		}
-		if(angular.isDefined(datos.documentoCliente) && datos.documentoCliente != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'documentoCliente=' + datos.documentoCliente;
-		}
-		if(angular.isDefined(datos.fecha) && datos.fecha != null && datos.fecha != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFecha(datos.fecha);
-			var fechaFin = new Date(datos.fecha);
-			fechaFin.setDate(fechaFin.getDate() + 1);
-			inserturl = inserturl + '&fechaFin=' + formatDate.formatearFecha(fechaFin);
-		}
+		inserturl = this.aplicarFiltros(inserturl, datos);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -150,24 +123,40 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
-	factory.getByCode = function(page, code, callback){
-		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?code=' + code;
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(factory.ponerDescripcionComprobantes(data));
-		}).error(function(errorText){
-			console.log(errorText);
-			if (errorText.status === 'ERROR'){
-				callback(errorText);
-				//dialogs.error('Error', errorText.data);
-			} else {
-				dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
-			}
-		});
+	factory.aplicarFiltros = function(unaUrl, datos){
+		var insertAux = unaUrl;
+		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'contenedor=' + datos.contenedor.toUpperCase();
+		}
+		if(angular.isDefined(datos.nroComprobante) && datos.nroComprobante != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'nroComprobante=' + datos.nroComprobante;
+		}
+		if(angular.isDefined(datos.codTipoComprob) && datos.codTipoComprob != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'codTipoComprob=' + datos.codTipoComprob;
+		}
+		if(angular.isDefined(datos.razonSocial) && datos.razonSocial != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'razonSocial=' + datos.razonSocial.toUpperCase();
+		}
+		if(angular.isDefined(datos.documentoCliente) && datos.documentoCliente != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'documentoCliente=' + datos.documentoCliente;
+		}
+		if(angular.isDefined(datos.fecha) && datos.fecha != null && datos.fecha != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(datos.fecha);
+			var fechaFin = new Date(datos.fecha);
+			fechaFin.setDate(fechaFin.getDate() + 1);
+			unaUrl = unaUrl + '&fechaFin=' + formatDate.formatearFecha(fechaFin);
+		}
+		if(angular.isDefined(datos.codigo) && datos.codigo != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'code=' + datos.codigo;
+		}
+		return unaUrl;
 	};
 
 	factory.ponerDescripcionComprobante = function(comprobante){
