@@ -271,7 +271,10 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
 		$scope.codigoFiltrado = codigo;
 		$scope.hayFiltros = true;
-		invoiceFactory.getByCode($scope.pageFiltros, codigo, function(data){
+		var datos = {
+			'codigo': codigo
+		};
+		invoiceFactory.getInvoice($scope.pageFiltros, datos, function(data){
 			$scope.totalItemsFiltros = data.totalCount;
 			$scope.pantalla.comprobantesRotos = data.data;
 		});
