@@ -8,6 +8,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 
+	$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'fechaDesde', 'fechaHasta'];
+
 	$scope.model = {
 		'codTipoComprob': '',
 		'nroComprobante': '',
@@ -109,11 +111,13 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				'contenedor': ''
 			};
 			$scope.controlFiltros = 'codigosFiltrados';
+			$scope.ocultarFiltros = [];
 			$scope.codigoFiltrado = filtro;
 			$scope.hayFiltros = true;
 			$scope.filtrar.cargar();
 		},
 		codComprobante : function(filtro){
+			console.log(filtro);
 			$scope.model.codTipoComprob = filtro;
 			$scope.filtrar.cargar();
 		},
@@ -375,11 +379,30 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.quitarFiltro = function () {
 		$scope.hayFiltros = false;
 		$scope.codigoFiltrado = '';
+		$scope.controlFiltros = 'codigos';
 		$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
+		$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'contenedor', 'razonSocial'];
+		$scope.model = {
+			'codTipoComprob': '',
+			'nroComprobante': '',
+			'razonSocial': '',
+			'documentoCliente': '',
+			'fechaDesde': $scope.model.fechaDesde,
+			'fechaHasta': $scope.model.fechaHasta,
+			'contenedor': ''
+		};
 	};
 
 	$scope.cambioTab = function(unTab){
-		$scope.control = unTab;
+		$scope.controlFiltros = unTab;
+		switch ($scope.controlFiltros){
+			case 'codigos':
+				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'contenedor', 'razonSocial'];
+				break;
+			case 'tasas':
+				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'fechaDesde', 'fechaHasta'];
+				break;
+		}
 		$scope.model = {
 			'codTipoComprob': '',
 			'nroComprobante': '',
