@@ -4,11 +4,20 @@
 
 function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, loginService){
 	'use strict';
+	$scope.model = {
+		'codTipoComprob': '',
+		'nroComprobante': '',
+		'razonSocial': '',
+		'documentoCliente': '',
+		'fechaDesde': '',
+		'contenedor': ''
+	};
+
 	vouchersFactory.getVouchersType(function(data){
 		$scope.comprobantesTipos = data.data;
 	});
 
-	$scope.control = '';
+	$scope.controlFiltros = 'tasas';
 
 	// Fecha (dia y hora)
 	$scope.hasta = new Date();
@@ -88,8 +97,35 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	$scope.filtrar = {
 		codigo : function(filtro){
-			$scope.codigoFiltrado = filtro;
-			switch ($scope.control){
+			$scope.model.codigoFiltrado = filtro;
+			$scope.filtrar.cargar();
+		},
+		codComprobante : function(filtro){
+			$scope.model.codTipoComprob = filtro;
+			$scope.filtrar.cargar();
+		},
+		nroComprobante : function(filtro){
+			$scope.model.nroComprobante = filtro;
+			$scope.filtrar.cargar();
+		},
+		razonSocial : function(filtro){
+			$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
+			$scope.filtrar.cargar();
+		},
+		documentoCliente : function(filtro){
+			$scope.model.documentoCliente = filtro;
+			$scope.filtrar.cargar();
+		},
+		fechaDesde : function(filtro){
+			$scope.model.fechaDesde = filtro;
+			$scope.filtrar.cargar();
+		},
+		contenedor : function(filtro){
+			$scope.model.contenedor = filtro;
+			$scope.filtrar.cargar();
+		},
+		cargar : function(){
+			switch ($scope.controlFiltros){
 				case 'codigos':
 					$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
 					$scope.hayFiltros = true;
@@ -97,53 +133,17 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 						$scope.totalItemsFiltros = data.totalCount;
 						$scope.pantalla.comprobantesRotos = data.data;
 					});
-			}
-			$scope.cargaFacturas();
-		},
-
-		codComprobante : function(filtro){
-			$scope.codTipoComprob = filtro;
-			switch ($scope.control){
-				case 'codigos':
-					$scope.filtrarCodigo($scope.codigoFiltrado);
 					break;
-			}
-			$scope.cargaFacturas();
-		},
-		nroComprobante : function(filtro){
-			$scope.nroComprobante = filtro;
-			switch ($scope.control){
+				case 'tasas':
+					$scope.controlTasaCargas();
+					break;
+			};
+		}
+	};
 
-			}
-			$scope.cargaFacturas();
-		},
-		razonSocial : function(filtro){
-			$scope.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
-			switch ($scope.control){
-
-			}
-			$scope.cargaFacturas();
-		},
-		documentoCliente : function(filtro){
-			$scope.documentoCliente = filtro;
-			switch ($scope.control){
-
-			}
-			$scope.cargaFacturas();
-		},
-		fechaDesde : function(filtro){
-			$scope.fechaDesde = filtro;
-			switch ($scope.control){
-
-			}
-			$scope.cargaFacturas();
-		},
-		contenedor : function(filtro){
-			$scope.contenedor = filtro;
-			switch ($scope.control){
-
-			}
-			$scope.cargaFacturas();
+	$scope.hitEnter = function(evt){
+		if(angular.equals(evt.keyCode,13)){
+			$scope.filtrar.cargar();
 		}
 	};
 
@@ -177,7 +177,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				$scope.pantalla.mostrarResultado = 1;
 				$scope.cargandoPaginaComprobantes = true;
 
-				invoiceFactory.getInvoicesNoMatches($scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(invoicesNoMatches){
+				invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(invoicesNoMatches){
 					console.log(invoicesNoMatches.data);
 					if (invoicesNoMatches.data != null){
 						invoicesNoMatches.data.forEach(function(unComprobante){
@@ -209,7 +209,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.controlTasaCargas = function(){
 		/*Acá control de tasa a las cargas*/
 		$scope.loadingTasaCargas = true;
-		invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.page, function(data){
+		invoiceFactory.getSinTasaCargas(cargaDatos(), $scope.desde, $scope.hasta, loginService.getFiltro(), $scope.page, function(data){
 			if (data.status == "ERROR"){
 				$scope.tasaCargas.titulo = "Error";
 				$scope.tasaCargas.cartel = "panel-danger";
@@ -298,8 +298,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.controlTasaCargas();
 	$scope.cargar();
 
-	$scope.mostrarDetalle = function(unaFactura, control){
-		$scope.control = control;
+	$scope.mostrarDetalle = function(unaFactura){
 		invoiceFactory.invoiceById(unaFactura._id, function(comprobante){
 			$scope.verDetalle = comprobante;
 		});
@@ -371,15 +370,28 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
 	};
 
+	$scope.cambioTab = function(unTab){
+		$scope.control = unTab;
+		$scope.model = {
+			'codTipoComprob': '',
+			'nroComprobante': '',
+			'razonSocial': '',
+			'documentoCliente': '',
+			'fechaDesde': '',
+			'contenedor': ''
+		};
+	};
+
 	function cargaDatos(){
 		return {
 			'codigo': $scope.codigoFiltrado,
-			'codTipoComprob': $scope.codTipoComprob,
-			'nroComprobante': $scope.nroComprobante,
-			'razonSocial': $scope.razonSocial,
-			'documentoCliente': $scope.documentoCliente,
-			'fecha': $scope.fechaDesde,
-			'contenedor': $scope.contenedor
+			'codTipoComprob': $scope.model.codTipoComprob,
+			'nroComprobante': $scope.model.nroComprobante,
+			'razonSocial': $scope.model.razonSocial,
+			'documentoCliente': $scope.model.documentoCliente,
+			'fechaDesde': $scope.model.fechaDesde,
+			'fechaHasta': $scope.model.fechaHasta,
+			'contenedor': $scope.model.contenedor
 		};
 	};
 

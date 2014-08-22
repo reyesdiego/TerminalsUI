@@ -53,8 +53,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 	};
 
-	factory.getSinTasaCargas = function(desde, hasta, terminal, page, callback){
-		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
+	factory.getSinTasaCargas = function(datos, desde, hasta, terminal, page, callback){
+		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit + '?';
+		inserturl = this.aplicarFiltros(inserturl, datos);
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -84,7 +85,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 	};
 
-	factory.getInvoicesNoMatches = function(desde, hasta, page, callback){
+	factory.getInvoicesNoMatches = function(datos, desde, hasta, page, callback){
 		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?fechaInicio=' + formatDate.formatearFecha(desde) + '&fechaFin=' + formatDate.formatearFecha(hasta);
 		$http({
 			method: "GET",
@@ -146,12 +147,13 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'documentoCliente=' + datos.documentoCliente;
 		}
-		if(angular.isDefined(datos.fecha) && datos.fecha != null && datos.fecha != ''){
+		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != null && datos.fechaDesde != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(datos.fecha);
-			var fechaFin = new Date(datos.fecha);
-			fechaFin.setDate(fechaFin.getDate() + 1);
-			unaUrl = unaUrl + '&fechaFin=' + formatDate.formatearFecha(fechaFin);
+			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(datos.fechaDesde);
+		}
+		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != null && datos.fechaHasta != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFecha(datos.fechaHasta);
 		}
 		if(angular.isDefined(datos.codigo) && datos.codigo != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
