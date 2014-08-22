@@ -126,47 +126,11 @@
 				<br>
 				<div class="row" data-ng-hide="$state.includes('invoices.result')">
 					<div class="col-lg-12">
-						<div ng-include="'view/invoices.search.html'"></div>
+						<div ng-include="'view/invoices.search.html'" onload="ocultarFiltros=['codComprobante', 'documentoCliente']"></div>
 						<!-- Para ocultar usar onload="ocultarFiltros=['nroComprobante', 'codComprobante', 'razonSocial', 'documentoCliente', 'contenedor']"-->
 					</div>
 				</div>
 
-				<div class="col-lg-12 well">
-					<div class="row">
-						<div class="col-lg-5">
-							<label for="fechaDesdeCodigos">Desde</label>
-							<p class="input-group">
-								<input type="text" id="fechaDesdeCodigos" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="$parent.desdeCodigos" />
-								<span class="input-group-btn">
-									<button class="btn btn-default" ng-click="isCollapsedDesdeCodigos = !isCollapsedDesdeCodigos"><i class="glyphicon glyphicon-calendar"></i></button>
-								</span>
-							</p>
-							<div collapse="isCollapsedDesdeCodigos">
-								<div>
-									<datepicker ng-model="$parent.desdeCodigos" show-weeks="false" ng-change="isCollapsedDesdeCodigos = !isCollapsedDesdeCodigos"></datepicker>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-5">
-							<label for="fechaHastaCodigos">Hasta</label>
-							<p class="input-group">
-								<input type="text" id="fechaHastaCodigos" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="$parent.hastaCodigos" />
-								<span class="input-group-btn">
-									<button class="btn btn-default" ng-click="isCollapsedHastaCodigos = !isCollapsedHastaCodigos"><i class="glyphicon glyphicon-calendar"></i></button>
-								</span>
-							</p>
-							<div collapse="isCollapsedHastaCodigos">
-								<div>
-									<datepicker ng-model="$parent.hastaCodigos" show-weeks="false" ng-change="isCollapsedHastaCodigos = !isCollapsedHastaCodigos"></datepicker>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-2 text-center">
-							<br>
-							<button class="btn btn-primary" ng-click="controlDeCodigos()"><span class="glyphicon glyphicon-asterisk"></span> Aplicar filtros</button>
-						</div>
-					</div>
-				</div>
 				<div class="col-lg-12 text-center" ng-show="loadingControlCodigos">
 					<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 				</div>
