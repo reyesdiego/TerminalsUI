@@ -4,20 +4,19 @@
 
 		<br>
 		<div class="row">
-			<div class="col-lg-7">
+			<div class="col-lg-12">
 				<div class="xpage-header">
-					<h1 ng-show="acceso=='terminal'"><img src="images/asociar.png" height="64" width="64">Tarifario - {{ terminal.full_name }}</h1>
-					<h1 ng-show="acceso=='agp'"><img src="images/asociar.png" height="64" width="64">Tarifario</h1>
+					<h2><img src="images/asociar.png" height="64" width="64">Asociación de tarifario - {{ terminal.full_name }} <span ng-show="acceso=='agp'" style="margin-left: 30px">({{ nombre }})</span></h2>
 				</div>
 			</div>
-			<div class="col-lg-5">
-				<div class="panel panel-default">
-					<div class="panel-heading"><strong>Buscar Tarifa por</strong></div>
-					<div class="panel-body">
-						<input type="text" ng-model="search" class="form-control" placeholder="Código, descripción o código asociado" toupper>
-					</div>
-				</div>
+		</div>
+
+		<div class="col-lg-12">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
+				<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 			</div>
+			<br>
 		</div>
 
 		<div class="row" ng-hide="flagGuardado">

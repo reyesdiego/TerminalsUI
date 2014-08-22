@@ -3,6 +3,7 @@
  */
 function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	'use strict';
+	$scope.nombre = loginService.getFiltro();
 
 	$scope.flagGuardado = true;
 	$scope.flagCambios = false;
