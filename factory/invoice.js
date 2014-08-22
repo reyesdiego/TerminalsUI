@@ -7,6 +7,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,

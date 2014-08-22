@@ -4,9 +4,17 @@
 
 function invoicesCtrl($scope, invoiceFactory, loginService) {
 	'use strict';
-
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
+
+	$scope.model = {
+		'codTipoComprob': $scope.codTipoComprob,
+		'nroComprobante': $scope.nroComprobante,
+		'razonSocial': $scope.razonSocial,
+		'documentoCliente': $scope.documentoCliente,
+		'fechaDesde': $scope.fechaDesde,
+		'contenedor': $scope.contenedor
+	};
 
 	$scope.comprobantesVistos = [];
 
@@ -14,27 +22,30 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 
 	$scope.filtrar = {
 		codComprobante : function(filtro){
-			$scope.codTipoComprob = filtro;
+			$scope.model.codTipoComprob = filtro;
 			$scope.cargaFacturas();
 		},
 		nroComprobante : function(filtro){
-			$scope.nroComprobante = filtro;
+			$scope.model.nroComprobante = filtro;
 			$scope.cargaFacturas();
 		},
 		razonSocial : function(filtro){
-			$scope.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
+			$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
 			$scope.cargaFacturas();
 		},
 		documentoCliente : function(filtro){
-			$scope.documentoCliente = filtro;
+			$scope.model.documentoCliente = filtro;
 			$scope.cargaFacturas();
 		},
 		fechaDesde : function(filtro){
-			$scope.fechaDesde = filtro;
+			$scope.model.fechaDesde = filtro;
 			$scope.cargaFacturas();
 		},
 		contenedor : function(filtro){
-			$scope.contenedor = filtro;
+			$scope.model.contenedor = filtro;
+			$scope.cargaFacturas();
+		},
+		cargar: function(){
 			$scope.cargaFacturas();
 		}
 	};
@@ -50,6 +61,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	};
 
 	$scope.cargaFacturas = function(page){
+		console.log(cargaDatos());
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
@@ -96,12 +108,12 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 
 	function cargaDatos(){
 		return {
-			'codTipoComprob': $scope.codTipoComprob,
-			'nroComprobante': $scope.nroComprobante,
-			'razonSocial': $scope.razonSocial,
-			'documentoCliente': $scope.documentoCliente,
-			'fecha': $scope.fechaDesde,
-			'contenedor': $scope.contenedor
+			'codTipoComprob': $scope.model.codTipoComprob,
+			'nroComprobante': $scope.model.nroComprobante,
+			'razonSocial': $scope.model.razonSocial,
+			'documentoCliente': $scope.model.documentoCliente,
+			'fecha': $scope.model.fechaDesde,
+			'contenedor': $scope.model.contenedor
 		};
 	};
 
