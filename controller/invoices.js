@@ -16,7 +16,8 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		'documentoCliente': $scope.documentoCliente,
 		'fechaDesde': $scope.fechaDesde,
 		'fechaHasta': $scope.fechaHasta,
-		'contenedor': $scope.contenedor
+		'contenedor': $scope.contenedor,
+		'codigo': $scope.codigo
 	};
 
 	$scope.comprobantesVistos = [];
@@ -24,6 +25,10 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.nombre = loginService.getFiltro();
 
 	$scope.filtrar = {
+		codigo : function(filtro){
+			$scope.model.codigo = filtro;
+			$scope.cargaFacturas();
+		},
 		codComprobante : function(filtro){
 			$scope.model.codTipoComprob = filtro;
 			$scope.cargaFacturas();
@@ -68,7 +73,6 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	};
 
 	$scope.cargaFacturas = function(page){
-		console.log(cargaDatos());
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
@@ -121,7 +125,8 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 			'documentoCliente': $scope.model.documentoCliente,
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
-			'contenedor': $scope.model.contenedor
+			'contenedor': $scope.model.contenedor,
+			'codigo': $scope.model.codigo
 		};
 	}
 
