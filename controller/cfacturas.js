@@ -4,12 +4,17 @@
 
 function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, loginService){
 	'use strict';
+	// Fecha (dia y hora)
+	$scope.hasta = new Date();
+	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
+
 	$scope.model = {
 		'codTipoComprob': '',
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
-		'fechaDesde': '',
+		'fechaDesde': $scope.desde,
+		'fechaHasta': $scope.hasta,
 		'contenedor': ''
 	};
 
@@ -18,12 +23,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	});
 
 	$scope.controlFiltros = 'tasas';
-
-	// Fecha (dia y hora)
-	$scope.hasta = new Date();
-	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
-	$scope.hastaCodigos = new Date();
-	$scope.desdeCodigos = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 
 	$scope.terminoCarga = false;
 	$scope.dateOptions = {
@@ -127,8 +126,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		cargar : function(){
 			switch ($scope.controlFiltros){
 				case 'codigos':
-					$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
-					$scope.hayFiltros = true;
+					$scope.controlDeCodigos();
+					break;
+				case 'codigosFiltrados':
 					invoiceFactory.getInvoice($scope.pageFiltros, cargaDatos(), function(data){
 						$scope.totalItemsFiltros = data.totalCount;
 						$scope.pantalla.comprobantesRotos = data.data;
@@ -177,7 +177,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				$scope.pantalla.mostrarResultado = 1;
 				$scope.cargandoPaginaComprobantes = true;
 
-				invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.desdeCodigos, $scope.hastaCodigos, $scope.pageCodigos, function(invoicesNoMatches){
+				invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.pageCodigos, function(invoicesNoMatches){
 					console.log(invoicesNoMatches.data);
 					if (invoicesNoMatches.data != null){
 						invoicesNoMatches.data.forEach(function(unComprobante){
@@ -349,6 +349,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	$scope.filtrarCodigo = function(codigo){
 		$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
+		$scope.control = 'codigosFiltrados';
 		$scope.codigoFiltrado = codigo;
 		$scope.hayFiltros = true;
 		invoiceFactory.getInvoice($scope.pageFiltros, cargaDatos(), function(data){
@@ -377,7 +378,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': '',
+			'fechaDesde': $scope.desde,
+			'fechaHasta': $scope.hasta,
 			'contenedor': ''
 		};
 	};
