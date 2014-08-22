@@ -35,15 +35,24 @@
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.contenedor();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
-			<div class="form-group col-lg-4">
-				<div class="col-lg-10">
-					<div class="input-group">
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
-						<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" />
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.fechaDesde();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-					</div>
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0">
+				<div class="input-group">
+					<label for="model.fechaDesde" class="input-group-addon">Desde</label>
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+					<input id="model.fechaDesde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" />
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.fechaDesde();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
-				<div class="col-lg-2">
+			</div>
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('fechaHasta', 0) >= 0">
+				<div class="input-group">
+					<label for="model.fechaHasta" class="input-group-addon">Hasta</label>
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaHasta = !openFechaHasta;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+					<input id="model.fechaHasta" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaHasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" />
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.fechaHasta();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+				</div>
+			</div>
+			<div class="form-group col-lg-4">
+				<div class="form-group">
 					<button class="btn btn-primary" ng-click="filtrar.cargar()"><span class="glyphicon glyphicon-search"></span></button>
 				</div>
 			</div>

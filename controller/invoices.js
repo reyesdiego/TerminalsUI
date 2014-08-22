@@ -6,6 +6,8 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	'use strict';
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
+	$scope.fechaHasta = new Date();
+	$scope.fechaHasta.setDate($scope.fechaHasta.getDate() + 1);
 
 	$scope.model = {
 		'codTipoComprob': $scope.codTipoComprob,
@@ -13,6 +15,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		'razonSocial': $scope.razonSocial,
 		'documentoCliente': $scope.documentoCliente,
 		'fechaDesde': $scope.fechaDesde,
+		'fechaHasta': $scope.fechaHasta,
 		'contenedor': $scope.contenedor
 	};
 
@@ -39,6 +42,10 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		},
 		fechaDesde : function(filtro){
 			$scope.model.fechaDesde = filtro;
+			$scope.cargaFacturas();
+		},
+		fechaHasta : function(filtro){
+			$scope.model.fechaHasta = filtro;
 			$scope.cargaFacturas();
 		},
 		contenedor : function(filtro){
@@ -112,10 +119,11 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 			'nroComprobante': $scope.model.nroComprobante,
 			'razonSocial': $scope.model.razonSocial,
 			'documentoCliente': $scope.model.documentoCliente,
-			'fecha': $scope.model.fechaDesde,
+			'fechaDesde': $scope.model.fechaDesde,
+			'fechaHasta': $scope.model.fechaHasta,
 			'contenedor': $scope.model.contenedor
 		};
-	};
+	}
 
 	$scope.cargaFacturas();
 
