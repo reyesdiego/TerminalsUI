@@ -168,9 +168,9 @@
 							<tbody>
 							<tr ng-repeat="comprobante in pantalla.comprobantesRotos">
 								<td class="text-right">{{ comprobante.nroPtoVenta }}</td>
-								<td class="text-right"><a href ng-click="filtrar.nroComprobante(comprobante.nroComprob)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.nroComprob }}</td>
-								<td class="text-left"><a ng-click="filtrar.razonSocial(comprobante.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.razon }}</td>
-								<td class="text-center"><a href ng-click="filtrar.fechaDesde(comprobante.fecha.emision)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+								<td class="text-right"><a href ng-click="filtrar.nroComprobante(comprobante.nroComprob)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.nroComprob }}</td>
+								<td class="text-left"><a ng-click="filtrar.razonSocial(comprobante.razon)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.razon }}</td>
+								<td class="text-center"><a href ng-click="filtrar.fechaDesde(comprobante.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(comprobante.importe.total, comprobante.codMoneda, comprobante.cotiMoneda) | currency }}</td>
 								<td class="text-center"><button ui-sref=".result" class="btn btn-info" type="button" ng-click="mostrarDetalle(comprobante)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 							</tr>
