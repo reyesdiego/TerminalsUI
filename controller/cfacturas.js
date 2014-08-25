@@ -88,6 +88,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.cargandoPaginaComprobantes = true;
 	$scope.anteriorCargaCodigos = [];
 
+	$scope.comprobantesVistosTasas = [];
+	$scope.comprobantesVistosCodigos = [];
+
 	$scope.loadingTasaCargas = true;
 
 	$scope.filtrar = {
@@ -319,10 +322,49 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.controlTasaCargas();
 	$scope.cargar();
 
-	$scope.mostrarDetalle = function(unaFactura){
-		invoiceFactory.invoiceById(unaFactura._id, function(comprobante){
-			$scope.verDetalle = comprobante;
+	$scope.mostrarDetalle = function(comprobante){
+		var encontrado = false;
+		switch ($scope.controlFiltros){
+			case 'codigos':
+			case 'codigosFiltrados':
+				$scope.comprobantesVistosCodigos.forEach(function(unComprobante){
+					if (unComprobante._id == comprobante._id){
+						encontrado = true;
+					}
+				});
+				if (!encontrado){
+					$scope.comprobantesVistosCodigos.push(comprobante);
+				}
+				break;
+			case 'tasas':
+				$scope.comprobantesVistosTasas.forEach(function(unComprobante){
+					if (unComprobante._id == comprobante._id){
+						encontrado = true;
+					}
+				});
+				if (!encontrado){
+					$scope.comprobantesVistosTasas.push(comprobante);
+				}
+				break;
+		}
+		invoiceFactory.invoiceById(comprobante._id, function(miComprobante){
+			$scope.verDetalle = miComprobante;
 		});
+	};
+
+	$scope.quitarVista = function(comprobante){
+		var pos;
+		switch ($scope.controlFiltros){
+			case 'codigos':
+			case 'codigosFiltrados':
+				pos = $scope.comprobantesVistosCodigos.indexOf(comprobante);
+				$scope.comprobantesVistosCodigos.splice(pos, 1);
+				break;
+			case 'tasas':
+				pos = $scope.comprobantesVistosTasas.indexOf(comprobante);
+				$scope.comprobantesVistosTasas.splice(pos, 1);
+				break;
+		}
 	};
 
 	$scope.$watch('currentPageTasaCargas', function(){

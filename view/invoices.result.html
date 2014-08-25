@@ -14,7 +14,7 @@
 				</tr>
 				<tr>
 					<td colspan="6" style="text-align: center">
-						<div><a ng-click="$parent.filtrar.razonSocial(verDetalle.razon); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
+						<div><a href ng-click="$parent.filtrar.razonSocial(verDetalle.razon); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
 						<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
 					</td>
 				</tr>
@@ -40,13 +40,13 @@
 				<tbody ng-repeat="contenedor in verDetalle.detalle">
 				<tr>
 					<td colspan="6" style="text-align: left">
-						<a ng-click="$parent.filtrar.contenedor(contenedor.contenedor); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
+						<a href ng-click="$parent.filtrar.contenedor(contenedor.contenedor); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
 						<span> - Buque: {{ contenedor.buque.nombre }}</span>
 						<span> - Viaje: {{ contenedor.buque.viaje }}</span>
 					</td>
 				</tr>
 				<tr style="text-align: right" ng-repeat="item in contenedor.items">
-					<td><a ng-click="$parent.filtrar.codigo(item.id); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span> {{ item.id }}</td>
+					<td><a href ng-click="$parent.filtrar.codigo(item.id); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
 					<td style="text-align: left" class="hidden-print"><span class="glyphicon glyphicon-warning-sign" style="color: red" ng-hide="isDefined($root.itemsDescriptionInvoices[item.id])"></span> {{ item.descripcion | maxLength : 200 }}<a href="" ng-show="(item.descripcion.length > 200)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
 					<td style="text-align: left" class="visible-print"><span class="glyphicon glyphicon-warning-sign" ng-hide="isDefined($root.itemsDescriptionInvoices[item.id])"></span> {{ item.descripcion }}</td>
 					<td>{{ item.cnt }}</td>
