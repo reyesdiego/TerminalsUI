@@ -22,7 +22,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 
 	$scope.invoiceEstado = {
 		'estado': 'Revisar',
-		'btnEstado': 'btn-info'
+		'btnEstado': 'btn-warning'
 	};
 
 	$scope.comprobantesVistos = [];
@@ -143,7 +143,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.revisarComprobante = function(comprobante){
 		comprobante.estado = {
 			'estado': 'Revisar',
-			'btnEstado': 'btn-info'
+			'btnEstado': 'btn-warning'
 		};
 		$scope.status.isopen = false;
 	};

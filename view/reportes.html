@@ -88,7 +88,7 @@
 							<tbody>
 							<tr ng-repeat="tarifa in tablaGrafico.data">
 								<td class="text-center">{{ tarifa.code }}</td>
-								<td ng-repeat="cantidad in tarifa.conteo track by $index" class="text-center">{{ cantidad }} <span ng-show="!$last">({{ tarifa.porcentaje[$index] }} %)</span></td>
+								<td ng-repeat="cantidad in tarifa.conteo track by $index" class="text-center">{{ cantidad }} <span ng-show="!$last">({{ tarifa.porcentaje[$index] | number:2 }} %)</span></td>
 							</tr>
 							</tbody>
 						</table>

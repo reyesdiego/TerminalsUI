@@ -233,7 +233,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.controlTasaCargas = function(){
 		/*Acá control de tasa a las cargas*/
 		$scope.loadingTasaCargas = true;
-		invoiceFactory.getSinTasaCargas(cargaDatos(), $scope.desde, $scope.hasta, loginService.getFiltro(), $scope.page, function(data){
+		invoiceFactory.getSinTasaCargas(cargaDatos(), loginService.getFiltro(), $scope.page, function(data){
 			if (data.status == "ERROR"){
 				$scope.tasaCargas.titulo = "Error";
 				$scope.tasaCargas.cartel = "panel-danger";
@@ -370,7 +370,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.$watch('currentPageTasaCargas', function(){
 		if ($scope.flagWatch){
 			$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
-			invoiceFactory.getSinTasaCargas($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.page, function(data){
+			invoiceFactory.getSinTasaCargas(cargaDatos(), loginService.getFiltro(), $scope.page, function(data){
 				if (data.status == "ERROR"){
 					$scope.tasaCargas.titulo = "Error";
 					$scope.tasaCargas.cartel = "panel-danger";

@@ -96,10 +96,10 @@
 									<button type="button" class="btn {{ invoice.estado.btnEstado }} dropdown-toggle">
 										{{ invoice.estado.estado }} <span class="caret"></span>
 									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li class="dropdown-toggle"><a href ng-click="revisarComprobante(invoice)">Revisar</a></li>
-										<li class="dropdown-toggle"><a href ng-click="comprobanteOk(invoice)">OK</a></li>
-										<li class="dropdown-toggle"><a href ng-click="comprobanteError(invoice)">Error</a></li>
+									<ul class="dropdown-menu dropdown-toggle" role="menu">
+										<li><a href ng-click="revisarComprobante(invoice)">Revisar</a></li>
+										<li><a href ng-click="comprobanteOk(invoice)">OK</a></li>
+										<li><a href ng-click="comprobanteError(invoice)">Error</a></li>
 									</ul>
 								</div>
 							</td>
