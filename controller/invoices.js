@@ -20,6 +20,11 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		'codigo': $scope.codigo
 	};
 
+	$scope.invoiceEstado = {
+		'estado': 'Revisar',
+		'btnEstado': 'btn-info'
+	};
+
 	$scope.comprobantesVistos = [];
 
 	$scope.nombre = loginService.getFiltro();
@@ -78,6 +83,9 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
+				$scope.invoices.forEach(function(comprobante){
+					comprobante.estado = $scope.invoiceEstado;
+				});
 				$scope.totalItems = data.totalCount;
 			}
 		});
@@ -131,5 +139,29 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	}
 
 	$scope.cargaFacturas();
+
+	$scope.revisarComprobante = function(comprobante){
+		comprobante.estado = {
+			'estado': 'Revisar',
+			'btnEstado': 'btn-info'
+		};
+		$scope.status.isopen = false;
+	};
+
+	$scope.comprobanteOk = function(comprobante){
+		comprobante.estado = {
+			'estado': 'Ok',
+			'btnEstado': 'btn-success'
+		};
+		$scope.status.isopen = false;
+	};
+
+	$scope.comprobanteError = function(comprobante){
+		comprobante.estado = {
+			'estado': 'Error',
+			'btnEstado': 'btn-danger'
+		};
+		$scope.status.isopen = false;
+	};
 
 }
