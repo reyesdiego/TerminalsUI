@@ -10,6 +10,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.fechaHasta.setDate($scope.fechaHasta.getDate() + 1);
 
 	$scope.model = {
+		'nroPtoVenta': $scope.nroPtoVenta,
 		'codTipoComprob': $scope.codTipoComprob,
 		'nroComprobante': $scope.nroComprobante,
 		'razonSocial': $scope.razonSocial,
@@ -30,6 +31,10 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.nombre = loginService.getFiltro();
 
 	$scope.filtrar = {
+		nroPtoVenta : function(filtro){
+			$scope.model.nroPtoVenta = filtro;
+			$scope.cargaFacturas();
+		},
 		codigo : function(filtro){
 			$scope.model.codigo = filtro;
 			$scope.cargaFacturas();
@@ -127,6 +132,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 
 	function cargaDatos(){
 		return {
+			'nroPtoVenta': $scope.model.nroPtoVenta,
 			'codTipoComprob': $scope.model.codTipoComprob,
 			'nroComprobante': $scope.model.nroComprobante,
 			'razonSocial': $scope.model.razonSocial,
@@ -145,7 +151,6 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 			'estado': 'Revisar',
 			'btnEstado': 'btn-warning'
 		};
-		$scope.status.isopen = false;
 	};
 
 	$scope.comprobanteOk = function(comprobante){
@@ -153,7 +158,6 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 			'estado': 'Ok',
 			'btnEstado': 'btn-success'
 		};
-		$scope.status.isopen = false;
 	};
 
 	$scope.comprobanteError = function(comprobante){
@@ -161,7 +165,6 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 			'estado': 'Error',
 			'btnEstado': 'btn-danger'
 		};
-		$scope.status.isopen = false;
 	};
 
 }

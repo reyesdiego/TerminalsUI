@@ -35,23 +35,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
-	factory.getByDate = function(desde, hasta, terminal, tipoComprobante, callback) {
-//		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
-		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + '0' + '/' + '10' + '?';
-
-		$http({
-			method: 'GET',
-			url: inserturl + 'codTipoComprob=' + tipoComprobante,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-				callback(factory.ponerDescripcionComprobantes(data));
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista de comprobantes');
-			});
-	};
-
 	factory.getSinTasaCargas = function(datos, terminal, page, callback){
 		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
@@ -73,15 +56,25 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 	};
 
-	factory.getTarifasTerminal = function(terminal, callback){
-		//var inserturl = serverUrl + '/invoices/algo/' + terminal;
-		$http.get('mocks/tarifasTerminal.json')
-			.success(function(data){
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al traer los datos de las tarifas');
-			});
+	factory.getTarifasTerminal = function(callback){
+		var inserturl = serverUrl + '/priceMatches/' + loginService.getFiltro();
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			console.log(data);
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			if (errorText.status === 'ERROR'){
+				callback(errorText);
+				//dialogs.error('Error', errorText.data);
+			} else {
+				dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
+			}
+		});
 	};
 
 	factory.getInvoicesNoMatches = function(datos, page, callback){
@@ -127,6 +120,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.aplicarFiltros = function(unaUrl, datos){
 		var insertAux = unaUrl;
+		if (angular.isDefined(datos.nroPtoVenta) && datos.nroPtoVenta != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'nroPtoVenta=' + datos.nroPtoVenta;
+		}
 		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'contenedor=' + datos.contenedor.toUpperCase();

@@ -83,7 +83,7 @@
 						</thead>
 						<tbody>
 						<tr ng-repeat="invoice in invoices">
-							<td style="text-align: right">{{ invoice.nroPtoVenta }}</td>
+							<td style="text-align: right"><a href ng-click="filtrar.nroPtoVenta(invoice.nroPtoVenta)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroPtoVenta }}</td>
 							<td><a href ng-click="filtrar.codComprobante(invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
 							<td style="text-align: right"><a href ng-click="filtrar.nroComprobante(invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
 							<td><a href ng-click="filtrar.razonSocial(invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
