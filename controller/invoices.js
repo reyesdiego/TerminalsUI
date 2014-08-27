@@ -36,41 +36,45 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.filtrar = {
 		nroPtoVenta : function(filtro){
 			$scope.model.nroPtoVenta = filtro;
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		codigo : function(filtro){
 			$scope.model.codigo = filtro;
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		codComprobante : function(filtro){
 			$scope.model.codTipoComprob = filtro;
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		nroComprobante : function(filtro){
 			$scope.model.nroComprobante = filtro;
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		razonSocial : function(filtro){
 			$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		documentoCliente : function(filtro){
 			$scope.model.documentoCliente = filtro;
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		fechaDesde : function(filtro){
 			$scope.model.fechaDesde = filtro;
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		fechaHasta : function(filtro){
 			$scope.model.fechaHasta = filtro;
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		contenedor : function(filtro){
 			$scope.model.contenedor = filtro;
-			$scope.cargaFacturas();
+			$scope.filtrar.cargar();
 		},
 		cargar: function(){
+			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+			}
 			$scope.cargaFacturas();
 		}
 	};

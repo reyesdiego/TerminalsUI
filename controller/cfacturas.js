@@ -168,6 +168,10 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 			$scope.filtrar.cargar();
 		},
 		cargar : function(){
+			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+			}
 			switch ($scope.controlFiltros){
 				case 'codigos':
 					$scope.controlDeCodigos();
