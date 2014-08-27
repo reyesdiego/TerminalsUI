@@ -7,6 +7,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -21,13 +22,14 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.getDescriptionItem = function(callback){
-		var inserturl = serverUrl + '/matches/' + loginService.getFiltro();
+		var inserturl = serverUrl + '/matches/' + loginService.getFiltro() + '/description';
 		$http({
 			method: 'GET',
 			url: inserturl,
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
+			console.log(data);
 			callback(data);
 		}).error(function(errorText) {
 			console.log(errorText);
@@ -57,7 +59,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.getTarifasTerminal = function(callback){
-		var inserturl = serverUrl + '/priceMatches/' + loginService.getFiltro();
+		var inserturl = serverUrl + '/matches/' + loginService.getFiltro() + '/prices';
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -79,6 +81,27 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getInvoicesNoMatches = function(datos, page, callback){
 		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
+		inserturl = this.aplicarFiltros(inserturl, datos);
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			if (errorText.status === 'ERROR'){
+				callback(errorText);
+				//dialogs.error('Error', errorText.data);
+			} else {
+				dialogs.error('Error', 'Error en la carga de comprobantes sin códigos asociados.');
+			}
+		});
+	};
+
+	factory.getCorrelative = function(datos, callback){
+		var inserturl = serverUrl + '/invoices/correlative/' + loginService.getFiltro() + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
 		$http({
 			method: "GET",

@@ -27,7 +27,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	$scope.controlFiltros = 'tasas';
 
-	$scope.terminoCarga = false;
 	$scope.dateOptions = {
 		'startingDay': 0,
 		'showWeeks': false
@@ -52,6 +51,18 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.pageFiltros = {
 		skip:0,
 		limit: $scope.itemsPerPage
+	};
+
+	$scope.currentPageTarifas = 1;
+	$scope.totalItemsTarifas = 0;
+	$scope.pageTarifas = {
+		skip:0,
+		limit: $scope.itemsPerPage
+	};
+
+	$scope.pageCorrelativo = {
+		skip:0,
+		limit:1
 	};
 
 	$scope.pantalla = {
@@ -161,7 +172,10 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 				case 'tasas':
 					$scope.controlTasaCargas();
 					break;
-			};
+				case 'correlativo':
+					$scope.controlCorrelatividad();
+					break;
+			}
 		}
 	};
 
@@ -253,13 +267,29 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		});
 	};
 
-	$scope.cargar = function(){
+	$scope.controlCorrelatividad = function(){
+		$scope.model.codTipoComprob = 1;
+		$scope.model.nroPtoVenta = 25;
+		invoiceFactory.getCorrelative(cargaDatos(), function(dataComprob) {
+			console.log(dataComprob);
+			$scope.result = dataComprob;
+			if ($scope.result.totalCount > 0){
+				$scope.pantalla.mensajeCorrelativo = "Se hallaron facturas faltantes: ";
+				$scope.pantalla.cartelCorrelativo = "panel-danger";
+				$scope.pantalla.tituloCorrelativo = "Error";
+				$scope.pantalla.resultadoCorrelativo = $scope.result.data;
+			}
+		});
+	};
+
+	$scope.controlTarifas = function(){
 		//Traigo todos los códigos de la terminal y me los guardo
 
-		invoiceFactory.getTarifasTerminal(loginService.getFiltro(), function(dataTarifas){
-			$scope.tarifasTerminal = dataTarifas;
+		invoiceFactory.getTarifasTerminal(function(dataTarifas){
+			$scope.tarifasTerminal = dataTarifas.data;
 
-				invoiceFactory.getByDate($scope.desde, $scope.hasta, loginService.getFiltro(), $scope.tipoComprobante, function(dataComprob) {
+				invoiceFactory.getInvoice(cargaDatos(), $scope.pageTarifas, function(dataComprob) {
+					console.log(dataComprob);
 					$scope.result = dataComprob;
 					$scope.totalFacturas= $scope.result.data.length;
 
@@ -274,29 +304,24 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 					//comprobante sea el correcto...
 					$scope.result.data.forEach(function(comprob){
 						comprob.tarifasMalCobradas = [];
-						contador+=1;
-						if ($scope.control == 0) {
-							$scope.control = comprob.nroComprob;
-						} else {
-							$scope.control += 1;
-							if ($scope.control != comprob.nroComprob){
-								$scope.pantalla.resultadoCorrelativo.push($scope.control);
-								$scope.control = comprob.nroComprob;
-								$scope.pantalla.mensajeCorrelativo = "Se hallaron facturas faltantes: ";
-								$scope.pantalla.cartelCorrelativo = "panel-danger";
-								$scope.pantalla.tituloCorrelativo = "Error";
-								$scope.pantalla.totalFaltantes += 1;
-							}
-						}
 
 						/*Aca control de tarifas*/
+						var tarifa;
+						console.log('Comprobante número: ' + comprob.nroComprob);
 						comprob.detalle.forEach(function(detalle){
 							detalle.items.forEach(function(item){
-
+								console.log(item.id);
 								if (angular.isDefined($scope.tarifasTerminal[item.id])){
-									tarifa = $scope.tarifasTerminal[item.id] * item.cnt;
-
+									tarifa = $scope.tarifasTerminal[item.id].price * item.cnt;
+									if (comprob.codMoneda == 'PES' && $scope.tarifasTerminal[item.id].currency == 'DOL'){
+										tarifa = tarifa * comprob.cotiMoneda;
+									}
+									if (comprob.codMoneda == 'DOL' && $scope.tarifasTerminal[item.id].currency == 'PES'){
+										tarifa = tarifa / comprob.cotiMoneda;
+									}
+									console.log('La tarifa tope es:' + tarifa);
 									if (tarifa < item.impTot){
+										console.log('La tarifa cobrada es:' + item.impTot);
 										$scope.pantalla.mensajeTarifas = "Se hallaron tarifas mal cobradas";
 										$scope.pantalla.cartelTarifas = "panel-danger";
 										$scope.pantalla.tituloTarifas = "Error";
@@ -305,22 +330,20 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 										flagErrorTarifas = true;
 									}
 								}
-							})
+							});
 						});
-
 						if (flagErrorTarifas){
 							$scope.pantalla.comprobantesMalCobrados.push(comprob);
 						}
-
 					});
 				});
-			$scope.terminoCarga = true;
 		});
 	};
 
-	$scope.controlDeCodigos();
+	//$scope.controlDeCodigos();
 	$scope.controlTasaCargas();
-	$scope.cargar();
+	//$scope.controlCorrelatividad();
+	//$scope.controlTarifas();
 
 	$scope.mostrarDetalle = function(comprobante){
 		var encontrado = false;
@@ -426,6 +449,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 			case 'tasas':
 				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta'];
 				break;
+			case 'correlativo':
+				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+				break;
 		}
 		$scope.model = {
 			'codTipoComprob': '',
@@ -440,6 +466,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	function cargaDatos(){
 		return {
+			'nroPtoVenta': $scope.model.nroPtoVenta,
 			'codigo': $scope.model.codigo,
 			'codTipoComprob': $scope.model.codTipoComprob,
 			'nroComprobante': $scope.model.nroComprobante,
