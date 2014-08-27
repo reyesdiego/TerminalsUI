@@ -7,11 +7,15 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	// Fecha (dia y hora)
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
+	$scope.maxDateD = new Date();
+	$scope.maxDateH = new Date();
+	$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
 
 	$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta'];
 
 	$scope.model = {
-		'codTipoComprob': '',
+		'nroPtoVenta': '',
+		'codTipoComprob': 0,
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
@@ -66,9 +70,9 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.pantalla = {
-		"tituloCorrelativo":  "Éxito",
-		"mensajeCorrelativo": "No se hallaron facturas faltantes",
-		"cartelCorrelativo": "panel-success",
+		"tituloCorrelativo":  "Correlatividad",
+		"mensajeCorrelativo": "Seleccione punto de venta y tipo de comprobante para realizar la búsqueda",
+		"cartelCorrelativo": "panel-info",
 		"resultadoCorrelativo": [],
 		"tituloCodigos": "Éxito",
 		"mensajeCodigos": "No se hallaron códigos sin asociar",
@@ -90,12 +94,12 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.tasaCargas = {
 		"titulo":"Éxito",
 		"cartel": "panel-success",
-		"mensaje": "No se hallaron facturas sin tasa a las cargas.",
+		"mensaje": "No se hallaron comprobantes sin tasa a las cargas.",
 		"resultado": [],
 		"mostrarResultado": 0
 	};
 
-	$scope.loadingControlCodigos = true;
+	$scope.loadingControlCodigos = false;
 	$scope.cargandoPaginaComprobantes = true;
 	$scope.anteriorCargaCodigos = [];
 
@@ -103,8 +107,13 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.comprobantesVistosCodigos = [];
 
 	$scope.loadingTasaCargas = true;
+	$scope.loadingCorrelatividad = false;
 
 	$scope.filtrar = {
+		nroPtoVenta : function(filtro){
+			$scope.model.nroPtoVenta = filtro;
+			$scope.filtrar.cargar();
+		},
 		codigo : function(filtro){
 			if (angular.isDefined(filtro) && filtro != ''){
 				if ($scope.controlFiltros == 'codigos'){
@@ -173,7 +182,11 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 					$scope.controlTasaCargas();
 					break;
 				case 'correlativo':
-					$scope.controlCorrelatividad();
+					console.log($scope.model.nroPtoVenta);
+					console.log($scope.model.codTipoComprob);
+					if ($scope.model.nroPtoVenta != '' && $scope.model.codTipoComprob != ''){
+						$scope.controlCorrelatividad();
+					}
 					break;
 			}
 		}
@@ -259,8 +272,16 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 					$scope.totalItemsTasaCargas = data.totalCount;
 					$scope.tasaCargas.titulo = "Error";
 					$scope.tasaCargas.cartel = "panel-danger";
-					$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
+					$scope.tasaCargas.mensaje = "Se hallaron comprobantes sin tasa a las cargas.";
 					$scope.tasaCargas.mostrarResultado = 1;
+				} else {
+					$scope.tasaCargas = {
+						"titulo":"Éxito",
+						"cartel": "panel-success",
+						"mensaje": "No se hallaron comprobantes sin tasa a las cargas.",
+						"resultado": [],
+						"mostrarResultado": 0
+					};
 				}
 			}
 			$scope.loadingTasaCargas = false;
@@ -268,17 +289,24 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.controlCorrelatividad = function(){
+		$scope.loadingCorrelatividad = true;
 		$scope.model.codTipoComprob = 1;
 		$scope.model.nroPtoVenta = 25;
 		invoiceFactory.getCorrelative(cargaDatos(), function(dataComprob) {
 			console.log(dataComprob);
 			$scope.result = dataComprob;
 			if ($scope.result.totalCount > 0){
-				$scope.pantalla.mensajeCorrelativo = "Se hallaron facturas faltantes: ";
+				$scope.pantalla.mensajeCorrelativo = "Se hallaron comprobantes faltantes: ";
 				$scope.pantalla.cartelCorrelativo = "panel-danger";
 				$scope.pantalla.tituloCorrelativo = "Error";
 				$scope.pantalla.resultadoCorrelativo = $scope.result.data;
+			} else {
+				$scope.pantalla.tituloCorrelativo =  "Éxito";
+				$scope.pantalla.mensajeCorrelativo = "No se hallaron comprobantes faltantes";
+				$scope.pantalla.cartelCorrelativo = "panel-success";
+				$scope.pantalla.resultadoCorrelativo = [];
 			}
+			$scope.loadingCorrelatividad = false;
 		});
 	};
 
@@ -340,7 +368,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		});
 	};
 
-	//$scope.controlDeCodigos();
+	$scope.controlDeCodigos();
 	$scope.controlTasaCargas();
 	//$scope.controlCorrelatividad();
 	//$scope.controlTarifas();
@@ -405,7 +433,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 						$scope.totalItemsTasaCargas = data.totalCount;
 						$scope.tasaCargas.titulo = "Error";
 						$scope.tasaCargas.cartel = "panel-danger";
-						$scope.tasaCargas.mensaje = "Se hallaron facturas sin tasa a las cargas.";
+						$scope.tasaCargas.mensaje = "Se hallaron comprobantes sin tasa a las cargas.";
 						$scope.tasaCargas.mostrarResultado = 1;
 					}
 				}
@@ -445,16 +473,20 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		switch ($scope.controlFiltros){
 			case 'codigos':
 				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+				$scope.model.codTipoComprob = 0;
 				break;
 			case 'tasas':
 				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta'];
+				$scope.model.codTipoComprob = 0;
 				break;
 			case 'correlativo':
 				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+				$scope.model.codTipoComprob = 1;
 				break;
 		}
 		$scope.model = {
-			'codTipoComprob': '',
+			'nroPtoVenta': '',
+			'codTipoComprob': 0,
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
