@@ -10,17 +10,19 @@
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.nroPtoVenta();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0">
+				<div class="input-group">
+					<select class="form-control" ng-model="model.codTipoComprob" ng-init="model.codTipoComprob=0">
+						<option value="0" disabled>Seleccionar Comprobante</option>
+						<option ng-repeat="comprobantes in vouchers" value="{{ comprobantes._id }}">{{ comprobantes.description }}</option>
+					</select>
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.codComprobante(0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+				</div>
+			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0">
 				<div class="input-group">
 					<input type="text" ng-keyup="hitEnter($event)" ng-model="model.nroComprobante" class="form-control" placeholder="N° Comprobante"/>
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.nroComprobante();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-				</div>
-			</div>
-			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0">
-				<div class="input-group">
-					<input type="text" ng-model="vouchersType[model.codTipoComprob]" class="form-control" placeholder="Tipo Comprobante" toupper disabled/>
-					<input type="hidden" ng-model="model.codTipoComprob" class="form-control"/>
-					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.codComprobante();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
