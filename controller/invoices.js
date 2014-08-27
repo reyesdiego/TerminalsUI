@@ -8,6 +8,9 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.fechaDesde = new Date();
 	$scope.fechaHasta = new Date();
 	$scope.fechaHasta.setDate($scope.fechaHasta.getDate() + 1);
+	$scope.maxDateD = new Date();
+	$scope.maxDateH = new Date();
+	$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
 
 	$scope.model = {
 		'nroPtoVenta': $scope.nroPtoVenta,
