@@ -22,7 +22,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.getDescriptionItem = function(callback){
-		var inserturl = serverUrl + '/matches/' + loginService.getFiltro() + '/description';
+		var inserturl = serverUrl + '/matches/' + loginService.getFiltro();
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -59,7 +59,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.getTarifasTerminal = function(callback){
-		var inserturl = serverUrl + '/matches/' + loginService.getFiltro() + '/prices';
+		var inserturl = serverUrl + '/matches/' + loginService.getFiltro() + '?type=prices';
 		$http({
 			method: "GET",
 			url: inserturl,
