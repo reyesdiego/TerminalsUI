@@ -242,6 +242,10 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 		$rootScope.vouchersType = data.data;
 	});
 
+	vouchersFactory.getVouchersType(function(data){
+		$rootScope.vouchers = data.data;
+	});
+
 	$rootScope.switchTheme = function(title){
 		var i, a;
 		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
