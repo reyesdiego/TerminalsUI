@@ -223,6 +223,17 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 		$event.preventDefault();
 		$event.stopPropagation();
 	};
+
+	$rootScope.filtrarOrden = function(filtro){
+		$rootScope.filtroOrden = filtro;
+		if ($rootScope.filtroOrden == $rootScope.filtroAnterior){
+			$rootScope.filtroOrdenReverse = !$rootScope.filtroOrdenReverse;
+		} else {
+			$rootScope.filtroOrdenReverse = false;
+		}
+		$rootScope.filtroAnterior = filtro;
+	};
+
 	$rootScope.isDefined = function(element){
 		return angular.isDefined(element);
 	};
@@ -265,6 +276,7 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 		} else {
 			$rootScope.verificaRutas(event, toState);
 		}
+		$rootScope.filtroOrden = '';
 	});
 
 	$rootScope.verificaRutas = function(event, toState){

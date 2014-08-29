@@ -76,17 +76,53 @@
 						<table ng-show="tasaCargas.mostrarResultado" class="table table-striped table-bordered table-hover">
 							<thead>
 							<tr>
-								<th class="col-lg-1 text-right">Pto. Venta</th>
-								<th>Comprobante</th>
-								<th class="col-lg-1 text-right">Nro</th>
-								<th>Razon Social</th>
-								<th class="text-center">Fecha</th>
-								<th class="text-right">Importe Total</th>
+								<th class="text-right">
+									<a href ng-click="filtrarOrden('nroPtoVenta')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
+										 Pto. Venta
+									</a>
+								</th>
+								<th>
+									<a href ng-click="filtrarOrden('codTipoComprob')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
+										 Comprobante
+									</a>
+								</th>
+								<th style="text-align: right" class="col-lg-1">
+									<a href ng-click="filtrarOrden('nroComprob')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
+										 Nro
+									</a>
+								</th>
+								<th>
+									<a href ng-click="filtrarOrden('razon')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
+										 Razón Social
+									</a>
+								</th>
+								<th style="text-align: center">
+									<a href ng-click="filtrarOrden('fecha.emision')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
+										 Fecha
+									</a>
+								</th>
+								<th style="text-align: right">
+									<a href ng-click="filtrarOrden('importe.total')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
+										 Importe Total
+									</a>
+								</th>
 								<th class="col-lg-1 text-center">Detalles</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr ng-repeat="factura in tasaCargas.resultado">
+							<tr ng-repeat="factura in tasaCargas.resultado | orderBy: filtroOrden : reverse=filtroOrdenReverse">
 								<td class="text-right">{{ factura.nroPtoVenta }}</td>
 								<td>{{ vouchersType[factura.codTipoComprob] }}</td>
 								<td class="text-right"></a> {{ factura.nroComprob }}</td>
@@ -196,16 +232,46 @@
 						<table ng-show="pantalla.mostrarResultado && !cargandoPaginaComprobantes" class="table table-striped table-bordered table-hover">
 							<thead>
 							<tr>
-								<th class="col-lg-1 text-right">Pto. Venta</th>
-								<th class="col-lg-1 text-right">Nro</th>
-								<th>Razon Social</th>
-								<th class="text-center">Fecha</th>
-								<th class="text-right">Importe Total</th>
+								<th style="text-align: right">
+									<a href ng-click="filtrarOrden('nroPtoVenta')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
+										Pto. Venta
+									</a>
+								</th>
+								<th style="text-align: right" class="col-lg-1">
+									<a href ng-click="filtrarOrden('nroComprob')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
+										Nro
+									</a>
+								</th>
+								<th>
+									<a href ng-click="filtrarOrden('razon')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
+										Razón Social
+									</a>
+								</th>
+								<th style="text-align: center">
+									<a href ng-click="filtrarOrden('fecha.emision')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
+										Fecha
+									</a>
+								</th>
+								<th style="text-align: right">
+									<a href ng-click="filtrarOrden('importe.total')">
+										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
+										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
+										Importe Total
+									</a>
+								</th>
 								<th class="col-lg-1 text-center">Detalles</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr ng-repeat="comprobante in pantalla.comprobantesRotos">
+							<tr ng-repeat="comprobante in pantalla.comprobantesRotos | orderBy: filtroOrden : reverse=filtroOrdenReverse">
 								<td class="text-right"><a href ng-click="filtrar.nroPtoVenta(comprobante.nroPtoVenta)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.nroPtoVenta }}</td>
 								<td class="text-right"><a href ng-click="filtrar.nroComprobante(comprobante.nroComprob)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.nroComprob }}</td>
 								<td class="text-left"><a href ng-click="filtrar.razonSocial(comprobante.razon)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.razon }}</td>
