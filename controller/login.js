@@ -3,7 +3,7 @@
  */
 function loginCtrl($scope, $state, loginService, authFactory){
 	'use strict';
-
+	$scope.sesion = false;
 	if (loginService.getStatus()){
 		$state.transitionTo('tarifario');
 	}

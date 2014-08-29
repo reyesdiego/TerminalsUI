@@ -32,13 +32,17 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.tarifaEditando = '';
 	$scope.flagEditando = false;
 	$scope.volviendoEditar = false;
+	$scope.codigosConMatch = [];
+	$scope.conMatch = false;
 
 	$scope.prepararDatos = function(){
 		priceFactory.getMatchPrices(loginService.getFiltro(), null, function (data) {
 			$scope.pricelist = data.data;
+			$scope.listaSeleccionada = $scope.pricelist;
 			//Cargo todos los códigos ya asociados de la terminal para control
 			$scope.pricelist.forEach(function(price){
 				if (price.matches != null && price.matches.length > 0){
+					$scope.codigosConMatch.push(price);
 					price.matches[0].match.forEach(function(codigo){
 						$scope.matchesTerminal.push(codigo);
 					})
@@ -74,6 +78,15 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			$scope.totalItems = $scope.pricelist.length;
 			$scope.itemsPerPage = 10;
 		}
+	});
+
+	$scope.$watch('conMatch', function(){
+		if ($scope.conMatch){
+			$scope.listaSeleccionada = $scope.codigosConMatch;
+		} else {
+			$scope.listaSeleccionada = $scope.pricelist;
+		}
+		$scope.totalItems = $scope.listaSeleccionada.length;
 	});
 
 	$scope.agregarCodigo = function(price){
