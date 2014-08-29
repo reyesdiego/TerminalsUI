@@ -9,9 +9,7 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	$scope.fechaHasta = new Date();
 	$scope.fechaDesde.setHours(0,0);
 	$scope.fechaHasta.setMinutes(0);
-	$scope.maxDateD = new Date();
-	$scope.maxDateH = new Date();
-	$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
+	$scope.maxDate = new Date();
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.gates = {};

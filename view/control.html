@@ -82,7 +82,7 @@
 			</p>
 			<div collapse="isCollapsedDayTasas">
 				<div class="well well-lg">
-					<datepicker ng-model="desdeTasas" show-weeks="false" ng-change="traerDatosFacturadoDiaTasas()"></datepicker>
+					<datepicker ng-model="desdeTasas" show-weeks="false" ng-change="traerDatosFacturadoDiaTasas()" max-date="maxDate"></datepicker>
 				</div>
 			</div>
 			<div collapse="!isCollapsedDayTasas">
@@ -120,7 +120,7 @@
 			</p>
 			<div collapse="isCollapsedDay">
 				<div class="well well-lg">
-					<datepicker ng-model="desde" show-weeks="false" ng-change="traerDatosFacturadoDia()"></datepicker>
+					<datepicker ng-model="desde" show-weeks="false" ng-change="traerDatosFacturadoDia()" max-date="maxDate"></datepicker>
 				</div>
 			</div>
 			<div collapse="!isCollapsedDay">
@@ -162,7 +162,7 @@
 			</p>
 			<div collapse="isCollapsedMonth">
 				<div class="well well-lg">
-					<datepicker ng-model="mesDesde" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosFacturadoMes()"></datepicker>
+					<datepicker ng-model="mesDesde" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosFacturadoMes()" max-date="maxDate"></datepicker>
 				</div>
 			</div>
 			<div collapse="!isCollapsedMonth">
@@ -202,7 +202,7 @@
 			</p>
 			<div collapse="isCollapsedGates">
 				<div class="well well-lg">
-					<datepicker ng-model="mesDesdeGates" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosGates()"></datepicker>
+					<datepicker ng-model="mesDesdeGates" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosGates()" max-date="maxDate"></datepicker>
 				</div>
 			</div>
 			<div collapse="!isCollapsedGates">
@@ -241,7 +241,7 @@
 			</p>
 			<div collapse="isCollapsedTurnos">
 				<div class="well well-lg">
-					<datepicker ng-model="mesDesdeTurnos" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosTurnos()"></datepicker>
+					<datepicker ng-model="mesDesdeTurnos" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosTurnos()" max-date="maxDateTurnos"></datepicker>
 				</div>
 			</div>
 			<div collapse="!isCollapsedTurnos">
@@ -282,7 +282,7 @@
 			</p>
 			<div collapse="isCollapsedDayGatesTurnos">
 				<div class="well well-lg">
-					<datepicker ng-model="diaGatesTurnos" show-weeks="false" ng-change="traerDatosGatesTurnosDia()"></datepicker>
+					<datepicker ng-model="diaGatesTurnos" show-weeks="false" ng-change="traerDatosGatesTurnosDia()" max-date="maxDateGatesTurnos"></datepicker>
 				</div>
 			</div>
 		</div>

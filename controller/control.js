@@ -75,10 +75,13 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
 	$scope.desdeTasas = new Date();
-	$scope.mesDesde = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth() + 1), '01' );
-	$scope.mesDesdeGates = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth() + 1), '01' );
-	$scope.mesDesdeTurnos = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth() + 1), '01' );
+	$scope.mesDesde = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth()), '01' );
+	$scope.mesDesdeGates = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth()), '01' );
+	$scope.mesDesdeTurnos = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth()), '01' );
 	$scope.diaGatesTurnos = new Date();
+	$scope.maxDate = new Date();
+	$scope.maxDateTurnos = new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 1), '01' );
+	$scope.maxDateGatesTurnos = new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 2), 0 );
 
 	$scope.monthMode = 'month';
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
