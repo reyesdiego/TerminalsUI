@@ -4,7 +4,6 @@
 
 function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService, authFactory){
 	"use strict";
-
 	$rootScope.esUsuario = '';
 	$rootScope.terminal = '';
 	$scope.acceso = '';
