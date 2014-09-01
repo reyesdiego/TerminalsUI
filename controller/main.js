@@ -159,9 +159,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 });
 
-myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, authFactory){
+myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, authFactory, dialogs){
 	"use strict";
-
 	// Carga la sesion por cookies
 	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
 		authFactory.login().then(function(){
@@ -224,6 +223,17 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 		$event.preventDefault();
 		$event.stopPropagation();
 	};
+
+	$rootScope.filtrarOrden = function(filtro){
+		$rootScope.filtroOrden = filtro;
+		if ($rootScope.filtroOrden == $rootScope.filtroAnterior){
+			$rootScope.filtroOrdenReverse = !$rootScope.filtroOrdenReverse;
+		} else {
+			$rootScope.filtroOrdenReverse = false;
+		}
+		$rootScope.filtroAnterior = filtro;
+	};
+
 	$rootScope.isDefined = function(element){
 		return angular.isDefined(element);
 	};
@@ -256,6 +266,9 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 	};
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
+		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
+			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
+		}
 		if (!loginService.getStatus() && authFactory.userEstaLogeado()){
 			authFactory.login().then(function(){
 				$rootScope.verificaRutas(event, toState);
@@ -263,6 +276,7 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 		} else {
 			$rootScope.verificaRutas(event, toState);
 		}
+		$rootScope.filtroOrden = '';
 	});
 
 	$rootScope.verificaRutas = function(event, toState){

@@ -4,6 +4,8 @@
 
 var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, loginService){
 
+	$scope.maxDate = new Date();
+
 	vouchersFactory.getVouchersType(function(data){
 		$scope.comprobantesTipos = data.data;
 	});

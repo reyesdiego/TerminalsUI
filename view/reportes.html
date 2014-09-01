@@ -24,7 +24,7 @@
 							</p>
 							<div collapse="isCollapsedDesde">
 								<div>
-									<datepicker ng-model="$parent.desde" show-weeks="false" ng-change="isCollapsedDesde = !isCollapsedDesde"></datepicker>
+									<datepicker ng-model="$parent.desde" show-weeks="false" ng-change="isCollapsedDesde = !isCollapsedDesde" max-date="maxDate"></datepicker>
 								</div>
 							</div>
 						</div>
@@ -38,7 +38,7 @@
 							</p>
 							<div collapse="isCollapsedHasta">
 								<div>
-									<datepicker ng-model="$parent.hasta" show-weeks="false" ng-change="isCollapsedHasta = !isCollapsedHasta"></datepicker>
+									<datepicker ng-model="$parent.hasta" show-weeks="false" ng-change="isCollapsedHasta = !isCollapsedHasta" max-date="maxDate"></datepicker>
 								</div>
 							</div>
 						</div>
