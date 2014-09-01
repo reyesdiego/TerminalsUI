@@ -224,16 +224,6 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 		$event.stopPropagation();
 	};
 
-	$rootScope.filtrarOrden = function(filtro){
-		$rootScope.filtroOrden = filtro;
-		if ($rootScope.filtroOrden == $rootScope.filtroAnterior){
-			$rootScope.filtroOrdenReverse = !$rootScope.filtroOrdenReverse;
-		} else {
-			$rootScope.filtroOrdenReverse = false;
-		}
-		$rootScope.filtroAnterior = filtro;
-	};
-
 	$rootScope.isDefined = function(element){
 		return angular.isDefined(element);
 	};
