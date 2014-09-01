@@ -148,6 +148,17 @@
 					</div>
 				</div>
 
+				<div class="col-lg-12">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">Puntos de venta de la terminal seleccionada</h3>
+						</div>
+						<div class="panel-body">
+							<span ng-repeat="numero in terminalSellPoints"><a href ng-click="filtrar.nroPtoVenta(numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
+						</div>
+					</div>
+				</div>
+
 				<div class="col-lg-12 text-center" ng-show="loadingCorrelatividad">
 					<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 				</div>

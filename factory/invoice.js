@@ -201,6 +201,20 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		return data;
 	};
 
+	factory.getSellPoints = function(callback){
+		var inserturl = serverUrl + '/invoices/sellPoints/' + loginService.getFiltro();
+		console.log(inserturl);
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers: { token: loginService.getToken() }
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al cargar la lista');
+		});
+	};
+
 	return factory;
 
 });
