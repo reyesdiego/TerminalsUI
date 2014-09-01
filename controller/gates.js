@@ -23,7 +23,26 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		'fechaDesde': $scope.fechaDesde,
 		'fechaHasta': $scope.fechaHasta,
 		'contenedor': $scope.contenedor,
-		'codigo': $scope.codigo
+		'codigo': $scope.codigo,
+		'order': ''
+	};
+
+	$scope.filtrarOrden = function(filtro){
+		var filtroModo;
+		$scope.filtroOrden = filtro;
+		if ($scope.filtroOrden == $scope.filtroAnterior){
+			$scope.filtroOrdenReverse = !$scope.filtroOrdenReverse;
+		} else {
+			$scope.filtroOrdenReverse = false;
+		}
+		if ($scope.filtroOrdenReverse){
+			filtroModo = -1;
+		} else {
+			filtroModo = 1;
+		}
+		$scope.model.order = '"' + filtro + '":' + filtroModo;
+		$scope.filtroAnterior = filtro;
+		$scope.filtrar.cargarSinFechas();
 	};
 
 	$scope.filtrar = {
@@ -62,6 +81,9 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		contenedor : function(filtro){
 			$scope.model.contenedor = filtro;
 			$scope.filtrar.cargar();
+		},
+		cargarSinFechas : function () {
+			$scope.cargaFacturasSinFechas();
 		},
 		cargar: function(){
 			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
@@ -117,6 +139,17 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		});
 	};
 
+	$scope.cargaFacturasSinFechas = function(page){
+		page = page || { skip:0, limit: $scope.itemsPerPage };
+		if (page.skip == 0){ $scope.currentPage = 1}
+		invoiceFactory.getInvoice(cargaDatosSinFechas(), page, function(data){
+			if(data.status === 'OK'){
+				$scope.invoices = data.data;
+				$scope.totalItems = data.totalCount;
+			}
+		});
+	};
+
 	$scope.mostrarDetalle = function(comprobante){
 		var encontrado = false;
 		$scope.comprobantesVistos.forEach(function(unComprobante){
@@ -165,7 +198,20 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
 			'contenedor': $scope.model.contenedor,
-			'codigo': $scope.model.codigo
+			'codigo': $scope.model.codigo,
+			'order': $scope.model.order
+		};
+	}
+
+	function cargaDatosSinFechas(){
+		return {
+			'codTipoComprob': $scope.model.codTipoComprob,
+			'nroComprobante': $scope.model.nroComprobante,
+			'razonSocial': $scope.model.razonSocial,
+			'documentoCliente': $scope.model.documentoCliente,
+			'contenedor': $scope.model.contenedor,
+			'codigo': $scope.model.codigo,
+			'order': $scope.model.order
 		};
 	}
 

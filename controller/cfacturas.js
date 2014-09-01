@@ -109,6 +109,24 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.loadingTasaCargas = true;
 	$scope.loadingCorrelatividad = false;
 
+	$scope.filtrarOrden = function(filtro){
+		var filtroModo;
+		$scope.filtroOrden = filtro;
+		if ($scope.filtroOrden == $scope.filtroAnterior){
+			$scope.filtroOrdenReverse = !$scope.filtroOrdenReverse;
+		} else {
+			$scope.filtroOrdenReverse = false;
+		}
+		if ($scope.filtroOrdenReverse){
+			filtroModo = -1;
+		} else {
+			filtroModo = 1;
+		}
+		$scope.model.order = '"' + filtro + '":' + filtroModo;
+		$scope.filtroAnterior = filtro;
+		$scope.filtrar.cargar();
+	};
+
 	$scope.filtrar = {
 		nroPtoVenta : function(filtro){
 			$scope.model.nroPtoVenta = filtro;
@@ -510,7 +528,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 			'documentoCliente': $scope.model.documentoCliente,
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
-			'contenedor': $scope.model.contenedor
+			'contenedor': $scope.model.contenedor,
+			'order': $scope.model.order
 		};
 	};
 

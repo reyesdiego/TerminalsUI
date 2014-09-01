@@ -179,6 +179,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'code=' + datos.codigo;
 		}
+		if(angular.isDefined(datos.order) && datos.order != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'order=' + '[{' + datos.order + '}]';
+		}
 		return unaUrl;
 	};
 

@@ -18,6 +18,10 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'contenedor=' + datos.contenedor.toUpperCase();
 		}
+		if(angular.isDefined(datos.order) && datos.order != ''){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'order=' + '[{' + datos.order + '}]';
+		}
 		$http({
 			method: 'GET',
 			url: inserturl,
