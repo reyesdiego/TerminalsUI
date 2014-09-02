@@ -219,6 +219,21 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
+	factory.cambiarEstado = function(invoiceId, estado, callback){
+		var inserturl = serverUrl + '/invoice/' + invoiceId;
+		console.log(inserturl);
+		$http({
+			method: 'PUT',
+			url: inserturl,
+			dataBody: { 'estado': estado},
+			headers: { token: loginService.getToken() }
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al actualizar el estado del comprobante');
+		});
+	};
+
 	return factory;
 
 });

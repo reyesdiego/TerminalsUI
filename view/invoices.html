@@ -128,8 +128,8 @@
 							<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="$parent.mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 							<td ng-show="acceso=='agp'">
 								<div class="btn-group" dropdown is-open="status.isopen">
-									<button type="button" class="btn {{ invoice.estado.btnEstado }} dropdown-toggle">
-										{{ invoice.estado.estado }} <span class="caret"></span>
+									<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+										{{ invoice.interfazEstado.estado }} <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu dropdown-toggle" role="menu">
 										<li><a href ng-click="revisarComprobante(invoice)">Revisar</a></li>
