@@ -119,6 +119,7 @@
 									</a>
 								</th>
 								<th class="col-lg-1 text-center">Detalles</th>
+								<th ng-show="acceso=='agp'">Estado</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -130,6 +131,18 @@
 								<td class="text-center"></a> {{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(factura.importe.total, factura.codMoneda, factura.cotiMoneda) | currency }}</td>
 								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(factura)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+								<td ng-show="acceso=='agp'">
+									<div class="btn-group" dropdown is-open="status.isopen">
+										<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+											{{ invoice.interfazEstado.estado }} <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-toggle" role="menu">
+											<li><a href ng-click="revisarComprobante(invoice)">Revisar</a></li>
+											<li><a href ng-click="comprobanteOk(invoice)">OK</a></li>
+											<li><a href ng-click="comprobanteError(invoice)">Error</a></li>
+										</ul>
+									</div>
+								</td>
 							</tr>
 							</tbody>
 						</table>

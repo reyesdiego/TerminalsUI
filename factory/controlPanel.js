@@ -62,7 +62,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getFacturasMeses = function(fecha, moneda, callback, errCallBack){
-		var inserturl = serverUrl + '/invoices/countsByMonth/' + moneda + '/?fecha=' + formatDate.formatearFecha(fecha);
+		var inserturl = serverUrl + '/invoices/countsByMonth/' + moneda + '?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
