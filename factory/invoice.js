@@ -120,6 +120,26 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
+	factory.getCashbox = function(datos, callback){
+		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro() + '?';
+		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function(data){
+			data.data.sort(function(a,b){
+				return a - b;
+			});
+			callback(data);
+		}).error(function(errorText){
+			console.log(errorText);
+			dialogs.error('Error', 'Error al cargar los distintos puntos de venta');
+		});
+	};
+
 	factory.invoiceById = function(id, callback){
 		var inserturl = serverUrl + '/invoice/' + id;
 		$http({
