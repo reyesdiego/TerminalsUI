@@ -13,7 +13,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data){
-			callback(factory.ponerDescripcionComprobantes(data));
+			data = factory.ponerDescripcionComprobantes(data);
+			callback(factory.setearInterfaz(data));
 		}).error(function(errorText){
 			console.log(errorText);
 			dialogs.error('Error', 'Error al cargar la lista Invoice');
@@ -220,7 +221,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.cambiarEstado = function(invoiceId, estado, callback){
-		var inserturl = serverUrl + '/invoice/' + invoiceId;
+		var inserturl = serverUrl + '/invoice/' + loginService.getFiltro() + '/' + invoiceId;
 		console.log(inserturl);
 		$http({
 			method: 'PUT',
@@ -232,6 +233,32 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).error(function(errorText){
 			dialogs.error('Error', 'Error al actualizar el estado del comprobante');
 		});
+	};
+
+	factory.setearInterfaz = function(comprobantes){
+		comprobantes.data.forEach(function(comprobante){
+			switch (comprobante.estado){
+				case 'Y':
+					comprobante.interfazEstado = {
+						'estado': 'Revisar',
+						'btnEstado': 'btn-warning'
+					};
+					break;
+				case 'G':
+					comprobante.interfazEstado = {
+						'estado': 'OK',
+						'btnEstado': 'btn-success'
+					};
+					break;
+				case 'R':
+					comprobante.interfazEstado = {
+						'estado': 'Error',
+						'btnEstado': 'btn-danger'
+					};
+					break;
+			}
+		});
+		return comprobantes;
 	};
 
 	return factory;
