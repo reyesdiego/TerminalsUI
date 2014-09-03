@@ -29,7 +29,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
-			console.log(data);
 			callback(data);
 		}).error(function(errorText) {
 			console.log(errorText);
@@ -46,7 +45,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-				callback(factory.ponerDescripcionComprobantes(data));
+				data = factory.ponerDescripcionComprobantes(data)
+				callback(factory.setearInterfaz(data));
 			}).error(function(errorText){
 				console.log(errorText);
 				if (errorText.status === 'ERROR'){
@@ -66,7 +66,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-			console.log(data);
 			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);
@@ -88,6 +87,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
+			console.log(data);
 			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);
@@ -124,7 +124,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getCashbox = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro() + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -226,23 +225,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		return data;
 	};
 
-	factory.getSellPoints = function(callback){
-		var inserturl = serverUrl + '/invoices/sellPoints/' + loginService.getFiltro();
-		console.log(inserturl);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al cargar la lista');
-		});
-	};
-
-	factory.cambiarEstado = function(invoiceId, estado, callback){
-		var inserturl = serverUrl + '/invoice/' + loginService.getFiltro() + '/' + invoiceId;
-		console.log(inserturl);
+	factory.cambiarEstado = function(invoiceId, estado, comentario, callback){
+		//var inserturl = serverUrl + '/invoice/' + loginService.getFiltro() + '/' + invoiceId; el que se tiene que usar
+		var inserturl = serverUrl + '/invoice/' + invoiceId;
 		$http({
 			method: 'PUT',
 			url: inserturl,
