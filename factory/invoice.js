@@ -225,8 +225,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		$http({
 			method: 'PUT',
 			url: inserturl,
-			dataBody: { 'estado': estado},
-			headers: { token: loginService.getToken() }
+			data: { estado: estado},
+			headers: {"Content-Type":"application/x-www-form-urlencoded; charset=utf-8", "token": loginService.getToken() }
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
