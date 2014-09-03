@@ -225,6 +225,35 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		return data;
 	};
 
+	factory.getSellPoints = function(callback){
+		var inserturl = serverUrl + '/invoices/sellPoints/' + loginService.getFiltro();
+		console.log(inserturl);
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers: { token: loginService.getToken() }
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al cargar la lista');
+		});
+	};
+
+	factory.cambiarEstado = function(invoiceId, estado, callback){
+		var inserturl = serverUrl + '/invoice/' + invoiceId;
+		console.log(inserturl);
+		$http({
+			method: 'PUT',
+			url: inserturl,
+			data: { estado: estado},
+			headers: {"Content-Type":"application/x-www-form-urlencoded; charset=utf-8", "token": loginService.getToken() }
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al actualizar el estado del comprobante');
+		});
+	};
+
 	return factory;
 
 });

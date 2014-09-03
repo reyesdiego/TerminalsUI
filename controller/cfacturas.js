@@ -128,6 +128,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.hayFiltros = false;
+	$scope.terminalSellPoints = [];
 
 	$scope.filtrar = {
 		nroPtoVenta : function(filtro){
@@ -314,10 +315,17 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		});
 	};
 
+	$scope.traerPuntosDeVenta = function(){
+		invoiceFactory.getSellPoints(function(data){
+			$scope.terminalSellPoints = data.data;
+			$scope.terminalSellPoints.sort(function(a, b){
+				return a-b;
+			});
+		})
+	};
+
 	$scope.controlCorrelatividad = function(){
 		$scope.loadingCorrelatividad = true;
-		$scope.model.codTipoComprob = 1;
-		$scope.model.nroPtoVenta = 25;
 		invoiceFactory.getCorrelative(cargaDatos(), function(dataComprob) {
 			console.log(dataComprob);
 			$scope.result = dataComprob;
@@ -396,6 +404,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 
 	$scope.controlDeCodigos();
 	$scope.controlTasaCargas();
+	$scope.traerPuntosDeVenta();
 	//$scope.controlCorrelatividad();
 	//$scope.controlTarifas();
 

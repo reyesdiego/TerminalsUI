@@ -26,7 +26,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	};
 
 	$scope.invoiceEstado = {
-		'estado': 'Revisar',
+		'estado': 'Y',
 		'btnEstado': 'btn-warning'
 	};
 
@@ -112,10 +112,30 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
+			console.log(data);
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.invoices.forEach(function(comprobante){
-					comprobante.estado = $scope.invoiceEstado;
+					switch (comprobante.estado){
+						case 'Y':
+							comprobante.interfazEstado = {
+								'estado': 'Revisar',
+								'btnEstado': 'btn-warning'
+							};
+							break;
+						case 'G':
+							comprobante.interfazEstado = {
+								'estado': 'OK',
+								'btnEstado': 'btn-success'
+							};
+							break;
+						case 'R':
+							comprobante.interfazEstado = {
+								'estado': 'Error',
+								'btnEstado': 'btn-danger'
+							};
+							break;
+					}
 				});
 				$scope.totalItems = data.totalCount;
 			}
@@ -174,24 +194,33 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.cargaFacturas();
 
 	$scope.revisarComprobante = function(comprobante){
-		comprobante.estado = {
+		comprobante.interfazEstado = {
 			'estado': 'Revisar',
 			'btnEstado': 'btn-warning'
 		};
+		invoiceFactory.cambiarEstado(comprobante._id, 'Y', function(data){
+			console.log(data);
+		});
 	};
 
 	$scope.comprobanteOk = function(comprobante){
-		comprobante.estado = {
-			'estado': 'Ok',
+		comprobante.interfazEstado = {
+			'estado': 'OK',
 			'btnEstado': 'btn-success'
 		};
+		invoiceFactory.cambiarEstado(comprobante._id, 'G', function(data){
+			console.log(data);
+		});
 	};
 
 	$scope.comprobanteError = function(comprobante){
-		comprobante.estado = {
+		comprobante.interfazEstado = {
 			'estado': 'Error',
 			'btnEstado': 'btn-danger'
 		};
+		invoiceFactory.cambiarEstado(comprobante._id, 'R', function(data){
+			console.log(data);
+		});
 	};
 
 }
