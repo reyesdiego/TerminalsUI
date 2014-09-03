@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, loginService){
+function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFactory, loginService){
 	'use strict';
 	// Fecha (dia y hora)
 	$scope.hasta = new Date();
@@ -316,11 +316,8 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.traerPuntosDeVenta = function(){
-		invoiceFactory.getSellPoints(function(data){
+		invoiceFactory.getCashbox({}, function(data){
 			$scope.terminalSellPoints = data.data;
-			$scope.terminalSellPoints.sort(function(a, b){
-				return a-b;
-			});
 		})
 	};
 
@@ -544,6 +541,52 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 			'contenedor': $scope.model.contenedor,
 			'order': $scope.model.order
 		};
+	};
+
+	$scope.trackInvoice = function(comprobante, estado){
+		var estadoAnterior = comprobante.interfazEstado;
+		switch (estado){
+			case 'Y':
+				comprobante.interfazEstado = {
+					'estado': 'Revisar',
+					'btnEstado': 'btn-warning'
+				};
+				break;
+			case 'G':
+				comprobante.interfazEstado = {
+					'estado': 'OK',
+					'btnEstado': 'btn-success'
+				};
+				break;
+			case 'R':
+				comprobante.interfazEstado = {
+					'estado': 'Error',
+					'btnEstado': 'btn-danger'
+				};
+				break;
+		}
+		if (estadoAnterior.estado == comprobante.interfazEstado.estado){
+			comprobante.interfazEstado = estadoAnterior;
+		} else {
+			var modalInstance = $modal.open({
+				templateUrl: 'view/trackingInvoice.html',
+				controller: trackingInvoiceCtrl,
+				backdrop: 'static',
+				resolve: {
+					estado: function () {
+						return estado;
+					}
+				}
+			});
+			modalInstance.result.then(function (comentario) {
+				invoiceFactory.cambiarEstado(comprobante._id, estado, comentario, function(data){
+					console.log(data);
+				});
+			}, function () {
+				comprobante.interfazEstado = estadoAnterior;
+				console.log('Modal dismissed at: ' + new Date());
+			});
+		}
 	};
 
 }
