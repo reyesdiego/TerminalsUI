@@ -6,28 +6,32 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado) {
 
 	$scope.interfazModal = {
 		titulo: '',
-		tipoModal: ''
+		tipoModal: '',
+		comentario: ''
 	};
 
 	switch (estado){
 		case 'Y':
 			$scope.interfazModal.titulo = 'Cambio de estado: Revisar';
-			$scope.interfazModal.tipoModal = 'btn-warning';
+			$scope.interfazModal.tipoModal = 'bg-warning';
 			break;
 		case 'G':
-			$scope.interfazModal.titulo = 'Cambio de estado: OK';
-			$scope.interfazModal.tipoModal = 'btn-success';
+			$scope.interfazModal.titulo = 'Cambio de estado: Controlada';
+			$scope.interfazModal.tipoModal = 'bg-success';
 			break;
 		case 'R':
 			$scope.interfazModal.titulo = 'Cambio de estado: Error';
-			$scope.interfazModal.tipoModal = 'btn-danger';
+			$scope.interfazModal.tipoModal = 'bg-danger';
 			break;
 	}
 
-	$scope.comentario = '';
-
 	$scope.guardar = function () {
-		$modalInstance.close($scope.comentario);
+		console.log($scope.interfazModal.comentario);
+		if ($scope.interfazModal.comentario != ''){
+			$scope.interfazModal.comentario = $scope.interfazModal.titulo + ' - ' + $scope.interfazModal.comentario;
+			console.log($scope.interfazModal.comentario);
+		}
+		$modalInstance.close($scope.interfazModal.comentario);
 	};
 
 	$scope.cancelar = function () {

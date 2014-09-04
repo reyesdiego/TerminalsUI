@@ -225,7 +225,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		return data;
 	};
 
-	factory.cambiarEstado = function(invoiceId, estado, comentario, callback){
+	factory.cambiarEstado = function(invoiceId, estado, callback){
 		//var inserturl = serverUrl + '/invoice/' + loginService.getFiltro() + '/' + invoiceId; el que se tiene que usar
 		var inserturl = serverUrl + '/invoice/' + invoiceId;
 		$http({
@@ -240,6 +240,14 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
+	factory.saveTrackInvoice = function(data, callback){
+		console.log(data);
+		callback({
+			status: 'Ok',
+			data: null
+		});
+	};
+
 	factory.setearInterfaz = function(comprobantes){
 		comprobantes.data.forEach(function(comprobante){
 			switch (comprobante.estado){
@@ -251,7 +259,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 					break;
 				case 'G':
 					comprobante.interfazEstado = {
-						'estado': 'OK',
+						'estado': 'Controlada',
 						'btnEstado': 'btn-success'
 					};
 					break;

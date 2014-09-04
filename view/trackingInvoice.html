@@ -1,8 +1,8 @@
-<div class="modal-header">
-	<h3 class="modal-title {{ interfazModal.tipoModal }}">{{ interfazModal.titulo}}</h3>
+<div class="modal-header {{ interfazModal.tipoModal }}" style="border-radius: 5px">
+	<h3 class="modal-title">{{ interfazModal.titulo}}</h3>
 </div>
 <div class="modal-body">
-	<input type="text" class="form-control" ng-model="comentario" placeholder="Ingrese un comentario">
+	<input type="text" class="form-control" ng-model="interfazModal.comentario" placeholder="Ingrese un comentario">
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" ng-click="guardar()">Guardar</button>

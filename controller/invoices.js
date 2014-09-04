@@ -184,7 +184,7 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService) {
 				break;
 			case 'G':
 				comprobante.interfazEstado = {
-					'estado': 'OK',
+					'estado': 'Controlada',
 					'btnEstado': 'btn-success'
 				};
 				break;
@@ -209,7 +209,16 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService) {
 				}
 			});
 			modalInstance.result.then(function (comentario) {
-				invoiceFactory.cambiarEstado(comprobante._id, estado, comentario, function(data){
+				console.log(comentario);
+				invoiceFactory.cambiarEstado(comprobante._id, estado, function(data){
+					var logInvoice = {
+						coment: comentario,
+						estado: estado,
+						usr: loginService.getInfo().user
+					};
+					invoiceFactory.saveTrackInvoice(logInvoice, function(dataTrack){
+						console.log(dataTrack);
+					});
 					console.log(data);
 				});
 			}, function () {
