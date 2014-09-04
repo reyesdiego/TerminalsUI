@@ -25,6 +25,13 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado) {
 			break;
 	}
 
+	$scope.hitKey = function(evt){
+		if(angular.equals(evt.keyCode,13))
+			$scope.guardar();
+		if(angular.equals(evt.keyCode, 27))
+			$scope.cancelar();
+	};
+
 	$scope.guardar = function () {
 		console.log($scope.interfazModal.comentario);
 		if ($scope.interfazModal.comentario != ''){

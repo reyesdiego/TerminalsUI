@@ -543,9 +543,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		};
 	};
 
-	$scope.trackInvoice = function(comprobante, estado){
+	$scope.trackInvoice = function(comprobante, estado) {
 		var estadoAnterior = comprobante.interfazEstado;
-		switch (estado){
+		switch (estado) {
 			case 'Y':
 				comprobante.interfazEstado = {
 					'estado': 'Revisar',
@@ -554,7 +554,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				break;
 			case 'G':
 				comprobante.interfazEstado = {
-					'estado': 'OK',
+					'estado': 'Controlada',
 					'btnEstado': 'btn-success'
 				};
 				break;
@@ -565,7 +565,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				};
 				break;
 		}
-		if (estadoAnterior.estado == comprobante.interfazEstado.estado){
+		if (estadoAnterior.estado == comprobante.interfazEstado.estado) {
 			comprobante.interfazEstado = estadoAnterior;
 		} else {
 			var modalInstance = $modal.open({
@@ -579,7 +579,16 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				}
 			});
 			modalInstance.result.then(function (comentario) {
-				invoiceFactory.cambiarEstado(comprobante._id, estado, comentario, function(data){
+				console.log(comentario);
+				invoiceFactory.cambiarEstado(comprobante._id, estado, function (data) {
+					var logInvoice = {
+						coment: comentario,
+						estado: estado,
+						usr: loginService.getInfo().user
+					};
+					invoiceFactory.saveTrackInvoice(logInvoice, function (dataTrack) {
+						console.log(dataTrack);
+					});
 					console.log(data);
 				});
 			}, function () {
