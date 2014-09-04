@@ -137,9 +137,9 @@
 										{{ invoice.interfazEstado.estado }} <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu dropdown-toggle" role="menu">
-										<li><a href ng-click="revisarComprobante(invoice)">Revisar</a></li>
-										<li><a href ng-click="comprobanteOk(invoice)">OK</a></li>
-										<li><a href ng-click="comprobanteError(invoice)">Error</a></li>
+										<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
+										<li><a href ng-click="trackInvoice(invoice, 'G')">Controlada</a></li>
+										<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
 									</ul>
 								</div>
 							</td>

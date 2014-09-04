@@ -1,0 +1,11 @@
+
+<div class="modal-header {{ interfazModal.tipoModal }}" style="border-radius: 5px">
+	<h3 class="modal-title">{{ interfazModal.titulo}}</h3>
+</div>
+<div class="modal-body">
+	<input type="text" class="form-control" ng-model="interfazModal.comentario" placeholder="Ingrese un comentario" ng-keyup="hitKey($event)">
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
+	<button class="btn btn-warning" ng-click="cancelar()">Cancelar</button>
+</div>

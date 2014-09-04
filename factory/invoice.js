@@ -13,7 +13,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data){
-			callback(factory.ponerDescripcionComprobantes(data));
+			data = factory.ponerDescripcionComprobantes(data);
+			callback(factory.setearInterfaz(data));
 		}).error(function(errorText){
 			console.log(errorText);
 			dialogs.error('Error', 'Error al cargar la lista Invoice');
@@ -44,7 +45,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-				callback(factory.ponerDescripcionComprobantes(data));
+				data = factory.ponerDescripcionComprobantes(data)
+				callback(factory.setearInterfaz(data));
 			}).error(function(errorText){
 				console.log(errorText);
 				if (errorText.status === 'ERROR'){
@@ -64,7 +66,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-			console.log(data);
 			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);
@@ -86,6 +87,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
+			console.log(data);
 			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);
@@ -223,23 +225,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		return data;
 	};
 
-	factory.getSellPoints = function(callback){
-		var inserturl = serverUrl + '/invoices/sellPoints/' + loginService.getFiltro();
-		console.log(inserturl);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al cargar la lista');
-		});
-	};
-
 	factory.cambiarEstado = function(invoiceId, estado, callback){
+		//var inserturl = serverUrl + '/invoice/' + loginService.getFiltro() + '/' + invoiceId; el que se tiene que usar
 		var inserturl = serverUrl + '/invoice/' + invoiceId;
-		console.log(inserturl);
 		$http({
 			method: 'PUT',
 			url: inserturl,
@@ -250,6 +238,40 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).error(function(errorText){
 			dialogs.error('Error', 'Error al actualizar el estado del comprobante');
 		});
+	};
+
+	factory.saveTrackInvoice = function(data, callback){
+		console.log(data);
+		callback({
+			status: 'Ok',
+			data: null
+		});
+	};
+
+	factory.setearInterfaz = function(comprobantes){
+		comprobantes.data.forEach(function(comprobante){
+			switch (comprobante.estado){
+				case 'Y':
+					comprobante.interfazEstado = {
+						'estado': 'Revisar',
+						'btnEstado': 'btn-warning'
+					};
+					break;
+				case 'G':
+					comprobante.interfazEstado = {
+						'estado': 'Controlada',
+						'btnEstado': 'btn-success'
+					};
+					break;
+				case 'R':
+					comprobante.interfazEstado = {
+						'estado': 'Error',
+						'btnEstado': 'btn-danger'
+					};
+					break;
+			}
+		});
+		return comprobantes;
 	};
 
 	return factory;

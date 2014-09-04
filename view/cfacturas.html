@@ -119,17 +119,30 @@
 									</a>
 								</th>
 								<th class="col-lg-1 text-center">Detalles</th>
+								<th ng-show="acceso=='agp'">Estado</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr ng-repeat="factura in tasaCargas.resultado | orderBy: filtroOrden : reverse=filtroOrdenReverse">
-								<td class="text-right">{{ factura.nroPtoVenta }}</td>
-								<td>{{ vouchersType[factura.codTipoComprob] }}</td>
-								<td class="text-right"></a> {{ factura.nroComprob }}</td>
-								<td><a ng-click="filtrar.razonSocial(factura.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ factura.razon }}</td>
-								<td class="text-center"></a> {{ factura.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(factura.importe.total, factura.codMoneda, factura.cotiMoneda) | currency }}</td>
-								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(factura)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+							<tr ng-repeat="invoice in tasaCargas.resultado | orderBy: filtroOrden : reverse=filtroOrdenReverse">
+								<td class="text-right">{{ invoice.nroPtoVenta }}</td>
+								<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
+								<td class="text-right"></a> {{ invoice.nroComprob }}</td>
+								<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+								<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+								<td ng-show="acceso=='agp'">
+									<div class="btn-group" dropdown is-open="status.isopen">
+										<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+											{{ invoice.interfazEstado.estado }} <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-toggle" role="menu">
+											<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
+											<li><a href ng-click="trackInvoice(invoice, 'G')">OK</a></li>
+											<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
+										</ul>
+									</div>
+								</td>
 							</tr>
 							</tbody>
 						</table>
@@ -279,6 +292,7 @@
 									</a>
 								</th>
 								<th class="col-lg-1 text-center">Detalles</th>
+								<th ng-show="acceso=='agp'">Estado</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -289,6 +303,18 @@
 								<td class="text-center"><a href ng-click="filtrar.fechaDesde(comprobante.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(comprobante.importe.total, comprobante.codMoneda, comprobante.cotiMoneda) | currency }}</td>
 								<td class="text-center"><button ui-sref=".result" class="btn btn-info" type="button" ng-click="mostrarDetalle(comprobante)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+								<td ng-show="acceso=='agp'">
+									<div class="btn-group" dropdown is-open="status.isopen">
+										<button type="button" class="btn {{ comprobante.interfazEstado.btnEstado }} dropdown-toggle">
+											{{ comprobante.interfazEstado.estado }} <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-toggle" role="menu">
+											<li><a href ng-click="trackInvoice(comprobante, 'Y')">Revisar</a></li>
+											<li><a href ng-click="trackInvoice(comprobante, 'G')">OK</a></li>
+											<li><a href ng-click="trackInvoice(comprobante, 'R')">Error</a></li>
+										</ul>
+									</div>
+								</td>
 							</tr>
 							</tbody>
 						</table>

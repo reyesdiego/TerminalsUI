@@ -2,8 +2,10 @@
  * Created by Diego Reyes on 2/3/14.
 */
 
-function invoicesCtrl($scope, invoiceFactory, loginService) {
+function invoicesCtrl($scope, $modal, invoiceFactory, loginService) {
 	'use strict';
+	$scope.items = ['item1', 'item2', 'item3'];
+
 	// Fecha (dia y hora)
 	$scope.fechaDesde = new Date();
 	$scope.fechaHasta = new Date();
@@ -152,28 +154,6 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
-				$scope.invoices.forEach(function(comprobante){
-					switch (comprobante.estado){
-						case 'Y':
-							comprobante.interfazEstado = {
-								'estado': 'Revisar',
-								'btnEstado': 'btn-warning'
-							};
-							break;
-						case 'G':
-							comprobante.interfazEstado = {
-								'estado': 'OK',
-								'btnEstado': 'btn-success'
-							};
-							break;
-						case 'R':
-							comprobante.interfazEstado = {
-								'estado': 'Error',
-								'btnEstado': 'btn-danger'
-							};
-							break;
-					}
-				});
 				$scope.totalItems = data.totalCount;
 			}
 		});
@@ -236,34 +216,59 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 
 	$scope.cargaTodosLosPuntosDeVentas();
 
-	$scope.revisarComprobante = function(comprobante){
-		comprobante.interfazEstado = {
-			'estado': 'Revisar',
-			'btnEstado': 'btn-warning'
-		};
-		invoiceFactory.cambiarEstado(comprobante._id, 'Y', function(data){
-			console.log(data);
-		});
-	};
-
-	$scope.comprobanteOk = function(comprobante){
-		comprobante.interfazEstado = {
-			'estado': 'OK',
-			'btnEstado': 'btn-success'
-		};
-		invoiceFactory.cambiarEstado(comprobante._id, 'G', function(data){
-			console.log(data);
-		});
-	};
-
-	$scope.comprobanteError = function(comprobante){
-		comprobante.interfazEstado = {
-			'estado': 'Error',
-			'btnEstado': 'btn-danger'
-		};
-		invoiceFactory.cambiarEstado(comprobante._id, 'R', function(data){
-			console.log(data);
-		});
+	$scope.trackInvoice = function(comprobante, estado){
+		var estadoAnterior = comprobante.interfazEstado;
+		switch (estado){
+			case 'Y':
+				comprobante.interfazEstado = {
+					'estado': 'Revisar',
+					'btnEstado': 'btn-warning'
+				};
+				break;
+			case 'G':
+				comprobante.interfazEstado = {
+					'estado': 'Controlada',
+					'btnEstado': 'btn-success'
+				};
+				break;
+			case 'R':
+				comprobante.interfazEstado = {
+					'estado': 'Error',
+					'btnEstado': 'btn-danger'
+				};
+				break;
+		}
+		if (estadoAnterior.estado == comprobante.interfazEstado.estado){
+			comprobante.interfazEstado = estadoAnterior;
+		} else {
+			var modalInstance = $modal.open({
+				templateUrl: 'view/trackingInvoice.html',
+				controller: trackingInvoiceCtrl,
+				backdrop: 'static',
+				resolve: {
+					estado: function () {
+						return estado;
+					}
+				}
+			});
+			modalInstance.result.then(function (comentario) {
+				console.log(comentario);
+				invoiceFactory.cambiarEstado(comprobante._id, estado, function(data){
+					var logInvoice = {
+						coment: comentario,
+						estado: estado,
+						usr: loginService.getInfo().user
+					};
+					invoiceFactory.saveTrackInvoice(logInvoice, function(dataTrack){
+						console.log(dataTrack);
+					});
+					console.log(data);
+				});
+			}, function () {
+				comprobante.interfazEstado = estadoAnterior;
+				console.log('Modal dismissed at: ' + new Date());
+			});
+		}
 	};
 
 }
