@@ -204,15 +204,10 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	}
 
 	function cargaDatosSinFechas(){
-		return {
-			'codTipoComprob': $scope.model.codTipoComprob,
-			'nroComprobante': $scope.model.nroComprobante,
-			'razonSocial': $scope.model.razonSocial,
-			'documentoCliente': $scope.model.documentoCliente,
-			'contenedor': $scope.model.contenedor,
-			'codigo': $scope.model.codigo,
-			'order': $scope.model.order
-		};
+		var datos = cargaDatos();
+		datos.fechaDesde = '';
+		datos.fechaHasta = '';
+		return datos;
 	}
 
 	// Carga los gates del día hasta la hora del usuario

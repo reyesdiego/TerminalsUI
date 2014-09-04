@@ -28,7 +28,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data) {
-			console.log(data);
 			callback(data);
 		}).error(function(errorText) {
 			console.log(errorText);
@@ -123,7 +122,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getCashbox = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro() + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,

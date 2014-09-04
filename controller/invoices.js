@@ -12,6 +12,10 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.maxDateH = new Date();
 	$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
 
+	// Puntos de Ventas
+	$scope.puntosDeVentas = [];
+	$scope.todosLosPuntosDeVentas = [];
+
 	$scope.model = {
 		'nroPtoVenta': $scope.nroPtoVenta,
 		'codTipoComprob': $scope.codTipoComprob,
@@ -33,6 +37,40 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 	$scope.comprobantesVistos = [];
 
 	$scope.nombre = loginService.getFiltro();
+
+	// Funciones de Puntos de Venta
+	$scope.cargaPuntosDeVenta = function(){
+		invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
+			var hide;
+			$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
+				hide = true;
+				data.data.forEach(function(punto){
+					if (todosPtos.punto == punto){
+						hide = false;
+					}
+				});
+				todosPtos.hide = hide;
+				if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
+					$scope.model.nroPtoVenta = '';
+					$scope.todosLosPuntosDeVentas[0].active = true;
+				}
+			});
+			$scope.todosLosPuntosDeVentas[0].hide = false;
+			$scope.cargaFacturas();
+		});
+	};
+
+	$scope.cargaTodosLosPuntosDeVentas = function(){
+		invoiceFactory.getCashbox('', function(data){
+			var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
+			$scope.todosLosPuntosDeVentas.push(dato);
+			data.data.forEach(function(punto){
+				dato = {'heading': punto, 'punto': punto, 'active': false, 'hide': true};
+				$scope.todosLosPuntosDeVentas.push(dato);
+			});
+			$scope.cargaFacturas();
+		})
+	};
 
 	$scope.filtrarOrden = function(filtro){
 		var filtroModo;
@@ -94,7 +132,7 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
 				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
 			}
-			$scope.cargaFacturas();
+			$scope.cargaPuntosDeVenta();
 		}
 	};
 
@@ -112,7 +150,6 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
-			console.log(data);
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.invoices.forEach(function(comprobante){
@@ -191,7 +228,13 @@ function invoicesCtrl($scope, invoiceFactory, loginService) {
 		};
 	}
 
-	$scope.cargaFacturas();
+	function cargaDatosSinPtoVenta(){
+		var datos = cargaDatos();
+		datos.nroPtoVenta = '';
+		return datos;
+	}
+
+	$scope.cargaTodosLosPuntosDeVentas();
 
 	$scope.revisarComprobante = function(comprobante){
 		comprobante.interfazEstado = {
