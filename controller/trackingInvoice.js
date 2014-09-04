@@ -16,7 +16,7 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado) {
 			$scope.interfazModal.tipoModal = 'bg-warning';
 			break;
 		case 'G':
-			$scope.interfazModal.titulo = 'Cambio de estado: Controlada';
+			$scope.interfazModal.titulo = 'Cambio de estado: Controlado';
 			$scope.interfazModal.tipoModal = 'bg-success';
 			break;
 		case 'R':

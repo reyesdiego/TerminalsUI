@@ -1,129 +1,47 @@
 <div class="container agp" ng-controller="cfacturasCtrl">
+<br>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="xpage-header">
+			<h1 id="forms">Control de comprobantes</h1>
+		</div>
+	</div>
+</div>
+
+<div data-ng-hide="$state.includes('cfacturas.result')" class="row">
+
+<tabset justified="true">
+<tab heading="Tasa a las cargas" select="cambioTab('tasas')">
 	<br>
-	<div class="row">
+	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<div class="col-lg-12">
-			<div class="xpage-header">
-				<h1 id="forms">Control de comprobantes</h1>
-			</div>
+			<div ng-include="'view/invoices.search.html'"></div>
 		</div>
 	</div>
 
-	<div data-ng-hide="$state.includes('cfacturas.result')" class="row">
-
-		<tabset justified="true">
-			<tab heading="Tasa a las cargas" select="cambioTab('tasas')">
-				<br>
-				<div class="row" data-ng-hide="$state.includes('invoices.result')">
-					<div class="col-lg-12">
-						<div ng-include="'view/invoices.search.html'"></div>
-					</div>
-				</div>
-
-				<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosTasas.length == 0">
-					<div class="col-lg-12">
-						<accordion>
-							<accordion-group is-open="status.open">
-								<accordion-heading>
-									<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-								</accordion-heading>
-								<div class="table-responsive">
-									<table class="table table-striped table-bordered table-hover">
-										<thead>
-										<tr>
-											<th class="col-lg-1 text-right">Pto. Venta</th>
-											<th>Comprobante</th>
-											<th class="col-lg-1 text-right">Nro</th>
-											<th>Razon Social</th>
-											<th class="text-center">Fecha</th>
-											<th class="text-right">Importe Total</th>
-											<th class="col-lg-1 text-center">Detalles</th>
-											<th class="col-lg-1 text-center">Quitar</th>
-										</tr>
-										</thead>
-										<tbody>
-										<tr ng-repeat="invoice in comprobantesVistosTasas">
-											<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-											<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
-											<td class="text-right"></a> {{ invoice.nroComprob }}</td>
-											<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-											<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-											<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-											<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-											<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
-										</tr>
-										</tbody>
-									</table>
-								</div>
-							</accordion-group>
-						</accordion>
-					</div>
-				</div>
-
-				<div class="col-lg-12 text-center" ng-show="loadingTasaCargas">
-					<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-				</div>
-				<div class="col-lg-12 well" ng-hide="loadingTasaCargas">
-					<div class="panel {{ tasaCargas.cartel }}">
-						<div class="panel-heading">
-							<h3 class="panel-title">{{ tasaCargas.titulo }}</h3>
-						</div>
-						<div class="panel-body">
-							<p>{{ tasaCargas.mensaje }}</p>
-						</div>
-					</div>
-
+	<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosTasas.length == 0">
+		<div class="col-lg-12">
+			<accordion>
+				<accordion-group is-open="status.open">
+					<accordion-heading>
+						<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</accordion-heading>
 					<div class="table-responsive">
-						<table ng-show="tasaCargas.mostrarResultado" class="table table-striped table-bordered table-hover">
+						<table class="table table-striped table-bordered table-hover">
 							<thead>
 							<tr>
-								<th class="text-right">
-									<a href ng-click="filtrarOrden('nroPtoVenta')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
-										 Pto. Venta
-									</a>
-								</th>
-								<th>
-									<a href ng-click="filtrarOrden('codTipoComprob')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
-										 Comprobante
-									</a>
-								</th>
-								<th style="text-align: right" class="col-lg-1">
-									<a href ng-click="filtrarOrden('nroComprob')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
-										 Nro
-									</a>
-								</th>
-								<th>
-									<a href ng-click="filtrarOrden('razon')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
-										 Razón Social
-									</a>
-								</th>
-								<th style="text-align: center">
-									<a href ng-click="filtrarOrden('fecha.emision')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
-										 Fecha
-									</a>
-								</th>
-								<th style="text-align: right">
-									<a href ng-click="filtrarOrden('importe.total')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
-										 Importe Total
-									</a>
-								</th>
+								<th class="col-lg-1 text-right">Pto. Venta</th>
+								<th>Comprobante</th>
+								<th class="col-lg-1 text-right">Nro</th>
+								<th>Razon Social</th>
+								<th class="text-center">Fecha</th>
+								<th class="text-right">Importe Total</th>
 								<th class="col-lg-1 text-center">Detalles</th>
-								<th ng-show="acceso=='agp'">Estado</th>
+								<th class="col-lg-1 text-center">Quitar</th>
 							</tr>
 							</thead>
 							<tbody>
-							<tr ng-repeat="invoice in tasaCargas.resultado | orderBy: filtroOrden : reverse=filtroOrdenReverse">
+							<tr ng-repeat="invoice in comprobantesVistosTasas">
 								<td class="text-right">{{ invoice.nroPtoVenta }}</td>
 								<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
 								<td class="text-right"></a> {{ invoice.nroComprob }}</td>
@@ -131,251 +49,600 @@
 								<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
 								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-								<td ng-show="acceso=='agp'">
-									<div class="btn-group" dropdown is-open="status.isopen">
-										<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
-											{{ invoice.interfazEstado.estado }} <span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu dropdown-toggle" role="menu">
-											<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
-											<li><a href ng-click="trackInvoice(invoice, 'G')">OK</a></li>
-											<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
-										</ul>
-									</div>
-								</td>
+								<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
 							</tr>
 							</tbody>
 						</table>
 					</div>
-
-					<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-				</div>
-			</tab>
-
-			<tab heading="Correlatividad" select="cambioTab('correlativo')">
-				<br>
-				<div class="row" data-ng-hide="$state.includes('invoices.result')">
-					<div class="col-lg-12">
-						<div ng-include="'view/invoices.search.html'"></div>
-					</div>
-				</div>
-
-				<div class="col-lg-12">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title">Puntos de venta de la terminal seleccionada</h3>
-						</div>
-						<div class="panel-body">
-							<span ng-repeat="numero in terminalSellPoints"><a href ng-click="filtrar.nroPtoVenta(numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-12 text-center" ng-show="loadingCorrelatividad">
-					<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-				</div>
-				<div class="col-lg-12" ng-hide="loadingCorrelatividad">
-					<div class="panel {{ pantalla.cartelCorrelativo }}">
-						<div class="panel-heading">
-							<h3 class="panel-title">{{ pantalla.tituloCorrelativo }}</h3>
-						</div>
-						<div class="panel-body">
-							<p>{{ pantalla.mensajeCorrelativo }}</p>
-							<span ng-repeat="numero in pantalla.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
-						</div>
-					</div>
-				</div>
-			</tab>
-
-			<tab heading="Control de códigos" select="cambioTab('codigos')">
-				<br>
-				<div class="row" data-ng-hide="$state.includes('invoices.result')">
-					<div class="col-lg-12">
-						<div ng-include="'view/invoices.search.html'"></div>
-					</div>
-				</div>
-
-				<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosCodigos.length == 0">
-					<div class="col-lg-12">
-						<accordion>
-							<accordion-group is-open="status.open">
-								<accordion-heading>
-									<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-								</accordion-heading>
-								<div class="table-responsive">
-									<table class="table table-striped table-bordered table-hover">
-										<thead>
-										<tr>
-											<th class="col-lg-1 text-right">Pto. Venta</th>
-											<th class="col-lg-1 text-right">Nro</th>
-											<th>Razon Social</th>
-											<th class="text-center">Fecha</th>
-											<th class="text-right">Importe Total</th>
-											<th class="col-lg-1 text-center">Detalles</th>
-											<th class="col-lg-1 text-center">Quitar</th>
-										</tr>
-										</thead>
-										<tbody>
-										<tr ng-repeat="invoice in comprobantesVistosCodigos">
-											<td class="text-right"><a href ng-click="filtrar.nroPtoVenta(invoice.nroPtoVenta)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroPtoVenta }}</td>
-											<td class="text-right"><a href ng-click="filtrar.nroComprobante(invoice.nroComprob)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
-											<td class="text-left"><a href ng-click="filtrar.razonSocial(invoice.razon)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-											<td class="text-center"><a href ng-click="filtrar.fechaDesde(invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-											<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-											<td class="text-center"><button ui-sref=".result" class="btn btn-info" type="button" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-											<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
-										</tr>
-										</tbody>
-									</table>
-								</div>
-							</accordion-group>
-						</accordion>
-					</div>
-				</div>
-
-				<div class="col-lg-12 text-center" ng-show="loadingControlCodigos">
-					<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-				</div>
-				<div class="col-lg-12 well" ng-hide="loadingControlCodigos">
-					<div class="panel {{ pantalla.cartelCodigos }}">
-						<div class="panel-heading">
-							<h3 class="panel-title">{{ pantalla.tituloCodigos }}</h3>
-						</div>
-						<div class="panel-body">
-							<p>{{ pantalla.mensajeCodigos }}</p>
-							<span ng-repeat="numero in pantalla.resultadoCodigos"><a title="Filtrar por:" href ng-click="filtrar.codigo(numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
-						</div>
-					</div>
-
-					<div class="col-lg-12 text-center" ng-show="cargandoPaginaComprobantes">
-						<img class="media-object" style="margin-left: 40%;" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-					</div>
-
-					<div class="table-responsive">
-						<table ng-show="pantalla.mostrarResultado && !cargandoPaginaComprobantes" class="table table-striped table-bordered table-hover">
-							<thead>
-							<tr>
-								<th style="text-align: right">
-									<a href ng-click="filtrarOrden('nroPtoVenta')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
-										Pto. Venta
-									</a>
-								</th>
-								<th style="text-align: right" class="col-lg-1">
-									<a href ng-click="filtrarOrden('nroComprob')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
-										Nro
-									</a>
-								</th>
-								<th>
-									<a href ng-click="filtrarOrden('razon')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
-										Razón Social
-									</a>
-								</th>
-								<th style="text-align: center">
-									<a href ng-click="filtrarOrden('fecha.emision')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
-										Fecha
-									</a>
-								</th>
-								<th style="text-align: right">
-									<a href ng-click="filtrarOrden('importe.total')">
-										<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
-										<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
-										Importe Total
-									</a>
-								</th>
-								<th class="col-lg-1 text-center">Detalles</th>
-								<th ng-show="acceso=='agp'">Estado</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr ng-repeat="comprobante in pantalla.comprobantesRotos | orderBy: filtroOrden : reverse=filtroOrdenReverse">
-								<td class="text-right"><a href ng-click="filtrar.nroPtoVenta(comprobante.nroPtoVenta)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.nroPtoVenta }}</td>
-								<td class="text-right"><a href ng-click="filtrar.nroComprobante(comprobante.nroComprob)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.nroComprob }}</td>
-								<td class="text-left"><a href ng-click="filtrar.razonSocial(comprobante.razon)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.razon }}</td>
-								<td class="text-center"><a href ng-click="filtrar.fechaDesde(comprobante.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(comprobante.importe.total, comprobante.codMoneda, comprobante.cotiMoneda) | currency }}</td>
-								<td class="text-center"><button ui-sref=".result" class="btn btn-info" type="button" ng-click="mostrarDetalle(comprobante)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-								<td ng-show="acceso=='agp'">
-									<div class="btn-group" dropdown is-open="status.isopen">
-										<button type="button" class="btn {{ comprobante.interfazEstado.btnEstado }} dropdown-toggle">
-											{{ comprobante.interfazEstado.estado }} <span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu dropdown-toggle" role="menu">
-											<li><a href ng-click="trackInvoice(comprobante, 'Y')">Revisar</a></li>
-											<li><a href ng-click="trackInvoice(comprobante, 'G')">OK</a></li>
-											<li><a href ng-click="trackInvoice(comprobante, 'R')">Error</a></li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-
-					<div class="text-center hidden-xs" ng-show="pantalla.mostrarResultado"><pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="20" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					<div class="text-center visible-xs" ng-show="pantalla.mostrarResultado"><pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="5" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					<div class="text-center hidden-xs" ng-show="pantalla.mostrarResultado"><pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="20" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					<div class="text-center visible-xs" ng-show="pantalla.mostrarResultado"><pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="5" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-				</div>
-
-			</tab>
-
-			<tab heading="Control de tarifas">
-				<br>
-				<div class="row col-lg-12">
-					<div class="panel {{ pantalla.cartelTarifas }}">
-						<div class="panel-heading">
-							<h3 class="panel-title">{{ pantalla.tituloTarifas }}</h3>
-						</div>
-						<div class="panel-body">
-							<p>{{ pantalla.mensajeTarifas }}</p>
-							<span ng-repeat="numero in pantalla.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
-						</div>
-					</div>
-				</div>
-
-				<div class="row row col-lg-12">
-					<div class="table-responsive">
-						<table ng-show="pantalla.mostrarResultadoTarifas" class="table table-striped table-bordered table-hover">
-							<thead>
-							<tr>
-								<th>Comprobante</th>
-								<th>Razon Social</th>
-								<th>Fecha</th>
-								<th>Tarifas erróneas</th>
-								<th>Detalles</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr ng-repeat="comprobante in pantalla.comprobantesMalCobrados">
-								<td>{{ comprobante.nroComprob }}</td>
-								<td>{{ comprobante.razon }}</td>
-								<td>{{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-								<td><span ng-repeat="numeroCod in comprobante.codigosFaltantes">{{ numeroCod }}<span ng-show="!$last"> - </span></span></td>
-								<td><button ui-sref=".result" class="btn btn-primary" type="button" ng-click="mostrarDetalle(comprobante)">M&aacute;s detalles</button></td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-
-				</div>
-			</tab>
-
-		</tabset>
-
+				</accordion-group>
+			</accordion>
+		</div>
 	</div>
 
-	<div data-ng-show="$state.includes('cfacturas.result')">
-		<div ui-view></div>
+	<div class="col-lg-12 text-center" ng-show="loadingTasaCargas">
+		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 	</div>
+	<div class="col-lg-12 well" ng-hide="loadingTasaCargas">
+		<div class="panel {{ tasaCargas.cartel }}">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ tasaCargas.titulo }}</h3>
+			</div>
+			<div class="panel-body">
+				<p>{{ tasaCargas.mensaje }}</p>
+			</div>
+		</div>
 
+		<div class="table-responsive">
+			<table ng-show="tasaCargas.mostrarResultado" class="table table-striped table-bordered table-hover">
+				<thead>
+				<tr>
+					<th class="text-right">
+						<a href ng-click="filtrarOrden('nroPtoVenta')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
+							Pto. Venta
+						</a>
+					</th>
+					<th>
+						<a href ng-click="filtrarOrden('codTipoComprob')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
+							Comprobante
+						</a>
+					</th>
+					<th style="text-align: right" class="col-lg-1">
+						<a href ng-click="filtrarOrden('nroComprob')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
+							Nro
+						</a>
+					</th>
+					<th>
+						<a href ng-click="filtrarOrden('razon')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
+							Razón Social
+						</a>
+					</th>
+					<th style="text-align: center">
+						<a href ng-click="filtrarOrden('fecha.emision')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
+							Fecha
+						</a>
+					</th>
+					<th style="text-align: right">
+						<a href ng-click="filtrarOrden('importe.total')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
+							Importe Total
+						</a>
+					</th>
+					<th class="col-lg-1 text-center">Detalles</th>
+					<th ng-show="acceso=='agp'">Estado</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="invoice in tasaCargas.resultado | orderBy: filtroOrden : reverse=filtroOrdenReverse">
+					<td class="text-right">{{ invoice.nroPtoVenta }}</td>
+					<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
+					<td class="text-right"></a> {{ invoice.nroComprob }}</td>
+					<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+					<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+					<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+					<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+					<td ng-show="acceso=='agp'">
+						<div class="btn-group" dropdown is-open="status.isopen">
+							<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+								{{ invoice.interfazEstado.estado }} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-toggle" role="menu">
+								<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
+								<li><a href ng-click="trackInvoice(invoice, 'G')">Controlado</a></li>
+								<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+	</div>
+</tab>
+
+<tab heading="Correlatividad" select="cambioTab('correlativo')">
 	<br>
+	<div class="row" data-ng-hide="$state.includes('invoices.result')">
+		<div class="col-lg-12">
+			<div ng-include="'view/invoices.search.html'"></div>
+		</div>
+	</div>
+
+	<div class="col-lg-12">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">Puntos de venta de la terminal seleccionada</h3>
+			</div>
+			<div class="panel-body">
+				<span ng-repeat="numero in terminalSellPoints"><a href ng-click="filtrar.nroPtoVenta(numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-12 text-center" ng-show="loadingCorrelatividad">
+		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+	</div>
+	<div class="col-lg-12" ng-hide="loadingCorrelatividad">
+		<div class="panel {{ pantalla.cartelCorrelativo }}">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ pantalla.tituloCorrelativo }}</h3>
+			</div>
+			<div class="panel-body">
+				<p>{{ pantalla.mensajeCorrelativo }}</p>
+				<span ng-repeat="numero in pantalla.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
+			</div>
+		</div>
+	</div>
+</tab>
+
+<tab heading="Control de códigos" select="cambioTab('codigos')">
+	<br>
+	<div class="row" data-ng-hide="$state.includes('invoices.result')">
+		<div class="col-lg-12">
+			<div ng-include="'view/invoices.search.html'"></div>
+		</div>
+	</div>
+
+	<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosCodigos.length == 0">
+		<div class="col-lg-12">
+			<accordion>
+				<accordion-group is-open="status.open">
+					<accordion-heading>
+						<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</accordion-heading>
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+							<tr>
+								<th class="col-lg-1 text-right">Pto. Venta</th>
+								<th class="col-lg-1 text-right">Nro</th>
+								<th>Razon Social</th>
+								<th class="text-center">Fecha</th>
+								<th class="text-right">Importe Total</th>
+								<th class="col-lg-1 text-center">Detalles</th>
+								<th class="col-lg-1 text-center">Quitar</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="invoice in comprobantesVistosCodigos">
+								<td class="text-right"><a href ng-click="filtrar.nroPtoVenta(invoice.nroPtoVenta)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroPtoVenta }}</td>
+								<td class="text-right"><a href ng-click="filtrar.nroComprobante(invoice.nroComprob)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+								<td class="text-left"><a href ng-click="filtrar.razonSocial(invoice.razon)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+								<td class="text-center"><a href ng-click="filtrar.fechaDesde(invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+								<td class="text-center"><button ui-sref=".result" class="btn btn-info" type="button" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+								<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</accordion-group>
+			</accordion>
+		</div>
+	</div>
+
+	<div class="col-lg-12 text-center" ng-show="loadingControlCodigos">
+		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+	</div>
+	<div class="col-lg-12 well" ng-hide="loadingControlCodigos">
+		<div class="panel {{ pantalla.cartelCodigos }}">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ pantalla.tituloCodigos }}</h3>
+			</div>
+			<div class="panel-body">
+				<p>{{ pantalla.mensajeCodigos }}</p>
+				<span ng-repeat="numero in pantalla.resultadoCodigos"><a title="Filtrar por:" href ng-click="filtrar.codigo(numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
+			</div>
+		</div>
+
+		<div class="col-lg-12 text-center" ng-show="cargandoPaginaComprobantes">
+			<img class="media-object" style="margin-left: 40%;" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+		</div>
+
+		<div class="table-responsive">
+			<table ng-show="pantalla.mostrarResultado && !cargandoPaginaComprobantes" class="table table-striped table-bordered table-hover">
+				<thead>
+				<tr>
+					<th style="text-align: right">
+						<a href ng-click="filtrarOrden('nroPtoVenta')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
+							Pto. Venta
+						</a>
+					</th>
+					<th style="text-align: right" class="col-lg-1">
+						<a href ng-click="filtrarOrden('nroComprob')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
+							Nro
+						</a>
+					</th>
+					<th>
+						<a href ng-click="filtrarOrden('razon')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
+							Razón Social
+						</a>
+					</th>
+					<th style="text-align: center">
+						<a href ng-click="filtrarOrden('fecha.emision')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
+							Fecha
+						</a>
+					</th>
+					<th style="text-align: right">
+						<a href ng-click="filtrarOrden('importe.total')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
+							Importe Total
+						</a>
+					</th>
+					<th class="col-lg-1 text-center">Detalles</th>
+					<th ng-show="acceso=='agp'">Estado</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="comprobante in pantalla.comprobantesRotos | orderBy: filtroOrden : reverse=filtroOrdenReverse">
+					<td class="text-right"><a href ng-click="filtrar.nroPtoVenta(comprobante.nroPtoVenta)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.nroPtoVenta }}</td>
+					<td class="text-right"><a href ng-click="filtrar.nroComprobante(comprobante.nroComprob)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.nroComprob }}</td>
+					<td class="text-left"><a href ng-click="filtrar.razonSocial(comprobante.razon)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.razon }}</td>
+					<td class="text-center"><a href ng-click="filtrar.fechaDesde(comprobante.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+					<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(comprobante.importe.total, comprobante.codMoneda, comprobante.cotiMoneda) | currency }}</td>
+					<td class="text-center"><button ui-sref=".result" class="btn btn-info" type="button" ng-click="mostrarDetalle(comprobante)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+					<td ng-show="acceso=='agp'">
+						<div class="btn-group" dropdown is-open="status.isopen">
+							<button type="button" class="btn {{ comprobante.interfazEstado.btnEstado }} dropdown-toggle">
+								{{ comprobante.interfazEstado.estado }} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-toggle" role="menu">
+								<li><a href ng-click="trackInvoice(comprobante, 'Y')">Revisar</a></li>
+								<li><a href ng-click="trackInvoice(comprobante, 'G')">Controlado</a></li>
+								<li><a href ng-click="trackInvoice(comprobante, 'R')">Error</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="text-center hidden-xs" ng-show="pantalla.mostrarResultado"><pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="20" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs" ng-show="pantalla.mostrarResultado"><pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="5" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center hidden-xs" ng-show="pantalla.mostrarResultado"><pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="20" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs" ng-show="pantalla.mostrarResultado"><pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="5" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+	</div>
+
+</tab>
+
+<tab heading="Control de tarifas">
+	<br>
+	<div class="row col-lg-12">
+		<div class="panel {{ pantalla.cartelTarifas }}">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ pantalla.tituloTarifas }}</h3>
+			</div>
+			<div class="panel-body">
+				<p>{{ pantalla.mensajeTarifas }}</p>
+				<span ng-repeat="numero in pantalla.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="row row col-lg-12">
+		<div class="table-responsive">
+			<table ng-show="pantalla.mostrarResultadoTarifas" class="table table-striped table-bordered table-hover">
+				<thead>
+				<tr>
+					<th>Comprobante</th>
+					<th>Razon Social</th>
+					<th>Fecha</th>
+					<th>Tarifas erróneas</th>
+					<th>Detalles</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="comprobante in pantalla.comprobantesMalCobrados">
+					<td>{{ comprobante.nroComprob }}</td>
+					<td>{{ comprobante.razon }}</td>
+					<td>{{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+					<td><span ng-repeat="numeroCod in comprobante.codigosFaltantes">{{ numeroCod }}<span ng-show="!$last"> - </span></span></td>
+					<td><button ui-sref=".result" class="btn btn-primary" type="button" ng-click="mostrarDetalle(comprobante)">M&aacute;s detalles</button></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</tab>
+
+<tab heading="Comprobantes a revisar">
+	<br>
+	<div class="row" data-ng-hide="$state.includes('invoices.result')">
+		<div class="col-lg-12">
+			<div ng-include="'view/invoices.search.html'"></div>
+		</div>
+	</div>
+
+	<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosRevisar.length == 0">
+		<div class="col-lg-12">
+			<accordion>
+				<accordion-group is-open="status.open">
+					<accordion-heading>
+						<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</accordion-heading>
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+							<tr>
+								<th class="col-lg-1 text-right">Pto. Venta</th>
+								<th>Comprobante</th>
+								<th class="col-lg-1 text-right">Nro</th>
+								<th>Razon Social</th>
+								<th class="text-center">Fecha</th>
+								<th class="text-right">Importe Total</th>
+								<th class="col-lg-1 text-center">Detalles</th>
+								<th class="col-lg-1 text-center">Quitar</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="invoice in comprobantesVistosRevisar">
+								<td class="text-right">{{ invoice.nroPtoVenta }}</td>
+								<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
+								<td class="text-right"></a> {{ invoice.nroComprob }}</td>
+								<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+								<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+								<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</accordion-group>
+			</accordion>
+		</div>
+	</div>
+
+	<div class="col-lg-12 text-center" ng-show="loadingRevisar">
+		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+	</div>
+	<div class="col-lg-12 well" ng-hide="loadingRevisar">
+
+		<div class="table-responsive">
+			<table ng-show="comprobantesRevisar.length > 0" class="table table-striped table-bordered table-hover">
+				<thead>
+				<tr>
+					<th class="text-right">
+						<a href ng-click="filtrarOrden('nroPtoVenta')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
+							Pto. Venta
+						</a>
+					</th>
+					<th>
+						<a href ng-click="filtrarOrden('codTipoComprob')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
+							Comprobante
+						</a>
+					</th>
+					<th style="text-align: right" class="col-lg-1">
+						<a href ng-click="filtrarOrden('nroComprob')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
+							Nro
+						</a>
+					</th>
+					<th>
+						<a href ng-click="filtrarOrden('razon')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
+							Razón Social
+						</a>
+					</th>
+					<th style="text-align: center">
+						<a href ng-click="filtrarOrden('fecha.emision')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
+							Fecha
+						</a>
+					</th>
+					<th style="text-align: right">
+						<a href ng-click="filtrarOrden('importe.total')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
+							Importe Total
+						</a>
+					</th>
+					<th class="col-lg-1 text-center">Detalles</th>
+					<th ng-show="acceso=='agp'">Estado</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="invoice in comprobantesRevisar | orderBy: filtroOrden : reverse=filtroOrdenReverse">
+					<td class="text-right">{{ invoice.nroPtoVenta }}</td>
+					<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
+					<td class="text-right"></a> {{ invoice.nroComprob }}</td>
+					<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+					<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+					<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+					<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+					<td ng-show="acceso=='agp'">
+						<div class="btn-group" dropdown is-open="status.isopen">
+							<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+								{{ invoice.interfazEstado.estado }} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-toggle" role="menu">
+								<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
+								<li><a href ng-click="trackInvoice(invoice, 'G')">Controlado</a></li>
+								<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+	</div>
+</tab>
+
+<tab heading="Comprobantes erróneos">
+	<br>
+	<div class="row" data-ng-hide="$state.includes('invoices.result')">
+		<div class="col-lg-12">
+			<div ng-include="'view/invoices.search.html'"></div>
+		</div>
+	</div>
+
+	<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosRevisar.length == 0">
+		<div class="col-lg-12">
+			<accordion>
+				<accordion-group is-open="status.open">
+					<accordion-heading>
+						<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</accordion-heading>
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+							<tr>
+								<th class="col-lg-1 text-right">Pto. Venta</th>
+								<th>Comprobante</th>
+								<th class="col-lg-1 text-right">Nro</th>
+								<th>Razon Social</th>
+								<th class="text-center">Fecha</th>
+								<th class="text-right">Importe Total</th>
+								<th class="col-lg-1 text-center">Detalles</th>
+								<th class="col-lg-1 text-center">Quitar</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="invoice in comprobantesVistosError">
+								<td class="text-right">{{ invoice.nroPtoVenta }}</td>
+								<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
+								<td class="text-right"></a> {{ invoice.nroComprob }}</td>
+								<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+								<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+								<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</accordion-group>
+			</accordion>
+		</div>
+	</div>
+
+	<div class="col-lg-12 text-center" ng-show="loadingError">
+		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+	</div>
+	<div class="col-lg-12 well" ng-hide="loadingRevisar">
+
+		<div class="table-responsive">
+			<table ng-show="comprobantesError.length > 0" class="table table-striped table-bordered table-hover">
+				<thead>
+				<tr>
+					<th class="text-right">
+						<a href ng-click="filtrarOrden('nroPtoVenta')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
+							Pto. Venta
+						</a>
+					</th>
+					<th>
+						<a href ng-click="filtrarOrden('codTipoComprob')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
+							Comprobante
+						</a>
+					</th>
+					<th style="text-align: right" class="col-lg-1">
+						<a href ng-click="filtrarOrden('nroComprob')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
+							Nro
+						</a>
+					</th>
+					<th>
+						<a href ng-click="filtrarOrden('razon')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
+							Razón Social
+						</a>
+					</th>
+					<th style="text-align: center">
+						<a href ng-click="filtrarOrden('fecha.emision')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
+							Fecha
+						</a>
+					</th>
+					<th style="text-align: right">
+						<a href ng-click="filtrarOrden('importe.total')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
+							Importe Total
+						</a>
+					</th>
+					<th class="col-lg-1 text-center">Detalles</th>
+					<th ng-show="acceso=='agp'">Estado</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="invoice in comprobantesError | orderBy: filtroOrden : reverse=filtroOrdenReverse">
+					<td class="text-right">{{ invoice.nroPtoVenta }}</td>
+					<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
+					<td class="text-right"></a> {{ invoice.nroComprob }}</td>
+					<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+					<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+					<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+					<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+					<td ng-show="acceso=='agp'">
+						<div class="btn-group" dropdown is-open="status.isopen">
+							<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+								{{ invoice.interfazEstado.estado }} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-toggle" role="menu">
+								<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
+								<li><a href ng-click="trackInvoice(invoice, 'G')">Controlado</a></li>
+								<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+	</div>
+</tab>
+
+</tabset>
+
+</div>
+
+<div data-ng-show="$state.includes('cfacturas.result')">
+	<div ui-view></div>
+</div>
+
+<br>
 </div>

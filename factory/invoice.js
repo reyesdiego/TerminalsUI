@@ -259,7 +259,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 					break;
 				case 'G':
 					comprobante.interfazEstado = {
-						'estado': 'Controlada',
+						'estado': 'Controlado',
 						'btnEstado': 'btn-success'
 					};
 					break;

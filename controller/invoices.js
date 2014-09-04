@@ -227,7 +227,7 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService) {
 				break;
 			case 'G':
 				comprobante.interfazEstado = {
-					'estado': 'Controlada',
+					'estado': 'Controlado',
 					'btnEstado': 'btn-success'
 				};
 				break;
