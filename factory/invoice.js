@@ -226,8 +226,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.cambiarEstado = function(invoiceId, estado, callback){
-		//var inserturl = serverUrl + '/invoice/' + loginService.getFiltro() + '/' + invoiceId; el que se tiene que usar
-		var inserturl = serverUrl + '/invoice/' + invoiceId;
+		var inserturl = serverUrl + '/invoice/' + loginService.getFiltro() + '/' + invoiceId;
+		//var inserturl = serverUrl + '/invoice/' + invoiceId;
 		$http({
 			method: 'PUT',
 			url: inserturl,
@@ -249,6 +249,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.setearInterfaz = function(comprobantes){
+		console.log(comprobantes);
 		comprobantes.data.forEach(function(comprobante){
 			switch (comprobante.estado){
 				case 'Y':
