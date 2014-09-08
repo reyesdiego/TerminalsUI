@@ -110,10 +110,11 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 
 	$scope.cargaFacturasPorContenedor = function(container){
 		var datos = { 'contenedor': container };
-		$scope.model.contenedor = container;
+		$scope.container = container;
 		invoiceFactory.getInvoice(datos, { skip:0, limit: $scope.itemsPerPage }, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
+				$scope.paginationHide = true
 			}
 		});
 	};

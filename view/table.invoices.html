@@ -1,0 +1,75 @@
+<div class="table-responsive col-lg-12">
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+		<tr>
+			<th style="text-align: right">
+				<a href ng-click="filtrarOrden({filtro: 'nroPtoVenta'})">
+					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
+					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
+					Pto. Venta
+				</a>
+			</th>
+			<th>
+				<a href ng-click="filtrarOrden({filtro: 'codTipoComprob'})">
+					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
+					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
+					Comprobante
+				</a>
+			</th>
+			<th style="text-align: right">
+				<a href ng-click="filtrarOrden({filtro: 'nroComprob'})">
+					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
+					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
+					Nro
+				</a>
+			</th>
+			<th>
+				<a href ng-click="filtrarOrden({filtro: 'razon'})">
+					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
+					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
+					Razón Social
+				</a>
+			</th>
+			<th style="text-align: center">
+				<a href ng-click="filtrarOrden({filtro: 'fecha.emision'})">
+					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
+					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
+					Fecha
+				</a>
+			</th>
+			<th style="text-align: right">
+				<a href ng-click="filtrarOrden({filtro: 'importe.total'})">
+					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
+					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
+					Importe Total
+				</a>
+			</th>
+			<th style="text-align: center">Detalles</th>
+			<th ng-show="acceso=='agp'">Estado</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="invoice in invoices">
+			<td style="text-align: right">{{ invoice.nroPtoVenta }}</td>
+			<td><a ng-hide="true" href ng-click="filtrar.codComprobante(invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
+			<td style="text-align: right"><a ng-hide="true" href ng-click="filtrar.nroComprobante(invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+			<td><a ng-hide="true" href ng-click="filtrar.razonSocial(invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+			<td style="text-align: center"><a ng-hide="true" href ng-click="filtrar.fechaDesde(invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+			<td style="text-align: right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
+			<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+			<td ng-show="acceso=='agp'">
+				<div class="btn-group" dropdown is-open="status.isopen">
+					<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+						{{ invoice.interfazEstado.estado }} <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-toggle" role="menu">
+						<li><a href ng-click="trackInvoice({comprobante: invoice, estado: 'Y'})">Revisar</a></li>
+						<li><a href ng-click="trackInvoice({comprobante: invoice, estado: 'G'})">Controlada</a></li>
+						<li><a href ng-click="trackInvoice({comprobante: invoice, estado: 'R'})">Error</a></li>
+					</ul>
+				</div>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
