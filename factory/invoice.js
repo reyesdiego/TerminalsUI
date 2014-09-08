@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginService, formatDate){
+myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginService, formatDate, $templateCache){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
@@ -213,7 +213,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				} else {
 					item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
 				}
-			})
+			});
 		});
 		return comprobante;
 	};
@@ -240,11 +240,35 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
-	factory.saveTrackInvoice = function(data, callback){
-		console.log(data);
-		callback({
-			status: 'Ok',
-			data: null
+	factory.commentInvoice = function(data, callback){
+		var inserturl = serverUrl + '/comment';
+		$http({
+			method: 'POST',
+			url: inserturl,
+			data: JSON.stringify(data),
+			headers:{"Content-Type":"application/json", token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
+		});
+	};
+
+	factory.getTrackInvoice = function(invoiceId, callback){
+		var inserturl = serverUrl + '/invoice/' + invoiceId + '/comments';
+		console.log(inserturl);
+		$http({
+			method: 'GET',
+			url: inserturl,
+			cache: false,
+			headers:{ token: loginService.getToken()}
+		}).success(function (data){
+			data.data.forEach(function(comment){
+				comment.fecha = formatDate.formatearFecha(idToDate(comment._id));
+			});
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al obtener comentarios sobre el comprobante');
 		});
 	};
 
@@ -268,6 +292,12 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 					comprobante.interfazEstado = {
 						'estado': 'Error',
 						'btnEstado': 'btn-danger'
+					};
+					break;
+				default :
+					comprobante.interfazEstado = {
+						'estado': 'Revisar',
+						'btnEstado': 'btn-warning'
 					};
 					break;
 			}

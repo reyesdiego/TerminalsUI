@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 2/3/14.
 */
 
-function invoicesCtrl($scope, $modal, invoiceFactory, loginService) {
+function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCache) {
 	'use strict';
 	$scope.items = ['item1', 'item2', 'item3'];
 
@@ -241,32 +241,35 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService) {
 		if (estadoAnterior.estado == comprobante.interfazEstado.estado){
 			comprobante.interfazEstado = estadoAnterior;
 		} else {
-			var modalInstance = $modal.open({
-				templateUrl: 'view/trackingInvoice.html',
-				controller: trackingInvoiceCtrl,
-				backdrop: 'static',
-				resolve: {
-					estado: function () {
-						return estado;
+			invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+				var modalInstance = $modal.open({
+					templateUrl: 'view/trackingInvoice.html',
+					controller: trackingInvoiceCtrl,
+					backdrop: 'static',
+					resolve: {
+						estado: function () {
+							return estado;
+						},
+						track: function() {
+							return dataTrack;
+						}
 					}
-				}
-			});
-			modalInstance.result.then(function (comentario) {
-				console.log(comentario);
-				invoiceFactory.cambiarEstado(comprobante._id, estado, function(data){
-					var logInvoice = {
-						coment: comentario,
-						estado: estado,
-						usr: loginService.getInfo().user
-					};
-					invoiceFactory.saveTrackInvoice(logInvoice, function(dataTrack){
-						console.log(dataTrack);
-					});
-					console.log(data);
 				});
-			}, function () {
-				comprobante.interfazEstado = estadoAnterior;
-				console.log('Modal dismissed at: ' + new Date());
+				dataTrack = [];
+				modalInstance.result.then(function (dataComment) {
+					invoiceFactory.cambiarEstado(comprobante._id, estado, function(data){
+						var logInvoice = {
+							title: dataComment.title,
+							state: estado,
+							comment: dataComment.comment,
+							invoice: comprobante._id
+						};
+						invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+						});
+					});
+				}, function () {
+					comprobante.interfazEstado = estadoAnterior;
+				});
 			});
 		}
 	};

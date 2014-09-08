@@ -2,13 +2,15 @@
  * Created by artiom on 03/09/14.
  */
 
-function trackingInvoiceCtrl($scope, $modalInstance, estado) {
+function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 
 	$scope.interfazModal = {
 		titulo: '',
 		tipoModal: '',
 		comentario: ''
 	};
+
+	$scope.tracking = track.data;
 
 	switch (estado){
 		case 'Y':
@@ -33,12 +35,11 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado) {
 	};
 
 	$scope.guardar = function () {
-		console.log($scope.interfazModal.comentario);
-		if ($scope.interfazModal.comentario != ''){
-			$scope.interfazModal.comentario = $scope.interfazModal.titulo + ' - ' + $scope.interfazModal.comentario;
-			console.log($scope.interfazModal.comentario);
-		}
-		$modalInstance.close($scope.interfazModal.comentario);
+		var commentData = {
+			title: $scope.interfazModal.titulo,
+			comment: $scope.interfazModal.comentario
+		};
+		$modalInstance.close(commentData);
 	};
 
 	$scope.cancelar = function () {
