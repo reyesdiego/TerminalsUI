@@ -5,7 +5,7 @@
 <div class="modal-body">
 	<input type="text" class="form-control" ng-model="interfazModal.comentario" placeholder="Ingrese un comentario" ng-keyup="hitKey($event)">
 	<br>
-	<div class="well" ng-show="tracking.length > 0">
+	<div class="well" ng-show="tracking.length > 0" style="height: 300px; overflow: scroll;">
 		<div ng-repeat="track in tracking">
 			<h6>{{ track.fecha }}</h6>
 			<h4>{{ track.title }}</h4>
