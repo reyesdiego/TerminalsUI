@@ -185,6 +185,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'documentoCliente=' + datos.documentoCliente;
 		}
+		if(angular.isDefined(datos.estado) && datos.estado != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'estado=' + datos.estado;
+		}
 		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != null && datos.fechaDesde != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(datos.fechaDesde);

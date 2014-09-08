@@ -24,6 +24,7 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 		'nroComprobante': $scope.nroComprobante,
 		'razonSocial': $scope.razonSocial,
 		'documentoCliente': $scope.documentoCliente,
+		'estado': $scope.estado,
 		'fechaDesde': $scope.fechaDesde,
 		'fechaHasta': $scope.fechaHasta,
 		'contenedor': $scope.contenedor,
@@ -117,6 +118,10 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 			$scope.model.documentoCliente = filtro;
 			$scope.filtrar.cargar();
 		},
+		estado : function(filtro){
+			$scope.model.estado = filtro;
+			$scope.filtrar.cargar();
+		},
 		fechaDesde : function(filtro){
 			$scope.model.fechaDesde = filtro;
 			$scope.filtrar.cargar();
@@ -200,6 +205,7 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 			'nroComprobante': $scope.model.nroComprobante,
 			'razonSocial': $scope.model.razonSocial,
 			'documentoCliente': $scope.model.documentoCliente,
+			'estado': $scope.model.estado,
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
 			'contenedor': $scope.model.contenedor,

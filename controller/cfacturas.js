@@ -567,13 +567,13 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		};
 		switch ($scope.controlFiltros){
 			case 'codigos':
-				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado'];
 				break;
 			case 'tasas':
 				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta'];
 				break;
 			case 'correlativo':
-				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado'];
 				$scope.model.codTipoComprob = 1;
 				break;
 			case 'revisar':
@@ -581,7 +581,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				$scope.model.estado = 'Y';
 				break;
 			case 'error':
-				$scope.ocultarFiltros = ['nroPtoVenta'];
+				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
 				$scope.model.estado = 'R';
 				break;
 		}
@@ -603,9 +603,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		};
 	};
 
-	$scope.trackInvoice = function(comprobante, estado) {
+	$scope.trackInvoice = function(comprobante, estado){
 		var estadoAnterior = comprobante.interfazEstado;
-		switch (estado) {
+		switch (estado){
 			case 'Y':
 				comprobante.interfazEstado = {
 					'estado': 'Revisar',
@@ -614,7 +614,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				break;
 			case 'G':
 				comprobante.interfazEstado = {
-					'estado': 'Controlada',
+					'estado': 'Controlado',
 					'btnEstado': 'btn-success'
 				};
 				break;
@@ -625,35 +625,38 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				};
 				break;
 		}
-		if (estadoAnterior.estado == comprobante.interfazEstado.estado) {
+		if (estadoAnterior.estado == comprobante.interfazEstado.estado){
 			comprobante.interfazEstado = estadoAnterior;
 		} else {
-			var modalInstance = $modal.open({
-				templateUrl: 'view/trackingInvoice.html',
-				controller: trackingInvoiceCtrl,
-				backdrop: 'static',
-				resolve: {
-					estado: function () {
-						return estado;
+			invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+				var modalInstance = $modal.open({
+					templateUrl: 'view/trackingInvoice.html',
+					controller: trackingInvoiceCtrl,
+					backdrop: 'static',
+					resolve: {
+						estado: function () {
+							return estado;
+						},
+						track: function() {
+							return dataTrack;
+						}
 					}
-				}
-			});
-			modalInstance.result.then(function (comentario) {
-				console.log(comentario);
-				invoiceFactory.cambiarEstado(comprobante._id, estado, function (data) {
-					var logInvoice = {
-						coment: comentario,
-						estado: estado,
-						usr: loginService.getInfo().user
-					};
-					invoiceFactory.saveTrackInvoice(logInvoice, function (dataTrack) {
-						console.log(dataTrack);
-					});
-					console.log(data);
 				});
-			}, function () {
-				comprobante.interfazEstado = estadoAnterior;
-				console.log('Modal dismissed at: ' + new Date());
+				dataTrack = [];
+				modalInstance.result.then(function (dataComment) {
+					invoiceFactory.cambiarEstado(comprobante._id, estado, function(data){
+						var logInvoice = {
+							title: dataComment.title,
+							state: estado,
+							comment: dataComment.comment,
+							invoice: comprobante._id
+						};
+						invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+						});
+					});
+				}, function () {
+					comprobante.interfazEstado = estadoAnterior;
+				});
 			});
 		}
 	};

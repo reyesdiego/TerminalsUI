@@ -43,6 +43,17 @@
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.codigo();"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
+			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
+				<div class="input-group">
+					<select class="form-control" ng-model="model.estado" ng-init="model.estado='N'">
+						<option value="N" disabled>Seleccionar Estado</option>
+						<option value="Y">Revisar</option>
+						<option value="G">Controlado</option>
+						<option value="R">Error</option>
+					</select>
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar.estado('N');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+				</div>
+			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0">
 				<div class="input-group">
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
