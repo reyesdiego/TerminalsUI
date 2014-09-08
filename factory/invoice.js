@@ -87,7 +87,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-			console.log(data);
 			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);
@@ -256,7 +255,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getTrackInvoice = function(invoiceId, callback){
 		var inserturl = serverUrl + '/invoice/' + invoiceId + '/comments';
-		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -273,7 +271,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.setearInterfaz = function(comprobantes){
-		console.log(comprobantes);
 		comprobantes.data.forEach(function(comprobante){
 			switch (comprobante.estado){
 				case 'Y':
