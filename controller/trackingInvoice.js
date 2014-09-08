@@ -2,7 +2,7 @@
  * Created by artiom on 03/09/14.
  */
 
-function trackingInvoiceCtrl($scope, $modalInstance, estado) {
+function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 
 	$scope.interfazModal = {
 		titulo: '',
@@ -10,13 +10,15 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado) {
 		comentario: ''
 	};
 
+	$scope.tracking = track.data;
+
 	switch (estado){
 		case 'Y':
 			$scope.interfazModal.titulo = 'Cambio de estado: Revisar';
 			$scope.interfazModal.tipoModal = 'bg-warning';
 			break;
 		case 'G':
-			$scope.interfazModal.titulo = 'Cambio de estado: Controlada';
+			$scope.interfazModal.titulo = 'Cambio de estado: Controlado';
 			$scope.interfazModal.tipoModal = 'bg-success';
 			break;
 		case 'R':
@@ -33,12 +35,11 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado) {
 	};
 
 	$scope.guardar = function () {
-		console.log($scope.interfazModal.comentario);
-		if ($scope.interfazModal.comentario != ''){
-			$scope.interfazModal.comentario = $scope.interfazModal.titulo + ' - ' + $scope.interfazModal.comentario;
-			console.log($scope.interfazModal.comentario);
-		}
-		$modalInstance.close($scope.interfazModal.comentario);
+		var commentData = {
+			title: $scope.interfazModal.titulo,
+			comment: $scope.interfazModal.comentario
+		};
+		$modalInstance.close(commentData);
 	};
 
 	$scope.cancelar = function () {

@@ -69,6 +69,16 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		limit:1
 	};
 
+	$scope.pageRevisar = {
+		skip:0,
+		limit:1
+	};
+
+	$scope.pageError = {
+		skip:0,
+		limit:1
+	};
+
 	$scope.pantalla = {
 		"tituloCorrelativo":  "Correlatividad",
 		"mensajeCorrelativo": "Seleccione punto de venta y tipo de comprobante para realizar la búsqueda",
@@ -105,6 +115,11 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 
 	$scope.comprobantesVistosTasas = [];
 	$scope.comprobantesVistosCodigos = [];
+	$scope.comprobantesVistosRevisar = [];
+	$scope.comprobantesVistosError = [];
+
+	$scope.comprobantesRevisar = [];
+	$scope.comprobantesError = [];
 
 	$scope.loadingTasaCargas = true;
 	$scope.loadingCorrelatividad = false;
@@ -214,6 +229,11 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 					if ($scope.model.nroPtoVenta != '' && $scope.model.codTipoComprob != ''){
 						$scope.controlCorrelatividad();
 					}
+					break;
+				case 'revisar':
+					$scope.traerComprobantesRevisar();
+					break;
+				case 'error':
 					break;
 			}
 		}
@@ -399,6 +419,10 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		});
 	};
 
+	$scope.traerComprobantesRevisar = function(){
+
+	};
+
 	$scope.controlDeCodigos();
 	$scope.controlTasaCargas();
 	$scope.traerPuntosDeVenta();
@@ -429,6 +453,26 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 					$scope.comprobantesVistosTasas.push(comprobante);
 				}
 				break;
+			case 'revisar':
+				$scope.comprobantesVistosRevisar.forEach(function(unComprobante){
+					if (unComprobante._id == comprobante._id){
+						encontrado = true;
+					}
+				});
+				if (!encontrado){
+					$scope.comprobantesVistosRevisar.push(comprobante);
+				}
+				break;
+			case 'error':
+				$scope.comprobantesVistosError.forEach(function(unComprobante){
+					if (unComprobante._id == comprobante._id){
+						encontrado = true;
+					}
+				});
+				if (!encontrado){
+					$scope.comprobantesVistosError.push(comprobante);
+				}
+				break;
 		}
 		invoiceFactory.invoiceById(comprobante._id, function(miComprobante){
 			$scope.verDetalle = miComprobante;
@@ -446,6 +490,14 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			case 'tasas':
 				pos = $scope.comprobantesVistosTasas.indexOf(comprobante);
 				$scope.comprobantesVistosTasas.splice(pos, 1);
+				break;
+			case 'revisar':
+				pos = $scope.comprobantesVistosRevisar.indexOf(comprobante);
+				$scope.comprobantesVistosRevisar.splice(pos, 1);
+				break;
+			case 'error':
+				pos = $scope.comprobantesVistosError.indexOf(comprobante);
+				$scope.comprobantesVistosError.splice(pos, 1);
 				break;
 		}
 	};
@@ -502,20 +554,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 
 	$scope.cambioTab = function(unTab){
 		$scope.controlFiltros = unTab;
-		switch ($scope.controlFiltros){
-			case 'codigos':
-				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
-				$scope.model.codTipoComprob = 0;
-				break;
-			case 'tasas':
-				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta'];
-				$scope.model.codTipoComprob = 0;
-				break;
-			case 'correlativo':
-				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
-				$scope.model.codTipoComprob = 1;
-				break;
-		}
 		$scope.model = {
 			'nroPtoVenta': '',
 			'codTipoComprob': 0,
@@ -524,8 +562,29 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			'documentoCliente': '',
 			'fechaDesde': $scope.desde,
 			'fechaHasta': $scope.hasta,
-			'contenedor': ''
+			'contenedor': '',
+			'estado': ''
 		};
+		switch ($scope.controlFiltros){
+			case 'codigos':
+				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+				break;
+			case 'tasas':
+				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta'];
+				break;
+			case 'correlativo':
+				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+				$scope.model.codTipoComprob = 1;
+				break;
+			case 'revisar':
+				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
+				$scope.model.estado = 'Y';
+				break;
+			case 'error':
+				$scope.ocultarFiltros = ['nroPtoVenta'];
+				$scope.model.estado = 'R';
+				break;
+		}
 	};
 
 	function cargaDatos(){
@@ -539,7 +598,8 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
 			'contenedor': $scope.model.contenedor,
-			'order': $scope.model.order
+			'order': $scope.model.order,
+			'estado': $scope.model.estado
 		};
 	};
 
