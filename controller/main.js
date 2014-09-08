@@ -34,6 +34,10 @@ function in_array(needle, haystack, argStrict){
 	return false;
 }
 
+function idToDate(objectId){
+	return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
+}
+
 var serverUrl = config.url();
 
 var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies']);
@@ -161,6 +165,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 
 myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, authFactory, dialogs){
 	"use strict";
+
 	// Carga la sesion por cookies
 	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
 		authFactory.login().then(function(){
