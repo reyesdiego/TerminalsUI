@@ -28,6 +28,7 @@
 				<tabset>
 					<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar.nroPtoVenta(tab.punto)"></tab>
 				</tabset>
+				<br>
 				<table-invoices datos="invoices" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 				<div-pagination></div-pagination>
 			</div>

@@ -72,84 +72,10 @@
 			</div>
 		</div>
 
-		<div class="table-responsive">
-			<table ng-show="tasaCargas.mostrarResultado" class="table table-striped table-bordered table-hover">
-				<thead>
-				<tr>
-					<th class="text-right">
-						<a href ng-click="filtrarOrden('nroPtoVenta')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
-							Pto. Venta
-						</a>
-					</th>
-					<th>
-						<a href ng-click="filtrarOrden('codTipoComprob')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
-							Comprobante
-						</a>
-					</th>
-					<th style="text-align: right" class="col-lg-1">
-						<a href ng-click="filtrarOrden('nroComprob')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
-							Nro
-						</a>
-					</th>
-					<th>
-						<a href ng-click="filtrarOrden('razon')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
-							Razón Social
-						</a>
-					</th>
-					<th style="text-align: center">
-						<a href ng-click="filtrarOrden('fecha.emision')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
-							Fecha
-						</a>
-					</th>
-					<th style="text-align: right">
-						<a href ng-click="filtrarOrden('importe.total')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
-							Importe Total
-						</a>
-					</th>
-					<th class="col-lg-1 text-center">Detalles</th>
-					<th ng-show="acceso=='agp'">Estado</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr ng-repeat="invoice in tasaCargas.resultado | orderBy: filtroOrden : reverse=filtroOrdenReverse">
-					<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-					<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
-					<td class="text-right"></a> {{ invoice.nroComprob }}</td>
-					<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-					<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-					<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-					<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-					<td ng-show="acceso=='agp'">
-						<div class="btn-group" dropdown is-open="status.isopen">
-							<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
-								{{ invoice.interfazEstado.estado }} <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu dropdown-toggle" role="menu">
-								<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
-								<li><a href ng-click="trackInvoice(invoice, 'G')">Controlado</a></li>
-								<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
-							</ul>
-						</div>
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+		<table-invoices ng-show="tasaCargas.mostrarResultado" datos="tasaCargas.resultado" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
-		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="20" ng-change="pageChangedTasa()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="5" ng-change="pageChangedTasa()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 	</div>
 </tab>
 
@@ -421,84 +347,10 @@
 	</div>
 	<div class="col-lg-12 well" ng-hide="loadingRevisar">
 
-		<div class="table-responsive">
-			<table ng-show="comprobantesRevisar.length > 0" class="table table-striped table-bordered table-hover">
-				<thead>
-				<tr>
-					<th class="text-right">
-						<a href ng-click="filtrarOrden('nroPtoVenta')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
-							Pto. Venta
-						</a>
-					</th>
-					<th>
-						<a href ng-click="filtrarOrden('codTipoComprob')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
-							Comprobante
-						</a>
-					</th>
-					<th style="text-align: right" class="col-lg-1">
-						<a href ng-click="filtrarOrden('nroComprob')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
-							Nro
-						</a>
-					</th>
-					<th>
-						<a href ng-click="filtrarOrden('razon')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
-							Razón Social
-						</a>
-					</th>
-					<th style="text-align: center">
-						<a href ng-click="filtrarOrden('fecha.emision')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
-							Fecha
-						</a>
-					</th>
-					<th style="text-align: right">
-						<a href ng-click="filtrarOrden('importe.total')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
-							Importe Total
-						</a>
-					</th>
-					<th class="col-lg-1 text-center">Detalles</th>
-					<th ng-show="acceso=='agp'">Estado</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr ng-repeat="invoice in comprobantesRevisar | orderBy: filtroOrden : reverse=filtroOrdenReverse">
-					<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-					<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
-					<td class="text-right"></a> {{ invoice.nroComprob }}</td>
-					<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-					<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-					<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-					<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-					<td ng-show="acceso=='agp'">
-						<div class="btn-group" dropdown is-open="status.isopen">
-							<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
-								{{ invoice.interfazEstado.estado }} <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu dropdown-toggle" role="menu">
-								<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
-								<li><a href ng-click="trackInvoice(invoice, 'G')">Controlado</a></li>
-								<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
-							</ul>
-						</div>
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+		<table-invoices datos="comprobantesRevisar" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
-		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="20" ng-change="pageChangedRevisar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="5" ng-change="pageChangedRevisar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 	</div>
 </tab>
 
@@ -555,84 +407,10 @@
 	</div>
 	<div class="col-lg-12 well" ng-hide="loadingRevisar">
 
-		<div class="table-responsive">
-			<table ng-show="comprobantesError.length > 0" class="table table-striped table-bordered table-hover">
-				<thead>
-				<tr>
-					<th class="text-right">
-						<a href ng-click="filtrarOrden('nroPtoVenta')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroPtoVenta' && filtroOrdenReverse==true"></span>
-							Pto. Venta
-						</a>
-					</th>
-					<th>
-						<a href ng-click="filtrarOrden('codTipoComprob')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='codTipoComprob' && filtroOrdenReverse==true"></span>
-							Comprobante
-						</a>
-					</th>
-					<th style="text-align: right" class="col-lg-1">
-						<a href ng-click="filtrarOrden('nroComprob')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='nroComprob' && filtroOrdenReverse==true"></span>
-							Nro
-						</a>
-					</th>
-					<th>
-						<a href ng-click="filtrarOrden('razon')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='razon' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='razon' && filtroOrdenReverse==true"></span>
-							Razón Social
-						</a>
-					</th>
-					<th style="text-align: center">
-						<a href ng-click="filtrarOrden('fecha.emision')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='fecha.emision' && filtroOrdenReverse==true"></span>
-							Fecha
-						</a>
-					</th>
-					<th style="text-align: right">
-						<a href ng-click="filtrarOrden('importe.total')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='importe.total' && filtroOrdenReverse==true"></span>
-							Importe Total
-						</a>
-					</th>
-					<th class="col-lg-1 text-center">Detalles</th>
-					<th ng-show="acceso=='agp'">Estado</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr ng-repeat="invoice in comprobantesError | orderBy: filtroOrden : reverse=filtroOrdenReverse">
-					<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-					<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
-					<td class="text-right"></a> {{ invoice.nroComprob }}</td>
-					<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-					<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-					<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-					<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-					<td ng-show="acceso=='agp'">
-						<div class="btn-group" dropdown is-open="status.isopen">
-							<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
-								{{ invoice.interfazEstado.estado }} <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu dropdown-toggle" role="menu">
-								<li><a href ng-click="trackInvoice(invoice, 'Y')">Revisar</a></li>
-								<li><a href ng-click="trackInvoice(invoice, 'G')">Controlado</a></li>
-								<li><a href ng-click="trackInvoice(invoice, 'R')">Error</a></li>
-							</ul>
-						</div>
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+		<table-invoices datos="comprobantesError" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
-		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="20" ng-change="pageChangedError()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="5" ng-change="pageChangedError()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 	</div>
 </tab>
 

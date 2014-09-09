@@ -11,7 +11,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	$scope.maxDateH = new Date();
 	$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
 
-	$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta'];
+	$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado'];
 
 	$scope.model = {
 		'nroPtoVenta': '',
@@ -66,17 +66,21 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 
 	$scope.pageCorrelativo = {
 		skip:0,
-		limit:1
+		limit:$scope.itemsPerPage
 	};
 
+	$scope.currentPageRevisar = 1;
+	$scope.totalItemsRevisar = 0;
 	$scope.pageRevisar = {
 		skip:0,
-		limit:1
+		limit:$scope.itemsPerPage
 	};
 
+	$scope.currentPageError = 1;
+	$scope.totalItemsError = 0;
 	$scope.pageError = {
 		skip:0,
-		limit:1
+		limit:$scope.itemsPerPage
 	};
 
 	$scope.pantalla = {
@@ -123,6 +127,8 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 
 	$scope.loadingTasaCargas = true;
 	$scope.loadingCorrelatividad = false;
+	$scope.loadingRevisar = false;
+	$scope.loadingError = false;
 
 	$scope.filtrarOrden = function(filtro){
 		var filtroModo;
@@ -224,8 +230,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 					$scope.controlTasaCargas();
 					break;
 				case 'correlativo':
-					console.log($scope.model.nroPtoVenta);
-					console.log($scope.model.codTipoComprob);
 					if ($scope.model.nroPtoVenta != '' && $scope.model.codTipoComprob != ''){
 						$scope.controlCorrelatividad();
 					}
@@ -234,6 +238,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 					$scope.traerComprobantesRevisar();
 					break;
 				case 'error':
+					$scope.traerComprobantesError();
 					break;
 			}
 		}
@@ -420,7 +425,21 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	};
 
 	$scope.traerComprobantesRevisar = function(){
+		$scope.loadingRevisar = true;
+		invoiceFactory.getInvoice(cargaDatos(), $scope.pageRevisar, function(invoiceRevisar){
+			$scope.comprobantesRevisar = invoiceRevisar.data;
+			$scope.totalItemsRevisar = invoiceRevisar.totalCount;
+			$scope.loadingRevisar = false;
+		})
+	};
 
+	$scope.traerComprobantesError = function(){
+		$scope.loadingError = true;
+		invoiceFactory.getInvoice(cargaDatos(), $scope.pageError, function(invoiceError){
+			$scope.comprobantesError = invoiceError.data;
+			$scope.totalItemsError = invoiceError.totalCount;
+			$scope.loadingError = false;
+		})
 	};
 
 	$scope.controlDeCodigos();
@@ -502,30 +521,26 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		}
 	};
 
-	$scope.$watch('currentPageTasaCargas', function(){
-		if ($scope.flagWatch){
-			$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
-			invoiceFactory.getSinTasaCargas(cargaDatos(), loginService.getFiltro(), $scope.page, function(data){
-				if (data.status == "ERROR"){
+	$scope.pageChangedTasa = function(){
+		$scope.page.skip = (($scope.currentPageTasaCargas - 1) * $scope.itemsPerPage);
+		invoiceFactory.getSinTasaCargas(cargaDatos(), loginService.getFiltro(), $scope.page, function(data){
+			if (data.status == "ERROR"){
+				$scope.tasaCargas.titulo = "Error";
+				$scope.tasaCargas.cartel = "panel-danger";
+				$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
+				$scope.tasaCargas.mostrarResultado = 0;
+			} else {
+				$scope.tasaCargas.resultado = data.data;
+				if ($scope.tasaCargas.resultado.length > 0) {
+					$scope.totalItemsTasaCargas = data.totalCount;
 					$scope.tasaCargas.titulo = "Error";
 					$scope.tasaCargas.cartel = "panel-danger";
-					$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
-					$scope.tasaCargas.mostrarResultado = 0;
-				} else {
-					$scope.tasaCargas.resultado = data.data;
-					if ($scope.tasaCargas.resultado.length > 0) {
-						$scope.totalItemsTasaCargas = data.totalCount;
-						$scope.tasaCargas.titulo = "Error";
-						$scope.tasaCargas.cartel = "panel-danger";
-						$scope.tasaCargas.mensaje = "Se hallaron comprobantes sin tasa a las cargas.";
-						$scope.tasaCargas.mostrarResultado = 1;
-					}
+					$scope.tasaCargas.mensaje = "Se hallaron comprobantes sin tasa a las cargas.";
+					$scope.tasaCargas.mostrarResultado = 1;
 				}
-			});
-		} else {
-			$scope.flagWatch = true;
-		}
-	});
+			}
+		});
+	};
 
 	$scope.pageChangedCodigos = function(){
 		$scope.cargandoPaginaComprobantes = true;
@@ -549,6 +564,20 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
 		invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
 			$scope.pantalla.comprobantesRotos = data.data;
+		});
+	};
+
+	$scope.pageChangedRevisar = function(){
+		$scope.pageRevisar.skip = (($scope.currentPageRevisar - 1) * $scope.itemsPerPage);
+		invoiceFactory.getInvoice(cargaDatos(), $scope.pageRevisar, function(data){
+			$scope.comprobantesRevisar = data.data;
+		});
+	};
+
+	$scope.pageChangedError = function(){
+		$scope.pageError.skip = (($scope.currentPageError - 1) * $scope.itemsPerPage);
+		invoiceFactory.getInvoice(cargaDatos(), $scope.pageError, function(data){
+			$scope.comprobantesError = data.data;
 		});
 	};
 
@@ -579,10 +608,12 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			case 'revisar':
 				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
 				$scope.model.estado = 'Y';
+				$scope.filtrar.cargar();
 				break;
 			case 'error':
 				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
 				$scope.model.estado = 'R';
+				$scope.filtrar.cargar();
 				break;
 		}
 	};
