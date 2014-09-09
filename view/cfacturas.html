@@ -409,8 +409,8 @@
 
 		<table-invoices datos="comprobantesError" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
-		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="20" ng-change="pageChangedError()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="5" ng-change="pageChangedError()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsError" ng-model="$parent.currentPageError" max-size="20" ng-change="pageChangedError()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsError" ng-model="$parent.currentPageError" max-size="5" ng-change="pageChangedError()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 	</div>
 </tab>
 
