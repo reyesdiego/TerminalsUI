@@ -10,11 +10,13 @@
 				invoices:			'=datosInvoices',
 				acceso:				'@',
 				moneda:				'@',
+				ocultarFiltros:		'@',
 				filtroOrden:		'@',
 				filtroOrdenReverse:	'=',
 				mostrarDetalle:		'&',
 				filtrarOrden:		'&',
-				trackInvoice:		'&'
+				trackInvoice:		'&',
+				filtrar:			'&'
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
 				$scope.vouchersType = $rootScope.vouchersType;

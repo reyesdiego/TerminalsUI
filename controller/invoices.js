@@ -90,57 +90,51 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 		}
 		$scope.model.order = '"' + filtro + '":' + filtroModo;
 		$scope.filtroAnterior = filtro;
-		$scope.filtrar.cargar();
+		$scope.filtrarCargar();
 	};
 
-	$scope.filtrar = {
-		nroPtoVenta : function(filtro){
-			$scope.model.nroPtoVenta = filtro;
-			$scope.filtrar.cargar();
-		},
-		codigo : function(filtro){
-			$scope.model.codigo = filtro;
-			$scope.filtrar.cargar();
-		},
-		codComprobante : function(filtro){
-			$scope.model.codTipoComprob = filtro;
-			$scope.filtrar.cargar();
-		},
-		nroComprobante : function(filtro){
-			$scope.model.nroComprobante = filtro;
-			$scope.filtrar.cargar();
-		},
-		razonSocial : function(filtro){
-			$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
-			$scope.filtrar.cargar();
-		},
-		documentoCliente : function(filtro){
-			$scope.model.documentoCliente = filtro;
-			$scope.filtrar.cargar();
-		},
-		estado : function(filtro){
-			$scope.model.estado = filtro;
-			$scope.filtrar.cargar();
-		},
-		fechaDesde : function(filtro){
-			$scope.model.fechaDesde = filtro;
-			$scope.filtrar.cargar();
-		},
-		fechaHasta : function(filtro){
-			$scope.model.fechaHasta = filtro;
-			$scope.filtrar.cargar();
-		},
-		contenedor : function(filtro){
-			$scope.model.contenedor = filtro;
-			$scope.filtrar.cargar();
-		},
-		cargar: function(){
-			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
-			}
-			$scope.cargaPuntosDeVenta();
+	$scope.filtrar = function (filtro, contenido){
+		switch (filtro){
+			case 'nroPtoVenta':
+				$scope.model.nroPtoVenta = contenido;
+				break;
+			case 'codigo':
+				$scope.model.codigo = contenido;
+				break;
+			case 'codComprobante':
+				$scope.model.codTipoComprob = contenido;
+				break;
+			case 'nroComprobante':
+				$scope.model.nroComprobante = contenido;
+				break;
+			case 'razonSocial':
+				$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(contenido);
+				break;
+			case 'documentoCliente':
+				$scope.model.documentoCliente = contenido;
+				break;
+			case 'estado':
+				$scope.model.estado = contenido;
+				break;
+			case 'fechaDesde':
+				$scope.model.fechaDesde = contenido;
+				break;
+			case 'fechaHasta':
+				$scope.model.fechaHasta = contenido;
+				break;
+			case 'contenedor':
+				$scope.model.contenedor = contenido;
+				break;
 		}
+		$scope.filtrarCargar();
+	};
+
+	$scope.filtrarCargar = function(){
+		if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+			$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+			$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+		}
+		$scope.cargaPuntosDeVenta();
 	};
 
 	$scope.hitEnter = function(evt){

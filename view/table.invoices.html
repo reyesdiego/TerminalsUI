@@ -51,10 +51,10 @@
 		<tbody>
 		<tr ng-repeat="invoice in invoices">
 			<td style="text-align: right">{{ invoice.nroPtoVenta }}</td>
-			<td><a ng-hide="true" href ng-click="filtrar.codComprobante(invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
-			<td style="text-align: right"><a ng-hide="true" href ng-click="filtrar.nroComprobante(invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
-			<td><a ng-hide="true" href ng-click="filtrar.razonSocial(invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-			<td style="text-align: center"><a ng-hide="true" href ng-click="filtrar.fechaDesde(invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+			<td><a href ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0" ng-click="filtrar({filtro: 'codComprobante', contenido: invoice.codTipoComprob})"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
+			<td style="text-align: right"><a href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrar({filtro: 'nroComprobante', contenido: invoice.nroComprob})"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+			<td><a href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrar({filtro: 'razonSocial', contenido: invoice.razon})"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+			<td style="text-align: center"><a href ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0" ng-click="filtrar({filtro: 'fechaDesde', contenido: invoice.fecha.emision})"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 			<td style="text-align: right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
 			<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 			<td ng-show="acceso=='agp'">
