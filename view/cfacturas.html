@@ -19,44 +19,8 @@
 		</div>
 	</div>
 
-	<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosTasas.length == 0">
-		<div class="col-lg-12">
-			<accordion>
-				<accordion-group is-open="status.open">
-					<accordion-heading>
-						<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-					</accordion-heading>
-					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-hover">
-							<thead>
-							<tr>
-								<th class="col-lg-1 text-right">Pto. Venta</th>
-								<th>Comprobante</th>
-								<th class="col-lg-1 text-right">Nro</th>
-								<th>Razon Social</th>
-								<th class="text-center">Fecha</th>
-								<th class="text-right">Importe Total</th>
-								<th class="col-lg-1 text-center">Detalles</th>
-								<th class="col-lg-1 text-center">Quitar</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr ng-repeat="invoice in comprobantesVistosTasas">
-								<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-								<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
-								<td class="text-right"></a> {{ invoice.nroComprob }}</td>
-								<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-								<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-								<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-				</accordion-group>
-			</accordion>
-		</div>
+	<div class="row">
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosTasas" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="loadingTasaCargas">
@@ -72,10 +36,9 @@
 			</div>
 		</div>
 
-		<table-invoices ng-show="tasaCargas.mostrarResultado" datos="tasaCargas.resultado" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices ng-show="tasaCargas.mostrarResultado" datos-invoices="tasaCargas.resultado" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
-		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="20" ng-change="pageChangedTasa()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsTasaCargas" ng-model="$parent.currentPageTasaCargas" max-size="5" ng-change="pageChangedTasa()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div-pagination current-page="$parent.currentPageTasaCargas" page-changed="pageChangedTasa()" total-items="totalItemsTasaCargas"></div-pagination>
 	</div>
 </tab>
 
@@ -122,42 +85,8 @@
 		</div>
 	</div>
 
-	<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosCodigos.length == 0">
-		<div class="col-lg-12">
-			<accordion>
-				<accordion-group is-open="status.open">
-					<accordion-heading>
-						<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-					</accordion-heading>
-					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-hover">
-							<thead>
-							<tr>
-								<th class="col-lg-1 text-right">Pto. Venta</th>
-								<th class="col-lg-1 text-right">Nro</th>
-								<th>Razon Social</th>
-								<th class="text-center">Fecha</th>
-								<th class="text-right">Importe Total</th>
-								<th class="col-lg-1 text-center">Detalles</th>
-								<th class="col-lg-1 text-center">Quitar</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr ng-repeat="invoice in comprobantesVistosCodigos">
-								<td class="text-right"><a href ng-click="filtrar.nroPtoVenta(invoice.nroPtoVenta)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroPtoVenta }}</td>
-								<td class="text-right"><a href ng-click="filtrar.nroComprobante(invoice.nroComprob)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
-								<td class="text-left"><a href ng-click="filtrar.razonSocial(invoice.razon)" data-ng-show="controlFiltros == 'codigosFiltrados'"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-								<td class="text-center"><a href ng-click="filtrar.fechaDesde(invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-								<td class="text-center"><button ui-sref=".result" class="btn btn-info" type="button" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-								<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-				</accordion-group>
-			</accordion>
-		</div>
+	<div class="row">
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosCodigos" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="loadingControlCodigos">
@@ -246,15 +175,13 @@
 			</table>
 		</div>
 
-		<div class="text-center hidden-xs" ng-show="pantalla.mostrarResultado"><pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="20" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs" ng-show="pantalla.mostrarResultado"><pagination ng-hide="hayFiltros" boundary-links="true" total-items="totalItemsCodigos" ng-model="$parent.currentPageCodigos" max-size="5" ng-change="pageChangedCodigos()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center hidden-xs" ng-show="pantalla.mostrarResultado"><pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="20" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs" ng-show="pantalla.mostrarResultado"><pagination ng-show="hayFiltros" boundary-links="true" total-items="totalItemsFiltros" ng-model="$parent.currentPageFiltros" max-size="5" ng-change="pageChangedFiltros()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div-pagination ng-hide="hayFiltros" current-page="$parent.currentPageCodigos" page-changed="pageChangedCodigos()" total-items="totalItemsCodigos"></div-pagination>
+		<div-pagination ng-show="hayFiltros" current-page="$parent.currentPageFiltros" page-changed="pageChangedFiltros()" total-items="totalItemsFiltros"></div-pagination>
 	</div>
 
 </tab>
 
-<tab heading="Control de tarifas">
+<tab heading="Control de tarifas" ng-show="false">
 	<br>
 	<div class="row col-lg-12">
 		<div class="panel {{ pantalla.cartelTarifas }}">
@@ -302,44 +229,8 @@
 		</div>
 	</div>
 
-	<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosRevisar.length == 0">
-		<div class="col-lg-12">
-			<accordion>
-				<accordion-group is-open="status.open">
-					<accordion-heading>
-						<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-					</accordion-heading>
-					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-hover">
-							<thead>
-							<tr>
-								<th class="col-lg-1 text-right">Pto. Venta</th>
-								<th>Comprobante</th>
-								<th class="col-lg-1 text-right">Nro</th>
-								<th>Razon Social</th>
-								<th class="text-center">Fecha</th>
-								<th class="text-right">Importe Total</th>
-								<th class="col-lg-1 text-center">Detalles</th>
-								<th class="col-lg-1 text-center">Quitar</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr ng-repeat="invoice in comprobantesVistosRevisar">
-								<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-								<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
-								<td class="text-right"></a> {{ invoice.nroComprob }}</td>
-								<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-								<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-								<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-				</accordion-group>
-			</accordion>
-		</div>
+	<div class="row">
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosRevisar" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="loadingRevisar">
@@ -347,10 +238,9 @@
 	</div>
 	<div class="col-lg-12 well" ng-hide="loadingRevisar">
 
-		<table-invoices datos="comprobantesRevisar" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices datos-invoices="comprobantesRevisar" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
-		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="20" ng-change="pageChangedRevisar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsRevisar" ng-model="$parent.currentPageRevisar" max-size="5" ng-change="pageChangedRevisar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div-pagination current-page="$parent.currentPageRevisar" page-changed="pageChangedRevisar()" total-items="totalItemsRevisar"></div-pagination>
 	</div>
 </tab>
 
@@ -362,44 +252,8 @@
 		</div>
 	</div>
 
-	<div class="row" data-ng-hide="$state.includes('invoices.result') || $state.includes('gates.invoices.result') || comprobantesVistosRevisar.length == 0">
-		<div class="col-lg-12">
-			<accordion>
-				<accordion-group is-open="status.open">
-					<accordion-heading>
-						<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-					</accordion-heading>
-					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-hover">
-							<thead>
-							<tr>
-								<th class="col-lg-1 text-right">Pto. Venta</th>
-								<th>Comprobante</th>
-								<th class="col-lg-1 text-right">Nro</th>
-								<th>Razon Social</th>
-								<th class="text-center">Fecha</th>
-								<th class="text-right">Importe Total</th>
-								<th class="col-lg-1 text-center">Detalles</th>
-								<th class="col-lg-1 text-center">Quitar</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr ng-repeat="invoice in comprobantesVistosError">
-								<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-								<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
-								<td class="text-right"></a> {{ invoice.nroComprob }}</td>
-								<td><a ng-click="filtrar.razonSocial(invoice.razon)" data-ng-hide="$state.includes('gates.invoices')"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-								<td class="text-center"></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-								<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-								<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-								<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-				</accordion-group>
-			</accordion>
-		</div>
+	<div class="row">
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosError" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="loadingError">
@@ -407,10 +261,9 @@
 	</div>
 	<div class="col-lg-12 well" ng-hide="loadingError">
 
-		<table-invoices datos="comprobantesError" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices datos-invoices="comprobantesError" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
-		<div class="text-center hidden-xs"><pagination boundary-links="true" total-items="totalItemsError" ng-model="$parent.currentPageError" max-size="20" ng-change="pageChangedError()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItemsError" ng-model="$parent.currentPageError" max-size="5" ng-change="pageChangedError()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div-pagination current-page="$parent.currentPageError" page-changed="pageChangedError()" total-items="totalItemsError"></div-pagination>
 	</div>
 </tab>
 
