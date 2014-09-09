@@ -36,7 +36,7 @@
 			</div>
 		</div>
 
-		<table-invoices ng-show="tasaCargas.mostrarResultado" datos-invoices="tasaCargas.resultado" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices ng-show="tasaCargas.mostrarResultado" datos-invoices="tasaCargas.resultado" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
 		<div-pagination current-page="$parent.currentPageTasaCargas" page-changed="pageChangedTasa()" total-items="totalItemsTasaCargas"></div-pagination>
 	</div>
@@ -238,7 +238,7 @@
 	</div>
 	<div class="col-lg-12 well" ng-hide="loadingRevisar">
 
-		<table-invoices datos-invoices="comprobantesRevisar" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices datos-invoices="comprobantesRevisar" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
 		<div-pagination current-page="$parent.currentPageRevisar" page-changed="pageChangedRevisar()" total-items="totalItemsRevisar"></div-pagination>
 	</div>
@@ -261,7 +261,7 @@
 	</div>
 	<div class="col-lg-12 well" ng-hide="loadingError">
 
-		<table-invoices datos-invoices="comprobantesError" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices datos-invoices="comprobantesError" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
 		<div-pagination current-page="$parent.currentPageError" page-changed="pageChangedError()" total-items="totalItemsError"></div-pagination>
 	</div>
