@@ -7,6 +7,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -14,6 +15,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			{token: loginService.getToken()}
 		}).success(function(data){
 			data = factory.ponerDescripcionComprobantes(data);
+			console.log(data);
 			callback(factory.setearInterfaz(data));
 		}).error(function(errorText){
 			console.log(errorText);
@@ -185,7 +187,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'documentoCliente=' + datos.documentoCliente;
 		}
-		if(angular.isDefined(datos.estado) && datos.estado != ''){
+		if(angular.isDefined(datos.estado) && datos.estado != '' && datos.estado != 'N'){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'estado=' + datos.estado;
 		}
