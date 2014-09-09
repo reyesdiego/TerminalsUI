@@ -1,8 +1,8 @@
 <div class="container col-lg-12">
 	<div ng-hide="$state.includes('gates.invoices.result')">
 		<fieldset><legend>Comprobantes del contenedor {{ container }}</legend></fieldset>
-		<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
-		<table-invoices datos="invoices" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistos" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
+		<table-invoices datos-invoices="invoices" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 		<button class="btn btn-default" ng-click="$state.go('^'); paginationHide=false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 	</div>
 	<div class="row">

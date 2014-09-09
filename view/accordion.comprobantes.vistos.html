@@ -21,13 +21,13 @@
 					<tbody>
 					<tr ng-repeat="invoice in comprobantesVistos">
 						<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-						<td><a ng-click="filtrar.codComprobante(invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
-						<td class="text-right"><a href ng-click="filtrar.nroComprobante(invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
-						<td><a ng-click="filtrar.razonSocial(invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
-						<td class="text-center"><a href ng-click="filtrar.fechaDesde(invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+						<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
+						<td class="text-right">{{ invoice.nroComprob }}</td>
+						<td>{{ invoice.razon }}</td>
+						<td class="text-center">{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 						<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
-						<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="$parent.verDetalle = invoice"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-						<td class="text-center"><button class="btn btn-info" ng-click="$parent.quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
+						<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+						<td class="text-center"><button class="btn btn-info" ng-click="quitarVista({comprobante: invoice})"><span class="glyphicon glyphicon-remove"></span></button></td>
 					</tr>
 					</tbody>
 				</table>
