@@ -19,16 +19,16 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 	$scope.todosLosPuntosDeVentas = [];
 
 	$scope.model = {
-		'nroPtoVenta': $scope.nroPtoVenta,
-		'codTipoComprob': $scope.codTipoComprob,
-		'nroComprobante': $scope.nroComprobante,
-		'razonSocial': $scope.razonSocial,
-		'documentoCliente': $scope.documentoCliente,
-		'estado': $scope.estado,
-		'fechaDesde': $scope.fechaDesde,
-		'fechaHasta': $scope.fechaHasta,
-		'contenedor': $scope.contenedor,
-		'codigo': $scope.codigo,
+		'nroPtoVenta': '',
+		'codTipoComprob': 0,
+		'nroComprobante': '',
+		'razonSocial': '',
+		'documentoCliente': '',
+		'fechaDesde': $scope.desde,
+		'fechaHasta': $scope.hasta,
+		'contenedor': '',
+		'estado': 'N',
+		'codigo': '',
 		'order': ''
 	};
 

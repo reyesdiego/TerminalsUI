@@ -147,6 +147,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
+			data.data = factory.setearInterfazComprobante(data.data);
 			callback(factory.ponerDescripcionComprobante(data.data));
 		}).error(function(errorText){
 			console.log(errorText);
@@ -275,35 +276,40 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.setearInterfaz = function(comprobantes){
-		comprobantes.data.forEach(function(comprobante){
-			switch (comprobante.estado){
-				case 'Y':
-					comprobante.interfazEstado = {
-						'estado': 'Revisar',
-						'btnEstado': 'btn-warning'
-					};
-					break;
-				case 'G':
-					comprobante.interfazEstado = {
-						'estado': 'Controlado',
-						'btnEstado': 'btn-success'
-					};
-					break;
-				case 'R':
-					comprobante.interfazEstado = {
-						'estado': 'Error',
-						'btnEstado': 'btn-danger'
-					};
-					break;
-				default :
-					comprobante.interfazEstado = {
-						'estado': 'Revisar',
-						'btnEstado': 'btn-warning'
-					};
-					break;
-			}
+		comprobantes.data.forEach(function(comprobante) {
+			factory.setearInterfazComprobante(comprobante);
 		});
 		return comprobantes;
+	};
+
+	factory.setearInterfazComprobante = function(comprobante){
+		switch (comprobante.estado){
+			case 'Y':
+				comprobante.interfazEstado = {
+					'estado': 'Revisar',
+					'btnEstado': 'btn-warning'
+				};
+				break;
+			case 'G':
+				comprobante.interfazEstado = {
+					'estado': 'Controlado',
+					'btnEstado': 'btn-success'
+				};
+				break;
+			case 'R':
+				comprobante.interfazEstado = {
+					'estado': 'Error',
+					'btnEstado': 'btn-danger'
+				};
+				break;
+			default :
+				comprobante.interfazEstado = {
+					'estado': 'Revisar',
+					'btnEstado': 'btn-warning'
+				};
+				break;
+		}
+		return comprobante;
 	};
 
 	return factory;
