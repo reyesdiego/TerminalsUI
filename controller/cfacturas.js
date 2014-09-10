@@ -38,7 +38,11 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	$scope.format = 'yyyy-MM-dd';
 	$scope.verDetalle = "";
 	$scope.tipoComprobante = "0";
-	$scope.flagWatch = false;
+
+	$scope.flagWatchCodigos = false;
+	$scope.flagWatchFiltros = false;
+	$scope.flagWatchRevisar = false;
+	$scope.flagWatchError = false;
 
 	$scope.currentPageTasaCargas = 1;
 	$scope.totalItemsTasaCargas = 0;
@@ -62,11 +66,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	$scope.pageTarifas = {
 		skip:0,
 		limit: $scope.itemsPerPage
-	};
-
-	$scope.pageCorrelativo = {
-		skip:0,
-		limit:$scope.itemsPerPage
 	};
 
 	$scope.currentPageRevisar = 1;
@@ -151,96 +150,96 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	$scope.hayFiltros = false;
 	$scope.terminalSellPoints = [];
 
-	$scope.filtrar = {
-		nroPtoVenta : function(filtro){
-			$scope.model.nroPtoVenta = filtro;
-			$scope.filtrar.cargar();
-		},
-		codigo : function(filtro){
-			if (angular.isDefined(filtro) && filtro != ''){
+	$scope.filtrar = function (filtro, contenido){
+		switch (filtro){
+			case 'nroPtoVenta':
+				$scope.model.nroPtoVenta = contenido;
+				break;
+			case 'codigo':
 				if ($scope.controlFiltros == 'codigos'){
-					$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
-				}
-				$scope.controlFiltros = 'codigosFiltrados';
-				$scope.ocultarFiltros = [];
-				$scope.model.codigo = filtro;
-				$scope.hayFiltros = true;
-				$scope.filtrar.cargar();
-			} else{
-				$scope.hayFiltros = false;
-				$scope.model.codigo = '';
-				$scope.controlFiltros = 'codigos';
-				$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
-				$scope.ocultarFiltros = ['nroComprobante', 'nroPtoVenta', 'codComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
-				$scope.model = {
-					'codTipoComprob': '',
-					'nroComprobante': '',
-					'razonSocial': '',
-					'documentoCliente': '',
-					'fechaDesde': $scope.model.fechaDesde,
-					'fechaHasta': $scope.model.fechaHasta,
-					'contenedor': ''
-				};
-			}
-		},
-		codComprobante : function(filtro){
-			$scope.model.codTipoComprob = filtro;
-			$scope.filtrar.cargar();
-		},
-		nroComprobante : function(filtro){
-			$scope.model.nroComprobante = filtro;
-			$scope.filtrar.cargar();
-		},
-		razonSocial : function(filtro){
-			$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
-			$scope.filtrar.cargar();
-		},
-		documentoCliente : function(filtro){
-			$scope.model.documentoCliente = filtro;
-			$scope.filtrar.cargar();
-		},
-		fechaDesde : function(filtro){
-			$scope.model.fechaDesde = filtro;
-			$scope.filtrar.cargar();
-		},
-		fechaHasta : function(filtro){
-			$scope.model.fechaHasta = filtro;
-			$scope.filtrar.cargar();
-		},
-		contenedor : function(filtro){
-			$scope.model.contenedor = filtro;
-			$scope.filtrar.cargar();
-		},
-		cargar : function(){
-			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
-			}
-			switch ($scope.controlFiltros){
-				case 'codigos':
-					$scope.controlDeCodigos();
-					break;
-				case 'codigosFiltrados':
-					invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
-						$scope.totalItemsFiltros = data.totalCount;
-						$scope.pantalla.comprobantesRotos = data.data;
-					});
-					break;
-				case 'tasas':
-					$scope.controlTasaCargas();
-					break;
-				case 'correlativo':
-					if ($scope.model.nroPtoVenta != '' && $scope.model.codTipoComprob != ''){
-						$scope.controlCorrelatividad();
+					if (angular.isDefined(contenido) && contenido != ''){
+						$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
+						$scope.controlFiltros = 'codigosFiltrados';
+						$scope.ocultarFiltros = [];
+						$scope.model.codigo = contenido;
+						$scope.hayFiltros = true;
+					} else {
+						$scope.hayFiltros = false;
+						$scope.model.codigo = '';
+						$scope.controlFiltros = 'codigos';
+						$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
+						$scope.ocultarFiltros = ['nroComprobante', 'nroPtoVenta', 'codComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+						$scope.model = {
+							'codTipoComprob': '',
+							'nroComprobante': '',
+							'razonSocial': '',
+							'documentoCliente': '',
+							'fechaDesde': $scope.model.fechaDesde,
+							'fechaHasta': $scope.model.fechaHasta,
+							'contenedor': ''
+						};
 					}
-					break;
-				case 'revisar':
-					$scope.traerComprobantesRevisar();
-					break;
-				case 'error':
-					$scope.traerComprobantesError();
-					break;
-			}
+				} else {
+					$scope.model.codigo = contenido;
+				}
+				break;
+			case 'codComprobante':
+				$scope.model.codTipoComprob = contenido;
+				break;
+			case 'nroComprobante':
+				$scope.model.nroComprobante = contenido;
+				break;
+			case 'razonSocial':
+				$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(contenido);
+				break;
+			case 'documentoCliente':
+				$scope.model.documentoCliente = contenido;
+				break;
+			case 'estado':
+				$scope.model.estado = contenido;
+				break;
+			case 'fechaDesde':
+				$scope.model.fechaDesde = contenido;
+				break;
+			case 'fechaHasta':
+				$scope.model.fechaHasta = contenido;
+				break;
+			case 'contenedor':
+				$scope.model.contenedor = contenido;
+				break;
+		}
+		$scope.filtrarCargar();
+	};
+
+	$scope.filtrarCargar = function(){
+		if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+			$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+			$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+		}
+		switch ($scope.controlFiltros){
+			case 'codigos':
+				$scope.controlDeCodigos();
+				break;
+			case 'codigosFiltrados':
+				invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
+					$scope.totalItemsFiltros = data.totalCount;
+					$scope.pantalla.comprobantesRotos = data.data;
+				});
+				break;
+			case 'tasas':
+				$scope.controlTasaCargas();
+				break;
+			case 'correlativo':
+				if ($scope.model.nroPtoVenta != '' && $scope.model.codTipoComprob != ''){
+					$scope.controlCorrelatividad();
+				}
+				break;
+			case 'revisar':
+				$scope.traerComprobantesRevisar();
+				break;
+			case 'error':
+				$scope.traerComprobantesError();
+				break;
 		}
 	};
 
@@ -349,7 +348,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	$scope.controlCorrelatividad = function(){
 		$scope.loadingCorrelatividad = true;
 		invoiceFactory.getCorrelative(cargaDatos(), function(dataComprob) {
-			console.log(dataComprob);
 			$scope.result = dataComprob;
 			if ($scope.result.totalCount > 0){
 				$scope.pantalla.mensajeCorrelativo = "Se hallaron comprobantes faltantes: ";
@@ -373,7 +371,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			$scope.tarifasTerminal = dataTarifas.data;
 
 				invoiceFactory.getInvoice(cargaDatos(), $scope.pageTarifas, function(dataComprob) {
-					console.log(dataComprob);
 					$scope.result = dataComprob;
 					$scope.totalFacturas= $scope.result.data.length;
 
@@ -391,10 +388,8 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 
 						/*Aca control de tarifas*/
 						var tarifa;
-						console.log('Comprobante número: ' + comprob.nroComprob);
 						comprob.detalle.forEach(function(detalle){
 							detalle.items.forEach(function(item){
-								console.log(item.id);
 								if (angular.isDefined($scope.tarifasTerminal[item.id])){
 									tarifa = $scope.tarifasTerminal[item.id].price * item.cnt;
 									if (comprob.codMoneda == 'PES' && $scope.tarifasTerminal[item.id].currency == 'DOL'){
@@ -403,9 +398,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 									if (comprob.codMoneda == 'DOL' && $scope.tarifasTerminal[item.id].currency == 'PES'){
 										tarifa = tarifa / comprob.cotiMoneda;
 									}
-									console.log('La tarifa tope es:' + tarifa);
 									if (tarifa < item.impTot){
-										console.log('La tarifa cobrada es:' + item.impTot);
 										$scope.pantalla.mensajeTarifas = "Se hallaron tarifas mal cobradas";
 										$scope.pantalla.cartelTarifas = "panel-danger";
 										$scope.pantalla.tituloTarifas = "Error";
@@ -445,8 +438,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	$scope.controlDeCodigos();
 	$scope.controlTasaCargas();
 	$scope.traerPuntosDeVenta();
-	//$scope.controlCorrelatividad();
-	//$scope.controlTarifas();
 
 	$scope.mostrarDetalle = function(comprobante){
 		var encontrado = false;
@@ -543,42 +534,58 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	};
 
 	$scope.pageChangedCodigos = function(){
-		$scope.cargandoPaginaComprobantes = true;
-		$scope.pantalla.comprobantesRotos = [];
-		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
-		invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.pageCodigos, function(data){
-			data.data.forEach(function(unComprobante){
-				unComprobante._id.fecha = {
-					emision: unComprobante._id.fecha
-				};
-				unComprobante._id.importe = {
-					total: unComprobante._id.impTot
-				};
-				$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+		if ($scope.flagWatchCodigos){
+			$scope.cargandoPaginaComprobantes = true;
+			$scope.pantalla.comprobantesRotos = [];
+			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
+			invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.pageCodigos, function(data){
+				data.data.forEach(function(unComprobante){
+					unComprobante._id.fecha = {
+						emision: unComprobante._id.fecha
+					};
+					unComprobante._id.importe = {
+						total: unComprobante._id.impTot
+					};
+					$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+				});
+				$scope.cargandoPaginaComprobantes = false;
 			});
-			$scope.cargandoPaginaComprobantes = false;
-		});
+		} else {
+			$scope.flagWatchCodigos = true;
+		}
 	};
 
 	$scope.pageChangedFiltros = function(){
-		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
-		invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
-			$scope.pantalla.comprobantesRotos = data.data;
-		});
+		if ($scope.flagWatchFiltros){
+			$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
+			invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
+				$scope.pantalla.comprobantesRotos = data.data;
+			});
+		} else {
+			$scope.flagWatchFiltros = true;
+		}
 	};
 
 	$scope.pageChangedRevisar = function(){
-		$scope.pageRevisar.skip = (($scope.currentPageRevisar - 1) * $scope.itemsPerPage);
-		invoiceFactory.getInvoice(cargaDatos(), $scope.pageRevisar, function(data){
-			$scope.comprobantesRevisar = data.data;
-		});
+		if ($scope.flagWatchRevisar){
+			$scope.pageRevisar.skip = (($scope.currentPageRevisar - 1) * $scope.itemsPerPage);
+			invoiceFactory.getInvoice(cargaDatos(), $scope.pageRevisar, function(data){
+				$scope.comprobantesRevisar = data.data;
+			});
+		} else {
+			$scope.flagWatchRevisar = true;
+		}
 	};
 
 	$scope.pageChangedError = function(){
-		$scope.pageError.skip = (($scope.currentPageError - 1) * $scope.itemsPerPage);
-		invoiceFactory.getInvoice(cargaDatos(), $scope.pageError, function(data){
-			$scope.comprobantesError = data.data;
-		});
+		if ($scope.flagWatchError){
+			$scope.pageError.skip = (($scope.currentPageError - 1) * $scope.itemsPerPage);
+			invoiceFactory.getInvoice(cargaDatos(), $scope.pageError, function(data){
+				$scope.comprobantesError = data.data;
+			});
+		} else {
+			$scope.flagWatchError = true;
+		}
 	};
 
 	$scope.cambioTab = function(unTab){
@@ -599,7 +606,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado'];
 				break;
 			case 'tasas':
-				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta'];
+				$scope.ocultarFiltros = ['nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado'];
 				break;
 			case 'correlativo':
 				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado'];
@@ -608,12 +615,12 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			case 'revisar':
 				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
 				$scope.model.estado = 'Y';
-				$scope.filtrar.cargar();
+				$scope.filtrarCargar()
 				break;
 			case 'error':
 				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
 				$scope.model.estado = 'R';
-				$scope.filtrar.cargar();
+				$scope.filtrarCargar()
 				break;
 		}
 	};
