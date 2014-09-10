@@ -156,30 +156,31 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				$scope.model.nroPtoVenta = contenido;
 				break;
 			case 'codigo':
-				if (angular.isDefined(filtro) && filtro != ''){
-					if ($scope.controlFiltros == 'codigos'){
+				if ($scope.controlFiltros == 'codigos'){
+					if (angular.isDefined(contenido) && contenido != ''){
 						$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
+						$scope.controlFiltros = 'codigosFiltrados';
+						$scope.ocultarFiltros = [];
+						$scope.model.codigo = contenido;
+						$scope.hayFiltros = true;
+					} else {
+						$scope.hayFiltros = false;
+						$scope.model.codigo = '';
+						$scope.controlFiltros = 'codigos';
+						$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
+						$scope.ocultarFiltros = ['nroComprobante', 'nroPtoVenta', 'codComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
+						$scope.model = {
+							'codTipoComprob': '',
+							'nroComprobante': '',
+							'razonSocial': '',
+							'documentoCliente': '',
+							'fechaDesde': $scope.model.fechaDesde,
+							'fechaHasta': $scope.model.fechaHasta,
+							'contenedor': ''
+						};
 					}
-					$scope.controlFiltros = 'codigosFiltrados';
-					$scope.ocultarFiltros = [];
-					$scope.model.codigo = filtro;
-					$scope.hayFiltros = true;
-					$scope.filtrar.cargar();
 				} else {
-					$scope.hayFiltros = false;
-					$scope.model.codigo = '';
-					$scope.controlFiltros = 'codigos';
-					$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
-					$scope.ocultarFiltros = ['nroComprobante', 'nroPtoVenta', 'codComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
-					$scope.model = {
-						'codTipoComprob': '',
-						'nroComprobante': '',
-						'razonSocial': '',
-						'documentoCliente': '',
-						'fechaDesde': $scope.model.fechaDesde,
-						'fechaHasta': $scope.model.fechaHasta,
-						'contenedor': ''
-					};
+					$scope.model.codigo = contenido;
 				}
 				break;
 			case 'codComprobante':
