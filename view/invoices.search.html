@@ -32,6 +32,7 @@
 				                  filtrar="$parent.filtrar(filtrar, contenido)"
 				                  input-field="razonSocial"
 				                  match-class="highlight"
+				                  limit-results="15"
 				></angucomplete-alt>
 			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('documentoCliente', 0) >= 0">
@@ -53,6 +54,7 @@
 					              filtrar="$parent.filtrar(filtrar, contenido)"
 					              input-field="contenedor"
 					              match-class="highlight"
+					              limit-results="15"
 					></angucomplete-alt>
 			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('codigo', 0) >= 0">

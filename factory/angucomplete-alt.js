@@ -57,7 +57,8 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 			inputChanged: '=',
 			autoMatch: '@',
 			filtrar: '&',
-			inputField: '@'
+			inputField: '@',
+			limitResults: '@'
 		},
 		template:
 			'<div class="angucomplete-holder input-group">' +
@@ -302,7 +303,6 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 				var i, match, s,
 					searchFields = scope.searchFields.split(','),
 					matches = [];
-
 				for (i = 0; i < scope.localData.length; i++) {
 					match = false;
 
@@ -313,6 +313,10 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 					if (match) {
 						matches[matches.length] = scope.localData[i];
 					}
+				}
+
+				if (scope.limitResults > 0){
+					matches = matches.splice(0, scope.limitResults);
 				}
 
 				scope.searching = false;

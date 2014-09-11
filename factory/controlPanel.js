@@ -138,5 +138,33 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		});
 	};
 
+	factory.getClients = function(callback){
+		var inserturl = serverUrl + '/clients';
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			errCallBack(errorText);
+		});
+	};
+
+	factory.getContainers = function(callback){
+		var inserturl = serverUrl + '/containers';
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			errCallBack(errorText);
+		});
+	};
+
 	return factory;
 });

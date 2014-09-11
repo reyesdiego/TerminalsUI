@@ -163,7 +163,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 });
 
-myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, authFactory, dialogs){
+myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs){
 	"use strict";
 
 	// Carga la sesion por cookies
@@ -179,6 +179,30 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 
 	$rootScope.listaRazonSocial = [];
 	$rootScope.listaContenedores = [];
+
+	controlPanelFactory.getClients(function(data){
+		var i;
+		data.data.forEach(function(cliente){
+			var objetoCliente = {
+				'id': i,
+				'nombre': cliente
+			};
+			$rootScope.listaRazonSocial.push(objetoCliente);
+			i++;
+		})
+	});
+
+	controlPanelFactory.getContainers(function(data){
+		var i;
+		data.data.forEach(function(contenedor){
+			var objetoContenedor = {
+				'id': i,
+				'contenedor': contenedor
+			};
+			$rootScope.listaContenedores.push(objetoContenedor);
+			i++;
+		})
+	});
 
 	var styles=document.styleSheets;
 	for(var i=0,l=styles.length; i<l; ++i){
