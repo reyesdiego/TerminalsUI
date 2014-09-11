@@ -20,10 +20,19 @@
 				</div>
 			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
-				<div class="input-group">
-					<input type="text" ng-keyup="hitEnter($event)" ng-model="model.razonSocial" class="form-control" placeholder="Raz&oacute;n Social" toupper/>
-					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar('razonSocial', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-				</div>
+				<angucomplete-alt id="idRazonSocial"
+				                  placeholder="Razón Social"
+				                  pause="100"
+				                  selected-object="model.razonSocial"
+				                  local-data="listaRazonSocial"
+				                  search-fields="nombre"
+				                  title-field="nombre"
+				                  minlength="1"
+				                  input-class="form-control"
+				                  filtrar="$parent.filtrar(filtrar, contenido)"
+				                  input-field="razonSocial"
+				                  match-class="highlight"
+				></angucomplete-alt>
 			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('documentoCliente', 0) >= 0">
 				<div class="input-group">
@@ -32,10 +41,19 @@
 				</div>
 			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
-				<div class="input-group">
-					<input type="text" ng-keyup="hitEnter($event)" ng-model="model.contenedor" class="form-control" placeholder="Contenedor">
-					<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar('contenedor', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-				</div>
+					<angucomplete-alt id="idContenedor"
+					              placeholder="Contenedor"
+					              pause="100"
+					              selected-object="model.contenedor"
+					              local-data="listaContenedores"
+					              search-fields="contenedor"
+					              title-field="contenedor"
+					              minlength="1"
+					              input-class="form-control"
+					              filtrar="$parent.filtrar(filtrar, contenido)"
+					              input-field="contenedor"
+					              match-class="highlight"
+					></angucomplete-alt>
 			</div>
 			<div class="form-group col-lg-4" ng-hide="ocultarFiltros.indexOf('codigo', 0) >= 0">
 				<div class="input-group">

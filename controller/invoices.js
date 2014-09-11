@@ -151,6 +151,7 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
+			console.log(data);
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.totalItems = data.totalCount;
@@ -197,12 +198,12 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 			'nroPtoVenta': $scope.model.nroPtoVenta,
 			'codTipoComprob': $scope.model.codTipoComprob,
 			'nroComprobante': $scope.model.nroComprobante,
-			'razonSocial': $scope.model.razonSocial,
+			'razonSocial': $scope.model.razonSocial.title,
 			'documentoCliente': $scope.model.documentoCliente,
 			'estado': $scope.model.estado,
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
-			'contenedor': $scope.model.contenedor,
+			'contenedor': $scope.model.contenedor.title,
 			'codigo': $scope.model.codigo,
 			'order': $scope.model.order
 		};

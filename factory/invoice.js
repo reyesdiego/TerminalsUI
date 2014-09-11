@@ -168,6 +168,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}
 		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			console.log(datos.contenedor);
 			unaUrl = unaUrl + 'contenedor=' + datos.contenedor.toUpperCase();
 		}
 		if(angular.isDefined(datos.nroComprobante) && datos.nroComprobante != ''){

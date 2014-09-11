@@ -40,7 +40,7 @@ function idToDate(objectId){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -176,6 +176,9 @@ myapp.run(function($rootScope, $state, loginService, $http, vouchersFactory, aut
 	$rootScope.colorBactssa = '';
 	$rootScope.colorTerminal4 = '';
 	$rootScope.colorTrp = '';
+
+	$rootScope.listaRazonSocial = [];
+	$rootScope.listaContenedores = [];
 
 	var styles=document.styleSheets;
 	for(var i=0,l=styles.length; i<l; ++i){

@@ -641,11 +641,11 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			'codigo': $scope.model.codigo,
 			'codTipoComprob': $scope.model.codTipoComprob,
 			'nroComprobante': $scope.model.nroComprobante,
-			'razonSocial': $scope.model.razonSocial,
+			'razonSocial': $scope.model.razonSocial.title,
 			'documentoCliente': $scope.model.documentoCliente,
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
-			'contenedor': $scope.model.contenedor,
+			'contenedor': $scope.model.contenedor.title,
 			'order': $scope.model.order,
 			'estado': $scope.model.estado
 		};
