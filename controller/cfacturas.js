@@ -22,7 +22,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		'fechaDesde': $scope.desde,
 		'fechaHasta': $scope.hasta,
 		'contenedor': '',
-		'codigo': ''
+		'estado': 'N',
+		'codigo': '',
+		'order': ''
 	};
 
 	vouchersFactory.getVouchersType(function(data){
@@ -144,43 +146,55 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		}
 		$scope.model.order = '"' + filtro + '":' + filtroModo;
 		$scope.filtroAnterior = filtro;
-		$scope.filtrar.cargar();
+		$scope.filtrarCargar();
 	};
 
 	$scope.hayFiltros = false;
 	$scope.terminalSellPoints = [];
 
 	$scope.filtrar = function (filtro, contenido){
+		var recargar = true;
 		switch (filtro){
 			case 'nroPtoVenta':
 				$scope.model.nroPtoVenta = contenido;
 				break;
 			case 'codigo':
-				if ($scope.controlFiltros == 'codigos'){
-					if (angular.isDefined(contenido) && contenido != ''){
+				switch ($scope.controlFiltros){
+					case 'codigos':
 						$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
 						$scope.controlFiltros = 'codigosFiltrados';
 						$scope.ocultarFiltros = [];
 						$scope.model.codigo = contenido;
 						$scope.hayFiltros = true;
-					} else {
-						$scope.hayFiltros = false;
-						$scope.model.codigo = '';
-						$scope.controlFiltros = 'codigos';
-						$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
-						$scope.ocultarFiltros = ['nroComprobante', 'nroPtoVenta', 'codComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial'];
-						$scope.model = {
-							'codTipoComprob': '',
-							'nroComprobante': '',
-							'razonSocial': '',
-							'documentoCliente': '',
-							'fechaDesde': $scope.model.fechaDesde,
-							'fechaHasta': $scope.model.fechaHasta,
-							'contenedor': ''
-						};
-					}
-				} else {
-					$scope.model.codigo = contenido;
+						break;
+					case 'codigosFiltrados':
+						if (angular.isDefined(contenido) && contenido != ''){
+							$scope.model.codigo = contenido;
+						} else {
+							$scope.hayFiltros = false;
+							$scope.model.codigo = '';
+							$scope.controlFiltros = 'codigos';
+							$scope.pantalla.comprobantesRotos = $scope.anteriorCargaCodigos;
+							$scope.ocultarFiltros = ['nroComprobante', 'nroPtoVenta', 'codComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado'];
+							$scope.model = {
+								'nroPtoVenta': '',
+								'codTipoComprob': 0,
+								'nroComprobante': '',
+								'razonSocial': '',
+								'documentoCliente': '',
+								'fechaDesde': $scope.desde,
+								'fechaHasta': $scope.hasta,
+								'contenedor': '',
+								'estado': 'N',
+								'codigo': '',
+								'order': ''
+							};
+							recargar = false;
+						}
+						break;
+					default:
+						$scope.model.codigo = contenido;
+						break;
 				}
 				break;
 			case 'codComprobante':
@@ -208,7 +222,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				$scope.model.contenedor = contenido;
 				break;
 		}
-		$scope.filtrarCargar();
+		if (recargar){
+			$scope.filtrarCargar();
+		}
 	};
 
 	$scope.filtrarCargar = function(){
@@ -283,13 +299,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.pageCodigos, function(invoicesNoMatches){
 					if (invoicesNoMatches.data != null){
 						invoicesNoMatches.data.forEach(function(unComprobante){
-							unComprobante._id.fecha = {
-								emision: unComprobante._id.fecha
-							};
-							unComprobante._id.importe = {
-								total: unComprobante._id.impTot
-							};
-							$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+							invoiceFactory.invoiceById(unComprobante._id._id, function(realData){
+								$scope.pantalla.comprobantesRotos.push(realData);
+							});
 						});
 						$scope.totalItemsCodigos = invoicesNoMatches.totalCount;
 					}
@@ -540,13 +552,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
 			invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.pageCodigos, function(data){
 				data.data.forEach(function(unComprobante){
-					unComprobante._id.fecha = {
-						emision: unComprobante._id.fecha
-					};
-					unComprobante._id.importe = {
-						total: unComprobante._id.impTot
-					};
-					$scope.pantalla.comprobantesRotos.push(unComprobante._id);
+					invoiceFactory.invoiceById(unComprobante._id._id, function(realData){
+						$scope.pantalla.comprobantesRotos.push(realData);
+					});
 				});
 				$scope.cargandoPaginaComprobantes = false;
 			});
@@ -599,7 +607,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			'fechaDesde': $scope.desde,
 			'fechaHasta': $scope.hasta,
 			'contenedor': '',
-			'estado': ''
+			'estado': 'N',
+			'codigo': '',
+			'order': ''
 		};
 		switch ($scope.controlFiltros){
 			case 'codigos':
@@ -631,11 +641,11 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			'codigo': $scope.model.codigo,
 			'codTipoComprob': $scope.model.codTipoComprob,
 			'nroComprobante': $scope.model.nroComprobante,
-			'razonSocial': $scope.model.razonSocial,
+			'razonSocial': $scope.model.razonSocial.title,
 			'documentoCliente': $scope.model.documentoCliente,
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
-			'contenedor': $scope.model.contenedor,
+			'contenedor': $scope.model.contenedor.title,
 			'order': $scope.model.order,
 			'estado': $scope.model.estado
 		};
