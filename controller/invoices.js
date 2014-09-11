@@ -24,8 +24,8 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
-		'fechaDesde': $scope.desde,
-		'fechaHasta': $scope.hasta,
+		'fechaDesde': $scope.fechaDesde,
+		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
 		'estado': 'N',
 		'codigo': '',
@@ -151,7 +151,6 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		invoiceFactory.getInvoice(cargaDatos(), page, function(data){
-			console.log(data);
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.totalItems = data.totalCount;
