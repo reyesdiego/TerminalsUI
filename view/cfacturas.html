@@ -18,7 +18,7 @@
 	</div>
 
 	<div class="row">
-		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosTasas" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosTasas" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)"></accordion-comprobantes-vistos>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="loadingTasaCargas">
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 
-		<table-invoices ng-show="tasaCargas.mostrarResultado" datos-invoices="tasaCargas.resultado" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices ng-show="tasaCargas.mostrarResultado" datos-invoices="tasaCargas.resultado" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 
 		<div-pagination current-page="$parent.currentPageTasaCargas" page-changed="pageChangedTasa()" total-items="totalItemsTasaCargas"></div-pagination>
 	</div>
@@ -84,7 +84,7 @@
 	</div>
 
 	<div class="row">
-		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosCodigos" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosCodigos" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)"></accordion-comprobantes-vistos>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="loadingControlCodigos">
@@ -228,7 +228,7 @@
 	</div>
 
 	<div class="row">
-		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosRevisar" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosRevisar" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)"></accordion-comprobantes-vistos>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="loadingRevisar">
@@ -247,7 +247,7 @@
 	</div>
 
 	<div class="col-lg-12 well" ng-hide="loadingRevisar || comprobantesRevisar.length == 0">
-		<table-invoices datos-invoices="comprobantesRevisar" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices datos-invoices="comprobantesRevisar" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 		<div-pagination current-page="$parent.currentPageRevisar" page-changed="pageChangedRevisar()" total-items="totalItemsRevisar"></div-pagination>
 	</div>
 </tab>
@@ -261,7 +261,7 @@
 	</div>
 
 	<div class="row">
-		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosError" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)" moneda="{{moneda}}"></accordion-comprobantes-vistos>
+		<accordion-comprobantes-vistos datos-comprobantes="comprobantesVistosError" mostrar-detalle="mostrarDetalle(comprobante)" quitar-vista="quitarVista(comprobante)"></accordion-comprobantes-vistos>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="loadingError">
@@ -280,7 +280,7 @@
 	</div>
 
 	<div class="col-lg-12 well" ng-hide="loadingError || comprobantesError.length == 0">
-		<table-invoices datos-invoices="comprobantesError" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices datos-invoices="comprobantesError" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 		<div-pagination current-page="$parent.currentPageError" page-changed="pageChangedError()" total-items="totalItemsError"></div-pagination>
 	</div>
 </tab>
