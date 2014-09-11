@@ -9,7 +9,6 @@
 			scope: {
 				invoices:			'=datosInvoices',
 				acceso:				'@',
-				moneda:				'@',
 				ocultarFiltros:		'@',
 				filtroOrden:		'@',
 				filtroOrdenReverse:	'=',
@@ -20,6 +19,7 @@
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
 				$scope.vouchersType = $rootScope.vouchersType;
+				$scope.moneda = $rootScope.moneda;
 				$scope.conversionMoneda = function(importe, codMoneda, cotiMoneda){
 					if ($rootScope.moneda == 'PES' && codMoneda == 'DOL'){ return (importe * cotiMoneda);
 					} else if ($rootScope.moneda == 'DOL' && codMoneda == 'PES'){ return (importe / cotiMoneda);
@@ -35,17 +35,33 @@
 			templateUrl:	'view/accordion.comprobantes.vistos.html',
 			scope: {
 				comprobantesVistos:	'=datosComprobantes',
-				moneda:				'@',
 				mostrarDetalle:		'&',
 				quitarVista:		'&'
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
 				$scope.vouchersType = $rootScope.vouchersType;
+				$scope.moneda = $rootScope.moneda;
 				$scope.conversionMoneda = function(importe, codMoneda, cotiMoneda){
 					if ($rootScope.moneda == 'PES' && codMoneda == 'DOL'){ return (importe * cotiMoneda);
 					} else if ($rootScope.moneda == 'DOL' && codMoneda == 'PES'){ return (importe / cotiMoneda);
 					} else { return (importe); }
 				};
+			}]
+		}
+	});
+
+	myapp.directive('accordionInvoicesSearch', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/accordion.invoices.search.html',
+			scope: {
+				model:				'=',
+				ocultarFiltros:		'@',
+				filtrar:			'&',
+				filtrarCargar:		'&'
+			},
+			controller: ['$rootScope', '$scope', function($rootScope, $scope){
+				$scope.vouchers = $rootScope.vouchers;
 			}]
 		}
 	});
