@@ -166,5 +166,19 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		});
 	};
 
+	factory.getShips = function(callback){
+		var inserturl = serverUrl + '/ships';
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			errCallBack(errorText);
+		});
+	};
+
 	return factory;
 });

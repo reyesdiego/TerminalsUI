@@ -57,11 +57,23 @@
 			scope: {
 				model:				'=',
 				ocultarFiltros:		'@',
-				filtrar:			'&',
-				filtrarCargar:		'&'
+				filtrar:			'&'
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
+				$scope.maxDateD = new Date();
+				$scope.maxDateH = new Date();
+				$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
 				$scope.vouchers = $rootScope.vouchers;
+				$scope.formatDate = $rootScope.formatDate;
+				$scope.dateOptions = $rootScope.dateOptions;
+				$scope.listaContenedores = $rootScope.listaContenedores;
+				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
+				$scope.openDate = function(event){
+					$rootScope.openDate(event);
+				};
+				$scope.filtrado = function(filtro, contenido){
+					$scope.filtrar({filtro: filtro, contenido: contenido});
+				}
 			}]
 		}
 	});
