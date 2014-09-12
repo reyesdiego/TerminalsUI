@@ -94,8 +94,6 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 	};
 
 	$scope.filtrar = function (filtro, contenido){
-		console.log(filtro);
-		console.log(contenido);
 		switch (filtro){
 			case 'nroPtoVenta':
 				$scope.model.nroPtoVenta = contenido;
@@ -125,7 +123,6 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 				$scope.model.fechaHasta = contenido;
 				break;
 			case 'contenedor':
-				console.log('hola');
 				$scope.model.contenedor = contenido;
 				break;
 		}
@@ -133,7 +130,6 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 	};
 
 	$scope.filtrarCargar = function(){
-		console.log('hola2');
 		if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
 			$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
 			$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);

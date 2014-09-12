@@ -5,6 +5,12 @@
 				<strong>Buscar por</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 			</accordion-heading>
 			<div class="row">
+				<div class="form-group col-lg-3" ng-hide="ocultarFiltros.indexOf('nroPtoVenta', 0) >= 0">
+					<div class="input-group">
+						<input type="text" ng-keyup="hitEnter($event)" ng-model="model.nroPtoVenta" class="form-control" placeholder="N° Punto de venta"/>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar('nroPtoVenta', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+					</div>
+				</div>
 				<div class="form-group col-lg-3" ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0">
 					<div class="input-group">
 						<select class="form-control" ng-model="model.codTipoComprob" ng-init="model.codTipoComprob=0">
@@ -33,7 +39,8 @@
 									  filtrar="filtrado(filtrar, contenido)"
 									  input-field="razonSocial"
 									  match-class="highlight"
-									  limit-results="15"></angucomplete-alt>
+									  limit-results="15"
+									  outside-model="model.razonSocial"></angucomplete-alt>
 				</div>
 				<div class="form-group col-lg-3" ng-hide="ocultarFiltros.indexOf('documentoCliente', 0) >= 0">
 					<div class="input-group">
@@ -54,7 +61,8 @@
 									  filtrar="filtrado(filtrar, contenido)"
 									  input-field="contenedor"
 									  match-class="highlight"
-									  limit-results="15"></angucomplete-alt>
+									  limit-results="15"
+									  outside-model="model.contenedor"></angucomplete-alt>
 				</div>
 				<div class="form-group col-lg-3" ng-hide="ocultarFiltros.indexOf('codigo', 0) >= 0">
 					<div class="input-group">

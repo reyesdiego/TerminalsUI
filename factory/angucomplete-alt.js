@@ -58,7 +58,8 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 			autoMatch: '@',
 			filtrar: '&',
 			inputField: '@',
-			limitResults: '@'
+			limitResults: '@',
+			outsideModel: '='
 		},
 		template:
 			'<div class="angucomplete-holder input-group">' +
@@ -96,13 +97,16 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 				scope.searchStr = scope.initialValue;
 			});
 
+			scope.$watch('outsideModel', function(){
+				scope.searchStr = scope.outsideModel;
+			});
+
 			// for IE8 quirkiness about event.which
 			function ie8EventNormalizer(event) {
 				return event.which ? event.which : event.keyCode;
 			}
 
 			function callOrAssign(value) {
-				console.log(typeof scope.selectedObject);
 				if (typeof scope.selectedObject === 'function') {
 					scope.selectedObject(value);
 				}
@@ -425,7 +429,7 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 			};
 
 			scope.inputChangeHandler = function(str) {
-				if (str.length < minlength) {
+				if (angular.isDefined(str) && str.length < minlength) {
 					clearResults();
 				}
 				if (scope.inputChanged) {
