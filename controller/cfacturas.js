@@ -11,7 +11,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	$scope.maxDateH = new Date();
 	$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
 
-	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado', 'buque'];
 
 	$scope.model = {
 		'nroPtoVenta': '',
@@ -24,7 +24,8 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		'contenedor': '',
 		'estado': 'N',
 		'codigo': '',
-		'order': ''
+		'order': '',
+		'buque': ''
 	};
 
 	vouchersFactory.getVouchersType(function(data){
@@ -220,6 +221,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				break;
 			case 'contenedor':
 				$scope.model.contenedor = contenido;
+				break;
+			case 'buque':
+				$scope.model.buque = contenido;
 				break;
 		}
 		if (recargar){
@@ -610,17 +614,18 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			'contenedor': '',
 			'estado': 'N',
 			'codigo': '',
-			'order': ''
+			'order': '',
+			'buque': ''
 		};
 		switch ($scope.controlFiltros){
 			case 'codigos':
-				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado'];
+				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 				break;
 			case 'tasas':
-				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado'];
+				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado', 'buque'];
 				break;
 			case 'correlativo':
-				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado'];
+				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 				$scope.model.codTipoComprob = 1;
 				break;
 			case 'revisar':
@@ -648,7 +653,8 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			'fechaHasta': $scope.model.fechaHasta,
 			'contenedor': $scope.model.contenedor,
 			'order': $scope.model.order,
-			'estado': $scope.model.estado
+			'estado': $scope.model.estado,
+			'buque': $scope.model.buque
 		};
 	};
 
