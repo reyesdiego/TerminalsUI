@@ -27,6 +27,7 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 		'fechaDesde': $scope.fechaDesde,
 		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
+		'buque': '',
 		'estado': 'N',
 		'codigo': '',
 		'order': ''
@@ -125,6 +126,9 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 			case 'contenedor':
 				$scope.model.contenedor = contenido;
 				break;
+			case 'buque':
+				$scope.model.buque = contenido;
+				break;
 		}
 		$scope.filtrarCargar();
 	};
@@ -203,6 +207,7 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
 			'contenedor': $scope.model.contenedor,
+			'buque': $scope.model.buque,
 			'codigo': $scope.model.codigo,
 			'order': $scope.model.order
 		};

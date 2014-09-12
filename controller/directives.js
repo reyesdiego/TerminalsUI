@@ -69,6 +69,7 @@
 				$scope.dateOptions = $rootScope.dateOptions;
 				$scope.listaContenedores = $rootScope.listaContenedores;
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
+				$scope.listaBuques = $rootScope.listaBuques;
 				$scope.openDate = function(event){
 					$rootScope.openDate(event);
 				};
@@ -86,7 +87,13 @@
 						$scope.model.contenedor = selected.title;
 						$scope.filtrar({filtro: 'contenedor', contenido: selected.title});
 					}
-				}
+				};
+				$scope.buqueSelected = function(selected){
+					if (angular.isDefined(selected)){
+						$scope.model.buque = selected.title;
+						$scope.filtrar({filtro: 'buque', contenido: selected.title});
+					}
+				};
 			}]
 		}
 	});

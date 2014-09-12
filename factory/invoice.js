@@ -186,6 +186,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'documentoCliente=' + datos.documentoCliente;
 		}
+		if(angular.isDefined(datos.buque) && datos.buque != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'buqueNombre=' + datos.buque;
+		}
 		if(angular.isDefined(datos.estado) && datos.estado != '' && datos.estado != 'N'){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'estado=' + datos.estado;

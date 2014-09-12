@@ -179,6 +179,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 
 	$rootScope.listaRazonSocial = [];
 	$rootScope.listaContenedores = [];
+	$rootScope.listaBuques = [];
 
 	controlPanelFactory.getClients(function(data){
 		var i;
@@ -201,6 +202,20 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 			};
 			$rootScope.listaContenedores.push(objetoContenedor);
 			i++;
+		})
+	});
+
+	controlPanelFactory.getShips(function(data){
+		var i;
+		data.data.forEach(function(buque){
+			if (angular.isDefined(buque) && buque != null){
+				var objetoBuque = {
+					'id': i,
+					'buque': buque
+				};
+				$rootScope.listaBuques.push(objetoBuque);
+				i++;
+			}
 		})
 	});
 

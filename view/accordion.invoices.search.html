@@ -81,6 +81,22 @@
 						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtro: 'estado', contenido: 'N'});"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
+				<div class="form-group col-lg-3" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
+					<angucomplete-alt id="idBuque"
+									  placeholder="Buque"
+									  pause="100"
+									  selected-object="buqueSelected"
+									  local-data="listaBuques"
+									  search-fields="buque"
+									  title-field="buque"
+									  minlength="1"
+									  input-class="form-control"
+									  filtrar="filtrado(filtrar, contenido)"
+									  input-field="buque"
+									  match-class="highlight"
+									  limit-results="15"
+									  outside-model="model.buque"></angucomplete-alt>
+				</div>
 				<div class="form-group col-lg-3" ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0">
 					<div class="input-group">
 						<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
