@@ -73,6 +73,16 @@
 				};
 				$scope.filtrado = function(filtro, contenido){
 					$scope.filtrar({filtro: filtro, contenido: contenido});
+				};
+				$scope.clientSelected = function(selected){
+					console.log(selected);
+					$scope.model.razonSocial = selected.title;
+					$scope.filtrar({filtro: 'razonSocial', contenido: selected.title});
+				};
+				$scope.containerSelected = function(selected){
+					console.log(selected);
+					$scope.model.contenedor = selected.title;
+					$scope.filtrar({filtro: 'contenedor', contenido: selected.title});
 				}
 			}]
 		}
