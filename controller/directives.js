@@ -57,6 +57,7 @@
 			scope: {
 				model:				'=',
 				ocultarFiltros:		'@',
+				hitEnter:			'&',
 				filtrar:			'&'
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
