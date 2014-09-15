@@ -98,6 +98,13 @@
 		}
 	});
 
+	myapp.directive('accordionGatesTurnosSearch', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/accordion.gatesturnos.search.html'
+		}
+	});
+
 	myapp.directive('divPagination', function(){
 		return {
 			restrict:		'E',

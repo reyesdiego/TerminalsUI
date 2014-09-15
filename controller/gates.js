@@ -102,8 +102,8 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		if (horarioGate >= horarioInicio && horarioGate <= horarioFin) { return 'green' } else { return 'red' }
 	};
 
-	$scope.cargaGatesPorFiltros = function(){
-		$scope.isCollapsed = !$scope.isCollapsed;
+	$scope.cargaPorFiltros = function(){
+		$scope.status.open = !$scope.status.open;
 		$scope.currentPage = 1;
 		$scope.cargaGates();
 	};
@@ -211,6 +211,4 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		return datos;
 	}
 
-	// Carga los gates del día hasta la hora del usuario
-	$scope.cargaGates();
 }

@@ -40,7 +40,7 @@ function idToDate(objectId){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'timepickerPop']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -222,11 +222,11 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	var styles=document.styleSheets;
 	for(var i=0,l=styles.length; i<l; ++i){
 		var sheet=styles[i];
-
+		var rules, rule, j, l2;
 		if(sheet.title === "BACTSSA"){
-			var rules=sheet.cssRules;
-			for(var j=0, l2=rules.length; j<l2; j++){
-				var rule=rules[j];
+			rules=sheet.cssRules;
+			for(j=0, l2=rules.length; j<l2; j++){
+				rule=rules[j];
 
 				if('.navbar-default' === rule.selectorText){
 					$rootScope.colorBactssa = rule.style['backgroundColor'];
@@ -234,9 +234,9 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 			}
 		}
 		if(sheet.title === "TRP"){
-			var rules=sheet.cssRules;
-			for(var j=0, l2=rules.length; j<l2; j++){
-				var rule=rules[j];
+			rules=sheet.cssRules;
+			for(j=0, l2=rules.length; j<l2; j++){
+				rule=rules[j];
 
 				if('.navbar-default' === rule.selectorText){
 					$rootScope.colorTrp = rule.style['backgroundColor'];
@@ -244,9 +244,9 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 			}
 		}
 		if(sheet.title === "TERMINAL4"){
-			var rules=sheet.cssRules;
-			for(var j=0, l2=rules.length; j<l2; j++){
-				var rule=rules[j];
+			rules=sheet.cssRules;
+			for(j=0, l2=rules.length; j<l2; j++){
+				rule=rules[j];
 
 				if('.navbar-default' === rule.selectorText){
 					$rootScope.colorTerminal4 = rule.style['backgroundColor'];
