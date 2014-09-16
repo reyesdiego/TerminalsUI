@@ -13,26 +13,25 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="row"><p></p>
 		<div class="col-lg-12">
 			<div class="control-label">
 				<span><strong>D&iacute;a: {{ fecha | date: 'dd/MM/yyyy' }}</strong></span>
 			</div>
 			<div class="row">
-				<div class="col-lg-3 list-group-item">
+				<div class="col-lg-3 col-md-3 col-sm-6 list-group-item">
 					<span>Cantidad de Facturas</span>
 					<span class="badge text-right">{{ control.invoicesCount }}</span>
 				</div>
-				<div class="col-lg-3 list-group-item">
+				<div class="col-lg-3 col-md-3 col-sm-6 list-group-item">
 					<span>Cantidad de tasas AGP</span>
 					<span class="badge text-right">{{ control.ratesCount }}</span>
 				</div>
-				<div class="col-lg-3 list-group-item">
+				<div class="col-lg-3 col-md-3 col-sm-6 list-group-item">
 					<span>Precio total tasas AGP</span>
 					<span class="badge text-right">{{ prefijo }} {{ control.ratesTotal | currency }}</span>
 				</div>
-				<div class="col-lg-3 list-group-item">
+				<div class="col-lg-3 col-md-3 col-sm-6 list-group-item">
 					<span>Precio total facturas</span>
 					<span class="badge text-right">{{ control.tasasTotal | currency }}</span>
 				</div>

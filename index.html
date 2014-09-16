@@ -88,11 +88,23 @@
 				<li ng-show="acceso!=''"><a ui-sref="tarifario" ng-click="isCollapsed = false">Tarifario</a></li>
 				<li ng-show="acceso!=''"><a ui-sref="matches" ng-click="isCollapsed = false">Asociar</a></li>
 				<li ng-show="acceso!=''"><a ui-sref="invoices" ng-click="isCollapsed = false">Comprobantes</a></li>
-				<li ng-show="acceso=='agp'"><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
 				<li ng-show="acceso=='terminal'"><a ui-sref="cfacturas" ng-click="isCollapsed = false">Control de comprobantes</a></li>
-				<li ng-show="acceso=='agp'"><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
-				<li ng-show="acceso=='agp'" class="dropdown">
-					<a href class="dropdown-toggle" data-toggle="dropdown" ><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
+				<li ng-show="acceso=='agp'" class="dropdown visible-sm">
+					<a class="dropdown-toggle" data-toggle="dropdown"> Administrar<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
+						<li><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Seleccione Terminal</li>
+						<li><a ng-click="isCollapsed = false; setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li><a ng-click="isCollapsed = false; setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li><a ng-click="isCollapsed = false; setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+					</ul>
+				</li>
+				<li ng-show="acceso=='agp'" class="hidden-sm"><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
+				<li ng-show="acceso=='agp'" class="hidden-sm"><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
+				<li ng-show="acceso=='agp'" class="dropdown hidden-sm">
+					<a href class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a ng-click="isCollapsed = false; setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
 						<li><a ng-click="isCollapsed = false; setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
