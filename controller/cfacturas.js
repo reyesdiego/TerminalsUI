@@ -28,6 +28,10 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		'buque': ''
 	};
 
+	// Puntos de Ventas
+	$scope.puntosDeVentas = [];
+	$scope.todosLosPuntosDeVentas = [];
+
 	vouchersFactory.getVouchersType(function(data){
 		$scope.comprobantesTipos = data.data;
 	});
@@ -255,10 +259,10 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				}
 				break;
 			case 'revisar':
-				$scope.traerComprobantesRevisar();
+				$scope.cargaPuntosDeVenta();
 				break;
 			case 'error':
-				$scope.traerComprobantesError();
+				$scope.cargaPuntosDeVenta();
 				break;
 		}
 	};
@@ -601,7 +605,49 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		}
 	};
 
+	// Funciones de Puntos de Venta
+	$scope.cargaPuntosDeVenta = function(){
+		invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
+			var hide;
+			$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
+				hide = true;
+				data.data.forEach(function(punto){
+					if (todosPtos.punto == punto){
+						hide = false;
+					}
+				});
+				todosPtos.hide = hide;
+				if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
+					$scope.model.nroPtoVenta = '';
+					$scope.todosLosPuntosDeVentas[0].active = true;
+				}
+			});
+			$scope.todosLosPuntosDeVentas[0].hide = false;
+			switch ($scope.controlFiltros){
+				case 'revisar':
+					$scope.traerComprobantesRevisar();
+					break;
+				case 'error':
+					$scope.traerComprobantesError();
+					break;
+			}
+		});
+	};
+
+	$scope.cargaTodosLosPuntosDeVentas = function(){
+		invoiceFactory.getCashbox('', function(data){
+			var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
+			$scope.todosLosPuntosDeVentas.push(dato);
+			data.data.forEach(function(punto){
+				dato = {'heading': punto, 'punto': punto, 'active': false, 'hide': true};
+				$scope.todosLosPuntosDeVentas.push(dato);
+			});
+			$scope.filtrarCargar();
+		})
+	};
+
 	$scope.cambioTab = function(unTab){
+		$scope.todosLosPuntosDeVentas = [];
 		$scope.controlFiltros = unTab;
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -629,14 +675,14 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				$scope.model.codTipoComprob = 1;
 				break;
 			case 'revisar':
-				$scope.ocultarFiltros = ['estado'];
+				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
 				$scope.model.estado = 'Y';
-				$scope.filtrarCargar();
+				$scope.cargaTodosLosPuntosDeVentas();
 				break;
 			case 'error':
-				$scope.ocultarFiltros = ['estado'];
+				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
 				$scope.model.estado = 'R';
-				$scope.filtrarCargar();
+				$scope.cargaTodosLosPuntosDeVentas();
 				break;
 		}
 	};
@@ -656,7 +702,13 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			'estado': $scope.model.estado,
 			'buque': $scope.model.buque
 		};
-	};
+	}
+
+	function cargaDatosSinPtoVenta(){
+		var datos = cargaDatos();
+		datos.nroPtoVenta = '';
+		return datos;
+	}
 
 	$scope.trackInvoice = function(comprobante, estado){
 		var estadoAnterior = comprobante.interfazEstado;
