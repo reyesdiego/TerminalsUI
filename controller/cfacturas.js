@@ -707,6 +707,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 							invoice: comprobante._id
 						};
 						invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+							if ($scope.controlFiltros == 'revisar' || $scope.controlFiltros == 'error'){
+								$scope.filtrarCargar();
+							}
 						});
 					});
 				}, function () {
