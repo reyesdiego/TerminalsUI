@@ -59,14 +59,9 @@
 			<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 			<td ng-show="acceso=='agp'">
 				<div class="btn-group" dropdown is-open="status.isopen">
-					<button type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
-						{{ invoice.interfazEstado.estado }} <span class="caret"></span>
+					<button ng-click="trackInvoice({comprobante: invoice})" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+						{{ invoice.interfazEstado.estado }}
 					</button>
-					<ul class="dropdown-menu dropdown-toggle" role="menu">
-						<li><a href ng-click="trackInvoice({comprobante: invoice, estado: 'Y'})">Revisar</a></li>
-						<li><a href ng-click="trackInvoice({comprobante: invoice, estado: 'G'})">Controlada</a></li>
-						<li><a href ng-click="trackInvoice({comprobante: invoice, estado: 'R'})">Error</a></li>
-					</ul>
 				</div>
 			</td>
 		</tr>

@@ -4,26 +4,42 @@
 
 function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 
+	$scope.noGuardar = true;
+
 	$scope.interfazModal = {
 		titulo: '',
 		tipoModal: '',
-		comentario: ''
+		comentario: '',
+		btnEstado: '',
+		estado: '',
+		divCuerpo: '',
+		nuevoEstado: ''
 	};
 
 	$scope.tracking = track.data;
+	$scope.estado = estado;
 
-	switch (estado){
+	switch ($scope.estado){
 		case 'Y':
-			$scope.interfazModal.titulo = 'Cambio de estado: Revisar';
+			$scope.interfazModal.titulo = 'Estado: Revisar';
 			$scope.interfazModal.tipoModal = 'bg-warning';
+			$scope.interfazModal.btnEstado = 'btn-warning';
+			$scope.interfazModal.estado = 'Revisar';
+			$scope.interfazModal.divCuerpo = 'bg-warning';
 			break;
 		case 'G':
-			$scope.interfazModal.titulo = 'Cambio de estado: Controlado';
+			$scope.interfazModal.titulo = 'Estado: Controlado';
 			$scope.interfazModal.tipoModal = 'bg-success';
+			$scope.interfazModal.btnEstado = 'btn-success';
+			$scope.interfazModal.estado = 'Controlado';
+			$scope.interfazModal.divCuerpo = 'bg-success';
 			break;
 		case 'R':
-			$scope.interfazModal.titulo = 'Cambio de estado: Error';
+			$scope.interfazModal.titulo = 'Estado: Error';
 			$scope.interfazModal.tipoModal = 'bg-danger';
+			$scope.interfazModal.btnEstado = 'btn-danger';
+			$scope.interfazModal.estado = 'Error';
+			$scope.interfazModal.divCuerpo = 'bg-danger';
 			break;
 	}
 
@@ -34,10 +50,33 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 			$scope.cancelar();
 	};
 
+	$scope.trackInvoice = function(estado){
+		$scope.noGuardar = false;
+		$scope.interfazModal.nuevoEstado = estado;
+		switch (estado){
+			case 'Y':
+				$scope.interfazModal.btnEstado = 'btn-warning';
+				$scope.interfazModal.estado = 'Revisar';
+				$scope.interfazModal.divCuerpo = 'bg-warning';
+				break;
+			case 'G':
+				$scope.interfazModal.btnEstado = 'btn-success';
+				$scope.interfazModal.estado = 'Controlado';
+				$scope.interfazModal.divCuerpo = 'bg-success';
+				break;
+			case 'R':
+				$scope.interfazModal.btnEstado = 'btn-danger';
+				$scope.interfazModal.estado = 'Error';
+				$scope.interfazModal.divCuerpo = 'bg-danger';
+				break;
+		}
+	};
+
 	$scope.guardar = function () {
 		var commentData = {
-			title: $scope.interfazModal.titulo,
-			comment: $scope.interfazModal.comentario
+			title: 'Cambio de estado: ' + $scope.interfazModal.estado,
+			comment: $scope.interfazModal.comentario,
+			newState: $scope.interfazModal.nuevoEstado
 		};
 		$modalInstance.close(commentData);
 	};
@@ -45,4 +84,4 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 	$scope.cancelar = function () {
 		$modalInstance.dismiss('cancel');
 	};
-};
+}

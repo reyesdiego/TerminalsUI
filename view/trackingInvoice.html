@@ -2,7 +2,20 @@
 <div class="modal-header {{ interfazModal.tipoModal }}" style="border-radius: 5px">
 	<h3 class="modal-title">{{ interfazModal.titulo}}</h3>
 </div>
-<div class="modal-body">
+<div class="modal-body {{ interfazModal.divCuerpo }}">
+	<br>
+	<span style="font-size: 18px">Cambio de estado:</span>
+	<div class="btn-group" dropdown is-open="status.isopen">
+		<button type="button" class="btn {{ interfazModal.btnEstado }} dropdown-toggle">
+			{{ interfazModal.estado }} <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu dropdown-toggle" role="menu">
+			<li ng-hide="estado == 'Y'"><a href ng-click="trackInvoice('Y')">Revisar</a></li>
+			<li ng-hide="estado == 'G'"><a href ng-click="trackInvoice('G')">Controlada</a></li>
+			<li ng-hide="estado == 'R'"><a href ng-click="trackInvoice('R')">Error</a></li>
+		</ul>
+	</div>
+	<hr>
 	<input type="text" class="form-control" ng-model="interfazModal.comentario" placeholder="Ingrese un comentario" ng-keyup="hitKey($event)">
 	<br>
 	<div class="well" ng-show="tracking.length > 0" style="height: 300px; overflow: scroll;">
@@ -16,6 +29,6 @@
 	</div>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
+	<button ng-disabled="noGuardar" class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	<button class="btn btn-warning" ng-click="cancelar()">Cancelar</button>
 </div>

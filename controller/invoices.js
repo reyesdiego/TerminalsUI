@@ -221,62 +221,58 @@ function invoicesCtrl($scope, $modal, invoiceFactory, loginService, $templateCac
 
 	$scope.cargaTodosLosPuntosDeVentas();
 
-	$scope.trackInvoice = function(comprobante, estado){
-		var estadoAnterior = comprobante.interfazEstado;
-		switch (estado){
-			case 'Y':
-				comprobante.interfazEstado = {
-					'estado': 'Revisar',
-					'btnEstado': 'btn-warning'
-				};
-				break;
-			case 'G':
-				comprobante.interfazEstado = {
-					'estado': 'Controlado',
-					'btnEstado': 'btn-success'
-				};
-				break;
-			case 'R':
-				comprobante.interfazEstado = {
-					'estado': 'Error',
-					'btnEstado': 'btn-danger'
-				};
-				break;
-		}
-		if (estadoAnterior.estado == comprobante.interfazEstado.estado){
-			comprobante.interfazEstado = estadoAnterior;
-		} else {
-			invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
-				var modalInstance = $modal.open({
-					templateUrl: 'view/trackingInvoice.html',
-					controller: trackingInvoiceCtrl,
-					backdrop: 'static',
-					resolve: {
-						estado: function () {
-							return estado;
-						},
-						track: function() {
-							return dataTrack;
-						}
+	$scope.trackInvoice = function(comprobante){
+		var estado = comprobante.estado;
+		invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+			var modalInstance = $modal.open({
+				templateUrl: 'view/trackingInvoice.html',
+				controller: trackingInvoiceCtrl,
+				backdrop: 'static',
+				resolve: {
+					estado: function () {
+						return estado;
+					},
+					track: function() {
+						return dataTrack;
 					}
-				});
-				dataTrack = [];
-				modalInstance.result.then(function (dataComment) {
-					invoiceFactory.cambiarEstado(comprobante._id, estado, function(data){
-						var logInvoice = {
-							title: dataComment.title,
-							state: estado,
-							comment: dataComment.comment,
-							invoice: comprobante._id
-						};
-						invoiceFactory.commentInvoice(logInvoice, function(dataRes){
-						});
-					});
-				}, function () {
-					comprobante.interfazEstado = estadoAnterior;
-				});
+				}
 			});
-		}
+			dataTrack = [];
+			modalInstance.result.then(function (dataComment) {
+				invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState, function(data){
+					var logInvoice = {
+						title: dataComment.title,
+						state: dataComment.newState,
+						comment: dataComment.comment,
+						invoice: comprobante._id
+					};
+					invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+						switch (dataComment.newState){
+							case 'Y':
+								comprobante.interfazEstado = {
+									'estado': 'Revisar',
+									'btnEstado': 'btn-warning'
+								};
+								break;
+							case 'G':
+								comprobante.interfazEstado = {
+									'estado': 'Controlado',
+									'btnEstado': 'btn-success'
+								};
+								break;
+							case 'R':
+								comprobante.interfazEstado = {
+									'estado': 'Error',
+									'btnEstado': 'btn-danger'
+								};
+								break;
+						}
+						comprobante.estado = dataComment.newState;
+					});
+				});
+			}, function () {
+			});
+		});
 	};
 
 }
