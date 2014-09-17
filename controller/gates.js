@@ -19,7 +19,8 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		'fechaDesde': $scope.fechaDesde,
 		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
-		'buque': ''
+		'buque': '',
+		'order': ''
 	};
 
 	$scope.filtrar = function(filtro, contenido){
@@ -31,6 +32,25 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 				$scope.model.buque = contenido;
 				break;
 		}
+		$scope.cargaGates();
+	};
+
+	$scope.filtrarOrden = function(filtro){
+		console.log(filtro);
+		var filtroModo;
+		$scope.filtroOrden = filtro;
+		if ($scope.filtroOrden == $scope.filtroAnterior){
+			$scope.filtroOrdenReverse = !$scope.filtroOrdenReverse;
+		} else {
+			$scope.filtroOrdenReverse = false;
+		}
+		if ($scope.filtroOrdenReverse){
+			filtroModo = -1;
+		} else {
+			filtroModo = 1;
+		}
+		$scope.model.order = '"' + filtro + '":' + filtroModo;
+		$scope.filtroAnterior = filtro;
 		$scope.cargaGates();
 	};
 
@@ -60,6 +80,7 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	};
 
 	$scope.cargaGates = function(page){
+		console.log(cargaDatos());
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		gatesFactory.getGate(cargaDatos(), page, function(data){
 			if (data.status === "OK"){
@@ -126,7 +147,8 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
 			'contenedor': $scope.model.contenedor,
-			'buque': $scope.model.buque
+			'buque': $scope.model.buque,
+			'order': $scope.model.order
 		};
 	}
 

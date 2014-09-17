@@ -16,13 +16,27 @@
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover" style="text-align: center">
 						<tr>
-							<th style="text-align: center">Fecha</th>
+							<th style="text-align: center">
+								<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
+									<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='gateTimestamp' && filtroOrdenReverse==false"></span>
+									<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='gateTimestamp' && filtroOrdenReverse==true"></span>
+									Fecha
+								</a>
+								<span ng-show="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">Fecha</span>
+							</th>
 							<th style="text-align: center">Buque</th>
 							<th style="text-align: center">Viaje</th>
 							<th style="text-align: center">Contenedor</th>
 							<th style="text-align: center">Patente del cami&oacute;n</th>
 							<th style="text-align: center">Tipo</th>
-							<th style="text-align: center">Horario</th>
+							<th style="text-align: center">
+								<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
+									<span class="glyphicon glyphicon-sort-by-attributes" ng-show="filtroOrden=='gateTimestamp' && filtroOrdenReverse==false"></span>
+									<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="filtroOrden=='gateTimestamp' && filtroOrdenReverse==true"></span>
+									Horario
+								</a>
+								<span ng-show="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">Horario</span>
+							</th>
 							<th style="text-align: center">Inicio del turno</th>
 							<th style="text-align: center">Fin del turno</th>
 							<th style="text-align: center">Movimiento</th>
