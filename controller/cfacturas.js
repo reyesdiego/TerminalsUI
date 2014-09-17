@@ -366,7 +366,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	};
 
 	$scope.controlCorrelatividad = function(){
-		console.log($scope.ocultarFiltros);
 		$scope.loadingCorrelatividad = true;
 		invoiceFactory.getCorrelative(cargaDatos(), function(dataComprob) {
 			$scope.result = dataComprob;

@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		<table-invoices ng-show="tasaCargas.mostrarResultado" datos-invoices="tasaCargas.resultado" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
-		<div-pagination current-page="$parent.currentPageTasaCargas" page-changed="pageChangedTasa()" total-items="totalItemsTasaCargas"></div-pagination>
+		<div-pagination ng-show="tasaCargas.mostrarResultado" current-page="$parent.currentPageTasaCargas" page-changed="pageChangedTasa()" total-items="totalItemsTasaCargas"></div-pagination>
 	</div>
 </tab>
 
