@@ -121,7 +121,18 @@
 				pageChanged:		'&'
 			},
 			link: function($scope){
-				$scope.$watch('currentPage', function(){ $scope.pageChanged() })
+				$scope.$watch('currentPage', function(){ $scope.pageChanged() });
+				$scope.$watch('totalItems', function(){
+					if ($scope.totalItems >= 10000){
+						$scope.maxSizeSM = 9;
+						$scope.maxSizeMD = 13;
+						$scope.maxSizeLG = 17;
+					} else {
+						$scope.maxSizeSM = 10;
+						$scope.maxSizeMD = 15;
+						$scope.maxSizeLG = 20;
+					}
+				})
 			}
 		}
 	});
