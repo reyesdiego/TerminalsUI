@@ -10,9 +10,9 @@
 			{{ interfazModal.estado }} <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu dropdown-toggle" role="menu">
-			<li ng-hide="estado == 'Y'"><a href ng-click="trackInvoice('Y')">Revisar</a></li>
-			<li ng-hide="estado == 'G'"><a href ng-click="trackInvoice('G')">Controlada</a></li>
-			<li ng-hide="estado == 'R'"><a href ng-click="trackInvoice('R')">Error</a></li>
+			<li><a href ng-click="trackInvoice('Y')">Revisar</a></li>
+			<li><a href ng-click="trackInvoice('G')">Controlada</a></li>
+			<li><a href ng-click="trackInvoice('R')">Error</a></li>
 		</ul>
 	</div>
 	<hr>
@@ -29,6 +29,6 @@
 	</div>
 </div>
 <div class="modal-footer">
-	<button ng-disabled="noGuardar" class="btn btn-primary" ng-click="guardar()">Guardar</button>
+	<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
 	<button class="btn btn-warning" ng-click="cancelar()">Cancelar</button>
 </div>

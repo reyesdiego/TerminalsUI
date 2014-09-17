@@ -4,8 +4,6 @@
 
 function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 
-	$scope.noGuardar = true;
-
 	$scope.interfazModal = {
 		titulo: '',
 		tipoModal: '',
@@ -18,6 +16,7 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 
 	$scope.tracking = track.data;
 	$scope.estado = estado;
+	$scope.interfazModal.nuevoEstado = estado;
 
 	switch ($scope.estado){
 		case 'Y':
@@ -51,7 +50,6 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 	};
 
 	$scope.trackInvoice = function(estado){
-		$scope.noGuardar = false;
 		$scope.interfazModal.nuevoEstado = estado;
 		switch (estado){
 			case 'Y':
@@ -78,6 +76,9 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 			comment: $scope.interfazModal.comentario,
 			newState: $scope.interfazModal.nuevoEstado
 		};
+		if ($scope.interfazModal.nuevoEstado == $scope.estado){
+			commentData.title = $scope.interfazModal.estado
+		}
 		$modalInstance.close(commentData);
 	};
 
