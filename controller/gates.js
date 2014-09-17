@@ -20,8 +20,10 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
 		'buque': '',
-		'order': ''
+		'order': '"gateTimestamp":-1'
 	};
+	$scope.filtroOrden = 'gateTimestamp';
+	$scope.filtroOrdenReverse = true;
 
 	$scope.filtrar = function(filtro, contenido){
 		switch (filtro){
@@ -36,7 +38,6 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	};
 
 	$scope.filtrarOrden = function(filtro){
-		console.log(filtro);
 		var filtroModo;
 		$scope.filtroOrden = filtro;
 		if ($scope.filtroOrden == $scope.filtroAnterior){
@@ -80,7 +81,6 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	};
 
 	$scope.cargaGates = function(page){
-		console.log(cargaDatos());
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		gatesFactory.getGate(cargaDatos(), page, function(data){
 			if (data.status === "OK"){
