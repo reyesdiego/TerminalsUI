@@ -266,12 +266,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		}
 	};
 
-	$scope.hitEnter = function(evt){
-		if(angular.equals(evt.keyCode,13)){
-			$scope.filtrarCargar();
-		}
-	};
-
 	$scope.filtrarCaracteresInvalidos = function(palabra){
 		if (angular.isDefined(palabra) && palabra.length > 0){
 			var palabraFiltrada;
