@@ -16,82 +16,22 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 	$scope.comprobantesVistos = [];
 
 	$scope.model = {
-		'codTipoComprob': $scope.codTipoComprob,
-		'nroComprobante': $scope.nroComprobante,
-		'razonSocial': $scope.razonSocial,
-		'documentoCliente': $scope.documentoCliente,
 		'fechaDesde': $scope.fechaDesde,
 		'fechaHasta': $scope.fechaHasta,
-		'contenedor': $scope.contenedor,
-		'codigo': $scope.codigo,
-		'order': ''
+		'contenedor': '',
+		'buque': ''
 	};
 
-	$scope.filtrarOrden = function(filtro){
-		var filtroModo;
-		$scope.filtroOrden = filtro;
-		if ($scope.filtroOrden == $scope.filtroAnterior){
-			$scope.filtroOrdenReverse = !$scope.filtroOrdenReverse;
-		} else {
-			$scope.filtroOrdenReverse = false;
+	$scope.filtrar = function(filtro, contenido){
+		switch (filtro){
+			case 'contenedor':
+				$scope.model.contenedor = contenido;
+				break;
+			case 'buque':
+				$scope.model.buque = contenido;
+				break;
 		}
-		if ($scope.filtroOrdenReverse){
-			filtroModo = -1;
-		} else {
-			filtroModo = 1;
-		}
-		$scope.model.order = '"' + filtro + '":' + filtroModo;
-		$scope.filtroAnterior = filtro;
-		$scope.filtrar.cargarSinFechas();
-	};
-
-	$scope.filtrar = {
-		nroPtoVenta : function(filtro){
-			$scope.model.nroPtoVenta = filtro;
-			$scope.filtrar.cargar();
-		},
-		codigo : function(filtro){
-			$scope.model.codigo = filtro;
-			$scope.filtrar.cargar();
-		},
-		codComprobante : function(filtro){
-			$scope.model.codTipoComprob = filtro;
-			$scope.filtrar.cargar();
-		},
-		nroComprobante : function(filtro){
-			$scope.model.nroComprobante = filtro;
-			$scope.filtrar.cargar();
-		},
-		razonSocial : function(filtro){
-			$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(filtro);
-			$scope.filtrar.cargar();
-		},
-		documentoCliente : function(filtro){
-			$scope.model.documentoCliente = filtro;
-			$scope.filtrar.cargar();
-		},
-		fechaDesde : function(filtro){
-			$scope.model.fechaDesde = filtro;
-			$scope.filtrar.cargar();
-		},
-		fechaHasta : function(filtro){
-			$scope.model.fechaHasta = filtro;
-			$scope.filtrar.cargar();
-		},
-		contenedor : function(filtro){
-			$scope.model.contenedor = filtro;
-			$scope.filtrar.cargar();
-		},
-		cargarSinFechas : function () {
-			$scope.cargaFacturasSinFechas();
-		},
-		cargar: function(){
-			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
-			}
-			$scope.cargaFacturas();
-		}
+		$scope.cargaGates();
 	};
 
 	// Pone estilo al horario de acuerdo si esta o no a tiempo
@@ -140,17 +80,6 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		});
 	};
 
-	$scope.cargaFacturasSinFechas = function(page){
-		page = page || { skip:0, limit: $scope.itemsPerPage };
-		if (page.skip == 0){ $scope.currentPage = 1}
-		invoiceFactory.getInvoice(cargaDatosSinFechas(), page, function(data){
-			if(data.status === 'OK'){
-				$scope.invoices = data.data;
-				$scope.totalItems = data.totalCount;
-			}
-		});
-	};
-
 	$scope.mostrarDetalle = function(comprobante){
 		var encontrado = false;
 		$scope.comprobantesVistos.forEach(function(unComprobante){
@@ -169,46 +98,36 @@ function gatesCtrl($scope, gatesFactory, invoiceFactory){
 		$scope.comprobantesVistos.splice(pos, 1);
 	};
 
-	$scope.filtrarCaracteresInvalidos = function(palabra){
-		if (angular.isDefined(palabra) && palabra.length > 0){
-			var palabraFiltrada;
-			var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
-			palabraFiltrada = palabra;
-			for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
-				if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
-					palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
-				}
-			}
-			return palabraFiltrada.toUpperCase();
-		} else {
-			return palabra;
-		}
-	};
-
 	$scope.pageChanged = function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.cargaGates($scope.page);
 	};
 
+	$scope.buqueSelected = function(selected){
+		if (angular.isDefined(selected)){
+			$scope.model.buque = selected.title;
+			$scope.filtrar('buque', selected.title);
+		}
+	};
+
+	$scope.containerSelected = function(selected){
+		if (angular.isDefined(selected)){
+			$scope.model.contenedor = selected.title;
+			$scope.filtrar('contenedor', selected.title);
+		}
+	};
+
+	$scope.filtrado = function(filtro, contenido){
+		$scope.filtrar(filtro, contenido);
+	};
+
 	function cargaDatos(){
 		return {
-			'codTipoComprob': $scope.model.codTipoComprob,
-			'nroComprobante': $scope.model.nroComprobante,
-			'razonSocial': $scope.model.razonSocial,
-			'documentoCliente': $scope.model.documentoCliente,
 			'fechaDesde': $scope.model.fechaDesde,
 			'fechaHasta': $scope.model.fechaHasta,
 			'contenedor': $scope.model.contenedor,
-			'codigo': $scope.model.codigo,
-			'order': $scope.model.order
+			'buque': $scope.model.buque
 		};
-	}
-
-	function cargaDatosSinFechas(){
-		var datos = cargaDatos();
-		datos.fechaDesde = '';
-		datos.fechaHasta = '';
-		return datos;
 	}
 
 }

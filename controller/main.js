@@ -192,7 +192,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 			};
 			$rootScope.listaRazonSocial.push(objetoCliente);
 			i++;
-		})
+		});
 	});
 
 	controlPanelFactory.getContainers(function(data){
@@ -204,7 +204,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 			};
 			$rootScope.listaContenedores.push(objetoContenedor);
 			i++;
-		})
+		});
 	});
 
 	controlPanelFactory.getShips(function(data){
@@ -218,7 +218,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.listaBuques.push(objetoBuque);
 				i++;
 			}
-		})
+		});
 	});
 
 	controlPanelFactory.getContainersGates(function(data){
@@ -227,13 +227,14 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 			if (angular.isDefined(container) && container != null){
 				var objetoContainer = {
 					'id': i,
-					'container': container
+					'contenedor': container
 				};
 				$rootScope.listaContenedoresGates.push(objetoContainer);
 				i++;
 			}
-		})
+		});
 	});
+
 
 	controlPanelFactory.getShipsGates(function(data){
 		var i = 0;
@@ -246,7 +247,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.listaBuquesGates.push(objetoBuque);
 				i++;
 			}
-		})
+		});
 	});
 
 	var styles=document.styleSheets;
