@@ -400,11 +400,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 					$scope.result = dataComprob;
 					$scope.totalFacturas= $scope.result.data.length;
 
-					var contador = 0;
 					$scope.control = 0;
 
 					var flagErrorTarifas = false;
-					var tarifa;
 
 					//Por ahora se esta realizando el chequeo contra el mock, el algoritmo está hecho suponiendo que
 					//el rango de facturas por fecha viene ordenado, tampoco hay nada que me permita comprobar que el primer
@@ -513,29 +511,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		invoiceFactory.invoiceById(comprobante._id, function(miComprobante){
 			$scope.verDetalle = miComprobante;
 		});
-	};
-
-	$scope.quitarVista = function(comprobante){
-		var pos;
-		switch ($scope.controlFiltros){
-			case 'codigos':
-			case 'codigosFiltrados':
-				pos = $scope.comprobantesVistosCodigos.indexOf(comprobante);
-				$scope.comprobantesVistosCodigos.splice(pos, 1);
-				break;
-			case 'tasas':
-				pos = $scope.comprobantesVistosTasas.indexOf(comprobante);
-				$scope.comprobantesVistosTasas.splice(pos, 1);
-				break;
-			case 'revisar':
-				pos = $scope.comprobantesVistosRevisar.indexOf(comprobante);
-				$scope.comprobantesVistosRevisar.splice(pos, 1);
-				break;
-			case 'error':
-				pos = $scope.comprobantesVistosError.indexOf(comprobante);
-				$scope.comprobantesVistosError.splice(pos, 1);
-				break;
-		}
 	};
 
 	$scope.pageChangedTasa = function(){

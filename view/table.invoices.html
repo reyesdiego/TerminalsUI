@@ -55,7 +55,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="invoice in invoices">
+		<tr ng-repeat="invoice in datosInvoices">
 			<td style="text-align: right">{{ invoice.nroPtoVenta }}</td>
 			<td><a href ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0" ng-click="filtrar({filtro: 'codComprobante', contenido: invoice.codTipoComprob})"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
 			<td style="text-align: right"><a href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrar({filtro: 'nroComprobante', contenido: invoice.nroComprob})"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>

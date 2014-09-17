@@ -27,7 +27,7 @@
 						<td class="text-center">{{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 						<td class="text-right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
 						<td class="text-center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-						<td class="text-center"><button class="btn btn-info" ng-click="quitarVista({comprobante: invoice})"><span class="glyphicon glyphicon-remove"></span></button></td>
+						<td class="text-center"><button class="btn btn-info" ng-click="quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
 					</tr>
 					</tbody>
 				</table>

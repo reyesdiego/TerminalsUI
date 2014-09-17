@@ -7,7 +7,7 @@
 			restrict:		'E',
 			templateUrl:	'view/table.invoices.html',
 			scope: {
-				invoices:			'=datosInvoices',
+				datosInvoices:		'=',
 				acceso:				'@',
 				ocultarFiltros:		'@',
 				filtroOrden:		'@',
@@ -34,13 +34,16 @@
 			restrict:		'E',
 			templateUrl:	'view/accordion.comprobantes.vistos.html',
 			scope: {
-				comprobantesVistos:	'=datosComprobantes',
-				mostrarDetalle:		'&',
-				quitarVista:		'&'
+				comprobantesVistos:	'=',
+				mostrarDetalle:		'&'
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
 				$scope.vouchersType = $rootScope.vouchersType;
 				$scope.moneda = $rootScope.moneda;
+				$scope.quitarVista = function (comprobante) {
+					var pos = $scope.comprobantesVistos.indexOf(comprobante);
+					$scope.comprobantesVistos.splice(pos, 1);
+				};
 				$scope.conversionMoneda = function(importe, codMoneda, cotiMoneda){
 					if ($rootScope.moneda == 'PES' && codMoneda == 'DOL'){ return (importe * cotiMoneda);
 					} else if ($rootScope.moneda == 'DOL' && codMoneda == 'PES'){ return (importe / cotiMoneda);

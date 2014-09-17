@@ -1,46 +1,47 @@
 /**
  * Created by leo on 28/04/14.
  */
-function turnosCtrl($scope, turnosFactory){
-	'use strict';
+(function(){
+	myapp.controller('turnosCtrl', function($scope, turnosFactory){
+		// Fecha (dia y hora)
+		$scope.model = {
+			'fechaDesde':	new Date(),
+			'fechaHasta':	new Date()
+		};
+		$scope.model.fechaDesde.setHours(0,0);
+		$scope.model.fechaHasta.setMinutes(0);
 
-	// Fecha (dia y hora)
-	$scope.model = {
-		'fechaDesde':	new Date(),
-		'fechaHasta':	new Date()
-	};
-	$scope.model.fechaDesde.setHours(0,0);
-	$scope.model.fechaHasta.setMinutes(0);
+		// Variable para almacenar la info principal que trae del factory
+		$scope.turnos = {};
 
-	// Variable para almacenar la info principal que trae del factory
-	$scope.turnos = {};
+		// Carga los turnos por fechas
+		$scope.cargaPorFiltros = function(){
+			$scope.status.open = !$scope.status.open;
+			$scope.currentPage = 1;
+			$scope.cargaTurnos();
+		};
 
-	// Carga los turnos por fechas
-	$scope.cargaPorFiltros = function(){
-		$scope.status.open = !$scope.status.open;
-		$scope.currentPage = 1;
+		$scope.cargaTurnos = function(page){
+			page = page || { skip:0, limit: $scope.itemsPerPage };
+			turnosFactory.getTurnos(cargaDatos(), page, function(data){
+				if (data.status === "OK"){
+					$scope.turnos = data.data;
+					$scope.totalItems = data.totalCount;
+				}
+			});
+		};
+
+		$scope.pageChanged = function(){
+			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			$scope.cargaTurnos($scope.page);
+		};
+
+		function cargaDatos(){
+			return { contenedor : $scope.contenedor, fechaDesde : $scope.model.fechaDesde, fechaHasta : $scope.model.fechaHasta }
+		}
+
+		// Carga los turnos del día hasta la hora del usuario
 		$scope.cargaTurnos();
-	};
 
-	$scope.cargaTurnos = function(page){
-		page = page || { skip:0, limit: $scope.itemsPerPage };
-		turnosFactory.getTurnos(cargaDatos(), page, function(data){
-			if (data.status === "OK"){
-				$scope.turnos = data.data;
-				$scope.totalItems = data.totalCount;
-			}
-		});
-	};
-
-	$scope.pageChanged = function(){
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		$scope.cargaTurnos($scope.page);
-	};
-
-	function cargaDatos(){
-		return { contenedor : $scope.contenedor, fechaDesde : $scope.model.fechaDesde, fechaHasta : $scope.model.fechaHasta }
-	}
-
-	// Carga los turnos del día hasta la hora del usuario
-	$scope.cargaTurnos();
-}
+	});
+})();
