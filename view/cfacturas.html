@@ -98,6 +98,10 @@
 		</div>
 
 		<div class="col-lg-12 well" ng-show="pantalla.mostrarResultado && !cargandoPaginaComprobantes">
+			<tabset ng-show="hayFiltros">
+				<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar('nroPtoVenta', tab.punto)"></tab>
+			</tabset>
+			<br>
 			<table-invoices datos-invoices="pantalla.comprobantesRotos" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 			<div-pagination ng-hide="hayFiltros" current-page="$parent.currentPageCodigos" page-changed="pageChangedCodigos()" total-items="totalItemsCodigos"></div-pagination>
 			<div-pagination ng-show="hayFiltros" current-page="$parent.currentPageFiltros" page-changed="pageChangedFiltros()" total-items="totalItemsFiltros"></div-pagination>

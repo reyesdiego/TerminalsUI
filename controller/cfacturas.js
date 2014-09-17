@@ -171,6 +171,8 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 						$scope.ocultarFiltros = [];
 						$scope.model.codigo = contenido;
 						$scope.hayFiltros = true;
+						recargar = false;
+						$scope.cargaTodosLosPuntosDeVentas();
 						break;
 					case 'codigosFiltrados':
 						if (angular.isDefined(contenido) && contenido != ''){
@@ -245,10 +247,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				$scope.controlDeCodigos();
 				break;
 			case 'codigosFiltrados':
-				invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
-					$scope.totalItemsFiltros = data.totalCount;
-					$scope.pantalla.comprobantesRotos = data.data;
-				});
+				$scope.cargaPuntosDeVenta();
 				break;
 			case 'tasas':
 				$scope.controlTasaCargas();
@@ -325,6 +324,13 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 				$scope.loadingControlCodigos = false;
 				$scope.cargandoPaginaComprobantes = false;
 			}
+		});
+	};
+
+	$scope.controlCodigosFiltrados = function(){
+		invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
+			$scope.totalItemsFiltros = data.totalCount;
+			$scope.pantalla.comprobantesRotos = data.data;
 		});
 	};
 
@@ -623,6 +629,9 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 			});
 			$scope.todosLosPuntosDeVentas[0].hide = false;
 			switch ($scope.controlFiltros){
+				case 'codigosFiltrados':
+					$scope.controlCodigosFiltrados();
+					break;
 				case 'revisar':
 					$scope.traerComprobantesRevisar();
 					break;
@@ -634,6 +643,7 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	};
 
 	$scope.cargaTodosLosPuntosDeVentas = function(){
+		$scope.todosLosPuntosDeVentas = [];
 		invoiceFactory.getCashbox('', function(data){
 			var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
 			$scope.todosLosPuntosDeVentas.push(dato);
@@ -646,7 +656,6 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 	};
 
 	$scope.cambioTab = function(unTab){
-		$scope.todosLosPuntosDeVentas = [];
 		$scope.controlFiltros = unTab;
 		$scope.model = {
 			'nroPtoVenta': '',
