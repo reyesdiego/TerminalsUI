@@ -180,9 +180,11 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.listaRazonSocial = [];
 	$rootScope.listaContenedores = [];
 	$rootScope.listaBuques = [];
+	$rootScope.listaContenedoresGates = [];
+	$rootScope.listaBuquesGates = [];
 
 	controlPanelFactory.getClients(function(data){
-		var i;
+		var i = 0;
 		data.data.forEach(function(cliente){
 			var objetoCliente = {
 				'id': i,
@@ -194,7 +196,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	});
 
 	controlPanelFactory.getContainers(function(data){
-		var i;
+		var i = 0;
 		data.data.forEach(function(contenedor){
 			var objetoContenedor = {
 				'id': i,
@@ -206,7 +208,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	});
 
 	controlPanelFactory.getShips(function(data){
-		var i;
+		var i = 0;
 		data.data.forEach(function(buque){
 			if (angular.isDefined(buque) && buque != null){
 				var objetoBuque = {
@@ -214,6 +216,34 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 					'buque': buque
 				};
 				$rootScope.listaBuques.push(objetoBuque);
+				i++;
+			}
+		})
+	});
+
+	controlPanelFactory.getContainersGates(function(data){
+		var i = 0;
+		data.data.forEach(function(container){
+			if (angular.isDefined(container) && container != null){
+				var objetoContainer = {
+					'id': i,
+					'container': container
+				};
+				$rootScope.listaContenedoresGates.push(objetoContainer);
+				i++;
+			}
+		})
+	});
+
+	controlPanelFactory.getShipsGates(function(data){
+		var i = 0;
+		data.data.forEach(function(buque){
+			if (angular.isDefined(buque) && buque != null){
+				var objetoBuque = {
+					'id': i,
+					'buque': buque
+				};
+				$rootScope.listaBuquesGates.push(objetoBuque);
 				i++;
 			}
 		})
