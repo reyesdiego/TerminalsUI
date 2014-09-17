@@ -139,11 +139,6 @@
 			$scope.cargaPuntosDeVenta();
 		};
 
-		$scope.hitEnter = function(evt){
-			if(angular.equals(evt.keyCode,13))
-				$scope.cargaFacturas();
-		};
-
 		$scope.pageChanged = function(){
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.cargaFacturas($scope.page);

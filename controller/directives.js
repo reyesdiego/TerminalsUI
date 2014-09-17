@@ -60,7 +60,6 @@
 			scope: {
 				model:				'=',
 				ocultarFiltros:		'@',
-				hitEnter:			'&',
 				filtrar:			'&'
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
@@ -73,6 +72,10 @@
 				$scope.listaContenedores = $rootScope.listaContenedores;
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 				$scope.listaBuques = $rootScope.listaBuques;
+				$scope.hitEnter = function(evt){
+					if(angular.equals(evt.keyCode,13))
+						$scope.filtrar();
+				};
 				$scope.openDate = function(event){
 					$rootScope.openDate(event);
 				};
