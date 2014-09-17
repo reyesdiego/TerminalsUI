@@ -266,6 +266,12 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 		}
 	};
 
+	$scope.hitEnter = function(evt){
+		if(angular.equals(evt.keyCode,13)){
+			$scope.filtrarCargar();
+		}
+	};
+
 	$scope.filtrarCaracteresInvalidos = function(palabra){
 		if (angular.isDefined(palabra) && palabra.length > 0){
 			var palabraFiltrada;
@@ -713,28 +719,30 @@ function cfacturasCtrl($scope, $modal, invoiceFactory, priceFactory, vouchersFac
 						invoice: comprobante._id
 					};
 					invoiceFactory.commentInvoice(logInvoice, function(dataRes){
-						switch (dataComment.newState){
-							case 'Y':
-								comprobante.interfazEstado = {
-									'estado': 'Revisar',
-									'btnEstado': 'btn-warning'
-								};
-								break;
-							case 'G':
-								comprobante.interfazEstado = {
-									'estado': 'Controlado',
-									'btnEstado': 'btn-success'
-								};
-								break;
-							case 'R':
-								comprobante.interfazEstado = {
-									'estado': 'Error',
-									'btnEstado': 'btn-danger'
-								};
-								break;
+						if (dataRes.status == 'OK'){
+							switch (dataComment.newState){
+								case 'Y':
+									comprobante.interfazEstado = {
+										'estado': 'Revisar',
+										'btnEstado': 'btn-warning'
+									};
+									break;
+								case 'G':
+									comprobante.interfazEstado = {
+										'estado': 'Controlado',
+										'btnEstado': 'btn-success'
+									};
+									break;
+								case 'R':
+									comprobante.interfazEstado = {
+										'estado': 'Error',
+										'btnEstado': 'btn-danger'
+									};
+									break;
+							}
+							comprobante.estado = dataComment.newState;
+							$scope.filtrarCargar();
 						}
-						comprobante.estado = dataComment.newState;
-						$scope.filtrarCargar();
 					});
 				});
 			}, function () {
