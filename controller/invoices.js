@@ -24,6 +24,9 @@
 			'buque': '',
 			'estado': 'N',
 			'codigo': '',
+			'filtroOrden': 'gateTimestamp',
+			'filtroOrdenAnterior': '',
+			'filtroOrdenReverse': false,
 			'order': ''
 		};
 
@@ -61,24 +64,6 @@
 				});
 				$scope.cargaFacturas();
 			})
-		};
-
-		$scope.filtrarOrden = function(filtro){
-			var filtroModo;
-			$scope.filtroOrden = filtro;
-			if ($scope.filtroOrden == $scope.filtroAnterior){
-				$scope.filtroOrdenReverse = !$scope.filtroOrdenReverse;
-			} else {
-				$scope.filtroOrdenReverse = false;
-			}
-			if ($scope.filtroOrdenReverse){
-				filtroModo = -1;
-			} else {
-				filtroModo = 1;
-			}
-			$scope.model.order = '"' + filtro + '":' + filtroModo;
-			$scope.filtroAnterior = filtro;
-			$scope.filtrarCargar();
 		};
 
 		$scope.filtrar = function (filtro, contenido){

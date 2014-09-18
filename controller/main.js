@@ -345,7 +345,6 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		} else {
 			$rootScope.verificaRutas(event, toState);
 		}
-		$rootScope.filtroOrden = '';
 	});
 
 	$rootScope.verificaRutas = function(event, toState){
