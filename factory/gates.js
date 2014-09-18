@@ -6,26 +6,7 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 
 	factory.getGate = function(datos, page, callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
-		var insertAux = inserturl;
-		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != ''){
-			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutos(datos.fechaDesde);
-		}
-		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'fechaFin=' + formatDate.formatearFechaHorasMinutos(datos.fechaHasta);
-		}
-		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'contenedor=' + datos.contenedor.toUpperCase();
-		}
-		if(angular.isDefined(datos.buque) && datos.buque != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'buqueNombre=' + datos.buque.toUpperCase();
-		}
-		if(angular.isDefined(datos.order) && datos.order != ''){
-			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'order=' + '[{' + datos.order + '}]';
-		}
+		inserturl = this.aplicarFiltros(inserturl, datos);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -37,6 +18,45 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar la lista de Gates');
 			});
+	};
+
+	factory.getReporteHorarios = function(datos, callback){
+		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?';
+		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
+		});
+	};
+
+	factory.aplicarFiltros = function(unaUrl, datos){
+		var insertAux = unaUrl;
+		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != ''){
+			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutos(datos.fechaDesde);
+		}
+		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFechaHorasMinutos(datos.fechaHasta);
+		}
+		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'contenedor=' + datos.contenedor.toUpperCase();
+		}
+		if(angular.isDefined(datos.buque) && datos.buque != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'buqueNombre=' + datos.buque.toUpperCase();
+		}
+		if(angular.isDefined(datos.order) && datos.order != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'order=' + '[{' + datos.order + '}]';
+		}
+		return unaUrl
 	};
 
 	return factory;
