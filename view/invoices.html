@@ -22,7 +22,7 @@
 					<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar('nroPtoVenta', tab.punto)"></tab>
 				</tabset>
 				<br>
-				<table-invoices datos-invoices="invoices" filtrar="filtrar(filtro, contenido)" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+				<table-invoices datos-invoices="invoices" filtrar="filtrar(filtro, contenido)" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 				<div-pagination current-page="currentPage" page-changed="pageChanged()" total-items="totalItems"></div-pagination>
 			</div>
 		</div>

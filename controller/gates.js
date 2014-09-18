@@ -20,7 +20,9 @@
 			'fechaHasta': $scope.fechaHasta,
 			'contenedor': '',
 			'buque': '',
-			'order': '"gateTimestamp":-1'
+			'filtroOrden': 'gateTimestamp',
+			'filtroOrdenReverse': true,
+			'order': '"gateTimestamp": -1'
 		};
 		$scope.filtroOrden = 'gateTimestamp';
 		$scope.filtroOrdenReverse = true;
@@ -69,55 +71,18 @@
 
 		$scope.cargaPorFiltros = function () {
 			$scope.status.open = !$scope.status.open;
-			$scope.currentPage = 1;
 			$scope.cargaGates();
-		};
-
-		$scope.cargaFacturasPorContenedor = function (container) {
-			var datos = { 'contenedor': container };
-			$scope.container = container;
-			invoiceFactory.getInvoice(datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
-				if (data.status === 'OK') {
-					$scope.invoices = data.data;
-					$scope.paginationHide = true
-				}
-			});
 		};
 
 		$scope.cargaGates = function (page) {
 			page = page || { skip: 0, limit: $scope.itemsPerPage };
+			if (page.skip == 0){ $scope.currentPage = 1}
 			gatesFactory.getGate(cargaDatos(), page, function (data) {
 				if (data.status === "OK") {
 					$scope.gates = data.data;
 					$scope.totalItems = data.totalCount;
 				}
 			});
-		};
-
-		$scope.cargaFacturas = function (page) {
-			page = page || { skip: 0, limit: $scope.itemsPerPage };
-			if (page.skip == 0) {
-				$scope.currentPage = 1
-			}
-			invoiceFactory.getInvoice(cargaDatos(), page, function (data) {
-				if (data.status === 'OK') {
-					$scope.invoices = data.data;
-					$scope.totalItems = data.totalCount;
-				}
-			});
-		};
-
-		$scope.mostrarDetalle = function (comprobante) {
-			var encontrado = false;
-			$scope.comprobantesVistos.forEach(function (unComprobante) {
-				if (unComprobante._id == comprobante._id) {
-					encontrado = true;
-				}
-			});
-			if (!encontrado) {
-				$scope.comprobantesVistos.push(comprobante);
-			}
-			$scope.verDetalle = comprobante;
 		};
 
 		$scope.pageChanged = function () {
@@ -145,14 +110,34 @@
 
 		function cargaDatos() {
 			return {
-				'fechaDesde': $scope.model.fechaDesde,
-				'fechaHasta': $scope.model.fechaHasta,
-				'contenedor': $scope.model.contenedor,
-				'buque': $scope.model.buque,
-				'order': $scope.model.order
+				'fechaDesde':			$scope.model.fechaDesde,
+				'fechaHasta':			$scope.model.fechaHasta,
+				'contenedor':			$scope.model.contenedor,
+				'buque':				$scope.model.buque,
+				'filtroOrden':			$scope.model.filtroOrden,
+				'filtroOrdenReverse':	$scope.model.filtroOrdenReverse,
+				'order':				$scope.model.order
 			};
 		}
 
 	});
 
+	myapp.controller('gatesInvoicesCtrl', function($scope, $stateParams, invoiceFactory){
+		$scope.contenedor = $stateParams.contenedor;
+
+		$scope.cargaFacturas = function(){
+			var datos = { 'contenedor': $scope.contenedor };
+			invoiceFactory.getInvoice(datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
+				if (data.status === 'OK') {
+					$scope.invoices = data.data;
+				}
+			});
+		};
+
+		$scope.mostrarDetalle = function (comprobante) {
+			$scope.verDetalle = comprobante;
+		};
+
+		$scope.cargaFacturas();
+	});
 })();

@@ -6,11 +6,7 @@
 
 		// Fecha (dia y hora)
 		$scope.fechaDesde = new Date();
-		$scope.fechaHasta = new Date();
-		$scope.fechaHasta.setDate($scope.fechaHasta.getDate() + 1);
-		$scope.maxDateD = new Date();
-		$scope.maxDateH = new Date();
-		$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
+		$scope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 		// Puntos de Ventas
 		$scope.puntosDeVentas = [];
@@ -43,15 +39,8 @@
 		// Funciones de Puntos de Venta
 		$scope.cargaPuntosDeVenta = function(){
 			invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
-				var hide;
 				$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
-					hide = true;
-					data.data.forEach(function(punto){
-						if (todosPtos.punto == punto){
-							hide = false;
-						}
-					});
-					todosPtos.hide = hide;
+					todosPtos.hide = data.data.indexOf(todosPtos.punto, 0) < 0;
 					if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
 						$scope.model.nroPtoVenta = '';
 						$scope.todosLosPuntosDeVentas[0].active = true;
@@ -186,18 +175,18 @@
 
 		function cargaDatos(){
 			return {
-				'nroPtoVenta': $scope.model.nroPtoVenta,
-				'codTipoComprob': $scope.model.codTipoComprob,
-				'nroComprobante': $scope.model.nroComprobante,
-				'razonSocial': $scope.model.razonSocial,
-				'documentoCliente': $scope.model.documentoCliente,
-				'estado': $scope.model.estado,
-				'fechaDesde': $scope.model.fechaDesde,
-				'fechaHasta': $scope.model.fechaHasta,
-				'contenedor': $scope.model.contenedor,
-				'buque': $scope.model.buque,
-				'codigo': $scope.model.codigo,
-				'order': $scope.model.order
+				'nroPtoVenta':		$scope.model.nroPtoVenta,
+				'codTipoComprob':	$scope.model.codTipoComprob,
+				'nroComprobante':	$scope.model.nroComprobante,
+				'razonSocial':		$scope.model.razonSocial,
+				'documentoCliente':	$scope.model.documentoCliente,
+				'estado':			$scope.model.estado,
+				'fechaDesde':		$scope.model.fechaDesde,
+				'fechaHasta':		$scope.model.fechaHasta,
+				'contenedor':		$scope.model.contenedor,
+				'buque':			$scope.model.buque,
+				'codigo':			$scope.model.codigo,
+				'order':			$scope.model.order
 			};
 		}
 
