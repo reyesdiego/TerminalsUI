@@ -31,7 +31,7 @@
 				<p>{{ tasaCargas.mensaje }}</p>
 			</div>
 		</div>
-		<table-invoices ng-show="tasaCargas.mostrarResultado" datos-invoices="tasaCargas.resultado" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices ng-show="tasaCargas.mostrarResultado" datos-invoices="tasaCargas.resultado" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 		<div-pagination ng-show="tasaCargas.mostrarResultado" current-page="$parent.currentPageTasaCargas" page-changed="pageChangedTasa()" total-items="totalItemsTasaCargas"></div-pagination>
 	</div>
 </tab>
@@ -102,7 +102,7 @@
 				<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar('nroPtoVenta', tab.punto)"></tab>
 			</tabset>
 			<br>
-			<table-invoices datos-invoices="pantalla.comprobantesRotos" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" moneda="{{moneda}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+			<table-invoices datos-invoices="pantalla.comprobantesRotos" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 			<div-pagination ng-hide="hayFiltros" current-page="$parent.currentPageCodigos" page-changed="pageChangedCodigos()" total-items="totalItemsCodigos"></div-pagination>
 			<div-pagination ng-show="hayFiltros" current-page="$parent.currentPageFiltros" page-changed="pageChangedFiltros()" total-items="totalItemsFiltros"></div-pagination>
 		</div>
@@ -180,7 +180,7 @@
 			<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar('nroPtoVenta', tab.punto)"></tab>
 		</tabset>
 		<br>
-		<table-invoices datos-invoices="comprobantesRevisar" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices datos-invoices="comprobantesRevisar" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 		<div-pagination current-page="$parent.currentPageRevisar" page-changed="pageChangedRevisar()" total-items="totalItemsRevisar"></div-pagination>
 	</div>
 </tab>
@@ -214,7 +214,7 @@
 		<tabset>
 			<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar('nroPtoVenta', tab.punto)"></tab>
 		</tabset>
-		<table-invoices datos-invoices="comprobantesError" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+		<table-invoices datos-invoices="comprobantesError" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
 		<div-pagination current-page="$parent.currentPageError" page-changed="pageChangedError()" total-items="totalItemsError"></div-pagination>
 	</div>
 </tab>

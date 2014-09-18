@@ -1,11 +1,12 @@
-<div class="container col-lg-12">
-	<div ng-hide="$state.includes('gates.invoices.result')">
-		<fieldset><legend>Comprobantes del contenedor {{ container }}</legend></fieldset>
-		<accordion-comprobantes-vistos comprobantes-vistos="comprobantesVistos" mostrar-detalle="mostrarDetalle(comprobante)"></accordion-comprobantes-vistos>
-		<table-invoices datos-invoices="invoices" ocultar-filtros="['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde' 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden']" filtrar="filtrar(filtro, contenido)" acceso="{{acceso}}" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
-		<button class="btn btn-default" ng-click="$state.go('^'); paginationHide=false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+<div class="container" ng-controller="gatesInvoicesCtrl" >
+	<div class="row" ng-hide="$state.includes('gates.invoices.result')">
+		<div class="col-lg-12">
+			<h4>Comprobantes del contenedor {{ contenedor }}</h4>
+			<table-invoices datos-invoices="invoices" ocultar-filtros="['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde' 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden']" filtrar="filtrar(filtro, contenido)" filtro-orden="{{filtroOrden}}" filtro-orden-reverse="filtroOrdenReverse" mostrar-detalle="mostrarDetalle(comprobante)" filtrar-orden="filtrarOrden(filtro)" track-invoice="trackInvoice(comprobante, estado)"></table-invoices>
+			<button class="btn btn-default" ng-click="$state.go('^');"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+		</div>
 	</div>
-	<div class="row" ng-init="ocultarFiltros=['codigo', 'contenedor', 'razonSocial']">
+	<div class="row" ng-show="$state.includes('gates.invoices.result')" ng-init="ocultarFiltros=['codigo', 'contenedor', 'razonSocial']">
 		<div ui-view></div>
 	</div>
 </div>

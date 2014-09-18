@@ -139,6 +139,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/gates.html"
 		})
 		.state('gates.invoices', {
+			url: "/contenedor=:contenedor",
 			templateUrl: "view/gates.invoices.html"
 		})
 		.state('gates.invoices.result', {
