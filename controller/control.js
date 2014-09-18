@@ -286,6 +286,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 					$scope.chartDataFacturadoUS = datosPreparados;
 			}
 			$scope.chartDataFacturado = datosPreparados;
+			console.log($scope.chartDataFacturado);
 		}, function(err){
 			$scope.loadingFacturadoDia = false;
 			$scope.errorFacturadoDia = true;

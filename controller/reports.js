@@ -11,6 +11,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.maxDate = new Date();
 
 	$scope.loadingReportGates = false;
+	$scope.loadingReporteTarifas = false;
 
 	$scope.model = {
 		'fechaDesde': $scope.fechaDesde,
@@ -26,6 +27,8 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 		'gatesLate': 0,
 		'gatesOk': 0
 	};
+
+	$scope.tarifasElegidas = 1;
 
 	$scope.filtrar = function (filtro, contenido) {
 		switch (filtro) {
@@ -87,7 +90,10 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.chartTitleReporteTarifas = "Conteo de tarifas por código";
 	$scope.chartWidthReporteTarifas = 1200;
 	$scope.chartHeightReporteTarifas = 600;
-	$scope.chartDataReporteTarifas = [];
+	$scope.chartDataReporteTarifas = [
+		['Codigos', 'algo'],
+		['hola', 2526]
+	];
 
 	$scope.chartTitleBarrasHorarios = "Detalle cumplimiento de turnos";
 	$scope.chartWidthBarrasHorarios = 500;
@@ -145,6 +151,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 
 	$scope.armarGraficoTarifas = function () {
+		$scope.loadingReporteTarifas = true;
 		$scope.tarifasGraficar = {
 			"field": "code",
 			"data": []
@@ -165,7 +172,11 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 		var nuevaLinea = [];
 		var contarTerminales = 0;
 		var terminales = [];
-		reportsFactory.getReporteTarifas($scope.tarifasGraficar, function(data){
+		var fecha={
+			'fechaInicio': $scope.desde,
+			'fechaFin': $scope.hasta
+		};
+		reportsFactory.getReporteTarifas(fecha, $scope.tarifasGraficar, function(data){
 			contarTerminales = data.data.length;
 			data.data.forEach(function(resultado){
 				nuevaLinea.push(resultado.terminal);
@@ -174,6 +185,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				nuevaLinea = [];
 			});
 			var i = 1;
+			$scope.tarifasElegidas = $scope.tablaGrafico.data.length;
 			$scope.tablaGrafico.terminales = terminales;
 			$scope.tablaGrafico.data.forEach(function(tarifa){
 				var total = 0;
@@ -182,9 +194,14 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				tarifa.porcentaje = [];
 				base[0].push(code);
 				for (i=1; i<=contarTerminales; i++){
-					base[i].push(data.data[i-1].data[code]);
-					tarifa.conteo.push(data.data[i-1].data[code]);
-					total += data.data[i-1].data[code];
+					if (angular.isDefined(data.data[i-1].data[code])){
+						base[i].push(data.data[i-1].data[code]);
+						tarifa.conteo.push(data.data[i-1].data[code]);
+						total+=data.data[i-1].data[code];
+					} else {
+						base[i].push(0);
+						tarifa.conteo.push(0);
+					}
 				}
 				tarifa.conteo.push(total);
 				for (i=0; i<=contarTerminales-1; i++){
@@ -194,10 +211,11 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 			});
 			$scope.chartDataReporteTarifas = base;
 			$scope.mostrarGrafico = true;
+			$scope.loadingReporteTarifas = false;
 		});
 	};
 	
-	$scope.cargarReporteTarifasTerminal = function(unaTerminal){
+	/*$scope.cargarReporteTarifasTerminal = function(unaTerminal){
 		var arrayCodigos = [];
 		var arrayDescripcion = [];
 		var arrayCantidad = [];
@@ -274,7 +292,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 
 		});
 
-	};
+	};*/
 
 	$scope.cargarReporteTarifas = function(){
 		$scope.resultadosTarifasBactssa = [];
@@ -290,11 +308,8 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 
 	$scope.cargarReporteHorarios = function(){
-		console.log($scope.model.buque);
 		$scope.loadingReportGates = true;
-		console.log(cargaDatos());
 		gatesFactory.getReporteHorarios(cargaDatos(), function(data){
-			console.log(data);
 			$scope.datosReporteGates = data.data;
 			var graficoBarra = [
 				['Turnos', 'Cantidad', { role: 'annotation' } ],

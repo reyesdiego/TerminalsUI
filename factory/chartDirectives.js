@@ -17,7 +17,8 @@ myapp.directive('dynamicChart', function($timeout, $rootScope){
 			stacked:  '=stacked',
 			is3D:     '=is3D',
 			currency: '=currency',
-			money:    '=money'
+			money:    '=money',
+			columns:  '@'
 		},
 		link: function ($scope, $elm) {
 			var data; //= new google.visualization.arrayToDataTable($scope.data);
@@ -116,9 +117,8 @@ myapp.directive('dynamicChart', function($timeout, $rootScope){
 								{prefix: prefijo, negativeColor: 'red', negativeParens: true});
 							formatter.format(data, 1);
 							if (!$scope.stacked){
-								formatter.format(data, 2);
-								formatter.format(data, 3);
-								formatter.format(data, 4);
+								for (var i=2; i<=$scope.columns; i++)
+								formatter.format(data, i);
 							}
 						}
 						chart.draw(data, options);

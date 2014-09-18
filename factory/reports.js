@@ -29,11 +29,11 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 		});
 	};
 
-	factory.getReporteTarifas = function(tarifas, callback){
-		var inserturl = serverUrl + '/' + loginService.getFiltro() + '/'; // El que se va a usar
+	factory.getReporteTarifas = function(fecha, tarifas, callback){
+		var inserturl = serverUrl + '/invoices/byRates?fechaInicio=' + formatDate.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatDate.formatearFecha(fecha.fechaFin);
 		//El método que se va a usar para mandar la información
-		/*$http({
-			method: "GET",
+		$http({
+			method: "POST",
 			url: inserturl,
 			data: JSON.stringify(tarifas),
 			headers:{"Content-Type":"application/json", token: loginService.getToken()}
@@ -41,15 +41,15 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 			callback(response);
 		}).error(function(errorText) {
 			dialogs.error('Error', 'Error al añadir el Match en la base');
-		});*/
+		});
 
-		$http.get('mocks/tarifasCount.json')
+		/*$http.get('mocks/tarifasCount.json')
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
 				dialogs.error('Error', 'Error al traer los datos de los turnos');
-			});
+			});*/
 	};
 
 	return factory;
