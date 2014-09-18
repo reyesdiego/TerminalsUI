@@ -2,7 +2,7 @@
  * Created by leo on 31/03/14.
  */
 (function(){
-	myapp.controller('gatesCtrl', function ($scope, gatesFactory, invoiceFactory) {
+	myapp.controller('gatesCtrl', function ($scope, gatesFactory) {
 
 		// Fecha (dia y hora)
 		$scope.fechaDesde = new Date();
@@ -21,11 +21,10 @@
 			'contenedor': '',
 			'buque': '',
 			'filtroOrden': 'gateTimestamp',
+			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': true,
 			'order': '"gateTimestamp": -1'
 		};
-		$scope.filtroOrden = 'gateTimestamp';
-		$scope.filtroOrdenReverse = true;
 
 		$scope.filtrar = function (filtro, contenido) {
 			switch (filtro) {
@@ -39,22 +38,22 @@
 			$scope.cargaGates();
 		};
 
-		$scope.filtrarOrden = function (filtro) {
+		$scope.filtrarOrden = function(filtro){
 			var filtroModo;
-			$scope.filtroOrden = filtro;
-			if ($scope.filtroOrden == $scope.filtroAnterior) {
-				$scope.filtroOrdenReverse = !$scope.filtroOrdenReverse;
+			$scope.model.filtroOrden = filtro;
+			if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
+				$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
 			} else {
-				$scope.filtroOrdenReverse = false;
+				$scope.model.filtroOrdenReverse = false;
 			}
-			if ($scope.filtroOrdenReverse) {
+			if ($scope.model.filtroOrdenReverse){
 				filtroModo = -1;
 			} else {
 				filtroModo = 1;
 			}
 			$scope.model.order = '"' + filtro + '":' + filtroModo;
 			$scope.filtroAnterior = filtro;
-			$scope.cargaGates();
+			$scope.filtrar();
 		};
 
 		// Pone estilo al horario de acuerdo si esta o no a tiempo
@@ -114,8 +113,6 @@
 				'fechaHasta':			$scope.model.fechaHasta,
 				'contenedor':			$scope.model.contenedor,
 				'buque':				$scope.model.buque,
-				'filtroOrden':			$scope.model.filtroOrden,
-				'filtroOrdenReverse':	$scope.model.filtroOrdenReverse,
 				'order':				$scope.model.order
 			};
 		}

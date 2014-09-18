@@ -7,12 +7,10 @@
 			restrict:		'E',
 			templateUrl:	'view/table.invoices.html',
 			scope: {
+				model:				'=',
 				datosInvoices:		'=',
 				ocultarFiltros:		'@',
-				filtroOrden:		'@',
-				filtroOrdenReverse:	'=',
 				mostrarDetalle:		'&',
-				filtrarOrden:		'&',
 				trackInvoice:		'&',
 				filtrar:			'&'
 			},
@@ -24,6 +22,23 @@
 					if ($rootScope.moneda == 'PES' && codMoneda == 'DOL'){ return (importe * cotiMoneda);
 					} else if ($rootScope.moneda == 'DOL' && codMoneda == 'PES'){ return (importe / cotiMoneda);
 					} else { return (importe); }
+				};
+				$scope.filtrarOrden = function(filtro){
+					var filtroModo;
+					$scope.model.filtroOrden = filtro;
+					if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
+						$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
+					} else {
+						$scope.model.filtroOrdenReverse = false;
+					}
+					if ($scope.model.filtroOrdenReverse){
+						filtroModo = -1;
+					} else {
+						filtroModo = 1;
+					}
+					$scope.model.order = '"' + filtro + '":' + filtroModo;
+					$scope.model.filtroAnterior = filtro;
+					$scope.filtrar();
 				};
 			}]
 		}
@@ -64,8 +79,7 @@
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
 				$scope.maxDateD = new Date();
-				$scope.maxDateH = new Date();
-				$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
+				$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 				$scope.vouchers = $rootScope.vouchers;
 				$scope.formatDate = $rootScope.formatDate;
 				$scope.dateOptions = $rootScope.dateOptions;
