@@ -157,7 +157,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.errorTotales = true;
 			$scope.mensajeErrorTotales = err;
 		});
-	}
+	};
 
 	$scope.traerDatosFacturadoMes = function(){
 		$scope.errorFacturadoMes = false;

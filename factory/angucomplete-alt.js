@@ -396,7 +396,7 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 
 			scope.searchTimerComplete = function(str) {
 				// Begin the search
-				if (str.length < minlength) {
+				if (angular.isDefined(str) && str.length < minlength) {
 					return;
 				}
 				if (scope.localData) {

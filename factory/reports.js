@@ -15,6 +15,20 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 			});
 	};
 
+	factory.getReporteHorarios = function(fecha, callback){
+		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?fechaInicio=' + formatDate.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatDate.formatearFecha(fecha.fechaFin);
+		console.log(inserturl);
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
+		});
+	};
+
 	factory.getReporteTarifas = function(tarifas, callback){
 		var inserturl = serverUrl + '/' + loginService.getFiltro() + '/'; // El que se va a usar
 		//El método que se va a usar para mandar la información

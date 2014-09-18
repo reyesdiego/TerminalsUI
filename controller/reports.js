@@ -2,7 +2,42 @@
  * Created by kolesnikov-a on 17/06/14.
 */
 
-var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, loginService){
+var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, gatesFactory, loginService){
+
+	$scope.fechaDesde = new Date();
+	$scope.fechaHasta = new Date();
+	$scope.fechaDesde.setHours(0, 0);
+	$scope.fechaHasta.setMinutes(0);
+	$scope.maxDate = new Date();
+
+	$scope.loadingReportGates = false;
+
+	$scope.model = {
+		'fechaDesde': $scope.fechaDesde,
+		'fechaHasta': $scope.fechaHasta,
+		'contenedor': '',
+		'buque': '',
+		'order': '"gateTimestamp":-1'
+	};
+
+	$scope.datosReporteGates = {
+		'gatesTotal': 0,
+		'gatesEarly': 0,
+		'gatesLate': 0,
+		'gatesOk': 0
+	};
+
+	$scope.filtrar = function (filtro, contenido) {
+		switch (filtro) {
+			case 'contenedor':
+				$scope.model.contenedor = contenido;
+				break;
+			case 'buque':
+				$scope.model.buque = contenido;
+				break;
+		}
+		$scope.cargarReporteHorarios();
+	};
 
 	$scope.maxDate = new Date();
 
@@ -19,7 +54,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 	$scope.tablaGrafico = [];
 
-	priceFactory.getPrice(loginService.getFiltro(), function (data) {
+	priceFactory.getPrice('agp', function (data) {
 		$scope.pricelist = data.data;
 		$scope.pricelist.forEach(function (price) {
 			price.graficar = false;
@@ -54,21 +89,17 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.chartHeightReporteTarifas = 600;
 	$scope.chartDataReporteTarifas = [];
 
-	$scope.chartTitleBarrasHorarios = "Detalle por mes";
+	$scope.chartTitleBarrasHorarios = "Detalle cumplimiento de turnos";
 	$scope.chartWidthBarrasHorarios = 500;
 	$scope.chartHeightBarrasHorarios = 400;
 
-	$scope.chartDataBarrasBactssa = [];
-	$scope.chartDataBarrasTerminal4 = [];
-	$scope.chartDataBarrasTrp = [];
+	$scope.chartDataBarras = [];
 
-	$scope.chartTitleTortaHorarios = "Porcentaje anual";
+	$scope.chartTitleTortaHorarios = "Porcentaje";
 	$scope.chartWidthTortaHorarios = 550;
 	$scope.chartHeightTortaHorarios = 530;
 
-	$scope.chartDataTortaBactssa = [];
-	$scope.chartDataTortaTerminal4 = [];
-	$scope.chartDataTortaTrp = [];
+	$scope.chartDataTorta = [];
 
 	$scope.chartDataTarifasBactssa = [];
 	$scope.chartDataTarifasTerminal4 = [];
@@ -83,7 +114,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.matchesTrp = [];
 
 	$scope.hasta = new Date();
-	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
+	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth() - 4);
 	$scope.mesDesdeHorarios = new Date($scope.hasta.getFullYear() + '-' + ($scope.hasta.getMonth() + 1) + '-01' );
 
 	$scope.monthMode = 'month';
@@ -108,7 +139,11 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.rowClass = function (index) {
 		return ($scope.selected === index) ? "selected" : "";
 	};
-	
+
+	$scope.cargaPorFiltros = function () {
+		$scope.cargarReporteHorarios();
+	};
+
 	$scope.armarGraficoTarifas = function () {
 		$scope.tarifasGraficar = {
 			"field": "code",
@@ -255,72 +290,63 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 
 	$scope.cargarReporteHorarios = function(){
-		reportsFactory.getCumplimientoTurnos($scope.mesDesdeHorarios, function(data){
-			var graficoBarras = [
-				['Datos', 'Ausencias', 'Tardes', 'Sin turno', { role: 'annotation' } ]
+		console.log($scope.model.buque);
+		$scope.loadingReportGates = true;
+		console.log(cargaDatos());
+		gatesFactory.getReporteHorarios(cargaDatos(), function(data){
+			console.log(data);
+			$scope.datosReporteGates = data.data;
+			var graficoBarra = [
+				['Turnos', 'Cantidad', { role: 'annotation' } ],
+				['Tardes', 0, ''],
+				['Antes de turno', 0, ''],
+				['En horario', 0, '']
 			];
-			var tortaBactssa = [
-				['Ausencias', 0],
+			var graficoTorta = [
 				['Tardes', 0],
-				['Sin turno', 0],
-				['Cumplidos', 0]
+				['Antes de turno', 0],
+				['En horario', 0]
 			];
-			var tortaTerminal4 = [
-				['Ausencias', 0],
-				['Tardes', 0],
-				['Sin turno', 0],
-				['Cumplidos', 0]
-			];
-			var tortaTrp = [
-				['Ausencias', 0],
-				['Tardes', 0],
-				['Sin turno', 0],
-				['Cumplidos', 0]
-			];
-			var barrasBactssa = graficoBarras.slice();
-			var barrasTerminal4 = graficoBarras.slice();
-			var barrasTrp = graficoBarras.slice();
+			graficoBarra[1][1] = $scope.datosReporteGates.gatesLate;
+			graficoBarra[2][1] = $scope.datosReporteGates.gatesEarly;
+			graficoBarra[3][1] = $scope.datosReporteGates.gatesOk;
 
-			var filaBarras = ['', 0, 0, 0, ''];
-			var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre", "Diciembre"];
+			graficoTorta[0][1] = $scope.datosReporteGates.gatesLate;
+			graficoTorta[1][1] = $scope.datosReporteGates.gatesEarly;
+			graficoTorta[2][1] = $scope.datosReporteGates.gatesOk;
 
-			data.data.forEach(function(datosHorarios){
-				filaBarras[0] = meses[datosHorarios.month - 1] + ' del ' + datosHorarios.year;
-				filaBarras[1] = datosHorarios.ausencias;
-				filaBarras[2] = datosHorarios.fueraDeHorario;
-				filaBarras[3] = datosHorarios.gatesSinTurno;
-				switch (datosHorarios.terminal){
-					case "BACTSSA":
-						barrasBactssa.push(filaBarras.slice());
-						tortaBactssa[0][1] += datosHorarios.ausencias;
-						tortaBactssa[1][1] += datosHorarios.fueraDeHorario;
-						tortaBactssa[2][1] += datosHorarios.gatesSinTurno;
-						tortaBactssa[3][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
-						break;
-					case "TERMINAL4":
-						barrasTerminal4.push(filaBarras.slice());
-						tortaTerminal4[0][1] += datosHorarios.ausencias;
-						tortaTerminal4[1][1] += datosHorarios.fueraDeHorario;
-						tortaTerminal4[2][1] += datosHorarios.gatesSinTurno;
-						tortaTerminal4[3][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
-						break;
-					case "TRP":
-						barrasTrp.push(filaBarras.slice());
-						tortaTrp[0][1] += datosHorarios.ausencias;
-						tortaTrp[1][1] += datosHorarios.fueraDeHorario;
-						tortaTrp[2][1] += datosHorarios.gatesSinTurno;
-						tortaTrp[3][1] += datosHorarios.turnosPlanificados - datosHorarios.ausencias - datosHorarios.fueraDeHorario;
-						break;
-				}
-			});
-			$scope.chartDataBarrasBactssa = barrasBactssa.slice();
-			$scope.chartDataBarrasTerminal4 = barrasTerminal4.slice();
-			$scope.chartDataBarrasTrp = barrasTrp.slice();
-
-			$scope.chartDataTortaBactssa = tortaBactssa.slice();
-			$scope.chartDataTortaTerminal4 = tortaTerminal4.slice();
-			$scope.chartDataTortaTrp = tortaTrp.slice();
+			$scope.chartDataBarras = graficoBarra.slice();
+			$scope.chartDataTorta = graficoTorta.slice();
+			$scope.loadingReportGates = false;
 		});
-
 	};
+
+	$scope.buqueSelected = function (selected) {
+		if (angular.isDefined(selected)) {
+			$scope.model.buque = selected.title;
+			$scope.filtrar('buque', selected.title);
+		}
+	};
+
+	$scope.containerSelected = function (selected) {
+		if (angular.isDefined(selected)) {
+			$scope.model.contenedor = selected.title;
+			$scope.filtrar('contenedor', selected.title);
+		}
+	};
+
+	$scope.filtrado = function (filtro, contenido) {
+		$scope.filtrar(filtro, contenido);
+	};
+
+	function cargaDatos() {
+		return {
+			'fechaDesde': $scope.model.fechaDesde,
+			'fechaHasta': $scope.model.fechaHasta,
+			'contenedor': $scope.model.contenedor,
+			'buque': $scope.model.buque,
+			'order': $scope.model.order
+		};
+	}
+
 });

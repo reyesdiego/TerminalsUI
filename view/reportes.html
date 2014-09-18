@@ -225,143 +225,55 @@
 				</div>
 			</tab>
 			<tab heading="Porcentaje de cumplimientos de horarios" select="cargarReporteHorarios()">
-				<div class="row well">
-					<div class="row col-lg-12" style="text-align: center"><h1>BACTSSA</h1></div>
-					<div class="col-lg-6">
-						<br>
-						<div class="row">
-							<table class="table table-bordered table-hover table-responsive">
-								<thead class="bg-info">
-									<th colspan="2" style="width: 50%; text-align: center">Turnos totales</th>
-									<th colspan="2" style="width: 50%; text-align: center">Turnos incumplidos</th>
-								</thead>
-								<thead class="bg-success">
-									<th style="width: 25%">Programados</th>
-									<th style="width: 25%">Sin programar</th>
-									<th style="width: 25%">Ausencias</th>
-									<th style="width: 25%">Tardes</th>
-								</thead>
-								<tr>
-									<td>{{ chartDataTortaBactssa[0][1] + chartDataTortaBactssa[1][1] + chartDataTortaBactssa[2][1] }}</td>
-									<td>{{ chartDataTortaBactssa[3][1] }}</td>
-									<td>{{ chartDataTortaBactssa[1][1] }}</td>
-									<td>{{ chartDataTortaBactssa[2][1] }}</td>
-								</tr>
-							</table>
+				<br>
+				<div class="row" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
+					<accordion-gates-turnos-search></accordion-gates-turnos-search>
+				</div>
+				<br>
+				<div class="col-lg-12" ng-show="!loadingReportGates && datosReporteGates.gatesTotal == 0">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">Reporte de cumplimiento de turnos</h3>
 						</div>
-						<div class="row">
-							<dynamic-chart
-									data="chartDataBarrasBactssa"
-									title="{{chartTitleBarrasHorarios}}"
-									width="{{chartWidthBarrasHorarios}}"
-									height="{{chartHeightBarrasHorarios}}"
-									select="selectRow(selectedRowIndexBarrasBactssa)"
-									type="{{columnChart}}"
-									currency="false"
-									stacked="false"
-									is3-d="false">
-							</dynamic-chart>
+						<div class="panel-body">
+							<span>No se encontraron gates para los filtros seleccionados.</span>
 						</div>
-					</div>
-					<div class="col-lg-6">
-						<dynamic-chart
-								data="chartDataTortaBactssa"
-								title="{{chartTitleTortaHorarios}}"
-								width="{{chartWidthTortaHorarios}}"
-								height="{{chartHeightTortaHorarios}}"
-								select="selectRow(selectedRowIndexTortaBactssa)"
-								type="{{pieChart}}"
-								stacked="false"
-								currency="false"
-								is3-d="true">
-						</dynamic-chart>
 					</div>
 				</div>
-				<hr>
-				<div class="row well">
-					<div class="row col-lg-12" style="text-align: center"><h1>TERMINAL 4</h1></div>
-					<div class="col-lg-6">
-						<br>
-						<div class=" row">
-							<table class="table table-bordered table-hover table-responsive">
-								<thead class="bg-info">
-									<th colspan="2" style="width: 50%; text-align: center">Turnos totales</th>
-									<th colspan="2" style="width: 50%; text-align: center">Turnos incumplidos</th>
-								</thead>
-								<thead class="bg-success">
-									<th style="width: 25%">Programados</th>
-									<th style="width: 25%">Sin programar</th>
-									<th style="width: 25%">Ausencias</th>
-									<th style="width: 25%">Tardes</th>
-								</thead>
-								<tr>
-									<td>{{ chartDataTortaTerminal4[0][1] + chartDataTortaTerminal4[1][1] + chartDataTortaTerminal4[2][1] }}</td>
-									<td>{{ chartDataTortaTerminal4[3][1] }}</td>
-									<td>{{ chartDataTortaTerminal4[1][1] }}</td>
-									<td>{{ chartDataTortaTerminal4[2][1] }}</td>
-								</tr>
-							</table>
-						</div>
-						<div class="row">
-							<dynamic-chart
-									data="chartDataBarrasTerminal4"
-									title="{{chartTitleBarrasHorarios}}"
-									width="{{chartWidthBarrasHorarios}}"
-									height="{{chartHeightBarrasHorarios}}"
-									select="selectRow(selectedRowIndexBarrasTerminal4)"
-									type="{{columnChart}}"
-									currency="false"
-									stacked="false"
-									is3-d="false">
-							</dynamic-chart>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<dynamic-chart
-								data="chartDataTortaTerminal4"
-								title="{{chartTitleTortaHorarios}}"
-								width="{{chartWidthTortaHorarios}}"
-								height="{{chartHeightTortaHorarios}}"
-								select="selectRow(selectedRowIndexTortaTerminal4)"
-								type="{{pieChart}}"
-								stacked="false"
-								currency="false"
-								is3-d="true">
-						</dynamic-chart>
-					</div>
+				<div class="col-lg-12" ng-show="loadingReportGates">
+					<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 				</div>
-				<hr>
-				<div class="row well">
-					<div class="row col-lg-12" style="text-align: center"><h1>Terminal Río de la Plata</h1></div>
+				<div class="row well" ng-hide="loadingReportGates || datosReporteGates.gatesTotal == 0">
+					<div class="row col-lg-12" style="text-align: center"><h1>{{ loginService.getFiltro() }}</h1></div>
 					<div class="col-lg-6">
 						<br>
-						<div class=" row">
+						<div class="row">
 							<table class="table table-bordered table-hover table-responsive">
 								<thead class="bg-info">
-									<th colspan="2" style="width: 50%; text-align: center">Turnos totales</th>
-									<th colspan="2" style="width: 50%; text-align: center">Turnos incumplidos</th>
+								<th colspan="2" style="width: 50%; text-align: center">Turnos</th>
+								<th colspan="2" style="width: 50%; text-align: center">Turnos incumplidos</th>
 								</thead>
 								<thead class="bg-success">
-									<th style="width: 25%">Programados</th>
-									<th style="width: 25%">Sin programar</th>
-									<th style="width: 25%">Ausencias</th>
-									<th style="width: 25%">Tardes</th>
+								<th style="width: 25%">Totales</th>
+								<th style="width: 25%">En horario</th>
+								<th style="width: 25%">Antes de horario</th>
+								<th style="width: 25%">Tardes</th>
 								</thead>
 								<tr>
-									<td>{{ chartDataTortaTrp[0][1] + chartDataTortaTrp[1][1] + chartDataTortaTrp[2][1] }}</td>
-									<td>{{ chartDataTortaTrp[3][1] }}</td>
-									<td>{{ chartDataTortaTrp[1][1] }}</td>
-									<td>{{ chartDataTortaTrp[2][1] }}</td>
+									<td>{{ datosReporteGates.gatesTotal }}</td>
+									<td>{{ datosReporteGates.gatesOk }}</td>
+									<td>{{ datosReporteGates.gatesEarly }}</td>
+									<td>{{ datosReporteGates.gatesLate }}</td>
 								</tr>
 							</table>
 						</div>
 						<div class="row">
 							<dynamic-chart
-									data="chartDataBarrasTrp"
+									data="chartDataBarras"
 									title="{{chartTitleBarrasHorarios}}"
 									width="{{chartWidthBarrasHorarios}}"
 									height="{{chartHeightBarrasHorarios}}"
-									select="selectRow(selectedRowIndexBarrasTrp)"
+									select="selectRow(selectedRowIndexBarras)"
 									type="{{columnChart}}"
 									currency="false"
 									stacked="false"
@@ -371,11 +283,11 @@
 					</div>
 					<div class="col-lg-6">
 						<dynamic-chart
-								data="chartDataTortaTrp"
+								data="chartDataTorta"
 								title="{{chartTitleTortaHorarios}}"
 								width="{{chartWidthTortaHorarios}}"
 								height="{{chartHeightTortaHorarios}}"
-								select="selectRow(selectedRowIndexTortaTrp)"
+								select="selectRow(selectedRowIndexTorta)"
 								type="{{pieChart}}"
 								stacked="false"
 								currency="false"
