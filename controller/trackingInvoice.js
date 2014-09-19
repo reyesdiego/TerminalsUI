@@ -42,13 +42,6 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 			break;
 	}
 
-	$scope.hitKey = function(evt){
-		if(angular.equals(evt.keyCode,13))
-			$scope.guardar();
-		if(angular.equals(evt.keyCode, 27))
-			$scope.cancelar();
-	};
-
 	$scope.trackInvoice = function(estado){
 		$scope.interfazModal.nuevoEstado = estado;
 		switch (estado){
@@ -71,15 +64,19 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 	};
 
 	$scope.guardar = function () {
-		var commentData = {
-			title: 'Cambio de estado: ' + $scope.interfazModal.estado,
-			comment: $scope.interfazModal.comentario,
-			newState: $scope.interfazModal.nuevoEstado
-		};
-		if ($scope.interfazModal.nuevoEstado == $scope.estado){
-			commentData.title = $scope.interfazModal.estado
+		if ($scope.interfazModal.comentario == '' && $scope.interfazModal.nuevoEstado == $scope.estado){
+			$scope.cancelar();
+		} else {
+			var commentData = {
+				title: 'Nuevo estado: ' + $scope.interfazModal.estado,
+				comment: $scope.interfazModal.comentario,
+				newState: $scope.interfazModal.nuevoEstado
+			};
+			if ($scope.interfazModal.nuevoEstado == $scope.estado){
+				commentData.title = $scope.interfazModal.estado
+			}
+			$modalInstance.close(commentData);
 		}
-		$modalInstance.close(commentData);
 	};
 
 	$scope.cancelar = function () {

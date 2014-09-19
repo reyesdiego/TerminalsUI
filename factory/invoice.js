@@ -271,7 +271,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:{ token: loginService.getToken()}
 		}).success(function (data){
 			data.data.forEach(function(comment){
-				comment.fecha = formatDate.formatearFecha(idToDate(comment._id));
+				comment.fecha = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(comment._id));
 			});
 			callback(data);
 		}).error(function(errorText){
