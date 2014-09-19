@@ -45,6 +45,21 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="input-group">
+							<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
+							<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" ng-model="$parent.tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas
+							</label>
+						</div>
+					</div>
+				</div>
+
 				<div class="row" ng-hide="$parent.mostrarGrafico || loadingReporteTarifas">
 					<div class="col-lg-12">
 						<div class="bs-example table-responsive">
@@ -57,7 +72,7 @@
 								</tr>
 								</thead>
 								<tbody>
-								<tr style="height:60px" ng-repeat="price in filteredPrices">
+								<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage | filter:search)">
 									<td class="col-lg-1">{{ price.code }}</td>
 									<td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 									<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="price.graficar"></td>

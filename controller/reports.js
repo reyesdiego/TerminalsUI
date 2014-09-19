@@ -10,6 +10,9 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.fechaHasta.setMinutes(0);
 	$scope.maxDate = new Date();
 	$scope.monedaFija = 'DOL';
+	$scope.search = '';
+	$scope.pricelist = [];
+	$scope.filteredPrices = [];
 
 	$scope.loadingReportGates = false;
 	$scope.loadingReporteTarifas = false;
@@ -58,23 +61,61 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 	$scope.tablaGrafico = [];
 
-	priceFactory.getPrice('agp', '', function (data) {
+	$scope.tasas = false;
+
+	priceFactory.getPrice('agp', $scope.tasas, function (data) {
 		$scope.pricelist = data.data;
 		$scope.pricelist.forEach(function (price) {
 			price.graficar = false;
 		});
-		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage);
 		$scope.totalItems = $scope.pricelist.length;
 	});
+
+	$scope.recargarPricelist = function(){
+		$scope.filteredPrices.forEach(function(price){
+			var pos = $scope.filteredPrices.indexOf(price);
+			$scope.pricelist[($scope.paginaAnterior-1)*$scope.itemsPerPage + pos].graficar = price.graficar;
+		});
+		var anteriorPricelist = $scope.pricelist.slice();
+		priceFactory.getPrice('agp', $scope.tasas, function (data) {
+			$scope.pricelist = data.data;
+			anteriorPricelist.forEach(function(price){
+				var pos = $scope.pricelist.map(function(e) { return e._id; }).indexOf(price._id);
+				if (pos != -1){
+					$scope.pricelist[pos].graficar = price.graficar;
+				}
+			});
+			$scope.totalItems = $scope.pricelist.length;
+			$scope.currentPage = 1;
+		});
+	};
 
 	$scope.pageChanged = function(){
 		$scope.filteredPrices.forEach(function(price){
 			var pos = $scope.filteredPrices.indexOf(price);
 			$scope.pricelist[($scope.paginaAnterior-1)*$scope.itemsPerPage + pos].graficar = price.graficar;
 		});
-		$scope.filteredPrices = $scope.pricelist.slice(($scope.currentPage - 1) * $scope.itemsPerPage, $scope.currentPage * $scope.itemsPerPage);
 		$scope.paginaAnterior = $scope.currentPage;
 	};
+
+	$scope.$watch('search', function(){
+		if ($scope.search != "" && $scope.search != null){
+			//Se supone que siempre que busca se limiten los resultados a una sola página, por eso seteo
+			//el totalItems en 1
+			$scope.totalItems = 1;
+			if ($scope.search.length <= 1){
+				//Una búsqueda con un solo caracter producía demasiados resultados, por lo que solo muestro los 10 primeros
+				$scope.itemsPerPage = 10;
+			} else {
+				//Si los resultados estaban originalmente en una página distinta de la currentPage no se veían,
+				//de este modo todos los resultados van hasta la única página
+				$scope.itemsPerPage = $scope.pricelist.length;
+			}
+		} else {
+			$scope.totalItems = $scope.pricelist.length;
+			$scope.itemsPerPage = 10;
+		}
+	});
 
 	$scope.mostrarGrafico = false;
 
