@@ -12,7 +12,11 @@
 				<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
 				<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 			</div>
-			<br>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="tasas" ng-change="cargaPricelist()">Sólo tasa a las cargas
+				</label>
+			</div>
 		</div>
 	</div>
 
@@ -33,7 +37,7 @@
 						<td class="col-lg-1">{{ price.code }}</td>
 						<td class="col-lg-9">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td class="col-lg-1">{{ price.unit}}</td>
-						<td class="col-lg-1">{{ price.currency | formatCurrency }}{{ price.topPrice }}</td>
+						<td style="text-align: right" class="col-lg-1">{{ price.currency | formatCurrency }}{{ price.topPrice }}</td>
 					</tr>
 					</tbody>
 				</table>

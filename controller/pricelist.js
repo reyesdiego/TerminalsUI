@@ -6,11 +6,14 @@ function pricelistCtrl($scope, priceFactory, loginService){
 	// Variable para almacenar la info principal que trae del factory
 	$scope.pricelist = [];
 	$scope.filteredPrices = [];
+	$scope.tasas = false;
 
-	priceFactory.getPrice(loginService.getFiltro(), function (data) {
-		$scope.pricelist = data.data;
-		$scope.totalItems = $scope.pricelist.length;
-	});
+	$scope.cargaPricelist = function(){
+		priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
+			$scope.pricelist = data.data;
+			$scope.totalItems = $scope.pricelist.length;
+		});
+	};
 
 	$scope.$watch('search', function(){
 		if ($scope.search != "" && $scope.search != null){
@@ -30,4 +33,6 @@ function pricelistCtrl($scope, priceFactory, loginService){
 			$scope.itemsPerPage = 10;
 		}
 	});
+
+	$scope.cargaPricelist();
 }

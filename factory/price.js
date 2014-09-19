@@ -4,8 +4,9 @@
 myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate){
 	var factory = {};
 
-	factory.getPrice = function(terminal, callback) {
+	factory.getPrice = function(terminal, datos, callback) {
 		var inserturl = serverUrl + '/prices/' + terminal;
+		if (datos){ inserturl = inserturl + '?onlyRates=true' }
 		$http({
 			method: 'GET',
 			url: inserturl,

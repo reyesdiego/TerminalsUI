@@ -58,7 +58,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 	$scope.tablaGrafico = [];
 
-	priceFactory.getPrice('agp', function (data) {
+	priceFactory.getPrice('agp', '', function (data) {
 		$scope.pricelist = data.data;
 		$scope.pricelist.forEach(function (price) {
 			price.graficar = false;

@@ -62,6 +62,9 @@
 
 		$scope.filtrar = function(filtro, contenido){
 			switch (filtro) {
+				case 'nroPtoVenta':
+					$scope.model.nroPtoVenta = contenido;
+					break;
 				case 'codigo':
 					$scope.model.codigo = contenido;
 					break;
