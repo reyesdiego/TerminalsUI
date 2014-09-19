@@ -35,7 +35,9 @@ function in_array(needle, haystack, argStrict){
 }
 
 function idToDate(objectId){
-	return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
+	var fechaGMT0 = new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
+	fechaGMT0.setUTCHours(fechaGMT0.getHours(), fechaGMT0.getMinutes(), fechaGMT0.getSeconds());
+	return fechaGMT0;
 }
 
 var serverUrl = config.url();
