@@ -11,10 +11,9 @@
 				datosInvoices:		'=',
 				ocultarFiltros:		'@',
 				mostrarDetalle:		'&',
-				trackInvoice:		'&',
 				filtrar:			'&'
 			},
-			controller: ['$rootScope', '$scope', function($rootScope, $scope){
+			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', function($rootScope, $scope, $modal, invoiceFactory){
 				$scope.vouchersType = $rootScope.vouchersType;
 				$scope.moneda = $rootScope.moneda;
 				$scope.acceso = $rootScope.esUsuario;
@@ -39,6 +38,61 @@
 					$scope.model.order = '"' + filtro + '":' + filtroModo;
 					$scope.model.filtroAnterior = filtro;
 					$scope.filtrar();
+				};
+				$scope.trackInvoice = function(comprobante){
+					var estado = comprobante.estado;
+					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+						var modalInstance = $modal.open({
+							templateUrl: 'view/trackingInvoice.html',
+							controller: trackingInvoiceCtrl,
+							backdrop: 'static',
+							resolve: {
+								estado: function () {
+									return estado;
+								},
+								track: function() {
+									return dataTrack;
+								}
+							}
+						});
+						dataTrack = [];
+						modalInstance.result.then(function (dataComment) {
+							invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState, function(){
+								var logInvoice = {
+									title: dataComment.title,
+									state: dataComment.newState,
+									comment: dataComment.comment,
+									invoice: comprobante._id
+								};
+								invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+									if (dataRes.status == 'OK'){
+										switch (dataComment.newState){
+											case 'Y':
+												comprobante.interfazEstado = {
+													'estado': 'Revisar',
+													'btnEstado': 'btn-warning'
+												};
+												break;
+											case 'G':
+												comprobante.interfazEstado = {
+													'estado': 'Controlado',
+													'btnEstado': 'btn-success'
+												};
+												break;
+											case 'R':
+												comprobante.interfazEstado = {
+													'estado': 'Error',
+													'btnEstado': 'btn-danger'
+												};
+												break;
+										}
+										comprobante.estado = dataComment.newState;
+										$scope.filtrar();
+									}
+								});
+							});
+						});
+					});
 				};
 			}]
 		}

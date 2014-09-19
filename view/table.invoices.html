@@ -65,7 +65,7 @@
 			<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 			<td ng-show="acceso=='agp'">
 				<div class="btn-group" dropdown is-open="status.isopen">
-					<button ng-click="trackInvoice({comprobante: invoice})" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+					<button ng-click="trackInvoice(invoice)" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
 						{{ invoice.interfazEstado.estado }}
 					</button>
 				</div>

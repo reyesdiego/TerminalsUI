@@ -121,6 +121,7 @@
 
 	myapp.controller('gatesInvoicesCtrl', function($scope, $stateParams, invoiceFactory){
 		$scope.contenedor = $stateParams.contenedor;
+		$scope.filtrosGates = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
 		$scope.cargaFacturas = function(){
 			var datos = { 'contenedor': $scope.contenedor };
