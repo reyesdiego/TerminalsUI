@@ -51,7 +51,7 @@
 				<span ng-show="ocultarFiltros.indexOf('importeOrden', 0) >= 0">Importe Total</span>
 			</th>
 			<th style="text-align: center">Detalles</th>
-			<th ng-show="acceso=='agp'">Estado</th>
+			<th style="text-align: center" ng-show="acceso=='agp'" class="col-lg-1">Estado</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -63,9 +63,9 @@
 			<td style="text-align: center"><a href ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0" ng-click="filtrar({filtro: 'fechaDesde', contenido: invoice.fecha.emision})"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 			<td style="text-align: right">{{ moneda | formatCurrency }} {{ conversionMoneda(invoice.importe.total, invoice.codMoneda, invoice.cotiMoneda) | currency }}</td>
 			<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-			<td ng-show="acceso=='agp'">
+			<td ng-show="acceso=='agp'" style="text-align: center">
 				<div class="btn-group" dropdown is-open="status.isopen">
-					<button ng-click="trackInvoice({comprobante: invoice})" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+					<button ng-click="trackInvoice(invoice)" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
 						{{ invoice.interfazEstado.estado }}
 					</button>
 				</div>
