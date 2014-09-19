@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 2/3/14.
 */
 (function(){
-	myapp.controller('invoicesCtrl', function($scope, $modal, invoiceFactory, loginService){
+	myapp.controller('invoicesCtrl', function($scope, invoiceFactory, loginService){
 
 		// Fecha (dia y hora)
 		$scope.fechaDesde = new Date();
