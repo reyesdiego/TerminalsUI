@@ -70,10 +70,10 @@ myapp.directive('dynamicChart', function($timeout, $rootScope){
 						draw.triggered = false;
 						switch ($scope.money){
 							case 'PES':
-								prefijo = 'AR$';
+								prefijo = 'AR$ ';
 								break;
 							case 'DOL':
-								prefijo = 'US$';
+								prefijo = 'US$ ';
 								break;
 						}
 						if ($scope.type == 'pie'){
