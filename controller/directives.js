@@ -94,6 +94,60 @@
 						});
 					});
 				};
+				$scope.filtrado = function(filtro, contenido){
+					switch (filtro){
+						case 'nroPtoVenta':
+							$scope.model.nroPtoVenta = contenido;
+							break;
+						case 'codComprobante':
+							$scope.model.codTipoComprob = contenido;
+							break;
+						case 'nroComprobante':
+							$scope.model.nroComprobante = contenido;
+							break;
+						case 'razonSocial':
+							$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(contenido);
+							break;
+						case 'documentoCliente':
+							$scope.model.documentoCliente = contenido;
+							break;
+						case 'estado':
+							$scope.model.estado = contenido;
+							break;
+						case 'fechaDesde':
+							$scope.model.fechaDesde = contenido;
+							break;
+						case 'fechaHasta':
+							$scope.model.fechaHasta = contenido;
+							break;
+						case 'contenedor':
+							$scope.model.contenedor = contenido;
+							break;
+						case 'buque':
+							$scope.model.buque = contenido;
+							break;
+					}
+					if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+						$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+					}
+					$scope.filtrar(filtro, contenido);
+				};
+				$scope.filtrarCaracteresInvalidos = function(palabra){
+					if (angular.isDefined(palabra) && palabra.length > 0){
+						var palabraFiltrada;
+						var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
+						palabraFiltrada = palabra;
+						for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
+							if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
+								palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
+							}
+						}
+						return palabraFiltrada.toUpperCase();
+					} else {
+						return palabra;
+					}
+				};
 			}]
 		}
 	});
@@ -147,9 +201,6 @@
 				$scope.openDate = function(event){
 					$rootScope.openDate(event);
 				};
-				$scope.filtrado = function(filtro, contenido){
-					$scope.filtrar({filtro: filtro, contenido: contenido});
-				};
 				$scope.clientSelected = function(selected){
 					if (angular.isDefined(selected)){
 						$scope.model.razonSocial = selected.title;
@@ -166,6 +217,60 @@
 					if (angular.isDefined(selected)){
 						$scope.model.buque = selected.title;
 						$scope.filtrar({filtro: 'buque', contenido: selected.title});
+					}
+				};
+				$scope.filtrado = function(filtro, contenido){
+					switch (filtro){
+						case 'nroPtoVenta':
+							$scope.model.nroPtoVenta = contenido;
+							break;
+						case 'codComprobante':
+							$scope.model.codTipoComprob = contenido;
+							break;
+						case 'nroComprobante':
+							$scope.model.nroComprobante = contenido;
+							break;
+						case 'razonSocial':
+							$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(contenido);
+							break;
+						case 'documentoCliente':
+							$scope.model.documentoCliente = contenido;
+							break;
+						case 'estado':
+							$scope.model.estado = contenido;
+							break;
+						case 'fechaDesde':
+							$scope.model.fechaDesde = contenido;
+							break;
+						case 'fechaHasta':
+							$scope.model.fechaHasta = contenido;
+							break;
+						case 'contenedor':
+							$scope.model.contenedor = contenido;
+							break;
+						case 'buque':
+							$scope.model.buque = contenido;
+							break;
+					}
+					if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+						$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+					}
+					$scope.filtrar({filtro: filtro, contenido: contenido});
+				};
+				$scope.filtrarCaracteresInvalidos = function(palabra){
+					if (angular.isDefined(palabra) && palabra.length > 0){
+						var palabraFiltrada;
+						var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
+						palabraFiltrada = palabra;
+						for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
+							if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
+								palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
+							}
+						}
+						return palabraFiltrada.toUpperCase();
+					} else {
+						return palabra;
 					}
 				};
 			}]

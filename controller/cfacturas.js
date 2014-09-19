@@ -142,9 +142,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.filtrar = function (filtro, contenido){
 		var recargar = true;
 		switch (filtro){
-			case 'nroPtoVenta':
-				$scope.model.nroPtoVenta = contenido;
-				break;
 			case 'codigo':
 				switch ($scope.controlFiltros){
 					case 'codigos':
@@ -186,33 +183,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 						break;
 				}
 				break;
-			case 'codComprobante':
-				$scope.model.codTipoComprob = contenido;
-				break;
-			case 'nroComprobante':
-				$scope.model.nroComprobante = contenido;
-				break;
-			case 'razonSocial':
-				$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(contenido);
-				break;
-			case 'documentoCliente':
-				$scope.model.documentoCliente = contenido;
-				break;
-			case 'estado':
-				$scope.model.estado = contenido;
-				break;
-			case 'fechaDesde':
-				$scope.model.fechaDesde = contenido;
-				break;
-			case 'fechaHasta':
-				$scope.model.fechaHasta = contenido;
-				break;
-			case 'contenedor':
-				$scope.model.contenedor = contenido;
-				break;
-			case 'buque':
-				$scope.model.buque = contenido;
-				break;
 		}
 		if (recargar){
 			$scope.filtrarCargar();
@@ -220,10 +190,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.filtrarCargar = function(){
-		if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-			$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-			$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
-		}
 		switch ($scope.controlFiltros){
 			case 'codigos':
 				$scope.controlDeCodigos();
@@ -251,22 +217,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.hitEnter = function(evt){
 		if(angular.equals(evt.keyCode,13)){
 			$scope.filtrarCargar();
-		}
-	};
-
-	$scope.filtrarCaracteresInvalidos = function(palabra){
-		if (angular.isDefined(palabra) && palabra.length > 0){
-			var palabraFiltrada;
-			var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
-			palabraFiltrada = palabra;
-			for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
-				if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
-					palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
-				}
-			}
-			return palabraFiltrada.toUpperCase();
-		} else {
-			return palabra;
 		}
 	};
 

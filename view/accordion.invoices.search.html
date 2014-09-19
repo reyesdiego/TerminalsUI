@@ -8,7 +8,7 @@
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroPtoVenta', 0) >= 0">
 					<div class="input-group">
 						<input type="text" ng-keyup="hitEnter($event)" ng-model="model.nroPtoVenta" class="form-control" placeholder="N° Punto de venta"/>
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar('nroPtoVenta', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('nroPtoVenta', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0">
@@ -18,13 +18,13 @@
 							<option value="0" disabled>Seleccionar Comprobante</option>
 							<option ng-repeat="comprobantes in vouchers" value="{{ comprobantes._id }}">{{ comprobantes.description }}</option>
 						</select>
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtro: 'codComprobante', contenido: 0});"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codComprobante', 0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0">
 					<div class="input-group">
 						<input type="text" ng-keyup="hitEnter($event)" ng-model="model.nroComprobante" class="form-control" placeholder="N° Comprobante"/>
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtro: 'nroComprobante', contenido: ''});"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('nroComprobante', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
@@ -46,7 +46,7 @@
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('documentoCliente', 0) >= 0">
 					<div class="input-group">
 						<input type="text" ng-keyup="hitEnter($event)" ng-model="model.documentoCliente" class="form-control" placeholder="Documento Cliente"/>
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtro: 'documentoCliente', contenido:''});"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('documentoCliente', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
@@ -68,7 +68,7 @@
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codigo', 0) >= 0">
 					<div class="input-group">
 						<input type="text" ng-keyup="hitEnter($event)" ng-model="model.codigo" class="form-control" placeholder="Código de tarifa">
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtro: 'codigo', contenido: ''});"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codigo', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
@@ -80,7 +80,7 @@
 							<option value="G">Controlado</option>
 							<option value="R">Error</option>
 						</select>
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtro: 'estado', contenido: 'N'});"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('estado', 'N');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
@@ -104,7 +104,7 @@
 						<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
 						<label for="model.fechaDesde" class="sr-only">Fecha Desde</label>
 						<input id="model.fechaDesde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDateD" />
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtro: 'fechaDesde', contenido: ''});"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaDesde', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaHasta', 0) >= 0">
@@ -112,12 +112,12 @@
 						<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaHasta = !openFechaHasta;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
 						<label for="model.fechaHasta" class="sr-only">Fecha Hasta</label>
 						<input id="model.fechaHasta" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaHasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDateH"/>
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtro: 'fechaHasta', contenido: ''});"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaHasta', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6">
 					<div class="input-group">
-						<button class="btn btn-primary" ng-click="filtrar({filtro: '', contenido: ''})"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+						<button class="btn btn-primary" ng-click="filtrado('', '')"><span class="glyphicon glyphicon-search"></span> Buscar</button>
 					</div>
 				</div>
 			</div>

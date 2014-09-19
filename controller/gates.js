@@ -26,15 +26,7 @@
 			'order': '"gateTimestamp": -1'
 		};
 
-		$scope.filtrar = function (filtro, contenido) {
-			switch (filtro) {
-				case 'contenedor':
-					$scope.model.contenedor = contenido;
-					break;
-				case 'buque':
-					$scope.model.buque = contenido;
-					break;
-			}
+		$scope.filtrar = function () {
 			$scope.cargaGates();
 		};
 
@@ -52,7 +44,7 @@
 				filtroModo = 1;
 			}
 			$scope.model.order = '"' + filtro + '":' + filtroModo;
-			$scope.filtroAnterior = filtro;
+			$scope.model.filtroAnterior = filtro;
 			$scope.filtrar();
 		};
 
