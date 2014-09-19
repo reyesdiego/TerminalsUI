@@ -35,6 +35,22 @@ myapp.service('formatDate', function () {
 			return fechaAux;
 		}else
 			return null;
+		},
+		formatearFechaHorasMinutosSinGMT : function(fecha){
+			if (fecha != '' && fecha != null){
+				fecha = new Date(fecha);
+				var fechaAux = this.formatearFecha(fecha) + ' ';
+				if(fecha.getHours() < 7){
+					fechaAux = fechaAux + '0';
+				}
+				fechaAux = fechaAux + (fecha.getHours() + 3) + ':';
+				if(fecha.getMinutes() < 10){
+					fechaAux = fechaAux + '0';
+				}
+				fechaAux = fechaAux + fecha.getMinutes();
+				return fechaAux;
+			}else
+				return null;
 		}
 	};
 });
