@@ -2,13 +2,14 @@
  * Created by kolesnikov-a on 17/06/14.
 */
 
-var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, gatesFactory, loginService){
+var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, gatesFactory, loginService, dialogs){
 
 	$scope.fechaDesde = new Date();
 	$scope.fechaHasta = new Date();
 	$scope.fechaDesde.setHours(0, 0);
 	$scope.fechaHasta.setMinutes(0);
 	$scope.maxDate = new Date();
+	$scope.monedaFija = 'DOL';
 
 	$scope.loadingReportGates = false;
 	$scope.loadingReporteTarifas = false;
@@ -87,7 +88,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.columnChart = 'column';
 	$scope.pieChart = 'pie';
 
-	$scope.chartTitleReporteTarifas = "Conteo de tarifas por código";
+	$scope.chartTitleReporteTarifas = "Códigos de tarifas";
 	$scope.chartWidthReporteTarifas = 1200;
 	$scope.chartHeightReporteTarifas = 600;
 	$scope.chartDataReporteTarifas = [
@@ -120,7 +121,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	$scope.matchesTrp = [];
 
 	$scope.hasta = new Date();
-	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth() - 4);
+	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 	$scope.mesDesdeHorarios = new Date($scope.hasta.getFullYear() + '-' + ($scope.hasta.getMonth() + 1) + '-01' );
 
 	$scope.monthMode = 'month';
@@ -166,53 +167,59 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 				$scope.tablaGrafico.data.push(price);
 			}
 		});
-		var base = [
-			['Códigos']
-		];
-		var nuevaLinea = [];
-		var contarTerminales = 0;
-		var terminales = [];
-		var fecha={
-			'fechaInicio': $scope.desde,
-			'fechaFin': $scope.hasta
-		};
-		reportsFactory.getReporteTarifas(fecha, $scope.tarifasGraficar, function(data){
-			contarTerminales = data.data.length;
-			data.data.forEach(function(resultado){
-				nuevaLinea.push(resultado.terminal);
-				base.push(nuevaLinea.slice());
-				terminales.push(resultado.terminal);
-				nuevaLinea = [];
-			});
-			var i = 1;
-			$scope.tarifasElegidas = $scope.tablaGrafico.data.length;
-			$scope.tablaGrafico.terminales = terminales;
-			$scope.tablaGrafico.data.forEach(function(tarifa){
-				var total = 0;
-				var code = tarifa.code;
-				tarifa.conteo = [];
-				tarifa.porcentaje = [];
-				base[0].push(code);
-				for (i=1; i<=contarTerminales; i++){
-					if (angular.isDefined(data.data[i-1].data[code])){
-						base[i].push(data.data[i-1].data[code]);
-						tarifa.conteo.push(data.data[i-1].data[code]);
-						total+=data.data[i-1].data[code];
-					} else {
-						base[i].push(0);
-						tarifa.conteo.push(0);
-					}
-				}
-				tarifa.conteo.push(total);
-				for (i=0; i<=contarTerminales-1; i++){
-					var cuenta = (tarifa.conteo[i]*100)/tarifa.conteo[contarTerminales];
-					tarifa.porcentaje.push(cuenta);
-				}
-			});
-			$scope.chartDataReporteTarifas = base;
-			$scope.mostrarGrafico = true;
+		if ($scope.tarifasGraficar.data.length <= 0){
+			dialogs.notify("Totales por tarifa", "No se ha seleccionado ninguna tarifa para graficar.");
+			$scope.mostrarGrafico = false;
 			$scope.loadingReporteTarifas = false;
-		});
+		} else {
+			var base = [
+				['Códigos']
+			];
+			var nuevaLinea = [];
+			var contarTerminales = 0;
+			var terminales = [];
+			var fecha={
+				'fechaInicio': $scope.desde,
+				'fechaFin': $scope.hasta
+			};
+			reportsFactory.getReporteTarifas(fecha, $scope.tarifasGraficar, function(data){
+				contarTerminales = data.data.length;
+				data.data.forEach(function(resultado){
+					nuevaLinea.push(resultado.terminal);
+					base.push(nuevaLinea.slice());
+					terminales.push(resultado.terminal);
+					nuevaLinea = [];
+				});
+				var i = 1;
+				$scope.tarifasElegidas = $scope.tablaGrafico.data.length;
+				$scope.tablaGrafico.terminales = terminales;
+				$scope.tablaGrafico.data.forEach(function(tarifa){
+					var total = 0;
+					var code = tarifa.code;
+					tarifa.conteo = [];
+					tarifa.porcentaje = [];
+					base[0].push(code);
+					for (i=1; i<=contarTerminales; i++){
+						if (angular.isDefined(data.data[i-1].data[code])){
+							base[i].push(data.data[i-1].data[code]);
+							tarifa.conteo.push(data.data[i-1].data[code]);
+							total+=data.data[i-1].data[code];
+						} else {
+							base[i].push(0);
+							tarifa.conteo.push(0);
+						}
+					}
+					tarifa.conteo.push(total);
+					for (i=0; i<=contarTerminales-1; i++){
+						var cuenta = (tarifa.conteo[i]*100)/tarifa.conteo[contarTerminales];
+						tarifa.porcentaje.push(cuenta);
+					}
+				});
+				$scope.chartDataReporteTarifas = base;
+				$scope.mostrarGrafico = true;
+				$scope.loadingReporteTarifas = false;
+			});
+		}
 	};
 	
 	/*$scope.cargarReporteTarifasTerminal = function(unaTerminal){
