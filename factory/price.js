@@ -21,6 +21,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate)
 	factory.getMatchPrices = function(terminal, datos, callback) {
 		var inserturl = serverUrl + '/matchprices/' + terminal + '?';
 		var insertAux = inserturl;
+		console.log(datos);
 		if (datos && datos != null){
 			if(angular.isDefined(datos.codigo) && datos.codigo != ''){
 				inserturl = inserturl + 'code=' + datos.codigo.toUpperCase();
@@ -28,6 +29,10 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate)
 			if(angular.isDefined(datos.codigoAsociado) && datos.codigoAsociado != ''){
 				if(inserturl != insertAux){ inserturl = inserturl + '&'}
 				inserturl = inserturl + 'matchCode=' + datos.codigoAsociado.toUpperCase();
+			}
+			if(angular.isDefined(datos.tasaCargas) && datos.tasaCargas != ''){
+				if(inserturl != insertAux){ inserturl = inserturl + '&'}
+				inserturl = inserturl + 'onlyRates=' + datos.tasaCargas;
 			}
 		}
 		$http({
