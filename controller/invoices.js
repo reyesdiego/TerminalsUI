@@ -9,7 +9,6 @@
 		$scope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 		// Puntos de Ventas
-		$scope.puntosDeVentas = [];
 		$scope.todosLosPuntosDeVentas = [];
 
 		$scope.model = {
@@ -28,11 +27,6 @@
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': false,
 			'order': ''
-		};
-
-		$scope.invoiceEstado = {
-			'estado': 'Y',
-			'btnEstado': 'btn-warning'
 		};
 
 		$scope.comprobantesVistos = [];
@@ -66,49 +60,11 @@
 			})
 		};
 
-		$scope.filtrar = function (filtro, contenido){
-			switch (filtro){
-				case 'nroPtoVenta':
-					$scope.model.nroPtoVenta = contenido;
-					break;
+		$scope.filtrar = function(filtro, contenido){
+			switch (filtro) {
 				case 'codigo':
 					$scope.model.codigo = contenido;
 					break;
-				case 'codComprobante':
-					$scope.model.codTipoComprob = contenido;
-					break;
-				case 'nroComprobante':
-					$scope.model.nroComprobante = contenido;
-					break;
-				case 'razonSocial':
-					$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(contenido);
-					break;
-				case 'documentoCliente':
-					$scope.model.documentoCliente = contenido;
-					break;
-				case 'estado':
-					$scope.model.estado = contenido;
-					break;
-				case 'fechaDesde':
-					$scope.model.fechaDesde = contenido;
-					break;
-				case 'fechaHasta':
-					$scope.model.fechaHasta = contenido;
-					break;
-				case 'contenedor':
-					$scope.model.contenedor = contenido;
-					break;
-				case 'buque':
-					$scope.model.buque = contenido;
-					break;
-			}
-			$scope.filtrarCargar();
-		};
-
-		$scope.filtrarCargar = function(){
-			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
 			}
 			$scope.cargaPuntosDeVenta();
 		};
@@ -127,22 +83,6 @@
 					$scope.totalItems = data.totalCount;
 				}
 			});
-		};
-
-		$scope.filtrarCaracteresInvalidos = function(palabra){
-			if (angular.isDefined(palabra) && palabra.length > 0){
-				var palabraFiltrada;
-				var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
-				palabraFiltrada = palabra;
-				for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
-					if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
-						palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
-					}
-				}
-				return palabraFiltrada.toUpperCase();
-			} else {
-				return palabra;
-			}
 		};
 
 		$scope.mostrarDetalle = function(comprobante){
