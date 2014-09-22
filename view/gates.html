@@ -27,7 +27,7 @@
 							<th style="text-align: center">Buque</th>
 							<th style="text-align: center">Viaje</th>
 							<th style="text-align: center">Contenedor</th>
-							<th style="text-align: center">Patente del cami&oacute;n</th>
+							<th style="text-align: center">Patente cami&oacute;n</th>
 							<th style="text-align: center">Tipo</th>
 							<th style="text-align: center">
 								<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
@@ -37,9 +37,9 @@
 								</a>
 								<span ng-show="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">Horario</span>
 							</th>
-							<th style="text-align: center">Inicio del turno</th>
-							<th style="text-align: center">Fin del turno</th>
-							<th style="text-align: center">Movimiento</th>
+							<th style="text-align: center">Inicio turno</th>
+							<th style="text-align: center">Fin turno</th>
+							<th style="text-align: center"><span class="visible-sm">Movim.</span><span class="hidden-sm">Movimiento</span></th>
 							<th style="text-align: center">Facturas</th>
 						</tr>
 						<tr ng-repeat="gate in gates">
@@ -53,7 +53,7 @@
 							<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
 							<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
 							<td>{{ gate.mov }}</td>
-							<td><button class="btn btn-info" ui-sref="gates.invoices({contenedor: gate.contenedor})"><span class="glyphicon glyphicon-zoom-in"></span> Ver</button></td>
+							<td><button class="btn btn-info" ui-sref="gates.invoices({contenedor: gate.contenedor})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 						</tr>
 					</table>
 				</div>
