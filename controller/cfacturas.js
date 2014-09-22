@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, loginService){
+function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, loginService, $state){
 	'use strict';
 	// Fecha (dia y hora)
 	$scope.hasta = new Date();
@@ -10,6 +10,12 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.maxDateD = new Date();
 	$scope.maxDateH = new Date();
 	$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
+
+	$scope.tasasActive = true;
+	$scope.correlatividadActive = false;
+	$scope.codigosActive = false;
+	$scope.revisarActive = false;
+	$scope.errorActive = false;
 
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado', 'buque'];
 
@@ -563,42 +569,54 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	};
 
 	$scope.cambioTab = function(unTab){
-		$scope.controlFiltros = unTab;
-		$scope.model = {
-			'nroPtoVenta': '',
-			'codTipoComprob': 0,
-			'nroComprobante': '',
-			'razonSocial': '',
-			'documentoCliente': '',
-			'fechaDesde': $scope.desde,
-			'fechaHasta': $scope.hasta,
-			'contenedor': '',
-			'estado': 'N',
-			'codigo': '',
-			'order': '',
-			'buque': ''
-		};
-		switch ($scope.controlFiltros){
-			case 'codigos':
-				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
-				break;
-			case 'tasas':
-				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado', 'buque'];
-				break;
-			case 'correlativo':
-				$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
-				$scope.model.codTipoComprob = 1;
-				break;
-			case 'revisar':
-				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
-				$scope.model.estado = 'Y';
-				$scope.cargaTodosLosPuntosDeVentas();
-				break;
-			case 'error':
-				$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
-				$scope.model.estado = 'R';
-				$scope.cargaTodosLosPuntosDeVentas();
-				break;
+		if ($state.current.name == 'cfacturas'){
+			$scope.controlFiltros = unTab;
+			$scope.model = {
+				'nroPtoVenta': '',
+				'codTipoComprob': 0,
+				'nroComprobante': '',
+				'razonSocial': '',
+				'documentoCliente': '',
+				'fechaDesde': $scope.desde,
+				'fechaHasta': $scope.hasta,
+				'contenedor': '',
+				'estado': 'N',
+				'codigo': '',
+				'order': '',
+				'buque': ''
+			};
+			$scope.tasasActive = false;
+			$scope.correlatividadActive = false;
+			$scope.codigosActive = false;
+			$scope.revisarActive = false;
+			$scope.errorActive = false;
+			switch ($scope.controlFiltros){
+				case 'codigos':
+					$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+					$scope.codigosActive = true;
+					break;
+				case 'tasas':
+					$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado', 'buque'];
+					$scope.tasasActive = true;
+					break;
+				case 'correlativo':
+					$scope.ocultarFiltros = ['nroComprobante', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+					$scope.model.codTipoComprob = 1;
+					$scope.correlatividadActive = true;
+					break;
+				case 'revisar':
+					$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
+					$scope.model.estado = 'Y';
+					$scope.cargaTodosLosPuntosDeVentas();
+					$scope.revisarActive = true;
+					break;
+				case 'error':
+					$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
+					$scope.model.estado = 'R';
+					$scope.cargaTodosLosPuntosDeVentas();
+					$scope.errorActive = true;
+					break;
+			}
 		}
 	};
 

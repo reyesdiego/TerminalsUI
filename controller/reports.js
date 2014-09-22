@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 17/06/14.
 */
 
-var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, gatesFactory, loginService, dialogs){
+var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, gatesFactory, loginService, dialogs, $state){
 
 	$scope.fechaDesde = new Date();
 	$scope.fechaHasta = new Date();
@@ -356,32 +356,35 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 	};
 
 	$scope.cargarReporteHorarios = function(){
-		$scope.loadingReportGates = true;
-		gatesFactory.getReporteHorarios(cargaDatos(), function(data){
-			$scope.datosReporteGates = data.data;
-			var graficoBarra = [
-				['Turnos', 'Cantidad', { role: 'annotation' } ],
-				['Tardes', 0, ''],
-				['Antes de turno', 0, ''],
-				['En horario', 0, '']
-			];
-			var graficoTorta = [
-				['Tardes', 0],
-				['Antes de turno', 0],
-				['En horario', 0]
-			];
-			graficoBarra[1][1] = $scope.datosReporteGates.gatesLate;
-			graficoBarra[2][1] = $scope.datosReporteGates.gatesEarly;
-			graficoBarra[3][1] = $scope.datosReporteGates.gatesOk;
+		if ($state.current.name == 'reports'){
+			console.log($state.current.name);
+			$scope.loadingReportGates = true;
+			gatesFactory.getReporteHorarios(cargaDatos(), function(data){
+				$scope.datosReporteGates = data.data;
+				var graficoBarra = [
+					['Turnos', 'Cantidad', { role: 'annotation' } ],
+					['Tardes', 0, ''],
+					['Antes de turno', 0, ''],
+					['En horario', 0, '']
+				];
+				var graficoTorta = [
+					['Tardes', 0],
+					['Antes de turno', 0],
+					['En horario', 0]
+				];
+				graficoBarra[1][1] = $scope.datosReporteGates.gatesLate;
+				graficoBarra[2][1] = $scope.datosReporteGates.gatesEarly;
+				graficoBarra[3][1] = $scope.datosReporteGates.gatesOk;
 
-			graficoTorta[0][1] = $scope.datosReporteGates.gatesLate;
-			graficoTorta[1][1] = $scope.datosReporteGates.gatesEarly;
-			graficoTorta[2][1] = $scope.datosReporteGates.gatesOk;
+				graficoTorta[0][1] = $scope.datosReporteGates.gatesLate;
+				graficoTorta[1][1] = $scope.datosReporteGates.gatesEarly;
+				graficoTorta[2][1] = $scope.datosReporteGates.gatesOk;
 
-			$scope.chartDataBarras = graficoBarra.slice();
-			$scope.chartDataTorta = graficoTorta.slice();
-			$scope.loadingReportGates = false;
-		});
+				$scope.chartDataBarras = graficoBarra.slice();
+				$scope.chartDataTorta = graficoTorta.slice();
+				$scope.loadingReportGates = false;
+			});
+		}
 	};
 
 	$scope.buqueSelected = function (selected) {
