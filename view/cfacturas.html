@@ -9,7 +9,8 @@
 <div data-ng-hide="$state.includes('cfacturas.result')" class="row">
 
 <tabset justified="true">
-<tab heading="Tasa a las cargas" select="cambioTab('tasas')">
+
+<tab heading="Tasa a las cargas" select="cambioTab('tasas')" active="tasasActive">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -36,7 +37,7 @@
 	</div>
 </tab>
 
-<tab heading="Control de Correlatividad" select="cambioTab('correlativo')">
+<tab heading="Control de Correlatividad" select="cambioTab('correlativo')" active="correlatividadActive">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -69,7 +70,7 @@
 	</div>
 </tab>
 
-<tab heading="Control de códigos" select="cambioTab('codigos')">
+<tab heading="Control de códigos" select="cambioTab('codigos')" active="codigosActive">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -150,7 +151,7 @@
 	</div>
 </tab>
 
-<tab heading="Comprobantes a revisar" select="cambioTab('revisar')">
+<tab heading="Comprobantes a revisar" select="cambioTab('revisar')" active="revisarActive">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -185,7 +186,7 @@
 	</div>
 </tab>
 
-<tab heading="Comprobantes erróneos" select="cambioTab('error')">
+<tab heading="Comprobantes erróneos" select="cambioTab('error')" active="errorActive">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
