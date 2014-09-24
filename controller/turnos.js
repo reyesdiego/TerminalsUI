@@ -21,6 +21,10 @@
 			$scope.cargaTurnos();
 		};
 
+		$scope.filtrar = function(){
+			$scope.cargaTurnos();
+		};
+
 		$scope.cargaTurnos = function(page){
 			page = page || { skip:0, limit: $scope.itemsPerPage };
 			turnosFactory.getTurnos(cargaDatos(), page, function(data){

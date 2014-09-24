@@ -9,11 +9,9 @@
 		$scope.fechaHasta = new Date();
 		$scope.fechaDesde.setHours(0, 0);
 		$scope.fechaHasta.setMinutes(0);
-		$scope.maxDate = new Date();
 
 		// Variable para almacenar la info principal que trae del factory
 		$scope.gates = {};
-		$scope.comprobantesVistos = [];
 
 		$scope.model = {
 			'fechaDesde': $scope.fechaDesde,
@@ -26,7 +24,7 @@
 			'order': '"gateTimestamp": -1'
 		};
 
-		$scope.filtrar = function () {
+		$scope.filtrar = function(){
 			$scope.cargaGates();
 		};
 
@@ -60,11 +58,6 @@
 			}
 		};
 
-		$scope.cargaPorFiltros = function () {
-			$scope.status.open = !$scope.status.open;
-			$scope.cargaGates();
-		};
-
 		$scope.cargaGates = function (page) {
 			page = page || { skip: 0, limit: $scope.itemsPerPage };
 			if (page.skip == 0){ $scope.currentPage = 1}
@@ -79,24 +72,6 @@
 		$scope.pageChanged = function () {
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.cargaGates($scope.page);
-		};
-
-		$scope.buqueSelected = function (selected) {
-			if (angular.isDefined(selected)) {
-				$scope.model.buque = selected.title;
-				$scope.filtrar('buque', selected.title);
-			}
-		};
-
-		$scope.containerSelected = function (selected) {
-			if (angular.isDefined(selected)) {
-				$scope.model.contenedor = selected.title;
-				$scope.filtrar('contenedor', selected.title);
-			}
-		};
-
-		$scope.filtrado = function (filtro, contenido) {
-			$scope.filtrar(filtro, contenido);
 		};
 
 		function cargaDatos() {
