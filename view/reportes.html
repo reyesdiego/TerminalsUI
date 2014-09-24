@@ -252,7 +252,7 @@
 			<tab heading="Porcentaje de cumplimientos de horarios" select="cargarReporteHorarios()">
 				<br>
 				<div class="row" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
-					<accordion-gates-turnos-search></accordion-gates-turnos-search>
+					<accordion-gates-turnos-search model="model" filtrar="filtrar(filtro, contenido)"></accordion-gates-turnos-search>
 				</div>
 				<br>
 				<div class="col-lg-12" ng-show="!loadingReportGates && datosReporteGates.gatesTotal == 0">
