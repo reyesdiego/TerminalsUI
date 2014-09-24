@@ -29,6 +29,7 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 				loginService.setInfo(data);
 				loginService.setStatus(true);
 				loginService.setType(data.role);
+				loginService.setGroup(data.group);
 				loginService.setToken(data.token.token);
 				data.acceso.push("reports");
 				loginService.setAcceso(data.acceso);
