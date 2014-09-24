@@ -7,6 +7,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -39,6 +40,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getSinTasaCargas = function(datos, terminal, page, callback){
 		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -46,6 +48,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			{token: loginService.getToken()}
 		}).success(function (data){
 				data = factory.ponerDescripcionComprobantes(data)
+				console.log(data);
 				callback(factory.setearInterfaz(data));
 			}).error(function(errorText){
 				console.log(errorText);
@@ -81,12 +84,14 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getInvoicesNoMatches = function(datos, page, callback){
 		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
 		$http({
 			method: "GET",
 			url: inserturl,
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
+			console.log(data);
 			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);

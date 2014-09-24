@@ -10,7 +10,7 @@
 
 <tabset justified="true">
 
-<tab heading="Tasa a las cargas" select="cambioTab('tasas')" active="tasasActive">
+<tab heading="Tasa a las cargas" ng-controller="tasaCargasCtrl">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -33,11 +33,11 @@
 			</div>
 		</div>
 		<table-invoices ng-show="tasaCargas.mostrarResultado" model="model" datos-invoices="tasaCargas.resultado" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-		<div-pagination ng-show="tasaCargas.mostrarResultado" current-page="$parent.currentPageTasaCargas" page-changed="pageChangedTasa()" total-items="totalItemsTasaCargas"></div-pagination>
+		<div-pagination ng-show="tasaCargas.mostrarResultado" current-page="currentPage" page-changed="pageChanged()" total-items="totalItems"></div-pagination>
 	</div>
 </tab>
 
-<tab heading="Control de Correlatividad" select="cambioTab('correlativo')" active="correlatividadActive">
+<tab heading="Control de Correlatividad" ng-controller="correlatividadCtrl">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -70,7 +70,7 @@
 	</div>
 </tab>
 
-<tab heading="Control de códigos" select="cambioTab('codigos')" active="codigosActive">
+<tab heading="Control de códigos" ng-controller="codigosCtrl">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -104,8 +104,8 @@
 			</tabset>
 			<br>
 			<table-invoices datos-invoices="pantalla.comprobantesRotos" model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-			<div-pagination ng-hide="hayFiltros" current-page="$parent.currentPageCodigos" page-changed="pageChangedCodigos()" total-items="totalItemsCodigos"></div-pagination>
-			<div-pagination ng-show="hayFiltros" current-page="$parent.currentPageFiltros" page-changed="pageChangedFiltros()" total-items="totalItemsFiltros"></div-pagination>
+			<div-pagination ng-hide="hayFiltros" current-page="currentPageCodigos" page-changed="pageChangedCodigos()" total-items="totalItemsCodigos"></div-pagination>
+			<div-pagination ng-show="hayFiltros" current-page="currentPageFiltros" page-changed="pageChangedFiltros()" total-items="totalItemsFiltros"></div-pagination>
 		</div>
 	</div>
 
@@ -151,7 +151,7 @@
 	</div>
 </tab>
 
-<tab heading="Comprobantes a revisar" select="cambioTab('revisar')" active="revisarActive">
+<tab heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -182,11 +182,11 @@
 		</tabset>
 		<br>
 		<table-invoices datos-invoices="comprobantesRevisar" model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-		<div-pagination current-page="$parent.currentPageRevisar" page-changed="pageChangedRevisar()" total-items="totalItemsRevisar"></div-pagination>
+		<div-pagination current-page="currentPage" page-changed="pageChanged()" total-items="totalItems"></div-pagination>
 	</div>
 </tab>
 
-<tab heading="Comprobantes erróneos" select="cambioTab('error')" active="errorActive">
+<tab heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl">
 	<br>
 	<div class="row" data-ng-hide="$state.includes('invoices.result')">
 		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
@@ -215,8 +215,9 @@
 		<tabset>
 			<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar('nroPtoVenta', tab.punto)"></tab>
 		</tabset>
+		<br>
 		<table-invoices datos-invoices="comprobantesError" model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-		<div-pagination current-page="$parent.currentPageError" page-changed="pageChangedError()" total-items="totalItemsError"></div-pagination>
+		<div-pagination current-page="currentPage" page-changed="pageChanged()" total-items="totalItems"></div-pagination>
 	</div>
 </tab>
 

@@ -2,7 +2,17 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, loginService, $state){
+function cfacturasCtrl($scope){
+
+	$scope.verDetalle = '';
+
+	$scope.$on('recargarDetalle', function(event, comprobante){
+		$scope.verDetalle = comprobante;
+		console.log(comprobante);
+	});
+
+	/*
+
 	'use strict';
 	// Fecha (dia y hora)
 	$scope.hasta = new Date();
@@ -10,12 +20,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.maxDateD = new Date();
 	$scope.maxDateH = new Date();
 	$scope.maxDateH.setDate($scope.maxDateH.getDate() + 1);
-
-	$scope.tasasActive = true;
-	$scope.correlatividadActive = false;
-	$scope.codigosActive = false;
-	$scope.revisarActive = false;
-	$scope.errorActive = false;
 
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'fechaDesde', 'fechaHasta', 'estado', 'buque'];
 
@@ -129,7 +133,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.cargandoPaginaComprobantes = true;
 	$scope.anteriorCargaCodigos = [];
 
-	$scope.comprobantesVistosTasas = [];
 	$scope.comprobantesVistosCodigos = [];
 	$scope.comprobantesVistosRevisar = [];
 	$scope.comprobantesVistosError = [];
@@ -137,8 +140,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 	$scope.comprobantesRevisar = [];
 	$scope.comprobantesError = [];
 
-	$scope.loadingTasaCargas = true;
-	$scope.loadingCorrelatividad = false;
 	$scope.loadingRevisar = false;
 	$scope.loadingError = false;
 
@@ -272,37 +273,6 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		});
 	};
 
-	$scope.controlTasaCargas = function(){
-		/*Acá control de tasa a las cargas*/
-		$scope.loadingTasaCargas = true;
-		invoiceFactory.getSinTasaCargas(cargaDatos(), loginService.getFiltro(), $scope.page, function(data){
-			if (data.status == "ERROR"){
-				$scope.tasaCargas.titulo = "Error";
-				$scope.tasaCargas.cartel = "panel-danger";
-				$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
-				$scope.tasaCargas.mostrarResultado = 0;
-			} else {
-				$scope.tasaCargas.resultado = data.data;
-				if ($scope.tasaCargas.resultado.length > 0){
-					$scope.totalItemsTasaCargas = data.totalCount;
-					$scope.tasaCargas.titulo = "Error";
-					$scope.tasaCargas.cartel = "panel-danger";
-					$scope.tasaCargas.mensaje = "Se hallaron comprobantes sin tasa a las cargas.";
-					$scope.tasaCargas.mostrarResultado = 1;
-				} else {
-					$scope.tasaCargas = {
-						"titulo":"Éxito",
-						"cartel": "panel-success",
-						"mensaje": "No se hallaron comprobantes sin tasa a las cargas.",
-						"resultado": [],
-						"mostrarResultado": 0
-					};
-				}
-			}
-			$scope.loadingTasaCargas = false;
-		});
-	};
-
 	$scope.traerPuntosDeVenta = function(){
 		invoiceFactory.getCashbox({}, function(data){
 			$scope.terminalSellPoints = data.data;
@@ -348,7 +318,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 					$scope.result.data.forEach(function(comprob){
 						comprob.tarifasMalCobradas = [];
 
-						/*Aca control de tarifas*/
+						/*Aca control de tarifas*/ /*
 						var tarifa;
 						comprob.detalle.forEach(function(detalle){
 							detalle.items.forEach(function(item){
@@ -642,5 +612,7 @@ function cfacturasCtrl($scope, invoiceFactory, priceFactory, vouchersFactory, lo
 		datos.nroPtoVenta = '';
 		return datos;
 	}
+
+	*/
 
 }
