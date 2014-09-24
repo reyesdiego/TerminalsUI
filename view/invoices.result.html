@@ -50,27 +50,27 @@
 					<td style="text-align: left" class="hidden-print"><span class="glyphicon glyphicon-warning-sign" style="color: red" ng-hide="isDefined($root.itemsDescriptionInvoices[item.id])"></span> {{ item.descripcion | maxLength : 200 }}<a href="" ng-show="(item.descripcion.length > 200)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
 					<td style="text-align: left" class="visible-print"><span class="glyphicon glyphicon-warning-sign" ng-hide="isDefined($root.itemsDescriptionInvoices[item.id])"></span> {{ item.descripcion }}</td>
 					<td>{{ item.cnt }}</td>
-					<td>{{ moneda | formatCurrency }} {{ conversionMoneda(item.impUnit, verDetalle.codMoneda, verDetalle.cotiMoneda) | currency }}</td>
+					<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 					<td>{{ item.uniMed }}</td>
-					<td>{{ moneda | formatCurrency }} {{ conversionMoneda(item.impTot, verDetalle.codMoneda, verDetalle.cotiMoneda) | currency }}</td>
+					<td>{{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 				</tr>
 				</tbody>
 				<tfoot style="text-align: right;">
 				<tr>
 					<td colspan="2">Subtotal</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ conversionMoneda(verDetalle.importe.subtotal, verDetalle.codMoneda, verDetalle.cotiMoneda) | currency }}</td>
+					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.subtotal | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">IVA</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ conversionMoneda(verDetalle.importe.iva, verDetalle.codMoneda, verDetalle.cotiMoneda) | currency }}</td>
+					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.iva | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">Otros Tributos</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ conversionMoneda(verDetalle.importe.otrosTributos, verDetalle.codMoneda, verDetalle.cotiMoneda) | currency }}</td>
+					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">Total</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ conversionMoneda(verDetalle.importe.total, verDetalle.codMoneda, verDetalle.cotiMoneda) | currency }}</td>
+					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.total | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 				</tr>
 				<tr style="text-align: center">
 					<td colspan="6">
