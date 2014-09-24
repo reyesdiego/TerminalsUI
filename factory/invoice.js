@@ -7,7 +7,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -40,7 +39,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getSinTasaCargas = function(datos, terminal, page, callback){
 		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -48,7 +46,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			{token: loginService.getToken()}
 		}).success(function (data){
 				data = factory.ponerDescripcionComprobantes(data)
-				console.log(data);
 				callback(factory.setearInterfaz(data));
 			}).error(function(errorText){
 				console.log(errorText);
@@ -84,14 +81,12 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getInvoicesNoMatches = function(datos, page, callback){
 		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: "GET",
 			url: inserturl,
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-			console.log(data);
 			callback(data);
 		}).error(function(errorText){
 			console.log(errorText);
@@ -239,7 +234,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.cambiarEstado = function(invoiceId, estado, callback){
-		var inserturl = serverUrl + '/invoice/' + loginService.getFiltro() + '/' + invoiceId;
+		var inserturl = serverUrl + '/invoice/setState/' + loginService.getFiltro() + '/' + invoiceId;
 		//var inserturl = serverUrl + '/invoice/' + invoiceId;
 		$http({
 			method: 'PUT',
@@ -292,31 +287,65 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.setearInterfazComprobante = function(comprobante){
-		switch (comprobante.estado){
-			case 'Y':
+		if (comprobante.estado.length > 0){
+			var encontrado = false;
+			comprobante.estado.forEach(function(estadoGrupo){
+				if (estadoGrupo.grupo == loginService.getGroup()){
+					encontrado = true;
+					switch (estadoGrupo.estado){
+						case 'Y':
+							comprobante.interfazEstado = {
+								'estado': 'Revisar',
+								'btnEstado': 'btn-warning'
+							};
+							break;
+						case 'G':
+							comprobante.interfazEstado = {
+								'estado': 'Controlado',
+								'btnEstado': 'btn-success'
+							};
+							break;
+						case 'R':
+							comprobante.interfazEstado = {
+								'estado': 'Error',
+								'btnEstado': 'btn-danger'
+							};
+							break;
+						default :
+							var estadoDefault = {
+								'grupo': loginService.getGroup(),
+								'estado': 'Y'
+							};
+							comprobante.estado.push(estadoDefault);
+							comprobante.interfazEstado = {
+								'estado': 'Revisar',
+								'btnEstado': 'btn-warning'
+							};
+							break;
+					}
+				}
+			});
+			if (!encontrado){
+				var estadoDefault = {
+					'grupo': loginService.getGroup(),
+					'estado': 'Y'
+				};
+				comprobante.estado.push(estadoDefault);
 				comprobante.interfazEstado = {
 					'estado': 'Revisar',
 					'btnEstado': 'btn-warning'
 				};
-				break;
-			case 'G':
-				comprobante.interfazEstado = {
-					'estado': 'Controlado',
-					'btnEstado': 'btn-success'
-				};
-				break;
-			case 'R':
-				comprobante.interfazEstado = {
-					'estado': 'Error',
-					'btnEstado': 'btn-danger'
-				};
-				break;
-			default :
-				comprobante.interfazEstado = {
-					'estado': 'Revisar',
-					'btnEstado': 'btn-warning'
-				};
-				break;
+			}
+		} else {
+			var estadoDefault = {
+				'grupo': loginService.getGroup(),
+				'estado': 'Y'
+			};
+			comprobante.estado.push(estadoDefault);
+			comprobante.interfazEstado = {
+				'estado': 'Revisar',
+				'btnEstado': 'btn-warning'
+			};
 		}
 		return comprobante;
 	};

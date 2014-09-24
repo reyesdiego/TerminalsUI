@@ -22,6 +22,12 @@ myapp.service('loginService', function () {
 		getType: function () {
 			return sessionStorage.getItem('type');
 		},
+		setGroup: function (value) {
+			sessionStorage.setItem('group', value);
+		},
+		getGroup: function () {
+			return sessionStorage.getItem('group');
+		},
 		setAcceso: function(value) {
 			sessionStorage.acceso = JSON.stringify(value);
 		},

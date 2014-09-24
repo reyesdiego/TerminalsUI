@@ -13,7 +13,7 @@
 				mostrarDetalle:		'&',
 				filtrar:			'&'
 			},
-			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', function($rootScope, $scope, $modal, invoiceFactory){
+			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', function($rootScope, $scope, $modal, invoiceFactory, loginService){
 				$scope.vouchersType = $rootScope.vouchersType;
 				$scope.moneda = $rootScope.moneda;
 				$scope.acceso = $rootScope.esUsuario;
@@ -40,7 +40,12 @@
 					$scope.filtrar();
 				};
 				$scope.trackInvoice = function(comprobante){
-					var estado = comprobante.estado;
+					var estado;
+					comprobante.estado.forEach(function(estadoGrupo){
+						if (estadoGrupo.grupo == loginService.getGroup()){
+							estado = estadoGrupo.estado;
+						}
+					});
 					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 						var modalInstance = $modal.open({
 							templateUrl: 'view/trackingInvoice.html',
