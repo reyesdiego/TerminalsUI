@@ -53,7 +53,6 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 
 	$scope.traerComprobantes = function(){
 		$scope.loadingRevisar = true;
-		console.log(cargaDatos());
 		invoiceFactory.getInvoice(cargaDatos(), $scope.page, function(invoiceRevisar){
 			$scope.comprobantesRevisar = invoiceRevisar.data;
 			$scope.totalItems = invoiceRevisar.totalCount;

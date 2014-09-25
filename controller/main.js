@@ -131,7 +131,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 		})
 		.state('cfacturas', {
 			url: "/cfacturas",
-			templateUrl: "view/cfacturas.html"
+			templateUrl: "view/controlComprobantes.html"
 		})
 		.state('cfacturas.result', {
 			templateUrl: "view/invoices.result.html"

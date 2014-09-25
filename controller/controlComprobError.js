@@ -53,7 +53,6 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 
 	$scope.traerComprobantes = function(){
 		$scope.loadingError = true;
-		console.log(cargaDatos());
 		invoiceFactory.getInvoice(cargaDatos(), $scope.page, function(invoiceRevisar){
 			$scope.comprobantesError = invoiceRevisar.data;
 			$scope.totalItems = invoiceRevisar.totalCount;
