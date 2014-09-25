@@ -378,7 +378,6 @@
 			},
 			link: function($scope){
 				$scope.currentPage = 1;
-				//$scope.$watch('currentPage', function(){ $scope.pageChanged() });
 				$scope.$watch('totalItems', function(){
 					if ($scope.totalItems >= 10000){
 						$scope.maxSizeSM = 9;
