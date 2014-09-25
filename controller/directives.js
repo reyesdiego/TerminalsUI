@@ -15,13 +15,7 @@
 			},
 			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', function($rootScope, $scope, $modal, invoiceFactory, loginService){
 				$scope.vouchersType = $rootScope.vouchersType;
-				$scope.moneda = $rootScope.moneda;
 				$scope.acceso = $rootScope.esUsuario;
-				$scope.conversionMoneda = function(importe, codMoneda, cotiMoneda){
-					if ($rootScope.moneda == 'PES' && codMoneda == 'DOL'){ return (importe * cotiMoneda);
-					} else if ($rootScope.moneda == 'DOL' && codMoneda == 'PES'){ return (importe / cotiMoneda);
-					} else { return (importe); }
-				};
 				$scope.filtrarOrden = function(filtro){
 					var filtroModo;
 					$scope.model.filtroOrden = filtro;
@@ -153,6 +147,7 @@
 						return palabra;
 					}
 				};
+				$rootScope.$watch('moneda', function(){ $scope.moneda = $rootScope.moneda; });
 			}]
 		}
 	});
@@ -167,16 +162,11 @@
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
 				$scope.vouchersType = $rootScope.vouchersType;
-				$scope.moneda = $rootScope.moneda;
 				$scope.quitarVista = function (comprobante) {
 					var pos = $scope.comprobantesVistos.indexOf(comprobante);
 					$scope.comprobantesVistos.splice(pos, 1);
 				};
-				$scope.conversionMoneda = function(importe, codMoneda, cotiMoneda){
-					if ($rootScope.moneda == 'PES' && codMoneda == 'DOL'){ return (importe * cotiMoneda);
-					} else if ($rootScope.moneda == 'DOL' && codMoneda == 'PES'){ return (importe / cotiMoneda);
-					} else { return (importe); }
-				};
+				$rootScope.$watch('moneda', function(){ $scope.moneda = $rootScope.moneda; });
 			}]
 		}
 	});
