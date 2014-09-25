@@ -239,7 +239,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		$http({
 			method: 'PUT',
 			url: inserturl,
-			data: { estado: estado},
+			data: { estado: estado },
 			headers: {"Content-Type":"application/x-www-form-urlencoded; charset=utf-8", "token": loginService.getToken() }
 		}).success(function (data){
 			callback(data);
@@ -270,6 +270,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			cache: false,
 			headers:{ token: loginService.getToken()}
 		}).success(function (data){
+			data.data = factory.filtrarComentarios(data.data);
 			data.data.forEach(function(comment){
 				comment.fecha = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(comment._id));
 			});
@@ -348,6 +349,16 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			};
 		}
 		return comprobante;
+	};
+
+	factory.filtrarComentarios = function(dataComentarios){
+		var comentariosFiltrados = [];
+		dataComentarios.forEach(function(comentario){
+			if (comentario.group == loginService.getGroup()){
+				comentariosFiltrados.push(comentario);
+			}
+		})
+		return comentariosFiltrados;
 	};
 
 	return factory;
