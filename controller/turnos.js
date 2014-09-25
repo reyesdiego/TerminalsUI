@@ -14,6 +14,11 @@
 		// Variable para almacenar la info principal que trae del factory
 		$scope.turnos = {};
 
+		$scope.$on('cambioPagina', function(event, data){
+			$scope.currentPage = data;
+			$scope.pageChanged();
+		});
+
 		// Carga los turnos por fechas
 		$scope.cargaPorFiltros = function(){
 			$scope.status.open = !$scope.status.open;

@@ -8,6 +8,10 @@ function pricelistCtrl($scope, priceFactory, loginService){
 	$scope.filteredPrices = [];
 	$scope.tasas = false;
 
+	$scope.$on('cambioPagina', function(event, data){
+		$scope.currentPage = data;
+	});
+
 	$scope.cargaPricelist = function(){
 		priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
 			$scope.pricelist = data.data;

@@ -24,6 +24,11 @@
 			'order': '"gateTimestamp": -1'
 		};
 
+		$scope.$on('cambioPagina', function(event, data){
+			$scope.currentPage = data;
+			$scope.pageChanged();
+		});
+
 		$scope.filtrar = function(){
 			$scope.cargaGates();
 		};

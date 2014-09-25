@@ -33,6 +33,11 @@
 
 		$scope.nombre = loginService.getFiltro();
 
+		$scope.$on('cambioPagina', function(event, data){
+			$scope.currentPage = data;
+			$scope.pageChanged();
+		});
+
 		// Funciones de Puntos de Venta
 		$scope.cargaPuntosDeVenta = function(){
 			invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){

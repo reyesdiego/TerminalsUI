@@ -33,7 +33,7 @@
 			</div>
 		</div>
 		<table-invoices ng-show="tasaCargas.mostrarResultado" model="model" datos-invoices="tasaCargas.resultado" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-		<div-pagination ng-show="tasaCargas.mostrarResultado" current-page="currentPage" page-changed="pageChanged()" total-items="totalItems"></div-pagination>
+		<div-pagination ng-show="tasaCargas.mostrarResultado" total-items="totalItems"></div-pagination>
 	</div>
 </tab>
 
@@ -104,8 +104,8 @@
 			</tabset>
 			<br>
 			<table-invoices datos-invoices="pantalla.comprobantesRotos" model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-			<div-pagination ng-hide="hayFiltros" current-page="currentPageCodigos" page-changed="pageChangedCodigos()" total-items="totalItemsCodigos"></div-pagination>
-			<div-pagination ng-show="hayFiltros" current-page="currentPageFiltros" page-changed="pageChangedFiltros()" total-items="totalItemsFiltros"></div-pagination>
+			<div-pagination ng-hide="hayFiltros" total-items="totalItemsCodigos"></div-pagination>
+			<div-pagination ng-show="hayFiltros" total-items="totalItemsFiltros"></div-pagination>
 		</div>
 	</div>
 
@@ -182,7 +182,7 @@
 		</tabset>
 		<br>
 		<table-invoices datos-invoices="comprobantesRevisar" model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-		<div-pagination current-page="currentPage" page-changed="pageChanged()" total-items="totalItems"></div-pagination>
+		<div-pagination total-items="totalItems"></div-pagination>
 	</div>
 </tab>
 
@@ -217,7 +217,7 @@
 		</tabset>
 		<br>
 		<table-invoices datos-invoices="comprobantesError" model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-		<div-pagination current-page="currentPage" page-changed="pageChanged()" total-items="totalItems"></div-pagination>
+		<div-pagination total-items="totalItems"></div-pagination>
 	</div>
 </tab>
 

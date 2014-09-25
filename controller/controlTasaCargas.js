@@ -24,6 +24,11 @@ function tasaCargasCtrl($scope, invoiceFactory, loginService){
 
 	$scope.loadingTasaCargas = true;
 
+	$scope.$on('cambioPagina', function(event, data){
+		$scope.currentPage = data;
+		$scope.pageChanged();
+	});
+
 	$scope.filtrar = function(){
 		$scope.page.skip = 0;
 		if ($scope.page.skip == 0){ $scope.currentPage = 1}

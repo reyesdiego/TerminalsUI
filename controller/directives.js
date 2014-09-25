@@ -373,13 +373,12 @@
 			restrict:		'E',
 			templateUrl:	'view/div.pagination.html',
 			scope: {
-				currentPage:		'=',
 				totalItems:			'=',
-				paginationHide:		'=',
-				pageChanged:		'&'
+				paginationHide:		'='
 			},
 			link: function($scope){
-				$scope.$watch('currentPage', function(){ $scope.pageChanged() });
+				$scope.currentPage = 1;
+				//$scope.$watch('currentPage', function(){ $scope.pageChanged() });
 				$scope.$watch('totalItems', function(){
 					if ($scope.totalItems >= 10000){
 						$scope.maxSizeSM = 9;
@@ -390,7 +389,10 @@
 						$scope.maxSizeMD = 15;
 						$scope.maxSizeLG = 20;
 					}
-				})
+				});
+				$scope.pageChanged = function(){
+					$scope.$emit('cambioPagina', $scope.currentPage);
+				}
 			}
 		}
 	});

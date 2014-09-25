@@ -32,9 +32,6 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 	$scope.controlFiltros = 'codigos';
 	$scope.hayFiltros = false;
 
-	$scope.flagWatchCodigos = false;
-	$scope.flagWatchFiltros = false;
-
 	$scope.currentPageCodigos = 1;
 	$scope.totalItemsCodigos = 0;
 	$scope.pageCodigos = {
@@ -63,6 +60,16 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 	$scope.anteriorCargaCodigos = [];
 
 	$scope.comprobantesVistosCodigos = [];
+
+	$scope.$on('cambioPagina', function(event, data){
+		if ($scope.controlFiltros == 'codigos'){
+			$scope.currentPageCodigos = data;
+			$scope.pageChangedCodigos();
+		} else {
+			$scope.currentPageFiltros = data;
+			$scope.pageChangedFiltros();
+		}
+	});
 
 	$scope.filtrar = function (filtro, contenido){
 		console.log('hola que tal');
@@ -188,7 +195,6 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 	};
 
 	$scope.controlCodigosFiltrados = function(){
-		console.log(cargaDatos());
 		invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
 			$scope.totalItemsFiltros = data.totalCount;
 			$scope.pantalla.comprobantesRotos = data.data;
@@ -196,32 +202,24 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 	};
 
 	$scope.pageChangedCodigos = function(){
-		if ($scope.flagWatchCodigos){
-			$scope.cargandoPaginaComprobantes = true;
-			$scope.pantalla.comprobantesRotos = [];
-			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
-			invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.pageCodigos, function(data){
-				data.data.forEach(function(unComprobante){
-					invoiceFactory.invoiceById(unComprobante._id._id, function(realData){
-						$scope.pantalla.comprobantesRotos.push(realData);
-					});
+		$scope.cargandoPaginaComprobantes = true;
+		$scope.pantalla.comprobantesRotos = [];
+		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
+		invoiceFactory.getInvoicesNoMatches(cargaDatos(), $scope.pageCodigos, function(data){
+			data.data.forEach(function(unComprobante){
+				invoiceFactory.invoiceById(unComprobante._id._id, function(realData){
+					$scope.pantalla.comprobantesRotos.push(realData);
 				});
-				$scope.cargandoPaginaComprobantes = false;
 			});
-		} else {
-			$scope.flagWatchCodigos = true;
-		}
+			$scope.cargandoPaginaComprobantes = false;
+		});
 	};
 
 	$scope.pageChangedFiltros = function(){
-		if ($scope.flagWatchFiltros){
-			$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
-			invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
-				$scope.pantalla.comprobantesRotos = data.data;
-			});
-		} else {
-			$scope.flagWatchFiltros = true;
-		}
+		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
+		invoiceFactory.getInvoice(cargaDatos(), $scope.pageFiltros, function(data){
+			$scope.pantalla.comprobantesRotos = data.data;
+		});
 	};
 
 	// Funciones de Puntos de Venta

@@ -34,6 +34,11 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 
 	$scope.loadingError = false;
 
+	$scope.$on('cambioPagina', function(event, data){
+		$scope.currentPage = data;
+		$scope.pageChanged();
+	});
+
 	$scope.filtrar = function(filtro, contenido){
 		switch (filtro) {
 			case 'nroPtoVenta':

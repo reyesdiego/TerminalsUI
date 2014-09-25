@@ -36,6 +36,11 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.conMatch = false;
 	$scope.tasas = false;
 
+	$scope.$on('cambioPagina', function(event, data){
+		$scope.currentPage = data;
+		$scope.pageChanged();
+	});
+
 	$scope.prepararDatos = function(){
 		priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: $scope.tasas}, function (data) {
 			$scope.pricelist = data.data;
