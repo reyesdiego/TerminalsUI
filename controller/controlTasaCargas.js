@@ -26,19 +26,20 @@ function tasaCargasCtrl($scope, invoiceFactory, loginService){
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
-		$scope.pageChanged();
+		$scope.controlTasaCargas();
 	});
 
-	$scope.filtrar = function(){
-		$scope.page.skip = 0;
-		if ($scope.page.skip == 0){ $scope.currentPage = 1}
-		$scope.controlTasaCargas();
-	};
+	$scope.$on('cambioFiltro', function(event, data){
+		$scope.currentPage = 1;
+		$scope.model = data;
+		$scope.controlTasaCargas()
+	});
 
 	$scope.controlTasaCargas = function(){
 		/*Acá control de tasa a las cargas*/
 		$scope.loadingTasaCargas = true;
-		invoiceFactory.getSinTasaCargas(cargaDatos(), loginService.getFiltro(), $scope.page, function(data){
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		invoiceFactory.getSinTasaCargas($scope.model, loginService.getFiltro(), $scope.page, function(data){
 			if (data.status == "ERROR"){
 				$scope.tasaCargas.titulo = "Error";
 				$scope.tasaCargas.cartel = "panel-danger";
@@ -65,50 +66,5 @@ function tasaCargasCtrl($scope, invoiceFactory, loginService){
 			$scope.loadingTasaCargas = false;
 		});
 	};
-
-	$scope.mostrarDetalle = function(comprobante){
-		var encontrado = false;
-
-		$scope.comprobantesVistosTasas.forEach(function(unComprobante){
-			if (unComprobante._id == comprobante._id){
-				encontrado = true;
-			}
-		});
-		if (!encontrado){
-			$scope.comprobantesVistosTasas.push(comprobante);
-		}
-
-	};
-
-	$scope.pageChanged = function(){
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-		invoiceFactory.getSinTasaCargas(cargaDatos(), loginService.getFiltro(), $scope.page, function(data){
-			if (data.status == "ERROR"){
-				$scope.tasaCargas.titulo = "Error";
-				$scope.tasaCargas.cartel = "panel-danger";
-				$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
-				$scope.tasaCargas.mostrarResultado = 0;
-			} else {
-				$scope.tasaCargas.resultado = data.data;
-				if ($scope.tasaCargas.resultado.length > 0) {
-					$scope.totalItems = data.totalCount;
-					$scope.tasaCargas.titulo = "Error";
-					$scope.tasaCargas.cartel = "panel-danger";
-					$scope.tasaCargas.mensaje = "Se hallaron comprobantes sin tasa a las cargas.";
-					$scope.tasaCargas.mostrarResultado = 1;
-				}
-			}
-		});
-	};
-
-	function cargaDatos(){
-		return {
-			'razonSocial': $scope.model.razonSocial,
-			'contenedor': $scope.model.contenedor,
-			'order': $scope.model.order
-		};
-	}
-
-	$scope.controlTasaCargas();
 
 }

@@ -8,7 +8,8 @@
 			</div>
 		</div>
 
-		<div class="row" ng-hide="$state.includes('invoices.result')">
+		<vista-comprobantes datos-invoices="invoices" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="cargando"></vista-comprobantes>
+		<!--<div class="row" ng-hide="$state.includes('invoices.result')">
 			<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="['nroPtoVenta']"></accordion-invoices-search>
 		</div>
 
@@ -38,7 +39,8 @@
 				<table-invoices datos-invoices="invoices" model="model" filtrar="filtrar(filtro, contenido)" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
 				<div-pagination total-items="totalItems"></div-pagination>
 			</div>
-		</div>
+		</div>-->
+
 	</div>
 
 	<div data-ng-show="$state.includes('invoices.result')">
