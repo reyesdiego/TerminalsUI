@@ -157,8 +157,7 @@
 			restrict:		'E',
 			templateUrl:	'view/accordion.comprobantes.vistos.html',
 			scope: {
-				comprobantesVistos:	'=',
-				mostrarDetalle:		'&'
+				comprobantesVistos:	'='
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
 				$scope.vouchersType = $rootScope.vouchersType;

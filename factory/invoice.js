@@ -357,7 +357,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if (comentario.group == loginService.getGroup()){
 				comentariosFiltrados.push(comentario);
 			}
-		})
+		});
 		return comentariosFiltrados;
 	};
 

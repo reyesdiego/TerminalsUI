@@ -112,6 +112,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			controller: "invoicesCtrl"
 		})
 		.state('invoices.result', {
+			url: "/id=:idComprobante",
 			templateUrl: "view/invoices.result.html"
 		})
 		.state('matches', {
@@ -134,6 +135,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/controlComprobantes.html"
 		})
 		.state('cfacturas.result', {
+			url: "/id=:idComprobante",
 			templateUrl: "view/invoices.result.html"
 		})
 		.state('gates', {
@@ -145,6 +147,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			templateUrl: "view/gates.invoices.html"
 		})
 		.state('gates.invoices.result', {
+			url: "/id=:idComprobante",
 			templateUrl: "view/invoices.result.html"
 		})
 		.state('turnos', {

@@ -149,10 +149,6 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 			$scope.comprobantesVistosCodigos.push(comprobante);
 		}
 
-		invoiceFactory.invoiceById(comprobante._id, function(miComprobante){
-			$scope.verDetalle = miComprobante;
-			$scope.$emit('recargarDetalle', $scope.verDetalle);
-		});
 	};
 
 	$scope.controlDeCodigos = function(){

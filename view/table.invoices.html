@@ -62,7 +62,7 @@
 			<td><a href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
 			<td style="text-align: center"><a href ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0" ng-click="filtrado('fechaDesde', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 			<td style="text-align: right">{{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice.codMoneda: invoice.cotiMoneda | currency }}</td>
-			<td style="text-align: center"><button ui-sref=".result" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+			<td style="text-align: center"><button ui-sref=".result({idComprobante: invoice._id})" class="btn btn-info" ng-click="mostrarDetalle({comprobante: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 			<td ng-show="acceso=='agp'" style="text-align: center">
 				<div class="btn-group" dropdown is-open="status.isopen">
 					<button style="width: 95px" ng-click="trackInvoice(invoice)" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
