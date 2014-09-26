@@ -2,7 +2,7 @@
 	<div class="row" ng-hide="$state.includes('gates.invoices.result')">
 		<div class="col-lg-12">
 			<h4>Comprobantes del contenedor {{ contenedor }}</h4>
-			<table-invoices datos-invoices="invoices" model="model" ocultar-filtros="{{filtrosGates}}" filtrar="filtrar(filtro, contenido)" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
+			<table-invoices datos-invoices="invoices" model="model" ocultar-filtros="{{filtrosGates}}" filtrar="filtrar(filtro, contenido)"></table-invoices>
 			<button class="btn btn-default" ng-click="$state.go('^');"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 		</div>
 	</div>

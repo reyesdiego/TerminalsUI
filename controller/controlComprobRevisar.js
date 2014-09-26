@@ -72,10 +72,6 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 			$scope.comprobantesVistosRevisar.push(comprobante);
 		}
 
-		invoiceFactory.invoiceById(comprobante._id, function(miComprobante){
-			$scope.verDetalle = miComprobante;
-			$scope.$emit('recargarDetalle', $scope.verDetalle);
-		});
 	};
 
 	$scope.pageChanged = function(){

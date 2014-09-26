@@ -104,10 +104,6 @@
 			});
 		};
 
-		$scope.mostrarDetalle = function (comprobante) {
-			$scope.verDetalle = comprobante;
-		};
-
 		$scope.cargaFacturas();
 	});
 })();
