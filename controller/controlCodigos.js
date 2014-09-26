@@ -80,7 +80,7 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 					case 'codigos':
 						$scope.anteriorCargaCodigos = $scope.pantalla.comprobantesRotos.slice();
 						$scope.controlFiltros = 'codigosFiltrados';
-						$scope.ocultarFiltros = [];
+						$scope.ocultarFiltros = ['nroPtoVenta'];
 						$scope.model.codigo = contenido;
 						$scope.hayFiltros = true;
 						recargar = false;
