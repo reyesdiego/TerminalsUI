@@ -66,7 +66,7 @@
 
 				$scope.hitEnter = function(evt){
 					if(angular.equals(evt.keyCode,13))
-						$scope.filtrar();
+						$scope.cargaPuntosDeVenta();
 				};
 
 				$scope.openDate = function(event){
@@ -76,21 +76,21 @@
 				$scope.clientSelected = function(selected){
 					if (angular.isDefined(selected)){
 						$scope.model.razonSocial = selected.title;
-						$scope.filtrar({filtro: 'razonSocial', contenido: selected.title});
+						$scope.filtrado('razonSocial', selected.title);
 					}
 				};
 
 				$scope.containerSelected = function(selected){
 					if (angular.isDefined(selected)){
 						$scope.model.contenedor = selected.title;
-						$scope.filtrar({filtro: 'contenedor', contenido: selected.title});
+						$scope.filtrado('contenedor', selected.title);
 					}
 				};
 
 				$scope.buqueSelected = function(selected){
 					if (angular.isDefined(selected)){
 						$scope.model.buque = selected.title;
-						$scope.filtrar({filtro: 'buque', contenido: selected.title});
+						$scope.filtrado('buque', selected.title);
 					}
 				};
 
@@ -225,7 +225,7 @@
 												break;
 										}
 										comprobante.estado = dataComment.newState;
-										$scope.filtrar();
+										$scope.cargaPuntosDeVenta();
 									}
 								});
 							});
