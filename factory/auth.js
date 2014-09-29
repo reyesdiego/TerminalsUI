@@ -26,7 +26,6 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 
 		userFactory.login(user, pass, function(data, error){
 			if (!error) {
-				console.log(data);
 				loginService.setInfo(data);
 				loginService.setStatus(true);
 				loginService.setType(data.role);
