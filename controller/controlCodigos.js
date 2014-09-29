@@ -53,7 +53,7 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 			$scope.pageChangedCodigos();
 		} else {
 			$scope.currentPageFiltros = data;
-			$scope.pageChangedFiltros();
+			$scope.controlCodigosFiltrados();
 		}
 	});
 
@@ -90,6 +90,7 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 		$scope.hayFiltros = false;
 		$scope.model.codigo = '';
 		$scope.comprobantesRotos = [];
+		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
 		priceFactory.noMatches($scope.model.fechaDesde, $scope.model.fechaHasta, function(dataNoMatches){
 			$scope.codigosSinAsociar = dataNoMatches.data;
 			if ($scope.codigosSinAsociar.length > 0){
@@ -113,6 +114,7 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 
 	$scope.controlCodigosFiltrados = function(){
 		$scope.loadingControlCodigos = true;
+		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
 		invoiceFactory.getInvoice($scope.model, $scope.pageFiltros, function(data){
 			$scope.totalItems = data.totalCount;
 			$scope.comprobantesRotos = data.data;
@@ -131,15 +133,6 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 				});
 				$scope.loadingControlCodigos = false;
 			});
-		});
-	};
-
-	$scope.pageChangedFiltros = function(){
-		$scope.loadingControlCodigos = true;
-		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
-		invoiceFactory.getInvoice($scope.model, $scope.pageFiltros, function(data){
-			$scope.pantalla.comprobantesRotos = data.data;
-			$scope.loadingControlCodigos = false;
 		});
 	};
 

@@ -16,6 +16,7 @@
 				mostrarPtosVenta:	'='
 			},
 			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', function($rootScope, $scope, $modal, invoiceFactory, loginService){
+				$scope.currentPage = 1;
 				$scope.fechaDesde = new Date();
 				$scope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 				//Campos de búsqueda
@@ -59,6 +60,10 @@
 
 				$rootScope.$watch('moneda', function(){ $scope.moneda = $rootScope.moneda; });
 
+				$scope.$watch('ocultarFiltros', function() {
+					$scope.currentPage = 1;
+				});
+
 				$scope.hitEnter = function(evt){
 					if(angular.equals(evt.keyCode,13))
 						$scope.filtrar();
@@ -90,6 +95,7 @@
 				};
 
 				$scope.filtrado = function(filtro, contenido){
+					$scope.currentPage = 1;
 					switch (filtro){
 						case 'nroPtoVenta':
 							$scope.model.nroPtoVenta = contenido;
@@ -425,10 +431,10 @@
 			templateUrl:	'view/div.pagination.html',
 			scope: {
 				totalItems:			'=',
-				paginationHide:		'='
+				paginationHide:		'=',
+				currentPage:		'='
 			},
 			link: function($scope){
-				$scope.currentPage = 1;
 				$scope.$watch('totalItems', function(){
 					if ($scope.totalItems >= 10000){
 						$scope.maxSizeSM = 9;
