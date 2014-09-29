@@ -1,9 +1,19 @@
-<div class="row" data-ng-hide="$state.includes('invoices.result')">
+<div class="row">
 	<accordion-invoices-search></accordion-invoices-search>
 </div>
 
-<div class="row" data-ng-hide="$state.includes('invoices.result')">
+<div class="row">
 	<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
+</div>
+
+<div class="panel panel-danger" ng-show="controlCodigos && codigosSinAsociar.length > 0">
+	<div class="panel-heading">
+		<h3 class="panel-title">Error</h3>
+	</div>
+	<div class="panel-body">
+		<p>Se hallaron códigos sin asociar: </p>
+		<span ng-repeat="numero in codigosSinAsociar"><a title="Filtrar por:" href ng-click="filtrado('codigo', numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
+	</div>
 </div>
 
 <div class="col-lg-12" ng-show="datosInvoices.length == 0 && !loadingState">
@@ -21,9 +31,9 @@
 	<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 </div>
 
-<div class="row" data-ng-hide="$state.includes('invoices.result') || datosInvoices.length == 0 || loadingState">
+<div class="row" data-ng-hide="datosInvoices.length == 0 || loadingState">
 	<div class="col-lg-12">
-		<tabset>
+		<tabset ng-show="mostrarPtosVenta">
 			<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrado('nroPtoVenta', tab.punto)"></tab>
 		</tabset>
 		<br>

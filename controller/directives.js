@@ -10,7 +10,10 @@
 				datosInvoices:		'=',
 				ocultarFiltros:		'=',
 				totalItems:			'=',
-				loadingState:		'='
+				loadingState:		'=',
+				controlCodigos:		'&',
+				codigosSinAsociar:	'=',
+				mostrarPtosVenta:	'='
 			},
 			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', function($rootScope, $scope, $modal, invoiceFactory, loginService){
 				$scope.fechaDesde = new Date();
@@ -258,6 +261,7 @@
 				};
 
 				$scope.mostrarDetalle = function(comprobante){
+					console.log(comprobante);
 					var encontrado = false;
 					$scope.comprobantesVistos.forEach(function(unComprobante){
 						if (unComprobante._id == comprobante._id){

@@ -57,7 +57,6 @@
 
 	myapp.controller('invoicesResultCtrl', function ($rootScope, $scope, $stateParams, invoiceFactory) {
 
-
 		$scope.consultaComprobantePorId = function(){
 			invoiceFactory.invoiceById($stateParams.idComprobante, function(callback){
 				$scope.verDetalle = callback;

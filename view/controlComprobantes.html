@@ -12,7 +12,7 @@
 
 <tab heading="Tasa a las cargas" ng-controller="tasaCargasCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="tasaCargas.resultado" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingTasaCargas"></vista-comprobantes>
+	<vista-comprobantes datos-invoices="tasaCargas.resultado" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingTasaCargas" control-codigos="false" mostrar-ptos-venta="false"></vista-comprobantes>
 </tab>
 
 <tab heading="Control de Correlatividad" ng-controller="correlatividadCtrl">
@@ -50,43 +50,7 @@
 
 <tab heading="Control de códigos" ng-controller="codigosCtrl">
 	<br>
-	<div class="row" data-ng-hide="$state.includes('invoices.result')">
-		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
-	</div>
-
-	<div class="row">
-		<accordion-comprobantes-vistos comprobantes-vistos="comprobantesVistosCodigos"></accordion-comprobantes-vistos>
-	</div>
-
-	<div class="col-lg-12 text-center" ng-show="loadingControlCodigos">
-		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-	</div>
-	<div class="col-lg-12 well" ng-hide="loadingControlCodigos">
-		<div class="panel {{ pantalla.cartelCodigos }}">
-			<div class="panel-heading">
-				<h3 class="panel-title">{{ pantalla.tituloCodigos }}</h3>
-			</div>
-			<div class="panel-body">
-				<p>{{ pantalla.mensajeCodigos }}</p>
-				<span ng-repeat="numero in pantalla.resultadoCodigos"><a title="Filtrar por:" href ng-click="filtrar('codigo', numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
-			</div>
-		</div>
-
-		<div class="col-lg-12 text-center" ng-show="cargandoPaginaComprobantes">
-			<img class="media-object" style="margin-left: 40%;" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-		</div>
-
-		<div class="col-lg-12 well" ng-show="pantalla.mostrarResultado && !cargandoPaginaComprobantes">
-			<tabset ng-show="hayFiltros">
-				<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar('nroPtoVenta', tab.punto)"></tab>
-			</tabset>
-			<br>
-			<table-invoices datos-invoices="pantalla.comprobantesRotos" model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-			<div-pagination ng-hide="hayFiltros" total-items="totalItemsCodigos"></div-pagination>
-			<div-pagination ng-show="hayFiltros" total-items="totalItemsFiltros"></div-pagination>
-		</div>
-	</div>
-
+	<vista-comprobantes datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas"></vista-comprobantes>
 </tab>
 
 <tab heading="Control de tarifas" ng-show="false">
@@ -131,42 +95,12 @@
 
 <tab heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar"></vista-comprobantes>
+	<vista-comprobantes datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true"></vista-comprobantes>
 </tab>
 
 <tab heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl">
 	<br>
-	<div class="row" data-ng-hide="$state.includes('invoices.result')">
-		<accordion-invoices-search model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}"></accordion-invoices-search>
-	</div>
-
-	<div class="row">
-		<accordion-comprobantes-vistos comprobantes-vistos="comprobantesVistosError"></accordion-comprobantes-vistos>
-	</div>
-
-	<div class="col-lg-12 text-center" ng-show="loadingError">
-		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-	</div>
-
-	<div class="col-lg-12" ng-show="!loadingError && comprobantesError.length == 0">
-		<div class="panel panel-info">
-			<div class="panel-heading">
-				<h3 class="panel-title">Comprobantes erróneos</h3>
-			</div>
-			<div class="panel-body">
-				<span>No se encontraron comprobantes marcados como erróneos.</span>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-lg-12 well" ng-hide="loadingError || comprobantesError.length == 0">
-		<tabset>
-			<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrar('nroPtoVenta', tab.punto)"></tab>
-		</tabset>
-		<br>
-		<table-invoices datos-invoices="comprobantesError" model="model" filtrar="filtrar(filtro, contenido)" ocultar-filtros="{{ocultarFiltros}}" mostrar-detalle="mostrarDetalle(comprobante)"></table-invoices>
-		<div-pagination total-items="totalItems"></div-pagination>
-	</div>
+	<vista-comprobantes datos-invoices="comprobantesError" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingError" control-codigos="false" mostrar-ptos-venta="true"></vista-comprobantes>
 </tab>
 
 </tabset>
