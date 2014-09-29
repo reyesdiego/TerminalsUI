@@ -58,6 +58,10 @@
 				// Puntos de Ventas
 				$scope.todosLosPuntosDeVentas = [];
 
+				$scope.$on('iniciarBusqueda', function(event, data){
+					$scope.filtrado(data.filtro, data.contenido);
+				});
+
 				$rootScope.$watch('moneda', function(){ $scope.moneda = $rootScope.moneda; });
 
 				$scope.$watch('ocultarFiltros', function() {
