@@ -6,9 +6,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
-		console.log(datos);
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -40,9 +38,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getSinTasaCargas = function(datos, terminal, page, callback){
 		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit + '?';
-		console.log(datos);
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -254,6 +250,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.commentInvoice = function(data, callback){
 		var inserturl = serverUrl + '/comment';
+		console.log(data);
 		$http({
 			method: 'POST',
 			url: inserturl,

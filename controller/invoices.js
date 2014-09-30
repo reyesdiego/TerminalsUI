@@ -71,5 +71,13 @@
 			$scope.consultaComprobantePorId();
 		});
 
+		$scope.busqueda = function(filtro, contenido){
+			var data = {
+				filtro: filtro,
+				contenido: contenido
+			};
+			$rootScope.$broadcast('iniciarBusqueda', data);
+		}
+
 	});
 })();
