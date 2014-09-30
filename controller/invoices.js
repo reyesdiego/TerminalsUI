@@ -55,29 +55,4 @@
 
 	});
 
-	myapp.controller('invoicesResultCtrl', function ($rootScope, $scope, $stateParams, invoiceFactory) {
-
-		$scope.consultaComprobantePorId = function(){
-			invoiceFactory.invoiceById($stateParams.idComprobante, function(callback){
-				$scope.verDetalle = callback;
-			});
-		};
-
-		if(angular.isDefined($rootScope.itemsDescriptionInvoices)){
-			$scope.consultaComprobantePorId()
-		}
-
-		$rootScope.$on('itemsDescriptionLoad', function(){
-			$scope.consultaComprobantePorId();
-		});
-
-		$scope.busqueda = function(filtro, contenido){
-			var data = {
-				filtro: filtro,
-				contenido: contenido
-			};
-			$rootScope.$broadcast('iniciarBusqueda', data);
-		}
-
-	});
 })();

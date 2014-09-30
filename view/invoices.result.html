@@ -1,95 +1,93 @@
-<div class="container" ng-controller="invoicesResultCtrl">
-	<div class="row">
-		<div class="col-lg-12" style="text-align: center">
-			<table class="table table-striped table-bordered table-responsive" style="text-align: center">
-				<thead>
-				<tr>
-				  <td colspan="6" style="text-align: center">
-						<div><h3><strong>{{ vouchersType[verDetalle.codTipoComprob] }}</strong></h3></div>
-						<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
-						<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
-						<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
-						<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" style="text-align: center">
-						<div><a href ng-click="busqueda('razonSocial', verDetalle.razon); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
-						<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" style="text-align: center">
-						<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" style="text-align: center">
-						<span><strong>Detalle</strong></span>
-					</td>
-				</tr>
-				<tr>
-					<th style="text-align: right; width: 80px">Item</th>
-					<th style="text-align: left">Descripci&oacute;n</th>
-					<th style="text-align: right">Cantidad</th>
-					<th style="text-align: right; width: 120px">Precio Unitario</th>
-					<th style="text-align: right">Unidad</th>
-					<th style="text-align: right; width: 120px">Total</th>
-				</tr>
-				</thead>
-				<tbody ng-repeat="contenedor in verDetalle.detalle">
-				<tr>
-					<td colspan="6" style="text-align: left">
-						<a href ng-click="busqueda('contenedor', contenedor.contenedor); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
-						<span> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>
-						<span> - Viaje: {{ contenedor.buque.viaje }}</span>
-					</td>
-				</tr>
-				<tr style="text-align: right" ng-repeat="item in contenedor.items">
-					<td><a href ng-click="busqueda('codigo', item.id); $state.go('^')" ng-hide="$parent.ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
-					<td style="text-align: left" class="hidden-print"><span class="glyphicon glyphicon-warning-sign" style="color: red" ng-hide="isDefined($root.itemsDescriptionInvoices[item.id])"></span> {{ item.descripcion | maxLength : 200 }}<a href="" ng-show="(item.descripcion.length > 200)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
-					<td style="text-align: left" class="visible-print"><span class="glyphicon glyphicon-warning-sign" ng-hide="isDefined($root.itemsDescriptionInvoices[item.id])"></span> {{ item.descripcion }}</td>
-					<td>{{ item.cnt }}</td>
-					<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
-					<td>{{ item.uniMed }}</td>
-					<td>{{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
-				</tr>
-				</tbody>
-				<tfoot style="text-align: right;">
-				<tr>
-					<td colspan="2">Subtotal</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.subtotal | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
-				</tr>
-				<tr>
-					<td colspan="2">IVA</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.iva | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
-				</tr>
-				<tr>
-					<td colspan="2">Otros Tributos</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
-				</tr>
-				<tr>
-					<td colspan="2">Total</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.total | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
-				</tr>
-				<tr style="text-align: center">
-					<td colspan="6">
-						<span>Monto Gravado {{ verDetalle.importe.gravado | currency }} | </span>
-						<span>Monto No Gravado {{ verDetalle.importe.noGravado | currency }} | </span>
-						<span>Exento {{ verDetalle.importe.exento | currency }} | </span>
-						<span><b>Cotizaci&oacute;n Moneda U$s1 = ${{ verDetalle.cotiMoneda }}</b></span>
-					</td>
-				</tr>
-				</tfoot>
-			</table>
-		</div>
+<div class="row">
+	<div class="col-lg-12" style="text-align: center">
+		<table class="table table-striped table-bordered table-responsive" style="text-align: center">
+			<thead>
+			<tr>
+				<td colspan="6" style="text-align: center">
+					<div><h3><strong>{{ vouchersType[verDetalle.codTipoComprob] }}</strong></h3></div>
+					<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
+					<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
+					<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
+					<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="6" style="text-align: center">
+					<div><a href ng-click="filtrado('razonSocial', verDetalle.razon)" ng-hide="ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
+					<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="6" style="text-align: center">
+					<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="6" style="text-align: center">
+					<span><strong>Detalle</strong></span>
+				</td>
+			</tr>
+			<tr>
+				<th style="text-align: right; width: 80px">Item</th>
+				<th style="text-align: left">Descripci&oacute;n</th>
+				<th style="text-align: right">Cantidad</th>
+				<th style="text-align: right; width: 120px">Precio Unitario</th>
+				<th style="text-align: right">Unidad</th>
+				<th style="text-align: right; width: 120px">Total</th>
+			</tr>
+			</thead>
+			<tbody ng-repeat="contenedor in verDetalle.detalle">
+			<tr>
+				<td colspan="6" style="text-align: left">
+					<a href ng-click="filtrado('contenedor', contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
+					<span> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>
+					<span> - Viaje: {{ contenedor.buque.viaje }}</span>
+				</td>
+			</tr>
+			<tr style="text-align: right" ng-repeat="item in contenedor.items">
+				<td><a href ng-click="filtrado('codigo', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
+				<td style="text-align: left" class="hidden-print"><span class="glyphicon glyphicon-warning-sign" style="color: red" ng-hide="existeDescripcion(item.id)"></span> {{ item.descripcion | maxLength : 200 }}<a href="" ng-show="(item.descripcion.length > 200)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
+				<td style="text-align: left" class="visible-print"><span class="glyphicon glyphicon-warning-sign" ng-hide="existeDescripcion(item.id)"></span> {{ item.descripcion }}</td>
+				<td>{{ item.cnt }}</td>
+				<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+				<td>{{ item.uniMed }}</td>
+				<td>{{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+			</tr>
+			</tbody>
+			<tfoot style="text-align: right;">
+			<tr>
+				<td colspan="2">Subtotal</td>
+				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.subtotal | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+			</tr>
+			<tr>
+				<td colspan="2">IVA</td>
+				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.iva | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+			</tr>
+			<tr>
+				<td colspan="2">Otros Tributos</td>
+				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+			</tr>
+			<tr>
+				<td colspan="2">Total</td>
+				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.total | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+			</tr>
+			<tr style="text-align: center">
+				<td colspan="6">
+					<span>Monto Gravado {{ verDetalle.importe.gravado | currency }} | </span>
+					<span>Monto No Gravado {{ verDetalle.importe.noGravado | currency }} | </span>
+					<span>Exento {{ verDetalle.importe.exento | currency }} | </span>
+					<span><b>Cotizaci&oacute;n Moneda U$s1 = ${{ verDetalle.cotiMoneda }}</b></span>
+				</td>
+			</tr>
+			</tfoot>
+		</table>
 	</div>
-
-	<div class="row hidden-print">
-		<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
-			<button class="btn btn-default" ng-click="$state.go('^')"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
-			<a href="javascript:window.print()" class="btn btn-primary" ng-click="window.print();"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
-		</div>
-	</div>
-	<br>
 </div>
+
+<div class="row hidden-print">
+	<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
+		<button class="btn btn-default" ng-click="mostrarResultado = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+		<a href="javascript:window.print()" class="btn btn-primary" ng-click="window.print();"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+	</div>
+</div>
+<br>

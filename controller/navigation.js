@@ -33,7 +33,6 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 		//Esta carga se realiza en el caso de haber actualizado la página
 		invoiceFactory.getDescriptionItem(function(data){
 			$rootScope.itemsDescriptionInvoices = data.data;
-			$rootScope.$emit('itemsDescriptionLoad');
 		});
 		if (loginService.getType() == 'agp'){
 			$rootScope.filtroTerminal = loginService.getFiltro();

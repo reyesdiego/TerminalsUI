@@ -58,8 +58,36 @@
 				// Puntos de Ventas
 				$scope.todosLosPuntosDeVentas = [];
 
+				$scope.mostrarResultado = false;
+				$scope.verDetalle = {};
+
+				invoiceFactory.getDescriptionItem(function(data){
+					$scope.itemsDescription = data.data;
+				});
+
 				$scope.$on('iniciarBusqueda', function(event, data){
 					$scope.filtrado(data.filtro, data.contenido);
+				});
+
+				$scope.$on('resetModel', function(){
+					$scope.model = {
+						'nroPtoVenta': '',
+						'codTipoComprob': 0,
+						'nroComprobante': '',
+						'razonSocial': '',
+						'documentoCliente': '',
+						'fechaDesde': $scope.fechaDesde,
+						'fechaHasta': $scope.fechaHasta,
+						'contenedor': '',
+						'buque': '',
+						'estado': 'N',
+						'codigo': '',
+						'filtroOrden': 'gateTimestamp',
+						'filtroOrdenAnterior': '',
+						'filtroOrdenReverse': false,
+						'order': ''
+					};
+					$scope.cargaPuntosDeVenta();
 				});
 
 				$rootScope.$watch('moneda', function(){ $scope.moneda = $rootScope.moneda; });
@@ -99,6 +127,7 @@
 				};
 
 				$scope.filtrado = function(filtro, contenido){
+					$scope.mostrarResultado = false;
 					$scope.currentPage = 1;
 					switch (filtro){
 						case 'nroPtoVenta':
@@ -271,7 +300,7 @@
 				};
 
 				$scope.mostrarDetalle = function(comprobante){
-					console.log(comprobante);
+
 					var encontrado = false;
 					$scope.comprobantesVistos.forEach(function(unComprobante){
 						if (unComprobante._id == comprobante._id){
@@ -281,6 +310,15 @@
 					if (!encontrado){
 						$scope.comprobantesVistos.push(comprobante);
 					}
+
+					invoiceFactory.invoiceById(comprobante._id, function(callback){
+						$scope.verDetalle = callback;
+						$scope.mostrarResultado = true;
+					});
+				};
+
+				$scope.existeDescripcion = function(itemId){
+					return angular.isDefined($scope.itemsDescription[itemId]);
 				};
 
 				function cargaDatos(){
@@ -330,6 +368,13 @@
 		return {
 			restrict:		'E',
 			templateUrl:	'view/accordion.invoices.search.html'
+		}
+	});
+
+	myapp.directive('invoicesResult', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/invoices.result.html'
 		}
 	});
 
