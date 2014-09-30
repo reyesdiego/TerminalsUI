@@ -12,53 +12,7 @@
 		</div>
 
 		<div class="row" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
-			<div class="col-lg-12">
-				<div class="table-responsive">
-					<table class="table table-bordered table-hover" style="text-align: center">
-						<tr>
-							<th style="text-align: center">
-								<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
-									<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==false"></span>
-									<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==true"></span>
-									Fecha
-								</a>
-								<span ng-show="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">Fecha</span>
-							</th>
-							<th style="text-align: center">Buque</th>
-							<th style="text-align: center">Viaje</th>
-							<th style="text-align: center">Contenedor</th>
-							<th style="text-align: center">Patente cami&oacute;n</th>
-							<th style="text-align: center">Tipo</th>
-							<th style="text-align: center">
-								<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
-									<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==false"></span>
-									<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==true"></span>
-									Horario
-								</a>
-								<span ng-show="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">Horario</span>
-							</th>
-							<th style="text-align: center">Inicio turno</th>
-							<th style="text-align: center">Fin turno</th>
-							<th style="text-align: center"><span class="visible-sm">Movim.</span><span class="hidden-sm">Movimiento</span></th>
-							<th style="text-align: center">Facturas</th>
-						</tr>
-						<tr ng-repeat="gate in gates">
-							<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-							<td>{{ gate.buque }}</td>
-							<td>{{ gate.viaje }}</td>
-							<td>{{ gate.contenedor }}</td>
-							<td>{{ gate.patenteCamion }}</td>
-							<td>{{ gate.tipo }}</td>
-							<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
-							<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
-							<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
-							<td>{{ gate.mov }}</td>
-							<td><button class="btn btn-info" ui-sref="gates.invoices({contenedor: gate.contenedor})"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-						</tr>
-					</table>
-				</div>
-				<div-pagination total-items="totalItems"></div-pagination>
-			</div>
+			<table-gates datos-gates="gates" filtrar-orden="filtrarOrden(filtro)" total-items="totalItems"></table-gates>
 		</div>
 	</div>
 
