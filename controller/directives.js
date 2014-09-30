@@ -7,13 +7,15 @@
 			restrict:		'E',
 			templateUrl:	'view/vistaComprobantes.html',
 			scope: {
-				datosInvoices:		'=',
-				ocultarFiltros:		'=',
-				totalItems:			'=',
-				loadingState:		'=',
-				controlCodigos:		'&',
-				codigosSinAsociar:	'=',
-				mostrarPtosVenta:	'='
+				datosInvoices:						'=',
+				ocultarFiltros:						'=',
+				totalItems:							'=',
+				loadingState:						'=',
+				controlCodigos:						'&',
+				codigosSinAsociar:					'=',
+				mostrarPtosVenta:					'=',
+				ocultarAccordionInvoicesSearch:		'=',
+				ocultarAccordionComprobantesVistos:	'='
 			},
 			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', function($rootScope, $scope, $modal, invoiceFactory, loginService){
 				$scope.currentPage = 1;
@@ -312,6 +314,31 @@
 		return {
 			restrict:		'E',
 			templateUrl:	'view/table.invoices.html'
+		}
+	});
+
+	myapp.directive('tableGates', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/table.gates.html',
+			scope: {
+				datosGates:			'=',
+				totalItems:			'=',
+				ocultarFiltros:		'@',
+				filtrarOrden:		'&'
+			},
+			controller: ['$scope', function($scope){
+				$scope.colorHorario = function (gate) {
+					var horarioGate = new Date(gate.gateTimestamp);
+					var horarioInicio = new Date(gate.turnoInicio);
+					var horarioFin = new Date(gate.turnoFin);
+					if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
+						return 'green'
+					} else {
+						return 'red'
+					}
+				};
+			}]
 		}
 	});
 

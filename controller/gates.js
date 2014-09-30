@@ -51,18 +51,6 @@
 			$scope.filtrar();
 		};
 
-		// Pone estilo al horario de acuerdo si esta o no a tiempo
-		$scope.colorHorario = function (gate) {
-			var horarioGate = new Date(gate.gateTimestamp);
-			var horarioInicio = new Date(gate.turnoInicio);
-			var horarioFin = new Date(gate.turnoFin);
-			if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
-				return 'green'
-			} else {
-				return 'red'
-			}
-		};
-
 		$scope.cargaGates = function (page) {
 			page = page || { skip: 0, limit: $scope.itemsPerPage };
 			if (page.skip == 0){ $scope.currentPage = 1}
@@ -100,6 +88,7 @@
 			invoiceFactory.getInvoice(datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
 				if (data.status === 'OK') {
 					$scope.invoices = data.data;
+					$scope.totalItems = data.totalCount;
 				}
 			});
 		};
