@@ -148,6 +148,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			{token: loginService.getToken()}
 		}).success(function (data){
 			data.data = factory.setearInterfazComprobante(data.data);
+			data.data.transferencia = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
 			callback(factory.ponerDescripcionComprobante(data.data));
 		}).error(function(errorText){
 			console.log(errorText);
@@ -292,7 +293,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		if (comprobante.estado.length > 0){
 			var encontrado = false;
 			comprobante.estado.forEach(function(estadoGrupo){
-				if (estadoGrupo.grupo == loginService.getGroup()){
+				if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
 					encontrado = true;
 					switch (estadoGrupo.estado){
 						case 'Y':
@@ -355,7 +356,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.filtrarComentarios = function(dataComentarios){
 		var comentariosFiltrados = [];
 		dataComentarios.forEach(function(comentario){
-			if (comentario.group == loginService.getGroup()){
+			if (comentario.group == loginService.getGroup() || comentario.group === 'ALL'){
 				comentariosFiltrados.push(comentario);
 			}
 		});
