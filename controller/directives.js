@@ -507,7 +507,6 @@
 			templateUrl:	'view/div.pagination.html',
 			scope: {
 				totalItems:			'=',
-				paginationHide:		'=',
 				currentPage:		'='
 			},
 			link: function($scope){
