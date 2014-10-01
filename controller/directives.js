@@ -369,7 +369,7 @@
 				ocultarFiltros:		'@',
 				filtrarOrden:		'&'
 			},
-			controller: ['$scope', function($scope){
+			link: function($scope){
 				$scope.colorHorario = function (gate) {
 					var horarioGate = new Date(gate.gateTimestamp);
 					var horarioInicio = new Date(gate.turnoInicio);
@@ -380,7 +380,7 @@
 						return 'red'
 					}
 				};
-			}]
+			}
 		}
 	});
 
