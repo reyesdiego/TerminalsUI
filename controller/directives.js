@@ -210,7 +210,7 @@
 				$scope.trackInvoice = function(comprobante){
 					var estado;
 					comprobante.estado.forEach(function(estadoGrupo){
-						if (estadoGrupo.grupo == loginService.getGroup()){
+						if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
 							estado = estadoGrupo.estado;
 						}
 					});
