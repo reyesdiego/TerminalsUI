@@ -385,6 +385,17 @@
 		}
 	});
 
+	myapp.directive('tableTurnos', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/table.turnos.html',
+			scope: {
+				datosTurnos:		'=',
+				totalItems:			'='
+			}
+		}
+	});
+
 	myapp.directive('accordionComprobantesVistos', function(){
 		return {
 			restrict:		'E',
