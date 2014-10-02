@@ -191,6 +191,7 @@
 
 				$scope.filtrarOrden = function(filtro){
 					var filtroModo;
+					$scope.currentPage = 1;
 					$scope.model.filtroOrden = filtro;
 					if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
 						$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
