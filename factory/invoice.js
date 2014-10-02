@@ -290,6 +290,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.setearInterfazComprobante = function(comprobante){
+		var estadoDefault = {
+			'grupo': loginService.getGroup(),
+			'estado': 'Y'
+		};
 		if (comprobante.estado.length > 0){
 			var encontrado = false;
 			comprobante.estado.forEach(function(estadoGrupo){
@@ -315,10 +319,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 							};
 							break;
 						default :
-							var estadoDefault = {
-								'grupo': loginService.getGroup(),
-								'estado': 'Y'
-							};
 							comprobante.estado.push(estadoDefault);
 							comprobante.interfazEstado = {
 								'estado': 'Revisar',
@@ -329,10 +329,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				}
 			});
 			if (!encontrado){
-				var estadoDefault = {
-					'grupo': loginService.getGroup(),
-					'estado': 'Y'
-				};
 				comprobante.estado.push(estadoDefault);
 				comprobante.interfazEstado = {
 					'estado': 'Revisar',
@@ -340,10 +336,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				};
 			}
 		} else {
-			var estadoDefault = {
-				'grupo': loginService.getGroup(),
-				'estado': 'Y'
-			};
 			comprobante.estado.push(estadoDefault);
 			comprobante.interfazEstado = {
 				'estado': 'Revisar',

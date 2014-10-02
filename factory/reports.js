@@ -42,14 +42,6 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 		}).error(function(errorText) {
 			dialogs.error('Error', 'Error al añadir el Match en la base');
 		});
-
-		/*$http.get('mocks/tarifasCount.json')
-			.success(function(data){
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al traer los datos de los turnos');
-			});*/
 	};
 
 	return factory;
