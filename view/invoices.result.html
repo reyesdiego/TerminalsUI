@@ -13,7 +13,7 @@
 			</tr>
 			<tr>
 				<td colspan="6" style="text-align: center">
-					<div><a href ng-click="filtrado('razonSocial', verDetalle.razon)" ng-hide="ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
+					<div><a href class="hidden-print" ng-click="filtrado('razonSocial', verDetalle.razon)" ng-hide="ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
 					<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
 				</td>
 			</tr>
@@ -39,13 +39,13 @@
 			<tbody ng-repeat="contenedor in verDetalle.detalle">
 			<tr>
 				<td colspan="6" style="text-align: left">
-					<a href ng-click="filtrado('contenedor', contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
+					<a href class="hidden-print" ng-click="filtrado('contenedor', contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
 					<span> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>
 					<span> - Viaje: {{ contenedor.buque.viaje }}</span>
 				</td>
 			</tr>
 			<tr style="text-align: right" ng-repeat="item in contenedor.items">
-				<td><a href ng-click="filtrado('codigo', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
+				<td><a href class="hidden-print" ng-click="filtrado('codigo', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
 				<td style="text-align: left" class="hidden-print"><span class="glyphicon glyphicon-warning-sign" style="color: red" ng-hide="existeDescripcion(item.id)"></span> {{ item.descripcion | maxLength : 200 }}<a href="" ng-show="(item.descripcion.length > 200)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
 				<td style="text-align: left" class="visible-print"><span class="glyphicon glyphicon-warning-sign" ng-hide="existeDescripcion(item.id)"></span> {{ item.descripcion }}</td>
 				<td>{{ item.cnt }}</td>
@@ -88,7 +88,7 @@
 <div class="row hidden-print">
 	<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
 		<button class="btn btn-default" ng-click="mostrarResultado = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
-		<a href="javascript:window.print()" class="btn btn-primary" ng-click="window.print();"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+		<a href="javascript:window.print()" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
 	</div>
 </div>
 <br>

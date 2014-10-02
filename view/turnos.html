@@ -12,31 +12,7 @@
 		</div>
 
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="table-responsive">
-					<table class="table table-bordered table-hover" style="text-align: center">
-						<tr>
-							<th style="text-align: center">Fecha</th>
-							<th style="text-align: center">Buque</th>
-							<th style="text-align: center">Viaje</th>
-							<th style="text-align: center">Contenedor</th>
-							<th style="text-align: center">Inicio del turno</th>
-							<th style="text-align: center">Fin del turno</th>
-							<th style="text-align: center">Movimiento</th>
-						</tr>
-						<tr ng-repeat="turno in turnos">
-							<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
-							<td>{{ turno.buque }}</td>
-							<td>{{ turno.viaje }}</td>
-							<td>{{ turno.contenedor }}</td>
-							<td>{{ turno.inicio | date: 'HH:mm' }}</td>
-							<td>{{ turno.fin | date: 'HH:mm' }}</td>
-							<td>{{ turno.mov }}</td>
-						</tr>
-					</table>
-					<div-pagination total-items="totalItems" current-page="currentPage"></div-pagination>
-				</div>
-			</div>
+			<table-turnos datos-turnos="turnos" total-items="totalItems"></table-turnos>
 		</div>
 	</div>
 
