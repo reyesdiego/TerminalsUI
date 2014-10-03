@@ -453,24 +453,6 @@
 				};
 				$scope.filtrado = function(filtro, contenido){
 					switch (filtro){
-						case 'nroPtoVenta':
-							$scope.model.nroPtoVenta = contenido;
-							break;
-						case 'codComprobante':
-							$scope.model.codTipoComprob = contenido;
-							break;
-						case 'nroComprobante':
-							$scope.model.nroComprobante = contenido;
-							break;
-						case 'razonSocial':
-							$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(contenido);
-							break;
-						case 'documentoCliente':
-							$scope.model.documentoCliente = contenido;
-							break;
-						case 'estado':
-							$scope.model.estado = contenido;
-							break;
 						case 'fechaDesde':
 							$scope.model.fechaDesde = contenido;
 							break;
@@ -489,21 +471,6 @@
 						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
 					}
 					$scope.filtrar({filtro: filtro, contenido: contenido});
-				};
-				$scope.filtrarCaracteresInvalidos = function(palabra){
-					if (angular.isDefined(palabra) && palabra.length > 0){
-						var palabraFiltrada;
-						var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
-						palabraFiltrada = palabra;
-						for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
-							if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
-								palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
-							}
-						}
-						return palabraFiltrada.toUpperCase();
-					} else {
-						return palabra;
-					}
 				};
 				$scope.cargaPorFiltros = function () {
 					$scope.status.open = !$scope.status.open;
@@ -535,6 +502,34 @@
 				});
 				$scope.pageChanged = function(){
 					$scope.$emit('cambioPagina', $scope.currentPage);
+				}
+			}
+		}
+	});
+
+	myapp.directive('divPanel', function(){
+		return {
+			restrict:		'E',
+			transclude:		true,
+			scope:	{
+				titulo:		'@',
+				tipo:		'@'
+			},
+			template:		'<div class="panel" ng-class="{\'panel-info\': {{tipo == \'info\'}} , \'panel-danger\': {{tipo == \'danger\'}}, \'panel-warning\': {{tipo == \'warning\'}}, \'panel-success\': {{tipo == \'success\'}}}">' +
+							'	<div class="panel-heading">' +
+							'		<h3 class="panel-title">{{titulo}}</h3>' +
+							'	</div>' +
+							'	<div class="panel-body">' +
+							'		<span ng-transclude></span>' +
+							'	</div>' +
+							'</div>',
+			compile: function(){
+				return {
+					pre: function(scope){
+						if (!angular.isDefined(scope.tipo)){
+							scope.tipo = 'info';
+						}
+					}
 				}
 			}
 		}
