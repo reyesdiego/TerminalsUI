@@ -4,7 +4,7 @@
 
 var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, gatesFactory, loginService, dialogs, $state){
 
-	$scope.fechaDesde = new Date();
+	/*$scope.fechaDesde = new Date();
 	$scope.fechaHasta = new Date();
 	$scope.fechaDesde.setHours(0, 0);
 	$scope.fechaHasta.setMinutes(0);
@@ -123,37 +123,37 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 		"bactssa":$scope.colorBactssa,
 		"terminal4": $scope.colorTerminal4,
 		"trp": $scope.colorTrp
-	};
-	$scope.chartSeries = {3: {type: "line"}};
+	};*/
+	/*$scope.chartSeries = {3: {type: "line"}};
 
 	$scope.columnChart = 'column';
 	$scope.pieChart = 'pie';
 
 	$scope.chartTitleReporteTarifas = "Códigos de tarifas";
 	$scope.chartWidthReporteTarifas = 1200;
-	$scope.chartHeightReporteTarifas = 600;
+	$scope.chartHeightReporteTarifas = 600;*/
 	$scope.chartDataReporteTarifas = [
 		['Codigos', 'algo'],
 		['hola', 2526]
 	];
 
-	$scope.chartTitleBarrasHorarios = "Detalle cumplimiento de turnos";
+	/*$scope.chartTitleBarrasHorarios = "Detalle cumplimiento de turnos";
 	$scope.chartWidthBarrasHorarios = 500;
-	$scope.chartHeightBarrasHorarios = 400;
+	$scope.chartHeightBarrasHorarios = 400;*/
 
 	$scope.chartDataBarras = [];
 
-	$scope.chartTitleTortaHorarios = "Porcentaje";
+	/*$scope.chartTitleTortaHorarios = "Porcentaje";
 	$scope.chartWidthTortaHorarios = 550;
-	$scope.chartHeightTortaHorarios = 530;
+	$scope.chartHeightTortaHorarios = 530;*/
 
 	$scope.chartDataTorta = [];
 
-	$scope.chartDataTarifasBactssa = [];
+	/*$scope.chartDataTarifasBactssa = [];
 	$scope.chartDataTarifasTerminal4 = [];
 	$scope.chartDataTarifasTrp = [];
 
-	$scope.resultadosTarifasBactssa = [];
+	/*$scope.resultadosTarifasBactssa = [];
 	$scope.resultadosTarifasTerminal4 = [];
 	$scope.resultadosTarifasTrp = [];
 
@@ -342,7 +342,7 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 
 	};*/
 
-	$scope.cargarReporteTarifas = function(){
+	/*$scope.cargarReporteTarifas = function(){
 		$scope.resultadosTarifasBactssa = [];
 		$scope.resultadosTarifasTerminal4 = [];
 		$scope.resultadosTarifasTrp = [];
@@ -413,6 +413,6 @@ var reportsCtrl = myapp.controller('reportsCtrl', function ($scope, reportsFacto
 			'buque': $scope.model.buque,
 			'order': $scope.model.order
 		};
-	}
+	}*/
 
 });
