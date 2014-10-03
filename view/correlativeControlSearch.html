@@ -1,0 +1,9 @@
+<div class="row">
+	<accordion-invoices-search></accordion-invoices-search>
+</div>
+
+<div class="col-lg-12">
+	<div-panel titulo="Puntos de venta de la terminal seleccionada">
+		<span ng-repeat="numero in terminalSellPoints"><a href ng-click="filtrado('nroPtoVenta', numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
+	</div-panel>
+</div>
