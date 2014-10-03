@@ -42,7 +42,6 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.loadingRevisar = true;
 		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceRevisar){
-			console.log(invoiceRevisar);
 			$scope.comprobantesRevisar = invoiceRevisar.data;
 			$scope.totalItems = invoiceRevisar.totalCount;
 			$scope.loadingRevisar = false;
