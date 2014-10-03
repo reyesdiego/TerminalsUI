@@ -13,40 +13,40 @@
 				<div class="col-lg-12" ng-show="loadingReporteTarifas">
 					<img class="media-object col-lg-offset-5" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 				</div>
-				<div class="col-lg-12 well" ng-hide="$parent.mostrarGrafico || loadingReporteTarifas">
+				<div class="col-lg-12 well" ng-hide="mostrarGrafico || loadingReporteTarifas">
 					<div class="row">
 						<div class="col-lg-6">
 							<label for="fechaDesde">Desde</label>
 							<p class="input-group">
-								<input type="text" id="fechaDesde" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="$parent.desde" />
+								<input type="text" id="fechaDesde" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="isCollapsedDesde = !isCollapsedDesde"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>
 							</p>
 							<div collapse="isCollapsedDesde">
 								<div>
-									<datepicker ng-model="$parent.desde" show-weeks="false" ng-change="isCollapsedDesde = !isCollapsedDesde" max-date="maxDate"></datepicker>
+									<datepicker ng-model="desde" show-weeks="false" ng-change="isCollapsedDesde = !isCollapsedDesde" max-date="maxDate"></datepicker>
 								</div>
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<label for="fechaHasta">Hasta</label>
 							<p class="input-group">
-								<input type="text" id="fechaHasta" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="$parent.hasta" />
+								<input type="text" id="fechaHasta" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="hasta" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="isCollapsedHasta = !isCollapsedHasta"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>
 							</p>
 							<div collapse="isCollapsedHasta">
 								<div>
-									<datepicker ng-model="$parent.hasta" show-weeks="false" ng-change="isCollapsedHasta = !isCollapsedHasta" max-date="maxDate"></datepicker>
+									<datepicker ng-model="hasta" show-weeks="false" ng-change="isCollapsedHasta = !isCollapsedHasta" max-date="maxDate"></datepicker>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="row" ng-hide="$parent.mostrarGrafico || loadingReporteTarifas">
+				<div class="row" ng-hide="mostrarGrafico || loadingReporteTarifas">
 					<div class="col-lg-12">
 						<div class="input-group">
 							<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
@@ -54,13 +54,13 @@
 						</div>
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" ng-model="$parent.tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas
+								<input type="checkbox" ng-model="tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas
 							</label>
 						</div>
 					</div>
 				</div>
 
-				<div class="row" ng-hide="$parent.mostrarGrafico || loadingReporteTarifas">
+				<div class="row" ng-hide="mostrarGrafico || loadingReporteTarifas">
 					<div class="col-lg-12">
 						<div class="bs-example table-responsive">
 							<table class="table table-striped table-bordered table-hover">
@@ -83,19 +83,19 @@
 					</div>
 				</div>
 
-				<div class="row" ng-hide="$parent.mostrarGrafico || loadingReporteTarifas">
-					<div class="col-lg-10 hidden-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="$parent.currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					<div class="col-lg-10 visible-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="$parent.currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+				<div class="row" ng-hide="mostrarGrafico || loadingReporteTarifas">
+					<div class="col-lg-10 hidden-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="col-lg-10 visible-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class=" col-lg-2 text-right" style="margin-top: 20px">
 						<button class="btn btn-primary" ng-click="armarGraficoTarifas()"><span class="glyphicon glyphicon-asterisk"></span> Cargar gráfico</button>
 					</div>
 				</div>
 
-				<div class="row" ng-show="$parent.mostrarGrafico && !loadingReporteTarifas">
+				<div class="row" ng-show="mostrarGrafico && !loadingReporteTarifas">
 					<h3>Del {{ desde | date: 'dd/MM/yyyy' }} al {{ hasta | date: 'dd/MM/yyyy' }}</h3>
 				</div>
 
-				<div class="row" ng-show="$parent.mostrarGrafico && !loadingReporteTarifas">
+				<div class="row" ng-show="mostrarGrafico && !loadingReporteTarifas">
 					<div class="col-lg-12">
 						<table class="table table-striped table-bordered table-hover">
 							<thead>
@@ -115,7 +115,7 @@
 					</div>
 				</div>
 
-				<div class="row" ng-show="$parent.mostrarGrafico">
+				<div class="row" ng-show="mostrarGrafico">
 					<div class="col-lg-12 text-center">
 						<dynamic-chart
 								data="chartDataReporteTarifas"
@@ -134,9 +134,9 @@
 					</div>
 				</div>
 
-				<div class="row" ng-show="$parent.mostrarGrafico">
+				<div class="row" ng-show="mostrarGrafico">
 					<div>
-						<button class="btn btn-primary" ng-click="$parent.mostrarGrafico = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+						<button class="btn btn-primary" ng-click="mostrarGrafico = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 					</div>
 				</div>
 				<br>
@@ -249,7 +249,7 @@
 					</div>
 				</div>
 			</tab>-->
-			<tab heading="Porcentaje de cumplimientos de horarios" select="cargarReporteHorarios()">
+			<!--<tab heading="Porcentaje de cumplimientos de horarios" ng-controller="reporteHorariosCtrl">
 				<br>
 				<div class="row" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
 					<accordion-gates-turnos-search model="model" filtrar="filtrar(filtro, contenido)"></accordion-gates-turnos-search>
@@ -320,7 +320,7 @@
 						</dynamic-chart>
 					</div>
 				</div>
-			</tab>
+			</tab>-->
 		</tabset>
 	</div>
 
