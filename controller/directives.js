@@ -494,7 +494,7 @@
 				titulo:		'@',
 				tipo:		'@'
 			},
-			template:		'<div class="panel" ng-class="{\'panel-info\': {{tipo == \'info\'}} , \'panel-danger\': {{tipo == \'danger\'}}, \'panel-warning\': {{tipo == \'warning\'}}, \'panel-success\': {{tipo == \'success\'}}}">' +
+			template:		'<div class="panel {{ tipo }}">' +
 							'	<div class="panel-heading">' +
 							'		<h3 class="panel-title">{{titulo}}</h3>' +
 							'	</div>' +
@@ -502,14 +502,12 @@
 							'		<span ng-transclude></span>' +
 							'	</div>' +
 							'</div>',
-			compile: function(){
-				return {
-					pre: function(scope){
-						if (!angular.isDefined(scope.tipo)){
-							scope.tipo = 'info';
-						}
+			link: function($scope) {
+				$scope.$watch('tipo', function () {
+					if (!angular.isDefined($scope.tipo)) {
+						$scope.tipo = 'panel-info';
 					}
-				}
+				});
 			}
 		}
 	});

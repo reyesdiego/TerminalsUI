@@ -19,7 +19,7 @@ function correlatividadCtrl($scope, invoiceFactory){
 	$scope.pantalla = {
 		"tituloCorrelativo":  "Correlatividad",
 		"mensajeCorrelativo": "Seleccione punto de venta y tipo de comprobante para realizar la búsqueda",
-		"cartelCorrelativo": "info",
+		"cartelCorrelativo": "panel-info",
 		"resultadoCorrelativo": []
 	};
 
@@ -34,13 +34,13 @@ function correlatividadCtrl($scope, invoiceFactory){
 			$scope.result = dataComprob;
 			if ($scope.result.totalCount > 0){
 				$scope.pantalla.mensajeCorrelativo = "Se hallaron comprobantes faltantes: ";
-				$scope.pantalla.cartelCorrelativo = "danger";
+				$scope.pantalla.cartelCorrelativo = "panel-danger";
 				$scope.pantalla.tituloCorrelativo = "Error";
 				$scope.pantalla.resultadoCorrelativo = $scope.result.data;
 			} else {
 				$scope.pantalla.tituloCorrelativo =  "Éxito";
 				$scope.pantalla.mensajeCorrelativo = "No se hallaron comprobantes faltantes";
-				$scope.pantalla.cartelCorrelativo = "success";
+				$scope.pantalla.cartelCorrelativo = "panel-success";
 				$scope.pantalla.resultadoCorrelativo = [];
 			}
 			$scope.loadingCorrelatividad = false;
