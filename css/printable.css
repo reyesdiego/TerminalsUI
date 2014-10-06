@@ -1,0 +1,13 @@
+@media print {
+    body * {
+        visibility:hidden;
+    }
+    .printable, .printable * {
+        visibility:visible !important;
+    }
+    .printable { /* aligning the printable area */
+        position:absolute !important;;
+        left:40px !important;
+        top:40px !important;
+    }
+}
