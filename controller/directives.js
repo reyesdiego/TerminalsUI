@@ -71,27 +71,6 @@
 					$scope.filtrado(data.filtro, data.contenido);
 				});
 
-				$scope.$on('resetModel', function(){
-					$scope.model = {
-						'nroPtoVenta': '',
-						'codTipoComprob': 0,
-						'nroComprobante': '',
-						'razonSocial': '',
-						'documentoCliente': '',
-						'fechaDesde': $scope.fechaDesde,
-						'fechaHasta': $scope.fechaHasta,
-						'contenedor': '',
-						'buque': '',
-						'estado': 'N',
-						'codigo': '',
-						'filtroOrden': 'gateTimestamp',
-						'filtroOrdenAnterior': '',
-						'filtroOrdenReverse': false,
-						'order': ''
-					};
-					$scope.cargaPuntosDeVenta();
-				});
-
 				$rootScope.$watch('moneda', function(){ $scope.moneda = $rootScope.moneda; });
 
 				$scope.$watch('ocultarFiltros', function() {
@@ -515,7 +494,7 @@
 				titulo:		'@',
 				tipo:		'@'
 			},
-			template:		'<div class="panel" ng-class="{\'panel-info\': {{tipo == \'info\'}} , \'panel-danger\': {{tipo == \'danger\'}}, \'panel-warning\': {{tipo == \'warning\'}}, \'panel-success\': {{tipo == \'success\'}}}">' +
+			template:		'<div class="panel {{ tipo }}">' +
 							'	<div class="panel-heading">' +
 							'		<h3 class="panel-title">{{titulo}}</h3>' +
 							'	</div>' +
@@ -523,15 +502,85 @@
 							'		<span ng-transclude></span>' +
 							'	</div>' +
 							'</div>',
-			compile: function(){
-				return {
-					pre: function(scope){
-						if (!angular.isDefined(scope.tipo)){
-							scope.tipo = 'info';
-						}
+			link: function($scope) {
+				$scope.$watch('tipo', function () {
+					if (!angular.isDefined($scope.tipo)) {
+						$scope.tipo = 'panel-info';
 					}
-				}
+				});
 			}
 		}
 	});
+
+	myapp.directive('accordionBusquedaCorrelatividad', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/correlativeControlSearch.html',
+			controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
+				$scope.ocultarFiltros = ['razonSocial', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor'];
+				$scope.fechaDesde = new Date();
+				$scope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+				$scope.maxDate = new Date();
+				$scope.formatDate = $rootScope.formatDate;
+				$scope.dateOptions = $rootScope.dateOptions;
+				$scope.terminalSellPoints = [];
+				$scope.model = {
+					'nroPtoVenta': '',
+					'codTipoComprob': 1,
+					'fechaDesde': $scope.fechaDesde,
+					'fechaHasta': $scope.fechaHasta
+				};
+				$scope.traerPuntosDeVenta = function(){
+					invoiceFactory.getCashbox({}, function(data){
+						$scope.terminalSellPoints = data.data;
+						$scope.model.codTipoComprob = 1;
+					})
+				};
+				$scope.openDate = function(event){
+					$rootScope.openDate(event);
+				};
+				$scope.hitEnter = function(evt){
+					if(angular.equals(evt.keyCode,13))
+						$scope.filtrar();
+				};
+				$scope.filtrado = function(filtro, contenido){
+					$scope.mostrarResultado = false;
+					$scope.currentPage = 1;
+					switch (filtro){
+						case 'nroPtoVenta':
+							$scope.model.nroPtoVenta = contenido;
+							break;
+						case 'codComprobante':
+							$scope.model.codTipoComprob = contenido;
+							break;
+						case 'fechaDesde':
+							$scope.model.fechaDesde = contenido;
+							break;
+						case 'fechaHasta':
+							$scope.model.fechaHasta = contenido;
+							break;
+					}
+					if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+						$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+					}
+					if ($scope.model.nroPtoVenta != '' && $scope.model.codTipoComprob != ''){
+						$scope.$emit('cambioFiltro', cargaDatos());
+					}
+				};
+
+				function cargaDatos(){
+					return {
+						'nroPtoVenta':		$scope.model.nroPtoVenta,
+						'codTipoComprob':	$scope.model.codTipoComprob,
+						'fechaDesde':		$scope.model.fechaDesde,
+						'fechaHasta':		$scope.model.fechaHasta
+					};
+				}
+
+				$scope.traerPuntosDeVenta();
+			}]
+		}
+	});
+
 })();
