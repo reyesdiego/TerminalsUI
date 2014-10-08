@@ -84,6 +84,15 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 		}
 	});
 
+	$scope.$on('errorDatos', function(){
+		$scope.mensajeResultado = {
+			titulo: 'Error',
+			mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+			tipo: 'panel-danger'
+		};
+		$scope.loadingControlCodigos = false;
+	});
+
 	$scope.controlDeCodigos = function(){
 		$scope.controlFiltros = 'codigos';
 		$scope.loadingControlCodigos = true;

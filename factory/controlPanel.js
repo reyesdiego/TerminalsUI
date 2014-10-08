@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, formatDate, loginService){
+myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, formatDate, loginService, errorFactory){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback, errCallBack){
@@ -18,7 +18,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 				}
 				callback(result);
 			}).error(function(errorText){
-				errCallBack(errorText);
+				errorFactory.raiseError(errorText, 'errorGetByDay');
+				//errCallBack(errorText);
 			});
 	};
 
@@ -46,7 +47,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 				}
 				callback(result);
 			}).error(function(errorText){
-				errCallBack(errorText);
+				errorFactory.raiseError(errorText, 'errorTasas');
+				//errCallBack(errorText);
 			});
 	};
 
@@ -56,8 +58,9 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			.success(function (data){
 				callback(data.data);
 			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');
+				errorFactory.raiseError(errorText, 'errorTotales');
+				/*console.log(errorText);
+				dialogs.error('Error', 'Error al cargar la lista PriceList');*/
 			});
 	};
 
@@ -67,7 +70,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				errCallBack(errorText);
+				errorFactory.raiseError(errorText, 'errorFacturasMeses');
+				//errCallBack(errorText);
 			});
 	};
 
@@ -81,7 +85,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				errCallBack(errorText);
+				errorFactory.raiseError(errorText, 'gatesMeses');
+				//errCallBack(errorText);
 			});
 	};
 
@@ -95,7 +100,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				errCallBack(errorText);
+				errorFactory.raiseError(errorText);
+				//errCallBack(errorText);
 			});
 	};
 
@@ -106,7 +112,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				errCallBack(errorText);
+				errorFactory.raiseError(errorText, 'errorFacturadoPorDia');
 			});
 	};
 
@@ -120,7 +126,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errCallBack(errorText);
+			errorFactory.raiseError(errorText, 'errorDatos');
 		});
 	};
 
@@ -134,7 +140,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errCallBack(errorText);
+			errorFactory.raiseError(errorText, 'errorDatos');
 		});
 	};
 
@@ -148,7 +154,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errCallBack(errorText);
+			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
 		});
 	};
 
@@ -162,7 +168,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errCallBack(errorText);
+			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
 		});
 	};
 
@@ -176,7 +182,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errCallBack(errorText);
+			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
 		});
 	};
 
@@ -190,7 +196,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errCallBack(errorText);
+			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
 		});
 	};
 
@@ -204,7 +210,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errCallBack(errorText);
+			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
 		});
 	};
 

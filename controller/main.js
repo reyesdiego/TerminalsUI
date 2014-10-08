@@ -91,7 +91,15 @@ myapp.config(['$httpProvider', function ($httpProvider) {
 	}];
 }]);
 
-myapp.config(function ($stateProvider, $urlRouterProvider) {
+myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
+
+	$provide.decorator("$exceptionHandler", function($delegate, $injector){
+		return function(exception, cause){
+			var $rootScope = $injector.get("$rootScope");
+			$rootScope.addError({message:"Exception", reason:exception});
+			$delegate(exception, cause);
+		};
+	});
 
 	// For any unmatched url, send to /login
 	$urlRouterProvider.otherwise("/login");
@@ -179,6 +187,21 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.listaBuques = [];
 	$rootScope.listaContenedoresGates = [];
 	$rootScope.listaBuquesGates = [];
+
+	$rootScope.mensajeResultado = {
+		titulo: 'Comprobantes',
+		mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
+		tipo: 'panel-info'
+	};
+
+	$rootScope.addError = function(error){
+		$rootScope.mensajeResultado = {
+			titulo: 'Error',
+			mensaje: 'Se ha producido un error inesperado: ' + error.reason,
+			tipo: 'panel-danger'
+		};
+		$rootScope.$broadcast('errorInesperado', error);
+	};
 
 	controlPanelFactory.getClients(function(data){
 		var i = 0;

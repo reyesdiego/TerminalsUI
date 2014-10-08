@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginService, formatDate, $templateCache){
+myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginService, formatDate, errorFactory){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
@@ -13,11 +13,17 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data){
+			console.log(data);
 			data = factory.ponerDescripcionComprobantes(data);
 			callback(factory.setearInterfaz(data));
 		}).error(function(errorText){
-			console.log(errorText);
-			dialogs.error('Error', 'Error al cargar la lista Invoice');
+			errorFactory.raiseError(errorText, 'errorDatos');
+			/*if (angular.isDefined(errCallBack)){
+				errCallBack(errorText);
+			} else {
+				console.log(errorText);
+				dialogs.error('Error', 'Error al cargar los datos de comprobantes.');
+			}*/
 		});
 	};
 
@@ -31,8 +37,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function(data) {
 			callback(data);
 		}).error(function(errorText) {
-			console.log(errorText);
-			dialogs.error('Error', 'Error al cargar la lista Invoice');
+			errorFactory.raiseError(errorText, 'errorDatos');
+			/*console.log(errorText);
+			dialogs.error('Error', 'Error al cargar las descripciones de los códigos.');*/
 		});
 	};
 
@@ -45,16 +52,17 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-				data = factory.ponerDescripcionComprobantes(data)
+				data = factory.ponerDescripcionComprobantes(data);
 				callback(factory.setearInterfaz(data));
 			}).error(function(errorText){
-				console.log(errorText);
+				errorFactory.raiseError(errorText, 'errorDatos');
+				/*console.log(errorText);
 				if (errorText.status === 'ERROR'){
 					callback(errorText);
 					//dialogs.error('Error', errorText.data);
 				} else {
 					dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
-				}
+				}*/
 			});
 	};
 
@@ -68,13 +76,14 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
+			errorFactory.raiseError(errorText, 'errorDatos');
+			/*console.log(errorText);
 			if (errorText.status === 'ERROR'){
 				callback(errorText);
 				//dialogs.error('Error', errorText.data);
 			} else {
 				dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
-			}
+			}*/
 		});
 	};
 
@@ -89,13 +98,14 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
+			errorFactory.raiseError(errorText, 'errorDatos');
+			/*console.log(errorText);
 			if (errorText.status === 'ERROR'){
 				callback(errorText);
 				//dialogs.error('Error', errorText.data);
 			} else {
 				dialogs.error('Error', 'Error en la carga de comprobantes sin códigos asociados.');
-			}
+			}*/
 		});
 	};
 
@@ -110,19 +120,21 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
+			errorFactory.raiseError(errorText, 'errorDatos');
+			/*console.log(errorText);
 			if (errorText.status === 'ERROR'){
 				callback(errorText);
 				//dialogs.error('Error', errorText.data);
 			} else {
 				dialogs.error('Error', 'Error en la carga de comprobantes sin códigos asociados.');
-			}
+			}*/
 		});
 	};
 
 	factory.getCashbox = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro() + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -134,8 +146,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
-			dialogs.error('Error', 'Error al cargar los distintos puntos de venta');
+			errorFactory.raiseError(errorText, 'errorDatos');
+			/*console.log(errorText);
+			dialogs.error('Error', 'Error al cargar los distintos puntos de venta');*/
 		});
 	};
 
@@ -151,13 +164,14 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			data.data.transferencia = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
 			callback(factory.ponerDescripcionComprobante(data.data));
 		}).error(function(errorText){
-			console.log(errorText);
+			errorFactory.raiseError(errorText, 'errorDatos');
+			/*console.log(errorText);
 			if (errorText.status === 'ERROR'){
 				callback(errorText);
 				//dialogs.error('Error', errorText.data);
 			} else {
 				dialogs.error('Error', 'Error en la carga de Tasa a las Cargas.');
-			}
+			}*/
 		});
 	};
 
@@ -245,7 +259,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			dialogs.error('Error', 'Error al actualizar el estado del comprobante');
+			errorFactory.raiseError(errorText, 'errorTrack');
+			//dialogs.error('Error', 'Error al actualizar el estado del comprobante');
 		});
 	};
 
@@ -260,7 +275,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
+			errorFactory.raiseError(errorText, 'errorTrack');
+			//dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
 		});
 	};
 
@@ -278,7 +294,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 			callback(data);
 		}).error(function(errorText){
-			dialogs.error('Error', 'Error al obtener comentarios sobre el comprobante');
+			errorFactory.raiseError(errorText, 'errorDatos');
+			//dialogs.error('Error', 'Error al obtener comentarios sobre el comprobante');
 		});
 	};
 

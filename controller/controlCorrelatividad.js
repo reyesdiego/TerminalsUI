@@ -17,9 +17,9 @@ function correlatividadCtrl($scope, invoiceFactory){
 	};
 
 	$scope.pantalla = {
-		"tituloCorrelativo":  "Correlatividad",
+		"titulo":  "Correlatividad",
 		"mensajeCorrelativo": "Seleccione punto de venta y tipo de comprobante para realizar la búsqueda",
-		"cartelCorrelativo": "panel-info",
+		"tipo": "panel-info",
 		"resultadoCorrelativo": []
 	};
 
@@ -28,19 +28,27 @@ function correlatividadCtrl($scope, invoiceFactory){
 		$scope.controlCorrelatividad();
 	});
 
+	$scope.$on('errorDatos', function(){
+		$scope.pantalla.titulo =  "Error";
+		$scope.pantalla.mensajeCorrelativo = 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.';
+		$scope.pantalla.tipo = "panel-danger";
+		$scope.pantalla.resultadoCorrelativo = [];
+		$scope.loadingCorrelatividad = false;
+	});
+
 	$scope.controlCorrelatividad = function(){
 		$scope.loadingCorrelatividad = true;
 		invoiceFactory.getCorrelative($scope.model, function(dataComprob) {
 			$scope.result = dataComprob;
 			if ($scope.result.totalCount > 0){
 				$scope.pantalla.mensajeCorrelativo = "Se hallaron comprobantes faltantes: ";
-				$scope.pantalla.cartelCorrelativo = "panel-danger";
-				$scope.pantalla.tituloCorrelativo = "Error";
+				$scope.pantalla.tipo = "panel-danger";
+				$scope.pantalla.titulo = "Error";
 				$scope.pantalla.resultadoCorrelativo = $scope.result.data;
 			} else {
-				$scope.pantalla.tituloCorrelativo =  "Éxito";
+				$scope.pantalla.titulo =  "Éxito";
 				$scope.pantalla.mensajeCorrelativo = "No se hallaron comprobantes faltantes";
-				$scope.pantalla.cartelCorrelativo = "panel-success";
+				$scope.pantalla.tipo = "panel-success";
 				$scope.pantalla.resultadoCorrelativo = [];
 			}
 			$scope.loadingCorrelatividad = false;
