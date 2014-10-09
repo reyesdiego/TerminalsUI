@@ -60,6 +60,23 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			});
 	};
 
+	factory.getTasasContenedor = function(data, callback){
+		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + data.contenedor + '/' + data.currency;
+		console.log(inserturl);
+		$http.get({
+			method: 'GET',
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		})
+			.success(function (data){
+				callback(data.data);
+			}).error(function(errorText){
+				console.log(errorText);
+				dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
+			});
+	};
+
 	factory.getFacturasMeses = function(fecha, moneda, callback, errCallBack){
 		var inserturl = serverUrl + '/invoices/countsByMonth/' + moneda + '?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
