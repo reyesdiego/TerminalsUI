@@ -12,7 +12,7 @@
 
 <tab heading="Tasa a las cargas" ng-controller="tasaCargasCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="tasaCargas.resultado" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingTasaCargas" control-codigos="false" mostrar-ptos-venta="false"></vista-comprobantes>
+	<vista-comprobantes datos-invoices="tasaCargas.resultado" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingTasaCargas" control-codigos="false" mostrar-ptos-venta="false" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
 <tab heading="Control de Correlatividad" ng-controller="correlatividadCtrl">
@@ -23,7 +23,7 @@
 		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 	</div>
 	<div class="col-lg-12" ng-hide="loadingCorrelatividad">
-		<div-panel tipo="{{ pantalla.cartelCorrelativo }}" titulo="{{ pantalla.tituloCorrelativo }}">
+		<div-panel config-panel="pantalla">
 			<p>{{ pantalla.mensajeCorrelativo }}</p>
 			<span ng-repeat="numero in pantalla.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
 		</div-panel>
@@ -32,7 +32,7 @@
 
 <tab heading="Control de códigos" ng-controller="codigosCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas"></vista-comprobantes>
+	<vista-comprobantes datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
 <tab heading="Control de tarifas" ng-show="false">
@@ -77,20 +77,16 @@
 
 <tab heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true"></vista-comprobantes>
+	<vista-comprobantes datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
 <tab heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="comprobantesError" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingError" control-codigos="false" mostrar-ptos-venta="true"></vista-comprobantes>
+	<vista-comprobantes datos-invoices="comprobantesError" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingError" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
 </tabset>
 
-</div>
-
-<div data-ng-show="$state.includes('cfacturas.result')">
-	<div ui-view></div>
 </div>
 
 <br>

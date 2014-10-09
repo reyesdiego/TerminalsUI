@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate){
+myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate, errorFactory){
 	var factory = {};
 
 	factory.getPrice = function(terminal, datos, callback) {
@@ -14,14 +14,13 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate)
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			dialogs.error('Error', 'Error al cargar la lista');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar el tarifario.');
 		});
 	};
 
 	factory.getMatchPrices = function(terminal, datos, callback) {
 		var inserturl = serverUrl + '/matchprices/' + terminal + '?';
 		var insertAux = inserturl;
-		console.log(datos);
 		if (datos && datos != null){
 			if(angular.isDefined(datos.codigo) && datos.codigo != ''){
 				inserturl = inserturl + 'code=' + datos.codigo.toUpperCase();

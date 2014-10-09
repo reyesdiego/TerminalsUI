@@ -38,9 +38,19 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 		$scope.traerComprobantes();
 	});
 
+	$scope.$on('errorDatos', function(){
+		$scope.mensajeResultado = {
+			titulo: 'Error',
+			mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+			tipo: 'panel-danger'
+		};
+		$scope.loadingRevisar = false;
+	});
+
 	$scope.traerComprobantes = function(){
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.loadingRevisar = true;
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		$scope.comprobantesRevisar = [];
 		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceRevisar){
 			$scope.comprobantesRevisar = invoiceRevisar.data;
 			$scope.totalItems = invoiceRevisar.totalCount;

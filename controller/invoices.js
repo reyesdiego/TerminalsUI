@@ -41,9 +41,25 @@
 			$scope.cargaFacturas();
 		});
 
+		$scope.$on('errorInesperado', function(){
+			$scope.cargando = false;
+			$scope.invoices = [];
+		});
+
+		$scope.$on('errorDatos', function(){
+			$scope.mensajeResultado = {
+				titulo: 'Error',
+				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+				tipo: 'panel-danger'
+			};
+			$scope.invoices = [];
+			$scope.cargando = false;
+		});
+
 		$scope.cargaFacturas = function(){
-			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.cargando = true;
+			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			$scope.invoices = [];
 			invoiceFactory.getInvoice($scope.model, $scope.page, function(data){
 				if(data.status === 'OK'){
 					$scope.invoices = data.data;

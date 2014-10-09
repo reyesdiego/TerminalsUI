@@ -15,7 +15,8 @@
 				codigosSinAsociar:					'=',
 				mostrarPtosVenta:					'=',
 				ocultarAccordionInvoicesSearch:		'=',
-				ocultarAccordionComprobantesVistos:	'='
+				ocultarAccordionComprobantesVistos:	'=',
+				panelMensaje:						'='
 			},
 			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', function($rootScope, $scope, $modal, invoiceFactory, loginService){
 				$scope.currentPage = 1;
@@ -71,10 +72,23 @@
 					$scope.filtrado(data.filtro, data.contenido);
 				});
 
-				$rootScope.$watch('moneda', function(){ $scope.moneda = $rootScope.moneda; });
+				$rootScope.$watch('moneda', function(){
+					$scope.moneda = $rootScope.moneda;
+				});
 
 				$scope.$watch('ocultarFiltros', function() {
 					$scope.currentPage = 1;
+				});
+
+				$scope.$watch('panelMensaje', function(){
+					if (!angular.isDefined($scope.panelMensaje) || $scope.panelMensaje == {}){
+						console.log('no esta definido o está vacío');
+						$scope.panelMensaje = {
+							titulo: 'Comprobantes',
+							mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
+							tipo: 'panel-info'
+						};
+					}
 				});
 
 				$scope.hitEnter = function(evt){
@@ -108,6 +122,7 @@
 				};
 
 				$scope.filtrado = function(filtro, contenido){
+					$scope.loadingState = true;
 					$scope.mostrarResultado = false;
 					$scope.currentPage = 1;
 					switch (filtro){
@@ -149,7 +164,11 @@
 						$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
 						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
 					}
-					$scope.cargaPuntosDeVenta();
+					if (filtro == 'nroPtoVenta'){
+						$scope.$emit('cambioFiltro', cargaDatos());
+					} else {
+						$scope.cargaPuntosDeVenta();
+					}
 				};
 
 				$scope.filtrarCaracteresInvalidos = function(palabra){
@@ -256,6 +275,9 @@
 				// Funciones de Puntos de Venta
 				$scope.cargaPuntosDeVenta = function(){
 					invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
+						console.log('los ptos filtrados son:');
+						console.log(data);
+						console.log($scope.todosLosPuntosDeVentas);
 						$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
 							todosPtos.hide = data.data.indexOf(todosPtos.punto, 0) < 0;
 							if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
@@ -271,6 +293,8 @@
 
 				$scope.cargaTodosLosPuntosDeVentas = function(){
 					invoiceFactory.getCashbox('', function(data){
+						console.log('todos los ptos son:')
+						console.log(data);
 						var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
 						$scope.todosLosPuntosDeVentas.push(dato);
 						data.data.forEach(function(punto){
@@ -350,6 +374,10 @@
 				filtrarOrden:		'&'
 			},
 			link: function($scope){
+				$scope.configPanel = {
+					tipo: 'panel-info',
+					titulo: 'Gates'
+				};
 				$scope.colorHorario = function (gate) {
 					var horarioGate = new Date(gate.gateTimestamp);
 					var horarioInicio = new Date(gate.turnoInicio);
@@ -371,6 +399,12 @@
 			scope: {
 				datosTurnos:		'=',
 				totalItems:			'='
+			},
+			link: function($scope){
+				$scope.configPanel = {
+					tipo: 'panel-info',
+					titulo: 'Turnos'
+				};
 			}
 		}
 	});
@@ -491,24 +525,16 @@
 			restrict:		'E',
 			transclude:		true,
 			scope:	{
-				titulo:		'@',
-				tipo:		'@'
+				configPanel:	'='
 			},
-			template:		'<div class="panel {{ tipo }}">' +
+			template:		'<div class="panel {{ configPanel.tipo }}">' +
 							'	<div class="panel-heading">' +
-							'		<h3 class="panel-title">{{titulo}}</h3>' +
+							'		<h3 class="panel-title">{{ configPanel.titulo }}</h3>' +
 							'	</div>' +
 							'	<div class="panel-body">' +
 							'		<span ng-transclude></span>' +
 							'	</div>' +
-							'</div>',
-			link: function($scope) {
-				$scope.$watch('tipo', function () {
-					if (!angular.isDefined($scope.tipo)) {
-						$scope.tipo = 'panel-info';
-					}
-				});
-			}
+							'</div>'
 		}
 	});
 
@@ -524,6 +550,10 @@
 				$scope.formatDate = $rootScope.formatDate;
 				$scope.dateOptions = $rootScope.dateOptions;
 				$scope.terminalSellPoints = [];
+				$scope.configPanel = {
+					tipo: 'panel-info',
+					titulo: 'Puntos de venta de la terminal seleccionada.'
+				};
 				$scope.model = {
 					'nroPtoVenta': '',
 					'codTipoComprob': 1,
