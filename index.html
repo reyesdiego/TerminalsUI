@@ -51,6 +51,7 @@
 	<!-- Filters -->
 	<script src="filter/filters.js"></script>
 	<!-- Controles Angular-->
+	<script src="controller/container.js"></script>
 	<script src="controller/controlComprobantes.js"></script>
 	<script src="controller/control.js"></script>
 	<script src="controller/dialogs.js"></script>
@@ -108,6 +109,7 @@
 						<li><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
 						<li><a ui-sref="gates" ng-click="isCollapsed = false">Gates</a></li>
 						<li><a ui-sref="turnos" ng-click="isCollapsed = false">Turnos</a></li>
+						<!--<li><a ui-sref="container" ng-click="isCollapsed = false">Contenedor</a></li>-->
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
 						<li class="visible-sm"><a ng-click="isCollapsed = false; setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>

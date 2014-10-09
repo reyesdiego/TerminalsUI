@@ -150,6 +150,19 @@ myapp.config(function ($stateProvider, $urlRouterProvider) {
 			url: "/cambiarpass",
 			templateUrl: "view/newpass.html"
 		})
+		// TODO Verificar las rutas que se usan
+		.state('container',{
+			url: "/contenedor",
+			templateUrl: "view/container.html"
+		})
+		.state('container.result', {
+			url: "/id=:idComprobante",
+			templateUrl: "view/invoices.result.html"
+		})
+		.state('container.invoices', {
+			url: "/contenedor=:contenedor",
+			templateUrl: "view/gates.invoices.html"
+		})
 		.state('forbidden', {
 			url: "/forbidden",
 			templateUrl: "view/forbidden.html"
