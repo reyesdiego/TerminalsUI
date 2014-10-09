@@ -52,6 +52,7 @@
 				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
 				tipo: 'panel-danger'
 			};
+			$scope.invoices = [];
 			$scope.cargando = false;
 		});
 

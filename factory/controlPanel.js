@@ -4,7 +4,7 @@
 myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, formatDate, loginService, errorFactory){
 	var factory = {};
 
-	factory.getByDay = function(dia, callback, errCallBack){
+	factory.getByDay = function(dia, callback){
 		var inserturl = serverUrl + '/invoices/counts?fecha=' + dia;
 		$http.get(inserturl)
 			.success(function(data){
@@ -18,12 +18,11 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 				}
 				callback(result);
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, 'errorGetByDay');
-				//errCallBack(errorText);
+				errorFactory.raiseError(errorText, inserturl, 'errorGetByDay', 'Error al el conteo diario de comprobantes.');
 			});
 	};
 
-	factory.getTasas = function(fecha, moneda, callback, errCallBack){
+	factory.getTasas = function(fecha, moneda, callback){
 		var inserturl = serverUrl + '/invoices/ratesTotal/' + moneda + '/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function(data){
@@ -47,8 +46,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 				}
 				callback(result);
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, 'errorTasas');
-				//errCallBack(errorText);
+				errorFactory.raiseError(errorText, inserturl, 'errorTasas', 'Error al cargar total de facturado por tasa a las cargas.');
 			});
 	};
 
@@ -58,9 +56,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			.success(function (data){
 				callback(data.data);
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, 'errorTotales');
-				/*console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista PriceList');*/
+				errorFactory.raiseError(errorText, inserturl, 'errorTotales', 'Error al cargar conteo total de comprobantes.');
 			});
 	};
 
@@ -70,12 +66,11 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, 'errorFacturasMeses');
-				//errCallBack(errorText);
+				errorFactory.raiseError(errorText, inserturl, 'errorFacturasMeses', 'Error al cargar gráfico de facturado por mes.');
 			});
 	};
 
-	factory.getGatesMeses = function(fecha, callback, errCallBack){
+	factory.getGatesMeses = function(fecha, callback){
 		var inserturl = serverUrl + '/gatesByMonth?fecha=' + formatDate.formatearFecha(fecha);
 		$http({
 			method: "GET",
@@ -85,8 +80,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, 'gatesMeses');
-				//errCallBack(errorText);
+				errorFactory.raiseError(errorText, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
 			});
 	};
 
@@ -100,8 +94,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText);
-				//errCallBack(errorText);
+				errorFactory.raiseError(errorText, inserturl, 'turnosMeses', 'Error al cargar gráfico de cantidad de turnos por mes.');
 			});
 	};
 
@@ -112,11 +105,11 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, 'errorFacturadoPorDia');
+				errorFactory.raiseError(errorText, inserturl, 'errorFacturadoPorDia', 'Error al cargar monto facturado por día.');
 			});
 	};
 
-	factory.getGatesDia = function(fecha, callback, errCallBack){
+	factory.getGatesDia = function(fecha, callback){
 		var inserturl = serverUrl + '/gatesByHour?fecha=' + formatDate.formatearFecha(fecha);
 		$http({
 			method: "GET",
@@ -126,7 +119,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, 'errorDatos');
+			errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
 		});
 	};
 
@@ -140,7 +133,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, 'errorDatos');
+			errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de turnos por día.');
 		});
 	};
 
@@ -154,7 +147,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
+			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de clientes.');
 		});
 	};
 
@@ -168,7 +161,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
+			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
 		});
 	};
 
@@ -182,7 +175,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
+			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
 		});
 	};
 
@@ -196,7 +189,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
+			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
 		});
 	};
 
@@ -210,7 +203,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, 'errorListaAutoCompletar');
+			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
 		});
 	};
 
