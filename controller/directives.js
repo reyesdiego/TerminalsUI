@@ -7,6 +7,7 @@
 			restrict:		'E',
 			templateUrl:	'view/vistaComprobantes.html',
 			scope: {
+				model:								'=',
 				datosInvoices:						'=',
 				ocultarFiltros:						'=',
 				totalItems:							'=',
@@ -20,26 +21,7 @@
 			},
 			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', function($rootScope, $scope, $modal, invoiceFactory, loginService){
 				$scope.currentPage = 1;
-				$scope.fechaDesde = new Date();
-				$scope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-				//Campos de búsqueda
-				$scope.model = {
-					'nroPtoVenta': '',
-					'codTipoComprob': 0,
-					'nroComprobante': '',
-					'razonSocial': '',
-					'documentoCliente': '',
-					'fechaDesde': $scope.fechaDesde,
-					'fechaHasta': $scope.fechaHasta,
-					'contenedor': '',
-					'buque': '',
-					'estado': 'N',
-					'codigo': '',
-					'filtroOrden': 'gateTimestamp',
-					'filtroOrdenAnterior': '',
-					'filtroOrdenReverse': false,
-					'order': ''
-				};
+
 				//Variables para control de fechas
 				$scope.maxDateD = new Date();
 				$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -165,7 +147,7 @@
 						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
 					}
 					if (filtro == 'nroPtoVenta'){
-						$scope.$emit('cambioFiltro', cargaDatos());
+						$scope.$emit('cambioFiltro', $scope.model);
 					} else {
 						$scope.cargaPuntosDeVenta();
 					}
@@ -203,7 +185,8 @@
 					}
 					$scope.model.order = '"' + filtro + '":' + filtroModo;
 					$scope.model.filtroAnterior = filtro;
-					$scope.$emit('cambioFiltro', cargaDatos());
+
+					$scope.$emit('cambioFiltro', $scope.model);
 				};
 
 				$scope.trackInvoice = function(comprobante){
@@ -275,9 +258,6 @@
 				// Funciones de Puntos de Venta
 				$scope.cargaPuntosDeVenta = function(){
 					invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
-						console.log('los ptos filtrados son:');
-						console.log(data);
-						console.log($scope.todosLosPuntosDeVentas);
 						$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
 							todosPtos.hide = data.data.indexOf(todosPtos.punto, 0) < 0;
 							if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
@@ -287,14 +267,13 @@
 						});
 						$scope.todosLosPuntosDeVentas[0].hide = false;
 						$scope.currentPage = 1;
-						$scope.$emit('cambioFiltro', cargaDatos());
+
+						$scope.$emit('cambioFiltro', $scope.model);
 					});
 				};
 
 				$scope.cargaTodosLosPuntosDeVentas = function(){
 					invoiceFactory.getCashbox('', function(data){
-						console.log('todos los ptos son:')
-						console.log(data);
 						var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
 						$scope.todosLosPuntosDeVentas.push(dato);
 						data.data.forEach(function(punto){
@@ -306,7 +285,7 @@
 				};
 
 				$scope.mostrarDetalle = function(comprobante){
-
+					$scope.loadingState = true;
 					var encontrado = false;
 					$scope.comprobantesVistos.forEach(function(unComprobante){
 						if (unComprobante._id == comprobante._id){
@@ -320,6 +299,7 @@
 					invoiceFactory.invoiceById(comprobante._id, function(callback){
 						$scope.verDetalle = callback;
 						$scope.mostrarResultado = true;
+						$scope.loadingState = false;
 					});
 				};
 
@@ -327,25 +307,8 @@
 					return angular.isDefined($scope.itemsDescription[itemId]);
 				};
 
-				function cargaDatos(){
-					return {
-						'nroPtoVenta':		$scope.model.nroPtoVenta,
-						'codTipoComprob':	$scope.model.codTipoComprob,
-						'nroComprobante':	$scope.model.nroComprobante,
-						'razonSocial':		$scope.model.razonSocial,
-						'documentoCliente':	$scope.model.documentoCliente,
-						'estado':			$scope.model.estado,
-						'fechaDesde':		$scope.model.fechaDesde,
-						'fechaHasta':		$scope.model.fechaHasta,
-						'contenedor':		$scope.model.contenedor,
-						'buque':			$scope.model.buque,
-						'codigo':			$scope.model.codigo,
-						'order':			$scope.model.order
-					};
-				}
-
 				function cargaDatosSinPtoVenta(){
-					var datos = cargaDatos();
+					var datos = $scope.model;
 					datos.nroPtoVenta = '';
 					return datos;
 				}
