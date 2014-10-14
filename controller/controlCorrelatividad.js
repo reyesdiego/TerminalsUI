@@ -28,7 +28,7 @@ function correlatividadCtrl($scope, invoiceFactory){
 		$scope.controlCorrelatividad();
 	});
 
-	$scope.$on('errorDatos', function(){
+	$scope.$on('errorCorrelatividad', function(){
 		$scope.pantalla.titulo =  "Error";
 		$scope.pantalla.mensajeCorrelativo = 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.';
 		$scope.pantalla.tipo = "panel-danger";

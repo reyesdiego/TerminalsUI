@@ -31,8 +31,16 @@ function tasaCargasCtrl($scope, invoiceFactory, loginService){
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
-		$scope.model = data;
 		$scope.controlTasaCargas()
+	});
+
+	$scope.$on('errorSinTasaCargas', function(event, error){
+		$scope.mensajeResultado = {
+			titulo: 'Error',
+			mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+			tipo: 'panel-danger'
+		};
+		$scope.loadingTasaCargas = false;
 	});
 
 	$scope.controlTasaCargas = function(){

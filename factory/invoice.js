@@ -47,7 +47,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				data = factory.ponerDescripcionComprobantes(data);
 				callback(factory.setearInterfaz(data));
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar la lista de comprobantes sin tasa a las cargas.');
+				errorFactory.raiseError(errorText, inserturl, 'errorSinTasaCargas', 'Error al cargar la lista de comprobantes sin tasa a las cargas.');
 			});
 	};
 
@@ -91,13 +91,14 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar la lista de comprobantes faltantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorCorrelatividad', 'Error al cargar la lista de comprobantes faltantes.');
 		});
 	};
 
 	factory.getCashbox = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro() + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,

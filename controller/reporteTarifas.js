@@ -18,6 +18,14 @@ function reporteTarifasCtrl ($scope, reportsFactory, priceFactory, dialogs){
 
 	$scope.paginaAnterior = 1;
 
+	$scope.errorTarifario = false;
+
+	$scope.configPanel = {
+		tipo: 'panel-danger',
+		titulo: 'Error',
+		mensaje: 'Error al cargar los datos necesarios para generar el reporte.'
+	};
+
 	$scope.filteredPrices = [];
 	$scope.tarifasGraficar = {
 		"field": "code",
@@ -26,6 +34,10 @@ function reporteTarifasCtrl ($scope, reportsFactory, priceFactory, dialogs){
 	$scope.tablaGrafico = [];
 
 	$scope.tasas = false;
+
+	$scope.$on('errorDatos', function(){
+		$scope.errorTarifario = true;
+	});
 
 	priceFactory.getPrice('agp', $scope.tasas, function (data) {
 		$scope.pricelist = data.data;
