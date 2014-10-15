@@ -399,8 +399,7 @@
 			templateUrl:	'view/accordion.gatesturnos.search.html',
 			scope: {
 				model:			'=',
-				ocultarFiltros:	'@',
-				filtrar:		'&'
+				ocultarFiltros:	'@'
 			},
 			controller: ['$rootScope', '$scope', function($rootScope, $scope){
 				$scope.maxDate = new Date();
@@ -413,18 +412,18 @@
 				};
 				$scope.hitEnter = function(evt){
 					if(angular.equals(evt.keyCode,13))
-						$scope.filtrar();
+						$scope.$emit('cambioFiltro');
 				};
 				$scope.buqueSelected = function (selected) {
 					if (angular.isDefined(selected)) {
 						$scope.model.buque = selected.title;
-						$scope.filtrar('buque', selected.title);
+						$scope.filtrado('buque', selected.title);
 					}
 				};
 				$scope.containerSelected = function (selected) {
 					if (angular.isDefined(selected)) {
 						$scope.model.contenedor = selected.title;
-						$scope.filtrar('contenedor', selected.title);
+						$scope.filtrado('contenedor', selected.title);
 					}
 				};
 				$scope.filtrado = function(filtro, contenido){
@@ -446,11 +445,11 @@
 						$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
 						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
 					}
-					$scope.filtrar({filtro: filtro, contenido: contenido});
+					$scope.$emit('cambioFiltro');
 				};
 				$scope.cargaPorFiltros = function () {
 					$scope.status.open = !$scope.status.open;
-					$scope.filtrar();
+					$scope.$emit('cambioFiltro');
 				};
 			}]
 		}

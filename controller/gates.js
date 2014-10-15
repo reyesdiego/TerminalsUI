@@ -29,9 +29,9 @@
 			$scope.pageChanged();
 		});
 
-		$scope.filtrar = function(){
+		$scope.$on('cambioFiltro', function(){
 			$scope.cargaGates();
-		};
+		});
 
 		$scope.filtrarOrden = function(filtro){
 			var filtroModo;
@@ -54,7 +54,7 @@
 		$scope.cargaGates = function (page) {
 			page = page || { skip: 0, limit: $scope.itemsPerPage };
 			if (page.skip == 0){ $scope.currentPage = 1}
-			gatesFactory.getGate(cargaDatos(), page, function (data) {
+			gatesFactory.getGate($scope.model, page, function (data) {
 				if (data.status === "OK") {
 					$scope.gates = data.data;
 					$scope.totalItems = data.totalCount;
@@ -66,16 +66,6 @@
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.cargaGates($scope.page);
 		};
-
-		function cargaDatos() {
-			return {
-				'fechaDesde':			$scope.model.fechaDesde,
-				'fechaHasta':			$scope.model.fechaHasta,
-				'contenedor':			$scope.model.contenedor,
-				'buque':				$scope.model.buque,
-				'order':				$scope.model.order
-			};
-		}
 
 	});
 
