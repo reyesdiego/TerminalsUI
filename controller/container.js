@@ -4,7 +4,23 @@
 (function(){
 	myapp.controller('containerCtrl', function($scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory){
 		var page = { skip:0, limit: $scope.itemsPerPage };
-		$scope.model = { contenedor: $stateParams.contenedor };
+		$scope.model = {
+			'nroPtoVenta': '',
+			'codTipoComprob': 0,
+			'nroComprobante': '',
+			'razonSocial': '',
+			'documentoCliente': '',
+			'fechaDesde': '',
+			'fechaHasta': '',
+			'contenedor': '',
+			'buque': '',
+			'estado': 'N',
+			'codigo': '',
+			'filtroOrden': 'gateTimestamp',
+			'filtroOrdenAnterior': '',
+			'filtroOrdenReverse': false,
+			'order': ''
+		};
 		$scope.ocultarFiltrosInvoices = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 		$scope.ocultarFiltrosGates = ['fechaOrden'];
 		$scope.cargando = false;
