@@ -29,10 +29,11 @@
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
-			$scope.pageChanged();
+			$scope.cargaGates();
 		});
 
 		$scope.$on('cambioFiltro', function(){
+			$scope.currentPage = 1;
 			$scope.cargaGates();
 		});
 
@@ -54,20 +55,14 @@
 			$scope.filtrar();
 		};
 
-		$scope.cargaGates = function (page) {
-			page = page || { skip: 0, limit: $scope.itemsPerPage };
-			if (page.skip == 0){ $scope.currentPage = 1}
-			gatesFactory.getGate($scope.model, page, function (data) {
+		$scope.cargaGates = function () {
+			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			gatesFactory.getGate($scope.model, $scope.page, function (data) {
 				if (data.status === "OK") {
 					$scope.gates = data.data;
 					$scope.totalItems = data.totalCount;
 				}
 			});
-		};
-
-		$scope.pageChanged = function () {
-			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-			$scope.cargaGates($scope.page);
 		};
 
 	});

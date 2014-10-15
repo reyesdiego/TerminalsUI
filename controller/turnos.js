@@ -16,10 +16,11 @@
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
-			$scope.pageChanged();
+			$scope.cargaTurnos();
 		});
 
 		$scope.$on('cambioFiltro', function(){
+			$scope.currentPage = 1;
 			$scope.cargaTurnos();
 		});
 
@@ -30,19 +31,14 @@
 			$scope.cargaTurnos();
 		};
 
-		$scope.cargaTurnos = function(page){
-			page = page || { skip:0, limit: $scope.itemsPerPage };
-			turnosFactory.getTurnos($scope.model, page, function(data){
+		$scope.cargaTurnos = function(){
+			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			turnosFactory.getTurnos($scope.model, $scope.page, function(data){
 				if (data.status === "OK"){
 					$scope.turnos = data.data;
 					$scope.totalItems = data.totalCount;
 				}
 			});
-		};
-
-		$scope.pageChanged = function(){
-			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-			$scope.cargaTurnos($scope.page);
 		};
 
 		// Carga los turnos del día hasta la hora del usuario
