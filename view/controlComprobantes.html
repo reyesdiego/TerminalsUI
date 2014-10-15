@@ -12,7 +12,7 @@
 
 <tab heading="Tasa a las cargas" ng-controller="tasaCargasCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="tasaCargas.resultado" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingTasaCargas" control-codigos="false" mostrar-ptos-venta="false" panel-mensaje="mensajeResultado"></vista-comprobantes>
+	<vista-comprobantes model="model" datos-invoices="tasaCargas.resultado" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingTasaCargas" control-codigos="false" mostrar-ptos-venta="false" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
 <tab heading="Control de Correlatividad" ng-controller="correlatividadCtrl">
@@ -32,7 +32,7 @@
 
 <tab heading="Control de códigos" ng-controller="codigosCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas" panel-mensaje="mensajeResultado"></vista-comprobantes>
+	<vista-comprobantes model="model" datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
 <tab heading="Control de tarifas" ng-show="false">
@@ -77,12 +77,12 @@
 
 <tab heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
+	<vista-comprobantes model="model" datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
 <tab heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl">
 	<br>
-	<vista-comprobantes datos-invoices="comprobantesError" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingError" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
+	<vista-comprobantes model="model" datos-invoices="comprobantesError" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingError" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
 </tabset>

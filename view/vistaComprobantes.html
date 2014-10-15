@@ -3,37 +3,38 @@
 		<accordion-invoices-search></accordion-invoices-search>
 	</div>
 
-<div class="row" ng-hide="ocultarAccordionComprobantesVistos">
-	<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
-</div>
-
-<div class="col-lg-12" ng-show="controlCodigos && codigosSinAsociar.length > 0">
-	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error' }">
-		<p>Se hallaron códigos sin asociar: </p>
-		<span ng-repeat="numero in codigosSinAsociar"><a title="Filtrar por:" href ng-click="filtrado('codigo', numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
-	</div-panel>
-</div>
-
-<div class="col-lg-12" ng-show="datosInvoices.length == 0 && !loadingState">
-	<div-panel config-panel="panelMensaje">
-		<span>{{ $parent.panelMensaje.mensaje }}</span>
-	</div-panel>
-</div>
-
-<div class="col-lg-12 text-center" ng-show="loadingState">
-	<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-</div>
-
-<div class="row" data-ng-hide="datosInvoices.length == 0 || loadingState">
-	<div class="col-lg-12">
-		<tabset ng-show="mostrarPtosVenta">
-			<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrado('nroPtoVenta', tab.punto)"></tab>
-		</tabset>
-		<br>
-		<table-invoices></table-invoices>
-		<div-pagination total-items="totalItems" current-page="currentPage"></div-pagination>
+	<div class="row" ng-hide="ocultarAccordionComprobantesVistos">
+		<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
 	</div>
-</div>
+
+	<div class="col-lg-12" ng-show="controlCodigos && codigosSinAsociar.length > 0">
+		<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error' }">
+			<p>Se hallaron códigos sin asociar: </p>
+			<span ng-repeat="numero in codigosSinAsociar"><a title="Filtrar por:" href ng-click="filtrado('codigo', numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
+		</div-panel>
+	</div>
+
+	<div class="col-lg-12" ng-show="datosInvoices.length == 0 && !loadingState">
+		<div-panel config-panel="panelMensaje">
+			<span>{{ $parent.panelMensaje.mensaje }}</span>
+		</div-panel>
+	</div>
+
+	<div class="col-lg-12 text-center" ng-show="loadingState">
+		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+	</div>
+
+	<div class="row" data-ng-hide="datosInvoices.length == 0 || loadingState">
+		<div class="col-lg-12">
+			<h5><strong>Resultados: {{ totalItems }}</strong></h5>
+			<tabset ng-show="mostrarPtosVenta">
+				<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrado('nroPtoVenta', tab.punto)"></tab>
+			</tabset>
+			<br>
+			<table-invoices></table-invoices>
+			<div-pagination total-items="totalItems" current-page="currentPage"></div-pagination>
+		</div>
+	</div>
 </div>
 
 <div ng-show="mostrarResultado" class="printable">

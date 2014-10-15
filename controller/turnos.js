@@ -19,6 +19,10 @@
 			$scope.pageChanged();
 		});
 
+		$scope.$on('cambioFiltro', function(){
+			$scope.cargaTurnos();
+		});
+
 		// Carga los turnos por fechas
 		$scope.cargaPorFiltros = function(){
 			$scope.status.open = !$scope.status.open;
@@ -26,13 +30,9 @@
 			$scope.cargaTurnos();
 		};
 
-		$scope.filtrar = function(){
-			$scope.cargaTurnos();
-		};
-
 		$scope.cargaTurnos = function(page){
 			page = page || { skip:0, limit: $scope.itemsPerPage };
-			turnosFactory.getTurnos(cargaDatos(), page, function(data){
+			turnosFactory.getTurnos($scope.model, page, function(data){
 				if (data.status === "OK"){
 					$scope.turnos = data.data;
 					$scope.totalItems = data.totalCount;
@@ -44,10 +44,6 @@
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.cargaTurnos($scope.page);
 		};
-
-		function cargaDatos(){
-			return { contenedor : $scope.contenedor, fechaDesde : $scope.model.fechaDesde, fechaHasta : $scope.model.fechaHasta }
-		}
 
 		// Carga los turnos del día hasta la hora del usuario
 		$scope.cargaTurnos();

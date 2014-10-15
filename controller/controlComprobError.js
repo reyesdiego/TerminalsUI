@@ -12,13 +12,16 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
-		'fechaDesde': $scope.desde,
-		'fechaHasta': $scope.hasta,
+		'fechaDesde': $scope.fechaDesde,
+		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
+		'buque': '',
 		'estado': 'R',
 		'codigo': '',
-		'order': '',
-		'buque': ''
+		'filtroOrden': 'gateTimestamp',
+		'filtroOrdenAnterior': '',
+		'filtroOrdenReverse': false,
+		'order': ''
 	};
 
 	$scope.comprobantesError = [];
@@ -33,7 +36,6 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
-		$scope.model = data;
 		$scope.model.estado = 'R';
 		$scope.traerComprobantes();
 	});

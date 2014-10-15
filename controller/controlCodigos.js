@@ -12,13 +12,16 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
-		'fechaDesde': $scope.desde,
-		'fechaHasta': $scope.hasta,
+		'fechaDesde': $scope.fechaDesde,
+		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
+		'buque': '',
 		'estado': 'N',
 		'codigo': '',
-		'order': '',
-		'buque': ''
+		'filtroOrden': 'gateTimestamp',
+		'filtroOrdenAnterior': '',
+		'filtroOrdenReverse': false,
+		'order': ''
 	};
 
 	$scope.controlFiltros = 'codigos';

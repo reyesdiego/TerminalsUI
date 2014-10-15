@@ -32,13 +32,12 @@
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
-			$scope.cargaFacturas();
+			$scope.cargaDatos();
 		});
 
 		$scope.$on('cambioFiltro', function(event, data){
 			$scope.currentPage = 1;
-			$scope.model = data;
-			$scope.cargaFacturas();
+			$scope.cargaDatos();
 		});
 
 		$scope.$on('errorInesperado', function(){
@@ -56,7 +55,7 @@
 			$scope.cargando = false;
 		});
 
-		$scope.cargaFacturas = function(){
+		$scope.cargaDatos = function(){
 			$scope.cargando = true;
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.invoices = [];

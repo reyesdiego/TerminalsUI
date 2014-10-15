@@ -12,13 +12,16 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
-		'fechaDesde': $scope.desde,
-		'fechaHasta': $scope.hasta,
+		'fechaDesde': $scope.fechaDesde,
+		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
+		'buque': '',
 		'estado': 'Y',
 		'codigo': '',
-		'order': '',
-		'buque': ''
+		'filtroOrden': 'gateTimestamp',
+		'filtroOrdenAnterior': '',
+		'filtroOrdenReverse': false,
+		'order': ''
 	};
 
 	$scope.comprobantesRevisar = [];
@@ -33,7 +36,6 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
-		$scope.model = data;
 		$scope.model.estado = 'Y';
 		$scope.traerComprobantes();
 	});
@@ -44,6 +46,7 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 			mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
 			tipo: 'panel-danger'
 		};
+		$scope.comprobantesRevisar = [];
 		$scope.loadingRevisar = false;
 	});
 

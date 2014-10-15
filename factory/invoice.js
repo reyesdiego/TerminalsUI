@@ -13,7 +13,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			headers:
 			{token: loginService.getToken()}
 		}).success(function(data){
-			console.log(data);
 			data = factory.ponerDescripcionComprobantes(data);
 			callback(factory.setearInterfaz(data));
 		}).error(function(errorText){
@@ -47,7 +46,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				data = factory.ponerDescripcionComprobantes(data);
 				callback(factory.setearInterfaz(data));
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar la lista de comprobantes sin tasa a las cargas.');
+				errorFactory.raiseError(errorText, inserturl, 'errorSinTasaCargas', 'Error al cargar la lista de comprobantes sin tasa a las cargas.');
 			});
 	};
 
@@ -91,7 +90,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar la lista de comprobantes faltantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorCorrelatividad', 'Error al cargar la lista de comprobantes faltantes.');
 		});
 	};
 
@@ -218,7 +217,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.commentInvoice = function(data, callback){
 		var inserturl = serverUrl + '/comment';
-		console.log(data);
 		$http({
 			method: 'POST',
 			url: inserturl,
