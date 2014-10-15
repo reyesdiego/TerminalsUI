@@ -32,6 +32,7 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 				loginService.setGroup(data.group);
 				loginService.setToken(data.token.token);
 				data.acceso.push("reports");
+				data.acceso.push("container");
 				loginService.setAcceso(data.acceso);
 				if ($state.current.name == 'login') {
 					$state.transitionTo('tarifario');
