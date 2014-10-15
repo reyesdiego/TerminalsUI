@@ -163,14 +163,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 			url: "/contenedor",
 			templateUrl: "view/container.html"
 		})
-		.state('container.result', {
-			url: "/id=:idComprobante",
-			templateUrl: "view/invoices.result.html"
-		})
-		.state('container.invoices', {
-			url: "/contenedor=:contenedor",
-			templateUrl: "view/gates.invoices.html"
-		})
 		.state('forbidden', {
 			url: "/forbidden",
 			templateUrl: "view/forbidden.html"
