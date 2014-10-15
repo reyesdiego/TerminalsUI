@@ -7,18 +7,12 @@
 			</div>
 		</div>
 
-		<div class="row" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
+		<div class="row" ng-hide="detallesGates">
 			<accordion-gates-turnos-search model="model" filtrar="filtrar()"></accordion-gates-turnos-search>
 		</div>
 
-		<div class="row" data-ng-show="$state.includes('gates')" data-ng-hide="$state.includes('gates.invoices')">
-			<table-gates datos-gates="gates" filtrar-orden="filtrarOrden(filtro)" total-items="totalItems"></table-gates>
-		</div>
-	</div>
-
-	<div data-ng-show="$state.includes('gates.invoices')">
-		<div class="row printable">
-			<div ui-view></div>
+		<div class="row">
+			<table-gates datos-gates="gates" filtrar-orden="filtrarOrden(filtro)" detalles-gates="detallesGates" total-items="totalItems"></table-gates>
 		</div>
 	</div>
 

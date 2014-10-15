@@ -370,10 +370,11 @@
 			scope: {
 				datosGates:			'=',
 				totalItems:			'=',
+				detallesGates:		'=',
 				ocultarFiltros:		'@',
 				filtrarOrden:		'&'
 			},
-			link: function($scope){
+			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
 				$scope.configPanel = {
 					tipo: 'panel-info',
 					titulo: 'Gates'
@@ -388,7 +389,25 @@
 						return 'red'
 					}
 				};
-			}
+				$scope.mostrarDetalle = function(contenedor){
+					$scope.detallesGates = true;
+					$scope.contenedor = contenedor.contenedor;
+					var datos = { 'contenedor': contenedor.contenedor };
+					invoiceFactory.getInvoice(datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
+						if (data.status === 'OK') {
+							$scope.invoices = data.data;
+							$scope.totalItems = data.totalCount;
+						}
+					});
+				};
+			}]
+		}
+	});
+
+	myapp.directive('tableGatesResult', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/gates.invoices.html'
 		}
 	});
 

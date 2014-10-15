@@ -12,6 +12,9 @@
 
 		// Variable para almacenar la info principal que trae del factory
 		$scope.gates = {};
+		$scope.detalles = false;
+
+		$scope.filtrosGates = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
 		$scope.model = {
 			'fechaDesde': $scope.fechaDesde,
@@ -79,20 +82,4 @@
 
 	});
 
-	myapp.controller('gatesInvoicesCtrl', function($scope, $stateParams, invoiceFactory){
-		$scope.contenedor = $stateParams.contenedor;
-		$scope.filtrosGates = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
-
-		$scope.cargaFacturas = function(){
-			var datos = { 'contenedor': $scope.contenedor };
-			invoiceFactory.getInvoice(datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
-				if (data.status === 'OK') {
-					$scope.invoices = data.data;
-					$scope.totalItems = data.totalCount;
-				}
-			});
-		};
-
-		$scope.cargaFacturas();
-	});
 })();
