@@ -52,7 +52,7 @@
 			}
 			$scope.model.order = '"' + filtro + '":' + filtroModo;
 			$scope.model.filtroAnterior = filtro;
-			$scope.filtrar();
+			$scope.cargaGates();
 		};
 
 		$scope.cargaGates = function () {

@@ -11,6 +11,9 @@
 		$scope.model.fechaDesde.setHours(0,0);
 		$scope.model.fechaHasta.setMinutes(0);
 
+		$scope.fechaAuxDesde = new Date();
+		$scope.fechaAuxHasta = new Date();
+
 		// Variable para almacenar la info principal que trae del factory
 		$scope.turnos = {};
 
@@ -20,6 +23,10 @@
 		});
 
 		$scope.$on('cambioFiltro', function(){
+			$scope.fechaAuxHasta = new Date($scope.model.fechaHasta);
+			$scope.fechaAuxDesde = new Date($scope.model.fechaDesde);
+			$scope.model.fechaHasta = $scope.fechaAuxDesde;
+			$scope.model.fechaHasta.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
 			$scope.currentPage = 1;
 			$scope.cargaTurnos();
 		});

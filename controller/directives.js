@@ -412,65 +412,77 @@
 		}
 	});
 
-	myapp.directive('accordionGatesTurnosSearch', function(){
+	myapp.controller("searchController", ['$rootScope', '$scope', function($rootScope, $scope){
+		$scope.maxDate = new Date();
+		$scope.formatDate = $rootScope.formatDate;
+		$scope.dateOptions = $rootScope.dateOptions;
+		$scope.listaBuquesGates = $rootScope.listaBuquesGates;
+		$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
+		$scope.openDate = function(event){
+			$rootScope.openDate(event);
+		};
+		$scope.hitEnter = function(evt){
+			if(angular.equals(evt.keyCode,13))
+				$scope.$emit('cambioFiltro');
+		};
+		$scope.buqueSelected = function (selected) {
+			if (angular.isDefined(selected)) {
+				$scope.model.buque = selected.title;
+				$scope.filtrado('buque', selected.title);
+			}
+		};
+		$scope.containerSelected = function (selected) {
+			if (angular.isDefined(selected)) {
+				$scope.model.contenedor = selected.title;
+				$scope.filtrado('contenedor', selected.title);
+			}
+		};
+		$scope.filtrado = function(filtro, contenido){
+			switch (filtro){
+				case 'fechaDesde':
+					$scope.model.fechaDesde = contenido;
+					break;
+				case 'fechaHasta':
+					$scope.model.fechaHasta = contenido;
+					break;
+				case 'contenedor':
+					$scope.model.contenedor = contenido;
+					break;
+				case 'buque':
+					$scope.model.buque = contenido;
+					break;
+			}
+			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+			}
+			$scope.$emit('cambioFiltro');
+		};
+		$scope.cargaPorFiltros = function () {
+			$scope.status.open = !$scope.status.open;
+			$scope.$emit('cambioFiltro');
+		};
+	}]);
+
+	myapp.directive('accordionGatesSearch', function(){
 		return {
 			restrict:		'E',
-			templateUrl:	'view/accordion.gatesturnos.search.html',
+			templateUrl:	'view/accordion.gates.search.html',
 			scope: {
-				model:			'=',
-				ocultarFiltros:	'@'
+				model:			'='
 			},
-			controller: ['$rootScope', '$scope', function($rootScope, $scope){
-				$scope.maxDate = new Date();
-				$scope.formatDate = $rootScope.formatDate;
-				$scope.dateOptions = $rootScope.dateOptions;
-				$scope.listaBuquesGates = $rootScope.listaBuquesGates;
-				$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
-				$scope.openDate = function(event){
-					$rootScope.openDate(event);
-				};
-				$scope.hitEnter = function(evt){
-					if(angular.equals(evt.keyCode,13))
-						$scope.$emit('cambioFiltro');
-				};
-				$scope.buqueSelected = function (selected) {
-					if (angular.isDefined(selected)) {
-						$scope.model.buque = selected.title;
-						$scope.filtrado('buque', selected.title);
-					}
-				};
-				$scope.containerSelected = function (selected) {
-					if (angular.isDefined(selected)) {
-						$scope.model.contenedor = selected.title;
-						$scope.filtrado('contenedor', selected.title);
-					}
-				};
-				$scope.filtrado = function(filtro, contenido){
-					switch (filtro){
-						case 'fechaDesde':
-							$scope.model.fechaDesde = contenido;
-							break;
-						case 'fechaHasta':
-							$scope.model.fechaHasta = contenido;
-							break;
-						case 'contenedor':
-							$scope.model.contenedor = contenido;
-							break;
-						case 'buque':
-							$scope.model.buque = contenido;
-							break;
-					}
-					if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-						$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
-					}
-					$scope.$emit('cambioFiltro');
-				};
-				$scope.cargaPorFiltros = function () {
-					$scope.status.open = !$scope.status.open;
-					$scope.$emit('cambioFiltro');
-				};
-			}]
+			controller: 'searchController'
+		}
+	});
+
+	myapp.directive('accordionTurnosSearch', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/accordion.turnos.search.html',
+			scope: {
+				model:			'='
+			},
+			controller: 'searchController'
 		}
 	});
 
