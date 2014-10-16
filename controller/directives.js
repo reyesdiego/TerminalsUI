@@ -64,7 +64,6 @@
 
 				$scope.$watch('panelMensaje', function(){
 					if (!angular.isDefined($scope.panelMensaje) || $scope.panelMensaje == {}){
-						console.log('no esta definido o está vacío');
 						$scope.panelMensaje = {
 							titulo: 'Comprobantes',
 							mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
@@ -242,7 +241,8 @@
 												break;
 										}
 										comprobante.estado = dataComment.newState;
-										$scope.cargaPuntosDeVenta();
+										if (!$scope.ocultarAccordionInvoicesSearch)
+											$scope.cargaPuntosDeVenta();
 									}
 								});
 							});
