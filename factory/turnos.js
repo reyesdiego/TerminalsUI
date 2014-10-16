@@ -8,11 +8,11 @@ myapp.factory('turnosFactory', function($http, dialogs, formatDate, loginService
 		var inserturl = serverUrl + '/appointments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
 		var insertAux = inserturl;
 		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != ''){
-			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutos(datos.fechaDesde);
+			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaDesde);
 		}
 		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'fechaFin=' + formatDate.formatearFechaHorasMinutos(datos.fechaHasta);
+			inserturl = inserturl + 'fechaFin=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaHasta);
 		}
 		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
