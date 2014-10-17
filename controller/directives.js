@@ -338,6 +338,7 @@
 				filtrarOrden:		'&'
 			},
 			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
+				$scope.totalGates = 0;
 				$scope.configPanel = {
 					tipo: 'panel-info',
 					titulo: 'Gates'
@@ -353,6 +354,7 @@
 					}
 				};
 				$scope.mostrarDetalle = function(contenedor){
+					$scope.totalGates = $scope.totalItems;
 					$scope.detallesGates = true;
 					$scope.contenedor = contenedor.contenedor;
 					var datos = { 'contenedor': contenedor.contenedor };
