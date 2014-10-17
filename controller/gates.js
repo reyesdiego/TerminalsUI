@@ -16,6 +16,8 @@
 
 		$scope.filtrosGates = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
+		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'fechaDesde', 'codigo', 'razonSocial', 'contenedor', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
+
 		$scope.model = {
 			'fechaDesde': $scope.fechaDesde,
 			'fechaHasta': $scope.fechaHasta,
