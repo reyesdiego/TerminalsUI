@@ -6,8 +6,8 @@
         visibility:visible !important;
     }
     .printable { /* aligning the printable area */
-        position:absolute !important;;
-        left:40px !important;
-        top:40px !important;
+        position:absolute !important;
+        left:0px !important;
+        top:0px !important;
     }
 }
