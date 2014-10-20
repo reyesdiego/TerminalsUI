@@ -391,6 +391,19 @@
 		}
 	});
 
+	myapp.directive('tableTasasCargas', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/table.tasas.cargas.html',
+			link: function($scope){
+				$scope.configPanel = {
+					tipo: 'panel-info',
+					titulo: 'Tasas a las Cargas'
+				};
+			}
+		}
+	});
+
 	myapp.directive('accordionComprobantesVistos', function(){
 		return {
 			restrict:		'E',

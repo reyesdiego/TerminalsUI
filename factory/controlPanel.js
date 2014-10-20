@@ -62,19 +62,22 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 
 	factory.getTasasContenedor = function(data, callback){
 		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + data.contenedor + '/' + data.currency;
-		console.log(inserturl);
-		$http.get({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		})
-			.success(function (data){
-				callback(data.data);
+		console.log(data.contenedor == '');
+		if (data.contenedor != undefined && data.contenedor != ''){
+			$http({
+				method: "GET",
+				url: inserturl,
+				headers:
+				{token: loginService.getToken()}
+			}).success(function (data){
+				data.data = factory.ponerDescripcionCodigoItem(data.data);
+				data = factory.calcularTotalTasas(data);
+				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
 				dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
 			});
+		}
 	};
 
 	factory.getFacturasMeses = function(fecha, moneda, callback, errCallBack){
@@ -222,6 +225,26 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).error(function(errorText){
 			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
 		});
+	};
+
+	factory.ponerDescripcionCodigoItem = function(data){
+		data.forEach(function(detalle){
+			if (angular.isDefined($rootScope.itemsDescriptionInvoices[detalle._id.id])){
+				detalle._id.descripcion = $rootScope.itemsDescriptionInvoices[detalle._id.id];
+			} else {
+				detalle._id.descripcion = "No se halló la descripción, verifique que el código esté asociado";
+			}
+		});
+		return data;
+	};
+
+	factory.calcularTotalTasas = function(data){
+		datos = data;
+		datos.totalTasas = 0;
+		data.data.forEach(function(detalle){
+			datos.totalTasas += detalle.cnt * detalle.total;
+		});
+		return datos;
 	};
 
 	return factory;

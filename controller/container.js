@@ -54,11 +54,11 @@
 		};
 
 		$scope.cargaTasasCargas = function(){
-			datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
+			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
 			controlPanelFactory.getTasasContenedor(datos, function(data){
-				if(data.status === 'OK'){
+				if (data.status === 'OK'){
 					$scope.tasas = data.data;
-					console.log(data);
+					$scope.totalTasas = data.totalTasas;
 				}
 			});
 		};
