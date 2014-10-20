@@ -54,7 +54,7 @@
 				<td>{{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 			</tr>
 			</tbody>
-			<tfoot style="text-align: right;">
+			<tfoot class="text-right">
 			<tr>
 				<td colspan="2">Subtotal</td>
 				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.subtotal | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
@@ -71,12 +71,17 @@
 				<td colspan="2">Total</td>
 				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.total | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 			</tr>
-			<tr style="text-align: center">
+			<tr class="text-center">
 				<td colspan="6">
 					<span>Monto Gravado {{ verDetalle.importe.gravado | currency }} | </span>
 					<span>Monto No Gravado {{ verDetalle.importe.noGravado | currency }} | </span>
 					<span>Exento {{ verDetalle.importe.exento | currency }} | </span>
 					<span><b>Cotizaci&oacute;n Moneda U$s1 = ${{ verDetalle.cotiMoneda }}</b></span>
+				</td>
+			</tr>
+			<tr class="text-center">
+				<td colspan="6">
+					<span>Observaciones: {{ verDetalle.observa }}</span>
 				</td>
 			</tr>
 			</tfoot>

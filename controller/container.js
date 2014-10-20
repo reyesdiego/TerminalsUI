@@ -3,7 +3,6 @@
  */
 (function(){
 	myapp.controller('containerCtrl', function($scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory){
-		var page = { skip:0, limit: $scope.itemsPerPage };
 		$scope.model = {
 			'nroPtoVenta': '',
 			'codTipoComprob': 0,
@@ -21,8 +20,7 @@
 			'filtroOrdenReverse': false,
 			'order': ''
 		};
-		$scope.ocultarFiltrosInvoices = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
-		$scope.ocultarFiltrosGates = ['fechaOrden'];
+		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes'];
 		$scope.cargando = false;
 		$scope.invoices = [];
 
@@ -54,11 +52,11 @@
 		};
 
 		$scope.cargaTasasCargas = function(){
-			datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
+			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
 			controlPanelFactory.getTasasContenedor(datos, function(data){
-				if(data.status === 'OK'){
+				if (data.status === 'OK'){
 					$scope.tasas = data.data;
-					console.log(data);
+					$scope.totalTasas = data.totalTasas;
 				}
 			});
 		};
