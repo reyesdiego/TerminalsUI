@@ -7,7 +7,7 @@
     }
     .printable { /* aligning the printable area */
         position:absolute !important;
-        left:0px !important;
-        top:0px !important;
+        left:0 !important;
+        top:0 !important;
     }
 }
