@@ -62,7 +62,6 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 
 	factory.getTasasContenedor = function(data, callback){
 		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + data.contenedor + '/' + data.currency;
-		console.log(data.contenedor == '');
 		if (data.contenedor != undefined && data.contenedor != ''){
 			$http({
 				method: "GET",

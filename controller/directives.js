@@ -300,6 +300,7 @@
 						$scope.verDetalle = callback;
 						$scope.mostrarResultado = true;
 						$scope.loadingState = false;
+						$rootScope.verDetalle = callback;
 					});
 				};
 

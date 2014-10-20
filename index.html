@@ -9,7 +9,6 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="css/bootstrap.cerulean.css" title="BACTSSA">
 	<link rel="stylesheet" href="css/angucomplete-alt.css">
-	<link rel="stylesheet" href="css/printable.css">
 	<link rel="alternate stylesheet" href="css/bootstrap.flaty.css" title="TRP">
 	<link rel="alternate stylesheet" href="css/bootstrap.united.css" title="TERMINAL4">
 	<!-- Less test -->
@@ -139,9 +138,13 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row hidden-print">
 	<br/><br/>
 	<div ui-view></div>
+</div>
+
+<div class="visible-print-block">
+	<invoices-result></invoices-result>
 </div>
 
 </body>

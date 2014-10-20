@@ -263,7 +263,6 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		});
 	});
 
-
 	controlPanelFactory.getShipsGates(function(data){
 		var i = 0;
 		data.data.forEach(function(buque){
