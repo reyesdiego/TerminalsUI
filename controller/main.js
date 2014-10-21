@@ -313,7 +313,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		}
 	}
 
-	$rootScope.moneda = "PES";
+	$rootScope.moneda = "DOL";
 
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 	$rootScope.$state = $state;
