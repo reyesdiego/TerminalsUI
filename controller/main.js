@@ -204,6 +204,11 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 
 	$rootScope.commentsInvoice = [];
 
+	$rootScope.modeloImpresion = {
+		vista: 'visible-print-block',
+		comprobante: 'hidden print'
+	};
+
 	$rootScope.addError = function(error){
 		$rootScope.mensajeResultado = {
 			titulo: 'Error',
@@ -367,6 +372,10 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	};
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
+		$rootScope.modeloImpresion = {
+			vista: 'visible-print-block',
+			comprobante: 'hidden print'
+		};
 		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 		}

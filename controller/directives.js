@@ -308,6 +308,8 @@
 						$scope.mostrarResultado = true;
 						$scope.loadingState = false;
 						$rootScope.verDetalle = callback;
+						$rootScope.modeloImpresion.vista = 'hidden-print';
+						$rootScope.modeloImpresion.comprobante = 'visible-print-block';
 						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 							dataTrack.data.forEach(function(comment){
 								if (comment.group == loginService.getGroup()){

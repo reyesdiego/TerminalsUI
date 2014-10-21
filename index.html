@@ -143,7 +143,12 @@
 	<div ui-view></div>
 </div>
 
-<div class="visible-print-block">
+<div ng-show="false" class="{{ modeloImpresion.vista }}">
+	<br/><br/>
+	<div ui-view></div>
+</div>
+
+<div ng-show="false" class="{{ modeloImpresion.comprobante }}">
 	<invoices-result></invoices-result>
 	<br>
 	<invoice-track></invoice-track>
