@@ -75,12 +75,12 @@
 	</div>
 </tab>
 
-<tab heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl">
+<tab heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl" ng-show="acceso == 'agp'">
 	<br>
 	<vista-comprobantes model="model" datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
-<tab heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl">
+<tab heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl" ng-show="acceso == 'agp'">
 	<br>
 	<vista-comprobantes model="model" datos-invoices="comprobantesError" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingError" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
