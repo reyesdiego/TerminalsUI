@@ -2,7 +2,7 @@
  * Created by leo on 29/09/14.
  */
 (function(){
-	myapp.controller('containerCtrl', function($scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory){
+	myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory){
 		$scope.model = {
 			'nroPtoVenta': '',
 			'codTipoComprob': 0,
@@ -89,6 +89,10 @@
 				$scope.filtrar();
 			}
 		};
+
+		$rootScope.$watch('moneda', function(){
+			$scope.cargaTasasCargas();
+		});
 
 		function cargaDatos() {
 			return {
