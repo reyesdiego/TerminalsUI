@@ -16,6 +16,7 @@
 						<th class="text-right">Importe Total</th>
 						<th class="col-lg-1 text-center">Detalles</th>
 						<th class="col-lg-1 text-center">Quitar</th>
+						<th style="text-align: center" ng-show="acceso=='agp'" class="col-lg-1">Estado</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -28,6 +29,13 @@
 						<td class="text-right">{{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice.codMoneda: invoice.cotiMoneda | currency }}</td>
 						<td class="text-center"><button class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 						<td class="text-center"><button class="btn btn-info" ng-click="quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></button></td>
+						<td ng-show="acceso=='agp'" style="text-align: center">
+							<div class="btn-group" dropdown is-open="status.isopen">
+								<button style="width: 95px" ng-click="trackInvoice(invoice)" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle">
+									{{ invoice.interfazEstado.estado }}
+								</button>
+							</div>
+						</td>
 					</tr>
 					</tbody>
 				</table>
