@@ -240,7 +240,13 @@
 												};
 												break;
 										}
-										comprobante.estado = dataComment.newState;
+										var nuevoEstado = {
+											_id: comprobante._id,
+											estado: dataComment.newState,
+											grupo: loginService.getGroup(),
+											user: loginService.getInfo().user
+										};
+										comprobante.estado.push(nuevoEstado);
 										if (!$scope.ocultarAccordionInvoicesSearch)
 											$scope.cargaPuntosDeVenta();
 									}
