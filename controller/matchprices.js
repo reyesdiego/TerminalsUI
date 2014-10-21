@@ -36,6 +36,9 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.conMatch = false;
 	$scope.tasas = false;
 
+	$scope.predicate = '';
+	$scope.reverse = true;
+
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
 		$scope.pageChanged();
@@ -193,6 +196,13 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 				}, 3000);
 			});
 		}
+	};
+
+	$scope.ordenarPor = function(filtro){
+		if ($scope.predicate == filtro){
+			$scope.reverse = !$scope.reverse;
+		}
+		$scope.predicate = filtro;
 	};
 
 	$scope.guardarNuevoConcepto = function(){

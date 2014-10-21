@@ -7,6 +7,8 @@ function pricelistCtrl($scope, priceFactory, loginService){
 	$scope.pricelist = [];
 	$scope.filteredPrices = [];
 	$scope.tasas = false;
+	$scope.reverse = true;
+	$scope.predicate = '';
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
@@ -37,6 +39,13 @@ function pricelistCtrl($scope, priceFactory, loginService){
 			$scope.itemsPerPage = 10;
 		}
 	});
+
+	$scope.ordenarPor = function(filtro){
+		if ($scope.predicate == filtro){
+			$scope.reverse = !$scope.reverse;
+		}
+		$scope.predicate = filtro;
+	};
 
 	$scope.cargaPricelist();
 }
