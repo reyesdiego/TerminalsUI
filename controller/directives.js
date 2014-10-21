@@ -303,10 +303,18 @@
 					}
 
 					invoiceFactory.invoiceById(comprobante._id, function(callback){
+						$rootScope.commentsInvoice = [];
 						$scope.verDetalle = callback;
 						$scope.mostrarResultado = true;
 						$scope.loadingState = false;
 						$rootScope.verDetalle = callback;
+						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+							dataTrack.data.forEach(function(comment){
+								if (comment.group == loginService.getGroup()){
+									$rootScope.commentsInvoice.push(comment);
+								}
+							});
+						});
 					});
 				};
 
@@ -431,6 +439,13 @@
 		return {
 			restrict:		'E',
 			templateUrl:	'view/invoices.result.html'
+		}
+	});
+
+	myapp.directive('invoiceTrack', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/comments.invoice.html'
 		}
 	});
 

@@ -202,6 +202,8 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		tipo: 'panel-info'
 	};
 
+	$rootScope.commentsInvoice = [];
+
 	$rootScope.addError = function(error){
 		$rootScope.mensajeResultado = {
 			titulo: 'Error',
@@ -340,6 +342,20 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	vouchersFactory.getVouchersType(function(data){
 		$rootScope.vouchers = data.data;
 	});
+
+	$rootScope.devolverEstado = function(estado){
+		switch (estado){
+			case 'G':
+				return 'Controlado';
+				break;
+			case 'Y':
+				return 'Revisar';
+				break;
+			case 'R':
+				return 'Error';
+				break;
+		}
+	};
 
 	$rootScope.switchTheme = function(title){
 		var i, a;
