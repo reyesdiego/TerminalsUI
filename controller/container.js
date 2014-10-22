@@ -30,7 +30,14 @@
 					$scope.model.contenedor = contenido;
 					break;
 			}
-			$scope.filtrar();
+			if ($scope.model.contenedor != ''){
+				$scope.filtrar();
+			} else {
+				$scope.invoices = [];
+				$scope.tasas = [];
+				$scope.gates = [];
+				$scope.turnos = [];
+			}
 		};
 
 		$scope.filtrar = function(){
