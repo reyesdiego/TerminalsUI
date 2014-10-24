@@ -89,6 +89,29 @@
 		<p style="text-align: left">Transferido: {{ verDetalle.transferencia }}</p>
 	</div>
 </div>
+<div class="row col-lg-12" ng-show="controlTarifas.length > 0">
+	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error en tarifas' }">
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover" style="text-align: center">
+				<tr>
+					<th style="text-align: center">Código</th>
+					<th style="text-align: center">Valor máximo</th>
+					<th style="text-align: center">Valor cobrado</th>
+				</tr>
+				<tr ng-repeat="tarifaError in controlTarifas">
+					<td>{{ tarifaError.codigo }}</td>
+					<td>{{ tarifaError.currency | formatCurrency }} {{ tarifaError.topPrice }}</td>
+					<td>{{ tarifaError.currency | formatCurrency }} {{ tarifaError.current }}</td>
+				</tr>
+			</table>
+		</div>
+	</div-panel>
+</div>
+<div class="row col-lg-12" ng-show="noMatch">
+	<div-panel config-panel="{ tipo: 'panel-info', titulo: 'Control de tarifas' }">
+		<p>No se ha podido completar el control de tarifas, dado que se hayaron tarifas sin asociar.</p>
+	</div-panel>
+</div>
 <p></p>
 <div class="row hidden-print">
 	<div class="col-lg-10 col-lg-offset-1" style="text-align: center">

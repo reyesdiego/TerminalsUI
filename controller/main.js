@@ -204,6 +204,11 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 
 	$rootScope.commentsInvoice = [];
 
+	//Variables para control de tarifas
+	$rootScope.matchesTerminal = [];
+	$rootScope.controlTarifas = [];
+	$rootScope.noMatch = false;
+
 	$rootScope.modeloImpresion = {
 		vista: 'visible-print-block',
 		comprobante: 'hidden print'

@@ -45,6 +45,33 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		});
 	};
 
+	factory.getArrayMatches = function(terminal, callback){
+		var inserturl = serverUrl + '/matchprices/' + terminal + '?';
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers: { token: loginService.getToken() }
+		}).success(function (data){
+			var arrayMatches = [];
+			var addMatch;
+			data.data.forEach(function(price){
+				if (price.matches != null && price.matches.length > 0){
+					price.matches[0].match.forEach(function(code){
+						addMatch = {
+							codigo: code,
+							moneda: price.currency,
+							valor: price.topPrice
+						};
+						arrayMatches.push(addMatch);
+					});
+				}
+			});
+			callback(arrayMatches);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al cargar la lista');
+		});
+	};
+
 	factory.addMatchPrice = function (data, callback) {
 		var inserturl = serverUrl + '/matchprice';
 		$http({

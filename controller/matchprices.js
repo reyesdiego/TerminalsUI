@@ -126,7 +126,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 				$scope.matchesTerminal.push(price.new);
 				$scope.flagCambios = true;
 			}
-		} else{
+		} else {
 			dialogs.notify("Asociar","El código ingresado ya se encuentra asociado a otra tarifa");
 		}
 		price.new = '';

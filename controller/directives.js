@@ -19,7 +19,7 @@
 				ocultarAccordionComprobantesVistos:	'=',
 				panelMensaje:						'='
 			},
-			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', function($rootScope, $scope, $modal, invoiceFactory, loginService){
+			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', 'priceFactory', function($rootScope, $scope, $modal, invoiceFactory, loginService, priceFactory){
 				$scope.currentPage = 1;
 
 				//Variables para control de fechas
@@ -45,6 +45,14 @@
 
 				$scope.mostrarResultado = false;
 				$scope.verDetalle = {};
+
+				//Control de tarifas
+				$scope.controlTarifas = [];
+				$scope.noMatch = false;
+
+				priceFactory.getArrayMatches(loginService.getFiltro(), function(arrayMatches){
+					$rootScope.matchesTerminal = arrayMatches;
+				});
 
 				invoiceFactory.getDescriptionItem(function(data){
 					$scope.itemsDescription = data.data;
@@ -291,6 +299,12 @@
 				};
 
 				$scope.mostrarDetalle = function(comprobante){
+					var lookup = {};
+					for (var i = 0, len = $rootScope.matchesTerminal.length; i < len; i++) {
+						lookup[$rootScope.matchesTerminal[i].codigo] = $rootScope.matchesTerminal[i];
+					}
+					var tarifaError;
+
 					$scope.loadingState = true;
 					var encontrado = false;
 					$scope.comprobantesVistos.forEach(function(unComprobante){
@@ -303,11 +317,33 @@
 					}
 
 					invoiceFactory.invoiceById(comprobante._id, function(callback){
-						$rootScope.commentsInvoice = [];
 						$scope.verDetalle = callback;
+						$scope.controlTarifas = [];
+						$scope.noMatch = false;
+						$scope.verDetalle.detalle.forEach(function(detalle){
+							detalle.items.forEach(function(item){
+								if (angular.isDefined(lookup[item.id])){
+									if (item.impUnit > lookup[item.id].valor){
+										tarifaError = {
+											codigo: item.id,
+											currency: lookup[item.id].moneda,
+											topPrice: lookup[item.id].valor,
+											current: item.impUnit
+										};
+										$scope.controlTarifas.push(tarifaError);
+									}
+								} else {
+									$scope.noMatch = true;
+								}
+							});
+						});
+						$rootScope.commentsInvoice = [];
 						$scope.mostrarResultado = true;
 						$scope.loadingState = false;
+
 						$rootScope.verDetalle = callback;
+						$rootScope.controlTarifas = $scope.controlTarifas;
+						$rootScope.noMatch = $scope.noMatch;
 						$rootScope.modeloImpresion.vista = 'hidden-print';
 						$rootScope.modeloImpresion.comprobante = 'visible-print-block';
 						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
