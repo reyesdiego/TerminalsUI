@@ -50,6 +50,8 @@
 				$scope.controlTarifas = [];
 				$scope.noMatch = false;
 
+				$scope.recargarResultado = false;
+
 				priceFactory.getArrayMatches(loginService.getFiltro(), function(arrayMatches){
 					$rootScope.matchesTerminal = arrayMatches;
 				});
@@ -220,6 +222,7 @@
 						dataTrack = [];
 						modalInstance.result.then(function (dataComment) {
 							invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState, function(){
+								$scope.recargarResultado = true;
 								var logInvoice = {
 									title: dataComment.title,
 									state: dataComment.newState,
@@ -255,13 +258,19 @@
 											user: loginService.getInfo().user
 										};
 										comprobante.estado.push(nuevoEstado);
-										if (!$scope.ocultarAccordionInvoicesSearch)
+										if (!$scope.ocultarAccordionInvoicesSearch && !$scope.mostrarResultado)
 											$scope.cargaPuntosDeVenta();
 									}
 								});
 							});
 						});
 					});
+				};
+
+				$scope.ocultarResultado = function(){
+					$scope.mostrarResultado = false;
+					if ($scope.recargarResultado)
+						$scope.cargaPuntosDeVenta();
 				};
 
 				$scope.quitarVista = function (comprobante) {
@@ -299,6 +308,8 @@
 				};
 
 				$scope.mostrarDetalle = function(comprobante){
+					$scope.recargarResultado = false;
+
 					$scope.loadingState = true;
 					var encontrado = false;
 					$scope.comprobantesVistos.forEach(function(unComprobante){

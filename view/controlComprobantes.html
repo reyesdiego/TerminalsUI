@@ -40,46 +40,6 @@
 	<vista-comprobantes model="model" datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
-<tab heading="Control de tarifas" ng-show="false">
-	<br>
-	<div class="row col-lg-12">
-		<div class="panel {{ pantalla.cartelTarifas }}">
-			<div class="panel-heading">
-				<h3 class="panel-title">{{ pantalla.tituloTarifas }}</h3>
-			</div>
-			<div class="panel-body">
-				<p>{{ pantalla.mensajeTarifas }}</p>
-				<span ng-repeat="numero in pantalla.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
-			</div>
-		</div>
-	</div>
-
-	<div class="row row col-lg-12">
-		<div class="table-responsive">
-			<table ng-show="pantalla.mostrarResultadoTarifas" class="table table-striped table-bordered table-hover">
-				<thead>
-				<tr>
-					<th>Comprobante</th>
-					<th>Razon Social</th>
-					<th>Fecha</th>
-					<th>Tarifas erróneas</th>
-					<th>Detalles</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr ng-repeat="comprobante in pantalla.comprobantesMalCobrados">
-					<td>{{ comprobante.nroComprob }}</td>
-					<td>{{ comprobante.razon }}</td>
-					<td>{{ comprobante.fecha.emision | date: 'dd/MM/yyyy' }}</td>
-					<td><span ng-repeat="numeroCod in comprobante.codigosFaltantes">{{ numeroCod }}<span ng-show="!$last"> - </span></span></td>
-					<td><button ui-sref=".result" class="btn btn-primary" type="button" ng-click="mostrarDetalle(comprobante)">M&aacute;s detalles</button></td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</tab>
-
 <tab heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl" ng-show="acceso == 'agp'">
 	<br>
 	<vista-comprobantes model="model" datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
