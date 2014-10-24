@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 
-function correlatividadCtrl($scope, invoiceFactory){
+function correlatividadCtrl($rootScope, $scope, invoiceFactory){
 
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
@@ -15,6 +15,10 @@ function correlatividadCtrl($scope, invoiceFactory){
 		'fechaDesde': $scope.desde,
 		'fechaHasta': $scope.hasta
 	};
+
+	$rootScope.modeloImpresion.vista = 'hidden-print';
+	$rootScope.modeloImpresion.comprobante = 'hidden-print';
+	$rootScope.modeloImpresion.correlativo = 'visible-print-block';
 
 	$scope.pantalla = {
 		"titulo":  "Correlatividad",
@@ -43,7 +47,7 @@ function correlatividadCtrl($scope, invoiceFactory){
 			if ($scope.result.totalCount > 0){
 				$scope.pantalla.mensajeCorrelativo = "Se hallaron comprobantes faltantes: ";
 				$scope.pantalla.tipo = "panel-danger";
-				$scope.pantalla.titulo = "Error";
+				$scope.pantalla.titulo = "Error en el punto de venta " + $scope.model.nroPtoVenta;
 				$scope.pantalla.resultadoCorrelativo = $scope.result.data;
 			} else {
 				$scope.pantalla.titulo =  "Éxito";
@@ -51,6 +55,7 @@ function correlatividadCtrl($scope, invoiceFactory){
 				$scope.pantalla.tipo = "panel-success";
 				$scope.pantalla.resultadoCorrelativo = [];
 			}
+			$rootScope.controlCorrelativo = $scope.pantalla;
 			$scope.loadingCorrelatividad = false;
 		});
 	};

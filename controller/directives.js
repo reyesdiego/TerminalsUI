@@ -346,6 +346,7 @@
 						$rootScope.noMatch = $scope.noMatch;
 						$rootScope.modeloImpresion.vista = 'hidden-print';
 						$rootScope.modeloImpresion.comprobante = 'visible-print-block';
+						$rootScope.modeloImpresion.correlativo = 'hidden-print';
 						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 							dataTrack.data.forEach(function(comment){
 								if (comment.group == loginService.getGroup()){

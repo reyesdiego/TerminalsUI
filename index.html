@@ -154,6 +154,15 @@
 	<invoice-track></invoice-track>
 </div>
 
+<div ng-show="false" class="{{ modeloImpresion.correlativo }}">
+	<h1>Control de correlatividad</h1>
+	<br>
+	<div-panel config-panel="controlCorrelativo">
+		<p>{{ controlCorrelativo.mensajeCorrelativo }}</p>
+		<span ng-repeat="numero in controlCorrelativo.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
+	</div-panel>
+</div>
+
 </body>
 
 </html>

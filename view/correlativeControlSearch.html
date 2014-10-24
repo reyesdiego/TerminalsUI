@@ -2,7 +2,7 @@
 	<accordion-invoices-search></accordion-invoices-search>
 </div>
 
-<div class="col-lg-12">
+<div class="col-lg-12 hidden-print">
 	<div-panel config-panel="configPanel">
 		<span ng-repeat="numero in terminalSellPoints"><a href ng-click="filtrado('nroPtoVenta', numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
 	</div-panel>

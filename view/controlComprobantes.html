@@ -27,6 +27,11 @@
 			<p>{{ pantalla.mensajeCorrelativo }}</p>
 			<span ng-repeat="numero in pantalla.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
 		</div-panel>
+		<div class="row hidden-print">
+			<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
+				<a href="javascript:window.print()" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+			</div>
+		</div>
 	</div>
 </tab>
 
