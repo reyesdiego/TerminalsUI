@@ -299,12 +299,6 @@
 				};
 
 				$scope.mostrarDetalle = function(comprobante){
-					var lookup = {};
-					for (var i = 0, len = $rootScope.matchesTerminal.length; i < len; i++) {
-						lookup[$rootScope.matchesTerminal[i].codigo] = $rootScope.matchesTerminal[i];
-					}
-					var tarifaError;
-
 					$scope.loadingState = true;
 					var encontrado = false;
 					$scope.comprobantesVistos.forEach(function(unComprobante){
@@ -318,35 +312,17 @@
 
 					invoiceFactory.invoiceById(comprobante._id, function(callback){
 						$scope.verDetalle = callback;
-						$scope.controlTarifas = [];
-						$scope.noMatch = false;
-						$scope.verDetalle.detalle.forEach(function(detalle){
-							detalle.items.forEach(function(item){
-								if (angular.isDefined(lookup[item.id])){
-									if (item.impUnit > lookup[item.id].valor){
-										tarifaError = {
-											codigo: item.id,
-											currency: lookup[item.id].moneda,
-											topPrice: lookup[item.id].valor,
-											current: item.impUnit
-										};
-										$scope.controlTarifas.push(tarifaError);
-									}
-								} else {
-									$scope.noMatch = true;
-								}
-							});
-						});
+						$scope.controlarTarifas($scope.verDetalle);
+
 						$rootScope.commentsInvoice = [];
 						$scope.mostrarResultado = true;
 						$scope.loadingState = false;
 
 						$rootScope.verDetalle = callback;
-						$rootScope.controlTarifas = $scope.controlTarifas;
-						$rootScope.noMatch = $scope.noMatch;
 						$rootScope.modeloImpresion.vista = 'hidden-print';
 						$rootScope.modeloImpresion.comprobante = 'visible-print-block';
 						$rootScope.modeloImpresion.correlativo = 'hidden-print';
+
 						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 							dataTrack.data.forEach(function(comment){
 								if (comment.group == loginService.getGroup()){
@@ -355,6 +331,43 @@
 							});
 						});
 					});
+				};
+
+				$scope.controlarTarifas = function(comprobante){
+					var valorTomado;
+					var tarifaError;
+
+					var lookup = {};
+					for (var i = 0, len = $rootScope.matchesTerminal.length; i < len; i++) {
+						lookup[$rootScope.matchesTerminal[i].codigo] = $rootScope.matchesTerminal[i];
+					}
+
+					$scope.controlTarifas = [];
+					$scope.noMatch = false;
+
+					comprobante.detalle.forEach(function(detalle){
+						detalle.items.forEach(function(item){
+							if (angular.isDefined(lookup[item.id])){
+								valorTomado = item.impUnit;
+								if (lookup[item.id].moneda != 'DOL'){
+									valorTomado = item.impUnit * comprobante.cotiMoneda
+								}
+								if (valorTomado > lookup[item.id].valor){
+									tarifaError = {
+										codigo: item.id,
+										currency: lookup[item.id].moneda,
+										topPrice: lookup[item.id].valor,
+										current: item.impUnit
+									};
+									$scope.controlTarifas.push(tarifaError);
+								}
+							} else {
+								$scope.noMatch = true;
+							}
+						});
+					});
+					$rootScope.controlTarifas = $scope.controlTarifas;
+					$rootScope.noMatch = $scope.noMatch;
 				};
 
 				$scope.existeDescripcion = function(itemId){
