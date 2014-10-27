@@ -523,6 +523,8 @@
 		$scope.dateOptions = $rootScope.dateOptions;
 		$scope.listaBuquesGates = $rootScope.listaBuquesGates;
 		$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
+		$scope.listaBuquesTurnos = $rootScope.listaBuquesTurnos;
+		$scope.listaContenedoresTurnos = $rootScope.listaContenedoresTurnos;
 		$scope.openDate = function(event){
 			$rootScope.openDate(event);
 		};

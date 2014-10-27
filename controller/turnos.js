@@ -6,7 +6,9 @@
 		// Fecha (dia y hora)
 		$scope.model = {
 			'fechaDesde':	new Date(),
-			'fechaHasta':	new Date()
+			'fechaHasta':	new Date(),
+			'contenedor': '',
+			'buque': ''
 		};
 		$scope.model.fechaDesde.setHours(0,0);
 		$scope.model.fechaHasta.setMinutes(0);
