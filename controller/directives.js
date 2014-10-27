@@ -329,7 +329,7 @@
 						$scope.mostrarResultado = true;
 						$scope.loadingState = false;
 
-						$rootScope.verDetalle = callback;
+						$rootScope.verDetalle = $scope.verDetalle;
 						$rootScope.modeloImpresion.vista = 'hidden-print';
 						$rootScope.modeloImpresion.comprobante = 'visible-print-block';
 						$rootScope.modeloImpresion.correlativo = 'hidden-print';
@@ -348,12 +348,13 @@
 					var valorTomado;
 					var tarifaError;
 
+					comprobante.controlTarifas = [];
+
 					var lookup = {};
 					for (var i = 0, len = $rootScope.matchesTerminal.length; i < len; i++) {
 						lookup[$rootScope.matchesTerminal[i].codigo] = $rootScope.matchesTerminal[i];
 					}
 
-					$scope.controlTarifas = [];
 					$scope.noMatch = false;
 
 					comprobante.detalle.forEach(function(detalle){
@@ -370,15 +371,19 @@
 										topPrice: lookup[item.id].valor,
 										current: item.impUnit
 									};
-									$scope.controlTarifas.push(tarifaError);
+									comprobante.controlTarifas.push(tarifaError);
 								}
 							} else {
 								$scope.noMatch = true;
 							}
 						});
 					});
-					$rootScope.controlTarifas = $scope.controlTarifas;
 					$rootScope.noMatch = $scope.noMatch;
+				};
+
+				$scope.chequearTarifas = function(comprobante){
+					$scope.controlarTarifas(comprobante);
+					return comprobante.controlTarifas.length > 0;
 				};
 
 				$scope.existeDescripcion = function(itemId){
