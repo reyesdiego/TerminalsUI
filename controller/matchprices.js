@@ -14,6 +14,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.pricelist = [];
 	$scope.filteredPrices = [];
 	$scope.matchesTerminal = [];
+	$scope.listaSeleccionada = [];
 
 	$scope.codigoVacio = true;
 
@@ -88,7 +89,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 				$scope.itemsPerPage = $scope.pricelist.length;
 			}
 		} else {
-			$scope.totalItems = $scope.pricelist.length;
+			$scope.totalItems = $scope.listaSeleccionada.length;
 			$scope.itemsPerPage = 10;
 		}
 	});
@@ -99,7 +100,11 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		} else {
 			$scope.listaSeleccionada = $scope.pricelist;
 		}
-		$scope.totalItems = $scope.listaSeleccionada.length;
+		if ($scope.search != ""){
+			$scope.totalItems = 1
+		} else {
+			$scope.totalItems = $scope.listaSeleccionada.length;
+		}
 	});
 
 	$scope.agregarCodigo = function(price){
