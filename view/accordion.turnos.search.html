@@ -33,6 +33,42 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
+					<div class="form-group">
+						<angucomplete-alt id="idBuque"
+										  placeholder="Buque"
+										  pause="100"
+										  selected-object="buqueSelected"
+										  local-data="listaBuquesTurnos"
+										  search-fields="buque"
+										  title-field="buque"
+										  minlength="1"
+										  input-class="form-control"
+										  filtrar="filtrado(filtrar, contenido)"
+										  input-field="buque"
+										  match-class="highlight"
+										  limit-results="15"
+										  outside-model="model.buque"></angucomplete-alt>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
+					<div class="form-group">
+						<angucomplete-alt id="idContenedor"
+										  placeholder="Contenedor"
+										  pause="100"
+										  selected-object="containerSelected"
+										  local-data="listaContenedoresTurnos"
+										  search-fields="contenedor"
+										  title-field="contenedor"
+										  minlength="1"
+										  input-class="form-control"
+										  filtrar="filtrado(filtrar, contenido)"
+										  input-field="contenedor"
+										  match-class="highlight"
+										  limit-results="15"
+										  outside-model="model.contenedor"></angucomplete-alt>
+					</div>
+				</div>
 				<div class="col-lg-4 col-sm-6">
 					<div class="form-group">
 						<button class="btn btn-primary" ng-click="cargaPorFiltros()" ng-disabled="model.fechaDesde > model.fechaHasta">Cargar</button>

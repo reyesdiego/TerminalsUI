@@ -226,6 +226,34 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		});
 	};
 
+	factory.getContainersTurnos = function(callback){
+		var inserturl = serverUrl + '/appointments/containers';
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+		});
+	};
+
+	factory.getShipsTurnos = function(callback){
+		var inserturl = serverUrl + '/appointments/ships';
+		$http({
+			method: "GET",
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
+		});
+	};
+
 	factory.ponerDescripcionCodigoItem = function(data){
 		data.forEach(function(detalle){
 			if (angular.isDefined($rootScope.itemsDescriptionInvoices[detalle._id.id])){

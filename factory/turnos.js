@@ -18,6 +18,11 @@ myapp.factory('turnosFactory', function($http, dialogs, formatDate, loginService
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'contenedor=' + datos.contenedor.toUpperCase();
 		}
+		if(angular.isDefined(datos.buque) && datos.buque != ''){
+			if(inserturl != insertAux){ inserturl = inserturl + '&'}
+			inserturl = inserturl + 'buque=' + datos.buque.toUpperCase();
+		}
+
 		$http({
 			method: 'GET',
 			url: inserturl,

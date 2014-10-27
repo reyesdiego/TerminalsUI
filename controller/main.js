@@ -195,6 +195,8 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.listaBuques = [];
 	$rootScope.listaContenedoresGates = [];
 	$rootScope.listaBuquesGates = [];
+	$rootScope.listaContenedoresTurnos = [];
+	$rootScope.listaBuquesTurnos = [];
 
 	$rootScope.mensajeResultado = {
 		titulo: 'Comprobantes',
@@ -287,6 +289,34 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 					'buque': buque
 				};
 				$rootScope.listaBuquesGates.push(objetoBuque);
+				i++;
+			}
+		});
+	});
+
+	controlPanelFactory.getContainersTurnos(function(data){
+		var i = 0;
+		data.data.forEach(function(container){
+			if (angular.isDefined(container) && container != null){
+				var objetoContainer = {
+					'id': i,
+					'contenedor': container
+				};
+				$rootScope.listaContenedoresTurnos.push(objetoContainer);
+				i++;
+			}
+		});
+	});
+
+	controlPanelFactory.getShipsTurnos(function(data){
+		var i = 0;
+		data.data.forEach(function(buque){
+			if (angular.isDefined(buque) && buque != null){
+				var objetoBuque = {
+					'id': i,
+					'buque': buque
+				};
+				$rootScope.listaBuquesTurnos.push(objetoBuque);
 				i++;
 			}
 		});
