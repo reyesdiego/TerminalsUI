@@ -214,7 +214,27 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.modeloImpresion = {
 		vista: 'visible-print-block',
 		comprobante: 'hidden-print',
-		correlativo: 'hidden-print'
+		correlativo: 'hidden-print',
+		report: 'hidden-print'
+	};
+
+	$rootScope.grafico = {
+		desde: '',
+		hasta: '',
+		chartDataReporteTarifas: [
+			['Codigos', 'algo'],
+			['hola', 2526]
+		],
+		chartTitleReporteTarifas: 'Códigos de tarifas',
+		chartWidthReporteTarifas: 1200,
+		chartHeightReporteTarifas: 600,
+		tarifasElegidas: 1,
+		columnChart: 'column',
+		monedaFija: 'DOL',
+		tablaGrafico: {
+			"terminales": [],
+			"data": []
+		}
 	};
 
 	$rootScope.controlCorrelativo = {};
@@ -413,7 +433,8 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		$rootScope.modeloImpresion = {
 			vista: 'visible-print-block',
 			comprobante: 'hidden-print',
-			correlativo: 'hidden-print'
+			correlativo: 'hidden-print',
+			report: 'hidden-print'
 		};
 		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');

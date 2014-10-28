@@ -19,6 +19,7 @@ function correlatividadCtrl($rootScope, $scope, invoiceFactory){
 	$rootScope.modeloImpresion.vista = 'hidden-print';
 	$rootScope.modeloImpresion.comprobante = 'hidden-print';
 	$rootScope.modeloImpresion.correlativo = 'visible-print-block';
+	$rootScope.modeloImpresion.report = 'hidden-print';
 
 	$scope.pantalla = {
 		"titulo":  "Correlatividad",

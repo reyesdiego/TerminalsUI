@@ -345,6 +345,7 @@
 						$rootScope.modeloImpresion.vista = 'hidden-print';
 						$rootScope.modeloImpresion.comprobante = 'visible-print-block';
 						$rootScope.modeloImpresion.correlativo = 'hidden-print';
+						$rootScope.modeloImpresion.report = 'hidden-print';
 
 						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 							dataTrack.data.forEach(function(comment){
