@@ -25,7 +25,7 @@
 	<div class="col-lg-12" ng-hide="loadingCorrelatividad">
 		<div-panel config-panel="pantalla">
 			<p>{{ pantalla.mensajeCorrelativo }}</p>
-			<span ng-repeat="numero in pantalla.resultadoCorrelativo">{{ numero }}<span ng-show="!$last"> - </span></span>
+			<span ng-repeat="numero in pantalla.resultadoCorrelativo track by $index">{{ numero }}<span ng-show="!$last"> - </span></span>
 		</div-panel>
 		<div class="row hidden-print">
 			<div class="col-lg-10 col-lg-offset-1" style="text-align: center">

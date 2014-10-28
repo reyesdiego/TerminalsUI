@@ -19,7 +19,7 @@
 				ocultarAccordionComprobantesVistos:	'=',
 				panelMensaje:						'='
 			},
-			controller: ['$rootScope', '$scope', '$modal', 'invoiceFactory', 'loginService', 'priceFactory', function($rootScope, $scope, $modal, invoiceFactory, loginService, priceFactory){
+			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory){
 				$scope.currentPage = 1;
 
 				//Variables para control de fechas
@@ -267,10 +267,22 @@
 					});
 				};
 
-				$scope.ocultarResultado = function(){
+				$scope.ocultarResultado = function(comprobante){
 					$scope.mostrarResultado = false;
-					if ($scope.recargarResultado)
-						$scope.cargaPuntosDeVenta();
+					if ($scope.recargarResultado){
+						$scope.datosInvoices.forEach(function(comprob){
+							if (comprob._id == comprobante._id){
+								comprob.interfazEstado = comprobante.interfazEstado;
+								comprob.estado = comprobante.estado;
+							}
+						});
+						$scope.comprobantesVistos.forEach(function(visto){
+							if (visto._id == comprobante._id){
+								visto.interfazEstado = comprobante.interfazEstado;
+								visto.estado = comprobante.estado;
+							}
+						});
+					}
 				};
 
 				$scope.quitarVista = function (comprobante) {
