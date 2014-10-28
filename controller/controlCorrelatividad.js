@@ -45,16 +45,18 @@ function correlatividadCtrl($rootScope, $scope, invoiceFactory){
 		invoiceFactory.getCorrelative($scope.model, function(dataComprob) {
 			$scope.result = dataComprob;
 			if ($scope.result.totalCount > 0){
-				$scope.pantalla.mensajeCorrelativo = "Se hallaron comprobantes faltantes: ";
+				$scope.pantalla.mensajeCorrelativo = "Se hallaron " + $scope.result.totalCount + " " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes: ";
 				$scope.pantalla.tipo = "panel-danger";
 				$scope.pantalla.titulo = "Error en el punto de venta " + $scope.model.nroPtoVenta;
 				$scope.pantalla.resultadoCorrelativo = $scope.result.data;
 			} else {
 				$scope.pantalla.titulo =  "Éxito";
-				$scope.pantalla.mensajeCorrelativo = "No se hallaron comprobantes faltantes";
+				$scope.pantalla.mensajeCorrelativo = "No se hallaron " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes en el punto de venta " + $scope.model.nroPtoVenta;
 				$scope.pantalla.tipo = "panel-success";
 				$scope.pantalla.resultadoCorrelativo = [];
 			}
+			$scope.pantalla.fechaDesde = $scope.model.fechaDesde;
+			$scope.pantalla.fechaHasta = $scope.model.fechaHasta;
 			$rootScope.controlCorrelativo = $scope.pantalla;
 			$scope.loadingCorrelatividad = false;
 		});

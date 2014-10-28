@@ -156,6 +156,8 @@
 
 <div ng-show="false" class="{{ modeloImpresion.correlativo }}">
 	<h1>Control de correlatividad</h1>
+	<div ng-show="controlCorrelativo.fechaDesde != ''">Desde: {{ controlCorrelativo.fechaDesde | date: 'dd/MM/yyyy' }}</div>
+	<div ng-show="controlCorrelativo.fechaHasta != ''">Hasta: {{ controlCorrelativo.fechaHasta | date: 'dd/MM/yyyy' }}</div>
 	<br>
 	<div-panel config-panel="controlCorrelativo">
 		<p>{{ controlCorrelativo.mensajeCorrelativo }}</p>
