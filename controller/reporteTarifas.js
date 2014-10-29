@@ -2,7 +2,7 @@
  * Created by artiom on 02/10/14.
  */
 
-function reporteTarifasCtrl ($rootScope, $scope, reportsFactory, priceFactory, dialogs){
+function reporteTarifasCtrl ($scope, reportsFactory, priceFactory, dialogs){
 
 	$scope.maxDate = new Date();
 	$scope.monedaFija = 'DOL';
@@ -202,19 +202,6 @@ function reporteTarifasCtrl ($rootScope, $scope, reportsFactory, priceFactory, d
 					});
 					$scope.chartDataReporteTarifas = base;
 					$scope.mostrarGrafico = true;
-
-					$rootScope.modeloImpresion.vista = 'hidden-print';
-					$rootScope.modeloImpresion.comprobante = 'hidden-print';
-					$rootScope.modeloImpresion.correlativo = 'hidden-print';
-					$rootScope.modeloImpresion.report = 'visible-print-block';
-
-					$rootScope.grafico.chartDataReporteTarifas = base;
-					$rootScope.grafico.tarifasElegidas = $scope.tarifasElegidas;
-					$rootScope.grafico.tablaGrafico.terminales = $scope.tablaGrafico.terminales;
-					$rootScope.grafico.tablaGrafico.data = $scope.tablaGrafico.data;
-					$rootScope.grafico.desde = $scope.desde;
-					$rootScope.grafico.hasta = $scope.hasta;
-
 				} else {
 					dialogs.notify("Totales por tarifa", "No se encontraron datos para las fechas y tarifas seleccionadas.");
 				}

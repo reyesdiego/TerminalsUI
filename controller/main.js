@@ -204,41 +204,6 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		tipo: 'panel-info'
 	};
 
-	$rootScope.commentsInvoice = [];
-
-	//Variables para control de tarifas
-	$rootScope.matchesTerminal = [];
-	$rootScope.controlTarifas = [];
-	$rootScope.noMatch = false;
-
-	$rootScope.modeloImpresion = {
-		vista: 'visible-print-block',
-		comprobante: 'hidden-print',
-		correlativo: 'hidden-print',
-		report: 'hidden-print'
-	};
-
-	$rootScope.grafico = {
-		desde: '',
-		hasta: '',
-		chartDataReporteTarifas: [
-			['Codigos', 'algo'],
-			['hola', 2526]
-		],
-		chartTitleReporteTarifas: 'Códigos de tarifas',
-		chartWidthReporteTarifas: 1200,
-		chartHeightReporteTarifas: 600,
-		tarifasElegidas: 1,
-		columnChart: 'column',
-		monedaFija: 'DOL',
-		tablaGrafico: {
-			"terminales": [],
-			"data": []
-		}
-	};
-
-	$rootScope.controlCorrelativo = {};
-
 	$rootScope.addError = function(error){
 		$rootScope.mensajeResultado = {
 			titulo: 'Error',
@@ -406,20 +371,6 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		$rootScope.vouchers = data.data;
 	});
 
-	$rootScope.devolverEstado = function(estado){
-		switch (estado){
-			case 'G':
-				return 'Controlado';
-				break;
-			case 'Y':
-				return 'Revisar';
-				break;
-			case 'R':
-				return 'Error';
-				break;
-		}
-	};
-
 	$rootScope.switchTheme = function(title){
 		var i, a;
 		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
@@ -430,12 +381,6 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	};
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
-		$rootScope.modeloImpresion = {
-			vista: 'visible-print-block',
-			comprobante: 'hidden-print',
-			correlativo: 'hidden-print',
-			report: 'hidden-print'
-		};
 		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 		}

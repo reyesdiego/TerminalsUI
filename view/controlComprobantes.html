@@ -10,15 +10,23 @@
 
 <tabset justified="true">
 
-<tab heading="Tasa a las cargas" ng-controller="tasaCargasCtrl">
+<tab class="hidden-print" heading="Tasa a las cargas" ng-controller="tasaCargasCtrl">
+	<div class="visible-print-block">
+		<h3>Tasa a las cargas</h3>
+	</div>
 	<br>
 	<vista-comprobantes model="model" datos-invoices="tasaCargas.resultado" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingTasaCargas" control-codigos="false" mostrar-ptos-venta="false" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
-<tab heading="Control de Correlatividad" ng-controller="correlatividadCtrl">
+<tab class="hidden-print" heading="Control de Correlatividad" ng-controller="correlatividadCtrl">
+	<div class="visible-print-block">
+		<h3>Control de correlatividad</h3>
+	</div>
 	<br>
 	<accordion-busqueda-correlatividad></accordion-busqueda-correlatividad>
-
+	<div class="visible-print-block"><span ng-hide="model.fechaDesde == ''">Desde: {{ model.fechaDesde | date: 'dd/MM/yyyy' }}</span></div>
+	<div class="visible-print-block"><span ng-hide="model.fechaHasta == ''">Hasta: {{ model.fechaHasta | date: 'dd/MM/yyyy' }}</span></div>
+	<br class="visible-print-block">
 	<div class="col-lg-12 text-center" ng-show="loadingCorrelatividad">
 		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 	</div>
@@ -35,17 +43,26 @@
 	</div>
 </tab>
 
-<tab heading="Control de códigos" ng-controller="codigosCtrl">
+<tab class="hidden-print" heading="Control de códigos" ng-controller="codigosCtrl">
+	<div class="visible-print-block">
+		<h3>Control de códigos</h3>
+	</div>
 	<br>
 	<vista-comprobantes model="model" datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
-<tab heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl" ng-show="acceso == 'agp'">
+<tab class="hidden-print" heading="Comprobantes a revisar" ng-controller="comprobantesRevisarCtrl" ng-show="acceso == 'agp'">
+	<div class="visible-print-block">
+		<h3>Comprobantes a revisar</h3>
+	</div>
 	<br>
 	<vista-comprobantes model="model" datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
-<tab heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl" ng-show="acceso == 'agp'">
+<tab class="hidden-print" heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl" ng-show="acceso == 'agp'">
+	<div class="visible-print-block">
+		<h3>Comprobantes erróneos</h3>
+	</div>
 	<br>
 	<vista-comprobantes model="model" datos-invoices="comprobantesError" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingError" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>

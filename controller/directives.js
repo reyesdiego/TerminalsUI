@@ -19,7 +19,7 @@
 				ocultarAccordionComprobantesVistos:	'=',
 				panelMensaje:						'='
 			},
-			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory){
+			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory){
 				$scope.currentPage = 1;
 
 				//Variables para control de fechas
@@ -37,7 +37,10 @@
 
 				$scope.comprobantesVistos = [];
 
-				$scope.vouchersType = $rootScope.vouchersType;
+				vouchersFactory.getVouchersArray(function(data){
+					$scope.vouchersType = data.data;
+				});
+
 				$scope.acceso = $rootScope.esUsuario;
 
 				// Puntos de Ventas
@@ -49,6 +52,8 @@
 				//Control de tarifas
 				$scope.controlTarifas = [];
 				$scope.noMatch = false;
+
+				$scope.commentsInvoice = [];
 
 				$scope.recargarResultado = false;
 
@@ -337,24 +342,32 @@
 						$scope.verDetalle = callback;
 						$scope.controlarTarifas($scope.verDetalle);
 
-						$rootScope.commentsInvoice = [];
+						$scope.commentsInvoice = [];
 						$scope.mostrarResultado = true;
 						$scope.loadingState = false;
-
-						$rootScope.verDetalle = $scope.verDetalle;
-						$rootScope.modeloImpresion.vista = 'hidden-print';
-						$rootScope.modeloImpresion.comprobante = 'visible-print-block';
-						$rootScope.modeloImpresion.correlativo = 'hidden-print';
-						$rootScope.modeloImpresion.report = 'hidden-print';
 
 						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 							dataTrack.data.forEach(function(comment){
 								if (comment.group == loginService.getGroup()){
-									$rootScope.commentsInvoice.push(comment);
+									$scope.commentsInvoice.push(comment);
 								}
 							});
 						});
 					});
+				};
+
+				$scope.devolverEstado = function(estado){
+					switch (estado){
+						case 'G':
+							return 'Controlado';
+							break;
+						case 'Y':
+							return 'Revisar';
+							break;
+						case 'R':
+							return 'Error';
+							break;
+					}
 				};
 
 				$scope.controlarTarifas = function(comprobante){

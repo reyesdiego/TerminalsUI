@@ -31,7 +31,7 @@
 					<th style="text-align: center">Inicio turno</th>
 					<th style="text-align: center">Fin turno</th>
 					<th style="text-align: center"><span class="visible-sm">Movim.</span><span class="hidden-sm">Movimiento</span></th>
-					<th ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center">Facturas</th>
+					<th class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center">Facturas</th>
 				</tr>
 				<tr ng-repeat="gate in datosGates">
 					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
@@ -44,7 +44,7 @@
 					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
 					<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
 					<td>{{ gate.mov }}</td>
-					<td ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0"><button class="btn btn-info" ng-click="mostrarDetalle(gate)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
+					<td class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0"><button class="btn btn-info" ng-click="mostrarDetalle(gate)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 				</tr>
 			</table>
 			<div-pagination total-items="totalItems" current-page="currentPage"></div-pagination>

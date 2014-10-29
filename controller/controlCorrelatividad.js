@@ -16,11 +16,6 @@ function correlatividadCtrl($rootScope, $scope, invoiceFactory){
 		'fechaHasta': $scope.hasta
 	};
 
-	$rootScope.modeloImpresion.vista = 'hidden-print';
-	$rootScope.modeloImpresion.comprobante = 'hidden-print';
-	$rootScope.modeloImpresion.correlativo = 'visible-print-block';
-	$rootScope.modeloImpresion.report = 'hidden-print';
-
 	$scope.pantalla = {
 		"titulo":  "Correlatividad",
 		"mensajeCorrelativo": "Seleccione punto de venta y tipo de comprobante para realizar la búsqueda",
@@ -56,9 +51,6 @@ function correlatividadCtrl($rootScope, $scope, invoiceFactory){
 				$scope.pantalla.tipo = "panel-success";
 				$scope.pantalla.resultadoCorrelativo = [];
 			}
-			$scope.pantalla.fechaDesde = $scope.model.fechaDesde;
-			$scope.pantalla.fechaHasta = $scope.model.fechaHasta;
-			$rootScope.controlCorrelativo = $scope.pantalla;
 			$scope.loadingCorrelatividad = false;
 		});
 	};
