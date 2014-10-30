@@ -3,13 +3,23 @@
  */
 (function(){
 	myapp.controller('turnosCtrl', function($scope, turnosFactory){
+		$scope.turnosGates = true;
+
 		// Fecha (dia y hora)
 		$scope.model = {
-			'fechaDesde':	new Date(),
-			'fechaHasta':	new Date(),
+			'nroPtoVenta': '',
+			'codTipoComprob': 0,
+			'nroComprobante': '',
+			'razonSocial': '',
+			'documentoCliente': '',
+			'fechaDesde': new Date(),
+			'fechaHasta': new Date(),
 			'contenedor': '',
-			'buque': ''
+			'buque': '',
+			'estado': 'N',
+			'codigo': '',
 		};
+
 		$scope.model.fechaDesde.setHours(0,0);
 		$scope.model.fechaHasta.setMinutes(0);
 

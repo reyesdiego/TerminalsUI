@@ -3,7 +3,7 @@
 		<div-panel config-panel="configPanel">No se encontraron Turnos para los filtros seleccionados.</div-panel>
 	</div>
 	<div ng-show="datosTurnos.length != undefined && datosTurnos.length > 0">
-		<h5><strong>Resultados: {{ totalItems }}</strong></h5>
+		<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover" style="text-align: center">
 				<tr>

@@ -3,6 +3,7 @@
  */
 (function(){
 	myapp.controller('gatesCtrl', function ($scope, gatesFactory) {
+		$scope.turnosGates = true;
 
 		// Fecha (dia y hora)
 		$scope.fechaDesde = new Date();
@@ -19,10 +20,17 @@
 		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'fechaDesde', 'codigo', 'razonSocial', 'contenedor', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
 		$scope.model = {
+			'nroPtoVenta': '',
+			'codTipoComprob': 0,
+			'nroComprobante': '',
+			'razonSocial': '',
+			'documentoCliente': '',
 			'fechaDesde': $scope.fechaDesde,
 			'fechaHasta': $scope.fechaHasta,
 			'contenedor': '',
 			'buque': '',
+			'estado': 'N',
+			'codigo': '',
 			'filtroOrden': 'gateTimestamp',
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': true,
