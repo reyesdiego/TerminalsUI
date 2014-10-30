@@ -207,7 +207,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 		$scope.recargarFacturadoMes = false;
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, $rootScope.moneda, function(graf){
 			$scope.loadingFacturadoMes = false;
-			var datosPreparados = controlCtrl.prepararDatosMes(graf, true);
+			var datosPreparados = controlCtrl.prepararDatosMes(graf.data, true);
 			switch ($rootScope.moneda){
 				case 'PES':
 					$scope.chartDataFacturasAR = datosPreparados;
@@ -216,10 +216,10 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 					$scope.chartDataFacturasUS = datosPreparados;
 					break;
 			}
-			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf, true);
+			$scope.chartDataFacturas = controlCtrl.prepararDatosMes(graf.data, true);
 		});
 		controlPanelFactory.getFacturasMeses($scope.mesDesde, $scope.otraMoneda, function(graf){
-			var datosPreparados = controlCtrl.prepararDatosMes(graf, true);
+			var datosPreparados = controlCtrl.prepararDatosMes(graf.data, true);
 			switch ($scope.otraMoneda){
 				case 'PES':
 					$scope.chartDataFacturasAR = datosPreparados;
@@ -295,7 +295,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 		$scope.recargarFacturadoDia = false;
 		controlPanelFactory.getFacturadoPorDia($scope.desde, $rootScope.moneda, function(graf){
 			$scope.loadingFacturadoDia = false;
-			var datosPreparados = controlCtrl.prepararDatosFacturadoDia(graf)
+			var datosPreparados = controlCtrl.prepararDatosFacturadoDia(graf.data);
 			switch ($rootScope.moneda){
 				case 'PES':
 					$scope.chartDataFacturadoAR = datosPreparados;
@@ -306,7 +306,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.chartDataFacturado = datosPreparados;
 		});
 		controlPanelFactory.getFacturadoPorDia($scope.desde, $scope.otraMoneda, function(graf){
-			var datosPreparados = controlCtrl.prepararDatosFacturadoDia(graf)
+			var datosPreparados = controlCtrl.prepararDatosFacturadoDia(graf.data);
 			switch ($scope.otraMoneda){
 				case 'PES':
 					$scope.chartDataFacturadoAR = datosPreparados;
