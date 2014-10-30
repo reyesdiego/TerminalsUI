@@ -7,11 +7,17 @@ function tasaCargasCtrl($scope, invoiceFactory, loginService){
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'estado', 'buque'];
 
 	$scope.model = {
+		'nroPtoVenta': '',
+		'codTipoComprob': 0,
+		'nroComprobante': '',
 		'razonSocial': '',
-		'contenedor': '',
-		'order': '',
+		'documentoCliente': '',
 		'fechaDesde': $scope.fechaDesde,
-		'fechaHasta': $scope.fechaHasta
+		'fechaHasta': $scope.fechaHasta,
+		'contenedor': '',
+		'buque': '',
+		'estado': 'N',
+		'codigo': ''
 	};
 
 	$scope.tasaCargas = {

@@ -21,7 +21,7 @@
 			},
 			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory){
 				$scope.currentPage = 1;
-
+				$scope.itemsPerPage = 10;
 				//Variables para control de fechas
 				$scope.maxDateD = new Date();
 				$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -416,6 +416,11 @@
 					return angular.isDefined($scope.itemsDescription[itemId]);
 				};
 
+				$scope.mostrarTope = function(){
+					var max = $scope.currentPage * 10;
+					return max > $scope.totalItems ? $scope.totalItems : max;
+				};
+
 				function cargaDatosSinPtoVenta(){
 					var datos = $scope.model;
 					datos.nroPtoVenta = '';
@@ -738,5 +743,12 @@
 			}]
 		}
 	});
+
+	myapp.directive('impresionFiltros', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/print.filtros.html'
+		}
+	})
 
 })();

@@ -7,6 +7,10 @@
 		<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
 	</div>
 
+	<div class="row col-lg-12 visible-print-block">
+		<impresion-filtros></impresion-filtros>
+	</div>
+
 	<div class="col-lg-12" ng-show="controlCodigos && codigosSinAsociar.length > 0">
 		<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error' }">
 			<p>Se hallaron códigos sin asociar: </p>
@@ -26,8 +30,8 @@
 
 	<div class="row" data-ng-hide="datosInvoices.length == 0 || loadingState">
 		<div class="col-lg-12">
-			<h5><strong>Resultados: {{ totalItems }}</strong></h5>
-			<tabset ng-show="mostrarPtosVenta">
+			<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ mostrarTope() }} (página {{ currentPage }})</strong></span></h5>
+			<tabset ng-show="mostrarPtosVenta" class="hidden-print">
 				<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrado('nroPtoVenta', tab.punto)"></tab>
 			</tabset>
 			<br>
