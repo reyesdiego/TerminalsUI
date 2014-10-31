@@ -48,7 +48,6 @@
 			if (page.skip == 0){ $scope.currentPage = 1}
 			invoiceFactory.getInvoice($scope.model, page, function(data){
 				if(data.status === 'OK'){
-					console.log(data.data);
 					$scope.invoices = data.data;
 					$scope.invoicesTotalItems = data.totalCount;
 				}
@@ -59,7 +58,6 @@
 			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
 			controlPanelFactory.getTasasContenedor(datos, function(data){
 				if (data.status === 'OK'){
-					console.log(data.data);
 					$scope.tasas = data.data;
 					$scope.totalTasas = data.totalTasas;
 				}
@@ -75,7 +73,6 @@
 					$scope.gatesTotalItems = data.totalCount;
 				}
 			});
-
 		};
 
 		$scope.cargaTurnos = function(page){
