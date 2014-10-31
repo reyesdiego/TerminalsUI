@@ -26,8 +26,6 @@
 		$scope.invoices = [];
 
 		$scope.$on('cambioFiltro', function(){
-			console.log('hola');
-			console.log($scope.model);
 			if ($scope.model.contenedor != ''){
 				$scope.filtrar();
 			} else {
@@ -39,7 +37,6 @@
 		});
 
 		$scope.filtrar = function(){
-			console.log('hola2');
 			$scope.cargaComprobantes();
 			$scope.cargaTasasCargas();
 			$scope.cargaGates();
