@@ -20,16 +20,14 @@
 			'filtroOrdenReverse': false,
 			'order': ''
 		};
+		$scope.ocultarFiltros = ['fechaDesde', 'fechaHasta', 'buque'];
 		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes'];
 		$scope.cargando = false;
 		$scope.invoices = [];
 
-		$scope.filtrado = function(filtro, contenido){
-			switch (filtro){
-				case 'contenedor':
-					$scope.model.contenedor = contenido;
-					break;
-			}
+		$scope.$on('cambioFiltro', function(){
+			console.log('hola');
+			console.log($scope.model);
 			if ($scope.model.contenedor != ''){
 				$scope.filtrar();
 			} else {
@@ -38,9 +36,10 @@
 				$scope.gates = [];
 				$scope.turnos = [];
 			}
-		};
+		});
 
 		$scope.filtrar = function(){
+			console.log('hola2');
 			$scope.cargaComprobantes();
 			$scope.cargaTasasCargas();
 			$scope.cargaGates();
@@ -50,8 +49,9 @@
 		$scope.cargaComprobantes = function(page){
 			page = page || { skip:0, limit: $scope.itemsPerPage };
 			if (page.skip == 0){ $scope.currentPage = 1}
-			invoiceFactory.getInvoice(cargaDatos(), page, function(data){
+			invoiceFactory.getInvoice($scope.model, page, function(data){
 				if(data.status === 'OK'){
+					console.log(data.data);
 					$scope.invoices = data.data;
 					$scope.invoicesTotalItems = data.totalCount;
 				}
@@ -62,6 +62,7 @@
 			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
 			controlPanelFactory.getTasasContenedor(datos, function(data){
 				if (data.status === 'OK'){
+					console.log(data.data);
 					$scope.tasas = data.data;
 					$scope.totalTasas = data.totalTasas;
 				}
@@ -71,7 +72,7 @@
 		$scope.cargaGates = function(page){
 			page = page || { skip: 0, limit: $scope.itemsPerPage };
 			if (page.skip == 0){ $scope.currentPage = 1}
-			gatesFactory.getGate(cargaDatos(), page, function (data) {
+			gatesFactory.getGate($scope.model, page, function (data) {
 				if (data.status === "OK") {
 					$scope.gates = data.data;
 					$scope.gatesTotalItems = data.totalCount;
@@ -82,7 +83,7 @@
 
 		$scope.cargaTurnos = function(page){
 			page = page || { skip:0, limit: $scope.itemsPerPage };
-			turnosFactory.getTurnos(cargaDatos(), page, function(data){
+			turnosFactory.getTurnos($scope.model, page, function(data){
 				if (data.status === "OK"){
 					$scope.turnos = data.data;
 					$scope.turnosTotalItems = data.totalCount;
@@ -90,22 +91,9 @@
 			});
 		};
 
-		$scope.containerSelected = function(selected){
-			if (angular.isDefined(selected)){
-				$scope.model.contenedor = selected.title;
-				$scope.filtrar();
-			}
-		};
-
 		$rootScope.$watch('moneda', function(){
 			$scope.cargaTasasCargas();
 		});
-
-		function cargaDatos() {
-			return {
-				'contenedor':			$scope.model.contenedor
-			};
-		}
 
 	});
 })();

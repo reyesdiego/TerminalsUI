@@ -5,39 +5,7 @@
 		</div>
 	</div>
 
-	<div class="row hidden-print">
-		<div class="col-lg-12">
-			<accordion>
-				<accordion-group is-open="status.open">
-					<accordion-heading>
-						<strong>Buscar por</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-					</accordion-heading>
-					<div class="row">
-						<div class="form-group col-lg-4 col-md-4 col-sm-6">
-							<angucomplete-alt id="idContenedor"
-											  placeholder="Contenedor"
-											  pause="100"
-											  selected-object="containerSelected"
-											  local-data="listaContenedores"
-											  search-fields="contenedor"
-											  title-field="contenedor"
-											  minlength="1"
-											  input-class="form-control"
-											  filtrar="filtrado(filtrar, contenido)"
-											  input-field="contenedor"
-											  match-class="highlight"
-											  limit-results="15"
-											  outside-model="model.contenedor"
-											  auto-match="true"></angucomplete-alt>
-						</div>
-						<div class="form-group col-lg-4">
-							<button class="btn btn-primary" ng-click="filtrado('', ''); status.open = !status.open"><span class="glyphicon glyphicon-search"></span> Buscar</button>
-						</div>
-					</div>
-				</accordion-group>
-			</accordion>
-		</div>
-	</div>
+	<containers-gates-search model="model" ocultar-filtros="ocultarFiltros"></containers-gates-search>
 
 	<div class="row">
 		<div class="col-lg-12">

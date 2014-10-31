@@ -602,12 +602,13 @@
 		};
 	}]);
 
-	myapp.directive('accordionGatesSearch', function(){
+	myapp.directive('containersGatesSearch', function(){
 		return {
 			restrict:		'E',
 			templateUrl:	'view/accordion.gates.search.html',
 			scope: {
-				model:			'='
+				model:			'=',
+				ocultarFiltros:	'='
 			},
 			controller: 'searchController'
 		}
