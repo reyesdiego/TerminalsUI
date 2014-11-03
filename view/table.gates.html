@@ -35,9 +35,9 @@
 				</tr>
 				<tr ng-repeat="gate in datosGates">
 					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-					<td>{{ gate.buque }}</td>
+					<td><a class="hidden-print" href ng-click="filtrado('buque', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
 					<td>{{ gate.viaje }}</td>
-					<td>{{ gate.contenedor }}</td>
+					<td><a class="hidden-print" href ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
 					<td>{{ gate.patenteCamion }}</td>
 					<td>{{ gate.tipo }}</td>
 					<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>

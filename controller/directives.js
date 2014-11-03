@@ -445,11 +445,13 @@
 			restrict:		'E',
 			templateUrl:	'view/table.gates.html',
 			scope: {
+				model:				'=',
 				datosGates:			'=',
 				totalItems:			'=',
 				detallesGates:		'=',
 				ocultarFiltros:		'@',
-				filtrarOrden:		'&'
+				filtrarOrden:		'&',
+				currentPage:		'='
 			},
 			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
 				$scope.totalGates = 0;
@@ -479,6 +481,17 @@
 						}
 					});
 				};
+				$scope.filtrado = function(filtro, contenido){
+					switch (filtro){
+						case 'contenedor':
+							$scope.model.contenedor = contenido;
+							break;
+						case 'buque':
+							$scope.model.buque = contenido;
+							break;
+					}
+					$scope.$emit('cambioFiltro');
+				};
 			}]
 		}
 	});
@@ -495,15 +508,13 @@
 			restrict:		'E',
 			templateUrl:	'view/table.turnos.html',
 			scope: {
+				model:				'=',
 				datosTurnos:		'=',
-				totalItems:			'='
+				totalItems:			'=',
+				configPanel:		'=',
+				currentPage:		'='
 			},
-			link: function($scope){
-				$scope.configPanel = {
-					tipo: 'panel-info',
-					titulo: 'Turnos'
-				};
-			}
+			controller: 'searchController'
 		}
 	});
 
@@ -608,7 +619,8 @@
 			templateUrl:	'view/accordion.gates.search.html',
 			scope: {
 				model:			'=',
-				ocultarFiltros:	'='
+				ocultarFiltros:	'=',
+				currentPage:	'='
 			},
 			controller: 'searchController'
 		}
@@ -619,7 +631,8 @@
 			restrict:		'E',
 			templateUrl:	'view/accordion.turnos.search.html',
 			scope: {
-				model:			'='
+				model:			'=',
+				currentPage:	'='
 			},
 			controller: 'searchController'
 		}

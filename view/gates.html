@@ -9,7 +9,7 @@
 		</div>
 
 		<div class="row hidden-print" ng-hide="detallesGates">
-			<containers-gates-search model="model"></containers-gates-search>
+			<containers-gates-search model="model" current-page="currentPage"></containers-gates-search>
 		</div>
 
 		<div class="row visible-print-block">
@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="row">
-			<table-gates datos-gates="gates" filtrar-orden="filtrarOrden(filtro)" detalles-gates="detallesGates" total-items="totalItems"></table-gates>
+			<table-gates model="model" datos-gates="gates" filtrar-orden="filtrarOrden(filtro)" detalles-gates="detallesGates" total-items="totalItems" current-page="currentPage"></table-gates>
 		</div>
 	</div>
 

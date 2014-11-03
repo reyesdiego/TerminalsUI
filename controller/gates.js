@@ -4,6 +4,7 @@
 (function(){
 	myapp.controller('gatesCtrl', function ($scope, gatesFactory) {
 		$scope.turnosGates = true;
+		$scope.currentPage = 1;
 
 		// Fecha (dia y hora)
 		$scope.fechaDesde = new Date();
