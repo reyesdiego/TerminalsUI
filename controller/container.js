@@ -21,7 +21,7 @@
 			'order': ''
 		};
 		$scope.ocultarFiltros = ['fechaDesde', 'fechaHasta', 'buque'];
-		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes'];
+		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
 		$scope.cargando = false;
 		$scope.invoices = [];
 

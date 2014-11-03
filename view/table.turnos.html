@@ -17,9 +17,9 @@
 				</tr>
 				<tr ng-repeat="turno in datosTurnos">
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
-					<td><a class="hidden-print" href ng-click="filtrado('buque', turno.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0" ng-click="filtrado('buque', turno.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
 					<td>{{ turno.viaje }}</td>
-					<td><a class="hidden-print" href ng-click="filtrado('contenedor', turno.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0" ng-click="filtrado('contenedor', turno.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
 					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
 					<td>{{ turno.fin | date: 'HH:mm' }}</td>
 					<td>{{ turno.mov }}</td>

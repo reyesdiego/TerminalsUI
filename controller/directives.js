@@ -449,8 +449,7 @@
 				datosGates:			'=',
 				totalItems:			'=',
 				detallesGates:		'=',
-				ocultarFiltros:		'@',
-				filtrarOrden:		'&',
+				ocultarFiltros:		'=',
 				currentPage:		'='
 			},
 			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
@@ -492,6 +491,23 @@
 					}
 					$scope.$emit('cambioFiltro');
 				};
+				$scope.filtrarOrden = function(filtro){
+					var filtroModo;
+					$scope.model.filtroOrden = filtro;
+					if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
+						$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
+					} else {
+						$scope.model.filtroOrdenReverse = false;
+					}
+					if ($scope.model.filtroOrdenReverse){
+						filtroModo = -1;
+					} else {
+						filtroModo = 1;
+					}
+					$scope.model.order = '"' + filtro + '":' + filtroModo;
+					$scope.model.filtroAnterior = filtro;
+					$scope.$emit('cambioFiltro');
+				};
 			}]
 		}
 	});
@@ -512,7 +528,8 @@
 				datosTurnos:		'=',
 				totalItems:			'=',
 				configPanel:		'=',
-				currentPage:		'='
+				currentPage:		'=',
+				ocultarFiltros:		'='
 			},
 			controller: 'searchController'
 		}
