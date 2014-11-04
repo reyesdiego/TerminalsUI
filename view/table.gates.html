@@ -8,7 +8,7 @@
 			<table class="table table-bordered table-hover" style="text-align: center">
 				<tr>
 					<th style="text-align: center">
-						<a href ng-click="filtrarOrden({filtro: 'gateTimestamp'})" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
+						<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==false"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==true"></span>
 							Fecha
@@ -21,7 +21,7 @@
 					<th style="text-align: center">Patente cami&oacute;n</th>
 					<th style="text-align: center">Tipo</th>
 					<th style="text-align: center">
-						<a href ng-click="filtrarOrden({filtro: 'gateTimestamp'})" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
+						<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==false"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==true"></span>
 							Horario
@@ -35,9 +35,9 @@
 				</tr>
 				<tr ng-repeat="gate in datosGates">
 					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-					<td>{{ gate.buque }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0" ng-click="filtrado('buque', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
 					<td>{{ gate.viaje }}</td>
-					<td>{{ gate.contenedor }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0" ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
 					<td>{{ gate.patenteCamion }}</td>
 					<td>{{ gate.tipo }}</td>
 					<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>

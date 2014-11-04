@@ -3,12 +3,13 @@
 	<div>
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 id="forms">Gates</h1>
+				<h1 class="hidden-xs"><img src="images/icon-gates.png" height="64" width="64">Gates</h1>
+				<h1 class="visible-xs">Gates</h1>
 			</div>
 		</div>
 
 		<div class="row hidden-print" ng-hide="detallesGates">
-			<containers-gates-search model="model"></containers-gates-search>
+			<containers-gates-search model="model" current-page="currentPage"></containers-gates-search>
 		</div>
 
 		<div class="row visible-print-block">
@@ -16,7 +17,7 @@
 		</div>
 
 		<div class="row">
-			<table-gates datos-gates="gates" filtrar-orden="filtrarOrden(filtro)" detalles-gates="detallesGates" total-items="totalItems"></table-gates>
+			<table-gates model="model" datos-gates="gates" detalles-gates="detallesGates" total-items="totalItems" current-page="currentPage"></table-gates>
 		</div>
 	</div>
 

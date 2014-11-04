@@ -4,6 +4,7 @@
 (function(){
 	myapp.controller('gatesCtrl', function ($scope, gatesFactory) {
 		$scope.turnosGates = true;
+		$scope.currentPage = 1;
 
 		// Fecha (dia y hora)
 		$scope.fechaDesde = new Date();
@@ -46,24 +47,6 @@
 			$scope.currentPage = 1;
 			$scope.cargaGates();
 		});
-
-		$scope.filtrarOrden = function(filtro){
-			var filtroModo;
-			$scope.model.filtroOrden = filtro;
-			if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
-				$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
-			} else {
-				$scope.model.filtroOrdenReverse = false;
-			}
-			if ($scope.model.filtroOrdenReverse){
-				filtroModo = -1;
-			} else {
-				filtroModo = 1;
-			}
-			$scope.model.order = '"' + filtro + '":' + filtroModo;
-			$scope.model.filtroAnterior = filtro;
-			$scope.cargaGates();
-		};
 
 		$scope.cargaGates = function () {
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);

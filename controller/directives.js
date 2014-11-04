@@ -445,11 +445,12 @@
 			restrict:		'E',
 			templateUrl:	'view/table.gates.html',
 			scope: {
+				model:				'=',
 				datosGates:			'=',
 				totalItems:			'=',
 				detallesGates:		'=',
-				ocultarFiltros:		'@',
-				filtrarOrden:		'&'
+				ocultarFiltros:		'=',
+				currentPage:		'='
 			},
 			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
 				$scope.totalGates = 0;
@@ -479,6 +480,34 @@
 						}
 					});
 				};
+				$scope.filtrado = function(filtro, contenido){
+					switch (filtro){
+						case 'contenedor':
+							$scope.model.contenedor = contenido;
+							break;
+						case 'buque':
+							$scope.model.buque = contenido;
+							break;
+					}
+					$scope.$emit('cambioFiltro');
+				};
+				$scope.filtrarOrden = function(filtro){
+					var filtroModo;
+					$scope.model.filtroOrden = filtro;
+					if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
+						$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
+					} else {
+						$scope.model.filtroOrdenReverse = false;
+					}
+					if ($scope.model.filtroOrdenReverse){
+						filtroModo = -1;
+					} else {
+						filtroModo = 1;
+					}
+					$scope.model.order = '"' + filtro + '":' + filtroModo;
+					$scope.model.filtroAnterior = filtro;
+					$scope.$emit('cambioFiltro');
+				};
 			}]
 		}
 	});
@@ -495,15 +524,14 @@
 			restrict:		'E',
 			templateUrl:	'view/table.turnos.html',
 			scope: {
+				model:				'=',
 				datosTurnos:		'=',
-				totalItems:			'='
+				totalItems:			'=',
+				configPanel:		'=',
+				currentPage:		'=',
+				ocultarFiltros:		'='
 			},
-			link: function($scope){
-				$scope.configPanel = {
-					tipo: 'panel-info',
-					titulo: 'Turnos'
-				};
-			}
+			controller: 'searchController'
 		}
 	});
 
@@ -608,7 +636,8 @@
 			templateUrl:	'view/accordion.gates.search.html',
 			scope: {
 				model:			'=',
-				ocultarFiltros:	'='
+				ocultarFiltros:	'=',
+				currentPage:	'='
 			},
 			controller: 'searchController'
 		}
@@ -619,7 +648,8 @@
 			restrict:		'E',
 			templateUrl:	'view/accordion.turnos.search.html',
 			scope: {
-				model:			'='
+				model:			'=',
+				currentPage:	'='
 			},
 			controller: 'searchController'
 		}

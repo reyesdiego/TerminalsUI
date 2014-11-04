@@ -3,7 +3,12 @@
  */
 (function(){
 	myapp.controller('turnosCtrl', function($scope, turnosFactory){
+		$scope.currentPage = 1;
 		$scope.turnosGates = true;
+		$scope.configPanel = {
+			tipo: 'panel-info',
+			titulo: 'Turnos'
+		};
 
 		// Fecha (dia y hora)
 		$scope.model = {
@@ -17,7 +22,7 @@
 			'contenedor': '',
 			'buque': '',
 			'estado': 'N',
-			'codigo': '',
+			'codigo': ''
 		};
 
 		$scope.model.fechaDesde.setHours(0,0);

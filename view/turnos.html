@@ -3,12 +3,13 @@
 	<div>
 		<div class="row">
 			<div class="col-lg-12">
-				<h1>Turnos</h1>
+				<h1 class="hidden-xs"><img src="images/calendar.png" height="64" width="64">Turnos</h1>
+				<h1 class="visible-xs">Turnos</h1>
 			</div>
 		</div>
 
 		<div class="row hidden-print">
-			<accordion-turnos-search model="model"></accordion-turnos-search>
+			<accordion-turnos-search model="model" current-page="currentPage"></accordion-turnos-search>
 		</div>
 
 		<div class="row visible-print-block">
@@ -16,7 +17,7 @@
 		</div>
 
 		<div class="row">
-			<table-turnos datos-turnos="turnos" total-items="totalItems"></table-turnos>
+			<table-turnos model="model" datos-turnos="turnos" total-items="totalItems" config-panel="configPanel" current-page="currentPage"></table-turnos>
 		</div>
 	</div>
 
