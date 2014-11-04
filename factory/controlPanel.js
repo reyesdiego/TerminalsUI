@@ -79,7 +79,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}
 	};
 
-	factory.getFacturasMeses = function(fecha, moneda, callback, errCallBack){
+	factory.getFacturasMeses = function(fecha, moneda, callback){
 		var inserturl = serverUrl + '/invoices/countsByMonth/' + moneda + '?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
@@ -103,7 +103,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			});
 	};
 
-	factory.getTurnosMeses = function(fecha, callback, errCallBack){
+	factory.getTurnosMeses = function(fecha, callback){
 		var inserturl = serverUrl + '/appointmentsByMonth?fecha=' + formatDate.formatearFecha(fecha);
 		$http({
 			method: "GET",
@@ -118,7 +118,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
-	factory.getFacturadoPorDia = function(fecha, moneda, callback, errCallBack){
+	factory.getFacturadoPorDia = function(fecha, moneda, callback){
 		var inserturl = serverUrl + '/invoices/countsByDate/' + moneda +'/?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
@@ -142,7 +142,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		});
 	};
 
-	factory.getTurnosDia = function(fecha, callback, errCallBack){
+	factory.getTurnosDia = function(fecha, callback){
 		var inserturl = serverUrl + '/appointmentsByHour?fecha=' + formatDate.formatearFecha(fecha);
 		$http({
 			method: "GET",
