@@ -176,43 +176,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory){
 	"use strict";
 
-	// Carga la sesion por cookies
-	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
-		authFactory.login().then(function(){
-			$rootScope.estaLogeado = true;
-		});
-	}
-
-	$rootScope.fechaDesde = new Date();
-	$rootScope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-
-	$rootScope.colorBactssa = '';
-	$rootScope.colorTerminal4 = '';
-	$rootScope.colorTrp = '';
-
-	$rootScope.listaRazonSocial = [];
-	$rootScope.listaContenedores = [];
-	$rootScope.listaBuques = [];
-	$rootScope.listaContenedoresGates = [];
-	$rootScope.listaBuquesGates = [];
-	$rootScope.listaContenedoresTurnos = [];
-	$rootScope.listaBuquesTurnos = [];
-
-	$rootScope.mensajeResultado = {
-		titulo: 'Comprobantes',
-		mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
-		tipo: 'panel-info'
-	};
-
-	$rootScope.addError = function(error){
-		$rootScope.mensajeResultado = {
-			titulo: 'Error',
-			mensaje: 'Se ha producido un error inesperado: ' + error.reason,
-			tipo: 'panel-danger'
-		};
-		$rootScope.$broadcast('errorInesperado', error);
-	};
-
 	$rootScope.cargaGeneral = function(){
 		invoiceFactory.getDescriptionItem(function (data) {
 			$rootScope.itemsDescriptionInvoices = data.data;
@@ -311,6 +274,47 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				}
 			});
 		});
+	};
+
+	// Carga la sesion por cookies
+	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
+		authFactory.login().then(function(){
+			$rootScope.estaLogeado = true;
+		});
+	} else {
+		if (loginService.getStatus()){
+			$rootScope.cargaGeneral();
+		}
+	}
+
+	$rootScope.fechaDesde = new Date();
+	$rootScope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
+	$rootScope.colorBactssa = '';
+	$rootScope.colorTerminal4 = '';
+	$rootScope.colorTrp = '';
+
+	$rootScope.listaRazonSocial = [];
+	$rootScope.listaContenedores = [];
+	$rootScope.listaBuques = [];
+	$rootScope.listaContenedoresGates = [];
+	$rootScope.listaBuquesGates = [];
+	$rootScope.listaContenedoresTurnos = [];
+	$rootScope.listaBuquesTurnos = [];
+
+	$rootScope.mensajeResultado = {
+		titulo: 'Comprobantes',
+		mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
+		tipo: 'panel-info'
+	};
+
+	$rootScope.addError = function(error){
+		$rootScope.mensajeResultado = {
+			titulo: 'Error',
+			mensaje: 'Se ha producido un error inesperado: ' + error.reason,
+			tipo: 'panel-danger'
+		};
+		$rootScope.$broadcast('errorInesperado', error);
 	};
 
 	var styles=document.styleSheets;

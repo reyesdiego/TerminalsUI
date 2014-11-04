@@ -24,6 +24,10 @@
 		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
 		$scope.cargando = false;
 		$scope.invoices = [];
+		$scope.turnosConfigPanel = {
+			tipo: 'panel-info',
+			titulo: 'Turnos'
+		};
 
 		$scope.$on('cambioFiltro', function(){
 			if ($scope.model.contenedor != ''){
