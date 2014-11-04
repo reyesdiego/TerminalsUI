@@ -173,7 +173,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 		})
 });
 
-myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs){
+myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory){
 	"use strict";
 
 	// Carga la sesion por cookies
@@ -213,99 +213,105 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		$rootScope.$broadcast('errorInesperado', error);
 	};
 
-	controlPanelFactory.getClients(function(data){
-		var i = 0;
-		data.data.forEach(function(cliente){
-			var objetoCliente = {
-				'id': i,
-				'nombre': cliente
-			};
-			$rootScope.listaRazonSocial.push(objetoCliente);
-			i++;
+	$rootScope.cargaGeneral = function(){
+		invoiceFactory.getDescriptionItem(function (data) {
+			$rootScope.itemsDescriptionInvoices = data.data;
 		});
-	});
 
-	controlPanelFactory.getContainers(function(data){
-		var i = 0;
-		data.data.forEach(function(contenedor){
-			var objetoContenedor = {
-				'id': i,
-				'contenedor': contenedor
-			};
-			$rootScope.listaContenedores.push(objetoContenedor);
-			i++;
-		});
-	});
-
-	controlPanelFactory.getShips(function(data){
-		var i = 0;
-		data.data.forEach(function(buque){
-			if (angular.isDefined(buque) && buque != null){
-				var objetoBuque = {
+		controlPanelFactory.getClients(function(data){
+			var i = 0;
+			data.data.forEach(function(cliente){
+				var objetoCliente = {
 					'id': i,
-					'buque': buque
+					'nombre': cliente
 				};
-				$rootScope.listaBuques.push(objetoBuque);
+				$rootScope.listaRazonSocial.push(objetoCliente);
 				i++;
-			}
+			});
 		});
-	});
 
-	controlPanelFactory.getContainersGates(function(data){
-		var i = 0;
-		data.data.forEach(function(container){
-			if (angular.isDefined(container) && container != null){
-				var objetoContainer = {
+		controlPanelFactory.getContainers(function(data){
+			var i = 0;
+			data.data.forEach(function(contenedor){
+				var objetoContenedor = {
 					'id': i,
-					'contenedor': container
+					'contenedor': contenedor
 				};
-				$rootScope.listaContenedoresGates.push(objetoContainer);
+				$rootScope.listaContenedores.push(objetoContenedor);
 				i++;
-			}
+			});
 		});
-	});
 
-	controlPanelFactory.getShipsGates(function(data){
-		var i = 0;
-		data.data.forEach(function(buque){
-			if (angular.isDefined(buque) && buque != null){
-				var objetoBuque = {
-					'id': i,
-					'buque': buque
-				};
-				$rootScope.listaBuquesGates.push(objetoBuque);
-				i++;
-			}
+		controlPanelFactory.getShips(function(data){
+			var i = 0;
+			data.data.forEach(function(buque){
+				if (angular.isDefined(buque) && buque != null){
+					var objetoBuque = {
+						'id': i,
+						'buque': buque
+					};
+					$rootScope.listaBuques.push(objetoBuque);
+					i++;
+				}
+			});
 		});
-	});
 
-	controlPanelFactory.getContainersTurnos(function(data){
-		var i = 0;
-		data.data.forEach(function(container){
-			if (angular.isDefined(container) && container != null){
-				var objetoContainer = {
-					'id': i,
-					'contenedor': container
-				};
-				$rootScope.listaContenedoresTurnos.push(objetoContainer);
-				i++;
-			}
+		controlPanelFactory.getContainersGates(function(data){
+			var i = 0;
+			data.data.forEach(function(container){
+				if (angular.isDefined(container) && container != null){
+					var objetoContainer = {
+						'id': i,
+						'contenedor': container
+					};
+					$rootScope.listaContenedoresGates.push(objetoContainer);
+					i++;
+				}
+			});
 		});
-	});
 
-	controlPanelFactory.getShipsTurnos(function(data){
-		var i = 0;
-		data.data.forEach(function(buque){
-			if (angular.isDefined(buque) && buque != null){
-				var objetoBuque = {
-					'id': i,
-					'buque': buque
-				};
-				$rootScope.listaBuquesTurnos.push(objetoBuque);
-				i++;
-			}
+		controlPanelFactory.getShipsGates(function(data){
+			var i = 0;
+			data.data.forEach(function(buque){
+				if (angular.isDefined(buque) && buque != null){
+					var objetoBuque = {
+						'id': i,
+						'buque': buque
+					};
+					$rootScope.listaBuquesGates.push(objetoBuque);
+					i++;
+				}
+			});
 		});
-	});
+
+		controlPanelFactory.getContainersTurnos(function(data){
+			var i = 0;
+			data.data.forEach(function(container){
+				if (angular.isDefined(container) && container != null){
+					var objetoContainer = {
+						'id': i,
+						'contenedor': container
+					};
+					$rootScope.listaContenedoresTurnos.push(objetoContainer);
+					i++;
+				}
+			});
+		});
+
+		controlPanelFactory.getShipsTurnos(function(data){
+			var i = 0;
+			data.data.forEach(function(buque){
+				if (angular.isDefined(buque) && buque != null){
+					var objetoBuque = {
+						'id': i,
+						'buque': buque
+					};
+					$rootScope.listaBuquesTurnos.push(objetoBuque);
+					i++;
+				}
+			});
+		});
+	};
 
 	var styles=document.styleSheets;
 	for(var i=0,l=styles.length; i<l; ++i){
