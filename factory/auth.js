@@ -59,10 +59,8 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 					$rootScope.switchTheme(loginService.getFiltro());
 				}
 
-				//En el login debe cargar las descripciones asociadas
-				invoiceFactory.getDescriptionItem(function (data) {
-					$rootScope.itemsDescriptionInvoices = data.data;
-				});
+				//En el login debe cargar todos los datos que se utilizan
+				$rootScope.cargaGeneral();
 
 				deferred.resolve(data);
 			} else {
