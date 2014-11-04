@@ -146,10 +146,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 			url: "/contenedor=:contenedor",
 			templateUrl: "view/gates.invoices.html"
 		})
-		.state('gates.invoices.result', {
-			url: "/id=:idComprobante",
-			templateUrl: "view/invoices.result.html"
-		})
 		.state('turnos', {
 			url: "/turnos",
 			templateUrl: "view/turnos.html"
@@ -158,7 +154,6 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 			url: "/cambiarpass",
 			templateUrl: "view/newpass.html"
 		})
-		// TODO Verificar las rutas que se usan
 		.state('container',{
 			url: "/contenedor",
 			templateUrl: "view/container.html"
