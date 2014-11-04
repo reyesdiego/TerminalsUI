@@ -157,7 +157,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getClients = function(callback){
-		var inserturl = serverUrl + '/clients';
+		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/clients';
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -171,7 +171,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getContainers = function(callback){
-		var inserturl = serverUrl + '/containers';
+		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/containers';
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -185,7 +185,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getShips = function(callback){
-		var inserturl = serverUrl + '/ships';
+		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/ships';
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -199,7 +199,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getContainersGates = function(callback){
-		var inserturl = serverUrl + '/gates/containers';
+		var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/containers';
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -213,7 +213,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getShipsGates = function(callback){
-		var inserturl = serverUrl + '/gates/ships';
+		var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/ships';
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -227,7 +227,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getContainersTurnos = function(callback){
-		var inserturl = serverUrl + '/appointments/containers';
+		var inserturl = serverUrl + '/appointments/'+loginService.getFiltro()+'/containers';
 		$http({
 			method: "GET",
 			url: inserturl,
@@ -241,7 +241,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getShipsTurnos = function(callback){
-		var inserturl = serverUrl + '/appointments/ships';
+		var inserturl = serverUrl + '/appointments/'+loginService.getFiltro()+'/ships';
 		$http({
 			method: "GET",
 			url: inserturl,
