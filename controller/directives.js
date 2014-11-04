@@ -453,6 +453,7 @@
 				currentPage:		'='
 			},
 			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
+				$scope.itemsPerPage = 10;
 				$scope.totalGates = 0;
 				$scope.configPanel = {
 					tipo: 'panel-info',
@@ -469,6 +470,7 @@
 					}
 				};
 				$scope.mostrarDetalle = function(contenedor){
+					$scope.paginaAnterior = $scope.currentPage;
 					$scope.totalGates = $scope.totalItems;
 					$scope.detallesGates = true;
 					$scope.contenedor = contenedor.contenedor;
