@@ -1,0 +1,32 @@
+<div class="row col-lg-12">
+	<div class="col-lg-3">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">Buques</h3>
+			</div>
+			<div class="panel-body">
+				<angucomplete-alt id="idBuque"
+				                  placeholder="Buque"
+				                  pause="100"
+				                  selected-object="buqueSelected"
+				                  local-data="buques"
+				                  search-fields="buque"
+				                  title-field="buque"
+				                  minlength="1"
+				                  input-class="form-control"
+				                  filtrar="filtrado(filtrar, contenido)"
+				                  input-field="buque"
+				                  match-class="highlight"
+				                  limit-results="0"
+				                  auto-match="true"></angucomplete-alt>
+				<!--<input class="form-control" type="text" ng-model="search" placeholder="Búsqueda">-->
+				<!--<h4 ng-repeat="buque in buquesFiltrados = (buques | filter: model.buque)"><a href ng-click="buqueSelected(buque)"><span class="glyphicon glyphicon-bookmark"></span> {{ buque.buque }}</a></h4>-->
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-9">
+		<tabset justified="true">
+			<tab ng-repeat="viaje in buqueElegido.viajes" class="hidden-print" heading="{{ viaje }}"></tab>
+		</tabset>
+	</div>
+</div>

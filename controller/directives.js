@@ -782,6 +782,27 @@
 			restrict:		'E',
 			templateUrl:	'view/print.filtros.html'
 		}
-	})
+	});
+
+	myapp.directive('buqueViajeSearch', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/buqueViajeSearch.html',
+			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
+				$scope.buques = [];
+				$scope.buqueElegido = {};
+				invoiceFactory.getShipTrips(function(data){
+					$scope.buques = data.data;
+				});
+
+				$scope.buqueSelected = function(selected){
+					if (angular.isDefined(selected)){
+						$scope.buqueElegido = selected.originalObject;
+					}
+				};
+
+			}]
+		}
+	});
 
 })();

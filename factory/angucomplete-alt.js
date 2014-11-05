@@ -305,27 +305,29 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 			}
 
 			function getLocalResults(str) {
-				var i, match, s,
-					searchFields = scope.searchFields.split(','),
-					matches = [];
-				for (i = 0; i < scope.localData.length; i++) {
-					match = false;
+				if (angular.isDefined(str)){
+					var i, match, s,
+						searchFields = scope.searchFields.split(','),
+						matches = [];
+					for (i = 0; i < scope.localData.length; i++) {
+						match = false;
 
-					for (s = 0; s < searchFields.length; s++) {
-						match = match || (scope.localData[i][searchFields[s]].toLowerCase().indexOf(str.toLowerCase()) >= 0);
+						for (s = 0; s < searchFields.length; s++) {
+							match = match || (scope.localData[i][searchFields[s]].toLowerCase().indexOf(str.toLowerCase()) >= 0);
+						}
+
+						if (match) {
+							matches[matches.length] = scope.localData[i];
+						}
 					}
 
-					if (match) {
-						matches[matches.length] = scope.localData[i];
+					if (scope.limitResults > 0){
+						matches = matches.splice(0, scope.limitResults);
 					}
-				}
 
-				if (scope.limitResults > 0){
-					matches = matches.splice(0, scope.limitResults);
+					scope.searching = false;
+					scope.processResults(matches, str);
 				}
-
-				scope.searching = false;
-				scope.processResults(matches, str);
 			}
 
 			function checkExactMatch(result, obj, str){

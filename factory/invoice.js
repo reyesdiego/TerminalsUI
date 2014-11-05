@@ -112,6 +112,20 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
+	factory.getShipTrips = function(callback){
+		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipTrips';
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function(data){
+			callback(data);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de buques y viajes.');
+		});
+	};
+
 	factory.invoiceById = function(id, callback){
 		var inserturl = serverUrl + '/invoice/' + id;
 		$http({
