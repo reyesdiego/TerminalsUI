@@ -16,8 +16,13 @@ function tasaCargasCtrl($scope, invoiceFactory, loginService){
 		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
 		'buque': '',
+		'viaje': '',
 		'estado': 'N',
-		'codigo': ''
+		'codigo': '',
+		'filtroOrden': 'gateTimestamp',
+		'filtroOrdenAnterior': '',
+		'filtroOrdenReverse': false,
+		'order': ''
 	};
 
 	$scope.tasaCargas = {

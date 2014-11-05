@@ -30,6 +30,7 @@
 			'fechaHasta': $scope.fechaHasta,
 			'contenedor': '',
 			'buque': '',
+			'viaje': '',
 			'estado': 'N',
 			'codigo': '',
 			'filtroOrden': 'gateTimestamp',

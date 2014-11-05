@@ -33,7 +33,8 @@
 				//Listas para autocompletado
 				$scope.listaContenedores = $rootScope.listaContenedores;
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
-				$scope.listaBuques = $rootScope.listaBuques;
+				$scope.listaBuquesLocal = $rootScope.listaBuques;
+				$scope.listaViajes = [];
 
 				$scope.comprobantesVistos = [];
 
@@ -63,6 +64,12 @@
 
 				invoiceFactory.getDescriptionItem(function(data){
 					$scope.itemsDescription = data.data;
+				});
+
+				$scope.$on('cargaGeneral', function(){
+					$scope.listaContenedores = $rootScope.listaContenedores;
+					$scope.listaRazonSocial = $rootScope.listaRazonSocial;
+					$scope.listaBuquesLocal = $rootScope.listaBuques;
 				});
 
 				$scope.$on('iniciarBusqueda', function(event, data){
@@ -112,8 +119,24 @@
 
 				$scope.buqueSelected = function(selected){
 					if (angular.isDefined(selected)){
-						$scope.model.buque = selected.title;
-						$scope.filtrado('buque', selected.title);
+						$scope.model.buque = selected.originalObject.buque;
+						//$scope.filtrado('buque', $scope.model.buque);
+						var i = 0;
+						selected.originalObject.viajes.forEach(function(viaje){
+							var objetoViaje = {
+								'id': i,
+								'viaje': viaje
+							};
+							$scope.listaViajes.push(objetoViaje);
+							i++;
+						});
+					}
+				};
+
+				$scope.viajeSelected = function(selected){
+					if (angular.isDefined(selected)){
+						$scope.model.viaje = selected.title;
+						$scope.filtrado('viaje', selected.title);
 					}
 				};
 
@@ -154,6 +177,9 @@
 							break;
 						case 'buque':
 							$scope.model.buque = contenido;
+							break;
+						case 'viaje':
+							$scope.model.viaje = contenido;
 							break;
 					}
 					if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
@@ -586,6 +612,11 @@
 		$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
 		$scope.listaBuquesTurnos = $rootScope.listaBuquesTurnos;
 		$scope.listaContenedoresTurnos = $rootScope.listaContenedoresTurnos;
+		$scope.$on('cargaGeneral', function(){
+			$scope.listaContenedores = $rootScope.listaContenedores;
+			$scope.listaRazonSocial = $rootScope.listaRazonSocial;
+			$scope.listaBuquesLocal = $rootScope.listaBuques;
+		});
 		$scope.openDate = function(event){
 			$rootScope.openDate(event);
 		};
@@ -593,10 +624,25 @@
 			if(angular.equals(evt.keyCode,13))
 				$scope.$emit('cambioFiltro');
 		};
-		$scope.buqueSelected = function (selected) {
-			if (angular.isDefined(selected)) {
-				$scope.model.buque = selected.title;
-				$scope.filtrado('buque', selected.title);
+		$scope.buqueSelected = function(selected){
+			if (angular.isDefined(selected)){
+				$scope.model.buque = selected.originalObject.buque;
+				//$scope.filtrado('buque', $scope.model.buque);
+				var i = 0;
+				selected.originalObject.viajes.forEach(function(viaje){
+					var objetoViaje = {
+						'id': i,
+						'viaje': viaje
+					};
+					$scope.listaViajes.push(objetoViaje);
+					i++;
+				});
+			}
+		};
+		$scope.viajeSelected = function(selected){
+			if (angular.isDefined(selected)){
+				$scope.model.viaje = selected.title;
+				$scope.filtrado('viaje', selected.title);
 			}
 		};
 		$scope.containerSelected = function (selected) {
@@ -618,6 +664,9 @@
 					break;
 				case 'buque':
 					$scope.model.buque = contenido;
+					break;
+				case 'viaje':
+					$scope.model.viaje = contenido;
 					break;
 			}
 			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){

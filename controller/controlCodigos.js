@@ -16,6 +16,7 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 		'fechaHasta': $scope.fechaHasta,
 		'contenedor': '',
 		'buque': '',
+		'viaje': '',
 		'estado': 'N',
 		'codigo': '',
 		'filtroOrden': 'gateTimestamp',

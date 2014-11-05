@@ -17,12 +17,17 @@
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': new Date(),
-			'fechaHasta': new Date(),
+			'fechaDesde': $scope.fechaDesde,
+			'fechaHasta': $scope.fechaHasta,
 			'contenedor': '',
 			'buque': '',
+			'viaje': '',
 			'estado': 'N',
-			'codigo': ''
+			'codigo': '',
+			'filtroOrden': 'gateTimestamp',
+			'filtroOrdenAnterior': '',
+			'filtroOrdenReverse': false,
+			'order': ''
 		};
 
 		$scope.model.fechaDesde.setHours(0,0);

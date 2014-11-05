@@ -190,6 +190,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.listaRazonSocial.push(objetoCliente);
 				i++;
 			});
+			$rootScope.$broadcast('cargaGeneral');
 		});
 
 		controlPanelFactory.getContainers(function(data){
@@ -202,20 +203,12 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.listaContenedores.push(objetoContenedor);
 				i++;
 			});
+			$rootScope.$broadcast('cargaGeneral');
 		});
 
-		controlPanelFactory.getShips(function(data){
-			var i = 0;
-			data.data.forEach(function(buque){
-				if (angular.isDefined(buque) && buque != null){
-					var objetoBuque = {
-						'id': i,
-						'buque': buque
-					};
-					$rootScope.listaBuques.push(objetoBuque);
-					i++;
-				}
-			});
+		invoiceFactory.getShipTrips(function(data){
+			$rootScope.listaBuques = data.data;
+			$rootScope.$broadcast('cargaGeneral');
 		});
 
 		controlPanelFactory.getContainersGates(function(data){
@@ -230,6 +223,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 					i++;
 				}
 			});
+			$rootScope.$broadcast('cargaGeneral');
 		});
 
 		controlPanelFactory.getShipsGates(function(data){
@@ -244,6 +238,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 					i++;
 				}
 			});
+			$rootScope.$broadcast('cargaGeneral');
 		});
 
 		controlPanelFactory.getContainersTurnos(function(data){
@@ -258,6 +253,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 					i++;
 				}
 			});
+			$rootScope.$broadcast('cargaGeneral');
 		});
 
 		controlPanelFactory.getShipsTurnos(function(data){
@@ -272,6 +268,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 					i++;
 				}
 			});
+			$rootScope.$broadcast('cargaGeneral');
 		});
 	};
 

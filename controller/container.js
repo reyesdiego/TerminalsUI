@@ -12,6 +12,7 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 		'fechaHasta': '',
 		'contenedor': '',
 		'buque': '',
+		'viaje': '',
 		'estado': 'N',
 		'codigo': '',
 		'filtroOrden': 'gateTimestamp',
