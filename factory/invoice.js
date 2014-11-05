@@ -126,6 +126,22 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
+	factory.getShipContainers = function(datos, callback){
+		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers?';
+		inserturl = this.aplicarFiltros(inserturl, datos);
+		console.log(inserturl);
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function(data){
+			callback(data);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al traer los contenedores para el buque y el viaje seleccionado.');
+		});
+	};
+
 	factory.invoiceById = function(id, callback){
 		var inserturl = serverUrl + '/invoice/' + id;
 		$http({

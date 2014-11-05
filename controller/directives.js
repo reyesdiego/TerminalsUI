@@ -836,10 +836,25 @@
 	myapp.directive('buqueViajeSearch', function(){
 		return {
 			restrict:		'E',
-			templateUrl:	'view/buqueViajeSearch.html',
+			templateUrl:	'view/buque.viaje.search.html',
 			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
+				$scope.currentPage = 1;
+				$scope.itemsPerPage = 10;
+				$scope.totalItems = 0;
+				$scope.panelMensaje = {
+					titulo: 'Buque - Viaje',
+					mensaje: 'No se encontraron contenedores para los filtros seleccionados.',
+					tipo: 'panel-info'
+				};
+				$scope.model = {
+					buque: '',
+					viaje: ''
+				};
 				$scope.buques = [];
 				$scope.buqueElegido = {};
+				$scope.datosContainers = [];
+				$scope.loadingState = false;
+
 				invoiceFactory.getShipTrips(function(data){
 					$scope.buques = data.data;
 				});
@@ -847,10 +862,56 @@
 				$scope.buqueSelected = function(selected){
 					if (angular.isDefined(selected)){
 						$scope.buqueElegido = selected.originalObject;
+						$scope.model.buque = selected.originalObject.buque;
+						$scope.model.viaje = selected.originalObject.viajes[0];
+						$scope.traerResultados();
 					}
 				};
 
+				$scope.filtrado = function(filtro, contenido){
+					$scope.currentPage = 1;
+					var cargar = true;
+					switch (filtro){
+						case 'buque':
+							if (contenido == '') {
+								$scope.model = {
+									buque: '',
+									viaje: ''
+								};
+								$scope.datosContainers = [];
+								$scope.buqueElegido = {};
+								cargar = false;
+							} else {
+								$scope.model.buque = contenido;
+							}
+							break;
+						case 'viaje':
+							$scope.model.viaje = contenido;
+							break;
+					}
+					if (cargar){
+						$scope.traerResultados();
+					}
+				};
+
+				$scope.traerResultados = function(){
+					$scope.loadingState = true;
+					$scope.datosContainers = [];
+					invoiceFactory.getShipContainers($scope.model, function(data){
+						$scope.datosContainers = data.data;
+						$scope.totalItems = $scope.datosContainers.length;
+						$scope.loadingState = false;
+					});
+				};
+
 			}]
+		}
+	});
+
+	myapp.directive('tableBuqueViaje', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/buque.viaje.result.html'
 		}
 	});
 
