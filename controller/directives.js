@@ -33,7 +33,7 @@
 				//Listas para autocompletado
 				$scope.listaContenedores = $rootScope.listaContenedores;
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
-				$scope.listaBuquesLocal = $rootScope.listaBuques;
+				$scope.listaBuques = $rootScope.listaBuques;
 				$scope.listaViajes = [];
 
 				$scope.comprobantesVistos = [];
@@ -69,7 +69,7 @@
 				$scope.$on('cargaGeneral', function(){
 					$scope.listaContenedores = $rootScope.listaContenedores;
 					$scope.listaRazonSocial = $rootScope.listaRazonSocial;
-					$scope.listaBuquesLocal = $rootScope.listaBuques;
+					$scope.listaBuques = $rootScope.listaBuques;
 				});
 
 				$scope.$on('iniciarBusqueda', function(event, data){
@@ -615,7 +615,7 @@
 		$scope.$on('cargaGeneral', function(){
 			$scope.listaContenedores = $rootScope.listaContenedores;
 			$scope.listaRazonSocial = $rootScope.listaRazonSocial;
-			$scope.listaBuquesLocal = $rootScope.listaBuques;
+			$scope.listaBuques = $rootScope.listaBuques;
 		});
 		$scope.openDate = function(event){
 			$rootScope.openDate(event);
