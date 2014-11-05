@@ -73,6 +73,7 @@
 	<script src="controller/controlComprobError.js"></script>
 	<script src="controller/reporteTarifas.js"></script>
 	<script src="controller/reporteHorarios.js"></script>
+	<script src="controller/buqueViaje.js"></script>
 	<!-- Directives -->
 	<script src="controller/directives.js"></script>
 	<!-- Style Switcher-->
@@ -111,6 +112,7 @@
 						<li><a ui-sref="gates" ng-click="isCollapsed = false">Gates</a></li>
 						<li><a ui-sref="turnos" ng-click="isCollapsed = false">Turnos</a></li>
 						<li><a ui-sref="container" ng-click="isCollapsed = false">Contenedor</a></li>
+						<li><a ui-sref="buque" ng-click="isCollapsed = false">Buque - Viaje</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
 						<li class="visible-sm"><a ng-click="isCollapsed = false; setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>

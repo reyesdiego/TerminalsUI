@@ -31,8 +31,14 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 				loginService.setType(data.role);
 				loginService.setGroup(data.group);
 				loginService.setToken(data.token.token);
+
+				///Hardcodeo de nuevas rutas agregadas
+				///Cuando ya estén todas definidas, estos valores deben venir desde el servidor
 				data.acceso.push("reports");
 				data.acceso.push("container");
+				data.acceso.push("buque");
+				///-------------------------------------------------------------------------
+
 				loginService.setAcceso(data.acceso);
 				if ($state.current.name == 'login') {
 					$state.transitionTo('tarifario');
