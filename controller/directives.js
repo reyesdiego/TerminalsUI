@@ -476,7 +476,8 @@
 				totalItems:			'=',
 				detallesGates:		'=',
 				ocultarFiltros:		'=',
-				currentPage:		'='
+				currentPage:		'=',
+				loadingState:		'='
 			},
 			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
 				$scope.itemsPerPage = 10;
@@ -557,7 +558,8 @@
 				totalItems:			'=',
 				configPanel:		'=',
 				currentPage:		'=',
-				ocultarFiltros:		'='
+				ocultarFiltros:		'=',
+				loadingState:		'='
 			},
 			controller: 'searchController'
 		}
@@ -837,8 +839,25 @@
 		return {
 			restrict:		'E',
 			templateUrl:	'view/buque.viaje.search.html',
-			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
-				$scope.currentPage = 1;
+			controller: ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory){
+				$scope.loadingState = false;
+				$scope.invoices = [];
+				$scope.loadingInvoices = false;
+				$scope.gates = [];
+				$scope.loadingGates = false;
+				$scope.turnos = [];
+				$scope.loadingTurnos = false;
+				$scope.tasas = [];
+				$scope.loadingTasas = false;
+				$scope.detalleGates = false;
+				$scope.ocultarFiltros = ['buque', 'contenedor', 'comprobantes', 'razonSocial', 'codComprobante', 'nroComprobante', 'fechaDesde'];
+				$scope.configPanelTurnos = {
+					tipo: 'panel-info',
+					titulo: 'Turnos'
+				};
+				$scope.detalle = false;
+				$scope.contenedorElegido = {};
+				$scope.currentPageContainers = 1;
 				$scope.itemsPerPage = 10;
 				$scope.totalItems = 0;
 				$scope.panelMensaje = {
@@ -848,7 +867,8 @@
 				};
 				$scope.model = {
 					buque: '',
-					viaje: ''
+					viaje: '',
+					contenedor: ''
 				};
 				$scope.buques = [];
 				$scope.buqueElegido = {};
@@ -869,7 +889,10 @@
 				};
 
 				$scope.filtrado = function(filtro, contenido){
-					$scope.currentPage = 1;
+					$scope.loadingState = true;
+					$scope.detalle = false;
+					$scope.currentPageContainers = 1;
+					$scope.model.contenedor = '';
 					var cargar = true;
 					switch (filtro){
 						case 'buque':
@@ -880,6 +903,7 @@
 								};
 								$scope.datosContainers = [];
 								$scope.buqueElegido = {};
+								$scope.loadingState = false;
 								cargar = false;
 							} else {
 								$scope.model.buque = contenido;
@@ -903,6 +927,77 @@
 						$scope.loadingState = false;
 					});
 				};
+
+				$scope.verDetalles = function(contenedor){
+					$scope.loadingInvoices = true;
+					$scope.invoices = [];
+					$scope.loadingGates = true;
+					$scope.gates = [];
+					$scope.loadingTurnos = true;
+					$scope.turnos = [];
+					$scope.loadingTasas = true;
+					$scope.tasas = [];
+					$scope.detalle = true;
+					$scope.contenedorElegido = contenedor;
+					$scope.model.contenedor = contenedor.contenedor;
+					$scope.cargaComprobantes();
+					$scope.cargaTasasCargas();
+					$scope.cargaGates();
+					$scope.cargaTurnos();
+				};
+
+				$scope.cargaComprobantes = function(page){
+					page = page || { skip:0, limit: $scope.itemsPerPage };
+					if (page.skip == 0){ $scope.currentPage = 1}
+					invoiceFactory.getInvoice($scope.model, page, function(data){
+						if(data.status === 'OK'){
+							$scope.invoices = data.data;
+							$scope.invoicesTotalItems = data.totalCount;
+							$scope.loadingInvoices = false;
+						}
+					});
+				};
+
+				$scope.cargaTasasCargas = function(){
+					var datos = { contenedor: $scope.contenedorElegido.contenedor, currency: $scope.moneda};
+					controlPanelFactory.getTasasContenedor(datos, function(data){
+						if (data.status === 'OK'){
+							$scope.tasas = data.data;
+							$scope.totalTasas = data.totalTasas;
+							$scope.loadingTasas = false;
+						}
+					});
+				};
+
+				$scope.cargaGates = function(page){
+					page = page || { skip: 0, limit: $scope.itemsPerPage };
+					if (page.skip == 0){ $scope.currentPage = 1}
+					gatesFactory.getGate($scope.model, page, function (data) {
+						if (data.status === "OK") {
+							$scope.gates = data.data;
+							$scope.gatesTotalItems = data.totalCount;
+							$scope.loadingGates = false;
+						}
+					});
+				};
+
+				$scope.cargaTurnos = function(page){
+					page = page || { skip:0, limit: $scope.itemsPerPage };
+					turnosFactory.getTurnos($scope.model, page, function(data){
+						if (data.status === "OK"){
+							$scope.turnos = data.data;
+							$scope.turnosTotalItems = data.totalCount;
+							$scope.loadingTurnos = false;
+						}
+					});
+				};
+
+				$rootScope.$watch('moneda', function(){
+					if ($scope.detalle){
+						$scope.loadingTasas = true;
+						$scope.cargaTasasCargas();
+					}
+				});
 
 			}]
 		}

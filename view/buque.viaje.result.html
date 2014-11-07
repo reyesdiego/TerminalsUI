@@ -2,17 +2,17 @@
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr>
-			<th><span>Contenedor</span></th>
-			<th><span>Fecha</span></th>
-			<th><span>Movimiento</span></th>
+			<th class="text-center"><span>Contenedor</span></th>
+			<th class="text-center"><span>Detalles</span></th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="contenedor in datosContainers | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
-			<td><span>{{ contenedor.contenedor }}</span></td>
-			<td><span>{{ contenedor.gateTimestamp | date: 'dd/MM/yyyy' }}</span></td>
-			<td><span>{{ contenedor.mov }}</span></td>
+		<tr ng-repeat="datosContenedor in datosContainers | startFrom:(currentPageContainers-1)*itemsPerPage | limitTo:itemsPerPage">
+			<td class="text-center"><a ng-show="datosContenedor.gates.length == 0" href popover="No se encontraron gates para este contenedor" popover-trigger="mouseenter"><span class="glyphicon glyphicon-exclamation-sign alert-danger"></span></a><span> {{ datosContenedor.contenedor.contenedor }}</span></td>
+			<td class="text-center"><span><button class="btn btn-primary" ng-click="verDetalles(datosContenedor.contenedor)">Detalles</button></span></td>
 		</tr>
 		</tbody>
 	</table>
 </div>
+
+<div-pagination total-items="totalItems" current-page="currentPageContainers"></div-pagination>

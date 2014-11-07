@@ -129,7 +129,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getShipContainers = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
