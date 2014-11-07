@@ -23,7 +23,6 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 	factory.getReporteHorarios = function(datos, callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		console.log(inserturl);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -51,6 +50,9 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 		if(angular.isDefined(datos.buque) && datos.buque != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'buqueNombre=' + datos.buque.toUpperCase();
+		}if(angular.isDefined(datos.viaje) && datos.viaje != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'viaje=' + datos.viaje.toUpperCase();
 		}
 		if(angular.isDefined(datos.order) && datos.order != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
