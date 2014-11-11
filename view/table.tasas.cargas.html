@@ -9,6 +9,7 @@
 				<tr>
 					<th>C&oacute;digo</th>
 					<th>Descripci&oacute;n</th>
+					<th>Cantidad</th>
 					<th class="text-right">Total</th>
 				</tr>
 				</thead>
@@ -16,12 +17,13 @@
 				<tr ng-repeat="tasa in tasas">
 					<td>{{ tasa._id.id }}</td>
 					<td>{{ tasa._id.descripcion }}</td>
+					<td class="text-right">{{ tasa.cnt }}</td>
 					<td class="text-right">{{ moneda | formatCurrency }} {{ tasa.total | currency }}</td>
 				</tr>
 				</tbody>
 				<tfoot>
 				<tr>
-					<td colspan="2" class="text-right">Total</td>
+					<th colspan="3" class="text-right">Total</th>
 					<td class="text-right">{{ moneda | formatCurrency}} {{ totalTasas | currency }}</td>
 				</tr>
 				</tfoot>
