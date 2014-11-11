@@ -269,7 +269,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		datos = data;
 		datos.totalTasas = 0;
 		data.data.forEach(function(detalle){
-			datos.totalTasas += detalle.cnt * detalle.total;
+			datos.totalTasas += detalle.total;
 		});
 		return datos;
 	};
