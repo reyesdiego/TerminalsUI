@@ -758,7 +758,7 @@
 			restrict:		'E',
 			templateUrl:	'view/correlativeControlSearch.html',
 			controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
-				$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor'];
+				$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje'];
 				$scope.fechaDesde = new Date();
 				$scope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 				$scope.maxDate = new Date();
