@@ -214,7 +214,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		if ($scope.flagNuevoConcepto){
 			var formData = {
 				"description":$scope.descripcion,
-				"topPrice":$scope.precio,
+				"topPrices": [{price: $scope.precio}],
 				"matches": null,
 				"unit": $scope.unidad,
 				"currency": $scope.moneda,
@@ -319,6 +319,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 					price.flagGuardar = true;
 					$scope.flagEditando = false;
 					$scope.volviendoEditar = true;
+					$scope.flagCambios = true;
 				}
 			} else {
 				price.editar = false;

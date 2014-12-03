@@ -85,7 +85,13 @@
 									</span>
 								</div>
 							</td>
-							<td class="col-lg-1 text-right">{{ price.currency | formatCurrency }} {{ price.topPrices[0].price }}</td>
+							<td class="col-lg-1 text-right" ng-click="editarTarifa(price, 'topPrices[0].price')">
+								<span ng-hide="price.editar">{{ price.currency | formatCurrency }} {{ price.topPrices[0].price }}</span>
+								<div ng-show="price.editar">
+									<input id="{{ price._id }}price.topPrices[0].price" type="text" class="form-control" ng-model="price.topPrices[0].price" ng-keyup="hitKeyEditar($event, price)" toupper>
+								</div>
+							</td>
+
 							<td class="col-lg-2" style="text-align: right">
 								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="acceso=='terminal'">
 									<a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a>
