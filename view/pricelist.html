@@ -41,9 +41,9 @@
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'unit' && reverse"></span>
 							<span class="glyphicon glyphicon-tag"></span> Unidad
 						</a></th>
-						<th style="width: 10%"><a href="" ng-click="ordenarPor('topPrice')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'topPrice' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'topPrice' && reverse"></span>
+						<th style="width: 10%"><a href="" ng-click="ordenarPor('topPrices[0].price')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'topPrices[0].price' && !reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'topPrices[0].price' && reverse"></span>
 							<span class="glyphicon glyphicon-usd"></span> Tope
 						</a></th>
 					</tr>
@@ -53,7 +53,7 @@
 						<td style="width: 15%">{{ price.code }}</td>
 						<td style="width: 60%">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 15%">{{ price.unit}}</td>
-						<td style="text-align: right; width: 10%" >{{ price.currency | formatCurrency }}{{ price.topPrice }}</td>
+						<td style="text-align: right; width: 10%" >{{ price.currency | formatCurrency }} {{ price.topPrices[0].price }}</td>
 					</tr>
 					</tbody>
 				</table>
