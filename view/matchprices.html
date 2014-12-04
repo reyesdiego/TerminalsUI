@@ -191,18 +191,18 @@
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
 								<tr>
-									<th class="col-lg-8 text-center">
+									<th class="col-lg-7 text-center">
 										<span class="glyphicon glyphicon-bookmark"></span> Fecha
 									</th>
-									<th class="col-lg-4 text-center">
+									<th class="col-lg-5 text-center">
 										<span class="glyphicon glyphicon-credit-card"></span> Precio
 									</th>
 								</tr>
 								</thead>
 								<tbody>
 								<tr ng-repeat="price in preciosHistoricos">
-									<td class="col-lg-8 text-center">{{ price.from | date: 'dd/MM/yyyy' }}</td>
-									<td class="col-lg-4 text-center">{{ price.price | currency }}</td>
+									<td class="col-lg-7 text-center">{{ price.from | date: 'dd/MM/yyyy' }}</td>
+									<td class="col-lg-5 text-center">{{ price.currency | formatCurrency }} {{ price.price | currency }}</td>
 								</tr>
 								</tbody>
 							</table>
