@@ -113,6 +113,33 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		});
 	};
 
+	factory.getPriceById = function(id, callback){
+		var inserturl = serverUrl + '/price/' + id + '/' + loginService.getFiltro();
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:{ token: loginService.getToken() }
+		}).success(function(response) {
+			callback(response);
+		}).error(function(errorText) {
+			dialogs.error('Error', 'Error al añadir el Precio en la base');
+		});
+	};
+
+	factory.savePriceChanges = function(formData, id, callback){
+		var inserturl = serverUrl + '/price/' + id;
+		$http({
+			method: 'PUT',
+			url: inserturl,
+			data: JSON.stringify(formData),
+			headers:{"Content-Type":"application/json", token: loginService.getToken() }
+		}).success(function(response) {
+			callback(response);
+		}).error(function(errorText) {
+			dialogs.error('Error', 'Error al añadir el Precio en la base');
+		});
+	};
+
 	return factory;
 
 });

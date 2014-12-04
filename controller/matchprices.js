@@ -8,8 +8,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.flagGuardado = true;
 	$scope.flagCambios = false;
 
-	$scope.listaMatch = false;
-	$scope.nuevoConcepto = true;
+	$scope.nuevoConcepto = false;
 
 	$scope.pricelist = [];
 	$scope.filteredPrices = [];
@@ -27,18 +26,17 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.acceso = loginService.getType();
 
-	$scope.anteriorDescripcion = '';
-	$scope.anteriorCodigo = '';
-	$scope.anteriorId = '';
-	$scope.tarifaEditando = '';
 	$scope.flagEditando = false;
-	$scope.volviendoEditar = false;
 	$scope.codigosConMatch = [];
 	$scope.conMatch = false;
 	$scope.tasas = false;
 
 	$scope.predicate = '';
 	$scope.reverse = true;
+
+	$scope.preciosHistoricos = [];
+
+	$scope.puedeEditar = (loginService.getType() == 'terminal');
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
@@ -163,20 +161,13 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		price.disabled = !(angular.isDefined(price.new) && price.new != '');
 	};
 
-	//Toma el enter para guardar los cambios realizados, o el escape para volver los cambios atrás
-	$scope.hitKeyEditar = function(evt, price){
-		if(angular.equals(evt.keyCode,13))
-			$scope.editado(price);
-			$scope.volviendoEditar = false;
-		if(angular.equals(evt.keyCode, 27))
-			$scope.cancelarEditado(price);
-	};
-
-	$scope.abrirNuevoConcepto = function(){
-		$scope.listaMatch = true;
-		$scope.nuevoConcepto = false;
+	$scope.abrirNuevoConcepto = function(tipo){
+		$scope.nuevoConcepto = true;
 		$scope.esRequerido = true;
 		$scope.flagNuevoConcepto = true;
+		if (tipo == 'editar'){
+			$scope.flagEditando = true;
+		}
 	};
 
 	$scope.guardar = function(){
@@ -222,36 +213,49 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 				"terminal": loginService.getInfo().terminal
 			};
 
-			priceFactory.addPrice(formData, function(nuevoPrecio){
+			if ($scope.verificarEditado()){
+				if ($scope.flagEditando){
+					priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
+						if (data.status == 'OK'){
+							dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
+							$scope.salir();
+							$scope.prepararDatos();
+						}
+					})
+				} else {
+					priceFactory.addPrice(formData, function(nuevoPrecio){
 
-				if (nuevoPrecio.status === 'OK'){
-					var nuevoMatch = {
-						code: nuevoPrecio.data.code,
-						terminal: nuevoPrecio.data.terminal,
-						_idPrice: nuevoPrecio.data._id,
-						match:[]
-					};
-					nuevoMatch.match.push(nuevoPrecio.data.code);
+						if (nuevoPrecio.status === 'OK'){
+							var nuevoMatch = {
+								code: nuevoPrecio.data.code,
+								terminal: nuevoPrecio.data.terminal,
+								_idPrice: nuevoPrecio.data._id,
+								match:[]
+							};
+							nuevoMatch.match.push(nuevoPrecio.data.code);
 
-					$scope.match = [];
-					$scope.match.push(nuevoMatch);
+							$scope.match = [];
+							$scope.match.push(nuevoMatch);
 
-					priceFactory.addMatchPrice($scope.match, function(){
-						dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente");
-						$scope.salir();
-						$scope.prepararDatos();
-					});
+							priceFactory.addMatchPrice($scope.match, function(){
+								dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente.");
+								$scope.salir();
+								$scope.prepararDatos();
+							});
+						}
+					})
 				}
-			})
+			}
 		}
 	};
 
 	$scope.salir = function(){
+		$scope.preciosHistoricos = [];
 		$scope.flagNuevoConcepto = false;
+		$scope.flagEditando = false;
 		$scope.esRequerido = false;
 
-		$scope.listaMatch = false;
-		$scope.nuevoConcepto = true;
+		$scope.nuevoConcepto = false;
 
 		$scope.descripcion = "";
 		$scope.codigo = "";
@@ -264,80 +268,39 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		$scope.flagGuardado = true;
 	};
 
-	$scope.editarTarifa = function(tarifa, campo){
-		if (!$scope.volviendoEditar){
-			if($scope.flagEditando && tarifa._id != $scope.anteriorId){
-				$scope.cancelarEditado($scope.tarifaEditando);
-			}
-			if (tarifa.terminal != 'AGP' && loginService.getType() == 'terminal' && !$scope.flagEditando){
-				var elemento;
-				//Determino sobre qué campo se hizo el click para ponerle el foco al mostrarlo para editar
-				switch (campo) {
-					case 'code':
-						elemento = document.getElementById(tarifa._id + 'code');
-						break;
-					case 'description':
-						elemento = document.getElementById(tarifa._id + 'description');
-						break;
-				}
-				$timeout(function(){
-					elemento.focus();
-				},500);
-				$scope.flagEditando = true;
-				tarifa.editar = true;
-				$scope.anteriorDescripcion = tarifa.description;
-				$scope.anteriorCodigo = tarifa.code;
-				$scope.anteriorId = tarifa._id;
-				$scope.tarifaEditando = tarifa;
-			}
-		} else {
-			$scope.volviendoEditar = false;
-		}
+	$scope.editarTarifa = function(tarifa){
+		$scope.posicionTarifa = $scope.pricelist.indexOf(tarifa);
+		priceFactory.getPriceById(tarifa._id, function(data){
+			$scope.tarifaCompleta = data.data;
+			$scope.codigo = $scope.tarifaCompleta.code;
+			$scope.descripcion = $scope.tarifaCompleta.description;
+			$scope.unidad = $scope.tarifaCompleta.unit;
+			$scope.moneda = $scope.tarifaCompleta.currency;
+			$scope.precio = tarifa.topPrices[0].price;
+			$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+			$scope.abrirNuevoConcepto('editar');
+		});
 	};
 
-	$scope.editado = function(price){
+	$scope.verificarEditado = function(){
 		var flagCodigo = false;
 		var flagDescripcion = false;
-		//Chequeo que la descripción ni el código no sean vacíos
-		if (!(angular.equals(price.code, '') || angular.equals(price.description,''))){
-			//Me fijo si efectivamente se produjeron cambios
-			if (price.code != $scope.anteriorCodigo || price.description != $scope.anteriorDescripcion){
-				//Luego comparo que con los cambios hechos, no coincidan ni la descripción ni el código con otra tarifa de la lista
-				var pos = $scope.pricelist.indexOf(price);
-				var listaSinCodigo = $scope.pricelist.slice();
-				listaSinCodigo.splice(pos, 1);
-				listaSinCodigo.forEach(function(tarifa){
-					if (price.code == tarifa.code) flagCodigo = true;
-					if (price.description == tarifa.description) flagDescripcion = true;
-				});
-				//Si hubo coincidencia muestro mensaje de error
-				if (flagCodigo || flagDescripcion){
-					dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden coincidir con el de una tarifa existente.');
-				} else {
-					price.editar = false;
-					price.claseFila = "info";
-					price.flagGuardar = true;
-					$scope.flagEditando = false;
-					$scope.volviendoEditar = true;
-					$scope.flagCambios = true;
-				}
-			} else {
-				price.editar = false;
-				$scope.flagEditando = false;
-				$scope.volviendoEditar = true;
-			}
-		} else {
-			dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden ser vacíos.');
-		}
-	};
 
-	$scope.cancelarEditado = function(price){
-		if ($scope.flagEditando){
-			price.code = $scope.anteriorCodigo;
-			price.description = $scope.anteriorDescripcion;
-			price.editar = false;
-			$scope.flagEditando = false;
+		//Comparo que con los cambios hechos, no coincidan ni la descripción ni el código con otra tarifa de la lista
+		var listaSinCodigo = $scope.pricelist.slice();
+		listaSinCodigo.splice($scope.posicionTarifa, 1);
+		listaSinCodigo.forEach(function(tarifa){
+			if ($scope.codigo == tarifa.code) flagCodigo = true;
+			if ($scope.descripcion == tarifa.description) flagDescripcion = true;
+		});
+		//Si hubo coincidencia muestro mensaje de error
+		if (flagCodigo || flagDescripcion){
+			dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden coincidir con el de una tarifa existente.');
+			return false;
+		} else {
+			return true;
 		}
+
 	};
 
 }
