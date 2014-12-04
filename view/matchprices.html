@@ -77,7 +77,7 @@
 								<span>{{ price.description | maxLength : 124 }}</span><a href="" ng-show="(price.description.length > 124) && !price.editar" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
 							</td>
 							<td class="col-lg-2 text-right">
-								<span>{{ price.currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</span>
+								<span>{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</span>
 							</td>
 
 							<td class="col-lg-2" style="text-align: right">

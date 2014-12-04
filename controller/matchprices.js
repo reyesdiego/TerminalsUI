@@ -205,10 +205,9 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		if ($scope.flagNuevoConcepto){
 			var formData = {
 				"description":$scope.descripcion,
-				"topPrices": [{price: $scope.precio}],
+				"topPrices": [{price: $scope.precio, currency: $scope.moneda}],
 				"matches": null,
 				"unit": $scope.unidad,
-				"currency": $scope.moneda,
 				"code": $scope.codigo,
 				"terminal": loginService.getInfo().terminal
 			};
@@ -275,7 +274,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			$scope.codigo = $scope.tarifaCompleta.code;
 			$scope.descripcion = $scope.tarifaCompleta.description;
 			$scope.unidad = $scope.tarifaCompleta.unit;
-			$scope.moneda = $scope.tarifaCompleta.currency;
+			$scope.moneda = tarifa.topPrices[0].currency;
 			$scope.precio = tarifa.topPrices[0].price;
 			$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
 			$scope.abrirNuevoConcepto('editar');

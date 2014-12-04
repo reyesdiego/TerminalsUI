@@ -53,7 +53,7 @@
 						<td style="width: 15%">{{ price.code }}</td>
 						<td style="width: 60%">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 15%">{{ price.unit}}</td>
-						<td style="text-align: right; width: 10%" >{{ price.currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</td>
+						<td style="text-align: right; width: 10%" >{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</td>
 					</tr>
 					</tbody>
 				</table>
