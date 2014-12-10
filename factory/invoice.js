@@ -300,7 +300,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 					switch (estadoGrupo.estado){
 						case 'Y':
 							comprobante.interfazEstado = {
-								'estado': 'Revisar',
+								'estado': 'Sin revisar',
 								'btnEstado': 'btn-warning'
 							};
 							break;
@@ -319,7 +319,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 						default :
 							comprobante.estado.push(estadoDefault);
 							comprobante.interfazEstado = {
-								'estado': 'Revisar',
+								'estado': 'Sin revisar',
 								'btnEstado': 'btn-warning'
 							};
 							break;
@@ -329,14 +329,14 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if (!encontrado){
 				comprobante.estado.push(estadoDefault);
 				comprobante.interfazEstado = {
-					'estado': 'Revisar',
+					'estado': 'Sin revisar',
 					'btnEstado': 'btn-warning'
 				};
 			}
 		} else {
 			comprobante.estado.push(estadoDefault);
 			comprobante.interfazEstado = {
-				'estado': 'Revisar',
+				'estado': 'Sin revisar',
 				'btnEstado': 'btn-warning'
 			};
 		}

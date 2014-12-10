@@ -2,7 +2,9 @@
  * Created by artiom on 03/09/14.
  */
 
-function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
+function trackingInvoiceCtrl($scope, $modalInstance, estado, track, states) {
+
+	$scope.states = states.data;
 
 	$scope.interfazModal = {
 		titulo: '',
@@ -20,10 +22,10 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 
 	switch ($scope.estado){
 		case 'Y':
-			$scope.interfazModal.titulo = 'Estado: Revisar';
+			$scope.interfazModal.titulo = 'Estado: Sin revisar';
 			$scope.interfazModal.tipoModal = 'bg-warning';
 			$scope.interfazModal.btnEstado = 'btn-warning';
-			$scope.interfazModal.estado = 'Revisar';
+			$scope.interfazModal.estado = 'Sin revisar';
 			$scope.interfazModal.divCuerpo = 'bg-warning';
 			break;
 		case 'G':
@@ -43,24 +45,28 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track) {
 	}
 
 	$scope.trackInvoice = function(estado){
-		$scope.interfazModal.nuevoEstado = estado;
-		switch (estado){
-			case 'Y':
-				$scope.interfazModal.btnEstado = 'btn-warning';
-				$scope.interfazModal.estado = 'Revisar';
-				$scope.interfazModal.divCuerpo = 'bg-warning';
-				break;
-			case 'G':
-				$scope.interfazModal.btnEstado = 'btn-success';
-				$scope.interfazModal.estado = 'Controlado';
-				$scope.interfazModal.divCuerpo = 'bg-success';
-				break;
-			case 'R':
-				$scope.interfazModal.btnEstado = 'btn-danger';
-				$scope.interfazModal.estado = 'Error';
-				$scope.interfazModal.divCuerpo = 'bg-danger';
-				break;
+		$scope.interfazModal.nuevoEstado = estado._id;
+
+		var btnClass = '';
+		var cuerpoClass = '';
+		if (estado.type === 'ERROR'){
+			btnClass = 'btn-danger';
+			cuerpoClass = 'bg-danger';
+		} else if (estado.type === 'WARN'){
+			btnClass = 'btn-warning';
+			cuerpoClass = 'bg-warning';
 		}
+		else if (estado.type === 'OK'){
+			btnClass = 'btn-success';
+			cuerpoClass = 'bg-success';
+		}
+		else if (estado.type === 'UNKNOWN') {
+			btnClass = 'btn-warning';
+			cuerpoClass = 'bg-warning';
+		}
+		$scope.interfazModal.btnEstado = btnClass;
+		$scope.interfazModal.estado = estado.description;
+		$scope.interfazModal.divCuerpo = cuerpoClass;
 	};
 
 	$scope.guardar = function () {

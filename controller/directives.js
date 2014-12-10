@@ -19,7 +19,7 @@
 				ocultarAccordionComprobantesVistos:	'=',
 				panelMensaje:						'='
 			},
-			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory){
+			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, statesFactory){
 				$scope.currentPage = 1;
 				$scope.itemsPerPage = 10;
 				//Variables para control de fechas
@@ -237,64 +237,75 @@
 						}
 					});
 					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
-						var modalInstance = $modal.open({
-							templateUrl: 'view/trackingInvoice.html',
-							controller: trackingInvoiceCtrl,
-							backdrop: 'static',
-							resolve: {
-								estado: function () {
-									return estado;
-								},
-								track: function() {
-									return dataTrack;
-								}
-							}
-						});
-						dataTrack = [];
-						modalInstance.result.then(function (dataComment) {
-							invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState, function(){
-								$scope.recargarResultado = true;
-								var logInvoice = {
-									title: dataComment.title,
-									state: dataComment.newState,
-									comment: dataComment.comment,
-									invoice: comprobante._id
-								};
-								invoiceFactory.commentInvoice(logInvoice, function(dataRes){
-									if (dataRes.status == 'OK'){
-										switch (dataComment.newState){
-											case 'Y':
-												comprobante.interfazEstado = {
-													'estado': 'Revisar',
-													'btnEstado': 'btn-warning'
-												};
-												break;
-											case 'G':
-												comprobante.interfazEstado = {
-													'estado': 'Controlado',
-													'btnEstado': 'btn-success'
-												};
-												break;
-											case 'R':
-												comprobante.interfazEstado = {
-													'estado': 'Error',
-													'btnEstado': 'btn-danger'
-												};
-												break;
-										}
-										var nuevoEstado = {
-											_id: comprobante._id,
-											estado: dataComment.newState,
-											grupo: loginService.getGroup(),
-											user: loginService.getInfo().user
-										};
-										comprobante.estado.push(nuevoEstado);
-										if (!$scope.ocultarAccordionInvoicesSearch && !$scope.mostrarResultado)
-											$scope.cargaPuntosDeVenta();
+
+						statesFactory.getStatesType(function (dataStates){
+
+							var modalInstance = $modal.open({
+								templateUrl: 'view/trackingInvoice.html',
+								controller: trackingInvoiceCtrl,
+								backdrop: 'static',
+								resolve: {
+									estado: function () {
+										return estado;
+									},
+									track: function() {
+										return dataTrack;
+									},
+									states : function() {
+										return dataStates;
 									}
+								}
+							});
+
+
+							dataTrack = [];
+							modalInstance.result.then(function (dataComment) {
+								invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState, function(){
+									$scope.recargarResultado = true;
+									var logInvoice = {
+										title: dataComment.title,
+										state: dataComment.newState,
+										comment: dataComment.comment,
+										invoice: comprobante._id
+									};
+									invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+										if (dataRes.status == 'OK'){
+											switch (dataComment.newState){
+												case 'Y':
+													comprobante.interfazEstado = {
+														'estado': 'Sin revisar',
+														'btnEstado': 'btn-warning'
+													};
+													break;
+												case 'G':
+													comprobante.interfazEstado = {
+														'estado': 'Controlado',
+														'btnEstado': 'btn-success'
+													};
+													break;
+												case 'R':
+													comprobante.interfazEstado = {
+														'estado': 'Error',
+														'btnEstado': 'btn-danger'
+													};
+													break;
+											}
+											var nuevoEstado = {
+												_id: comprobante._id,
+												estado: dataComment.newState,
+												grupo: loginService.getGroup(),
+												user: loginService.getInfo().user
+											};
+											comprobante.estado.push(nuevoEstado);
+											if (!$scope.ocultarAccordionInvoicesSearch && !$scope.mostrarResultado)
+												$scope.cargaPuntosDeVenta();
+										}
+									});
 								});
 							});
+
 						});
+
 					});
 				};
 
@@ -388,7 +399,7 @@
 							return 'Controlado';
 							break;
 						case 'Y':
-							return 'Revisar';
+							return 'Sin revisar';
 							break;
 						case 'R':
 							return 'Error';
@@ -491,9 +502,9 @@
 					var horarioInicio = new Date(gate.turnoInicio);
 					var horarioFin = new Date(gate.turnoFin);
 					if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
-						return 'green'
+						return 'green';
 					} else {
-						return 'red'
+						return 'red';
 					}
 				};
 				$scope.mostrarDetalle = function(contenedor){
