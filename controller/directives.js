@@ -35,7 +35,7 @@
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 				$scope.listaBuques = $rootScope.listaBuques;
 				$scope.listaViajes = [];
-				$scope.estadosComprobantes = [];
+				$scope.estadosComprobantes = $rootScope.estadosComprobantes;
 
 				$scope.comprobantesVistos = [];
 

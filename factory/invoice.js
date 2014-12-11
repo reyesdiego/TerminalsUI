@@ -297,7 +297,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			comprobante.estado.forEach(function(estadoGrupo){
 				if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
 					encontrado = true;
-					comprobante.interfazEstado = $rootScope.estadosComprobantes[estadoGrupo.estado];
+					comprobante.interfazEstado = $rootScope.estadosComprobantesArray[estadoGrupo.estado];
 					switch (comprobante.interfazEstado.type){
 						case 'WARN':
 							comprobante.interfazEstado.btnEstado = 'btn-warning';

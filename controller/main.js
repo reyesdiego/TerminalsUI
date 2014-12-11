@@ -176,9 +176,13 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	"use strict";
 
 	$rootScope.cargaGeneral = function(){
+
 		statesFactory.getStatesArray(function(data){
+			$rootScope.estadosComprobantesArray = data.data;
+		});
+
+		statesFactory.getStatesType(function(data){
 			$rootScope.estadosComprobantes = data.data;
-			console.log($rootScope.estadosComprobantes);
 		});
 
 		invoiceFactory.getDescriptionItem(function (data) {
