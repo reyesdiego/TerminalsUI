@@ -172,10 +172,15 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 		})
 });
 
-myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory){
+myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory){
 	"use strict";
 
 	$rootScope.cargaGeneral = function(){
+		statesFactory.getStatesArray(function(data){
+			$rootScope.estadosComprobantes = data.data;
+			console.log($rootScope.estadosComprobantes);
+		});
+
 		invoiceFactory.getDescriptionItem(function (data) {
 			$rootScope.itemsDescriptionInvoices = data.data;
 		});

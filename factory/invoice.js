@@ -297,31 +297,23 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			comprobante.estado.forEach(function(estadoGrupo){
 				if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
 					encontrado = true;
-					switch (estadoGrupo.estado){
-						case 'Y':
-							comprobante.interfazEstado = {
-								'estado': 'Sin revisar',
-								'btnEstado': 'btn-warning'
-							};
+					comprobante.interfazEstado = $rootScope.estadosComprobantes[estadoGrupo.estado];
+					switch (comprobante.interfazEstado.type){
+						case 'WARN':
+							comprobante.interfazEstado.btnEstado = 'btn-warning';
 							break;
-						case 'G':
-							comprobante.interfazEstado = {
-								'estado': 'Controlado',
-								'btnEstado': 'btn-success'
-							};
+						case 'OK':
+							comprobante.interfazEstado.btnEstado = 'btn-success';
 							break;
-						case 'R':
-							comprobante.interfazEstado = {
-								'estado': 'Error',
-								'btnEstado': 'btn-danger'
-							};
+						case 'ERROR':
+							comprobante.interfazEstado.btnEstado = 'btn-danger';
+							break;
+						case 'UNKNOWN':
+							comprobante.interfazEstado.btnEstado = 'btn-info';
 							break;
 						default :
 							comprobante.estado.push(estadoDefault);
-							comprobante.interfazEstado = {
-								'estado': 'Sin revisar',
-								'btnEstado': 'btn-warning'
-							};
+							comprobante.interfazEstado.btnEstado = 'btn-info';
 							break;
 					}
 				}
@@ -329,14 +321,16 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if (!encontrado){
 				comprobante.estado.push(estadoDefault);
 				comprobante.interfazEstado = {
-					'estado': 'Sin revisar',
-					'btnEstado': 'btn-warning'
+					'name': 'Sin ver',
+					'description': 'Sin ver',
+					'btnEstado': 'btn-info'
 				};
 			}
 		} else {
 			comprobante.estado.push(estadoDefault);
 			comprobante.interfazEstado = {
-				'estado': 'Sin revisar',
+				'name': 'Sin ver',
+				'description': 'Sin ver',
 				'btnEstado': 'btn-warning'
 			};
 		}

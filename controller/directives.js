@@ -35,6 +35,7 @@
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 				$scope.listaBuques = $rootScope.listaBuques;
 				$scope.listaViajes = [];
+				$scope.estadosComprobantes = [];
 
 				$scope.comprobantesVistos = [];
 
@@ -70,6 +71,7 @@
 					$scope.listaContenedores = $rootScope.listaContenedores;
 					$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 					$scope.listaBuques = $rootScope.listaBuques;
+					$scope.estadosComprobantes = $rootScope.estadosComprobantes;
 				});
 
 				$scope.$on('iniciarBusqueda', function(event, data){
@@ -231,14 +233,15 @@
 
 				$scope.trackInvoice = function(comprobante){
 					var estado;
-					comprobante.estado.forEach(function(estadoGrupo){
+					console.log(comprobante);
+					estado = comprobante.interfazEstado;
+					/*comprobante.estado.forEach(function(estadoGrupo){
 						if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
+							console.log(estadoGrupo);
 							estado = estadoGrupo.estado;
 						}
-					});
+					});*/
 					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
-
-						statesFactory.getStatesType(function (dataStates){
 
 							var modalInstance = $modal.open({
 								templateUrl: 'view/trackingInvoice.html',
@@ -252,11 +255,10 @@
 										return dataTrack;
 									},
 									states : function() {
-										return dataStates;
+										return $rootScope.estadosComprobantes;
 									}
 								}
 							});
-
 
 							dataTrack = [];
 							modalInstance.result.then(function (dataComment) {
@@ -303,8 +305,6 @@
 									});
 								});
 							});
-
-						});
 
 					});
 				};

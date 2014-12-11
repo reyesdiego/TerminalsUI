@@ -4,7 +4,7 @@
 
 function trackingInvoiceCtrl($scope, $modalInstance, estado, track, states) {
 
-	$scope.states = states.data;
+	$scope.states = states;
 
 	$scope.interfazModal = {
 		titulo: '',
@@ -20,29 +20,33 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track, states) {
 	$scope.estado = estado;
 	$scope.interfazModal.nuevoEstado = estado;
 
-	switch ($scope.estado){
-		case 'Y':
-			$scope.interfazModal.titulo = 'Estado: Sin revisar';
-			$scope.interfazModal.tipoModal = 'bg-warning';
-			$scope.interfazModal.btnEstado = 'btn-warning';
-			$scope.interfazModal.estado = 'Sin revisar';
-			$scope.interfazModal.divCuerpo = 'bg-warning';
+	console.log($scope.estado);
+
+	switch ($scope.estado.type){
+		case 'UNKNOWN':
+			$scope.interfazModal.tipoModal = 'bg-info';
+			$scope.interfazModal.btnEstado = 'btn-info';
+			$scope.interfazModal.divCuerpo = 'bg-info';
 			break;
-		case 'G':
-			$scope.interfazModal.titulo = 'Estado: Controlado';
+		case 'OK':
 			$scope.interfazModal.tipoModal = 'bg-success';
 			$scope.interfazModal.btnEstado = 'btn-success';
-			$scope.interfazModal.estado = 'Controlado';
 			$scope.interfazModal.divCuerpo = 'bg-success';
 			break;
-		case 'R':
-			$scope.interfazModal.titulo = 'Estado: Error';
+		case 'ERROR':
 			$scope.interfazModal.tipoModal = 'bg-danger';
 			$scope.interfazModal.btnEstado = 'btn-danger';
-			$scope.interfazModal.estado = 'Error';
+			$scope.interfazModal.divCuerpo = 'bg-danger';
+			break;
+		case 'WARN':
+			$scope.interfazModal.tipoModal = 'bg-danger';
+			$scope.interfazModal.btnEstado = 'btn-danger';
 			$scope.interfazModal.divCuerpo = 'bg-danger';
 			break;
 	}
+
+	$scope.interfazModal.titulo = 'Estado: ' + $scope.estado.description;
+	$scope.interfazModal.estado = $scope.estado.description;
 
 	$scope.trackInvoice = function(estado){
 		$scope.interfazModal.nuevoEstado = estado._id;

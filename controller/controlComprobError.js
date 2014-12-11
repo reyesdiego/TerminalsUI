@@ -17,7 +17,7 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 		'contenedor': '',
 		'buque': '',
 		'viaje': '',
-		'estado': 'N',
+		'estado': 'R,T',
 		'codigo': '',
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
@@ -31,13 +31,13 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
-		$scope.model.estado = 'R';
+		$scope.model.estado = 'R,T';
 		$scope.traerComprobantes();
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
-		$scope.model.estado = 'R';
+		$scope.model.estado = 'R,T';
 		$scope.traerComprobantes();
 	});
 
