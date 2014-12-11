@@ -233,14 +233,7 @@
 
 				$scope.trackInvoice = function(comprobante){
 					var estado;
-					console.log(comprobante);
 					estado = comprobante.interfazEstado;
-					/*comprobante.estado.forEach(function(estadoGrupo){
-						if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
-							console.log(estadoGrupo);
-							estado = estadoGrupo.estado;
-						}
-					});*/
 					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 
 							var modalInstance = $modal.open({

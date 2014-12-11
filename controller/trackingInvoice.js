@@ -20,8 +20,6 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track, states) {
 	$scope.estado = estado;
 	$scope.interfazModal.nuevoEstado = estado;
 
-	console.log($scope.estado);
-
 	switch ($scope.estado.type){
 		case 'UNKNOWN':
 			$scope.interfazModal.tipoModal = 'bg-info';
