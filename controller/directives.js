@@ -256,15 +256,17 @@
 
 							dataTrack = [];
 							modalInstance.result.then(function (dataComment) {
-								invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState, function(){
+								console.log(dataComment);
+								invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
 									$scope.recargarResultado = true;
 									var logInvoice = {
 										title: dataComment.title,
-										state: dataComment.newState,
+										state: dataComment.newState._id,
 										comment: dataComment.comment,
 										invoice: comprobante._id
 									};
 									invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+										console.log(dataRes);
 										if (dataRes.status == 'OK'){
 											switch (dataComment.newState){
 												case 'Y':

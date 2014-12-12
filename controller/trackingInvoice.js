@@ -47,7 +47,7 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track, states) {
 	$scope.interfazModal.estado = $scope.estado.description;
 
 	$scope.trackInvoice = function(estado){
-		$scope.interfazModal.nuevoEstado = estado._id;
+		$scope.interfazModal.nuevoEstado = estado;
 
 		var btnClass = '';
 		var cuerpoClass = '';
@@ -80,7 +80,7 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track, states) {
 				comment: $scope.interfazModal.comentario,
 				newState: $scope.interfazModal.nuevoEstado
 			};
-			if ($scope.interfazModal.nuevoEstado == $scope.estado){
+			if ($scope.interfazModal.nuevoEstado._id == $scope.estado){
 				commentData.title = $scope.interfazModal.estado
 			}
 			$modalInstance.close(commentData);
