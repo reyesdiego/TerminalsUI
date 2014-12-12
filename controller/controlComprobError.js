@@ -4,7 +4,7 @@
 
 function comprobantesErrorCtrl($scope, invoiceFactory){
 
-	$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
+	$scope.ocultarFiltros = ['nroPtoVenta'];
 
 	$scope.model = {
 		'nroPtoVenta': '',
@@ -17,7 +17,7 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 		'contenedor': '',
 		'buque': '',
 		'viaje': '',
-		'estado': 'R,T',
+		'estado': 'N',
 		'codigo': '',
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
@@ -31,13 +31,12 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
-		$scope.model.estado = 'R,T';
+		//$scope.model.estado = 'R,T';
 		$scope.traerComprobantes();
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
-		$scope.model.estado = 'R,T';
 		$scope.traerComprobantes();
 	});
 
@@ -53,11 +52,18 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 	$scope.traerComprobantes = function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.loadingError = true;
-		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceError){
+		invoiceFactory.getInvoice($scope.procesarModel(), $scope.page, function(invoiceError){
 			$scope.comprobantesError = invoiceError.data;
 			$scope.totalItems = invoiceError.totalCount;
 			$scope.loadingError = false;
 		})
+	};
+
+	$scope.procesarModel = function(){
+		var data = angular.copy($scope.model);
+		if (data.estado != 'R' && data.estado != 'T')
+			data.estado = 'R,T';
+		return data;
 	};
 
 }

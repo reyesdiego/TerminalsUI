@@ -17,7 +17,8 @@
 				mostrarPtosVenta:					'=',
 				ocultarAccordionInvoicesSearch:		'=',
 				ocultarAccordionComprobantesVistos:	'=',
-				panelMensaje:						'='
+				panelMensaje:						'=',
+				filtroEstados:						'@'
 			},
 			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, statesFactory){
 				$scope.currentPage = 1;
