@@ -105,13 +105,14 @@
 					var contenido;
 					if (data.ticked){
 						contenido = $scope.model.estado + ',' + data._id;
-						/*if ($scope.model.estado == 'N'){
-							contenido = data._id;
-						} else {
-							contenido = $scope.model.estado + ',' + data._id;
-						}*/
+						contenido = contenido.replace('N,', '');
 					} else {
-						contenido = $scope.model.estado.replace(data._id, 'N');
+						contenido = $scope.model.estado.replace(',' + data._id, '');
+						contenido = contenido.replace(data._id + ',', '');
+						contenido = contenido.replace(data._id, '');
+						if (contenido == ''){
+							contenido = 'N';
+						}
 					};
 					$scope.filtrado('estado', contenido);
 				};
