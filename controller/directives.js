@@ -36,7 +36,7 @@
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 				$scope.listaBuques = $rootScope.listaBuques;
 				$scope.listaViajes = [];
-				$scope.estadosComprobantes = $rootScope.estadosComprobantes;
+				$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
 
 				$scope.comprobantesVistos = [];
 
@@ -72,11 +72,15 @@
 					$scope.listaContenedores = $rootScope.listaContenedores;
 					$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 					$scope.listaBuques = $rootScope.listaBuques;
-					$scope.estadosComprobantes = $rootScope.estadosComprobantes;
+					$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
 				});
 
 				$scope.$on('iniciarBusqueda', function(event, data){
 					$scope.filtrado(data.filtro, data.contenido);
+				});
+
+				$scope.$on('borrarEstado', function(){
+					$scope.filtrado('estado', 'N');
 				});
 
 				$rootScope.$watch('moneda', function(){
@@ -96,6 +100,21 @@
 						};
 					}
 				});
+
+				$scope.estadoSeleccionado = function(data){
+					var contenido;
+					if (data.ticked){
+						contenido = $scope.model.estado + ',' + data._id;
+						/*if ($scope.model.estado == 'N'){
+							contenido = data._id;
+						} else {
+							contenido = $scope.model.estado + ',' + data._id;
+						}*/
+					} else {
+						contenido = $scope.model.estado.replace(data._id, 'N');
+					};
+					$scope.filtrado('estado', contenido);
+				};
 
 				$scope.hitEnter = function(evt){
 					if(angular.equals(evt.keyCode,13))
@@ -256,7 +275,6 @@
 
 							dataTrack = [];
 							modalInstance.result.then(function (dataComment) {
-								console.log(dataComment);
 								invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
 									$scope.recargarResultado = true;
 									var logInvoice = {
@@ -266,26 +284,20 @@
 										invoice: comprobante._id
 									};
 									invoiceFactory.commentInvoice(logInvoice, function(dataRes){
-										console.log(dataRes);
 										if (dataRes.status == 'OK'){
-											switch (dataComment.newState){
-												case 'Y':
-													comprobante.interfazEstado = {
-														'estado': 'Sin revisar',
-														'btnEstado': 'btn-warning'
-													};
+											comprobante.interfazEstado = dataComment.newState;
+											switch (dataComment.newState.type){
+												case 'WARN':
+													comprobante.interfazEstado.btnEstado = 'btn-warning';
 													break;
-												case 'G':
-													comprobante.interfazEstado = {
-														'estado': 'Controlado',
-														'btnEstado': 'btn-success'
-													};
+												case 'OK':
+													comprobante.interfazEstado.btnEstado = 'btn-success';
 													break;
-												case 'R':
-													comprobante.interfazEstado = {
-														'estado': 'Error',
-														'btnEstado': 'btn-danger'
-													};
+												case 'ERROR':
+													comprobante.interfazEstado.btnEstado = 'btn-danger';
+													break;
+												case 'UNKNOWN':
+													comprobante.interfazEstado.btnEstado = 'btn-info';
 													break;
 											}
 											var nuevoEstado = {

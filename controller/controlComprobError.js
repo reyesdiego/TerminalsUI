@@ -61,7 +61,7 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 
 	$scope.procesarModel = function(){
 		var data = angular.copy($scope.model);
-		if (data.estado != 'R' && data.estado != 'T')
+		if (data.estado == 'N')
 			data.estado = 'R,T';
 		return data;
 	};

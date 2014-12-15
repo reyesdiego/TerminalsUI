@@ -42,7 +42,7 @@ function idToDate(objectId){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'timepickerPop']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'timepickerPop', 'multi-select']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -183,6 +183,23 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 
 		statesFactory.getStatesType(function(data){
 			$rootScope.estadosComprobantes = data.data;
+			$rootScope.estadosComprobantes.forEach(function(estado){
+				switch (estado.type){
+					case 'WARN':
+						estado.icon = '<img src="images/warn.png" />';
+						break;
+					case 'ERROR':
+						estado.icon = '<img src="images/error.png" />';
+						break;
+					case 'UNKNOWN':
+						estado.icon = '<img src="images/unknown.png" />';
+						break;
+					case 'OK':
+						estado.icon = '<img src="images/ok.png" />';
+						break;
+				}
+				estado.ticked = false;
+			})
 		});
 
 		invoiceFactory.getDescriptionItem(function (data) {

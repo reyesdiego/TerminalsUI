@@ -73,16 +73,6 @@
 						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codigo', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
 				</div>
-				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
-					<div class="input-group">
-						<label class="sr-only" for="model.estado">Seleccionar estado de la factura</label>
-						<select id="model.estado" class="form-control" ng-model="model.estado">
-							<option value="N" disabled>Seleccionar Estado</option>
-							<option ng-repeat="estado in estadosComprobantes | filter: filtroEstados" value="{{ estado._id }}">{{ estado.description }}</option>
-						</select>
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('estado', 'N');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-					</div>
-				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
 					<angucomplete-alt id="idBuque"
 									  placeholder="Buque"
@@ -132,6 +122,17 @@
 						<input id="model.fechaHasta" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaHasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDateH"/>
 						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaHasta', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 					</div>
+				</div>
+				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
+					<!--<div class="input-group">
+						<label class="sr-only" for="model.estado">Seleccionar estado de la factura</label>
+						<select id="model.estado" class="form-control" ng-model="model.estado">
+							<option value="N" disabled>Seleccionar Estado</option>
+							<option ng-repeat="estado in estadosComprobantes | filter: filtroEstados" value="{{ estado._id }}">{{ estado.description }}</option>
+						</select>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('estado', 'N');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+					</div>-->
+					<multi-select input-model="estadosComprobantes" button-label="icon description" item-label="icon description" tick-property="ticked" helper-elements="none" default-label="Seleccionar estado" max-labels="1" on-item-click="estadoSeleccionado(data)"></multi-select>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6">
 					<div class="input-group">
