@@ -1,20 +1,12 @@
 
 <div class="modal-header {{ interfazModal.tipoModal }}" style="border-radius: 5px">
-	<h3 class="modal-title">{{ interfazModal.titulo}}</h3>
+	<h3 class="modal-title"><img ng-src="{{ interfazModal.imagen }}" height="24" width="24"> {{ interfazModal.titulo}}</h3>
 </div>
 <div class="modal-body {{ interfazModal.divCuerpo }}">
 	<textarea rows="2" ng-model="interfazModal.comentario" placeholder="Ingrese un comentario" style="resize: none; width: 100%"></textarea>
 	<hr>
 	<span style="font-size: 18px">Nuevo estado:</span>
-	<div class="btn-group" dropdown is-open="status.isopen">
-		<button type="button" class="btn {{ interfazModal.btnEstado }} dropdown-toggle">
-			{{ interfazModal.estado }} <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu dropdown-toggle" role="menu" >
-			<li ng-repeat="state in states"><a href ng-click="trackInvoice(state)">{{ state.description }}</a></li>
-		</ul>
-
-	</div>
+	<multi-select input-model="states" button-label="icon description" item-label="icon description" tick-property="ticked" helper-elements="" selection-mode="single" default-label="Seleccionar estado" on-item-click="trackInvoice(data)"></multi-select>
 	<hr>
 	<div class="well" ng-show="tracking.length > 0" style="height: 300px; overflow: scroll;">
 		<div ng-repeat="track in tracking">

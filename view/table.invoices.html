@@ -66,6 +66,7 @@
 			<td ng-show="acceso=='agp'" style="text-align: center; width: 15%">
 				<div class="btn-group" dropdown is-open="status.isopen">
 					<button style="width: 150px" ng-click="trackInvoice(invoice)" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle" popover="{{item.descripcion}}" popover-trigger="mouseenter">
+						<img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16">
 						{{ invoice.interfazEstado.description }}
 					</button>
 				</div>

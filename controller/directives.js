@@ -113,7 +113,7 @@
 						if (contenido == ''){
 							contenido = 'N';
 						}
-					};
+					}
 					$scope.filtrado('estado', contenido);
 				};
 
@@ -269,7 +269,7 @@
 										return dataTrack;
 									},
 									states : function() {
-										return $rootScope.estadosComprobantes;
+										return angular.copy($rootScope.estadosComprobantes);
 									}
 								}
 							});
