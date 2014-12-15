@@ -63,12 +63,13 @@
 			<td style="text-align: center; width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0" ng-click="filtrado('fechaDesde', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 			<td style="text-align: right; width: 13%"><a class="hidden-print" ng-show="chequearTarifas(invoice)" href="" popover="Error en tarifas" popover-trigger="mouseenter"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a> {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice.codMoneda: invoice.cotiMoneda | currency }}</td>
 			<td class="hidden-print" style="text-align: center; width: 5%"><button class="btn btn-info" ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
-			<td ng-show="acceso=='agp'" style="text-align: center; width: 15%">
+			<td ng-show="acceso=='agp'" style="text-align: left; width: 15%">
 				<div class="btn-group" dropdown is-open="status.isopen">
-					<button style="width: 150px" ng-click="trackInvoice(invoice)" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle" popover="{{item.descripcion}}" popover-trigger="mouseenter">
+					<!--<button style="width: 150px" ng-click="trackInvoice(invoice)" type="button" class="btn {{ invoice.interfazEstado.btnEstado }} dropdown-toggle" popover="{{item.descripcion}}" popover-trigger="mouseenter">
 						<img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16">
 						{{ invoice.interfazEstado.description }}
-					</button>
+					</button>-->
+					<img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><a ng-click="trackInvoice(invoice)"> {{ invoice.interfazEstado.description }}</a>
 				</div>
 			</td>
 		</tr>
