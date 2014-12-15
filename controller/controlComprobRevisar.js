@@ -31,13 +31,11 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
-		$scope.model.estado = 'Y';
 		$scope.traerComprobantes();
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
-		$scope.model.estado = 'Y';
 		$scope.traerComprobantes();
 	});
 
