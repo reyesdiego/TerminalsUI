@@ -22,7 +22,8 @@ function tasaCargasCtrl($scope, invoiceFactory, loginService){
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
-		'order': ''
+		'order': '',
+		'itemsPerPage': 15
 	};
 
 	$scope.tasaCargas = {
@@ -59,7 +60,8 @@ function tasaCargasCtrl($scope, invoiceFactory, loginService){
 	$scope.controlTasaCargas = function(){
 		/*Acá control de tasa a las cargas*/
 		$scope.loadingTasaCargas = true;
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
+		$scope.page.limit = $scope.model.itemsPerPage;
 		invoiceFactory.getSinTasaCargas($scope.model, loginService.getFiltro(), $scope.page, function(data){
 			if (data.status == "ERROR"){
 				$scope.tasaCargas.titulo = "Error";

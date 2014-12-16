@@ -22,7 +22,8 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
-		'order': ''
+		'order': '',
+		'itemsPerPage': 15
 	};
 
 	$scope.controlFiltros = 'codigos';
@@ -32,14 +33,14 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 	$scope.totalItemsCodigos = 0;
 	$scope.pageCodigos = {
 		skip: 0,
-		limit: $scope.itemsPerPage
+		limit: $scope.model.itemsPerPage
 	};
 
 	$scope.currentPageFiltros = 1;
 	$scope.totalItemsFiltros = 0;
 	$scope.pageFiltros = {
 		skip:0,
-		limit: $scope.itemsPerPage
+		limit: $scope.model.itemsPerPage
 	};
 
 	$scope.codigosSinAsociar = [];
@@ -103,7 +104,8 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 		$scope.hayFiltros = false;
 		$scope.model.codigo = '';
 		$scope.comprobantesRotos = [];
-		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
+		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
+		$scope.pageCodigos.limit = $scope.model.itemsPerPage;
 		priceFactory.noMatches($scope.model.fechaDesde, $scope.model.fechaHasta, function(dataNoMatches){
 			$scope.codigosSinAsociar = dataNoMatches.data;
 			if ($scope.codigosSinAsociar.length > 0){
@@ -127,7 +129,8 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 
 	$scope.controlCodigosFiltrados = function(){
 		$scope.loadingControlCodigos = true;
-		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.itemsPerPage);
+		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.model.itemsPerPage);
+		$scope.pageFiltros.limit = $scope.limit.itemsPerPage;
 		invoiceFactory.getInvoice($scope.model, $scope.pageFiltros, function(data){
 			$scope.totalItems = data.totalCount;
 			$scope.comprobantesRotos = data.data;
@@ -138,7 +141,8 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 	$scope.pageChangedCodigos = function(){
 		$scope.loadingControlCodigos = true;
 		$scope.comprobantesRotos = [];
-		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.itemsPerPage);
+		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
+		$scope.pageCodigos.limit = $scope.model.itemsPerPage;
 		invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(data){
 			data.data.forEach(function(unComprobante){
 				invoiceFactory.invoiceById(unComprobante._id._id, function(realData){

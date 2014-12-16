@@ -22,7 +22,8 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
-		'order': ''
+		'order': '',
+		'itemsPerPage': 15
 	};
 
 	$scope.comprobantesRevisar = [];
@@ -51,7 +52,8 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 
 	$scope.traerComprobantes = function(){
 		$scope.loadingRevisar = true;
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
+		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.comprobantesRevisar = [];
 		invoiceFactory.getInvoice($scope.procesarModel(), $scope.page, function(invoiceRevisar){
 			$scope.comprobantesRevisar = invoiceRevisar.data;

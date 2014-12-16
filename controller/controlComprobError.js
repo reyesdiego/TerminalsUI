@@ -22,7 +22,8 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
-		'order': ''
+		'order': '',
+		'itemsPerPage': 15
 	};
 
 	$scope.comprobantesError = [];
@@ -50,7 +51,8 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 	});
 
 	$scope.traerComprobantes = function(){
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
+		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.loadingError = true;
 		invoiceFactory.getInvoice($scope.procesarModel(), $scope.page, function(invoiceError){
 			$scope.comprobantesError = invoiceError.data;

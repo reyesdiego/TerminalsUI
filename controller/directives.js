@@ -36,6 +36,12 @@
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 				$scope.listaBuques = $rootScope.listaBuques;
 				$scope.listaViajes = [];
+				$scope.itemsPorPagina = [
+					{ value: 10, description: '10 items por página', ticked: false},
+					{ value: 15, description: '15 items por página', ticked: true},
+					{ value: 20, description: '20 items por página', ticked: false},
+					{ value: 50, description: '50 items por página', ticked: false}
+				];
 				$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
 
 				$scope.comprobantesVistos = [];
@@ -100,6 +106,10 @@
 						};
 					}
 				});
+
+				$scope.cambioItemsPorPagina = function(data){
+					$scope.filtrado('itemsPorPagina', data.value);
+				};
 
 				$scope.estadoSeleccionado = function(data){
 					var contenido;
@@ -203,6 +213,9 @@
 							break;
 						case 'viaje':
 							$scope.model.viaje = contenido;
+							break;
+						case 'itemsPorPagina':
+							$scope.model.itemsPerPage = contenido;
 							break;
 					}
 					if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){

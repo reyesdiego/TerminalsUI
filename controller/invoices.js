@@ -22,7 +22,8 @@
 			'filtroOrden': 'gateTimestamp',
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': false,
-			'order': ''
+			'order': '',
+			'itemsPerPage': 15
 		};
 
 		$scope.invoices = [];
@@ -58,7 +59,8 @@
 
 		$scope.cargaDatos = function(){
 			$scope.cargando = true;
-			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
+			$scope.page.limit = $scope.model.itemsPerPage;
 			$scope.invoices = [];
 			invoiceFactory.getInvoice($scope.model, $scope.page, function(data){
 				if(data.status === 'OK'){

@@ -124,15 +124,10 @@
 					</div>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
-					<!--<div class="input-group">
-						<label class="sr-only" for="model.estado">Seleccionar estado de la factura</label>
-						<select id="model.estado" class="form-control" ng-model="model.estado">
-							<option value="N" disabled>Seleccionar Estado</option>
-							<option ng-repeat="estado in estadosComprobantes | filter: filtroEstados" value="{{ estado._id }}">{{ estado.description }}</option>
-						</select>
-						<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('estado', 'N');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-					</div>-->
 					<multi-select input-model="estadosComprobantes" button-label="icon description" item-label="icon description" tick-property="ticked" helper-elements="none" default-label="Seleccionar estado" max-labels="1" on-item-click="estadoSeleccionado(data)"></multi-select>
+				</div>
+				<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('itemsPerPage', 0) >= 0">
+					<multi-select input-model="itemsPorPagina" button-label="description" item-label="description" tick-property="ticked" helper-elements="" selection-mode="single" on-item-click="cambioItemsPorPagina(data)"></multi-select>
 				</div>
 				<div class="form-group col-lg-3 col-md-4 col-sm-6">
 					<div class="input-group">
