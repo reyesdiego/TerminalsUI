@@ -22,7 +22,7 @@
 			},
 			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, statesFactory){
 				$scope.currentPage = 1;
-				$scope.itemsPerPage = 10;
+				$scope.itemsPerPage = 15;
 				//Variables para control de fechas
 				$scope.maxDateD = new Date();
 				$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -734,7 +734,8 @@
 			templateUrl:	'view/div.pagination.html',
 			scope: {
 				totalItems:			'=',
-				currentPage:		'='
+				currentPage:		'=',
+				itemsPerPage:		'='
 			},
 			link: function($scope){
 				$scope.$watch('totalItems', function(){

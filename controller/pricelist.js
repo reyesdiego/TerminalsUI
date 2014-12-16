@@ -9,6 +9,7 @@ function pricelistCtrl($scope, priceFactory, loginService){
 	$scope.tasas = false;
 	$scope.reverse = true;
 	$scope.predicate = '';
+	$scope.itemsPerPage = 10;
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;

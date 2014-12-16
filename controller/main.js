@@ -380,7 +380,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	var rutasComunes = ['login', 'forbidden', 'changepass'];
 	$rootScope.$state = $state;
 	// Variables Globales de Paginacion
-	$rootScope.itemsPerPage = 10;
+	$rootScope.itemsPerPage = 15;
 	$rootScope.currentPage = 1;
 	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 	// Variables Globales de Fecha

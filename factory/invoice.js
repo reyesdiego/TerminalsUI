@@ -300,24 +300,24 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 					comprobante.interfazEstado = $rootScope.estadosComprobantesArray[estadoGrupo.estado];
 					switch (comprobante.interfazEstado.type){
 						case 'WARN':
-							comprobante.interfazEstado.btnEstado = 'btn-warning';
+							comprobante.interfazEstado.btnEstado = 'text-warning';
 							comprobante.interfazEstado.imagen = 'images/warn.png';
 							break;
 						case 'OK':
-							comprobante.interfazEstado.btnEstado = 'btn-success';
+							comprobante.interfazEstado.btnEstado = 'text-success';
 							comprobante.interfazEstado.imagen = 'images/ok.png';
 							break;
 						case 'ERROR':
-							comprobante.interfazEstado.btnEstado = 'btn-danger';
+							comprobante.interfazEstado.btnEstado = 'text-danger';
 							comprobante.interfazEstado.imagen = 'images/error.png';
 							break;
 						case 'UNKNOWN':
-							comprobante.interfazEstado.btnEstado = 'btn-info';
+							comprobante.interfazEstado.btnEstado = 'text-info';
 							comprobante.interfazEstado.imagen = 'images/unknown.png';
 							break;
 						default :
 							comprobante.estado.push(estadoDefault);
-							comprobante.interfazEstado.btnEstado = 'btn-info';
+							comprobante.interfazEstado.btnEstado = 'text-info';
 							comprobante.interfazEstado.imagen = 'images/unknown.png';
 							break;
 					}
@@ -328,7 +328,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				comprobante.interfazEstado = {
 					'name': 'Sin ver',
 					'description': 'Sin ver',
-					'btnEstado': 'btn-info',
+					'btnEstado': 'text-info',
 					'imagen': 'images/unknown.png'
 				};
 			}
@@ -337,7 +337,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			comprobante.interfazEstado = {
 				'name': 'Sin ver',
 				'description': 'Sin ver',
-				'btnEstado': 'btn-warning',
+				'btnEstado': 'text-info',
 				'imagen': 'images/unknown.png'
 			};
 		}

@@ -10,7 +10,6 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track, states) {
 		titulo: '',
 		tipoModal: '',
 		comentario: '',
-		btnEstado: '',
 		estado: '',
 		divCuerpo: '',
 		nuevoEstado: ''
@@ -55,7 +54,6 @@ function trackingInvoiceCtrl($scope, $modalInstance, estado, track, states) {
 	$scope.trackInvoice = function(estado){
 		$scope.interfazModal.nuevoEstado = estado;
 
-		var btnClass = '';
 		var cuerpoClass = '';
 		if (estado.type === 'ERROR'){
 			cuerpoClass = 'bg-danger';

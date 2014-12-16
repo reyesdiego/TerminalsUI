@@ -38,6 +38,8 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 
 	$scope.puedeEditar = (loginService.getType() == 'terminal');
 
+	$scope.itemsPerPage = 10;
+
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
 		$scope.pageChanged();
