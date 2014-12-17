@@ -32,11 +32,13 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
+		$scope.model.estado = 'C';
 		$scope.traerComprobantes();
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
+		$scope.model.estado = 'C';
 		$scope.traerComprobantes();
 	});
 
@@ -55,18 +57,11 @@ function comprobantesRevisarCtrl($scope, invoiceFactory){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.comprobantesRevisar = [];
-		invoiceFactory.getInvoice($scope.procesarModel(), $scope.page, function(invoiceRevisar){
+		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceRevisar){
 			$scope.comprobantesRevisar = invoiceRevisar.data;
 			$scope.totalItems = invoiceRevisar.totalCount;
 			$scope.loadingRevisar = false;
 		})
-	};
-
-	$scope.procesarModel = function(){
-		var data = angular.copy($scope.model);
-		if (data.estado == 'N')
-			data.estado = 'C';
-		return data;
 	};
 
 }
