@@ -37,6 +37,16 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 				data.acceso.push("reports");
 				data.acceso.push("container");
 				data.acceso.push("buque");
+				data.acceso.push("afip");
+				data.acceso.push("afip.impo1");
+				data.acceso.push("afip.impo2");
+				data.acceso.push("afip.impo3");
+				data.acceso.push("afip.impo4");
+				data.acceso.push("afip.impo5");
+				data.acceso.push("afip.expo1");
+				data.acceso.push("afip.expo2");
+				data.acceso.push("afip.expo3");
+				data.acceso.push("afip.expo4");
 				///-------------------------------------------------------------------------
 
 				loginService.setAcceso(data.acceso);

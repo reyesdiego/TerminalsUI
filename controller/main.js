@@ -170,6 +170,39 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 			url: "/reportes",
 			templateUrl:"view/reportes.html"
 		})
+		.state('afip', {
+			url: "/afip",
+			templateUrl: "view/afip.html"
+		})
+		.state('afip.impo1', {
+			templateUrl: "view/afip.impo1.html"
+		})
+		.state('afip.impo2', {
+			templateUrl: "view/afip.impo2.html"
+		})
+		.state('afip.impo3', {
+			templateUrl: "view/afip.impo3.html"
+		})
+		.state('afip.impo4', {
+			templateUrl: "view/afip.impo4.html"
+		})
+		.state('afip.impo5', {
+			templateUrl: "view/afip.impo5.html"
+		})
+		.state('afip.expo1', {
+			templateUrl: "view/afip.expo1.html"
+		})
+		.state('afip.expo2', {
+			templateUrl: "view/afip.expo2.html"
+		})
+		.state('afip.expo3', {
+			templateUrl: "view/afip.expo3.html"
+		})
+		.state('afip.expo4', {
+			templateUrl: "view/afip.expo4.html"
+		})
+
+
 });
 
 myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory){
