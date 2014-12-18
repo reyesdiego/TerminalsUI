@@ -32,12 +32,17 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
-		//$scope.model.estado = 'R,T';
+		if ($scope.model.estado == 'N'){
+			$scope.model.estado = 'R,T';
+		}
 		$scope.traerComprobantes();
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
+		if ($scope.model.estado == 'N'){
+			$scope.model.estado = 'R,T';
+		}
 		$scope.traerComprobantes();
 	});
 
@@ -54,18 +59,11 @@ function comprobantesErrorCtrl($scope, invoiceFactory){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.loadingError = true;
-		invoiceFactory.getInvoice($scope.procesarModel(), $scope.page, function(invoiceError){
+		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceError){
 			$scope.comprobantesError = invoiceError.data;
 			$scope.totalItems = invoiceError.totalCount;
 			$scope.loadingError = false;
 		})
-	};
-
-	$scope.procesarModel = function(){
-		var data = angular.copy($scope.model);
-		if (data.estado == 'N')
-			data.estado = 'R,T';
-		return data;
 	};
 
 }

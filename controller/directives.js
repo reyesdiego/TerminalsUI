@@ -44,6 +44,10 @@
 				];
 				$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
 
+				$scope.estadosComprobantes.forEach(function(unEstado){
+					unEstado.ticked = false;
+				});
+
 				$scope.comprobantesVistos = [];
 
 				vouchersFactory.getVouchersArray(function(data){
@@ -112,10 +116,17 @@
 				};
 
 				$scope.estadoSeleccionado = function(data){
-					var contenido;
+					var contenido = '';
 					if (data.ticked){
-						contenido = $scope.model.estado + ',' + data._id;
-						contenido = contenido.replace('N,', '');
+						$scope.estadosComprobantes.forEach(function(unEstado){
+							if (unEstado.ticked){
+								if (contenido == ''){
+									contenido += unEstado._id;
+								} else {
+									contenido += ',' + unEstado._id;
+								}
+							}
+						});
 					} else {
 						contenido = $scope.model.estado.replace(',' + data._id, '');
 						contenido = contenido.replace(data._id + ',', '');
