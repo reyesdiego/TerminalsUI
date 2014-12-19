@@ -38,15 +38,26 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 				data.acceso.push("container");
 				data.acceso.push("buque");
 				data.acceso.push("afip");
-				data.acceso.push("afip.impo1");
-				data.acceso.push("afip.impo2");
-				data.acceso.push("afip.impo3");
-				data.acceso.push("afip.impo4");
-				data.acceso.push("afip.impo5");
+				data.acceso.push("afip.afectacion1");
+				data.acceso.push("afip.afectacion2");
+				data.acceso.push("afip.detexpo1");
+				data.acceso.push("afip.detexpo2");
+				data.acceso.push("afip.detexpo3");
+				data.acceso.push("afip.detimpo1");
+				data.acceso.push("afip.detimpo2");
+				data.acceso.push("afip.detimpo3");
 				data.acceso.push("afip.expo1");
 				data.acceso.push("afip.expo2");
 				data.acceso.push("afip.expo3");
 				data.acceso.push("afip.expo4");
+				data.acceso.push("afip.expo5");
+				data.acceso.push("afip.impo1");
+				data.acceso.push("afip.impo2");
+				data.acceso.push("afip.impo3");
+				data.acceso.push("afip.impo4");
+				data.acceso.push("afip.solicitud1");
+				data.acceso.push("afip.solicitud2");
+				data.acceso.push("afip.solicitud3");
 				///-------------------------------------------------------------------------
 
 				loginService.setAcceso(data.acceso);
