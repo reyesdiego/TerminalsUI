@@ -26,26 +26,27 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td>{{ TIPOREGISTRO }}</td>
-						<td>{{ SOLICITUD }}</td>
-						<td>{{ CONOCIMIENTO }}</td>
-						<td>{{ NRO_LINEA }}</td>
-						<td>{{ COD_EMBALAJE }}</td>
-						<td>{{ TIPO_EMBALAJE }}</td>
-						<td>{{ CANTIDAD }}</td>
-						<td>{{ PESO }}</td>
-						<td>{{ COMENTARIO }}</td>
-						<td>{{ CONDICION_CONTENEDOR }}</td>
-						<td>{{ UNIDADMEDIDA }}</td>
-						<td>{{ TIPOMERCADERIA }}</td>
-						<td>{{ NUMERACIONBULTOS }}</td>
-						<td>{{ REGISTRADO_POR }}</td>
-						<td>{{ REGISTRADO_EN }}</td>
+					<tr ng-repeat="registro in datosRegistro">
+						<td>{{ registro.TIPOREGISTRO }}</td>
+						<td>{{ registro.SOLICITUD }}</td>
+						<td>{{ registro.CONOCIMIENTO }}</td>
+						<td>{{ registro.NRO_LINEA }}</td>
+						<td>{{ registro.COD_EMBALAJE }}</td>
+						<td>{{ registro.TIPO_EMBALAJE }}</td>
+						<td>{{ registro.CANTIDAD }}</td>
+						<td>{{ registro.PESO }}</td>
+						<td>{{ registro.COMENTARIO }}</td>
+						<td>{{ registro.CONDICION_CONTENEDOR }}</td>
+						<td>{{ registro.UNIDADMEDIDA }}</td>
+						<td>{{ registro.TIPOMERCADERIA }}</td>
+						<td>{{ registro.NUMERACIONBULTOS }}</td>
+						<td>{{ registro.REGISTRADO_POR }}</td>
+						<td>{{ registro.REGISTRADO_EN }}</td>
 					</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		<div-pagination current-page="currentPage" items-per-page="itemsPerPage" total-items="totalItems"></div-pagination>
 	</div>
 </div>

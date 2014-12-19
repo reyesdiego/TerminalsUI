@@ -30,30 +30,31 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td>{{ TIPOREGISTRO }}</td>
-						<td>{{ SUMARIA }}</td>
-						<td>{{ ANIO }}</td>
-						<td>{{ ADUANA }}</td>
-						<td>{{ TIPO_SUMARIA }}</td>
-						<td>{{ MANE_NRO }}</td>
-						<td>{{ LETRA_CTRL }}</td>
-						<td>{{ CONOCIMIENTO }}</td>
-						<td>{{ TITULOCOMPLETO }}</td>
-						<td>{{ MARCA }}</td>
-						<td>{{ CONSIGNATARIO }}</td>
-						<td>{{ NOTIFICARA }}</td>
-						<td>{{ COMENTARIO }}</td>
-						<td>{{ CONSOLIDADO }}</td>
-						<td>{{ TRANSITO_TRANSBORDO }}</td>
-						<td>{{ FRACCIONADO }}</td>
-						<td>{{ BLOQUEO }}</td>
-						<td>{{ REGISTRADO_POR }}</td>
-						<td>{{ REGISTRADO_EN }}</td>
+					<tr ng-repeat="registro in datosRegistro">
+						<td>{{ registro.TIPOREGISTRO }}</td>
+						<td>{{ registro.SUMARIA }}</td>
+						<td>{{ registro.ANIO }}</td>
+						<td>{{ registro.ADUANA }}</td>
+						<td>{{ registro.TIPO_SUMARIA }}</td>
+						<td>{{ registro.MANE_NRO }}</td>
+						<td>{{ registro.LETRA_CTRL }}</td>
+						<td>{{ registro.CONOCIMIENTO }}</td>
+						<td>{{ registro.TITULOCOMPLETO }}</td>
+						<td>{{ registro.MARCA }}</td>
+						<td>{{ registro.CONSIGNATARIO }}</td>
+						<td>{{ registro.NOTIFICARA }}</td>
+						<td>{{ registro.COMENTARIO }}</td>
+						<td>{{ registro.CONSOLIDADO }}</td>
+						<td>{{ registro.TRANSITO_TRANSBORDO }}</td>
+						<td>{{ registro.FRACCIONADO }}</td>
+						<td>{{ registro.BLOQUEO }}</td>
+						<td>{{ registro.REGISTRADO_POR }}</td>
+						<td>{{ registro.REGISTRADO_EN }}</td>
 					</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		<div-pagination current-page="currentPage" items-per-page="itemsPerPage" total-items="totalItems"></div-pagination>
 	</div>
 </div>

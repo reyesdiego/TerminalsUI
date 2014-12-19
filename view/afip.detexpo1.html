@@ -29,29 +29,30 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td>{{ TIPOREGISTRO }}</td>
-						<td>{{ DETALLADA }}</td>
-						<td>{{ IMPO_EXPO }}</td>
-						<td>{{ DIVISAFOB }}</td>
-						<td>{{ MONTOFOB }}</td>
-						<td>{{ DIVISAFLETE }}</td>
-						<td>{{ MONTOFLETE }}</td>
-						<td>{{ DIVISASEGURO }}</td>
-						<td>{{ MONTOSEGURO }}</td>
-						<td>{{ ADUANASALIDA }}</td>
-						<td>{{ PAISDESTINO }}</td>
-						<td>{{ FECOFI }}</td>
-						<td>{{ FECHA_CUMPLIDO }}</td>
-						<td>{{ FECOFIPOSTEMBARQUE }}</td>
-						<td>{{ CODIGOLIQUIDADO }}</td>
-						<td>{{ TOTALDEDERECHOSEXPO }}</td>
-						<td>{{ REGISTRADO_POR }}</td>
-						<td>{{ REGISTRADO_EN }}</td>
+					<tr ng-repeat="registro in datosRegistro">
+						<td>{{ registro.TIPOREGISTRO }}</td>
+						<td>{{ registro.DETALLADA }}</td>
+						<td>{{ registro.IMPO_EXPO }}</td>
+						<td>{{ registro.DIVISAFOB }}</td>
+						<td>{{ registro.MONTOFOB }}</td>
+						<td>{{ registro.DIVISAFLETE }}</td>
+						<td>{{ registro.MONTOFLETE }}</td>
+						<td>{{ registro.DIVISASEGURO }}</td>
+						<td>{{ registro.MONTOSEGURO }}</td>
+						<td>{{ registro.ADUANASALIDA }}</td>
+						<td>{{ registro.PAISDESTINO }}</td>
+						<td>{{ registro.FECOFI }}</td>
+						<td>{{ registro.FECHA_CUMPLIDO }}</td>
+						<td>{{ registro.FECOFIPOSTEMBARQUE }}</td>
+						<td>{{ registro.CODIGOLIQUIDADO }}</td>
+						<td>{{ registro.TOTALDEDERECHOSEXPO }}</td>
+						<td>{{ registro.REGISTRADO_POR }}</td>
+						<td>{{ registro.REGISTRADO_EN }}</td>
 					</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		<div-pagination current-page="currentPage" items-per-page="itemsPerPage" total-items="totalItems"></div-pagination>
 	</div>
 </div>

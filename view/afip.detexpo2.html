@@ -19,19 +19,20 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td>{{ TIPOREGISTRO }}</td>
-						<td>{{ DETALLADA }}</td>
-						<td>{{ NRO_LINEA }}</td>
-						<td>{{ COD_EMBALAJE }}</td>
-						<td>{{ CANTIDAD }}</td>
-						<td>{{ PESO }}</td>
-						<td>{{ REGISTRADO_POR }}</td>
-						<td>{{ REGISTRADO_EN }}</td>
+					<tr ng-repeat="registro in datosRegistro">
+						<td>{{ registro.TIPOREGISTRO }}</td>
+						<td>{{ registro.DETALLADA }}</td>
+						<td>{{ registro.NRO_LINEA }}</td>
+						<td>{{ registro.COD_EMBALAJE }}</td>
+						<td>{{ registro.CANTIDAD }}</td>
+						<td>{{ registro.PESO }}</td>
+						<td>{{ registro.REGISTRADO_POR }}</td>
+						<td>{{ registro.REGISTRADO_EN }}</td>
 					</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		<div-pagination current-page="currentPage" items-per-page="itemsPerPage" total-items="totalItems"></div-pagination>
 	</div>
 </div>

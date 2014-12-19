@@ -385,4 +385,6 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
+	return factory;
+
 });

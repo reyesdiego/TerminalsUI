@@ -1,0 +1,19 @@
+<div class="container" ng-controller="afipCtrl"><br>
+	<div class="row">
+		<div class="col-md-2">
+			<ul class="nav nav-pills nav-stacked">
+				<li><b>Detalle Impo</b></li>
+				<li><a ui-sref="afip.detimpo1" ng-click="cargaDatos('detimpo1')">M&oacute;dulo 1</a></li>
+				<li><a ui-sref="afip.detimpo2" ng-click="cargaDatos('detimpo2')">M&oacute;dulo 2</a></li>
+				<li><a ui-sref="afip.detimpo3" ng-click="cargaDatos('detimpo3')">M&oacute;dulo 3</a></li>
+				<li><b>Detalle Expo</b></li>
+				<li><a ui-sref="afip.detexpo1" ng-click="cargaDatos('detexpo1')">M&oacute;dulo 1</a></li>
+				<li><a ui-sref="afip.detexpo2" ng-click="cargaDatos('detexpo2')">M&oacute;dulo 2</a></li>
+				<li><a ui-sref="afip.detexpo3" ng-click="cargaDatos('detexpo3')">M&oacute;dulo 3</a></li>
+			</ul>
+		</div>
+		<div class="col-md-10">
+			<div ui-view></div>
+		</div>
+	</div>
+</div>
