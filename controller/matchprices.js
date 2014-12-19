@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
+function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, $modal){
 	'use strict';
 	$scope.nombre = loginService.getFiltro();
 
@@ -39,6 +39,14 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 	$scope.puedeEditar = (loginService.getType() == 'terminal');
 
 	$scope.itemsPerPage = 10;
+
+	$scope.openFechaTarifa = false;
+	$scope.dateOptions = { 'showWeeks': false };
+	$scope.formatDate = 'yyyy-MM-dd';
+	$scope.openDate = function($event) {
+		$event.preventDefault();
+		$event.stopPropagation();
+	};
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
@@ -219,13 +227,17 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 					priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
 						if (data.status == 'OK'){
 							dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
-							$scope.salir();
+							$scope.tarifaCompleta = data.data;
+							$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+							$scope.preciosHistoricos.forEach(function(precio){
+								precio.from = new Date(precio.from);
+							});
+							//$scope.salir();
 							$scope.prepararDatos();
 						}
 					})
 				} else {
 					priceFactory.addPrice(formData, function(nuevoPrecio){
-
 						if (nuevoPrecio.status === 'OK'){
 							var nuevoMatch = {
 								code: nuevoPrecio.data.code,
@@ -279,6 +291,9 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 			$scope.moneda = tarifa.topPrices[0].currency;
 			$scope.precio = tarifa.topPrices[0].price;
 			$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+			$scope.preciosHistoricos.forEach(function(precio){
+				precio.from = new Date(precio.from);
+			});
 			$scope.abrirNuevoConcepto('editar');
 		});
 	};
@@ -287,21 +302,23 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService){
 		var flagCodigo = false;
 		var flagDescripcion = false;
 
-		//Comparo que con los cambios hechos, no coincidan ni la descripción ni el código con otra tarifa de la lista
+		//Comparo que con los cambios hechos, no coincida el código con otra tarifa de la lista
 		var listaSinCodigo = $scope.pricelist.slice();
 		listaSinCodigo.splice($scope.posicionTarifa, 1);
 		listaSinCodigo.forEach(function(tarifa){
 			if ($scope.codigo == tarifa.code) flagCodigo = true;
-			if ($scope.descripcion == tarifa.description) flagDescripcion = true;
 		});
 		//Si hubo coincidencia muestro mensaje de error
 		if (flagCodigo || flagDescripcion){
-			dialogs.error('Error', 'El código y/o la descripción de la tarifa no pueden coincidir con el de una tarifa existente.');
+			dialogs.error('Error', 'El código de la tarifa no puede coincidir con el de una tarifa existente.');
 			return false;
 		} else {
 			return true;
 		}
-
 	};
+
+	$scope.guardarFecha = function(){
+
+	}
 
 }
