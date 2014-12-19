@@ -25,25 +25,26 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td>{{ TIPOREGISTRO }}</td>
-						<td>{{ DETALLADA }}</td>
-						<td>{{ NRO_ITEM }}</td>
-						<td>{{ POSICIONARANCELARIA }}</td>
-						<td>{{ ESTADO_MERCA }}</td>
-						<td>{{ PROVINCIAORIGEN }}</td>
-						<td>{{ PAISDESTINO }}</td>
-						<td>{{ UNIDAD_DECLARADA }}</td>
-						<td>{{ CANTIDAD_UNIDAD_DECLARADA }}</td>
-						<td>{{ BASEIMPONIBLEDOLARES }}</td>
-						<td>{{ UNIDAD_ESTADISTICA }}</td>
-						<td>{{ CANTIDAD_UNIDADES_ESTAD }}</td>
-						<td>{{ REGISTRADO_POR }}</td>
-						<td>{{ REGISTRADO_EN }}</td>
+					<tr ng-repeat="registro in datosRegistro">
+						<td>{{ registro.TIPOREGISTRO }}</td>
+						<td>{{ registro.DETALLADA }}</td>
+						<td>{{ registro.NRO_ITEM }}</td>
+						<td>{{ registro.POSICIONARANCELARIA }}</td>
+						<td>{{ registro.ESTADO_MERCA }}</td>
+						<td>{{ registro.PROVINCIAORIGEN }}</td>
+						<td>{{ registro.PAISDESTINO }}</td>
+						<td>{{ registro.UNIDAD_DECLARADA }}</td>
+						<td>{{ registro.CANTIDAD_UNIDAD_DECLARADA }}</td>
+						<td>{{ registro.BASEIMPONIBLEDOLARES }}</td>
+						<td>{{ registro.UNIDAD_ESTADISTICA }}</td>
+						<td>{{ registro.CANTIDAD_UNIDADES_ESTAD }}</td>
+						<td>{{ registro.REGISTRADO_POR }}</td>
+						<td>{{ registro.REGISTRADO_EN }}</td>
 					</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		<div-pagination current-page="currentPage" items-per-page="itemsPerPage" total-items="totalItems"></div-pagination>
 	</div>
 </div>
