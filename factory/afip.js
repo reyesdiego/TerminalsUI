@@ -5,6 +5,106 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	var factory = {};
 
+	factory.getAfip = function(tipoRegitro, page, callback){
+		switch (tipoRegitro) {
+			case 'afectacion1':
+				this.getRegistro1Afectacion(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'afectacion2':
+				this.getRegistro2Afectacion(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'detexpo1':
+				this.getRegistro1detExpo(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'detexpo2':
+				this.getRegistro2detExpo(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'detexpo3':
+				this.getRegistro3detExpo(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'detimpo1':
+				this.getRegistro1detImpo(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'detimpo2':
+				this.getRegistro2detImpo(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'detimpo3':
+				this.getRegistro3detImpo(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'expo1':
+				this.getRegistro1sumExpoMane(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'expo2':
+				this.getRegistro2sumExpoMane(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'expo3':
+				this.getRegistro3sumExpoMane(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'expo4':
+				this.getRegistro4sumExpoMane(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'expo5':
+				this.getRegistro5sumExpoMane(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'impo1':
+				this.getRegistro1sumImpoMani(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'impo2':
+				this.getRegistro2sumImpoMani(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'impo3':
+				this.getRegistro3sumImpoMani(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'impo4':
+				this.getRegistro4sumImpoMani(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'solicitud1':
+				this.getRegistro1Afectacion(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'solicitud2':
+				this.getRegistro2Afectacion(page, function(data) {
+					callback(data);
+				});
+				break;
+		}
+	};
+
 	factory.getRegistro1Afectacion = function(page, callback){
 		var inserturl = serverUrl + '/afip/registro1_afectacion/' + page.skip + '/' + page.limit;
 		$http({
