@@ -93,12 +93,17 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 				});
 				break;
 			case 'solicitud1':
-				this.getRegistro1Afectacion(page, function(data) {
+				this.getRegistro1Solicitud(page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'solicitud2':
-				this.getRegistro2Afectacion(page, function(data) {
+				this.getRegistro2Solicitud(page, function(data) {
+					callback(data);
+				});
+				break;
+			case 'solicitud3':
+				this.getRegistro3Solicitud(page, function(data) {
 					callback(data);
 				});
 				break;
