@@ -174,57 +174,79 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 			url: "/afip",
 			templateUrl: "view/afip.html"
 		})
-		.state('afip.afectacion1', {
+		.state('afip.afectacion.afectacion1', {
 			templateUrl: "view/afip.afectacion1.html"
 		})
-		.state('afip.afectacion2', {
+		.state('afip.afectacion.afectacion2', {
 			templateUrl: "view/afip.afectacion2.html"
 		})
-		.state('afip.detexpo1', {
+		.state('afip.detalle.detimpo1', {
+			templateUrl: "view/afip.detimpo1.html"
+		})
+		.state('afip.detalle.detimpo2', {
+			templateUrl: "view/afip.detimpo2.html"
+		})
+		.state('afip.detalle.detimpo3', {
+			templateUrl: "view/afip.detimpo3.html"
+		})
+		.state('afip.detalle.detexpo1', {
 			templateUrl: "view/afip.detexpo1.html"
 		})
-		.state('afip.detexpo2', {
+		.state('afip.detalle.detexpo2', {
 			templateUrl: "view/afip.detexpo2.html"
 		})
-		.state('afip.detexpo3', {
+		.state('afip.detalle.detexpo3', {
 			templateUrl: "view/afip.detexpo3.html"
 		})
-		.state('afip.expo1', {
+		.state('afip.sumatorias.expo1', {
 			templateUrl: "view/afip.expo1.html"
 		})
-		.state('afip.expo2', {
+		.state('afip.sumatorias.expo2', {
 			templateUrl: "view/afip.expo2.html"
 		})
-		.state('afip.expo3', {
+		.state('afip.sumatorias.expo3', {
 			templateUrl: "view/afip.expo3.html"
 		})
-		.state('afip.expo4', {
+		.state('afip.sumatorias.expo4', {
 			templateUrl: "view/afip.expo4.html"
 		})
-		.state('afip.expo5', {
+		.state('afip.sumatorias.expo5', {
 			templateUrl: "view/afip.expo5.html"
 		})
-		.state('afip.impo1', {
+		.state('afip.sumatorias.impo1', {
 			templateUrl: "view/afip.impo1.html"
 		})
-		.state('afip.impo2', {
+		.state('afip.sumatorias.impo2', {
 			templateUrl: "view/afip.impo2.html"
 		})
-		.state('afip.impo3', {
+		.state('afip.sumatorias.impo3', {
 			templateUrl: "view/afip.impo3.html"
 		})
-		.state('afip.impo4', {
+		.state('afip.sumatorias.impo4', {
 			templateUrl: "view/afip.impo4.html"
 		})
-		.state('afip.solicitud1', {
+		.state('afip.solicitud.solicitud1', {
 			templateUrl: "view/afip.solicitud1.html"
 		})
-		.state('afip.solicitud2', {
+		.state('afip.solicitud.solicitud2', {
 			templateUrl: "view/afip.solicitud2.html"
 		})
-		.state('afip.solicitud3', {
+		.state('afip.solicitud.solicitud3', {
 			templateUrl: "view/afip.solicitud3.html"
 		})
+		.state('afip.afectacion', {
+			templateUrl: "view/afip.afectacion.html"
+		})
+		.state('afip.detalle', {
+			templateUrl: "view/afip.detalle.html"
+		})
+		.state('afip.solicitud', {
+			templateUrl: "view/afip.solicitud.html"
+		})
+		.state('afip.sumatorias', {
+			templateUrl: "view/afip.sumatorias.html"
+		})
+
 });
 
 myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory){

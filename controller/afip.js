@@ -21,9 +21,10 @@
 
 		$scope.cargaDatos = function(registro){
 			$scope.cargando = true;
-			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
-			$scope.page.limit = $scope.model.itemsPerPage;
+			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			$scope.page.limit = $scope.itemsPerPage;
 			$scope.invoices = [];
+			console.log('Carga Datos ' + registro);
 			afipFactory.getAfip(registro, $scope.page, function(data){
 				if(data.status === 'OK'){
 					$scope.datosRegistro = data.data;
