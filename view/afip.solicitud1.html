@@ -42,7 +42,7 @@
 						<td>{{ registro.NOMBREATA }}</td>
 						<td>{{ registro.ESTADO }}</td>
 						<td>{{ registro.PROCESO }}</td>
-						<td>{{ registro.FECHA_REGISTRO }}</td>
+						<td>{{ registro.FECHA_REGISTRO | date: 'dd/MM/yyyy'}}</td>
 						<td>{{ registro.CUIT_IMPO }}</td>
 						<td>{{ registro.LUGAR_OPERATIVO }}</td>
 						<td>{{ registro.DEPOSITOORIGEN }}</td>
@@ -59,7 +59,7 @@
 						<td>{{ registro.LETRA_CTRL }}</td>
 						<td>{{ registro.NOMBREBUQUE }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN }}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm'}}</td>
 					</tr>
 					</tbody>
 				</table>

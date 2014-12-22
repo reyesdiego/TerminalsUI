@@ -34,20 +34,20 @@
 						<td>{{ registro.DETALLADA }}</td>
 						<td>{{ registro.IMPO_EXPO }}</td>
 						<td>{{ registro.DIVISAFOB }}</td>
-						<td>{{ registro.MONTOFOB }}</td>
+						<td>{{ registro.DIVISAFOB | formatCurrency }} {{ registro.MONTOFOB | currency}}</td>
 						<td>{{ registro.DIVISAFLETE }}</td>
-						<td>{{ registro.MONTOFLETE }}</td>
+						<td>{{ registro.DIVISAFLETE | formatCurrency }} {{ registro.MONTOFLETE | currency }}</td>
 						<td>{{ registro.DIVISASEGURO }}</td>
-						<td>{{ registro.MONTOSEGURO }}</td>
+						<td>{{ registro.DIVISASEGURO | formatCurrency }} {{ registro.MONTOSEGURO | currency }}</td>
 						<td>{{ registro.ADUANASALIDA }}</td>
 						<td>{{ registro.PAISDESTINO }}</td>
-						<td>{{ registro.FECOFI }}</td>
-						<td>{{ registro.FECHA_CUMPLIDO }}</td>
-						<td>{{ registro.FECOFIPOSTEMBARQUE }}</td>
+						<td>{{ registro.FECOFI | date: 'dd/MM/yyyy'}}</td>
+						<td>{{ registro.FECHA_CUMPLIDO | date: 'dd/MM/yyyy'}}</td>
+						<td>{{ registro.FECOFIPOSTEMBARQUE | date: 'dd/MM/yyyy'}}</td>
 						<td>{{ registro.CODIGOLIQUIDADO }}</td>
 						<td>{{ registro.TOTALDEDERECHOSEXPO }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN }}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm' }}</td>
 					</tr>
 					</tbody>
 				</table>

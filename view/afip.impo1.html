@@ -50,8 +50,8 @@
 						<td>{{ registro.CUITATA }}</td>
 						<td>{{ registro.NOMBREATA }}</td>
 						<td>{{ registro.ESTADO }}</td>
-						<td>{{ registro.FECHAREGISTRO }}</td>
-						<td>{{ registro.FECHAARRIBO }}</td>
+						<td>{{ registro.FECHAREGISTRO | date: 'dd/MM/yyyy'}}</td>
+						<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy'}}</td>
 						<td>{{ registro.TRANSPORTEVACIO }}</td>
 						<td>{{ registro.PAISPROCEDENCIA }}</td>
 						<td>{{ registro.TRANSPORTISTA }}</td>
@@ -67,7 +67,7 @@
 						<td>{{ registro.LUGARDEGIRO }}</td>
 						<td>{{ registro.BUQUE }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN }}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm'}}</td>
 					</tr>
 					</tbody>
 				</table>

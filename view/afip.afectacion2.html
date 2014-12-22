@@ -41,7 +41,7 @@
 						<td>{{ registro.TIPO_MERCADERIA }}</td>
 						<td>{{ registro.NUMERACION_BULTOS }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN }}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy'}}</td>
 					</tr>
 					</tbody>
 				</table>
