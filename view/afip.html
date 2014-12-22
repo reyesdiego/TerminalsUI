@@ -1,9 +1,9 @@
-<div class="container"><br>
-	<ul class="nav nav-tabs nav-justified">
-		<li role="presentation"><a ui-sref="afip.afectacion">Afectaci&oacute;n</a></li>
-		<li role="presentation"><a ui-sref="afip.detalle">Detalles</a></li>
-		<li role="presentation"><a ui-sref="afip.solicitud">Solicitud</a></li>
-		<li role="presentation"><a ui-sref="afip.sumatorias">Sumatorias</a></li>
-	</ul>
+<div class="container" ng-controller="afipCtrl"><br>
+	<tabset justified="true">
+		<tab ui-sref="afip.afectacion" heading="Afectación"></tab>
+		<tab ui-sref="afip.detalle" heading="Detalles"></tab>
+		<tab ui-sref="afip.solicitud" heading="Solicitud"></tab>
+		<tab ui-sref="afip.sumatorias" heading="Sumatorias"></tab>
+	</tabset>
 	<div ui-view></div>
 </div>

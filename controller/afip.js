@@ -3,7 +3,7 @@
  */
 (function(){
 
-	myapp.controller('afipCtrl', function afectacion1Ctrl($scope, afipFactory){
+	myapp.controller('afipCtrl', function afectacion1Ctrl($scope, afipFactory, $state){
 
 		$scope.datosRegistro = [];
 		$scope.currentPage = 1;
@@ -14,6 +14,13 @@
 			limit: $scope.itemsPerPage
 		};
 		$scope.actualRegistro = '';
+		$scope.afectacionActiva = true;
+
+		$scope.$watch('$state.current', function(){
+			if ($state.current.name == 'afip'){
+				$state.transitionTo('afip.afectacion');
+			}
+		});
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
@@ -36,7 +43,7 @@
 					$scope.cargando = false;
 				}
 			});
-		}
+		};
 
 	})
 
