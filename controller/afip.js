@@ -13,12 +13,12 @@
 			skip: 0,
 			limit: $scope.itemsPerPage
 		};
-		$scope.actualRegistro = '';
+		$scope.actualRegistro = 'afectacion1';
 		$scope.afectacionActiva = true;
 
 		$scope.$watch('$state.current', function(){
 			if ($state.current.name == 'afip'){
-				$state.transitionTo('afip.afectacion');
+				$state.transitionTo('afip.afectacion.afectacion1');
 			}
 		});
 
@@ -45,6 +45,7 @@
 			});
 		};
 
+		$scope.cargaDatos($scope.actualRegistro);
 	})
 
 })();
