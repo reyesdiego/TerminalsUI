@@ -5,6 +5,13 @@
 
 	myapp.controller('afipCtrl', function afectacion1Ctrl($scope, afipFactory, $state){
 
+		$scope.tabs = [
+			{ heading: 'Afectación',	select: 'afectacion1',	uisref: 'afip.afectacion.afectacion1' },
+			{ heading: 'Detalles',		select: 'detimpo1',		uisref: 'afip.detalle.detimpo1' },
+			{ heading: 'Solicitud',		select: 'solicitud1',	uisref: 'afip.solicitud.solicitud1' },
+			{ heading: 'Sumatorias',	select: 'impo1',		uisref: 'afip.sumatorias.impo1' }
+		];
+
 		$scope.datosRegistro = [];
 		$scope.currentPage = 1;
 		$scope.totalItems = 0;
@@ -19,6 +26,8 @@
 		$scope.$watch('$state.current', function(){
 			if ($state.current.name == 'afip'){
 				$state.transitionTo('afip.afectacion.afectacion1');
+				$scope.cargaDatos('afectacion1');
+				$scope.tabs[0].active = true;
 			}
 		});
 

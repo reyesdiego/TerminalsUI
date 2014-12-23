@@ -5,10 +5,7 @@
 		</div>
 	</div>
 	<tabset justified="true">
-		<tab ui-sref="afip.afectacion.afectacion1" select="cargaDatos('afectacion1')" heading="Afectación"></tab>
-		<tab ui-sref="afip.detalle.detimpo1" select="cargaDatos('detimpo1')" heading="Detalles"></tab>
-		<tab ui-sref="afip.solicitud.solicitud1" select="cargaDatos('solicitud1')" heading="Solicitud"></tab>
-		<tab ui-sref="afip.sumatorias.impo1" select="cargaDatos('impo1')" heading="Sumatorias"></tab>
+		<tab ng-repeat="tab in tabs" heading="{{ tab.heading }}" active="tab.active" ui-sref="{{ tab.uisref }}" ng-click="cargaDatos(tab.select)"></tab>
 	</tabset>
 	<div ui-view></div>
 </div>
