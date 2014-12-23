@@ -21,6 +21,9 @@
 				filtroEstados:						'@'
 			},
 			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, statesFactory){
+				$scope.status = {
+					open: true
+				};
 				$scope.currentPage = 1;
 				$scope.itemsPerPage = 15;
 				//Variables para control de fechas
@@ -651,6 +654,9 @@
 	});
 
 	myapp.controller("searchController", ['$rootScope', '$scope', function($rootScope, $scope){
+		$scope.status = {
+			open: true
+		};
 		$scope.maxDate = new Date();
 		$scope.formatDate = $rootScope.formatDate;
 		$scope.dateOptions = $rootScope.dateOptions;
@@ -803,6 +809,9 @@
 			restrict:		'E',
 			templateUrl:	'view/correlativeControlSearch.html',
 			controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
+				$scope.status = {
+					open: true
+				};
 				$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje', 'itemsPerPage'];
 				$scope.fechaDesde = new Date();
 				$scope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);

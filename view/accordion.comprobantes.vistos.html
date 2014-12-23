@@ -1,6 +1,6 @@
-<div class="col-lg-12" ng-hide="comprobantesVistos.length == 0">
+<div class="col-lg-12" ng-hide="comprobantesVistos.length == 0" ng-init="vistos.open = false">
 	<accordion>
-		<accordion-group is-open="status.open">
+		<accordion-group is-open="vistos.open">
 			<accordion-heading>
 				<strong>Comprobantes vistos</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 			</accordion-heading>
