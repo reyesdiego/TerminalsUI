@@ -1055,4 +1055,24 @@
 		}
 	});
 
+	myapp.directive('encabezadoTablaOrdenado', function() {
+		return {
+			restrict:		'E',
+			transclude:		true,
+			scope: {
+				filtrarOrden:	'&',
+				ocultaFiltros:	'=',
+				model:			'=',
+				filtro:			'@',
+				filtroOrden:	'@',
+				titulo:			'@'
+			},
+			template:		'<a href ng-click="filtrarOrden()" ng-hide="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">' +
+							'	<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden==\'{{ filtro }}\' && model.filtroOrdenReverse==false"></span>' +
+							'	<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden==\'{{ filtro }}\' && model.filtroOrdenReverse==true"></span>' +
+							'	{{ titulo }}' +
+							'</a>' +
+							'<span ng-show="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">{{ titulo }}</span>'
+		}
+	});
 })();

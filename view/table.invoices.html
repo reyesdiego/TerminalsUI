@@ -3,52 +3,22 @@
 		<thead>
 		<tr>
 			<th style="text-align: right">
-				<a href ng-click="filtrarOrden('nroPtoVenta')" ng-hide="ocultarFiltros.indexOf('nroPtoVentaOrden', 0) >= 0">
-					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='nroPtoVenta' && model.filtroOrdenReverse==false"></span>
-					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='nroPtoVenta' && model.filtroOrdenReverse==true"></span>
-					Pto. Venta
-				</a>
-				<span ng-show="ocultarFiltros.indexOf('nroPtoVentaOrden', 0) >= 0">Pto. Venta</span>
+				<encabezado-tabla-ordenado titulo="Pto. Venta" filtrar-orden="filtrarOrden('nroPtoVenta')" oculta-filtros="ocultarFiltros" model="model" filtro="nroPtoVenta" filtro-orden="nroPtoVentaOrden"></encabezado-tabla-ordenado>
 			</th>
 			<th>
-				<a href ng-click="filtrarOrden('codTipoComprob')" ng-hide="ocultarFiltros.indexOf('codTipoComprobOrden', 0) >= 0">
-					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='codTipoComprob' && model.filtroOrdenReverse==false"></span>
-					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='codTipoComprob' && model.filtroOrdenReverse==true"></span>
-					Comprobante
-				</a>
-				<span ng-show="ocultarFiltros.indexOf('codTipoComprobOrden', 0) >= 0">Comprobante</span>
+				<encabezado-tabla-ordenado titulo="Comprobante" filtrar-orden="filtrarOrden('codTipoComprob')" oculta-filtros="ocultarFiltros" model="model" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado>
 			</th>
 			<th style="text-align: right">
-				<a href ng-click="filtrarOrden('nroComprob')" ng-hide="ocultarFiltros.indexOf('nroComprobOrden', 0) >= 0">
-					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='nroComprob' && model.filtroOrdenReverse==false"></span>
-					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='nroComprob' && model.filtroOrdenReverse==true"></span>
-					Nro
-				</a>
-				<span ng-show="ocultarFiltros.indexOf('nroComprobOrden', 0) >= 0" >Nro</span>
+				<encabezado-tabla-ordenado titulo="Nro" filtrar-orden="filtrarOrden('nroComprob')" oculta-filtros="ocultarFiltros" model="model" filtro="nroComprob" filtro-orden="nroComprobOrden"></encabezado-tabla-ordenado>
 			</th>
 			<th>
-				<a href ng-click="filtrarOrden('razon')" ng-hide="ocultarFiltros.indexOf('razonOrden', 0) >= 0">
-					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='razon' && model.filtroOrdenReverse==false"></span>
-					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='razon' && model.filtroOrdenReverse==true"></span>
-					Razón Social
-				</a>
-				<span ng-show="ocultarFiltros.indexOf('razonOrden', 0) >= 0">Razón Social</span>
+				<encabezado-tabla-ordenado titulo="Razón Social" filtrar-orden="filtrarOrden('razon')" oculta-filtros="ocultarFiltros" model="model" filtro="razon" filtro-orden="razonOrden"></encabezado-tabla-ordenado>
 			</th>
 			<th style="text-align: center">
-				<a href ng-click="filtrarOrden('fecha.emision')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
-					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='fecha.emision' && model.filtroOrdenReverse==false"></span>
-					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='fecha.emision' && model.filtroOrdenReverse==true"></span>
-					Fecha
-				</a>
-				<span ng-show="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">Fecha</span>
+				<encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden('fecha.emision')" oculta-filtros="ocultarFiltros" model="model" filtro="fecha.emision" filtro-orden="fechaOrden"></encabezado-tabla-ordenado>
 			</th>
 			<th style="text-align: right">
-				<a href ng-click="filtrarOrden('importe.total')" ng-hide="ocultarFiltros.indexOf('importeOrden', 0) >= 0">
-					<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='importe.total' && model.filtroOrdenReverse==false"></span>
-					<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='importe.total' && model.filtroOrdenReverse==true"></span>
-					Importe Total
-				</a>
-				<span ng-show="ocultarFiltros.indexOf('importeOrden', 0) >= 0">Importe Total</span>
+				<encabezado-tabla-ordenado titulo="Importe Total" filtrar-orden="filtrarOrden('importe.total')" oculta-filtros="ocultarFiltros" model="model" filtro="importe.total" filtro-orden="importeOrden"></encabezado-tabla-ordenado>
 			</th>
 			<th class="hidden-print" style="text-align: center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 			<th style="text-align: center" ng-show="acceso=='agp'" class="col-lg-1">Estado</th>
