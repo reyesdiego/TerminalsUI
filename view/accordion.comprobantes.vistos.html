@@ -19,7 +19,7 @@
 						<th style="text-align: center" ng-show="acceso=='agp'" class="col-lg-1">Estado</th>
 					</tr>
 					</thead>
-					<tbody>
+					<tbody ng-show="acceso == 'agp'">
 					<tr ng-repeat="invoice in comprobantesVistos">
 						<td style="text-align: right; width: 8%">{{ invoice.nroPtoVenta }}</td>
 						<td style="width: 17%"><a href ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0" ng-click="filtrado('codComprobante', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
@@ -29,9 +29,21 @@
 						<td style="text-align: right; width: 12%"><a ng-show="invoice.controlTarifas.length > 0" href="" popover="Error en tarifas" popover-trigger="mouseenter"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a> {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice.codMoneda: invoice.cotiMoneda | currency }}</td>
 						<td class="hidden-print" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 						<td style="text-align: center; width: 3%"><a href ng-click="quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></a></td>
-						<td ng-show="acceso=='agp'" style="text-align: left; width: 14%">
+						<td style="text-align: left; width: 14%">
 							<a href ng-click="trackInvoice(invoice)"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
 						</td>
+					</tr>
+					</tbody>
+					<tbody ng-show="acceso == 'terminal'">
+					<tr ng-repeat="invoice in comprobantesVistos">
+						<td style="text-align: right; width: 8%">{{ invoice.nroPtoVenta }}</td>
+						<td style="width: 17%"><a href ng-hide="ocultarFiltros.indexOf('codComprobante', 0) >= 0" ng-click="filtrado('codComprobante', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ vouchersType[invoice.codTipoComprob] }}</td>
+						<td style="text-align: right; width: 8%"><a href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+						<td style="width: 38%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon | maxLength : 40}}<a href="" ng-show="(invoice.razon.length > 40)" popover="{{ invoice.razon }}" popover-trigger="mouseenter"> (...)</a></td>
+						<td style="text-align: center; width: 11%;"><a href ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0" ng-click="filtrado('fechaDesde', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
+						<td style="text-align: right; width: 12%"><a ng-show="invoice.controlTarifas.length > 0" href="" popover="Error en tarifas" popover-trigger="mouseenter"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a> {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice.codMoneda: invoice.cotiMoneda | currency }}</td>
+						<td class="hidden-print" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+						<td style="text-align: center; width: 3%"><a href ng-click="quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></a></td>
 					</tr>
 					</tbody>
 				</table>
