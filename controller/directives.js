@@ -151,21 +151,21 @@
 				};
 
 				$scope.clientSelected = function(selected){
-					if (angular.isDefined(selected)){
+					if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
 						$scope.model.razonSocial = selected.title;
 						$scope.filtrado('razonSocial', selected.title);
 					}
 				};
 
 				$scope.containerSelected = function(selected){
-					if (angular.isDefined(selected)){
+					if (angular.isDefined(selected) && selected.title != $scope.model.contenedor){
 						$scope.model.contenedor = selected.title;
 						$scope.filtrado('contenedor', selected.title);
 					}
 				};
 
 				$scope.buqueSelected = function(selected){
-					if (angular.isDefined(selected)){
+					if (angular.isDefined(selected) && selected.title != $scope.model.buque){
 						$scope.model.buque = selected.originalObject.buque;
 						//$scope.filtrado('buque', $scope.model.buque);
 						var i = 0;
@@ -181,7 +181,7 @@
 				};
 
 				$scope.viajeSelected = function(selected){
-					if (angular.isDefined(selected)){
+					if (angular.isDefined(selected) && selected.title != $scope.model.viaje){
 						$scope.model.viaje = selected.title;
 						$scope.filtrado('viaje', selected.title);
 					}
