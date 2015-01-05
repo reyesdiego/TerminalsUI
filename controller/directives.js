@@ -765,19 +765,45 @@
 			scope: {
 				totalItems:			'=',
 				currentPage:		'=',
-				itemsPerPage:		'='
+				itemsPerPage:		'=',
+				panelSize:			'='
 			},
 			link: function($scope){
 				$scope.$watch('totalItems', function(){
-					if ($scope.totalItems >= 10000){
-						$scope.maxSizeSM = 9;
-						$scope.maxSizeMD = 13;
-						$scope.maxSizeLG = 17;
-					} else {
-						$scope.maxSizeSM = 10;
-						$scope.maxSizeMD = 15;
-						$scope.maxSizeLG = 20;
+					switch ($scope.panelSize){
+						case 12:
+						case undefined:
+							if ($scope.totalItems / $scope.itemsPerPage >= 1000){
+								$scope.maxSizeSM = 9;
+								$scope.maxSizeMD = 13;
+								$scope.maxSizeLG = 17;
+							} else {
+								$scope.maxSizeSM = 10;
+								$scope.maxSizeMD = 15;
+								$scope.maxSizeLG = 20;
+							}
+							break;
+						case 10:
+							if ($scope.totalItems / $scope.itemsPerPage >= 10000){
+								$scope.maxSizeSM = 4;
+								$scope.maxSizeMD = 8;
+								$scope.maxSizeLG = 12;
+							} else if ($scope.totalItems / $scope.itemsPerPage >= 1000){
+								$scope.maxSizeSM = 6;
+								$scope.maxSizeMD = 10;
+								$scope.maxSizeLG = 14;
+							} else if ($scope.totalItems / $scope.itemsPerPage >= 100) {
+								$scope.maxSizeSM = 8;
+								$scope.maxSizeMD = 12;
+								$scope.maxSizeLG = 16;
+							} else {
+								$scope.maxSizeSM = 10;
+								$scope.maxSizeMD = 15;
+								$scope.maxSizeLG = 20;
+							}
+							break;
 					}
+
 				});
 				$scope.pageChanged = function(){
 					$scope.$emit('cambioPagina', $scope.currentPage);
