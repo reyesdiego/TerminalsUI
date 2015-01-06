@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, $modal){
+function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, $filter){
 	'use strict';
 	$scope.nombre = loginService.getFiltro();
 
@@ -39,6 +39,9 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, 
 	$scope.puedeEditar = (loginService.getType() == 'terminal');
 
 	$scope.itemsPerPage = 10;
+
+	$scope.newFrom = new Date();
+	$scope.newCurrency = 'DOL';
 
 	$scope.openFechaTarifa = false;
 	$scope.dateOptions = { 'showWeeks': false };
@@ -224,18 +227,45 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, 
 
 			if ($scope.verificarEditado()){
 				if ($scope.flagEditando){
-					priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
-						if (data.status == 'OK'){
-							dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
-							$scope.tarifaCompleta = data.data;
-							$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
-							$scope.preciosHistoricos.forEach(function(precio){
-								precio.from = new Date(precio.from);
-							});
-							//$scope.salir();
-							$scope.prepararDatos();
-						}
-					})
+					formData.topPrices = angular.copy($scope.tarifaCompleta.topPrices);
+					if (angular.isDefined($scope.newPrice) && $scope.newPrice > 0){
+						var dlg = dialogs.confirm("Nuevo precio", "¿Agregar nuevo precio a la tarifa? Fecha: " + $filter('date')($scope.newFrom, 'yyyy-MM-dd')  + ', moneda: ' + $filter('formatCurrency')($scope.newCurrency) + ', precio: ' + $scope.newPrice);
+						dlg.result.then(function(){
+							var nuevoTopPrice = {
+								price: $scope.newPrice,
+								currency: $scope.newCurrency,
+								from: $scope.newFrom
+							};
+							formData.topPrices.push(nuevoTopPrice);
+							priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
+								if (data.status == 'OK'){
+									$scope.newPrice = '';
+									$scope.newFrom = new Date();
+									dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
+									$scope.tarifaCompleta = data.data;
+									$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+									$scope.preciosHistoricos.forEach(function(precio){
+										precio.from = new Date(precio.from);
+									});
+									$scope.prepararDatos();
+								}
+							})
+						});
+					} else {
+						priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
+							if (data.status == 'OK'){
+								$scope.newPrice = '';
+								$scope.newFrom = new Date();
+								dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
+								$scope.tarifaCompleta = data.data;
+								$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+								$scope.preciosHistoricos.forEach(function(precio){
+									precio.from = new Date(precio.from);
+								});
+								$scope.prepararDatos();
+							}
+						})
+					}
 				} else {
 					priceFactory.addPrice(formData, function(nuevoPrecio){
 						if (nuevoPrecio.status === 'OK'){
@@ -317,7 +347,7 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, 
 		}
 	};
 
-	$scope.guardarFecha = function(){
+	$scope.updateTarifa = function(){
 
 	}
 

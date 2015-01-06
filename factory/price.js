@@ -127,6 +127,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 	};
 
 	factory.savePriceChanges = function(formData, id, callback){
+		formData.topPrices.forEach(function(unPrecio){
+			unPrecio.from = formatDate.formatearFecha(unPrecio.from);
+		});
 		var inserturl = serverUrl + '/price/' + id;
 		$http({
 			method: 'PUT',

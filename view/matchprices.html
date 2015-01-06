@@ -130,26 +130,21 @@
 		</div>
 
 		<div class="row">
-			<div class="col-lg-6">
+			<div class="col-lg-12">
 				<div class="well">
-					<form ng-submit="guardarNuevoConcepto()" class="bs-example form-horizontal" name="cargaNuevoConcepto">
-						<fieldset>
-							<legend>Tarifa</legend>
-							<div class="form-group">
-								<label for="inputCodigo" class="col-lg-2 control-label">Código</label>
-								<div class="col-lg-10">
+					<form ng-submit="guardarNuevoConcepto()" name="cargaNuevoConcepto">
+
+						<legend>Tarifa</legend>
+						<div class="row">
+							<div class="form-group col-lg-3">
+								<div class="input-group">
+									<span class="input-group-addon">Código</span>
 									<input type="text" class="form-control" ng-model="codigo" id="inputCodigo" placeholder="Ingresar código" ng-required="esRequerido" toupper>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="inputDescri" class="col-lg-2 control-label">Descripción</label>
-								<div class="col-lg-10">
-									<input type="text" class="form-control" ng-model="descripcion" id="inputDescri" placeholder="Ingresar descripcion" ng-required="esRequerido">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputUnidad" class="col-lg-2 control-label">Unidad</label>
-								<div class="col-lg-10">
+							<div class="form-group col-lg-3">
+								<div class="input-group">
+									<span class="input-group-addon">Unidad</span>
 									<select class="form-control" id="inputUnidad" ng-model="unidad" ng-required="esRequerido">
 										<option value="CONTAINER" ng-selected="true">Contenedor</option>
 										<option value="TN">tn</option>
@@ -157,32 +152,45 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="inputMoneda" class="col-lg-2 control-label">Moneda</label>
-								<div class="col-lg-10">
+							<div class="form-group col-lg-6">
+								<div class="input-group">
+									<span class="input-group-addon">Descripción</span>
+									<input type="text" class="form-control" ng-model="descripcion" id="inputDescri" placeholder="Ingresar descripcion" ng-required="esRequerido">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-lg-3" ng-hide="flagEditando">
+								<div class="input-group">
+									<span class="input-group-addon">Moneda</span>
 									<select class="form-control" id="inputMoneda" ng-model="moneda" ng-required="esRequerido">
 										<option value="DOL">U$S</option>
 										<option value="PES" ng-selected="true">$ARG</option>
 									</select>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="inputPrecio" class="col-lg-2 control-label">Precio</label>
-								<div class="col-lg-10">
+							<div class="form-group col-lg-3" ng-hide="flagEditando">
+								<div class="input-group">
+									<span class="input-group-addon">Precio</span>
 									<input type="text" class="form-control" ng-model="precio" id="inputPrecio" placeholder="Ingresar precio" ng-required="esRequerido">
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-lg-10 col-lg-offset-2">
-									<button class="btn btn-default" ng-click="salir()"><span class="glyphicon glyphicon-arrow-left"></span> Cancelar</button>
-									<button type="submit" class="btn btn-primary" ng-hide="flagEditando"><span class="glyphicon glyphicon-save"></span> Agregar</button>
-									<button type="submit" class="btn btn-primary" ng-show="flagEditando"><span class="glyphicon glyphicon-save"></span> Guardar</button>
+							<div class="form-group col-lg-1">
+								<div class="input-group" ng-hide="flagEditando">
+									<button class="btn btn-default" ng-click="salir()" ng-hide="flagEditando"><span class="glyphicon glyphicon-arrow-left"></span> Cancelar</button>
 								</div>
 							</div>
-						</fieldset>
+							<div class="form-group col-lg-1">
+								<div class="input-group" ng-hide="flagEditando">
+									<button type="submit" class="btn btn-primary col-lg-offset-1" ng-hide="flagEditando"><span class="glyphicon glyphicon-save"></span> Agregar</button>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>
+		</div>
+		<div class="row col-lg-12">
 			<div class="col-lg-6" ng-show="preciosHistoricos.length > 0">
 				<form ng-submit="guardarNuevoConcepto()" class="bs-example form-horizontal" name="cargaNuevoConcepto">
 					<fieldset>
@@ -191,38 +199,61 @@
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
 								<tr>
-									<th class="col-lg-6 text-center">
+									<th class="col-lg-4 text-center">
 										<span class="glyphicon glyphicon-bookmark"></span> Fecha
 									</th>
-									<th class="col-lg-5 text-center">
-										<span class="glyphicon glyphicon-credit-card"></span> Precio
+									<th class="col-lg-4 text-center">
+										<span class="glyphicon glyphicon-usd"></span> Moneda
 									</th>
-									<th class="col-lg-1 text-center">
-										<span class="glyphicon glyphicon-floppy-disk"></span>
+									<th class="col-lg-4 text-center">
+										<span class="glyphicon glyphicon-credit-card"></span> Precio
 									</th>
 								</tr>
 								</thead>
 								<tbody>
 								<tr ng-repeat="price in preciosHistoricos">
-									<td class="col-lg-7 text-center">
+									<td class="col-lg-4 text-center">
 										<div class="input-group">
 											<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="price.from" is-open="openFechaTarifa" datepicker-options="dateOptions" show-button-bar="false"/>
 											<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaTarifa = !openFechaTarifa;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 										</div>
 									</td>
-									<td class="col-lg-5 text-center">{{ price.currency | formatCurrency }} {{ price.price | currency }}</td>
-									<td>
-										<button class="btn btn-primary" ng-click="guardarFecha()"><span class="glyphicon glyphicon-check"></span></button>
+									<td class="col-lg-4 text-center">
+										<select class="form-control" ng-model="price.currency" ng-required="esRequerido">
+											<option value="DOL" ng-selected="true">U$S</option>
+											<option value="PES">$ARG</option>
+										</select>
+									</td>
+									<td class="col-lg-4 text-center">
+										<input type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="esRequerido">
+									</td>
+								</tr>
+								<tr>
+									<td class="col-lg-4 text-center">
+										<div class="input-group">
+											<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="newFrom" is-open="openNewFrom" datepicker-options="dateOptions" show-button-bar="false"/>
+											<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openNewFrom = !openNewFrom;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+										</div>
+									</td>
+									<td class="col-lg-4 text-center">
+										<select class="form-control" ng-model="newCurrency" ng-required="esRequerido">
+											<option value="DOL">U$S</option>
+											<option value="PES">$ARG</option>
+										</select>
+									</td>
+									<td class="col-lg-4 text-center">
+										<input type="text" class="form-control" ng-model="newPrice" placeholder="Ingresar precio">
 									</td>
 								</tr>
 								</tbody>
 							</table>
 						</div>
+						<button class="btn btn-default" ng-click="salir()" ng-show="flagEditando"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+						<button type="submit" class="btn btn-primary" ng-show="flagEditando"><span class="glyphicon glyphicon-save"></span> Guardar</button>
 					</fieldset>
 				</form>
 			</div>
 		</div>
-
 	</div>
 </div>
 <br>
