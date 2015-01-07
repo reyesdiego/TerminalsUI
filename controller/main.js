@@ -249,7 +249,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 
 });
 
-myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory){
+myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory){
 	"use strict";
 
 	$rootScope.cargaGeneral = function(){
@@ -281,6 +281,10 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 
 		invoiceFactory.getDescriptionItem(function (data) {
 			$rootScope.itemsDescriptionInvoices = data.data;
+		});
+
+		priceFactory.getUnitTypes(function(data){
+			$rootScope.unidadesTarifas = data.data;
 		});
 
 		controlPanelFactory.getClients(function(data){

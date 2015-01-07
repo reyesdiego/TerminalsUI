@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, $filter){
+function matchPricesCtrl($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter){
 	'use strict';
 	$scope.nombre = loginService.getFiltro();
 
@@ -150,7 +150,6 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, 
 	};
 
 	$scope.borrar = function(price, codigo){
-		$scope.cancelarEditado(price);
 		//Elimino el código del match
 		var pos = price.matches[0].match.indexOf(codigo);
 		price.matches[0].match.splice( pos, 1 );
@@ -346,9 +345,5 @@ function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, 
 			return true;
 		}
 	};
-
-	$scope.updateTarifa = function(){
-
-	}
 
 }
