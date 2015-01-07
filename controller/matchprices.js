@@ -62,6 +62,7 @@ function matchPricesCtrl($rootScope, $scope, priceFactory, $timeout, dialogs, lo
 			$scope.codigosConMatch = [];
 			//Cargo todos los códigos ya asociados de la terminal para control
 			$scope.pricelist.forEach(function(price){
+				$scope.matchesTerminal.push(price.code);
 				if (price.matches != null && price.matches.length > 0){
 					$scope.codigosConMatch.push(price);
 					price.matches[0].match.forEach(function(codigo){
@@ -119,7 +120,6 @@ function matchPricesCtrl($rootScope, $scope, priceFactory, $timeout, dialogs, lo
 	});
 
 	$scope.agregarCodigo = function(price){
-		$scope.cancelarEditado(price);
 		if (!$scope.matchesTerminal.contains(price.new)){
 			if (!(angular.equals(price.new, undefined) || angular.equals(price.new,''))){
 				if ((price.matches == null || price.matches.length === 0)){
@@ -329,16 +329,21 @@ function matchPricesCtrl($rootScope, $scope, priceFactory, $timeout, dialogs, lo
 
 	$scope.verificarEditado = function(){
 		var flagCodigo = false;
-		var flagDescripcion = false;
 
 		//Comparo que con los cambios hechos, no coincida el código con otra tarifa de la lista
 		var listaSinCodigo = $scope.pricelist.slice();
 		listaSinCodigo.splice($scope.posicionTarifa, 1);
 		listaSinCodigo.forEach(function(tarifa){
 			if ($scope.codigo == tarifa.code) flagCodigo = true;
+			if (tarifa.matches != null && tarifa.matches.length > 0){
+				tarifa.matches[0].match.forEach(function(codigo){
+					if (codigo == tarifa.code) flagCodigo = true;
+				})
+			}
 		});
+
 		//Si hubo coincidencia muestro mensaje de error
-		if (flagCodigo || flagDescripcion){
+		if (flagCodigo){
 			dialogs.error('Error', 'El código de la tarifa no puede coincidir con el de una tarifa existente.');
 			return false;
 		} else {
