@@ -10,6 +10,11 @@
 					<tr>
 						<th>Tipo Registro</th>
 						<th>Afectaci&oacute;n</th>
+						<th>Afec A&ntilde;o</th>
+						<th>Afec Aduana</th>
+						<th>Afec Tipo</th>
+						<th>Afec Nro</th>
+						<th>Afec Letra Control</th>
 						<th>T&iacute;tulo Completo</th>
 						<th>Nro de L&iacute;nea</th>
 						<th>C&oacute;d de Embalaje</th>
@@ -29,6 +34,11 @@
 					<tr ng-repeat="registro in datosRegistro">
 						<td>{{ registro.TIPOREGISTRO }}</td>
 						<td>{{ registro.AFECTACION }}</td>
+						<td>{{ registro.AFE_ANIO }}</td>
+						<td>{{ registro.AFE_ADUANA }}</td>
+						<td>{{ registro.AFE_TIPO }}</td>
+						<td>{{ registro.AFE_NRO }}</td>
+						<td>{{ registro.AFE_LETRA_CTRL }}</td>
 						<td>{{ registro.TITULOCOMPLETO }}</td>
 						<td>{{ registro.NRO_LINEA }}</td>
 						<td>{{ registro.COD_EMBALAJE }}</td>
