@@ -156,6 +156,19 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		});
 	};
 
+	factory.removePrice = function(id, callback){
+		var inserturl = serverUrl + '/price/' + id;
+		$http({
+			method: 'DELETE',
+			url: inserturl,
+			headers:{ token: loginService.getToken() }
+		}).success(function(response) {
+			callback(response);
+		}).error(function(errorText) {
+			dialogs.error('Error', 'Error al añadir el Precio en la base');
+		});
+	};
+
 	return factory;
 
 });

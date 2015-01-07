@@ -334,10 +334,14 @@ function matchPricesCtrl($rootScope, $scope, priceFactory, $timeout, dialogs, lo
 		var listaSinCodigo = $scope.pricelist.slice();
 		listaSinCodigo.splice($scope.posicionTarifa, 1);
 		listaSinCodigo.forEach(function(tarifa){
-			if ($scope.codigo == tarifa.code) flagCodigo = true;
+			if ($scope.codigo == tarifa.code){
+				flagCodigo = true;
+			}
 			if (tarifa.matches != null && tarifa.matches.length > 0){
 				tarifa.matches[0].match.forEach(function(codigo){
-					if (codigo == tarifa.code) flagCodigo = true;
+					if (codigo == $scope.codigo){
+						flagCodigo = true;
+					}
 				})
 			}
 		});
@@ -350,5 +354,18 @@ function matchPricesCtrl($rootScope, $scope, priceFactory, $timeout, dialogs, lo
 			return true;
 		}
 	};
+
+	$scope.eliminarTarifa = function(){
+		var dlg = dialogs.confirm('Eliminar', 'Se eliminará la tarifa, ¿confirma la operación?');
+		dlg.result.then(function(){
+			priceFactory.removePrice($scope.tarifaCompleta._id, function(data){
+				if (data.status == 'OK'){
+					dialogs.notify("Eliminar","La tarifa ha sido eliminada");
+					$scope.prepararDatos();
+					$scope.salir();
+				}
+			})
+		})
+	}
 
 }
