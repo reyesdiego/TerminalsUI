@@ -240,7 +240,7 @@ function matchPricesCtrl($rootScope, $scope, priceFactory, $timeout, dialogs, lo
 								if (data.status == 'OK'){
 									$scope.newPrice = '';
 									$scope.newFrom = new Date();
-									dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
+									dialogs.notify("Asociar","Se ha asignado el nuevo valor a la tarifa y se han guardado los cambios.");
 									$scope.tarifaCompleta = data.data;
 									$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
 									$scope.preciosHistoricos.forEach(function(precio){
