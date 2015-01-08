@@ -58,11 +58,13 @@ function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService
 	};
 
 	$scope.setearTerminal = function(terminal){
-		$rootScope.filtroTerminal = terminal;
-		loginService.setFiltro(terminal);
-		$rootScope.switchTheme(terminal);
-		authFactory.setTheme(terminal);
-		$scope.irA();
+		if ($rootScope.filtroTerminal != terminal){
+			$rootScope.filtroTerminal = terminal;
+			$scope.irA();
+			loginService.setFiltro(terminal);
+			$rootScope.switchTheme(terminal);
+			authFactory.setTheme(terminal);
+		}
 	};
 
 }
