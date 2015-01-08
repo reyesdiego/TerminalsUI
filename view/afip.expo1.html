@@ -10,6 +10,11 @@
 					<tr>
 						<th>Tipo Registro</th>
 						<th>Sumaria</th>
+						<th>A&ntilde;o</th>
+						<th>Aduana</th>
+						<th>Tipo Sumaria</th>
+						<th>Nro Manifiesto</th>
+						<th>Letra de Control</th>
 						<th>CUIT ATA</th>
 						<th>Nombre ATA</th>
 						<th>Codigo de Proceso</th>
@@ -39,6 +44,11 @@
 					<tr ng-repeat="registro in datosRegistro">
 						<td>{{ registro.TIPOREGISTRO }}</td>
 						<td>{{ registro.SUMARIA }}</td>
+						<td>{{ registro.SUM_ANIO }}</td>
+						<td>{{ registro.SUM_ADUANA }}</td>
+						<td>{{ registro.SUM_TIPO }}</td>
+						<td>{{ registro.SUM_NRO }}</td>
+						<td>{{ registro.SUM_LETRA_CTRL }}</td>
 						<td>{{ registro.CUITATA }}</td>
 						<td>{{ registro.NOMBREATA }}</td>
 						<td>{{ registro.CODIGOPROCESO }}</td>
