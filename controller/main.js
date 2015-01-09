@@ -252,6 +252,8 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory){
 	"use strict";
 
+	$rootScope.cambioMoneda = true;
+
 	$rootScope.cargaGeneral = function(){
 
 		statesFactory.getStatesArray(function(data){
@@ -507,6 +509,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	});
 
 	$rootScope.verificaRutas = function(event, toState){
+		$rootScope.cambioMoneda = !(toState.name == 'reports' || toState.name.indexOf('afip') != -1);
 		if (!in_array(toState.name, rutasComunes)){
 			if (loginService.getStatus()){
 				if(!in_array(toState.name, loginService.getAcceso())){
