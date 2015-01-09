@@ -29,6 +29,8 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 		titulo: 'Turnos'
 	};
 
+	$scope.cargandoTasas = false;
+
 	$scope.$on('cambioFiltro', function(){
 		if ($scope.model.contenedor != ''){
 			$scope.filtrar();
@@ -48,6 +50,7 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 	};
 
 	$scope.cargaComprobantes = function(page){
+		$scope.cargando = true;
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		invoiceFactory.getInvoice($scope.model, page, function(data){
@@ -55,20 +58,26 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 				$scope.invoices = data.data;
 				$scope.invoicesTotalItems = data.totalCount;
 			}
+			$scope.cargando = false;
 		});
 	};
 
 	$scope.cargaTasasCargas = function(){
-		var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
-		controlPanelFactory.getTasasContenedor(datos, function(data){
-			if (data.status === 'OK'){
-				$scope.tasas = data.data;
-				$scope.totalTasas = data.totalTasas;
-			}
-		});
+		if (angular.isDefined($scope.model.contenedor) && $scope.model.contenedor != ''){
+			$scope.cargandoTasas = true;
+			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
+			controlPanelFactory.getTasasContenedor(datos, function(data){
+				if (data.status === 'OK'){
+					$scope.tasas = data.data;
+					$scope.totalTasas = data.totalTasas;
+				}
+				$scope.cargandoTasas = false;
+			});
+		}
 	};
 
 	$scope.cargaGates = function(page){
+		$scope.cargandoGates = true;
 		page = page || { skip: 0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		gatesFactory.getGate($scope.model, page, function (data) {
@@ -76,16 +85,19 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 				$scope.gates = data.data;
 				$scope.gatesTotalItems = data.totalCount;
 			}
+			$scope.cargandoGates = false;
 		});
 	};
 
 	$scope.cargaTurnos = function(page){
+		$scope.cargandoTurnos = true;
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		turnosFactory.getTurnos($scope.model, page, function(data){
 			if (data.status === "OK"){
 				$scope.turnos = data.data;
 				$scope.turnosTotalItems = data.totalCount;
 			}
+			$scope.cargandoTurnos = false;
 		});
 	};
 
