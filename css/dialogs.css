@@ -8,6 +8,6 @@
 .dialog-header-wait span, .dialog-header-wait h4,
 .dialog-header-confirm span, .dialog-header-confirm h4 { color: #ffffff; }
 .columnaAnidada {
-	border-bottom:none;
-	text-align: center;
+	border-bottom:none !important;
+	text-align: center !important;
 }
