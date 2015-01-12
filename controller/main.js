@@ -289,6 +289,11 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 			$rootScope.unidadesTarifas = data.data;
 		});
 
+		priceFactory.getUnitTypesArray(function(data){
+			console.log(data);
+			$rootScope.arrayUnidades = data.data;
+		});
+
 		controlPanelFactory.getClients(function(data){
 			var i = 0;
 			data.data.forEach(function(cliente){

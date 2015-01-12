@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/29/14.
  */
-function matchPricesCtrl($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter){
+function matchPricesCtrl($scope, priceFactory, $timeout, dialogs, loginService, $filter){
 	'use strict';
 	$scope.nombre = loginService.getFiltro();
 

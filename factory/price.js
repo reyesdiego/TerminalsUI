@@ -156,6 +156,19 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		});
 	};
 
+	factory.getUnitTypesArray = function(callback){
+		var inserturl = serverUrl + '/unitTypes?type=array'; //ver direccion
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:{ token: loginService.getToken() }
+		}).success(function(response) {
+			callback(response);
+		}).error(function(errorText) {
+			dialogs.error('Error', 'Error al añadir el Precio en la base');
+		});
+	};
+
 	factory.removePrice = function(id, callback){
 		var inserturl = serverUrl + '/price/' + id;
 		$http({
