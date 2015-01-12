@@ -97,7 +97,7 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 		};
 		$scope.loadingControlCodigos = false;
 	});
-
+	//
 	$scope.controlDeCodigos = function(){
 		$scope.controlFiltros = 'codigos';
 		$scope.loadingControlCodigos = true;
