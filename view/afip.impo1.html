@@ -10,11 +10,10 @@
 					<tr>
 						<th rowspan="2">Tipo Registro</th>
 						<th rowspan="2">Sumaria</th>
-						<th colspan="5">Sumaria</th>
-						<th colspan="2">ATA</th>
+						<th colspan="5" style="border-bottom:none; text-align: center">Sumaria</th>
+						<th colspan="2" style="border-bottom:none; text-align: center">ATA</th>
 						<th rowspan="2">Estado</th>
-						<th rowspan="2">Fecha Registro</th>
-						<th rowspan="2">Fecha Arribo</th>
+						<th colspan="2" style="border-bottom:none; text-align: center">Fecha</th>
 						<th rowspan="2">Transp Vac&iacute;o</th>
 						<th rowspan="2">Pa&iacute;s Procedencia</th>
 						<th rowspan="2">Transportista</th>
@@ -29,16 +28,18 @@
 						<th rowspan="2">Lugar Operativo</th>
 						<th rowspan="2">Lugar de Giro</th>
 						<th rowspan="2">Buque</th>
-						<th colspan="2">Registrado</th>
+						<th colspan="2" style="border-bottom:none; text-align: center">Registrado</th>
 					</tr>
 					<tr>
 						<th>A&ntilde;o</th>
 						<th>Aduana</th>
-						<th>Tipo Sumaria</th>
+						<th>Tipo</th>
 						<th>Nro Manifiesto</th>
 						<th>Letra Control</th>
 						<th>CUIT</th>
 						<th>Nombre</th>
+						<th>Registro</th>
+						<th>Arribo</th>
 						<th>Por</th>
 						<th>En</th>
 					</tr>
@@ -70,7 +71,7 @@
 						<td>{{ registro.NACIONALIDADMEDIOTRANSPORTE }}</td>
 						<td>{{ registro.LUGAROPERATIVO }}</td>
 						<td>{{ registro.LUGARDEGIRO }}</td>
-						<td>{{ registro.BUQUE }}</td>
+						<td>{{ registro.NOMBREBUQUE }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
 						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm'}}</td>
 					</tr>
