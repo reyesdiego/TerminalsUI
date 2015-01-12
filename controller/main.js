@@ -509,7 +509,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	});
 
 	$rootScope.verificaRutas = function(event, toState){
-		$rootScope.cambioMoneda = !(toState.name == 'reports' || toState.name.indexOf('afip') != -1);
+		$rootScope.cambioMoneda = !(toState.name == 'reports' || toState.name.indexOf('afip') != -1 || toState.name == 'tarifario' || toState.name == 'matches');
 		if (!in_array(toState.name, rutasComunes)){
 			if (loginService.getStatus()){
 				if(!in_array(toState.name, loginService.getAcceso())){
