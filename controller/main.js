@@ -290,7 +290,6 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		});
 
 		priceFactory.getUnitTypesArray(function(data){
-			console.log(data);
 			$rootScope.arrayUnidades = data.data;
 		});
 

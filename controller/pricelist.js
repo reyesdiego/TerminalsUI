@@ -18,6 +18,7 @@ function pricelistCtrl($scope, priceFactory, loginService){
 	$scope.cargaPricelist = function(){
 		priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
 			$scope.pricelist = data.data;
+			console.log($scope.pricelist);
 			$scope.pricelist.forEach(function(tarifa){
 				if (angular.isDefined($scope.arrayUnidades[tarifa.unit])){
 					tarifa.unit = $scope.arrayUnidades[tarifa.unit];
