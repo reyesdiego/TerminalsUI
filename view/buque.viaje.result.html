@@ -3,13 +3,13 @@
 		<thead>
 		<tr>
 			<th class="text-center"><span class="glyphicon glyphicon-compressed"></span><span> Contenedor</span></th>
-			<th class="text-center"><span class="glyphicon glyphicon-search"></span><span> Detalles</span></th>
+			<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 		</tr>
 		</thead>
 		<tbody>
 		<tr ng-repeat="datosContenedor in datosContainers | startFrom:(currentPageContainers-1)*itemsPerPage | limitTo:itemsPerPage">
 			<td class="text-center"><a ng-show="datosContenedor.gates.length == 0" href popover="No se encontraron gates para este contenedor" popover-trigger="mouseenter"><span class="glyphicon glyphicon-exclamation-sign alert-danger"></span></a><span> {{ datosContenedor.contenedor.contenedor }}</span></td>
-			<td class="text-center"><span><button class="btn btn-primary" ng-click="verDetalles(datosContenedor.contenedor)">Detalles</button></span></td>
+			<td class="text-center" style="width: 3%"><a href ng-click="verDetalles(datosContenedor.contenedor)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		</tbody>
 	</table>
