@@ -22,6 +22,11 @@ function pricelistCtrl($scope, priceFactory, loginService){
 				if (angular.isDefined($scope.arrayUnidades[tarifa.unit])){
 					tarifa.unit = $scope.arrayUnidades[tarifa.unit];
 				}
+				if (!angular.isDefined(tarifa.topPrices[0].price || tarifa.topPrices[0].price == null)){
+					tarifa.orderPrice = 0;
+				} else {
+					tarifa.orderPrice = tarifa.topPrices[0].price;
+				}
 			});
 			$scope.totalItems = $scope.pricelist.length;
 		});

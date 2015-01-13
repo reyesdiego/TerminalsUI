@@ -2,7 +2,7 @@
  * Created by Artiom on 11/03/14.
  */
 
-function changePassCtrl ($scope, userFactory, dialogs) {
+function changePassCtrl ($scope, userFactory, dialogs, $state) {
 	'use strict';
 
 	$scope.changePass = function(){
@@ -21,7 +21,13 @@ function changePassCtrl ($scope, userFactory, dialogs) {
 
 		userFactory.cambiarContraseña(formData, function(data){
 			$scope.codStatus = data.data;
-			dialogs.notify('Cambiar contraseña', 'La contraseña ha sido modificada con éxito.');
+			if ($scope.codStatus == 'Password changed successfully'){
+				var dl = dialogs.notify('Cambiar contraseña', 'La contraseña ha sido modificada con éxito.');
+				dl.result.then(function(){
+					$state.transitionTo('login');
+				})
+			}
+
 		});
 
 	}

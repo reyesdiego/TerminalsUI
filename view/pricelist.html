@@ -26,34 +26,36 @@
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 					<tr>
-						<th style="width: 15%"><a href="" ng-click="ordenarPor('code')">
+						<th style="width: 10%"><a href="" ng-click="ordenarPor('code')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'code' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'code' && reverse"></span>
 							<span class="glyphicon glyphicon-bookmark"></span> Código
 						</a></th>
-						<th style="width: 60%"><a href="" ng-click="ordenarPor('description')">
+						<th style="width: 64%"><a href="" ng-click="ordenarPor('description')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'description' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'description' && reverse"></span>
 							<span class="glyphicon glyphicon-credit-card"></span> Tarifa
 						</a></th>
-						<th style="width: 15%"><a href="" ng-click="ordenarPor('unit')">
+						<th style="width: 12%"><a href="" ng-click="ordenarPor('unit')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'unit' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'unit' && reverse"></span>
 							<span class="glyphicon glyphicon-tag"></span> Unidad
 						</a></th>
-						<th style="width: 10%"><a href="" ng-click="ordenarPor('topPrices[0].price')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'topPrices[0].price' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'topPrices[0].price' && reverse"></span>
+						<th style="width: 14%"><a href="" ng-click="ordenarPor('orderPrice')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'orderPrice' && !reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'orderPrice' && reverse"></span>
 							<span class="glyphicon glyphicon-usd"></span> Tope
 						</a></th>
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | filter:search | orderBy: predicate : reverse | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage)">
-						<td style="width: 15%">{{ price.code }}</td>
-						<td style="width: 60%">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
-						<td style="width: 15%">{{ price.unit}}</td>
-						<td style="text-align: right; width: 10%" >{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</td>
+					<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | filter:search | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage)">
+						<td style="width: 10%">{{ price.code }}</td>
+						<td style="width: 64%">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+						<td style="width: 12%">{{ price.unit}}</td>
+						<td style="text-align: right; width: 14%" >
+							<span ng-show="!(price.topPrices[0].price > 0)" class="glyphicon glyphicon-warning-sign text-danger"> Sin definir</span> <span ng-show="price.topPrices[0].price > 0">{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</span>
+						</td>
 					</tr>
 					</tbody>
 				</table>
