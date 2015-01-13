@@ -73,6 +73,8 @@
 
 				$scope.recargarResultado = false;
 
+				$scope.comprobantesControlados = [];
+
 				priceFactory.getArrayMatches(loginService.getFiltro(), function(arrayMatches){
 					$rootScope.matchesTerminal = arrayMatches;
 				});
@@ -481,8 +483,13 @@
 				};
 
 				$scope.chequearTarifas = function(comprobante){
-					$scope.controlarTarifas(comprobante);
-					return comprobante.controlTarifas.length > 0;
+					if (angular.isDefined($scope.comprobantesControlados[comprobante._id])){
+						return $scope.comprobantesControlados[comprobante._id];
+					} else {
+						$scope.controlarTarifas(comprobante);
+						$scope.comprobantesControlados[comprobante._id] = (comprobante.controlTarifas.length > 0);
+						return comprobante.controlTarifas.length > 0;
+					}
 				};
 
 				$scope.existeDescripcion = function(itemId){
