@@ -20,7 +20,7 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 		'filtroOrdenReverse': false,
 		'order': ''
 	};
-	$scope.ocultarFiltros = ['fechaDesde', 'fechaHasta', 'buque'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'codComprobante', 'nroComprobante', 'razonSocial', 'documentoCliente', 'codigo', 'estado', 'itemsPerPage', 'fechaDesde', 'fechaHasta', 'buque'];
 	$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
 	$scope.cargando = false;
 	$scope.invoices = [];
