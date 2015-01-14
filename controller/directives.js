@@ -286,63 +286,63 @@
 					estado = comprobante.interfazEstado;
 					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 
-							var modalInstance = $modal.open({
-								templateUrl: 'view/trackingInvoice.html',
-								controller: trackingInvoiceCtrl,
-								backdrop: 'static',
-								resolve: {
-									estado: function () {
-										return estado;
-									},
-									track: function() {
-										return dataTrack;
-									},
-									states : function() {
-										return angular.copy($rootScope.estadosComprobantes);
-									}
+						var modalInstance = $modal.open({
+							templateUrl: 'view/trackingInvoice.html',
+							controller: trackingInvoiceCtrl,
+							backdrop: 'static',
+							resolve: {
+								estado: function () {
+									return estado;
+								},
+								track: function() {
+									return dataTrack;
+								},
+								states : function() {
+									return angular.copy($rootScope.estadosComprobantes);
 								}
-							});
+							}
+						});
 
-							dataTrack = [];
-							modalInstance.result.then(function (dataComment) {
-								invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
-									$scope.recargarResultado = true;
-									var logInvoice = {
-										title: dataComment.title,
-										state: dataComment.newState._id,
-										comment: dataComment.comment,
-										invoice: comprobante._id
-									};
-									invoiceFactory.commentInvoice(logInvoice, function(dataRes){
-										if (dataRes.status == 'OK'){
-											comprobante.interfazEstado = dataComment.newState;
-											switch (dataComment.newState.type){
-												case 'WARN':
-													comprobante.interfazEstado.btnEstado = 'btn-warning';
-													break;
-												case 'OK':
-													comprobante.interfazEstado.btnEstado = 'btn-success';
-													break;
-												case 'ERROR':
-													comprobante.interfazEstado.btnEstado = 'btn-danger';
-													break;
-												case 'UNKNOWN':
-													comprobante.interfazEstado.btnEstado = 'btn-info';
-													break;
-											}
-											var nuevoEstado = {
-												_id: comprobante._id,
-												estado: dataComment.newState,
-												grupo: loginService.getGroup(),
-												user: loginService.getInfo().user
-											};
-											comprobante.estado.push(nuevoEstado);
-											if (!$scope.ocultarAccordionInvoicesSearch && !$scope.mostrarResultado)
-												$scope.cargaPuntosDeVenta();
+						dataTrack = [];
+						modalInstance.result.then(function (dataComment) {
+							invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
+								$scope.recargarResultado = true;
+								var logInvoice = {
+									title: dataComment.title,
+									state: dataComment.newState._id,
+									comment: dataComment.comment,
+									invoice: comprobante._id
+								};
+								invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+									if (dataRes.status == 'OK'){
+										comprobante.interfazEstado = dataComment.newState;
+										switch (dataComment.newState.type){
+											case 'WARN':
+												comprobante.interfazEstado.btnEstado = 'btn-warning';
+												break;
+											case 'OK':
+												comprobante.interfazEstado.btnEstado = 'btn-success';
+												break;
+											case 'ERROR':
+												comprobante.interfazEstado.btnEstado = 'btn-danger';
+												break;
+											case 'UNKNOWN':
+												comprobante.interfazEstado.btnEstado = 'btn-info';
+												break;
 										}
-									});
+										var nuevoEstado = {
+											_id: comprobante._id,
+											estado: dataComment.newState,
+											grupo: loginService.getGroup(),
+											user: loginService.getInfo().user
+										};
+										comprobante.estado.push(nuevoEstado);
+										if (!$scope.ocultarAccordionInvoicesSearch && !$scope.mostrarResultado)
+											$scope.cargaPuntosDeVenta();
+									}
 								});
 							});
+						});
 
 					});
 				};
@@ -533,13 +533,18 @@
 				currentPage:		'=',
 				loadingState:		'='
 			},
-			controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
+			controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
 				$scope.itemsPerPage = 10;
 				$scope.totalGates = 0;
 				$scope.configPanel = {
 					tipo: 'panel-info',
 					titulo: 'Gates'
 				};
+				$scope.listaBuques = $rootScope.listaBuques;
+				$scope.listaViajes = [];
+				$scope.$on('cargaGeneral', function(){
+					$scope.listaBuques = $rootScope.listaBuques;
+				});
 				$scope.colorHorario = function (gate) {
 					var horarioGate = new Date(gate.gateTimestamp);
 					var horarioInicio = new Date(gate.turnoInicio);
@@ -570,9 +575,22 @@
 							break;
 						case 'buque':
 							$scope.model.buque = contenido;
+							var i = 0;
+							$scope.listaBuques.forEach(function(buque){
+								if (buque.buque == contenido){
+									buque.viajes.forEach(function(viaje){
+										var objetoViaje = {
+											'id': i,
+											'viaje': viaje
+										};
+										$scope.listaViajes.push(objetoViaje);
+										i++;
+									})
+								}
+							});
 							break;
 					}
-					$scope.$emit('cambioFiltro');
+					$scope.$emit('cambioFiltro', $scope.listaViajes);
 				};
 				$scope.filtrarOrden = function(filtro){
 					var filtroModo;
@@ -667,14 +685,22 @@
 		$scope.maxDate = new Date();
 		$scope.formatDate = $rootScope.formatDate;
 		$scope.dateOptions = $rootScope.dateOptions;
-		$scope.listaBuquesGates = $rootScope.listaBuquesGates;
+		//$scope.listaBuquesGates = $rootScope.listaBuquesGates;
 		$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
-		$scope.listaBuquesTurnos = $rootScope.listaBuquesTurnos;
+		//$scope.listaBuquesTurnos = $rootScope.listaBuquesTurnos;
 		$scope.listaContenedoresTurnos = $rootScope.listaContenedoresTurnos;
+		//$scope.listaViajes = $rootScope.listaViajes;
+		$scope.listaBuques = $rootScope.listaBuques;
+		$scope.listaViajes = [];
 		$scope.$on('cargaGeneral', function(){
-			$scope.listaContenedores = $rootScope.listaContenedores;
-			$scope.listaRazonSocial = $rootScope.listaRazonSocial;
+			//$scope.listaBuquesGates = $rootScope.listaBuquesGates;
+			$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
+			//$scope.listaBuquesTurnos = $rootScope.listaBuquesTurnos;
+			$scope.listaContenedoresTurnos = $rootScope.listaContenedoresTurnos;
 			$scope.listaBuques = $rootScope.listaBuques;
+		});
+		$scope.$on('tengoViajes', function(event, data){
+			$scope.listaViajes = data;
 		});
 		$scope.openDate = function(event){
 			$rootScope.openDate(event);
@@ -723,6 +749,23 @@
 					break;
 				case 'buque':
 					$scope.model.buque = contenido;
+					if (contenido != ''){
+						var i = 0;
+						$scope.listaBuques.forEach(function(buque){
+							if (buque.buque == contenido){
+								buque.viajes.forEach(function(viaje){
+									var objetoViaje = {
+										'id': i,
+										'viaje': viaje
+									};
+									$scope.listaViajes.push(objetoViaje);
+									i++;
+								})
+							}
+						});
+					} else {
+						$scope.model.viaje = '';
+					}
 					break;
 				case 'viaje':
 					$scope.model.viaje = contenido;
@@ -732,8 +775,9 @@
 				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
 				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
 			}
-			$scope.$emit('cambioFiltro');
+			$scope.$emit('cambioFiltro', $scope.listaViajes);
 		};
+
 		$scope.cargaPorFiltros = function () {
 			$scope.status.open = !$scope.status.open;
 			$scope.$emit('cambioFiltro');
@@ -827,13 +871,13 @@
 				configPanel:	'='
 			},
 			template:		'<div class="panel {{ configPanel.tipo }}">' +
-							'	<div class="panel-heading">' +
-							'		<h3 class="panel-title">{{ configPanel.titulo }}</h3>' +
-							'	</div>' +
-							'	<div class="panel-body">' +
-							'		<span ng-transclude></span>' +
-							'	</div>' +
-							'</div>'
+				'	<div class="panel-heading">' +
+				'		<h3 class="panel-title">{{ configPanel.titulo }}</h3>' +
+				'	</div>' +
+				'	<div class="panel-body">' +
+				'		<span ng-transclude></span>' +
+				'	</div>' +
+				'</div>'
 		}
 	});
 
@@ -1110,11 +1154,23 @@
 				titulo:			'@'
 			},
 			template:		'<a href ng-click="filtrarOrden()" ng-hide="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">' +
-							'	<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden==\'{{ filtro }}\' && model.filtroOrdenReverse==false"></span>' +
-							'	<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden==\'{{ filtro }}\' && model.filtroOrdenReverse==true"></span>' +
-							'	{{ titulo }}' +
-							'</a>' +
-							'<span ng-show="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">{{ titulo }}</span>'
+				'	<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden==\'{{ filtro }}\' && model.filtroOrdenReverse==false"></span>' +
+				'	<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden==\'{{ filtro }}\' && model.filtroOrdenReverse==true"></span>' +
+				'	{{ titulo }}' +
+				'</a>' +
+				'<span ng-show="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">{{ titulo }}</span>'
+		}
+	});
+
+	myapp.directive('tableContainerSumaria', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/container.sumaria.html',
+			scope: {
+				datosSumaria:	'=',
+				loadingState:	'=',
+				configPanel:	'='
+			}
 		}
 	});
 

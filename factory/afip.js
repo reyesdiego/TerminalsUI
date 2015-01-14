@@ -390,6 +390,20 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
+	factory.getContainerSumaria = function(container, callback){
+		var inserturl = serverUrl + '/afip/sumariaImpo/' + container;
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:
+			{token: loginService.getToken()}
+		}).success(function(data){
+			callback(data);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+		});
+	};
+
 	return factory;
 
 });
