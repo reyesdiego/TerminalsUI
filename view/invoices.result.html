@@ -46,8 +46,7 @@
 			</tr>
 			<tr style="text-align: right" ng-repeat="item in contenedor.items">
 				<td><a href class="hidden-print" ng-click="filtrado('codigo', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
-				<td style="text-align: left" class="hidden-print"><span class="glyphicon glyphicon-warning-sign" style="color: red" ng-hide="existeDescripcion(item.id)"></span> {{ item.descripcion | maxLength : 200 }}<a href="" ng-show="(item.descripcion.length > 200)" popover="{{item.descripcion}}" popover-trigger="mouseenter"> (...)</a></td>
-				<td style="text-align: left" class="visible-print"><span class="glyphicon glyphicon-warning-sign hidden-print" ng-hide="existeDescripcion(item.id)"></span> {{ item.descripcion }}</td>
+				<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="existeDescripcion(item.id)"></span> <text-pop text="{{ item.descripcion }}" max="200"></text-pop></td>
 				<td>{{ item.cnt }}</td>
 				<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
 				<td>{{ item.uniMed }}</td>

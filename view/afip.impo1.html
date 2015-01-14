@@ -1,47 +1,47 @@
-<div class="container col-lg-12">
-	<div class="row">
-		<div class="col-lg-12">
-			<h1>Sumaria Manifiesto de Importaciones - Módulo 1</h1>
+<div class="col-lg-12">
+	<div>
+		<div>
+			<h3>Sumaria Manifiesto de Importaciones - Módulo 1</h3>
 		</div>
-		<div class="col-lg-12">
+		<div>
 			<div class="table-responsive" style="max-height: 650px; max-width: 100%; overflow: auto">
 				<table class="table table-striped table-bordered">
 					<thead>
 					<tr>
-						<th rowspan="2">Tipo Registro</th>
+						<th rowspan="2" style="min-width: 80px">Tipo Reg.</th>
 						<th rowspan="2">Sumaria</th>
 						<th colspan="5" class="columnaAnidada">Sumaria</th>
 						<th colspan="2" class="columnaAnidada">ATA</th>
 						<th rowspan="2">Estado</th>
 						<th colspan="2" class="columnaAnidada">Fecha</th>
-						<th rowspan="2">Transp Vac&iacute;o</th>
-						<th rowspan="2">Pa&iacute;s Procedencia</th>
-						<th rowspan="2">Transportista</th>
-						<th rowspan="2">Transportista Pa&iacute;s</th>
-						<th rowspan="2">Comentario</th>
-						<th rowspan="2">Impo / Expo</th>
+						<th rowspan="2" style="min-width: 110px">Transp Vac&iacute;o</th>
+						<th rowspan="2" style="min-width: 140px">Pa&iacute;s Procedencia</th>
+						<th rowspan="2" style="min-width: 200px">Transportista</th>
+						<th rowspan="2" style="min-width: 150px">Transportista Pa&iacute;s</th>
+						<th rowspan="2" style="min-width: 200px">Comentario</th>
+						<th rowspan="2">Impo/Expo</th>
 						<th rowspan="2">Desconsolidado</th>
-						<th rowspan="2">T&iacute;tulo</th>
-						<th rowspan="2">Mercader&iacute;a Abordo</th>
+						<th rowspan="2" style="min-width: 200px">T&iacute;tulo</th>
+						<th rowspan="2" style="min-width: 150px">Mercader&iacute;a Abordo</th>
 						<th rowspan="2">V&iacute;a</th>
-						<th rowspan="2">Nacionalidad Medio Transp.</th>
-						<th rowspan="2">Lugar Operativo</th>
-						<th rowspan="2">Lugar de Giro</th>
-						<th rowspan="2">Buque</th>
+						<th rowspan="2" style="min-width: 210px">Nacionalidad Medio Transp.</th>
+						<th rowspan="2" style="min-width: 130px">Lugar Operativo</th>
+						<th rowspan="2" style="min-width: 120px">Lugar de Giro</th>
+						<th rowspan="2" style="min-width: 200px">Buque</th>
 						<th colspan="2" class="columnaAnidada">Registrado</th>
 					</tr>
 					<tr>
 						<th>A&ntilde;o</th>
 						<th>Aduana</th>
 						<th>Tipo</th>
-						<th>Nro Manifiesto</th>
-						<th>Letra Control</th>
+						<th>Nro</th>
+						<th>Letra</th>
 						<th>CUIT</th>
-						<th>Nombre</th>
+						<th style="min-width: 200px">Nombre</th>
 						<th>Registro</th>
 						<th>Arribo</th>
 						<th>Por</th>
-						<th>En</th>
+						<th style="min-width: 130px">En</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -54,24 +54,24 @@
 						<td>{{ registro.SUM_NRO }}</td>
 						<td>{{ registro.SUM_LETRA_CTRL }}</td>
 						<td>{{ registro.CUITATA }}</td>
-						<td>{{ registro.NOMBREATA }}</td>
+						<td><text-pop text="{{ registro.NOMBREATA }}" max="16"></text-pop></td>
 						<td>{{ registro.ESTADO }}</td>
 						<td>{{ registro.FECHAREGISTRO | date: 'dd/MM/yyyy'}}</td>
 						<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy'}}</td>
 						<td>{{ registro.TRANSPORTEVACIO }}</td>
 						<td>{{ registro.PAISPROCEDENCIA }}</td>
-						<td>{{ registro.TRANSPORTISTA }}</td>
+						<td><text-pop text="{{ registro.TRANSPORTISTA }}" max="16"></text-pop></td>
 						<td>{{ registro.PAISTRANSPORTISTA }}</td>
-						<td>{{ registro.COMENTARIO }}</td>
+						<td><text-pop text="{{ registro.COMENTARIO }}" max="16"></text-pop></td>
 						<td>{{ registro.IMPO_EXPO }}</td>
 						<td>{{ registro.DESCONSOLIDADO }}</td>
-						<td>{{ registro.TITULO }}</td>
+						<td><text-pop text="{{ registro.TITULO }}" max="16"></text-pop></td>
 						<td>{{ registro.MERCADERIAABORDO }}</td>
 						<td>{{ registro.VIA }}</td>
 						<td>{{ registro.NACIONALIDADMEDIOTRANSPORTE }}</td>
 						<td>{{ registro.LUGAROPERATIVO }}</td>
 						<td>{{ registro.LUGARDEGIRO }}</td>
-						<td>{{ registro.NOMBREBUQUE }}</td>
+						<td><text-pop text="{{ registro.NOMBREBUQUE }}" max="16"></text-pop></td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
 						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm'}}</td>
 					</tr>

@@ -1117,4 +1117,15 @@
 							'<span ng-show="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">{{ titulo }}</span>'
 		}
 	});
+
+	myapp.directive('textPop', function() {
+		return {
+			restrict:		'E',
+			scope: {
+				text:		'@',
+				max:		'@'
+			},
+			template: '<span class="hidden-print">{{ text | maxLength : max }}<a href ng-show="(text.length > max)" popover="{{ text }}" popover-trigger="mouseenter"> (...)</a></span><span class="visible-print">{{ text }}</span>'
+		}
+	});
 })();

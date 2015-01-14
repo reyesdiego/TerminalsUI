@@ -1,99 +1,97 @@
-<div class="container col-lg-12">
-	<div class="row">
-		<div class="col-lg-12">
-			<h1>Afectación - Módulo 1</h1>
-		</div>
-		<div class="col-lg-12">
-			<div class="table-responsive" style="max-height: 650px; max-width: 100%; overflow: auto">
-				<table class="table table-striped table-bordered">
-					<thead>
-					<tr>
-						<th rowspan="2">Tipo Registro</th>
-						<th rowspan="2">Afectaci&oacute;n</th>
-						<th colspan="5" class="columnaAnidada">Afectaci&oacute;n</th>
-						<th colspan="2" class="columnaAnidada">ATA</th>
-						<th rowspan="2">Estado</th>
-						<th rowspan="2">Proceso</th>
-						<th rowspan="2">Fecha de registro</th>
-						<th rowspan="2">CUIT Impo</th>
-						<th rowspan="2">Aduana llegada/salida</th>
-						<th rowspan="2">Pa&iacute;s de destino</th>
-						<th rowspan="2">Plazo transporte</th>
-						<th rowspan="2">Transportista</th>
-						<th rowspan="2">País transportista</th>
-						<th rowspan="2">Motivo de afectación</th>
-						<th rowspan="2">Identificador motivo</th>
-						<th rowspan="2">Sumaria</th>
-						<th colspan="5" class="columnaAnidada">Sumaria</th>
-						<th colspan="3" class="columnaAnidada">Transporte interno</th>
-						<th rowspan="2">Lugar Operativo</th>
-						<th rowspan="2">Lugar de Giro</th>
-						<th rowspan="2">Buque</th>
-						<th rowspan="2">Comentario</th>
-						<th colspan="2" class="columnaAnidada">Registrado</th>
-					</tr>
-					<tr>
-						<th>A&ntilde;o</th>
-						<th>Aduana</th>
-						<th>Tipo</th>
-						<th>Nro</th>
-						<th>Letra Control</th>
-						<th>CUIT</th>
-						<th>Nombre</th>
-						<th>A&ntilde;o</th>
-						<th>Aduana</th>
-						<th>Tipo Sumaria</th>
-						<th>Nro Manifiesto</th>
-						<th>Letra Control</th>
-						<th>Medio</th>
-						<th>Nacionalidad</th>
-						<th>Matr&iacute;cula</th>
-						<th>Por</th>
-						<th>En</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr ng-repeat="registro in datosRegistro">
-						<td>{{ registro.TIPOREGISTRO }}</td>
-						<td>{{ registro.AFECTACION }}</td>
-						<td>{{ registro.AFE_ANIO }}</td>
-						<td>{{ registro.AFE_ADUANA }}</td>
-						<td>{{ registro.AFE_TIPO }}</td>
-						<td>{{ registro.AFE_NRO }}</td>
-						<td>{{ registro.AFE_LETRA_CTRL }}</td>
-						<td>{{ registro.CUITATA }}</td>
-						<td>{{ registro.NOMBREATA }}</td>
-						<td>{{ registro.ESTADO }}</td>
-						<td>{{ registro.PROCESO }}</td>
-						<td>{{ registro.FECHA_REGISTRO | date: 'dd/MM/yyyy' }}</td>
-						<td>{{ registro.CUITIMPO }}</td>
-						<td>{{ registro.ADUANA_LLEGADA_SALIDA }}</td>
-						<td>{{ registro.PAISDESTINO }}</td>
-						<td>{{ registro.DIASPLAZOTRANSPORTE }}</td>
-						<td>{{ registro.TRANSPORTISTA }}</td>
-						<td>{{ registro.PAISTRANSPORTISTA }}</td>
-						<td>{{ registro.MOTIVOAFECTACION }}</td>
-						<td>{{ registro.IDENTIFICADORMOTIVOMICDTA }}</td>
-						<td>{{ registro.SUMARIA }}</td>
-						<td>{{ registro.SUM_ANIO }}</td>
-						<td>{{ registro.SUM_ADUANA }}</td>
-						<td>{{ registro.SUM_TIPO }}</td>
-						<td>{{ registro.SUM_NRO }}</td>
-						<td>{{ registro.SUM_LETRA_CTRL }}</td>
-						<td>{{ registro.MEDIOTRANSPORTEINTERNO }}</td>
-						<td>{{ registro.NACMEDIOTRANSPINTERNO }}</td>
-						<td>{{ registro.MATRICULAMEDIOTRANSPINTERNO }}</td>
-						<td>{{ registro.LUGAROPERATIVO }}</td>
-						<td>{{ registro.LUGARDEGIRO }}</td>
-						<td>{{ registro.NOMBREBUQUE }}</td>
-						<td>{{ registro.COMENTARIO }}</td>
-						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy HH:mm' }}</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div-pagination current-page="currentPage" items-per-page="itemsPerPage" total-items="totalItems" panel-size="10"></div-pagination>
+<div class="col-lg-12">
+	<div>
+		<h3>Afectación - Módulo 1</h3>
 	</div>
+	<div>
+		<div class="table-responsive" style="max-height: 630px; max-width: 100%; overflow: auto">
+			<table class="table table-striped table-bordered">
+				<thead>
+				<tr>
+					<th rowspan="2" style="min-width: 80px">Tipo Reg.</th>
+					<th rowspan="2">Afectaci&oacute;n</th>
+					<th colspan="5" class="columnaAnidada">Afectaci&oacute;n</th>
+					<th colspan="2" class="columnaAnidada">ATA</th>
+					<th rowspan="2">Estado</th>
+					<th rowspan="2">Proceso</th>
+					<th rowspan="2" style="min-width: 120px">Fecha registro</th>
+					<th rowspan="2" style="min-width: 120px">CUIT Impo</th>
+					<th rowspan="2" style="min-width: 150px">Adu. llegada/salida</th>
+					<th rowspan="2" style="min-width: 100px">Pa&iacute;s destino</th>
+					<th rowspan="2" style="min-width: 110px">Plazo transp.</th>
+					<th rowspan="2" style="min-width: 200px">Transportista</th>
+					<th rowspan="2" style="min-width: 150px">Pa&iacute;s transportista</th>
+					<th rowspan="2" style="min-width: 110px">Motivo afect.</th>
+					<th rowspan="2" style="min-width: 120px">Identif. motivo</th>
+					<th rowspan="2">Sumaria</th>
+					<th colspan="5" class="columnaAnidada">Sumaria</th>
+					<th colspan="3" class="columnaAnidada">Transporte interno</th>
+					<th rowspan="2" style="min-width: 130px">Lugar Operativo</th>
+					<th rowspan="2" style="min-width: 110px">Lugar de Giro</th>
+					<th rowspan="2" style="min-width: 200px">Buque</th>
+					<th rowspan="2" style="min-width: 200px">Comentario</th>
+					<th colspan="2" class="columnaAnidada">Registrado</th>
+				</tr>
+				<tr>
+					<th>A&ntilde;o</th>
+					<th>Aduana</th>
+					<th>Tipo</th>
+					<th>Nro</th>
+					<th>Letra</th>
+					<th>CUIT</th>
+					<th style="min-width: 200px">Nombre</th>
+					<th>A&ntilde;o</th>
+					<th>Aduana</th>
+					<th>Tipo</th>
+					<th>Nro</th>
+					<th>Letra</th>
+					<th>Medio</th>
+					<th>Nacionalidad</th>
+					<th>Matr&iacute;cula</th>
+					<th>Por</th>
+					<th style="min-width: 130px">En</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="registro in datosRegistro">
+					<td>{{ registro.TIPOREGISTRO }}</td>
+					<td>{{ registro.AFECTACION }}</td>
+					<td>{{ registro.AFE_ANIO }}</td>
+					<td>{{ registro.AFE_ADUANA }}</td>
+					<td>{{ registro.AFE_TIPO }}</td>
+					<td>{{ registro.AFE_NRO }}</td>
+					<td>{{ registro.AFE_LETRA_CTRL }}</td>
+					<td>{{ registro.CUITATA }}</td>
+					<td><text-pop text="{{ registro.NOMBREATA }}" max="17"></text-pop></td>
+					<td>{{ registro.ESTADO }}</td>
+					<td>{{ registro.PROCESO }}</td>
+					<td>{{ registro.FECHA_REGISTRO | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ registro.CUITIMPO }}</td>
+					<td>{{ registro.ADUANA_LLEGADA_SALIDA }}</td>
+					<td>{{ registro.PAISDESTINO }}</td>
+					<td>{{ registro.DIASPLAZOTRANSPORTE }}</td>
+					<td><text-pop text="{{ registro.TRANSPORTISTA }}" max="17"></text-pop></td>
+					<td>{{ registro.PAISTRANSPORTISTA }}</td>
+					<td>{{ registro.MOTIVOAFECTACION }}</td>
+					<td>{{ registro.IDENTIFICADORMOTIVOMICDTA }}</td>
+					<td>{{ registro.SUMARIA }}</td>
+					<td>{{ registro.SUM_ANIO }}</td>
+					<td>{{ registro.SUM_ADUANA }}</td>
+					<td>{{ registro.SUM_TIPO }}</td>
+					<td>{{ registro.SUM_NRO }}</td>
+					<td>{{ registro.SUM_LETRA_CTRL }}</td>
+					<td>{{ registro.MEDIOTRANSPORTEINTERNO }}</td>
+					<td>{{ registro.NACMEDIOTRANSPINTERNO }}</td>
+					<td>{{ registro.MATRICULAMEDIOTRANSPINTERNO }}</td>
+					<td>{{ registro.LUGAROPERATIVO }}</td>
+					<td>{{ registro.LUGARDEGIRO }}</td>
+					<td>{{ registro.NOMBREBUQUE }}</td>
+					<td><text-pop text="{{ registro.COMENTARIO }}" max="17"></text-pop></td>
+					<td>{{ registro.REGISTRADO_POR }}</td>
+					<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy HH:mm' }}</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div-pagination current-page="currentPage" items-per-page="itemsPerPage" total-items="totalItems" panel-size="10"></div-pagination>
 </div>
