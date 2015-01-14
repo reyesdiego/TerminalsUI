@@ -44,13 +44,16 @@
 			$scope.cargaTurnos();
 		});
 
-		$scope.$on('cambioFiltro', function(){
+		$scope.$on('cambioFiltro', function(event, data){
 			$scope.fechaAuxHasta = new Date($scope.model.fechaHasta);
 			$scope.fechaAuxDesde = new Date($scope.model.fechaDesde);
 			$scope.model.fechaHasta = $scope.fechaAuxDesde;
 			$scope.model.fechaHasta.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
 			$scope.currentPage = 1;
 			$scope.cargaTurnos();
+			if (angular.isDefined(data) && data.length > 0){
+				$scope.$broadcast('tengoViajes', data);
+			}
 		});
 
 		// Carga los turnos por fechas

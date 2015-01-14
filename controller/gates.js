@@ -44,9 +44,12 @@
 			$scope.cargaGates();
 		});
 
-		$scope.$on('cambioFiltro', function(){
+		$scope.$on('cambioFiltro', function(event, data){
 			$scope.currentPage = 1;
 			$scope.cargaGates();
+			if (angular.isDefined(data) && data.length > 0){
+				$scope.$broadcast('tengoViajes', data);
+			}
 		});
 
 		$scope.cargaGates = function () {
