@@ -1161,4 +1161,16 @@
 							'<span ng-show="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">{{ titulo }}</span>'
 		}
 	});
+
+	myapp.directive('tableContainerSumaria', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/container.sumaria.html',
+			scope: {
+				datosSumaria:	'=',
+				loadingState:	'=',
+				configPanel:	'='
+			}
+		}
+	})
 })();

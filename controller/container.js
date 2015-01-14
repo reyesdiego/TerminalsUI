@@ -1,7 +1,7 @@
 /**
  * Created by leo on 29/09/14.
  */
-myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory){
+myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory, afipFactory){
 	$scope.model = {
 		'nroPtoVenta': '',
 		'codTipoComprob': 0,
@@ -28,6 +28,10 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 		tipo: 'panel-info',
 		titulo: 'Turnos'
 	};
+	$scope.sumariaConfigPanel = {
+		tipo: 'panel-info',
+		titulo: 'A.F.I.P. sumaria'
+	};
 
 	$scope.cargandoTasas = false;
 
@@ -47,6 +51,7 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 		$scope.cargaTasasCargas();
 		$scope.cargaGates();
 		$scope.cargaTurnos();
+		$scope.cargaSumaria();
 	};
 
 	$scope.cargaComprobantes = function(page){
@@ -99,6 +104,17 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 			}
 			$scope.cargandoTurnos = false;
 		});
+	};
+
+	$scope.cargaSumaria = function(){
+		$scope.cargandoSumaria = true;
+		afipFactory.getContainerSumaria($scope.model.contenedor, function(data){
+			console.log(data);
+			if (data.status == 'OK'){
+				$scope.sumariaAfip = data.data;
+			}
+			$scope.cargandoSumaria = false;
+		})
 	};
 
 	$rootScope.$watch('moneda', function(){
