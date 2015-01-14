@@ -130,7 +130,7 @@ function codigosCtrl($scope, invoiceFactory, priceFactory){
 	$scope.controlCodigosFiltrados = function(){
 		$scope.loadingControlCodigos = true;
 		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.model.itemsPerPage);
-		$scope.pageFiltros.limit = $scope.limit.itemsPerPage;
+		$scope.pageFiltros.limit = $scope.model.itemsPerPage;
 		invoiceFactory.getInvoice($scope.model, $scope.pageFiltros, function(data){
 			$scope.totalItems = data.totalCount;
 			$scope.comprobantesRotos = data.data;
