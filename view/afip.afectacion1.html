@@ -14,7 +14,7 @@
 					<th rowspan="2">Estado</th>
 					<th rowspan="2">Proceso</th>
 					<th rowspan="2" style="min-width: 120px">Fecha registro</th>
-					<th rowspan="2" style="min-width: 120px">CUIT Impo</th>
+					<th rowspan="2" style="min-width: 200px">CUIT Impo</th>
 					<th rowspan="2" style="min-width: 150px">Adu. llegada/salida</th>
 					<th rowspan="2" style="min-width: 100px">Pa&iacute;s destino</th>
 					<th rowspan="2" style="min-width: 110px">Plazo transp.</th>
@@ -65,7 +65,7 @@
 					<td>{{ registro.ESTADO }}</td>
 					<td>{{ registro.PROCESO }}</td>
 					<td>{{ registro.FECHA_REGISTRO | date: 'dd/MM/yyyy' }}</td>
-					<td>{{ registro.CUITIMPO }}</td>
+					<td><text-pop text="{{ registro.CUITIMPO }}" max="16"></text-pop></td>
 					<td>{{ registro.ADUANA_LLEGADA_SALIDA }}</td>
 					<td>{{ registro.PAISDESTINO }}</td>
 					<td>{{ registro.DIASPLAZOTRANSPORTE }}</td>
