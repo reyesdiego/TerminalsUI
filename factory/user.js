@@ -36,8 +36,8 @@ myapp.factory('userFactory', function($http, dialogs){
 			data: formData
 		}).success(function(data) {
 				callback(data);
-			}).error(function() {
-				dialogs.error('Error al cambiar la contraseña', 'Se ha producido un error. Inténtelo nuevamente más tarde.');
+			}).error(function(err) {
+				dialogs.error('Error al cambiar la contraseña', err.data);
 			});
 
 	};
