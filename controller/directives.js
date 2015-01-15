@@ -970,7 +970,7 @@
 		return {
 			restrict:		'E',
 			templateUrl:	'view/buque.viaje.search.html',
-			controller: ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory){
+			controller: ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory',function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory){
 				$scope.loadingState = false;
 				$scope.invoices = [];
 				$scope.loadingInvoices = false;
@@ -996,6 +996,10 @@
 					mensaje: 'No se encontraron contenedores para los filtros seleccionados.',
 					tipo: 'panel-info'
 				};
+				$scope.sumariaConfigPanel = {
+					tipo: 'panel-info',
+					titulo: 'A.F.I.P. sumaria'
+				};
 				$scope.model = {
 					buque: '',
 					viaje: '',
@@ -1005,6 +1009,7 @@
 				$scope.buqueElegido = {};
 				$scope.datosContainers = [];
 				$scope.loadingState = false;
+				$scope.cargandoSumaria = false;
 
 				invoiceFactory.getShipTrips(function(data){
 					$scope.buques = data.data;
@@ -1075,6 +1080,7 @@
 					$scope.cargaTasasCargas();
 					$scope.cargaGates();
 					$scope.cargaTurnos();
+					$scope.cargaSumaria();
 				};
 
 				$scope.cargaComprobantes = function(page){
@@ -1121,6 +1127,16 @@
 							$scope.loadingTurnos = false;
 						}
 					});
+				};
+
+				$scope.cargaSumaria = function(){
+					$scope.cargandoSumaria = true;
+					afipFactory.getContainerSumaria($scope.model.contenedor, function(data){
+						if (data.status == 'OK'){
+							$scope.sumariaAfip = data.data;
+						}
+						$scope.cargandoSumaria = false;
+					})
 				};
 
 				$rootScope.$watch('moneda', function(){

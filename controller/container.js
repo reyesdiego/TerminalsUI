@@ -34,6 +34,7 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 	};
 
 	$scope.cargandoTasas = false;
+	$scope.cargandoSumaria = false;
 
 	$scope.$on('cambioFiltro', function(){
 		if ($scope.model.contenedor != ''){
@@ -109,7 +110,6 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 	$scope.cargaSumaria = function(){
 		$scope.cargandoSumaria = true;
 		afipFactory.getContainerSumaria($scope.model.contenedor, function(data){
-			console.log(data);
 			if (data.status == 'OK'){
 				$scope.sumariaAfip = data.data;
 			}
