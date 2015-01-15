@@ -1,70 +1,72 @@
 /**
  * Created by Artiom on 14/03/14.
  */
+(function() {
+	myapp.controller('navigationCtrl', function($scope, $rootScope, $state, invoiceFactory, loginService, authFactory) {
 
-function navigationCtrl($scope, $rootScope, $state, invoiceFactory, loginService, authFactory){
-	"use strict";
-	$rootScope.esUsuario = '';
-	$rootScope.terminal = '';
-	$scope.acceso = '';
-	$rootScope.filtroTerminal = '';
-
-	$scope.salir = function(){
-		authFactory.logout();
+		"use strict";
 		$rootScope.esUsuario = '';
-		$state.transitionTo('login');
-		loginService.unsetLogin();
+		$rootScope.terminal = '';
+		$scope.acceso = '';
 		$rootScope.filtroTerminal = '';
-		$rootScope.switchTheme('BACTSSA');
-	};
 
-	$scope.irA = function(){
-		if (loginService.getStatus()){
-			$state.transitionTo($state.current.name);
-			window.location.reload();
-		} else{
+		$scope.salir = function(){
+			authFactory.logout();
+			$rootScope.esUsuario = '';
 			$state.transitionTo('login');
-		}
-	};
+			loginService.unsetLogin();
+			$rootScope.filtroTerminal = '';
+			$rootScope.switchTheme('BACTSSA');
+		};
 
-	if (loginService.getStatus()){
-		$rootScope.esUsuario = loginService.getType();
-		$rootScope.terminal = loginService.getInfo();
-		//Esta carga se realiza en el caso de haber actualizado la página
-		invoiceFactory.getDescriptionItem(function(data){
-			$rootScope.itemsDescriptionInvoices = data.data;
+		$scope.irA = function(){
+			if (loginService.getStatus()){
+				$state.transitionTo($state.current.name);
+				window.location.reload();
+			} else{
+				$state.transitionTo('login');
+			}
+		};
+
+		if (loginService.getStatus()){
+			$rootScope.esUsuario = loginService.getType();
+			$rootScope.terminal = loginService.getInfo();
+			//Esta carga se realiza en el caso de haber actualizado la página
+			invoiceFactory.getDescriptionItem(function(data){
+				$rootScope.itemsDescriptionInvoices = data.data;
+			});
+			if (loginService.getType() == 'agp'){
+				$rootScope.filtroTerminal = loginService.getFiltro();
+			}
+
+			// Carga el tema de la terminal
+			$rootScope.switchTheme(loginService.getFiltro());
+		} else {
+			$rootScope.switchTheme('BACTSSA');
+		}
+
+		$scope.$watch(function(){
+			$scope.acceso = $rootScope.esUsuario;
+			$scope.terminal = $rootScope.terminal;
 		});
-		if (loginService.getType() == 'agp'){
-			$rootScope.filtroTerminal = loginService.getFiltro();
-		}
 
-		// Carga el tema de la terminal
-		$rootScope.switchTheme(loginService.getFiltro());
-	} else {
-		$rootScope.switchTheme('BACTSSA');
-	}
+		$scope.switchMoneda = function(){
+			if ($rootScope.moneda == 'PES'){
+				$rootScope.moneda = 'DOL';
+			} else if ($rootScope.moneda == 'DOL'){
+				$rootScope.moneda = 'PES';
+			}
+		};
 
-	$scope.$watch(function(){
-		$scope.acceso = $rootScope.esUsuario;
-		$scope.terminal = $rootScope.terminal;
+		$scope.setearTerminal = function(terminal){
+			if ($rootScope.filtroTerminal != terminal){
+				$rootScope.filtroTerminal = terminal;
+				$scope.irA();
+				loginService.setFiltro(terminal);
+				$rootScope.switchTheme(terminal);
+				authFactory.setTheme(terminal);
+			}
+		};
 	});
 
-	$scope.switchMoneda = function(){
-		if ($rootScope.moneda == 'PES'){
-			$rootScope.moneda = 'DOL';
-		} else if ($rootScope.moneda == 'DOL'){
-			$rootScope.moneda = 'PES';
-		}
-	};
-
-	$scope.setearTerminal = function(terminal){
-		if ($rootScope.filtroTerminal != terminal){
-			$rootScope.filtroTerminal = terminal;
-			$scope.irA();
-			loginService.setFiltro(terminal);
-			$rootScope.switchTheme(terminal);
-			authFactory.setTheme(terminal);
-		}
-	};
-
-}
+})();
