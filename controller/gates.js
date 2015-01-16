@@ -3,6 +3,7 @@
  */
 (function(){
 	myapp.controller('gatesCtrl', function ($scope, gatesFactory) {
+		$scope.totalItems = 0;
 		$scope.turnosGates = true;
 		//$scope.currentPage = 1;
 
@@ -39,7 +40,15 @@
 			'order': '"gateTimestamp": -1'
 		};
 
+		$scope.page = {
+			limit: 10,
+			skip:0
+		};
+
+		$scope.itemsPerPage = 10;
+
 		$scope.$on('cambioPagina', function(event, data){
+			console.log(data);
 			$scope.currentPage = data;
 			$scope.cargaGates();
 		});

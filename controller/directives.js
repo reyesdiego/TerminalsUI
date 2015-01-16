@@ -534,8 +534,8 @@
 				loadingState:		'='
 			},
 			controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
+				$scope.totalGates = 0
 				$scope.itemsPerPage = 10;
-				$scope.totalGates = 0;
 				$scope.configPanel = {
 					tipo: 'panel-info',
 					titulo: 'Gates'
@@ -1187,6 +1187,64 @@
 				loadingState:	'=',
 				configPanel:	'='
 			}
+		}
+	});
+
+	myapp.controller('missingInfo', function($scope, vouchersFactory, gatesFactory){
+		$scope.currentPage = 1;
+		$scope.itemsPerPage = 15;
+
+		$scope.datosFaltantes = [];
+		$scope.cargando = false;
+
+		$scope.cargaDatos = function(){
+
+			switch ($scope.datoFaltante){
+				case 'gates':
+					$scope.cargando = true;
+					gatesFactory.getMissingGates(function(data){
+						$scope.datosFaltantes = data.data;
+						$scope.totalItems = $scope.datosFaltantes.length;
+						$scope.cargando = false;
+					});
+					break;
+				case 'invoices':
+					$scope.cargando = true;
+					gatesFactory.getMissingInvoices(function(data){
+						$scope.datosFaltantes = data.data;
+						$scope.totalItems = $scope.datosFaltantes.length;
+						$scope.cargando = false;
+					});
+					break;
+			}
+		};
+
+		vouchersFactory.getVouchersArray(function(data){
+			$scope.vouchersType = data.data;
+		});
+
+		$scope.cargaDatos();
+	});
+
+	myapp.directive('tableMissingGates', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/missing.gates.html',
+			scope: {
+				datoFaltante:	'='
+			},
+			controller:		'missingInfo'
+		}
+	});
+
+	myapp.directive('tableMissingInvoices', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/missing.invoices.html',
+			scope: {
+				datoFaltante: '='
+			},
+			controller:		'missingInfo'
 		}
 	});
 

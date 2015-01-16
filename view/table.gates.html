@@ -51,7 +51,7 @@
 					<td class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0"><button class="btn btn-info" ng-click="mostrarDetalle(gate)"><span class="glyphicon glyphicon-zoom-in"></span></button></td>
 				</tr>
 			</table>
-			<div-pagination total-items="totalItems" current-page="currentPage"></div-pagination>
+			<div-pagination total-items="totalItems" current-page="currentPage" items-per-page="itemsPerPage"></div-pagination>
 		</div>
 	</div>
 	<div class="row" ng-show="detallesGates">

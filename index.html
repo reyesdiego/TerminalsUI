@@ -110,11 +110,17 @@
 					</ul>
 				</li>
 				<li ng-show="acceso=='agp'" class="dropdown">
+					<a class="dropdown-toggle" data-ng-hide="dropdown">Gates<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a ui-sref="gates" ng-click="isCollapsed = false">Ver</a></li>
+						<li><a ui-sref="cgates" ng-click="isCollapsed = false">Control</a></li>
+					</ul>
+				</li>
+				<li ng-show="acceso=='agp'" class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
 						<li><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
-						<li><a ui-sref="gates" ng-click="isCollapsed = false">Gates</a></li>
 						<li><a ui-sref="turnos" ng-click="isCollapsed = false">Turnos</a></li>
 						<li><a ui-sref="container" ng-click="isCollapsed = false">Contenedor</a></li>
 						<li><a ui-sref="buque" ng-click="isCollapsed = false">Buque - Viaje</a></li>

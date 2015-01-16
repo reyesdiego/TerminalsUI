@@ -34,6 +34,32 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 		});
 	};
 
+	factory.getMissingGates = function(callback){
+		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingGates';
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al obtener gates faltantes');
+		});
+	};
+
+	factory.getMissingInvoices = function(callback){
+		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingInvoices';
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers:{token: loginService.getToken()}
+		}).success(function (data){
+			callback(data);
+		}).error(function(errorText){
+			dialogs.error('Error', 'Error al obtener comprobantes faltantes');
+		});
+	};
+
 	factory.aplicarFiltros = function(unaUrl, datos){
 		var insertAux = unaUrl;
 		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != ''){
