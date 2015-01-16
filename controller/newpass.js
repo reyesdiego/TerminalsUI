@@ -20,9 +20,9 @@
 			};
 
 			userFactory.cambiarContraseña(formData, function(data){
-				$scope.codStatus = data.data;
-				if ($scope.codStatus == 'Password changed successfully'){
-					var dl = dialogs.notify('Cambiar contraseña', 'La contraseña ha sido modificada con éxito.');
+				if (data.status === 'OK'){
+					$scope.codStatus = data.data;
+					var dl = dialogs.notify('Cambio de Contraseña', $scope.codStatus);
 					dl.result.then(function(){
 						$state.transitionTo('login');
 					})
