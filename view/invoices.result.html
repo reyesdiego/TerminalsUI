@@ -40,8 +40,9 @@
 			<tr>
 				<td colspan="6" style="text-align: left">
 					<a href class="hidden-print" ng-click="filtrado('contenedor', contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
-					<span> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>
-					<span> - Viaje: {{ contenedor.buque.viaje }}</span>
+					<span ng-show="contenedor.buque.codigo != '' && contenedor.buque.viaje != null"> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>
+					<span ng-show="contenedor.buque.viaje != '' && contenedor.buque.viaje != null"> - Viaje: {{ contenedor.buque.viaje }}</span>
+					<span ng-show="angular.isDefined(contenedor.buque.fecha) && contenedor.buque.fecha != '' && contenedor.buque.viaje != null"> - Fecha: {{ contenedor.buque.fecha }}</span>
 				</td>
 			</tr>
 			<tr style="text-align: right" ng-repeat="item in contenedor.items">
