@@ -1197,6 +1197,9 @@
 		$scope.datosFaltantes = [];
 		$scope.cargando = false;
 
+		$scope.predicate = '';
+		$scope.reverse = false;
+
 		$scope.cargaDatos = function(){
 
 			switch ($scope.datoFaltante){
@@ -1222,6 +1225,13 @@
 		vouchersFactory.getVouchersArray(function(data){
 			$scope.vouchersType = data.data;
 		});
+
+		$scope.ordenarPor = function(filtro){
+			if ($scope.predicate == filtro){
+				$scope.reverse = !$scope.reverse;
+			}
+			$scope.predicate = filtro;
+		};
 
 		$scope.cargaDatos();
 	});

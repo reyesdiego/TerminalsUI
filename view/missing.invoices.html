@@ -5,19 +5,55 @@
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr>
-			<th>Buque</th>
-			<th>Viaje</th>
-			<th>Contenedor</th>
-			<th>Fecha</th>
-			<th>Moviemiento</th>
-			<th>Patente camión</th>
-			<th>Tipo</th>
-			<th>Turno inicio</th>
-			<th>Turno fin</th>
+			<th><a href="" ng-click="ordenarPor('buque')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'buque' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'buque' && reverse"></span>
+				 Buque
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('viaje')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'viaje' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'viaje' && reverse"></span>
+				 Viaje
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('contenedor')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'contenedor' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'contenedor' && reverse"></span>
+				 Contenedor
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('gateTimestamp')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'gateTimestamp' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'gateTimestamp' && reverse"></span>
+				 Fecha
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('mov')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'mov' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'mov' && reverse"></span>
+				 Moviemiento
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('patenteCamion')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'patenteCamion' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'patenteCamion' && reverse"></span>
+				 Patente camión
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('tipo')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'tipo' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'tipo' && reverse"></span>
+				 Tipo
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('turnoInicio')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'turnoInicio' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'turnoInicio' && reverse"></span>
+				 Turno inicio
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('turnoFin')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'turnoFin' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'turnoFin' && reverse"></span>
+				 Turno fin
+			</a></th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="registro in datosFaltantes | startFrom:(currentPage-1) * itemsPerPage | limitTo:itemsPerPage">
+		<tr ng-repeat="registro in datosFaltantes | orderBy: predicate : reverse | startFrom:(currentPage-1) * itemsPerPage | limitTo:itemsPerPage">
 			<td>{{ registro.buque }}</td>
 			<td>{{ registro.viaje }}</td>
 			<td>{{ registro.contenedor }}</td>

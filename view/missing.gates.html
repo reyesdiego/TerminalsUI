@@ -5,16 +5,40 @@
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr>
-			<th>Pto. venta</th>
-			<th>Comprobante</th>
-			<th>Nro. comprob</th>
-			<th>Tarifa</th>
-			<th>Contenedor</th>
-			<th>Fecha</th>
+			<th><a href="" ng-click="ordenarPor('nroPtoVenta')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'nroPtoVenta' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'nroPtoVenta' && reverse"></span>
+				 Pto. venta
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('codTipoComprob')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'codTipoComprob' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'codTipoComprob' && reverse"></span>
+				 Comprobante
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('nroComprob')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'nroComprob' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'nroComprob' && reverse"></span>
+				 Nro. comprob
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('code')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'code' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'code' && reverse"></span>
+				 Tarifa
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('contenedor')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'contenedor' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'contenedor' && reverse"></span>
+				 Contenedor
+			</a></th>
+			<th><a href="" ng-click="ordenarPor('fecha')">
+				<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'fecha' && !reverse"></span>
+				<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'fecha' && reverse"></span>
+				 Fecha
+			</a></th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="invoice in datosFaltantes | startFrom:(currentPage-1) * itemsPerPage | limitTo:itemsPerPage">
+		<tr ng-repeat="invoice in datosFaltantes | orderBy: predicate : reverse | startFrom:(currentPage-1) * itemsPerPage | limitTo:itemsPerPage">
 			<td>{{ invoice.nroPtoVenta }}</td>
 			<td>{{ vouchersType[invoice.codTipoComprob] }}</td>
 			<td>{{ invoice.nroComprob }}</td>
