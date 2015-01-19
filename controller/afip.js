@@ -12,6 +12,13 @@
 			{ heading: 'Sumarias',		select: 'impo1',		uisref: 'afip.sumatorias.impo1' }
 		];
 
+		$scope.model = {
+			filtroOrden: '',
+			filtroOrdenReverse: false,
+			filtroAnterior: '',
+			order: ''
+		};
+
 		$scope.datosRegistro = [];
 		$scope.currentPage = 1;
 		$scope.totalItems = 0;
@@ -36,16 +43,43 @@
 			$scope.cargaDatos($scope.actualRegistro);
 		});
 
+		$scope.filtrarOrden = function(filtro){
+			var filtroModo;
+			$scope.currentPage = 1;
+			$scope.model.filtroOrden = filtro;
+			if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
+				$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
+			} else {
+				$scope.model.filtroOrdenReverse = false;
+			}
+			if ($scope.model.filtroOrdenReverse){
+				filtroModo = -1;
+			} else {
+				filtroModo = 1;
+			}
+			$scope.model.order = '"' + filtro + '":' + filtroModo;
+			$scope.model.filtroAnterior = filtro;
+
+			$scope.currentPage = 1;
+			$scope.cargaDatos($scope.actualRegistro);
+		};
+
 		$scope.cargaDatos = function(registro){
 			$scope.cargando = true;
 			if (registro != $scope.actualRegistro){
+				$scope.model = {
+					filtroOrden: '',
+					filtroOrdenReverse: false,
+					filtroAnterior: '',
+					order: ''
+				};
 				$scope.currentPage = 1;
 			}
 			$scope.actualRegistro = registro;
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.page.limit = $scope.itemsPerPage;
 			$scope.invoices = [];
-			afipFactory.getAfip(registro, $scope.page, function(data){
+			afipFactory.getAfip(registro, $scope.model.order, $scope.page, function(data){
 				if(data.status === 'OK'){
 					$scope.datosRegistro = data.data;
 					$scope.totalItems = data.totalCount;

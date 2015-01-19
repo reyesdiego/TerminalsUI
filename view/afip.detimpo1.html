@@ -8,43 +8,99 @@
 				<table class="table table-striped table-bordered">
 					<thead>
 					<tr>
-						<th rowspan="2" style="min-width: 90px">Tipo Reg.</th>
-						<th rowspan="2">Detallada</th>
+						<th rowspan="2" style="min-width: 90px">
+							<encabezado-tabla-ordenado titulo="Tipo reg." filtrar-orden="filtrarOrden('TIPOREGISTRO')" oculta-filtros="ocultarFiltros" model="model" filtro="TIPOREGISTRO" filtro-orden="TIPOREGISTRO"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Detallada" filtrar-orden="filtrarOrden('DETALLADA')" oculta-filtros="ocultarFiltros" model="model" filtro="DETALLADA" filtro-orden="DETALLADAORDEN"></encabezado-tabla-ordenado>
+						</th>
 						<th colspan="5" class="columnaAnidada">Detalle</th>
-						<th rowspan="2">Sumaria</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Sumaria" filtrar-orden="filtrarOrden('SUMARIA')" oculta-filtros="ocultarFiltros" model="model" filtro="SUMARIA" filtro-orden="SUMARIAORDEN"></encabezado-tabla-ordenado>
+						</th>
 						<th colspan="5" class="columnaAnidada">Sumaria</th>
-						<th rowspan="2" style="min-width: 200px">Conocimiento</th>
-						<th rowspan="2">Impo/Expo</th>
+						<th rowspan="2" style="min-width: 200px">
+							<encabezado-tabla-ordenado titulo="Conocimiento" filtrar-orden="filtrarOrden('CONOCIMIENTO')" oculta-filtros="ocultarFiltros" model="model" filtro="CONOCIMIENTO" filtro-orden="CONOCIMIENTOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Impo/Expo" filtrar-orden="filtrarOrden('IMPO_EXPO')" oculta-filtros="ocultarFiltros" model="model" filtro="IMPO_EXPO" filtro-orden="IMPO_EXPOORDEN"></encabezado-tabla-ordenado>
+						</th>
 						<th colspan="2" class="columnaAnidada">FOB</th>
 						<th colspan="2" class="columnaAnidada">Flete</th>
 						<th colspan="2" class="columnaAnidada">Seguro</th>
 						<th colspan="2" class="columnaAnidada">Aduana</th>
-						<th rowspan="2">FECOFI</th>
-						<th rowspan="2" style="min-width: 120px">C&oacute;d. Liquidado</th>
-						<th rowspan="2" style="min-width: 150px">Total Derechos Imp</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="FECOFI" filtrar-orden="filtrarOrden('FECOFI')" oculta-filtros="ocultarFiltros" model="model" filtro="FECOFI" filtro-orden="FECOFIORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2" style="min-width: 120px">
+							<encabezado-tabla-ordenado titulo="Cod. liquidado" filtrar-orden="filtrarOrden('CODIGOLIQUIDADO')" oculta-filtros="ocultarFiltros" model="model" filtro="CODIGOLIQUIDADO" filtro-orden="CODIGOLIQUIDADOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2" style="min-width: 150px">
+							<encabezado-tabla-ordenado titulo="Total derechos imp." filtrar-orden="filtrarOrden('TOTALDEDERECHOSIMPO')" oculta-filtros="ocultarFiltros" model="model" filtro="TOTALDEDERECHOSIMPO" filtro-orden="TOTALDEDERECHOSIMPOORDEN"></encabezado-tabla-ordenado>
+						</th>
 						<th colspan="2" class="columnaAnidada">Registrado</th>
 					</tr>
 					<tr>
-						<th>A&ntilde;o</th>
-						<th>Aduana</th>
-						<th>Tipo</th>
-						<th>Nro</th>
-						<th>Letra</th>
-						<th>A&ntilde;o</th>
-						<th>Aduana</th>
-						<th>Tipo</th>
-						<th>Nro</th>
-						<th>Letra</th>
-						<th>Divisa</th>
-						<th style="min-width: 140px; text-align: right">Monto</th>
-						<th>Divisa</th>
-						<th style="min-width: 140px; text-align: right">Monto</th>
-						<th>Divisa</th>
-						<th style="min-width: 140px; text-align: right">Monto</th>
-						<th>Destino</th>
-						<th>Registro</th>
-						<th>Por</th>
-						<th style="min-width: 130px">En</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Año" filtrar-orden="filtrarOrden('DET_ANIO')" oculta-filtros="ocultarFiltros" model="model" filtro="DET_ANIO" filtro-orden="DET_ANIOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Aduana" filtrar-orden="filtrarOrden('DET_ADUANA')" oculta-filtros="ocultarFiltros" model="model" filtro="DET_ADUANA" filtro-orden="DET_ADUANAORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="filtrarOrden('DET_TIPO')" oculta-filtros="ocultarFiltros" model="model" filtro="DET_TIPO" filtro-orden="DET_TIPOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Nro." filtrar-orden="filtrarOrden('DET_NRO')" oculta-filtros="ocultarFiltros" model="model" filtro="DET_NRO" filtro-orden="DET_NROORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Letra" filtrar-orden="filtrarOrden('DET_LETRA_CTRL')" oculta-filtros="ocultarFiltros" model="model" filtro="DET_LETRA_CTRL" filtro-orden="DET_LETRA_CTRLORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Año" filtrar-orden="filtrarOrden('SUM_ANIO')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_ANIO" filtro-orden="SUM_ANIOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Aduana" filtrar-orden="filtrarOrden('SUM_ADUANA')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_ADUANA" filtro-orden="SUM_ADUANAORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="filtrarOrden('SUM_TIPO')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_TIPO" filtro-orden="SUM_TIPOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Nro." filtrar-orden="filtrarOrden('SUM_NRO')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_NRO" filtro-orden="SUM_NROORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Letra" filtrar-orden="filtrarOrden('SUM_LETRA_CTRL')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_LETRA_CTRL" filtro-orden="SUM_LETRA_CTRLORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Divisa" filtrar-orden="filtrarOrden('DIVISAFOB')" oculta-filtros="ocultarFiltros" model="model" filtro="DIVISAFOB" filtro-orden="DIVISAFOBORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th style="min-width: 140px; text-align: right">
+							<encabezado-tabla-ordenado titulo="Monto" filtrar-orden="filtrarOrden('MONTOFOB')" oculta-filtros="ocultarFiltros" model="model" filtro="MONTOFOB" filtro-orden="MONTOFOBORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Divisa" filtrar-orden="filtrarOrden('DIVISAFLETE')" oculta-filtros="ocultarFiltros" model="model" filtro="DIVISAFLETE" filtro-orden="DIVISAFLETEORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th style="min-width: 140px; text-align: right">
+							<encabezado-tabla-ordenado titulo="Monto" filtrar-orden="filtrarOrden('MONTOFLETE')" oculta-filtros="ocultarFiltros" model="model" filtro="MONTOFLETE" filtro-orden="MONTOFLETEORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Divisa" filtrar-orden="filtrarOrden('DIVISASEGURO')" oculta-filtros="ocultarFiltros" model="model" filtro="DIVISASEGURO" filtro-orden="DIVISASEGURO"></encabezado-tabla-ordenado>
+						</th>
+						<th style="min-width: 140px; text-align: right">
+							<encabezado-tabla-ordenado titulo="Monto" filtrar-orden="filtrarOrden('MONTOSEGURO')" oculta-filtros="ocultarFiltros" model="model" filtro="MONTOSEGURO" filtro-orden="MONTOSEGUROORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Destino" filtrar-orden="filtrarOrden('ADUANADESTINO')" oculta-filtros="ocultarFiltros" model="model" filtro="ADUANADESTINO" filtro-orden="ADUANADESTINOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Registro" filtrar-orden="filtrarOrden('ADUANAREGISTRO')" oculta-filtros="ocultarFiltros" model="model" filtro="ADUANAREGISTRO" filtro-orden="ADUANAREGISTROORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Por" filtrar-orden="filtrarOrden('REGISTRADO_POR')" oculta-filtros="ocultarFiltros" model="model" filtro="REGISTRADO_POR" filtro-orden="REGISTRADO_PORORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th style="min-width: 130px">
+							<encabezado-tabla-ordenado titulo="En" filtrar-orden="filtrarOrden('REGISTRADO_EN')" oculta-filtros="ocultarFiltros" model="model" filtro="REGISTRADO_EN" filtro-orden="REGISTRADO_ENORDEN"></encabezado-tabla-ordenado>
+						</th>
 					</tr>
 					</thead>
 					<tbody>
