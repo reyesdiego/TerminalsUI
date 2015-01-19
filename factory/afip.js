@@ -426,7 +426,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.aplicarOrden = function(unaUrl, orden){
 		if(angular.isDefined(orden) && orden != ''){
-			unaUrl = unaUrl + '?order=' + '[{' + datos.order + '}]';
+			unaUrl = unaUrl + '?order=' + '[{' + orden + '}]';
 		}
 		return unaUrl;
 	};
