@@ -19,6 +19,12 @@
 			order: ''
 		};
 
+		$scope.panelMensaje = {
+			titulo: 'AFIP',
+			mensaje: 'No se encontraron datos en la tabla seleccionada.',
+			tipo: 'panel-info'
+		};
+
 		$scope.datosRegistro = [];
 		$scope.currentPage = 1;
 		$scope.totalItems = 0;
@@ -83,6 +89,15 @@
 				if(data.status === 'OK'){
 					$scope.datosRegistro = data.data;
 					$scope.totalItems = data.totalCount;
+					$scope.cargando = false;
+				} else {
+					$scope.panelMensaje = {
+						titulo: 'AFIP',
+						mensaje: 'Se ha producido un error al cargar los datos.',
+						tipo: 'panel-danger'
+					};
+					$scope.datosRegistro = [];
+					$scope.totalItems = 0;
 					$scope.cargando = false;
 				}
 			});

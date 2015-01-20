@@ -121,7 +121,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -136,7 +140,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -151,7 +159,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -166,7 +178,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -181,7 +197,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -196,7 +216,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -211,7 +235,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -226,7 +254,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -241,7 +273,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -256,7 +292,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -271,7 +311,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -286,7 +330,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -301,7 +349,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -316,7 +368,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -331,7 +387,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -346,7 +406,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -361,7 +425,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -376,7 +444,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -391,7 +463,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -406,7 +482,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
@@ -420,7 +500,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			var data={
+				status: 'ERROR'
+			};
+			callback(data);
 		});
 	};
 
