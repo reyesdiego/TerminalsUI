@@ -8,29 +8,67 @@
 				<table class="table table-striped table-bordered">
 					<thead>
 					<tr>
-						<th rowspan="2" style="min-width: 90px">Tipo Reg.</th>
-						<th rowspan="2">Sumaria</th>
+						<th rowspan="2" style="min-width: 90px">
+							<encabezado-tabla-ordenado titulo="Tipo reg." filtrar-orden="filtrarOrden('TIPOREGISTRO')" oculta-filtros="ocultarFiltros" model="model" filtro="TIPOREGISTRO" filtro-orden="TIPOREGISTRO"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Sumaria" filtrar-orden="filtrarOrden('SUMARIA')" oculta-filtros="ocultarFiltros" model="model" filtro="SUMARIA" filtro-orden="SUMARIAORDEN"></encabezado-tabla-ordenado>
+						</th>
 						<th colspan="5" class="columnaAnidada">Sumaria</th>
-						<th rowspan="2" style="min-width: 200px">Conocimiento</th>
-						<th rowspan="2" style="min-width: 200px">Titulo Completo</th>
-						<th rowspan="2">Marca</th>
-						<th rowspan="2" style="min-width: 200px">Consignatario</th>
-						<th rowspan="2" style="min-width: 100px">Notificar a</th>
-						<th rowspan="2">Comentario</th>
-						<th rowspan="2">Consolidado</th>
-						<th rowspan="2" style="min-width: 170px">Transito / Transbordo</th>
-						<th rowspan="2">Fraccionado</th>
-						<th rowspan="2">Bloqueo</th>
+						<th rowspan="2" style="min-width: 200px">
+							<encabezado-tabla-ordenado titulo="Conocimiento" filtrar-orden="filtrarOrden('CONOCIMIENTO')" oculta-filtros="ocultarFiltros" model="model" filtro="CONOCIMIENTO" filtro-orden="CONOCIMIENTOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2" style="min-width: 200px">
+							<encabezado-tabla-ordenado titulo="Título completo" filtrar-orden="filtrarOrden('TITULOCOMPLETO')" oculta-filtros="ocultarFiltros" model="model" filtro="TITULOCOMPLETO" filtro-orden="TITULOCOMPLETOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Marca" filtrar-orden="filtrarOrden('MARCA')" oculta-filtros="ocultarFiltros" model="model" filtro="MARCA" filtro-orden="MARCAORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2" style="min-width: 200px">
+							<encabezado-tabla-ordenado titulo="Consignatario" filtrar-orden="filtrarOrden('CONSIGNATARIO')" oculta-filtros="ocultarFiltros" model="model" filtro="CONSIGNATARIO" filtro-orden="CONSIGNATARIOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2" style="min-width: 100px">
+							<encabezado-tabla-ordenado titulo="Notificar a" filtrar-orden="filtrarOrden('NOTIFICARA')" oculta-filtros="ocultarFiltros" model="model" filtro="NOTIFICARA" filtro-orden="NOTIFICARAORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Comentario" filtrar-orden="filtrarOrden('COMENTARIO')" oculta-filtros="ocultarFiltros" model="model" filtro="COMENTARIO" filtro-orden="COMENTARIOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Consolidado" filtrar-orden="filtrarOrden('CONSOLIDADO')" oculta-filtros="ocultarFiltros" model="model" filtro="CONSOLIDADO" filtro-orden="CONSOLIDADOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2" style="min-width: 170px">
+							<encabezado-tabla-ordenado titulo="Tránsito / Transbordo" filtrar-orden="filtrarOrden('TRANSITO_TRANSBORDO')" oculta-filtros="ocultarFiltros" model="model" filtro="TRANSITO_TRANSBORDO" filtro-orden="TRANSITO_TRANSBORDOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Fraccionado" filtrar-orden="filtrarOrden('FRACCIONADO')" oculta-filtros="ocultarFiltros" model="model" filtro="FRACCIONADO" filtro-orden="FRACCIONADOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th rowspan="2">
+							<encabezado-tabla-ordenado titulo="Bloqueo" filtrar-orden="filtrarOrden('BLOQUEO')" oculta-filtros="ocultarFiltros" model="model" filtro="BLOQUEO" filtro-orden="BLOQUEOORDEN"></encabezado-tabla-ordenado>
+						</th>
 						<th colspan="2" class="columnaAnidada">Registrado</th>
 					</tr>
 					<tr>
-						<th>A&ntilde;o</th>
-						<th>Aduana</th>
-						<th>Tipo</th>
-						<th>Nro</th>
-						<th>Letra</th>
-						<th>Por</th>
-						<th style="min-width: 130px">En</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Año" filtrar-orden="filtrarOrden('SUM_ANIO')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_ANIO" filtro-orden="SUM_ANIOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Aduana" filtrar-orden="filtrarOrden('SUM_ADUANA')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_ADUANA" filtro-orden="SUM_ADUANAORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="filtrarOrden('SUM_TIPO')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_TIPO" filtro-orden="SUM_TIPOORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Nro." filtrar-orden="filtrarOrden('SUM_NRO')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_NRO" filtro-orden="SUM_NROORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Letra" filtrar-orden="filtrarOrden('SUM_LETRA_CTRL')" oculta-filtros="ocultarFiltros" model="model" filtro="SUM_LETRA_CTRL" filtro-orden="SUM_LETRA_CTRLORDEN"></encabezado-tabla-ordenado>
+						</th>
+						<th>
+							<encabezado-tabla-ordenado titulo="Por" filtrar-orden="filtrarOrden('REGISTRADO_POR')" oculta-filtros="ocultarFiltros" model="model" filtro="REGISTRADO_POR" filtro-orden="REGISTRADO_POR"></encabezado-tabla-ordenado>
+						</th>
+						<th style="min-width: 100px">
+							<encabezado-tabla-ordenado titulo="En" filtrar-orden="filtrarOrden('REGISTRADO_EN')" oculta-filtros="ocultarFiltros" model="model" filtro="REGISTRADO_EN" filtro-orden="REGISTRADO_EN"></encabezado-tabla-ordenado>
+						</th>
 					</tr>
 					</thead>
 					<tbody>
