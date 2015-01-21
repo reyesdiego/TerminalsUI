@@ -1268,7 +1268,6 @@
 				case 'invoices':
 					$scope.cargando = true;
 					gatesFactory.getMissingInvoices(function(data){
-						console.log(data);
 						$scope.datosFaltantes = data.data;
 						$scope.totalItems = $scope.datosFaltantes.length;
 						$scope.cargando = false;

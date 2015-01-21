@@ -121,8 +121,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			console.log(errorText);
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -141,7 +140,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -160,7 +159,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -179,7 +178,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -198,7 +197,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -217,7 +216,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -236,7 +235,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -255,7 +254,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -274,7 +273,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -293,7 +292,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -312,7 +311,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -331,7 +330,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -350,7 +349,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -369,7 +368,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -388,7 +387,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -407,7 +406,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -426,7 +425,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -445,7 +444,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -464,7 +463,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -483,7 +482,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
@@ -501,7 +500,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
+			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 			var data={
 				status: 'ERROR'
 			};
