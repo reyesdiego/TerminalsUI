@@ -52,4 +52,23 @@
 			return importeDevuelto;
 		}
 	});
+
+	myapp.filter("dateRange", function() {
+		return function(items, from, to) {
+			var desde = from;
+			var hasta = to;
+			if (hasta == ''){
+				hasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+			}
+			var result = [];
+			for (var i=0; i<items.length; i++){
+				var fecha = new Date(items[i].fecha);
+				if (fecha > desde && fecha < hasta)  {
+					result.push(items[i]);
+				}
+			}
+			return result;
+		};
+	});
+
 })();

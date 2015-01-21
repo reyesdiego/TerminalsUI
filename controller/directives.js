@@ -1190,15 +1190,69 @@
 		}
 	});
 
-	myapp.controller('missingInfo', function($scope, vouchersFactory, gatesFactory){
+	myapp.controller('missingInfo', function($rootScope, $scope, vouchersFactory, gatesFactory){
 		$scope.currentPage = 1;
-		$scope.itemsPerPage = 15;
+
+		$scope.itemsPorPagina = [
+			{ value: 10, description: '10 items por página', ticked: false},
+			{ value: 15, description: '15 items por página', ticked: true},
+			{ value: 20, description: '20 items por página', ticked: false},
+			{ value: 50, description: '50 items por página', ticked: false}
+		];
+
+		$scope.filteredDatos = [];
 
 		$scope.datosFaltantes = [];
 		$scope.cargando = false;
 
 		$scope.predicate = '';
 		$scope.reverse = false;
+
+		//Variables para control de fechas
+		$scope.maxDateD = new Date();
+		$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+		//Opciones de fecha para calendarios
+		$scope.formatDate = $rootScope.formatDate;
+		$scope.dateOptions = $rootScope.dateOptions;
+
+		$scope.openDate = function(event){
+			$rootScope.openDate(event);
+		};
+
+		$scope.cambioItemsPorPagina = function(data){
+			$scope.filtrado('itemsPorPagina', data.value);
+		};
+
+		$scope.configPanel = {
+			tipo: 'panel-info',
+			titulo: 'Control gates'
+		};
+
+		$scope.model = {
+			fechaDesde: new Date(),
+			fechaHasta: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+			itemsPerPage: 15
+		};
+
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar'];
+
+		$scope.filtrado = function(filtro, contenido){
+			switch (filtro){
+				case 'fechaDesde':
+					$scope.model.fechaDesde = contenido;
+					break;
+				case 'fechaHasta':
+					$scope.model.fechaHasta = contenido;
+					break;
+				case 'itemsPorPagina':
+					$scope.model.itemsPerPage = contenido;
+					break;
+			}
+			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+			}
+		};
 
 		$scope.cargaDatos = function(){
 
@@ -1217,6 +1271,9 @@
 						$scope.datosFaltantes = data.data;
 						$scope.totalItems = $scope.datosFaltantes.length;
 						$scope.cargando = false;
+						$scope.datosFaltantes.forEach(function(registro){
+							registro.fecha = registro.gateTimestamp;
+						})
 					});
 					break;
 			}
