@@ -836,17 +836,17 @@
 							break;
 						case 10:
 							if ($scope.totalItems / $scope.itemsPerPage >= 10000){
-								$scope.maxSizeSM = 4;
-								$scope.maxSizeMD = 8;
-								$scope.maxSizeLG = 12;
+								$scope.maxSizeSM = 3;
+								$scope.maxSizeMD = 7;
+								$scope.maxSizeLG = 11;
 							} else if ($scope.totalItems / $scope.itemsPerPage >= 1000){
-								$scope.maxSizeSM = 6;
-								$scope.maxSizeMD = 10;
-								$scope.maxSizeLG = 14;
+								$scope.maxSizeSM = 5;
+								$scope.maxSizeMD = 9;
+								$scope.maxSizeLG = 13;
 							} else if ($scope.totalItems / $scope.itemsPerPage >= 100) {
-								$scope.maxSizeSM = 8;
-								$scope.maxSizeMD = 12;
-								$scope.maxSizeLG = 16;
+								$scope.maxSizeSM = 7;
+								$scope.maxSizeMD = 11;
+								$scope.maxSizeLG = 15;
 							} else {
 								$scope.maxSizeSM = 10;
 								$scope.maxSizeMD = 15;

@@ -70,7 +70,7 @@
 						<th>
 							<encabezado-tabla-ordenado titulo="Por" filtrar-orden="filtrarOrden('REGISTRADO_POR')" oculta-filtros="ocultarFiltros" model="model" filtro="REGISTRADO_POR" filtro-orden="REGISTRADO_POR"></encabezado-tabla-ordenado>
 						</th>
-						<th style="min-width: 100px">
+						<th style="min-width: 130px">
 							<encabezado-tabla-ordenado titulo="En" filtrar-orden="filtrarOrden('REGISTRADO_EN')" oculta-filtros="ocultarFiltros" model="model" filtro="REGISTRADO_EN" filtro-orden="REGISTRADO_EN"></encabezado-tabla-ordenado>
 						</th>
 					</tr>
@@ -96,7 +96,7 @@
 						<td><text-pop text="{{ registro.TIPO_MERCADERIA }}" max="17"></text-pop></td>
 						<td>{{ registro.NUMERACION_BULTOS }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy'}}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy HH:mm'}}</td>
 					</tr>
 					</tbody>
 				</table>

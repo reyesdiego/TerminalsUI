@@ -4,16 +4,16 @@
 			<br>
 			<ul class="nav nav-pills nav-stacked">
 				<li><b>Sumaria Impo</b></li>
-				<li><a ui-sref="afip.sumatorias.impo1" ng-click="cargaDatos('impo1')">M&oacute;dulo 1</a></li>
-				<li><a ui-sref="afip.sumatorias.impo2" ng-click="cargaDatos('impo2')">M&oacute;dulo 2</a></li>
-				<li><a ui-sref="afip.sumatorias.impo3" ng-click="cargaDatos('impo3')">M&oacute;dulo 3</a></li>
-				<li><a ui-sref="afip.sumatorias.impo4" ng-click="cargaDatos('impo4')">M&oacute;dulo 4</a></li>
+				<li ng-class="{selectedOption: 'impo1' == actualRegistro}"><a ui-sref="afip.sumatorias.impo1" ng-click="cargaDatos('impo1')">M&oacute;dulo 1</a></li>
+				<li ng-class="{selectedOption: 'impo2' == actualRegistro}"><a ui-sref="afip.sumatorias.impo2" ng-click="cargaDatos('impo2')">M&oacute;dulo 2</a></li>
+				<li ng-class="{selectedOption: 'impo3' == actualRegistro}"><a ui-sref="afip.sumatorias.impo3" ng-click="cargaDatos('impo3')">M&oacute;dulo 3</a></li>
+				<li ng-class="{selectedOption: 'impo4' == actualRegistro}"><a ui-sref="afip.sumatorias.impo4" ng-click="cargaDatos('impo4')">M&oacute;dulo 4</a></li>
 				<li><b>Sumaria Expo</b></li>
-				<li><a ui-sref="afip.sumatorias.expo1" ng-click="cargaDatos('expo1')">M&oacute;dulo 1</a></li>
-				<li><a ui-sref="afip.sumatorias.expo2" ng-click="cargaDatos('expo2')">M&oacute;dulo 2</a></li>
-				<li><a ui-sref="afip.sumatorias.expo3" ng-click="cargaDatos('expo3')">M&oacute;dulo 3</a></li>
-				<li><a ui-sref="afip.sumatorias.expo4" ng-click="cargaDatos('expo4')">M&oacute;dulo 4</a></li>
-				<li><a ui-sref="afip.sumatorias.expo5" ng-click="cargaDatos('expo5')">M&oacute;dulo 5</a></li>
+				<li ng-class="{selectedOption: 'expo1' == actualRegistro}"><a ui-sref="afip.sumatorias.expo1" ng-click="cargaDatos('expo1')">M&oacute;dulo 1</a></li>
+				<li ng-class="{selectedOption: 'expo2' == actualRegistro}"><a ui-sref="afip.sumatorias.expo2" ng-click="cargaDatos('expo2')">M&oacute;dulo 2</a></li>
+				<li ng-class="{selectedOption: 'expo3' == actualRegistro}"><a ui-sref="afip.sumatorias.expo3" ng-click="cargaDatos('expo3')">M&oacute;dulo 3</a></li>
+				<li ng-class="{selectedOption: 'expo4' == actualRegistro}"><a ui-sref="afip.sumatorias.expo4" ng-click="cargaDatos('expo4')">M&oacute;dulo 4</a></li>
+				<li ng-class="{selectedOption: 'expo5' == actualRegistro}"><a ui-sref="afip.sumatorias.expo5" ng-click="cargaDatos('expo5')">M&oacute;dulo 5</a></li>
 			</ul>
 		</div>
 		<div class="col-md-10">

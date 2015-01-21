@@ -121,6 +121,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
+			console.log(errorText);
 			errorFactory.raiseError(errorText, inserturl, 'errorDatos', errorText);
 			var data={
 				status: 'ERROR'

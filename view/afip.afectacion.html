@@ -4,8 +4,8 @@
 			<br>
 			<ul class="nav nav-pills nav-stacked">
 				<li><b>Afectación</b></li>
-				<li><a ui-sref="afip.afectacion.afectacion1" ng-click="cargaDatos('afectacion1')">Módulo 1</a></li>
-				<li><a ui-sref="afip.afectacion.afectacion2" ng-click="cargaDatos('afectacion2')">Módulo 2</a></li>
+				<li ng-class="{selectedOption: 'afectacion1' == actualRegistro}"><a ui-sref="afip.afectacion.afectacion1" ng-click="cargaDatos('afectacion1')">Módulo 1</a></li>
+				<li ng-class="{selectedOption: 'afectacion2' == actualRegistro}"><a ui-sref="afip.afectacion.afectacion2" ng-click="cargaDatos('afectacion2')">Módulo 2</a></li>
 			</ul>
 		</div>
 		<div class="col-md-10">

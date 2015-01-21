@@ -11,3 +11,7 @@
 	border-bottom:none !important;
 	text-align: center !important;
 }
+.selectedOption {
+	background-color: #eeeeee;
+	border-radius: 4px;
+}
