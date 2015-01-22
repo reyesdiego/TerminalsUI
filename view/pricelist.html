@@ -49,7 +49,7 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | filter:search | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage)">
+					<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 						<td style="width: 10%">{{ price.code }}</td>
 						<td style="width: 64%">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 12%">{{ price.unit}}</td>
@@ -63,6 +63,6 @@
 		</div>
 	</div>
 
-	<div-pagination total-items="totalItems" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+	<div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
 
 </div>

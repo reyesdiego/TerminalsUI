@@ -2,7 +2,7 @@
 	<accordion>
 		<accordion-group is-open="status.open">
 			<accordion-heading>
-				<strong>Filtrar por</strong>
+				<strong>Filtrar por</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 			</accordion-heading>
 			<div class="row">
 				<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('afectacion', 0) >= 0">
