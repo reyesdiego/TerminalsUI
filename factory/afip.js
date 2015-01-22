@@ -5,114 +5,114 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	var factory = {};
 
-	factory.getAfip = function(tipoRegitro, filtroOrden, page, callback){
+	factory.getAfip = function(tipoRegitro, filtros, page, callback){
 		switch (tipoRegitro) {
 			case 'afectacion1':
-				this.getRegistro1Afectacion(filtroOrden, page, function(data) {
+				this.getRegistro1Afectacion(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'afectacion2':
-				this.getRegistro2Afectacion(filtroOrden, page, function(data) {
+				this.getRegistro2Afectacion(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'detexpo1':
-				this.getRegistro1detExpo(filtroOrden, page, function(data) {
+				this.getRegistro1detExpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'detexpo2':
-				this.getRegistro2detExpo(filtroOrden, page, function(data) {
+				this.getRegistro2detExpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'detexpo3':
-				this.getRegistro3detExpo(filtroOrden, page, function(data) {
+				this.getRegistro3detExpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'detimpo1':
-				this.getRegistro1detImpo(filtroOrden, page, function(data) {
+				this.getRegistro1detImpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'detimpo2':
-				this.getRegistro2detImpo(filtroOrden, page, function(data) {
+				this.getRegistro2detImpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'detimpo3':
-				this.getRegistro3detImpo(filtroOrden, page, function(data) {
+				this.getRegistro3detImpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'expo1':
-				this.getRegistro1sumExpoMane(filtroOrden, page, function(data) {
+				this.getRegistro1sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'expo2':
-				this.getRegistro2sumExpoMane(filtroOrden, page, function(data) {
+				this.getRegistro2sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'expo3':
-				this.getRegistro3sumExpoMane(filtroOrden, page, function(data) {
+				this.getRegistro3sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'expo4':
-				this.getRegistro4sumExpoMane(filtroOrden, page, function(data) {
+				this.getRegistro4sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'expo5':
-				this.getRegistro5sumExpoMane(filtroOrden, page, function(data) {
+				this.getRegistro5sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'impo1':
-				this.getRegistro1sumImpoMani(filtroOrden, page, function(data) {
+				this.getRegistro1sumImpoMani(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'impo2':
-				this.getRegistro2sumImpoMani(filtroOrden, page, function(data) {
+				this.getRegistro2sumImpoMani(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'impo3':
-				this.getRegistro3sumImpoMani(filtroOrden, page, function(data) {
+				this.getRegistro3sumImpoMani(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'impo4':
-				this.getRegistro4sumImpoMani(filtroOrden, page, function(data) {
+				this.getRegistro4sumImpoMani(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'solicitud1':
-				this.getRegistro1Solicitud(filtroOrden, page, function(data) {
+				this.getRegistro1Solicitud(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'solicitud2':
-				this.getRegistro2Solicitud(filtroOrden, page, function(data) {
+				this.getRegistro2Solicitud(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 			case 'solicitud3':
-				this.getRegistro3Solicitud(filtroOrden, page, function(data) {
+				this.getRegistro3Solicitud(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
 		}
 	};
 
-	factory.getRegistro1Afectacion = function(filtroOrden, page, callback){
+	factory.getRegistro1Afectacion = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_afectacion/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -129,9 +129,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro1detExpo = function(filtroOrden, page, callback){
+	factory.getRegistro1detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_detexpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -148,9 +148,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro1detImpo = function(filtroOrden, page, callback){
+	factory.getRegistro1detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_detimpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -167,9 +167,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro1Solicitud = function(filtroOrden, page, callback){
+	factory.getRegistro1Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_solicitud/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -186,9 +186,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro1sumExpoMane = function(filtroOrden, page, callback){
+	factory.getRegistro1sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -205,9 +205,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro1sumImpoMani = function(filtroOrden, page, callback){
+	factory.getRegistro1sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_sumimpomani/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -224,9 +224,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro2Afectacion = function(filtroOrden, page, callback){
+	factory.getRegistro2Afectacion = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_afectacion/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -243,9 +243,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro2detExpo = function(filtroOrden, page, callback){
+	factory.getRegistro2detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_detexpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -262,9 +262,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro2detImpo = function(filtroOrden, page, callback){
+	factory.getRegistro2detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_detimpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -281,9 +281,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro2Solicitud = function(filtroOrden, page, callback){
+	factory.getRegistro2Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_solicitud/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -300,9 +300,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro2sumExpoMane = function(filtroOrden, page, callback){
+	factory.getRegistro2sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -319,9 +319,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro2sumImpoMani = function(filtroOrden, page, callback){
+	factory.getRegistro2sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_sumimpomani/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -338,9 +338,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro3detExpo = function(filtroOrden, page, callback){
+	factory.getRegistro3detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_detexpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -357,9 +357,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro3detImpo = function(filtroOrden, page, callback){
+	factory.getRegistro3detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_detimpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -376,9 +376,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro3Solicitud = function(filtroOrden, page, callback){
+	factory.getRegistro3Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_solicitud/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -395,9 +395,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro3sumExpoMane = function(filtroOrden, page, callback){
+	factory.getRegistro3sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -414,9 +414,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro3sumImpoMani = function(filtroOrden, page, callback){
+	factory.getRegistro3sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_sumimpomani/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -433,9 +433,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro4sumExpoMane = function(filtroOrden, page, callback){
+	factory.getRegistro4sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro4_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -452,9 +452,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro4sumImpoMani = function(filtroOrden, page, callback){
+	factory.getRegistro4sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro4_sumimpomani/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -471,9 +471,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.getRegistro5sumExpoMane = function(filtroOrden, page, callback){
+	factory.getRegistro5sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro5_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarOrden(inserturl, filtroOrden);
+		inserturl = factory.aplicarFiltros(inserturl, filtros);
 		$http({
 			method: 'GET',
 			url: inserturl,
@@ -508,9 +508,43 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		});
 	};
 
-	factory.aplicarOrden = function(unaUrl, orden){
-		if(angular.isDefined(orden) && orden != ''){
-			unaUrl = unaUrl + '?order=' + '[{' + orden + '}]';
+	factory.aplicarFiltros = function(unaUrl, filtros){
+		var insertAux = unaUrl;
+		if (angular.isDefined(filtros.afectacion) && filtros.afectacion != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'afectacion=' + filtros.afectacion;
+		}
+		if(angular.isDefined(filtros.detalle) && filtros.detalle != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'detalle=' + filtros.detalle;
+		}
+		if(angular.isDefined(filtros.solicitud) && filtros.solicitud != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'solicitud=' + filtros.solicitud;
+		}
+		if(angular.isDefined(filtros.sumaria) && filtros.sumaria != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'sumaria=' + filtros.sumaria;
+		}
+		if(angular.isDefined(filtros.conocimiento) && filtros.conocimiento != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'conocimiento=' + filtros.conocimiento;
+		}
+		if(angular.isDefined(filtros.buque) && filtros.buque != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'buqueNombre=' + filtros.buque;
+		}
+		if(angular.isDefined(filtros.fechaDesde) && filtros.fechaDesde != null && filtros.fechaDesde != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(filtros.fechaDesde);
+		}
+		if(angular.isDefined(filtros.fechaHasta) && filtros.fechaHasta != null && filtros.fechaHasta != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFecha(filtros.fechaHasta);
+		}
+		if(angular.isDefined(filtros.order) && filtros.order != ''){
+			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
+			unaUrl = unaUrl + 'order=' + '[{' + filtros.order + '}]';
 		}
 		return unaUrl;
 	};
