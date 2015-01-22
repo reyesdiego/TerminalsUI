@@ -1325,4 +1325,11 @@
 			template: '<span class="hidden-print">{{ text | maxLength : max }}<a href ng-show="(text.length > max)" popover="{{ text }}" popover-trigger="mouseenter"> (...)</a></span><span class="visible-print">{{ text }}</span>'
 		}
 	});
+
+	myapp.directive('accordionAfipSearch', function(){
+		return {
+			restrict:		'E',
+			templateUrl:	'view/accordion.afip.search.html'
+		}
+	})
 })();

@@ -25,6 +25,8 @@
 			tipo: 'panel-info'
 		};
 
+		$scope.ocultarFiltros = ['solicitud', 'detalle'];
+
 		$scope.datosRegistro = [];
 		$scope.currentPage = 1;
 		$scope.totalItems = 0;
@@ -82,10 +84,53 @@
 				$scope.currentPage = 1;
 			}
 			$scope.actualRegistro = registro;
+			switch ($scope.actualRegistro){
+				case 'afectacion1':
+					$scope.ocultarFiltros = ['solicitud', 'detalle', 'conocimiento', 'contenedor'];
+					break;
+				case 'afectacion2':
+					$scope.ocultarFiltros = ['solicitud', 'detalle', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
+					break;
+				case 'detimpo1':
+				case 'detimpo2':
+					$scope.ocultarFiltros = ['afectacion', 'solicitud', 'buque', 'contenedor'];
+					break;
+				case 'detimpo3':
+				case 'detexpo1':
+				case 'detexpo2':
+				case 'detexpo3':
+					$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
+					break;
+				case 'solicitud1':
+					$scope.ocultarFiltros = ['afectacion', 'detalle', 'conocimiento', 'contenedor'];
+					break;
+				case 'solicitud2':
+					$scope.ocultarFiltros = ['afectacion', 'detalle', 'sumaria', 'buque', 'contenedor'];
+					break;
+				case 'solicitud3':
+					$scope.ocultarFiltros = ['afectacion', 'detalle', 'sumaria', 'conocimiento', 'buque'];
+					break;
+				case 'impo1':
+				case 'expo1':
+					$scope.ocultarFiltros = ['afectacion', 'detalle', 'solicitud', 'conocimiento', 'contenedor'];
+					break;
+				case 'impo2':
+				case 'impo3':
+				case 'expo2':
+				case 'expo3':
+				case 'expo5':
+					$scope.ocultarFiltros = ['afectacion', 'detalle', 'solicitud', 'buque', 'contenedor'];
+					break;
+				case 'impo4':
+				case 'expo4':
+					$scope.ocultarFiltros = ['afectacion', 'detalle', 'solicitud', 'buque'];
+					break;
+			}
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.page.limit = $scope.itemsPerPage;
 			$scope.invoices = [];
 			afipFactory.getAfip(registro, $scope.model.order, $scope.page, function(data){
+				console.log(data);
 				if(data.status === 'OK'){
 					$scope.datosRegistro = data.data;
 					$scope.totalItems = data.totalCount;
