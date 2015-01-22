@@ -13,10 +13,18 @@
 		];
 
 		$scope.model = {
+			afectacion: '',
+			detalle: '',
+			solicitud: '',
+			sumaria: '',
+			conocimiento: '',
+			buque: '',
+			contenedor: '',
 			filtroOrden: '',
 			filtroOrdenReverse: false,
 			filtroAnterior: '',
-			order: ''
+			order: '',
+			currentPage: 1
 		};
 
 		$scope.panelMensaje = {
@@ -28,7 +36,6 @@
 		$scope.ocultarFiltros = ['solicitud', 'detalle'];
 
 		$scope.datosRegistro = [];
-		$scope.currentPage = 1;
 		$scope.totalItems = 0;
 		$scope.itemsPerPage = 15;
 		$scope.page = {
@@ -47,13 +54,57 @@
 		});
 
 		$scope.$on('cambioPagina', function(event, data){
-			$scope.currentPage = data;
+			$scope.model.currentPage = data;
 			$scope.cargaDatos($scope.actualRegistro);
 		});
 
+		$scope.hitEnter = function(evt){
+			if(angular.equals(evt.keyCode,13))
+				$scope.cargaDatos($scope.actualRegistro);
+		};
+
+		$scope.filtrado = function(filtro, contenido){
+			$scope.cargando = true;
+			$scope.model.currentPage = 1;
+			switch (filtro){
+				case 'afectacion':
+					$scope.model.afectacion = contenido;
+					break;
+				case 'detalle':
+					$scope.model.detalle = contenido;
+					break;
+				case 'solicitud':
+					$scope.model.solicitud = contenido;
+					break;
+				case 'sumaria':
+					$scope.model.sumaria = contenido;
+					break;
+				case 'conocimiento':
+					$scope.model.conocimiento = contenido;
+					break;
+				case 'fechaDesde':
+					$scope.model.fechaDesde = contenido;
+					break;
+				case 'fechaHasta':
+					$scope.model.fechaHasta = contenido;
+					break;
+				case 'contenedor':
+					$scope.model.contenedor = contenido;
+					break;
+				case 'buque':
+					$scope.model.buque = contenido;
+					break;
+			}
+			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
+				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
+				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+			}
+			$scope.cargaDatos($scope.actualRegistro);
+		};
+
 		$scope.filtrarOrden = function(filtro){
 			var filtroModo;
-			$scope.currentPage = 1;
+			$scope.model.currentPage = 1;
 			$scope.model.filtroOrden = filtro;
 			if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
 				$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
@@ -68,7 +119,6 @@
 			$scope.model.order = '"' + filtro + '":' + filtroModo;
 			$scope.model.filtroAnterior = filtro;
 
-			$scope.currentPage = 1;
 			$scope.cargaDatos($scope.actualRegistro);
 		};
 
@@ -81,7 +131,7 @@
 					filtroAnterior: '',
 					order: ''
 				};
-				$scope.currentPage = 1;
+				$scope.model.currentPage = 1;
 			}
 			$scope.actualRegistro = registro;
 			switch ($scope.actualRegistro){
@@ -126,11 +176,10 @@
 					$scope.ocultarFiltros = ['afectacion', 'detalle', 'solicitud', 'buque'];
 					break;
 			}
-			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
 			$scope.page.limit = $scope.itemsPerPage;
 			$scope.invoices = [];
-			afipFactory.getAfip(registro, $scope.model.order, $scope.page, function(data){
-				console.log(data);
+			afipFactory.getAfip(registro, $scope.model, $scope.page, function(data){
 				if(data.status === 'OK'){
 					$scope.datosRegistro = data.data;
 					$scope.totalItems = data.totalCount;
