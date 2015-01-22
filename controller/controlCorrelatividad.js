@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 (function() {
-	myapp.controller('correlatividadCtrl', function($rootScope, $scope, invoiceFactory) {
+	myapp.controller('correlatividadCtrl', function($rootScope, $scope, invoiceFactory, socket) {
 		$scope.hasta = new Date();
 		$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 
@@ -53,5 +53,10 @@
 				$scope.loadingCorrelatividad = false;
 			});
 		};
+
+		socket.on('correlative', function (data) {
+			//$scope.pantalla.resultadoCorrelativo = data;
+		});
+
 	});
 })();
