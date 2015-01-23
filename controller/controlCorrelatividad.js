@@ -15,12 +15,18 @@
 			'fechaHasta': $scope.hasta
 		};
 
+		$scope.tipoComprob = '';
+		$scope.puntosDeVenta = [];
+		$scope.totalFaltantes = 0;
+
 		$scope.pantalla = {
 			"titulo":  "Correlatividad",
-			"mensajeCorrelativo": "Seleccione punto de venta y tipo de comprobante para realizar la búsqueda",
+			"mensajeCorrelativo": 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.',
 			"tipo": "panel-info",
 			"resultadoCorrelativo": []
 		};
+		$scope.puntosDeVenta.push(angular.copy($scope.pantalla));
+		$scope.mostrarBotonImprimir = false;
 
 		$scope.$on('cambioFiltro', function(event, data){
 			$scope.model = data;
@@ -37,28 +43,52 @@
 
 		$scope.controlCorrelatividad = function(){
 			$scope.loadingCorrelatividad = true;
+			$scope.puntosDeVenta = [];
+			$scope.tipoComprob = $rootScope.vouchersType[$scope.model.codTipoComprob];
 			invoiceFactory.getCorrelative($scope.model, function(dataComprob) {
-				$scope.result = dataComprob;
+				$scope.totalFaltantes = dataComprob.totalCount;
+				/*$scope.result = dataComprob;
 				if ($scope.result.totalCount > 0){
 					$scope.pantalla.mensajeCorrelativo = "Se hallaron " + $scope.result.totalCount + " " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes: ";
 					$scope.pantalla.tipo = "panel-danger";
 					$scope.pantalla.titulo = "Error en el punto de venta " + $scope.model.nroPtoVenta;
 					$scope.pantalla.resultadoCorrelativo = $scope.result.data;
+					$scope.mostrarBotonImprimir = true;
 				} else {
 					$scope.pantalla.titulo =  "Éxito";
 					$scope.pantalla.mensajeCorrelativo = "No se hallaron " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes en el punto de venta " + $scope.model.nroPtoVenta;
 					$scope.pantalla.tipo = "panel-success";
 					$scope.pantalla.resultadoCorrelativo = [];
 				}
-				$scope.loadingCorrelatividad = false;
+				$scope.puntosDeVenta.push(angular.copy($scope.pantalla));*/
+				//$scope.loadingCorrelatividad = false;
 			});
 		};
 
 		socket.on('correlative', function (data) {
-			console.log('llego caja');
-			console.log(data);
-			//$scope.pantalla.resultadoCorrelativo = data;
+			var pantalla = {
+				mensajeCorrelativo: '',
+				tipo: '',
+				titulo: '',
+				resultadoCorrelativo: ''
+			};
+			if (data.totalCount > 0){
+				pantalla.mensajeCorrelativo = "Se hallaron " + data.totalCount + " " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes: ";
+				pantalla.tipo = "panel-danger";
+				pantalla.titulo = "Error en el punto de venta " + data.nroPtoVenta;
+				pantalla.resultadoCorrelativo = data.data;
+				$scope.mostrarBotonImprimir = true;
+			} else {
+				pantalla.titulo =  "Éxito";
+				pantalla.mensajeCorrelativo = "No se hallaron " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes en el punto de venta " + data.nroPtoVenta;
+				pantalla.tipo = "panel-success";
+				pantalla.resultadoCorrelativo = [];
+			}
+			$scope.puntosDeVenta.push(angular.copy(pantalla));
+			$scope.loadingCorrelatividad = false;
 		});
+
+		//$scope.controlCorrelatividad();
 
 	});
 })();

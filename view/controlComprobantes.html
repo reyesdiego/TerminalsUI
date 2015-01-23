@@ -32,11 +32,12 @@
 		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 	</div>
 	<div class="col-lg-12" ng-hide="loadingCorrelatividad">
-		<div-panel config-panel="pantalla">
+		<h3 ng-show="totalFaltantes > 0">Total: {{ tipoComprob }} {{ totalFaltantes }} faltantes.</h3>
+		<div-panel ng-repeat="pantalla in puntosDeVenta" config-panel="pantalla">
 			<p>{{ pantalla.mensajeCorrelativo }}</p>
 			<span ng-repeat="numero in pantalla.resultadoCorrelativo track by $index">{{ numero }}<span ng-show="!$last"> - </span></span>
 		</div-panel>
-		<div class="row hidden-print" ng-show="pantalla.resultadoCorrelativo.length > 0">
+		<div class="row hidden-print" ng-show="mostrarBotonImprimir">
 			<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
 				<a href="javascript:window.print()" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
 			</div>

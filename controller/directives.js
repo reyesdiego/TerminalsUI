@@ -908,11 +908,13 @@
 				};
 				$scope.traerPuntosDeVenta = function(){
 					invoiceFactory.getCashbox({}, function(data){
+						var i;
 						$scope.terminalSellPoints = data.data;
 						$scope.model.codTipoComprob = 1;
-						$scope.terminalSellPoints.forEach(function(caja){
-							$scope.model.nroPtoVenta = $scope.model.nroPtoVenta + ',' + caja;
-						})
+						$scope.model.nroPtoVenta = $scope.terminalSellPoints[0];
+						for (i = 1; i<$scope.terminalSellPoints.length; i++){
+							$scope.model.nroPtoVenta = $scope.model.nroPtoVenta + ',' + $scope.terminalSellPoints[i];
+						}
 					})
 				};
 				$scope.openDate = function(event){
