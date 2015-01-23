@@ -910,6 +910,9 @@
 					invoiceFactory.getCashbox({}, function(data){
 						$scope.terminalSellPoints = data.data;
 						$scope.model.codTipoComprob = 1;
+						$scope.terminalSellPoints.forEach(function(caja){
+							$scope.model.nroPtoVenta = $scope.model.nroPtoVenta + ',' + caja;
+						})
 					})
 				};
 				$scope.openDate = function(event){

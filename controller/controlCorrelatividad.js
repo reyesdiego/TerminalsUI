@@ -55,6 +55,8 @@
 		};
 
 		socket.on('correlative', function (data) {
+			console.log('llego caja');
+			console.log(data);
 			//$scope.pantalla.resultadoCorrelativo = data;
 		});
 
