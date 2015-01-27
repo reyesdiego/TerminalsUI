@@ -3,6 +3,9 @@
  */
 (function() {
 	myapp.controller('correlatividadCtrl', function($rootScope, $scope, invoiceFactory, socket) {
+
+		var socketIoRegister;
+
 		$scope.hasta = new Date();
 		$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 
@@ -20,10 +23,10 @@
 		$scope.totalFaltantes = 0;
 
 		$scope.pantalla = {
-			"titulo":  "Correlatividad",
-			"mensajeCorrelativo": 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.',
-			"tipo": "panel-info",
-			"resultadoCorrelativo": []
+			titulo:  "Correlatividad",
+			tipo: "panel-info",
+			mensajeCorrelativo : 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.',
+			puntosDeVenta: []
 		};
 		$scope.puntosDeVenta.push(angular.copy($scope.pantalla));
 		$scope.mostrarBotonImprimir = false;
@@ -45,50 +48,44 @@
 			$scope.loadingCorrelatividad = true;
 			$scope.puntosDeVenta = [];
 			$scope.tipoComprob = $rootScope.vouchersType[$scope.model.codTipoComprob];
-			invoiceFactory.getCorrelative($scope.model, function(dataComprob) {
+			$scope.mostrarBotonImprimir = false;
+			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
 				$scope.totalFaltantes = dataComprob.totalCount;
-				/*$scope.result = dataComprob;
-				if ($scope.result.totalCount > 0){
-					$scope.pantalla.mensajeCorrelativo = "Se hallaron " + $scope.result.totalCount + " " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes: ";
-					$scope.pantalla.tipo = "panel-danger";
-					$scope.pantalla.titulo = "Error en el punto de venta " + $scope.model.nroPtoVenta;
-					$scope.pantalla.resultadoCorrelativo = $scope.result.data;
-					$scope.mostrarBotonImprimir = true;
-				} else {
-					$scope.pantalla.titulo =  "Éxito";
-					$scope.pantalla.mensajeCorrelativo = "No se hallaron " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes en el punto de venta " + $scope.model.nroPtoVenta;
-					$scope.pantalla.tipo = "panel-success";
-					$scope.pantalla.resultadoCorrelativo = [];
+
+				if (dataComprob.totalCount === 0){
+					$scope.pantalla = {
+						titulo:  "Correlatividad",
+						tipo: "panel-info",
+						mensajeCorrelativo : 'No se hallaron comprobantes faltantes.',
+						puntosDeVenta: []
+					};
 				}
-				$scope.puntosDeVenta.push(angular.copy($scope.pantalla));*/
-				//$scope.loadingCorrelatividad = false;
+				$scope.loadingCorrelatividad = false;
 			});
 		};
 
-		socket.on('correlative', function (data) {
-			var pantalla = {
-				mensajeCorrelativo: '',
-				tipo: '',
-				titulo: '',
-				resultadoCorrelativo: ''
-			};
-			if (data.totalCount > 0){
-				pantalla.mensajeCorrelativo = "Se hallaron " + data.totalCount + " " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes: ";
-				pantalla.tipo = "panel-danger";
-				pantalla.titulo = "Error en el punto de venta " + data.nroPtoVenta;
-				pantalla.resultadoCorrelativo = data.data;
-				$scope.mostrarBotonImprimir = true;
-			} else {
-				pantalla.titulo =  "Éxito";
-				pantalla.mensajeCorrelativo = "No se hallaron " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes en el punto de venta " + data.nroPtoVenta;
-				pantalla.tipo = "panel-success";
-				pantalla.resultadoCorrelativo = [];
-			}
-			$scope.puntosDeVenta.push(angular.copy(pantalla));
-			$scope.loadingCorrelatividad = false;
-		});
+		socket.emit('newUser', function callback(sess){
 
-		//$scope.controlCorrelatividad();
+			socketIoRegister = sess;
+			socket.on('correlative_' + sess, function (data) {
+				$scope.loadingCorrelatividad = false;
+				var pantalla = {
+					mensajeCorrelativo: '',
+					tipo: '',
+					titulo: '',
+					resultadoCorrelativo: ''
+				};
+				pantalla.nroPtoVenta = data.nroPtoVenta;
+				pantalla.titulo = "Punto de Venta " + data.nroPtoVenta;
+				if (data.totalCount > 0){
+					pantalla.totalCnt = data.totalCount;
+					pantalla.tipo = "panel-danger";
+					pantalla.resultadoCorrelativo = data.data;
+					$scope.mostrarBotonImprimir = true;
+					$scope.puntosDeVenta.push(angular.copy(pantalla));
+				}
+			});
+		});
 
 	});
 })();
