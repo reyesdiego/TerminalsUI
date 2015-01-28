@@ -87,7 +87,17 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 	};
 
 	factory.noMatches = function (desde, hasta, callback){
-		var inserturl = serverUrl + '/noMatches/' + loginService.getFiltro() + '?fechaInicio=' + formatDate.formatearFecha(desde) + '&fechaFin=' + formatDate.formatearFecha(hasta);
+		var flagFea = false;
+		var inserturl = serverUrl + '/noMatches/' + loginService.getFiltro() + '?';
+		if (desde && desde != null) {
+			inserturl += 'fechaInicio=' + formatDate.formatearFecha(desde);
+			flagFea = true;
+		}
+		if (hasta && hasta != null) {
+			if (flagFea) inserturl += '&';
+
+			inserturl += 'fechaFin=' + formatDate.formatearFecha(hasta);
+		}
 		$http({
 			method: 'GET',
 			url: inserturl,

@@ -18,7 +18,7 @@
 			'viaje': '',
 			'estado': 'N',
 			'codigo': '',
-			'filtroOrden': 'gateTimestamp',
+			'filtroOrden': 'fecha.emision',
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': false,
 			'order': '',
@@ -83,6 +83,7 @@
 					$scope.mostrarPtosVentas = false;
 					$scope.controlDeCodigos()
 				} else {
+					$scope.controlDeCodigos()
 					$scope.controlCodigosFiltrados();
 				}
 			}
