@@ -84,9 +84,9 @@
 					$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 					$scope.controlFiltros = 'codigos';
 					$scope.mostrarPtosVentas = false;
-					$scope.controlDeCodigos()
+					$scope.controlDeCodigos();
 				} else {
-					$scope.controlDeCodigos()
+					$scope.controlDeCodigos();
 					$scope.controlCodigosFiltrados();
 				}
 			}
@@ -112,7 +112,7 @@
 			priceFactory.noMatches($scope.model.fechaDesde, $scope.model.fechaHasta, function(dataNoMatches){
 				$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
 				$scope.codigosSinAsociar.codigos = dataNoMatches.data;
-				if ($scope.codigosSinAsociar.length > 0){
+				if ($scope.codigosSinAsociar.total > 0){
 					invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
 						if (invoicesNoMatches.data != null){
 							invoicesNoMatches.data.forEach(function(unComprobante){
