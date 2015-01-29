@@ -79,9 +79,10 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
-	factory.getCorrelative = function(datos, callback){
+	factory.getCorrelative = function(datos, socketIoRegister, callback){
 		var inserturl = serverUrl + '/invoices/correlative/' + loginService.getFiltro() + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
+		inserturl += '&x='+socketIoRegister;
 		$http({
 			method: "GET",
 			url: inserturl,
