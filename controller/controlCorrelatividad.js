@@ -47,21 +47,6 @@
 			$scope.tipoComprob = $rootScope.vouchersType[$scope.model.codTipoComprob];
 			invoiceFactory.getCorrelative($scope.model, function(dataComprob) {
 				$scope.totalFaltantes = dataComprob.totalCount;
-				/*$scope.result = dataComprob;
-				if ($scope.result.totalCount > 0){
-					$scope.pantalla.mensajeCorrelativo = "Se hallaron " + $scope.result.totalCount + " " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes: ";
-					$scope.pantalla.tipo = "panel-danger";
-					$scope.pantalla.titulo = "Error en el punto de venta " + $scope.model.nroPtoVenta;
-					$scope.pantalla.resultadoCorrelativo = $scope.result.data;
-					$scope.mostrarBotonImprimir = true;
-				} else {
-					$scope.pantalla.titulo =  "Éxito";
-					$scope.pantalla.mensajeCorrelativo = "No se hallaron " + $rootScope.vouchersType[$scope.model.codTipoComprob] + " faltantes en el punto de venta " + $scope.model.nroPtoVenta;
-					$scope.pantalla.tipo = "panel-success";
-					$scope.pantalla.resultadoCorrelativo = [];
-				}
-				$scope.puntosDeVenta.push(angular.copy($scope.pantalla));*/
-				//$scope.loadingCorrelatividad = false;
 			});
 		};
 
@@ -87,8 +72,6 @@
 			$scope.puntosDeVenta.push(angular.copy(pantalla));
 			$scope.loadingCorrelatividad = false;
 		});
-
-		//$scope.controlCorrelatividad();
 
 	});
 })();
