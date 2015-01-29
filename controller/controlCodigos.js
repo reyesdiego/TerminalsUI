@@ -86,7 +86,6 @@
 					$scope.mostrarPtosVentas = false;
 					$scope.controlDeCodigos();
 				} else {
-					$scope.controlDeCodigos();
 					$scope.controlCodigosFiltrados();
 				}
 			}

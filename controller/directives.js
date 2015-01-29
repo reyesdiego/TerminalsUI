@@ -288,7 +288,7 @@
 
 						var modalInstance = $modal.open({
 							templateUrl: 'view/trackingInvoice.html',
-							controller: trackingInvoiceCtrl,
+							controller: 'trackingInvoiceCtrl',
 							backdrop: 'static',
 							resolve: {
 								estado: function () {
