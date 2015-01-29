@@ -39,7 +39,19 @@ myapp.factory('userFactory', function($http, dialogs){
 			}).error(function(err) {
 				dialogs.error('Error en Cambio de Contraseña', err.data);
 			});
+	};
 
+	factory.newUser = function(formData, callback){
+		//var inserturl = serverUrl + '/agp/password'; ver ruta
+		$http({
+			method: 'POST',
+			url: inserturl,
+			data: formData
+		}).success(function(data) {
+			callback(data);
+		}).error(function(err) {
+			dialogs.error('Error en Cambio de Contraseña', err.data);
+		});
 	};
 
 	return factory;

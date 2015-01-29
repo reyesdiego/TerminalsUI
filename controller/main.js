@@ -110,6 +110,10 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 			url: "/login",
 			templateUrl: "view/login.html"
 		})
+		.state('register', {
+			url: "/registro",
+			templateUrl: "view/newUser.html"
+		})
 		.state('tarifario', {
 			url: "/pricelist",
 			templateUrl: "view/pricelist.html"
@@ -468,7 +472,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 
 	$rootScope.moneda = "DOL";
 
-	var rutasComunes = ['login', 'forbidden', 'changepass'];
+	var rutasComunes = ['login', 'forbidden', 'changepass', 'register'];
 	$rootScope.$state = $state;
 	// Variables Globales de Paginacion
 	$rootScope.itemsPerPage = 15;
