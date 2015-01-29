@@ -24,7 +24,6 @@
 				$scope.status = {
 					open: true
 				};
-				console.log($scope.codigosSinAsociar);
 				$scope.currentPage = 1;
 				$scope.itemsPerPage = 15;
 				//Variables para control de fechas
