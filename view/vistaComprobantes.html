@@ -13,8 +13,8 @@
 
 	<div class="col-lg-12" ng-show="controlCodigos && codigosSinAsociar.length > 0">
 		<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error' }">
-			<p>Se hallaron códigos sin asociar: </p>
-			<span ng-repeat="numero in codigosSinAsociar"><a title="Filtrar por:" href ng-click="filtrado('codigo', numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
+			<p>Se hallaron {{ codigosSinAsociar.total }} códigos sin asociar: </p>
+			<span ng-repeat="numero in codigosSinAsociar.codigos"><a title="Filtrar por:" href ng-click="filtrado('codigo', numero)">{{ numero }}</a><span ng-show="!$last"> - </span></span>
 		</div-panel>
 	</div>
 

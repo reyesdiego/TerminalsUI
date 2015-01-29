@@ -19,7 +19,7 @@
 			'viaje': '',
 			'estado': 'N',
 			'codigo': '',
-			'filtroOrden': 'gateTimestamp',
+			'filtroOrden': 'fecha.emision',
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': false,
 			'order': '',

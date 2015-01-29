@@ -42,7 +42,10 @@
 			limit: $scope.model.itemsPerPage
 		};
 
-		$scope.codigosSinAsociar = [];
+		$scope.codigosSinAsociar = {
+			total: 0,
+			codigos: []
+		};
 		$scope.comprobantesRotos = [];
 
 		$scope.loadingControlCodigos = false;
@@ -107,7 +110,8 @@
 			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 			$scope.pageCodigos.limit = $scope.model.itemsPerPage;
 			priceFactory.noMatches($scope.model.fechaDesde, $scope.model.fechaHasta, function(dataNoMatches){
-				$scope.codigosSinAsociar = dataNoMatches.data;
+				$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
+				$scope.codigosSinAsociar.codigos = dataNoMatches.data;
 				if ($scope.codigosSinAsociar.length > 0){
 					invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
 						if (invoicesNoMatches.data != null){
