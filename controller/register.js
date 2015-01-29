@@ -2,7 +2,7 @@
  * Created by artiom on 29/01/15.
  */
 
-myapp.controller('registerCtrl', function ($scope, dialogs) {
+myapp.controller('registerCtrl', function ($scope, dialogs, userFactory) {
 
 	$scope.nombre = '';
 	$scope.apellido = '';
@@ -26,6 +26,10 @@ myapp.controller('registerCtrl', function ($scope, dialogs) {
 	});
 
 	$scope.register = function(){
+		if (!$scope.validEmail){
+			dialogs.error('Error', 'La dirección de correo electrónico ingresada no es válida');
+			return;
+		}
 		if ($scope.email != $scope.confirmEmail){
 			dialogs.error('Error', 'Las direccciones de correo electrónico no coinciden');
 			return;
@@ -35,6 +39,6 @@ myapp.controller('registerCtrl', function ($scope, dialogs) {
 			return;
 		}
 		console.log('hola');
-	}
+	};
 
 });
