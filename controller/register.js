@@ -2,7 +2,7 @@
  * Created by artiom on 29/01/15.
  */
 
-myapp.controller('registerCtrl', function ($scope, dialogs, userFactory) {
+myapp.controller('registerCtrl', function ($scope, dialogs, userFactory, $state) {
 
 	$scope.nombre = '';
 	$scope.apellido = '';
@@ -12,6 +12,8 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory) {
 	$scope.confirmPassword = '';
 	$scope.confirmEmail = '';
 	$scope.entidad = 'bactssa';
+	$scope.role = 'terminal';
+	$scope.terminal = 'BACTSSA';
 
 	$scope.validEmail = false;
 
@@ -21,11 +23,21 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory) {
 		}
 	}, true);
 
-	$scope.$watch('email', function(){
+	$scope.$watch('[email,entidad]', function(){
 		var expr = new RegExp("^([a-zA-Z0-9_\\.\\-])+\\@(" + $scope.entidad + ")\\.([a-zA-Z0-9]{2,4})+(\\.[a-zA-Z]{2})?$");
 		//var expr = /^([a-zA-Z0-9_\.\-])+\@(bactssa|trp|apmterminals|puertobuenosaires)\.([a-zA-Z0-9]{2,4})+(\.[a-zA-Z]{2})?$/;
 		$scope.validEmail = expr.test($scope.email);
-	});
+		if ($scope.entidad == 'puertobuenosaires'){
+			$scope.role = 'agp';
+			$scope.terminal = 'AGP'
+		} else {
+			$scope.role = 'terminal';
+			$scope.terminal = $scope.entidad.toUpperCase();
+		}
+		if ($scope.entidad == 'apmterminals'){
+			$scope.terminal = 'TERMINAL4';
+		}
+	}, true);
 
 	$scope.register = function(){
 		if (!$scope.validEmail){
@@ -41,15 +53,22 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory) {
 			return;
 		}
 		var formData = {
-			nombre: $scope.nombre,
-			apellido: $scope.apellido,
+			lastname: $scope.apellido,
+			firstname: $scope.nombre,
+			full_name: $scope.nombre + ' ' + $scope.apellido,
 			email: $scope.email,
 			password: $scope.password,
-			usuario: $scope.usuario,
-			entidad: $scope.entidad
+			user: $scope.usuario,
+			role: $scope.role,
+			terminal: $scope.terminal
 		};
 		userFactory.newUser(formData, function(data){
-			console.log(data);
+			if (data.status == 'OK'){
+				var dl = dialogs.notify('Registro', 'El usuario ' + $scope.usuario + ' ha sido registrado exitosamente. En breve recibirá un mail en la cuenta ' + $scope.email + ' para poder habilitarlo.');
+				dl.result.then(function(){
+					$state.transitionTo('login');
+				})
+			}
 		})
 	};
 
