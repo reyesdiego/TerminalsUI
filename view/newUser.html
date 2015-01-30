@@ -26,6 +26,17 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="inputEntity" class="col-lg-3 control-label"> Entidad</label>
+							<div class="col-lg-8">
+								<select id="inputEntity" class="form-control" ng-model="entidad" ng-required="true">
+									<option value="bactssa">BACTSSA</option>
+									<option value="trp">TRP</option>
+									<option value="apmterminals">TERMINAL 4</option>
+									<option value="puertobuenosaires">PUERTO BUENOS AIRES</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="inputEmail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-inbox"></span> E-Mail</label>
 							<div class="col-lg-8">
 								<input type="text" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar correo electrónico" ng-required="true">

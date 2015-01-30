@@ -11,6 +11,7 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory) {
 	$scope.usuario = '';
 	$scope.confirmPassword = '';
 	$scope.confirmEmail = '';
+	$scope.entidad = 'bactssa';
 
 	$scope.validEmail = false;
 
@@ -21,13 +22,14 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory) {
 	}, true);
 
 	$scope.$watch('email', function(){
-		var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		var expr = new RegExp("^([a-zA-Z0-9_\\.\\-])+\\@(" + $scope.entidad + ")\\.([a-zA-Z0-9]{2,4})+(\\.[a-zA-Z]{2})?$");
+		//var expr = /^([a-zA-Z0-9_\.\-])+\@(bactssa|trp|apmterminals|puertobuenosaires)\.([a-zA-Z0-9]{2,4})+(\.[a-zA-Z]{2})?$/;
 		$scope.validEmail = expr.test($scope.email);
 	});
 
 	$scope.register = function(){
 		if (!$scope.validEmail){
-			dialogs.error('Error', 'La dirección de correo electrónico ingresada no es válida');
+			dialogs.error('Error', 'La dirección de correo electrónico ingresada no es válida o no corresponde con la entidad elegida');
 			return;
 		}
 		if ($scope.email != $scope.confirmEmail){
@@ -38,7 +40,17 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory) {
 			dialogs.error('Error', 'Las contraseñas ingresadas no coinciden');
 			return;
 		}
-		console.log('hola');
+		var formData = {
+			nombre: $scope.nombre,
+			apellido: $scope.apellido,
+			email: $scope.email,
+			password: $scope.password,
+			usuario: $scope.usuario,
+			entidad: $scope.entidad
+		};
+		userFactory.newUser(formData, function(data){
+			console.log(data);
+		})
 	};
 
 });
