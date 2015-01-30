@@ -62,6 +62,11 @@
 				$scope.comprobantesError = invoiceError.data;
 				$scope.totalItems = invoiceError.totalCount;
 				$scope.loadingError = false;
+				$scope.comprobantesError.forEach(function(comprobante){
+					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+						comprobante.lastComment = dataTrack.data[0].comment + ' - ' + dataTrack.data[0].user;
+					})
+				})
 			})
 		};
 	});

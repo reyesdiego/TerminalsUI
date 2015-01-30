@@ -34,7 +34,7 @@
 			<td style="text-align: right; width: 12%"><a class="hidden-print" ng-show="chequearTarifas(invoice)" href="" popover="Error en tarifas" popover-trigger="mouseenter"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a> {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice.codMoneda: invoice.cotiMoneda | currency }}</td>
 			<td class="hidden-print" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			<td style="text-align: left; width: 14%">
-				<a href ng-click="trackInvoice(invoice)"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
+				<a href ng-click="trackInvoice(invoice)" popover="{{ invoice.lastComment }}" popover-trigger="mouseenter"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
 			</td>
 		</tr>
 		</tbody>
