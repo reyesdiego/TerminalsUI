@@ -1,0 +1,33 @@
+<div class="container" ng-controller="usersCtrl">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1>Control de Usuarios</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Usuario</th>
+						<th>Mail</th>
+						<th>Terminal</th>
+						<th>Estado</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="dato in datosUsers">
+						<td>{{ dato.full_name }}</td>
+						<td>{{ dato.user }}</td>
+						<td>{{ dato.email }}</td>
+						<td>{{ dato.terminal }}</td>
+						<td></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

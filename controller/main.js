@@ -254,6 +254,10 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 		.state('afip.sumatorias', {
 			templateUrl: "view/afip.sumatorias.html"
 		})
+		.state('users', {
+			url: "/users",
+			templateUrl: "view/users.html"
+		})
 
 });
 

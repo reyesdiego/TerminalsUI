@@ -63,6 +63,7 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 				data.acceso.push("afip.solicitud");
 				data.acceso.push("afip.sumatorias");
 				data.acceso.push("cgates");
+				data.acceso.push("users");
 				///-------------------------------------------------------------------------
 
 				loginService.setAcceso(data.acceso);

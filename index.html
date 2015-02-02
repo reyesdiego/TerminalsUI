@@ -53,6 +53,7 @@
 	<script src="factory/timepickerpop.js"></script>
 	<script src="factory/errorFactory.js"></script>
 	<script src="factory/afip.js"></script>
+	<script src="factory/controlUsers.js"></script>
 	<!-- Filters -->
 	<script src="filter/filters.js"></script>
 	<!-- Controles Angular-->
@@ -80,6 +81,7 @@
 	<script src="controller/angular-multi-select.js"></script>
 	<script src="controller/afip.js"></script>
 	<script src="controller/register.js"></script>
+	<script src="controller/users.js"></script>
 	<!-- Directives -->
 	<script src="controller/directives.js"></script>
 	<!-- Style Switcher-->
@@ -127,6 +129,7 @@
 						<li><a ui-sref="container" ng-click="isCollapsed = false">Contenedor</a></li>
 						<li><a ui-sref="buque" ng-click="isCollapsed = false">Buque - Viaje</a></li>
 						<li><a ui-sref="afip" ng-click="isCollapsed = false">A.F.I.P</a></li>
+						<li><a ui-sref="users" ng-click="isCollapsed = false">Usuarios</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
 						<li class="visible-sm"><a ng-click="isCollapsed = false; setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
