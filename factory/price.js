@@ -56,13 +56,14 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			var addMatch;
 			data.data.forEach(function(price){
 				if (price.matches != null && price.matches.length > 0){
-					price.matches[0].match.forEach(function(code){
-						addMatch = {
-							codigo: code,
-							moneda: price.currency,
-							valor: price.topPrice
-						};
-						arrayMatches.push(addMatch);
+					factory.getPriceById(price._id, function(priceComplete){
+						price.matches[0].match.forEach(function(code){
+							addMatch = {
+								codigo: code,
+								topPrices: priceComplete.data.topPrices
+							};
+							arrayMatches.push(addMatch);
+						});
 					});
 				}
 			});
