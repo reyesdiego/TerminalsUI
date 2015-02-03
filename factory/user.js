@@ -17,9 +17,17 @@ myapp.factory('userFactory', function($http, dialogs){
 			data: formData
 		}).success(function(data) {
 			callback(data, false);
-		}).error(function(data) {
-			dialogs.error('Error de inicio de sesión', data.data);
-			callback(data, true);
+		}).error(function(error, status) {
+			if (status === 0){
+				dialogs.error('Error de inicio de sesión', "El servidor no se encuentra disponible. Consulte con el Administrador del sistema.");
+				callback(error, true);
+			} else if (status === 403){
+				dialogs.error('Error de inicio de sesión', error.data);
+				callback(error.data, true);
+			} else {
+				dialogs.error('Error de inicio de sesión', "El servidor no se encuentra disponible. Consulte con el Administrador del sistema.");
+				callback(error, true);
+			}
 		});
 	};
 
