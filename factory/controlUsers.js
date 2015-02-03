@@ -14,8 +14,8 @@
 				{token: loginService.getToken()}
 			}).success(function(data){
 				callback(data);
-			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de los usuarios.');
+			}).error(function(error){
+				errorFactory.raiseError(error.data, inserturl, 'errorDatos', error.data);
 			});
 		};
 

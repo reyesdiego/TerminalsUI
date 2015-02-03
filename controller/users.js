@@ -4,8 +4,10 @@
 (function(){
 	myapp.controller('usersCtrl', function($scope, ctrlUsersFactory) {
 		ctrlUsersFactory.getUsers(function(data) {
-			$scope.datosUsers = data.data;
-			console.log(data);
+			if (data.status === 'OK'){
+				$scope.datosUsers = data.data;
+				console.log(data);
+			}
 		});
 
 		$scope.convertirIdAFecha = function(id) {
