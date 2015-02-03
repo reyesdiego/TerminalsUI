@@ -19,6 +19,34 @@
 			});
 		};
 
+		factory.userEnabled = function(id, callback) {
+			var inserturl = serverUrl + '/agp/account/' + id + '/enable';
+			$http({
+				method: 'PUT',
+				url: inserturl,
+				headers:
+				{token: loginService.getToken()}
+			}).success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al intentar habilitar un usuario');
+			});
+		};
+
+		factory.userDisabled = function(id, callback) {
+			var inserturl = serverUrl + '/agp/account/' + id + '/disable';
+			$http({
+				method: 'PUT',
+				url: inserturl,
+				headers:
+				{token: loginService.getToken()}
+			}).success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al intentar deshabilitar un usuario');
+			});
+		};
+
 		return factory;
 	})
 })();
