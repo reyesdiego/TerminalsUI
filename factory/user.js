@@ -18,13 +18,7 @@ myapp.factory('userFactory', function($http, dialogs){
 		}).success(function(data) {
 			callback(data, false);
 		}).error(function(data) {
-			console.log(data);
 			dialogs.error('Error de inicio de sesión', data.data);
-			/*if (errorNumber === 403){
-				dialogs.error('Error al iniciar sesión', 'Usuario o clave incorrectos.');
-			} else {
-				dialogs.error('Error de servidor', 'Ha ocurrido un error al conectarse, inténtelo nuevamente más tarde');
-			}*/
 			callback(data, true);
 		});
 	};
