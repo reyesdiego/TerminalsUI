@@ -62,6 +62,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 								codigo: code,
 								topPrices: priceComplete.data.topPrices
 							};
+							addMatch.topPrices.sort(function(a, b){
+								return a.from > b.from;
+							});
 							arrayMatches.push(addMatch);
 						});
 					});
