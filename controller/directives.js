@@ -79,6 +79,15 @@
 					$rootScope.matchesTerminal = arrayMatches;
 				});
 
+				priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: true}, function (data){
+					$rootScope.tasaCargasTerminal = [];
+					data.data.forEach(function(tasaCargas){
+						if (tasaCargas.matches != null && tasaCargas.matches.length > 0){
+							$rootScope.tasaCargasTerminal.push(tasaCargas.matches[0].match[0])
+						}
+					})
+				});
+
 				invoiceFactory.getDescriptionItem(function(data){
 					$scope.itemsDescription = data.data;
 				});
@@ -449,8 +458,10 @@
 					var valorTomado;
 					var tarifaError;
 
-					comprobante.controlTarifas = [];
+					var precioALaFecha;
+					var monedaALaFecha;
 
+					comprobante.controlTarifas = [];
 					var lookup = {};
 					for (var i = 0, len = $rootScope.matchesTerminal.length; i < len; i++) {
 						lookup[$rootScope.matchesTerminal[i].codigo] = $rootScope.matchesTerminal[i];
@@ -462,18 +473,37 @@
 						detalle.items.forEach(function(item){
 							if (angular.isDefined(lookup[item.id])){
 								valorTomado = item.impUnit;
-								if (lookup[item.id].moneda != 'DOL'){
+								lookup[item.id].topPrices.forEach(function(precioMatch){
+									if (comprobante.fecha.emision > precioMatch.from){
+										precioALaFecha = precioMatch.price;
+										monedaALaFecha = precioMatch.currency
+									}
+								});
+								if (monedaALaFecha != 'DOL'){
 									valorTomado = item.impUnit * comprobante.cotiMoneda
 								}
-								if (valorTomado > lookup[item.id].valor){
-									tarifaError = {
-										codigo: item.id,
-										currency: lookup[item.id].moneda,
-										topPrice: lookup[item.id].valor,
-										current: item.impUnit
-									};
-									comprobante.controlTarifas.push(tarifaError);
+								if ($rootScope.tasaCargasTerminal.indexOf(item.id) >= 0){
+									if (valorTomado != precioALaFecha){
+										tarifaError = {
+											codigo: item.id,
+											currency: monedaALaFecha,
+											topPrice: precioALaFecha,
+											current: item.impUnit
+										};
+										comprobante.controlTarifas.push(tarifaError);
+									}
+								} else {
+									if (valorTomado > precioALaFecha){
+										tarifaError = {
+											codigo: item.id,
+											currency: monedaALaFecha,
+											topPrice: precioALaFecha,
+											current: item.impUnit
+										};
+										comprobante.controlTarifas.push(tarifaError);
+									}
 								}
+
 							} else {
 								$scope.noMatch = true;
 							}
