@@ -3,11 +3,15 @@
  */
 (function(){
 	myapp.controller('usersCtrl', function($scope, ctrlUsersFactory) {
+		$scope.permiso = false;
+		$scope.cargando = true;
+
 		ctrlUsersFactory.getUsers(function(data) {
 			if (data.status === 'OK'){
+				$scope.permiso = true;
 				$scope.datosUsers = data.data;
-				console.log(data);
 			}
+			$scope.cargando = false;
 		});
 
 		$scope.convertirIdAFecha = function(id) {
