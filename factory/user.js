@@ -17,12 +17,14 @@ myapp.factory('userFactory', function($http, dialogs){
 			data: formData
 		}).success(function(data) {
 			callback(data, false);
-		}).error(function(errorText, errorNumber, data) {
-			if (errorNumber === 403){
+		}).error(function(data) {
+			console.log(data);
+			dialogs.error('Error de inicio de sesión', data.data);
+			/*if (errorNumber === 403){
 				dialogs.error('Error al iniciar sesión', 'Usuario o clave incorrectos.');
 			} else {
 				dialogs.error('Error de servidor', 'Ha ocurrido un error al conectarse, inténtelo nuevamente más tarde');
-			}
+			}*/
 			callback(data, true);
 		});
 	};
@@ -50,7 +52,19 @@ myapp.factory('userFactory', function($http, dialogs){
 		}).success(function(data) {
 			callback(data);
 		}).error(function(err) {
-			dialogs.error('Error en Cambio de Contraseña', err.data);
+			dialogs.error('Error en registro.', err.data);
+		});
+	};
+
+	factory.resetPassword = function(mail, callback){
+		var inserturl = serverUrl + '/agp/resetPassword/' + mail;
+		$http({
+			method: 'POST',
+			url: inserturl
+		}).success(function(data) {
+			callback(data);
+		}).error(function(err) {
+			dialogs.error('Error en cambio de contraseña.', err.data);
 		});
 	};
 
