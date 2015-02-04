@@ -1,7 +1,7 @@
 /**
  * Created by leo on 29/09/14.
  */
-myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory, afipFactory){
+myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory, afipFactory, dialogs){
 	$scope.model = {
 		'nroPtoVenta': '',
 		'codTipoComprob': 0,
@@ -63,6 +63,8 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.invoicesTotalItems = data.totalCount;
+			} else {
+				dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos de los comprobantes.');
 			}
 			$scope.cargando = false;
 		});
@@ -76,6 +78,8 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 				if (data.status === 'OK'){
 					$scope.tasas = data.data;
 					$scope.totalTasas = data.totalTasas;
+				} else {
+					dialogs.error('Tasas', 'Se ha producido un error al cargar las tasas de los contenedores.');
 				}
 				$scope.cargandoTasas = false;
 			});
@@ -90,6 +94,8 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 			if (data.status === "OK") {
 				$scope.gates = data.data;
 				$scope.gatesTotalItems = data.totalCount;
+			} else {
+				dialogs.error('Gates', 'Se ha producido un error al cargar los datos de los gates');
 			}
 			$scope.cargandoGates = false;
 		});
@@ -102,6 +108,8 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 			if (data.status === "OK"){
 				$scope.turnos = data.data;
 				$scope.turnosTotalItems = data.totalCount;
+			} else {
+				dialogs.error('Turnos', 'Se ha producido un error al cargar los datos de los turnos.');
 			}
 			$scope.cargandoTurnos = false;
 		});
@@ -112,6 +120,8 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 		afipFactory.getContainerSumaria($scope.model.contenedor, function(data){
 			if (data.status == 'OK'){
 				$scope.sumariaAfip = data.data;
+			} else {
+				dialogs.error('Sumaria', 'Se ha producido un error al cargar los datos de la sumaria del contenedor.');
 			}
 			$scope.cargandoSumaria = false;
 		})

@@ -30,9 +30,10 @@ myapp.factory('turnosFactory', function($http, dialogs, formatDate, loginService
 		})
 			.success(function(data){
 				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista de Turnos');
+			}).error(function(error){
+				/*console.log(errorText);
+				dialogs.error('Error', 'Error al cargar la lista de Turnos');*/
+				callback(error);
 			});
 	};
 

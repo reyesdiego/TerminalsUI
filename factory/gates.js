@@ -14,9 +14,10 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 		})
 			.success(function(data){
 				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista de Gates');
+			}).error(function(error){
+				/*console.log(errorText);
+				dialogs.error('Error', 'Error al cargar la lista de Gates');*/
+				callback(error);
 			});
 	};
 
@@ -42,8 +43,9 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 			headers:{token: loginService.getToken()}
 		}).success(function (data){
 			callback(data);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al obtener gates faltantes');
+		}).error(function(error){
+			//dialogs.error('Error', 'Error al obtener gates faltantes');
+			callback(error);
 		});
 	};
 
@@ -55,8 +57,9 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 			headers:{token: loginService.getToken()}
 		}).success(function (data){
 			callback(data);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al obtener comprobantes faltantes');
+		}).error(function(error){
+			//dialogs.error('Error', 'Error al obtener comprobantes faltantes');
+			callback(error);
 		});
 	};
 

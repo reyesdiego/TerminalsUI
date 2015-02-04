@@ -47,16 +47,6 @@
 			$scope.invoices = [];
 		});
 
-		$scope.$on('errorDatos', function(){
-			$scope.mensajeResultado = {
-				titulo: 'Error',
-				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-				tipo: 'panel-danger'
-			};
-			$scope.invoices = [];
-			$scope.cargando = false;
-		});
-
 		$scope.cargaDatos = function(){
 			$scope.cargando = true;
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
@@ -66,6 +56,14 @@
 				if(data.status === 'OK'){
 					$scope.invoices = data.data;
 					$scope.totalItems = data.totalCount;
+					$scope.cargando = false;
+				} else {
+					$scope.mensajeResultado = {
+						titulo: 'Error',
+						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+						tipo: 'panel-danger'
+					};
+					$scope.invoices = [];
 					$scope.cargando = false;
 				}
 			});

@@ -15,8 +15,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function(data){
 			data = factory.ponerDescripcionComprobantes(data);
 			callback(factory.setearInterfaz(data));
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+		}).error(function(error){
+			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
+			callback(error);
 		});
 	};
 
@@ -91,8 +92,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			{token: loginService.getToken()}
 		}).success(function (data){
 			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorCorrelatividad', 'Error al cargar la lista de comprobantes faltantes.');
+		}).error(function(error){
+			//errorFactory.raiseError(errorText, inserturl, 'errorCorrelatividad', 'Error al cargar la lista de comprobantes faltantes.');
+			callback(error);
 		});
 	};
 
@@ -109,8 +111,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				return a - b;
 			});
 			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los distintos puntos de venta.');
+		}).error(function(error){
+			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los distintos puntos de venta.');
+			callback(error);
 		});
 	};
 
@@ -155,8 +158,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			data.data = factory.setearInterfazComprobante(data.data);
 			data.data.transferencia = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
 			callback(factory.ponerDescripcionComprobante(data.data));
-		}).error(function(errorText){
+		}).error(function(error){
 			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
+			//callback(error);
 		});
 	};
 
@@ -278,8 +282,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				comment.fecha = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(comment._id));
 			});
 			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al obtener los comentarios del comprobante ' + invoiceId);
+		}).error(function(error){
+			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al obtener los comentarios del comprobante ' + invoiceId);
+			callback(error);
 		});
 	};
 

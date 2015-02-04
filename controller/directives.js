@@ -20,7 +20,7 @@
 				panelMensaje:						'=',
 				filtroEstados:						'@'
 			},
-			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory){
+			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, dialogs){
 				$scope.status = {
 					open: true
 				};
@@ -296,64 +296,67 @@
 					var estado;
 					estado = comprobante.interfazEstado;
 					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
-
-						var modalInstance = $modal.open({
-							templateUrl: 'view/trackingInvoice.html',
-							controller: 'trackingInvoiceCtrl',
-							backdrop: 'static',
-							resolve: {
-								estado: function () {
-									return estado;
-								},
-								track: function() {
-									return dataTrack;
-								},
-								states : function() {
-									return angular.copy($rootScope.estadosComprobantes);
-								}
-							}
-						});
-
-						dataTrack = [];
-						modalInstance.result.then(function (dataComment) {
-							invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
-								$scope.recargarResultado = true;
-								var logInvoice = {
-									title: dataComment.title,
-									state: dataComment.newState._id,
-									comment: dataComment.comment,
-									invoice: comprobante._id
-								};
-								invoiceFactory.commentInvoice(logInvoice, function(dataRes){
-									if (dataRes.status == 'OK'){
-										comprobante.interfazEstado = dataComment.newState;
-										switch (dataComment.newState.type){
-											case 'WARN':
-												comprobante.interfazEstado.btnEstado = 'btn-warning';
-												break;
-											case 'OK':
-												comprobante.interfazEstado.btnEstado = 'btn-success';
-												break;
-											case 'ERROR':
-												comprobante.interfazEstado.btnEstado = 'btn-danger';
-												break;
-											case 'UNKNOWN':
-												comprobante.interfazEstado.btnEstado = 'btn-info';
-												break;
-										}
-										var nuevoEstado = {
-											_id: comprobante._id,
-											estado: dataComment.newState,
-											grupo: loginService.getGroup(),
-											user: loginService.getInfo().user
-										};
-										comprobante.estado.push(nuevoEstado);
-										if (!$scope.ocultarAccordionInvoicesSearch && !$scope.mostrarResultado)
-											$scope.cargaPuntosDeVenta();
+						if (dataTrack.status == 'OK'){
+							var modalInstance = $modal.open({
+								templateUrl: 'view/trackingInvoice.html',
+								controller: 'trackingInvoiceCtrl',
+								backdrop: 'static',
+								resolve: {
+									estado: function () {
+										return estado;
+									},
+									track: function() {
+										return dataTrack;
+									},
+									states : function() {
+										return angular.copy($rootScope.estadosComprobantes);
 									}
+								}
+							});
+
+							dataTrack = [];
+							modalInstance.result.then(function (dataComment) {
+								invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
+									$scope.recargarResultado = true;
+									var logInvoice = {
+										title: dataComment.title,
+										state: dataComment.newState._id,
+										comment: dataComment.comment,
+										invoice: comprobante._id
+									};
+									invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+										if (dataRes.status == 'OK'){
+											comprobante.interfazEstado = dataComment.newState;
+											switch (dataComment.newState.type){
+												case 'WARN':
+													comprobante.interfazEstado.btnEstado = 'btn-warning';
+													break;
+												case 'OK':
+													comprobante.interfazEstado.btnEstado = 'btn-success';
+													break;
+												case 'ERROR':
+													comprobante.interfazEstado.btnEstado = 'btn-danger';
+													break;
+												case 'UNKNOWN':
+													comprobante.interfazEstado.btnEstado = 'btn-info';
+													break;
+											}
+											var nuevoEstado = {
+												_id: comprobante._id,
+												estado: dataComment.newState,
+												grupo: loginService.getGroup(),
+												user: loginService.getInfo().user
+											};
+											comprobante.estado.push(nuevoEstado);
+											if (!$scope.ocultarAccordionInvoicesSearch && !$scope.mostrarResultado)
+												$scope.cargaPuntosDeVenta();
+										}
+									});
 								});
 							});
-						});
+						} else {
+							dialogs.error('Comprobantes', 'Se ha producido un error al cargar los comentarios del comprobante');
+						}
 
 					});
 				};
@@ -384,29 +387,36 @@
 				// Funciones de Puntos de Venta
 				$scope.cargaPuntosDeVenta = function(){
 					invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
-						$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
-							todosPtos.hide = data.data.indexOf(todosPtos.punto, 0) < 0;
-							if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
-								$scope.model.nroPtoVenta = '';
-								$scope.todosLosPuntosDeVentas[0].active = true;
-							}
-						});
-						$scope.todosLosPuntosDeVentas[0].hide = false;
-						$scope.currentPage = 1;
-
-						$scope.$emit('cambioFiltro', $scope.model);
+						if (data.status == 'OK'){
+							$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
+								todosPtos.hide = data.data.indexOf(todosPtos.punto, 0) < 0;
+								if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
+									$scope.model.nroPtoVenta = '';
+									$scope.todosLosPuntosDeVentas[0].active = true;
+								}
+							});
+							$scope.todosLosPuntosDeVentas[0].hide = false;
+							$scope.currentPage = 1;
+							$scope.$emit('cambioFiltro', $scope.model);
+						} else {
+							dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta');
+						}
 					});
 				};
 
 				$scope.cargaTodosLosPuntosDeVentas = function(){
 					invoiceFactory.getCashbox('', function(data){
-						var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
-						$scope.todosLosPuntosDeVentas.push(dato);
-						data.data.forEach(function(punto){
-							dato = {'heading': punto, 'punto': punto, 'active': false, 'hide': true};
+						if (data.status == 'OK'){
+							var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
 							$scope.todosLosPuntosDeVentas.push(dato);
-						});
-						$scope.cargaPuntosDeVenta();
+							data.data.forEach(function(punto){
+								dato = {'heading': punto, 'punto': punto, 'active': false, 'hide': true};
+								$scope.todosLosPuntosDeVentas.push(dato);
+							});
+							$scope.cargaPuntosDeVenta();
+						} else {
+							dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta');
+						}
 					})
 				};
 
@@ -425,6 +435,7 @@
 					}
 
 					invoiceFactory.invoiceById(comprobante._id, function(callback){
+
 						$scope.verDetalle = callback;
 						$scope.controlarTarifas($scope.verDetalle);
 
@@ -433,11 +444,13 @@
 						$scope.loadingState = false;
 
 						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
-							dataTrack.data.forEach(function(comment){
-								if (comment.group == loginService.getGroup()){
-									$scope.commentsInvoice.push(comment);
-								}
-							});
+							if (dataTrack.status == 'OK'){
+								dataTrack.data.forEach(function(comment){
+									if (comment.group == loginService.getGroup()){
+										$scope.commentsInvoice.push(comment);
+									}
+								});
+							}
 						});
 					});
 				};
@@ -940,12 +953,14 @@
 				};
 				$scope.traerPuntosDeVenta = function(){
 					invoiceFactory.getCashbox({}, function(data){
-						var i;
-						$scope.terminalSellPoints = data.data;
-						$scope.model.codTipoComprob = 1;
-						$scope.model.nroPtoVenta = $scope.terminalSellPoints[0];
-						for (i = 1; i<$scope.terminalSellPoints.length; i++){
-							$scope.model.nroPtoVenta = $scope.model.nroPtoVenta + ',' + $scope.terminalSellPoints[i];
+						if (data.status == 'OK'){
+							var i;
+							$scope.terminalSellPoints = data.data;
+							$scope.model.codTipoComprob = 1;
+							$scope.model.nroPtoVenta = $scope.terminalSellPoints[0];
+							for (i = 1; i<$scope.terminalSellPoints.length; i++){
+								$scope.model.nroPtoVenta = $scope.model.nroPtoVenta + ',' + $scope.terminalSellPoints[i];
+							}
 						}
 					})
 				};
@@ -1007,7 +1022,7 @@
 		return {
 			restrict:		'E',
 			templateUrl:	'view/buque.viaje.search.html',
-			controller: ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory',function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory){
+			controller: ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs',function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs){
 				$scope.loadingState = false;
 				$scope.invoices = [];
 				$scope.loadingInvoices = false;
@@ -1095,8 +1110,16 @@
 					$scope.loadingState = true;
 					$scope.datosContainers = [];
 					invoiceFactory.getShipContainers($scope.model, function(data){
-						$scope.datosContainers = data.data;
-						$scope.totalItems = $scope.datosContainers.length;
+						if (data.status == 'OK'){
+							$scope.datosContainers = data.data;
+							$scope.totalItems = $scope.datosContainers.length;
+						} else {
+							$scope.panelMensaje = {
+								titulo: 'Buque - Viaje',
+								mensaje: 'Se ha producido un error al cargar los datos.',
+								tipo: 'panel-danger'
+							};
+						}
 						$scope.loadingState = false;
 					});
 				};
@@ -1127,8 +1150,10 @@
 						if(data.status === 'OK'){
 							$scope.invoices = data.data;
 							$scope.invoicesTotalItems = data.totalCount;
-							$scope.loadingInvoices = false;
+						} else {
+							dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos de los comprobantes.');
 						}
+						$scope.loadingInvoices = false;
 					});
 				};
 
@@ -1138,8 +1163,10 @@
 						if (data.status === 'OK'){
 							$scope.tasas = data.data;
 							$scope.totalTasas = data.totalTasas;
-							$scope.loadingTasas = false;
+						} else {
+							dialogs.error('Contenedor', 'Se ha producido un error al cargar las tasas por contenedor.');
 						}
+						$scope.loadingTasas = false;
 					});
 				};
 
@@ -1150,8 +1177,10 @@
 						if (data.status === "OK") {
 							$scope.gates = data.data;
 							$scope.gatesTotalItems = data.totalCount;
-							$scope.loadingGates = false;
+						} else  {
+							dialogs.error('Gates', 'Se ha producido un error al cargar los datos de los gates.')
 						}
+						$scope.loadingGates = false;
 					});
 				};
 
@@ -1161,8 +1190,10 @@
 						if (data.status === "OK"){
 							$scope.turnos = data.data;
 							$scope.turnosTotalItems = data.totalCount;
-							$scope.loadingTurnos = false;
+						} else {
+							dialogs.error('Turnos', 'Se ha producido un error al cargar los datos de los turnos.');
 						}
+						$scope.loadingTurnos = false;
 					});
 				};
 
@@ -1171,6 +1202,8 @@
 					afipFactory.getContainerSumaria($scope.model.contenedor, function(data){
 						if (data.status == 'OK'){
 							$scope.sumariaAfip = data.data;
+						} else {
+							dialogs.error('Sumaria', 'Se ha producido un error al cargar los datos de la sumaria del contenedor.');
 						}
 						$scope.cargandoSumaria = false;
 					})
@@ -1227,7 +1260,7 @@
 		}
 	});
 
-	myapp.controller('missingInfo', function($rootScope, $scope, vouchersFactory, gatesFactory){
+	myapp.controller('missingInfo', function($rootScope, $scope, vouchersFactory, gatesFactory, dialogs){
 		$scope.currentPage = 1;
 
 		$scope.itemsPorPagina = [
@@ -1297,20 +1330,28 @@
 				case 'gates':
 					$scope.cargando = true;
 					gatesFactory.getMissingGates(function(data){
-						$scope.datosFaltantes = data.data;
-						$scope.totalItems = $scope.datosFaltantes.length;
-						$scope.cargando = false;
+						if (data.status == 'OK'){
+							$scope.datosFaltantes = data.data;
+							$scope.totalItems = $scope.datosFaltantes.length;
+							$scope.cargando = false;
+						} else {
+							dialogs.error('Gates faltantes', 'Se ha producido un error al cargar los gates faltantes.');
+						}
 					});
 					break;
 				case 'invoices':
 					$scope.cargando = true;
 					gatesFactory.getMissingInvoices(function(data){
-						$scope.datosFaltantes = data.data;
-						$scope.totalItems = $scope.datosFaltantes.length;
-						$scope.cargando = false;
-						$scope.datosFaltantes.forEach(function(registro){
-							registro.fecha = registro.gateTimestamp;
-						})
+						if (data.status == 'OK'){
+							$scope.datosFaltantes = data.data;
+							$scope.totalItems = $scope.datosFaltantes.length;
+							$scope.cargando = false;
+							$scope.datosFaltantes.forEach(function(registro){
+								registro.fecha = registro.gateTimestamp;
+							})
+						} else {
+							dialogs.error('Comprobantes faltantes', 'Se ha producido un error al cargar los comprobantes faltantes.');
+						}
 					});
 					break;
 			}

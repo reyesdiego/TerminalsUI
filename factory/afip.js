@@ -499,11 +499,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 			{token: loginService.getToken()}
 		}).success(function(data){
 			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
+		}).error(function(error){
+			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+			/*var data={
 				status: 'ERROR'
-			};
+			};*/
 			callback(data);
 		});
 	};

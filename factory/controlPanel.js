@@ -46,7 +46,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 					}
 				}
 				callback(result);
-			}).error(function(errorText){
+			}).error(function(error){
 				//errorFactory.raiseError(errorText, inserturl, 'errorTasas', 'Error al cargar total de facturado por tasa a las cargas.');
 				callback(error);
 			});
@@ -75,9 +75,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 				data.data = factory.ponerDescripcionCodigoItem(data.data);
 				data = factory.calcularTotalTasas(data);
 				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
+			}).error(function(error){
+				callback(error);
 			});
 		}
 	};

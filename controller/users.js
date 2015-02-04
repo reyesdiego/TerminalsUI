@@ -33,11 +33,22 @@
 
 		$scope.cambiaUsuario = function(usuario, check) {
 			if (check) {
+				usuario.claseFila = 'success';
+			} else {
+				usuario.claseFila = 'danger';
+			}
+			usuario.status = check;
+			usuario.guardar = !usuario.guardar;
+		};
+
+		$scope.guardarCambiosUsuario = function(usuario){
+			console.log('se guarda el usuario ' + usuario.user);
+			if (usuario.status) {
 				ctrlUsersFactory.userEnabled(usuario._id, function(data) {
 					if (data.status == 'OK'){
 						usuario.claseFila = 'success';
 					} else {
-						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar habilitar el usuario.');
+						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar habilitar al usuario ' + usuario.user);
 					}
 				})
 			} else {
@@ -45,10 +56,19 @@
 					if (data.status == 'OK'){
 						usuario.claseFila = 'danger';
 					} else {
-						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar deshabilitar el usuario.');
+						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar deshabilitar al usuario ' + usuario.user);
 					}
 				})
 			}
+			usuario.guardar = false;
+		};
+
+		$scope.guardar = function(){
+			$scope.datosUsers.forEach(function(user){
+				if (user.guardar){
+					$scope.guardarCambiosUsuario(user);
+				}
+			})
 		}
 	})
 })();
