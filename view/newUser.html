@@ -39,7 +39,7 @@
 						<div class="form-group">
 							<label for="inputEmail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-inbox"></span> E-Mail</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar correo electrónico" ng-required="true">
+								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar correo electrónico" ng-required="true">
 							</div>
 							<div class="col-lg-1">
 								<a href="" popover="La dirección ingresada no es válida" popover-trigger="mouseenter" ng-show="email != '' && !validEmail"><span class="text-danger glyphicon glyphicon-remove"></span></a>
@@ -49,7 +49,7 @@
 						<div class="form-group row">
 							<label for="inputConfirmMail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-inbox"></span> Confirme E-Mail</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" ng-model="confirmEmail" id="inputConfirmMail" placeholder="Ingresar correo electrónico" ng-required="true"/>
+								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="confirmEmail" id="inputConfirmMail" placeholder="Ingresar correo electrónico" ng-required="true"/>
 							</div>
 							<div class="col-lg-1">
 								<a href="" popover="La direcciones ingresadas no coinciden" popover-trigger="mouseenter" ng-show="confirmEmail != '' && email != confirmEmail"><span class="text-danger glyphicon glyphicon-remove"></span></a>

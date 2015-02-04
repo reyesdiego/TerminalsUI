@@ -11,11 +11,13 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory, $state)
 	$scope.usuario = '';
 	$scope.confirmPassword = '';
 	$scope.confirmEmail = '';
-	$scope.entidad = 'bactssa';
-	$scope.role = 'terminal';
-	$scope.terminal = 'BACTSSA';
+
+	$scope.entidad = '';
+	$scope.role = '';
+	$scope.terminal = '';
 
 	$scope.validEmail = false;
+	$scope.disableForm = true;
 
 	$scope.$watch('[nombre, apellido]', function(){
 		if ($scope.nombre != '' && $scope.apellido != ''){
@@ -24,6 +26,9 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory, $state)
 	}, true);
 
 	$scope.$watch('[email,entidad]', function(){
+		if ($scope.entidad != ''){
+			$scope.disableForm = false;
+		}
 		var expr = new RegExp("^([a-zA-Z0-9_\\.\\-])+\\@(" + $scope.entidad + ")\\.([a-zA-Z0-9]{2,4})+(\\.[a-zA-Z]{2})?$");
 		//var expr = /^([a-zA-Z0-9_\.\-])+\@(bactssa|trp|apmterminals|puertobuenosaires)\.([a-zA-Z0-9]{2,4})+(\.[a-zA-Z]{2})?$/;
 		$scope.validEmail = expr.test($scope.email);
