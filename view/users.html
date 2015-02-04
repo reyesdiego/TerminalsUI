@@ -25,7 +25,10 @@
 						<td>{{ dato.email }}</td>
 						<td>{{ dato.terminal }}</td>
 						<td>{{ convertirIdAFecha(dato._id) | date: 'dd/MM/yyyy' }}</td>
-						<td class="text-center"><input type="checkbox" ng-model="checked" ng-init="checked=dato.status" ng-change="cambiaUsuario(dato._id, checked)"></td>
+						<td class="text-center disabled">
+							<input type="checkbox" ng-model="checked" ng-init="checked=dato.status" ng-change="cambiaUsuario(dato._id, checked)" ng-hide="!estaDefinido(dato.token.date_created)">
+							<a ng-show="!estaDefinido(dato.token.date_created)" data-toggle="tooltip" title="El usuario no confirmo el mail">?</a>
+						</td>
 					</tr>
 					</tbody>
 				</table>

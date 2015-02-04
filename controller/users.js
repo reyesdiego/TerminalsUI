@@ -14,6 +14,10 @@
 			return idToDate(id);
 		};
 
+		$scope.estaDefinido = function(data) {
+			return angular.isDefined(data) && data != '';
+		};
+
 		$scope.cambiaUsuario = function(id, check) {
 			if (check) {
 				ctrlUsersFactory.userEnabled(id, function(data) {
