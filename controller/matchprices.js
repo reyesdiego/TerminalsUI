@@ -59,25 +59,30 @@
 
 		$scope.prepararDatos = function(){
 			priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: $scope.tasas}, function (data) {
-				$scope.pricelist = data.data;
-				$scope.codigosConMatch = [];
-				//Cargo todos los códigos ya asociados de la terminal para control
-				$scope.pricelist.forEach(function(price){
-					$scope.matchesTerminal.push(price.code);
-					if (price.matches != null && price.matches.length > 0){
-						$scope.codigosConMatch.push(price);
-						price.matches[0].match.forEach(function(codigo){
-							$scope.matchesTerminal.push(codigo);
-						})
+				if (data.status == 'OK'){
+					$scope.pricelist = data.data;
+					$scope.codigosConMatch = [];
+					//Cargo todos los códigos ya asociados de la terminal para control
+					$scope.pricelist.forEach(function(price){
+						$scope.matchesTerminal.push(price.code);
+						if (price.matches != null && price.matches.length > 0){
+							$scope.codigosConMatch.push(price);
+							price.matches[0].match.forEach(function(codigo){
+								$scope.matchesTerminal.push(codigo);
+							})
+						}
+					});
+					if ($scope.conMatch){
+						$scope.listaSeleccionada = $scope.codigosConMatch;
+					} else {
+						$scope.listaSeleccionada = $scope.pricelist;
 					}
-				});
-				if ($scope.conMatch){
-					$scope.listaSeleccionada = $scope.codigosConMatch;
+					$scope.totalItems = $scope.pricelist.length;
 				} else {
-					$scope.listaSeleccionada = $scope.pricelist;
+					dialogs.error('Asociar', 'Se ha producido un error al cargar los datos de códigos asociados. ' + data.data);
+					$scope.pricelist = [];
+					$scope.totalItems = 0;
 				}
-				$scope.totalItems = $scope.pricelist.length;
-
 			});
 		};
 
@@ -177,13 +182,17 @@
 			});
 			//Envío la información al servidor
 			if ($scope.flagCambios){
-				priceFactory.addMatchPrice($scope.match, function(){
-					$scope.flagGuardado = false;
-					//Muestro cartel con el resultado de la operación y desaparece después de 3 segundos
-					$timeout(function(){
-						$scope.flagGuardado = true;
-						$scope.flagCambios = false;
-					}, 3000);
+				priceFactory.addMatchPrice($scope.match, function(data){
+					if (data.status == 'OK'){
+						$scope.flagGuardado = false;
+						//Muestro cartel con el resultado de la operación y desaparece después de 3 segundos
+						$timeout(function(){
+							$scope.flagGuardado = true;
+							$scope.flagCambios = false;
+						}, 3000);
+					} else {
+						dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
+					}
 				});
 			}
 		};
@@ -229,6 +238,8 @@
 											precio.from = new Date(precio.from);
 										});
 										$scope.prepararDatos();
+									} else {
+										dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
 									}
 								})
 							});
@@ -244,12 +255,14 @@
 										precio.from = new Date(precio.from);
 									});
 									$scope.prepararDatos();
+								} else {
+									dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
 								}
 							})
 						}
 					} else {
 						priceFactory.addPrice(formData, function(nuevoPrecio){
-							if (nuevoPrecio.status === 'OK'){
+							if (nuevoPrecio.status == 'OK'){
 								var nuevoMatch = {
 									code: nuevoPrecio.data.code,
 									terminal: nuevoPrecio.data.terminal,
@@ -261,11 +274,17 @@
 								$scope.match = [];
 								$scope.match.push(nuevoMatch);
 
-								priceFactory.addMatchPrice($scope.match, function(){
-									dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente.");
-									$scope.salir();
-									$scope.prepararDatos();
+								priceFactory.addMatchPrice($scope.match, function(data){
+									if (data.status == 'OK'){
+										dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente.");
+										$scope.salir();
+										$scope.prepararDatos();
+									} else {
+										dialogs.error('Asociar', 'Se ha producido un error al intentar asociar el nuevo valor. ' + data.data);
+									}
 								});
+							} else {
+								dialogs.error('Asociar', 'Se ha producido un error al agregar el nuevo valor. ' + nuevoPrecio.data);
 							}
 						})
 					}
@@ -295,17 +314,21 @@
 		$scope.editarTarifa = function(tarifa){
 			$scope.posicionTarifa = $scope.pricelist.indexOf(tarifa);
 			priceFactory.getPriceById(tarifa._id, function(data){
-				$scope.tarifaCompleta = data.data;
-				$scope.codigo = $scope.tarifaCompleta.code;
-				$scope.descripcion = $scope.tarifaCompleta.description;
-				$scope.unidad = $scope.tarifaCompleta.unit;
-				$scope.moneda = tarifa.topPrices[0].currency;
-				$scope.precio = tarifa.topPrices[0].price;
-				$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
-				$scope.preciosHistoricos.forEach(function(precio){
-					precio.from = new Date(precio.from);
-				});
-				$scope.abrirNuevoConcepto('editar');
+				if (data.status == 'OK'){
+					$scope.tarifaCompleta = data.data;
+					$scope.codigo = $scope.tarifaCompleta.code;
+					$scope.descripcion = $scope.tarifaCompleta.description;
+					$scope.unidad = $scope.tarifaCompleta.unit;
+					$scope.moneda = tarifa.topPrices[0].currency;
+					$scope.precio = tarifa.topPrices[0].price;
+					$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+					$scope.preciosHistoricos.forEach(function(precio){
+						precio.from = new Date(precio.from);
+					});
+					$scope.abrirNuevoConcepto('editar');
+				} else {
+					dialogs.error('Asociar', 'Se ha producido un error al cargar los datos de la tarifa. ' + data.data);
+				}
 			});
 		};
 
@@ -345,6 +368,8 @@
 						dialogs.notify("Eliminar","La tarifa ha sido eliminada");
 						$scope.prepararDatos();
 						$scope.salir();
+					} else {
+						dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + data.data);
 					}
 				})
 			})

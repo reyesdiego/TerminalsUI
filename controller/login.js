@@ -25,9 +25,11 @@
 			});
 			modalInstance.result.then(function(email){
 				userFactory.resetPassword(email, function(data){
+					console.log(data);
 					if (data.status == 'OK'){
 						dialogs.notify('Recuperación de contraseña', 'Solicitud enviada correctamente. En breve recibirá un correo en la dirección indicada con su nueva contraseña.');
 					} else {
+						console.log(data);
 						dialogs.error('Error', 'No se ha encontrado una cuenta asociada a la dirección enviada.')
 					}
 				})

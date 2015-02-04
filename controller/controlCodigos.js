@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 (function() {
-	myapp.controller('codigosCtrl', function($scope, invoiceFactory, priceFactory) {
+	myapp.controller('codigosCtrl', function($scope, invoiceFactory, priceFactory, dialogs) {
 		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 
 		$scope.model = {
@@ -91,15 +91,6 @@
 			}
 		});
 
-		$scope.$on('errorDatos', function(){
-			$scope.mensajeResultado = {
-				titulo: 'Error',
-				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-				tipo: 'panel-danger'
-			};
-			$scope.loadingControlCodigos = false;
-		});
-
 		$scope.controlDeCodigos = function(){
 			$scope.controlFiltros = 'codigos';
 			$scope.loadingControlCodigos = true;
@@ -109,22 +100,32 @@
 			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 			$scope.pageCodigos.limit = $scope.model.itemsPerPage;
 			priceFactory.noMatches($scope.model.fechaDesde, $scope.model.fechaHasta, function(dataNoMatches){
-				$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
-				$scope.codigosSinAsociar.codigos = dataNoMatches.data;
-				if ($scope.codigosSinAsociar.total > 0){
-					invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
-						if (invoicesNoMatches.data != null){
-							invoicesNoMatches.data.forEach(function(unComprobante){
-								invoiceFactory.invoiceById(unComprobante._id._id, function(realData){
-									$scope.comprobantesRotos.push(realData);
+				if (data.status == 'OK'){
+					$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
+					$scope.codigosSinAsociar.codigos = dataNoMatches.data;
+					if ($scope.codigosSinAsociar.total > 0){
+						invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
+							if (invoicesNoMatches.data != null){
+								invoicesNoMatches.data.forEach(function(unComprobante){
+									invoiceFactory.invoiceById(unComprobante._id._id, function(realData){
+										$scope.comprobantesRotos.push(realData);
+									});
 								});
-							});
-							$scope.totalItems = invoicesNoMatches.totalCount;
-							$scope.loadingControlCodigos = false;
-						}
-					});
+								$scope.totalItems = invoicesNoMatches.totalCount;
+								$scope.loadingControlCodigos = false;
+							}
+						});
+					} else {
+						$scope.totalItems = 0;
+						$scope.loadingControlCodigos = false;
+					}
 				} else {
-					$scope.totalItems = 0;
+					//dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos.');
+					$scope.mensajeResultado = {
+						titulo: 'Error',
+						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+						tipo: 'panel-danger'
+					};
 					$scope.loadingControlCodigos = false;
 				}
 			});

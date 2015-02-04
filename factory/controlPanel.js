@@ -166,7 +166,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de clientes.');
+			//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de clientes.');
+			console.log(errorText);
 		});
 	};
 
@@ -180,7 +181,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+			//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+			console.log(errorText);
 		});
 	};
 
@@ -208,7 +210,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+			//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+			console.log(errorText);
 		});
 	};
 
@@ -236,7 +239,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+			//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+			console.log(errorText);
 		});
 	};
 

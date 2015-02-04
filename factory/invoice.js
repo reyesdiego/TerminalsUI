@@ -30,7 +30,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function(data) {
 			callback(data);
 		}).error(function(errorText) {
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar las descripciones de los códigos');
+			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar las descripciones de los códigos');
+			console.log(errorText);
 		});
 	};
 
@@ -123,7 +124,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}).success(function(data){
 			callback(data);
 		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de buques y viajes.');
+			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de buques y viajes.');
+			console.log(errorText);
 		});
 	};
 

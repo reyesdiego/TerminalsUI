@@ -13,8 +13,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			headers: { token: loginService.getToken() }
 		}).success(function (data){
 			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar el tarifario.');
+		}).error(function(error){
+			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar el tarifario.');
+			callback(error);
 		});
 	};
 
@@ -40,8 +41,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			headers: { token: loginService.getToken() }
 		}).success(function (data){
 			callback(data);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al cargar la lista');
+		}).error(function(error){
+			//dialogs.error('Error', 'Error al cargar la lista');
+			callback(error);
 		});
 	};
 
@@ -57,22 +59,25 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			data.data.forEach(function(price){
 				if (price.matches != null && price.matches.length > 0){
 					factory.getPriceById(price._id, function(priceComplete){
-						price.matches[0].match.forEach(function(code){
-							addMatch = {
-								codigo: code,
-								topPrices: priceComplete.data.topPrices
-							};
-							addMatch.topPrices.sort(function(a, b){
-								return a.from > b.from;
+						if (data.status == 'OK'){
+							price.matches[0].match.forEach(function(code){
+								addMatch = {
+									codigo: code,
+									topPrices: priceComplete.data.topPrices
+								};
+								addMatch.topPrices.sort(function(a, b){
+									return a.from > b.from;
+								});
+								arrayMatches.push(addMatch);
 							});
-							arrayMatches.push(addMatch);
-						});
+						}
 					});
 				}
 			});
 			callback(arrayMatches);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al cargar la lista');
+		}).error(function(error){
+			//dialogs.error('Error', 'Error al cargar la lista');
+			console.log(error);
 		});
 	};
 
@@ -85,8 +90,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			headers:{"Content-Type":"application/json", token: loginService.getToken()}
 		}).success(function (response) {
 			callback(response);
-		}).error(function(errorText) {
-			dialogs.error('Error', 'Error al añadir el Match en la base');
+		}).error(function(error) {
+			//dialogs.error('Error', 'Error al añadir el Match en la base');
+			callback(error);
 		});
 	};
 
@@ -108,8 +114,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			headers: { token: loginService.getToken() }
 		}).success(function (data){
 			callback(data);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al cargar la lista');
+		}).error(function(error){
+			//dialogs.error('Error', 'Error al cargar la lista');
+			callback(error);
 		});
 	};
 
@@ -122,8 +129,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			headers:{ token: loginService.getToken() }
 		}).success(function(response) {
 			callback(response);
-		}).error(function(errorText) {
-			dialogs.error('Error', 'Error al añadir el Precio en la base');
+		}).error(function(error) {
+			//dialogs.error('Error', 'Error al añadir el Precio en la base');
+			callback(error);
 		});
 	};
 
@@ -135,8 +143,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			headers:{ token: loginService.getToken() }
 		}).success(function(response) {
 			callback(response);
-		}).error(function(errorText) {
-			dialogs.error('Error', 'Error al añadir el Precio en la base');
+		}).error(function(error) {
+			//dialogs.error('Error', 'Error al añadir el Precio en la base');
+			callback(error);
 		});
 	};
 
@@ -152,8 +161,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			headers:{"Content-Type":"application/json", token: loginService.getToken() }
 		}).success(function(response) {
 			callback(response);
-		}).error(function(errorText) {
-			dialogs.error('Error', 'Error al añadir el Precio en la base');
+		}).error(function(error) {
+			//dialogs.error('Error', 'Error al añadir el Precio en la base');
+			callback(error);
 		});
 	};
 
@@ -166,7 +176,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		}).success(function(response) {
 			callback(response);
 		}).error(function(errorText) {
-			dialogs.error('Error', 'Error al añadir el Precio en la base');
+			//dialogs.error('Error', 'Error al añadir el Precio en la base');
+			console.log(errorText);
 		});
 	};
 
@@ -179,7 +190,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		}).success(function(response) {
 			callback(response);
 		}).error(function(errorText) {
-			dialogs.error('Error', 'Error al añadir el Precio en la base');
+			//dialogs.error('Error', 'Error al añadir el Precio en la base');
+			console.log(errorText);
 		});
 	};
 
@@ -191,8 +203,9 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			headers:{ token: loginService.getToken() }
 		}).success(function(response) {
 			callback(response);
-		}).error(function(errorText) {
-			dialogs.error('Error', 'Error al añadir el Precio en la base');
+		}).error(function(error) {
+			//dialogs.error('Error', 'Error al añadir el Precio en la base');
+			callback(error);
 		});
 	};
 
