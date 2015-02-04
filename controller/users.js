@@ -2,7 +2,7 @@
  * Created by leo on 02/02/15.
  */
 (function(){
-	myapp.controller('usersCtrl', function($scope, ctrlUsersFactory) {
+	myapp.controller('usersCtrl', function($scope, ctrlUsersFactory, dialogs) {
 		$scope.permiso = false;
 		$scope.cargando = true;
 
@@ -10,6 +10,15 @@
 			if (data.status === 'OK'){
 				$scope.permiso = true;
 				$scope.datosUsers = data.data;
+				$scope.datosUsers.forEach(function(user){
+					if (user.status){
+						user.claseFila = 'success';
+					} else if (angular.isDefined(user.token) && user.token != null){
+						user.claseFila = 'danger';
+					} else {
+						user.claseFila = 'warning';
+					}
+				})
 			}
 			$scope.cargando = false;
 		});
@@ -22,14 +31,22 @@
 			return angular.isDefined(data) && data != '';
 		};
 
-		$scope.cambiaUsuario = function(id, check) {
+		$scope.cambiaUsuario = function(usuario, check) {
 			if (check) {
-				ctrlUsersFactory.userEnabled(id, function(data) {
-					console.log(data);
+				ctrlUsersFactory.userEnabled(usuario._id, function(data) {
+					if (data.status == 'OK'){
+						usuario.claseFila = 'success';
+					} else {
+						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar habilitar el usuario.');
+					}
 				})
 			} else {
-				ctrlUsersFactory.userDisabled(id, function(data) {
-					console.log(data);
+				ctrlUsersFactory.userDisabled(usuario._id, function(data) {
+					if (data.status == 'OK'){
+						usuario.claseFila = 'danger';
+					} else {
+						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar deshabilitar el usuario.');
+					}
 				})
 			}
 		}

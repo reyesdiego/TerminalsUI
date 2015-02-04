@@ -29,8 +29,9 @@
 				{token: loginService.getToken()}
 			}).success(function(data){
 				callback(data);
-			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al intentar habilitar un usuario');
+			}).error(function(error){
+				//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al intentar habilitar un usuario');
+				callback(error);
 			});
 		};
 
@@ -43,8 +44,9 @@
 				{token: loginService.getToken()}
 			}).success(function(data){
 				callback(data);
-			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al intentar deshabilitar un usuario');
+			}).error(function(error){
+				//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al intentar deshabilitar un usuario');
+				callback(error);
 			});
 		};
 
