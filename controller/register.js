@@ -68,6 +68,9 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory, $state)
 				dl.result.then(function(){
 					$state.transitionTo('login');
 				})
+			} else {
+				console.log(data);
+				dialogs.error('Registro', data.data);
 			}
 		})
 	};

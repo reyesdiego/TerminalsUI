@@ -81,11 +81,13 @@
 
 				priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: true}, function (data){
 					$rootScope.tasaCargasTerminal = [];
-					data.data.forEach(function(tasaCargas){
-						if (tasaCargas.matches != null && tasaCargas.matches.length > 0){
-							$rootScope.tasaCargasTerminal.push(tasaCargas.matches[0].match[0])
-						}
-					})
+					if (data.status == 'OK'){
+						data.data.forEach(function(tasaCargas){
+							if (tasaCargas.matches != null && tasaCargas.matches.length > 0){
+								$rootScope.tasaCargasTerminal.push(tasaCargas.matches[0].match[0])
+							}
+						})
+					}
 				});
 
 				invoiceFactory.getDescriptionItem(function(data){

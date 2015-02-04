@@ -22,10 +22,12 @@
 			userFactory.cambiarContraseña(formData, function(data){
 				if (data.status === 'OK'){
 					$scope.codStatus = data.data;
-					var dl = dialogs.notify('Cambio de Contraseña', $scope.codStatus);
+					var dl = dialogs.notify('Cambio de contraseña', $scope.codStatus);
 					dl.result.then(function(){
 						$state.transitionTo('login');
 					})
+				} else {
+					dialogs.error('Cambio de contraseña', data.data);
 				}
 
 			});

@@ -266,6 +266,17 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 
 	$rootScope.cambioMoneda = true;
 
+	$rootScope.estadosComprobantesArray = [];
+	$rootScope.estadosComprobantes = [];
+	$rootScope.itemsDescriptionInvoices = [];
+	$rootScope.unidadesTarifas = [];
+	$rootScope.arrayUnidades = [];
+	$rootScope.listaRazonSocial = [];
+	$rootScope.listaContenedores = [];
+	$rootScope.listaBuques = [];
+	$rootScope.listaContenedoresGates = [];
+	$rootScope.listaContenedoresTurnos = [];
+
 	$rootScope.cargaGeneral = function(){
 
 		statesFactory.getStatesArray(function(data){
@@ -414,14 +425,6 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.colorBactssa = '';
 	$rootScope.colorTerminal4 = '';
 	$rootScope.colorTrp = '';
-
-	$rootScope.listaRazonSocial = [];
-	$rootScope.listaContenedores = [];
-	$rootScope.listaBuques = [];
-	$rootScope.listaContenedoresGates = [];
-	$rootScope.listaBuquesGates = [];
-	$rootScope.listaContenedoresTurnos = [];
-	$rootScope.listaBuquesTurnos = [];
 
 	$rootScope.mensajeResultado = {
 		titulo: 'Comprobantes',
