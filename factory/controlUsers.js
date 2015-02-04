@@ -15,7 +15,8 @@
 			}).success(function(data){
 				callback(data);
 			}).error(function(error){
-				errorFactory.raiseError(error.data, inserturl, 'errorDatos', error.data);
+				callback(error);
+				//errorFactory.raiseError(error.data, inserturl, 'errorDatos', error.data);
 			});
 		};
 
