@@ -20,7 +20,7 @@
 				panelMensaje:						'=',
 				filtroEstados:						'@'
 			},
-			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, statesFactory){
+			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory){
 				$scope.status = {
 					open: true
 				};
@@ -564,7 +564,7 @@
 				loadingState:		'='
 			},
 			controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
-				$scope.totalGates = 0
+				$scope.totalGates = 0;
 				$scope.itemsPerPage = 10;
 				$scope.configPanel = {
 					tipo: 'panel-info',
@@ -1204,9 +1204,9 @@
 				filtroOrden:	'@',
 				titulo:			'@'
 			},
-			template:		'<a href ng-click="filtrarOrden()" ng-hide="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">' +
-				'	<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden==\'{{ filtro }}\' && model.filtroOrdenReverse==false"></span>' +
-				'	<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden==\'{{ filtro }}\' && model.filtroOrdenReverse==true"></span>' +
+			template:
+				'<a href ng-click="filtrarOrden({\'filtro\' : filtro})" ng-hide="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">' +
+				'	<span class="glyphicon" ng-class="{\'glyphicon-sort-by-attributes\' : !model.filtroOrdenReverse, \'glyphicon-sort-by-attributes-alt\' : model.filtroOrdenReverse}" ng-show="model.filtroOrden == \'{{ filtro }}\'"></span>' +
 				'	{{ titulo }}' +
 				'</a>' +
 				'<span ng-show="ocultarFiltros.indexOf(\'{{ filtroOrden }}\', 0) >= 0">{{ titulo }}</span>'

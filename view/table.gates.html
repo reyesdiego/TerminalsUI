@@ -12,12 +12,7 @@
 			<table class="table table-bordered table-hover" style="text-align: center">
 				<tr>
 					<th style="text-align: center">
-						<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==true"></span>
-							Fecha
-						</a>
-						<span ng-show="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">Fecha</span>
+						<encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado>
 					</th>
 					<th style="text-align: center">Buque</th>
 					<th style="text-align: center">Viaje</th>
@@ -25,12 +20,7 @@
 					<th style="text-align: center">Patente cami&oacute;n</th>
 					<th style="text-align: center">Tipo</th>
 					<th style="text-align: center">
-						<a href ng-click="filtrarOrden('gateTimestamp')" ng-hide="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==false"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden=='gateTimestamp' && model.filtroOrdenReverse==true"></span>
-							Horario
-						</a>
-						<span ng-show="ocultarFiltros.indexOf('fechaOrden', 0) >= 0">Horario</span>
+						<encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado>
 					</th>
 					<th style="text-align: center">Inicio turno</th>
 					<th style="text-align: center">Fin turno</th>
