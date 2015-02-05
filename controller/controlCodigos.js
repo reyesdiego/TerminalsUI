@@ -100,7 +100,7 @@
 			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 			$scope.pageCodigos.limit = $scope.model.itemsPerPage;
 			priceFactory.noMatches($scope.model.fechaDesde, $scope.model.fechaHasta, function(dataNoMatches){
-				if (data.status == 'OK'){
+				if (dataNoMatches.status == 'OK'){
 					$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
 					$scope.codigosSinAsociar.codigos = dataNoMatches.data;
 					if ($scope.codigosSinAsociar.total > 0){
