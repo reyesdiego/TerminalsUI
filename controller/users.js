@@ -2,7 +2,7 @@
  * Created by leo on 02/02/15.
  */
 (function(){
-	myapp.controller('usersCtrl', function($scope, ctrlUsersFactory, dialogs) {
+	myapp.controller('usersCtrl', function($scope, ctrlUsersFactory, dialogs, $q) {
 		$scope.permiso = false;
 		$scope.cargando = true;
 		$scope.datosUsers = [];
@@ -57,13 +57,11 @@
 		};
 
 		$scope.guardarCambiosUsuario = function(usuario){
-			console.log('se guarda el usuario ' + usuario.user);
 			if (usuario.status) {
 				ctrlUsersFactory.userEnabled(usuario._id, function(data) {
 					if (data.status == 'OK'){
 						usuario.claseFila = 'success';
 					} else {
-						console.log(data);
 						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar habilitar al usuario ' + usuario.user);
 					}
 					usuario.guardar = false;
@@ -73,7 +71,6 @@
 					if (data.status == 'OK'){
 						usuario.claseFila = 'danger';
 					} else {
-						console.log(data);
 						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar deshabilitar al usuario ' + usuario.user);
 					}
 					usuario.guardar = false;
@@ -82,11 +79,24 @@
 		};
 
 		$scope.guardar = function(){
+			var deferred = $q.defer();
+			var llamadas = [];
 			$scope.datosUsers.forEach(function(user){
 				if (user.guardar){
-					$scope.guardarCambiosUsuario(user);
+					llamadas.push($scope.guardarCambiosUsuario(user));
 				}
-			})
+			});
+			$q.all(llamadas)
+				.then(
+				function(results) {
+					dialogs.notify('Control de usuarios', 'Los datos se han guardado correctamente.');
+					deferred.resolve(
+						JSON.stringify(results));
+				},
+				function(errors) {
+					deferred.reject(errors);
+				});
+			return deferred.promise;
 		}
 	})
 })();
