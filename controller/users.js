@@ -41,6 +41,15 @@
 			usuario.guardar = !usuario.guardar;
 		};
 
+		/*
+		*
+		var result = $scope.datosUsers.reduce(function (prev,curr){
+		 return prev.status+curr.status;
+		});
+		esto va sumando cada true como 1.. si > 0 entonces hay alguno para grabar y ahi le clavas enable al boton
+		 * */
+
+
 		$scope.guardarCambiosUsuario = function(usuario){
 			console.log('se guarda el usuario ' + usuario.user);
 			if (usuario.status) {
@@ -48,6 +57,7 @@
 					if (data.status == 'OK'){
 						usuario.claseFila = 'success';
 					} else {
+						console.log(data);
 						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar habilitar al usuario ' + usuario.user);
 					}
 				})
@@ -56,6 +66,7 @@
 					if (data.status == 'OK'){
 						usuario.claseFila = 'danger';
 					} else {
+						console.log(data);
 						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar deshabilitar al usuario ' + usuario.user);
 					}
 				})
