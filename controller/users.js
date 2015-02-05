@@ -5,6 +5,7 @@
 	myapp.controller('usersCtrl', function($scope, ctrlUsersFactory, dialogs) {
 		$scope.permiso = false;
 		$scope.cargando = true;
+		$scope.datosUsers = [];
 
 		ctrlUsersFactory.getUsers(function(data) {
 			if (data.status === 'OK'){
@@ -41,14 +42,19 @@
 			usuario.guardar = !usuario.guardar;
 		};
 
-		/*
-		*
-		var result = $scope.datosUsers.reduce(function (prev,curr){
-		 return prev.status+curr.status;
-		});
-		esto va sumando cada true como 1.. si > 0 entonces hay alguno para grabar y ahi le clavas enable al boton
-		 * */
-
+		$scope.disableButton = function(){
+			if ($scope.datosUsers.length > 0){
+				var i = 0;
+				$scope.datosUsers.forEach(function(usuario){
+					if (usuario.guardar){
+						i++
+					}
+				});
+				return i == 0;
+			} else {
+				return true;
+			}
+		};
 
 		$scope.guardarCambiosUsuario = function(usuario){
 			console.log('se guarda el usuario ' + usuario.user);
@@ -60,6 +66,7 @@
 						console.log(data);
 						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar habilitar al usuario ' + usuario.user);
 					}
+					usuario.guardar = false;
 				})
 			} else {
 				ctrlUsersFactory.userDisabled(usuario._id, function(data) {
@@ -69,9 +76,9 @@
 						console.log(data);
 						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar deshabilitar al usuario ' + usuario.user);
 					}
+					usuario.guardar = false;
 				})
 			}
-			usuario.guardar = false;
 		};
 
 		$scope.guardar = function(){

@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, formatDate, loginService){
+myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, formatDate, loginService, errorFactory){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -17,9 +17,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 					result = {"invoicesCount": total};
 				}
 				callback(result);
-			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'errorGetByDay', 'Error al el conteo diario de comprobantes.');
-				callback(error);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorGetByDay', 'Error al el conteo diario de comprobantes.');
 			});
 	};
 
@@ -46,9 +45,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 					}
 				}
 				callback(result);
-			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'errorTasas', 'Error al cargar total de facturado por tasa a las cargas.');
-				callback(error);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorTasas', 'Error al cargar total de facturado por tasa a las cargas.');
 			});
 	};
 
@@ -57,9 +55,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data.data);
-			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'errorTotales', 'Error al cargar conteo total de comprobantes.');
-				callback(error)
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorTotales', 'Error al cargar conteo total de comprobantes.');
 			});
 	};
 
@@ -75,8 +72,9 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 				data.data = factory.ponerDescripcionCodigoItem(data.data);
 				data = factory.calcularTotalTasas(data);
 				callback(data);
-			}).error(function(error){
-				callback(error);
+			}).error(function(errorText){
+				console.log(errorText);
+				dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
 			});
 		}
 	};
@@ -86,9 +84,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
-			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'errorFacturasMeses', 'Error al cargar gráfico de facturado por mes.');
-				callback(error)
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorFacturasMeses', 'Error al cargar gráfico de facturado por mes.');
 			});
 	};
 
@@ -100,11 +97,10 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			headers:
 			{token: loginService.getToken()}
 		}).success(function (data){
-				callback(data);
-			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
-				callback(error);
-			});
+			callback(data);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
+		});
 	};
 
 	factory.getTurnosMeses = function(fecha, callback){
@@ -113,13 +109,12 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			method: "GET",
 			url: inserturl,
 			headers:
-				{token: loginService.getToken()}
+			{token: loginService.getToken()}
 		}).success(function (data){
-				callback(data);
-			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'turnosMeses', 'Error al cargar gráfico de cantidad de turnos por mes.');
-				callback(error);
-			});
+			callback(data);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'turnosMeses', 'Error al cargar gráfico de cantidad de turnos por mes.');
+		});
 	};
 
 	//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
@@ -128,9 +123,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
-			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'errorFacturadoPorDia', 'Error al cargar monto facturado por día.');
-				callback(error);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorFacturadoPorDia', 'Error al cargar monto facturado por día.');
 			});
 	};
 
@@ -143,9 +137,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			{token: loginService.getToken()}
 		}).success(function (data){
 			callback(data);
-		}).error(function(error){
-			//errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
-			callback(error);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
 		});
 	};
 
@@ -158,9 +151,8 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			{token: loginService.getToken()}
 		}).success(function (data){
 			callback(data);
-		}).error(function(error){
-			//errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de turnos por día.');
-			callback(error);
+		}).error(function(errorText){
+			errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de turnos por día.');
 		});
 	};
 
@@ -194,7 +186,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		});
 	};
 
-	/*factory.getShips = function(callback){
+	factory.getShips = function(callback){
 		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/ships';
 		$http({
 			method: "GET",
@@ -206,7 +198,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).error(function(errorText){
 			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
 		});
-	};*/ //No se está usando
+	};
 
 	factory.getContainersGates = function(callback){
 		var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/containers';
@@ -223,7 +215,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		});
 	};
 
-	/*factory.getShipsGates = function(callback){
+	factory.getShipsGates = function(callback){
 		var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/ships';
 		$http({
 			method: "GET",
@@ -235,7 +227,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).error(function(errorText){
 			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
 		});
-	};*/ //No se está usando
+	};
 
 	factory.getContainersTurnos = function(callback){
 		var inserturl = serverUrl + '/appointments/'+loginService.getFiltro()+'/containers';
@@ -252,7 +244,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		});
 	};
 
-	/*factory.getShipsTurnos = function(callback){
+	factory.getShipsTurnos = function(callback){
 		var inserturl = serverUrl + '/appointments/'+loginService.getFiltro()+'/ships';
 		$http({
 			method: "GET",
@@ -264,7 +256,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		}).error(function(errorText){
 			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
 		});
-	};*/ // No se está usando
+	};
 
 	factory.ponerDescripcionCodigoItem = function(data){
 		data.forEach(function(detalle){
@@ -278,7 +270,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.calcularTotalTasas = function(data){
-		var datos = data;
+		datos = data;
 		datos.totalTasas = 0;
 		data.data.forEach(function(detalle){
 			datos.totalTasas += detalle.total;
