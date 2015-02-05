@@ -25,6 +25,7 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 		pass = pass || $cookies.password;
 
 		userFactory.login(user, pass, function(data, error){
+			data = data.data;
 
 			if (!error && typeof data.token === 'object') {
 				loginService.setInfo(data);
