@@ -504,7 +504,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 			/*var data={
 				status: 'ERROR'
 			};*/
-			callback(data);
+			callback(error);
 		});
 	};
 

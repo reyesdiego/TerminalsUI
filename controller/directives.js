@@ -576,15 +576,12 @@
 				detallesGates:		'=',
 				ocultarFiltros:		'=',
 				currentPage:		'=',
+				configPanel:		'=',
 				loadingState:		'='
 			},
 			controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
 				$scope.totalGates = 0;
 				$scope.itemsPerPage = 10;
-				$scope.configPanel = {
-					tipo: 'panel-info',
-					titulo: 'Gates'
-				};
 				$scope.listaBuques = $rootScope.listaBuques;
 				$scope.listaViajes = [];
 				$scope.$on('cargaGeneral', function(){
@@ -686,11 +683,8 @@
 		return {
 			restrict:		'E',
 			templateUrl:	'view/table.tasas.cargas.html',
-			link: function($scope){
-				$scope.configPanel = {
-					tipo: 'panel-info',
-					titulo: 'Tasas a las Cargas'
-				};
+			scope: {
+				configPanel:		'='
 			}
 		}
 	});

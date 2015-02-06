@@ -4,10 +4,12 @@
 (function(){
 	myapp.controller('turnosCtrl', function($scope, turnosFactory){
 		$scope.currentPage = 1;
+		$scope.itemsPerPage = 15;
 		$scope.turnosGates = true;
 		$scope.configPanel = {
 			tipo: 'panel-info',
-			titulo: 'Turnos'
+			titulo: 'Turnos',
+			mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 		};
 
 		// Fecha (dia y hora)
@@ -65,10 +67,21 @@
 
 		$scope.cargaTurnos = function(){
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			$scope.configPanel = {
+				tipo: 'panel-info',
+				titulo: 'Turnos',
+				mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
+			};
 			turnosFactory.getTurnos($scope.model, $scope.page, function(data){
 				if (data.status === "OK"){
 					$scope.turnos = data.data;
 					$scope.totalItems = data.totalCount;
+				} else {
+					$scope.configPanel = {
+						tipo: 'panel-danger',
+						titulo: 'Turnos',
+						mensaje: 'Se ha producido un error al cargar los turnos.'
+					};
 				}
 			});
 		};
