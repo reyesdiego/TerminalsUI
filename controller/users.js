@@ -57,12 +57,14 @@
 		};
 
 		$scope.guardarCambiosUsuario = function(usuario){
+			var deferred = $q.defer();
 			if (usuario.status) {
 				ctrlUsersFactory.userEnabled(usuario._id, function(data) {
 					if (data.status == 'OK'){
 						usuario.claseFila = 'success';
+						deferred.resolve(data);
 					} else {
-						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar habilitar al usuario ' + usuario.user);
+						deferred.reject(data);
 					}
 					usuario.guardar = false;
 				})
@@ -70,16 +72,17 @@
 				ctrlUsersFactory.userDisabled(usuario._id, function(data) {
 					if (data.status == 'OK'){
 						usuario.claseFila = 'danger';
+						deferred.resolve(data);
 					} else {
-						dialogs.error('Control de usuarios', 'Se ha producido un error al intentar deshabilitar al usuario ' + usuario.user);
+						deferred.reject(data);
 					}
 					usuario.guardar = false;
 				})
 			}
+			return deferred.promise;
 		};
 
 		$scope.guardar = function(){
-			var deferred = $q.defer();
 			var llamadas = [];
 			$scope.datosUsers.forEach(function(user){
 				if (user.guardar){
@@ -90,13 +93,10 @@
 				.then(
 				function(results) {
 					dialogs.notify('Control de usuarios', 'Los datos se han guardado correctamente.');
-					deferred.resolve(
-						JSON.stringify(results));
 				},
 				function(errors) {
-					deferred.reject(errors);
+					dialogs.error('Control de usuarios', 'Se ha producido un error al actualizar los datos.');
 				});
-			return deferred.promise;
 		}
 	})
 })();

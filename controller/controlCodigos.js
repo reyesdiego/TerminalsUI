@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 (function() {
-	myapp.controller('codigosCtrl', function($scope, invoiceFactory, priceFactory, dialogs) {
+	myapp.controller('codigosCtrl', function($scope, invoiceFactory, priceFactory, dialogs, $q) {
 		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 
 		$scope.model = {
@@ -91,6 +91,14 @@
 			}
 		});
 
+		$scope.infoReal = function(id){
+			var deferred = $q.defer();
+			invoiceFactory.invoiceById(id, function(realData){
+				deferred.resolve(realData);
+			});
+			return deferred.promise;
+		};
+
 		$scope.controlDeCodigos = function(){
 			$scope.controlFiltros = 'codigos';
 			$scope.loadingControlCodigos = true;
@@ -105,14 +113,22 @@
 					$scope.codigosSinAsociar.codigos = dataNoMatches.data;
 					if ($scope.codigosSinAsociar.total > 0){
 						invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
+							var infoComprobantes = [];
 							if (invoicesNoMatches.data != null){
 								invoicesNoMatches.data.forEach(function(unComprobante){
-									invoiceFactory.invoiceById(unComprobante._id._id, function(realData){
-										$scope.comprobantesRotos.push(realData);
-									});
+									infoComprobantes.push($scope.infoReal(unComprobante._id._id));
 								});
-								$scope.totalItems = invoicesNoMatches.totalCount;
-								$scope.loadingControlCodigos = false;
+								$q.all(infoComprobantes)
+									.then(function(result){
+										$scope.comprobantesRotos = angular.copy(result);
+										$scope.totalItems = invoicesNoMatches.totalCount;
+										$scope.loadingControlCodigos = false;
+									},
+									function(errors) {
+										dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos de los comprobantes.');
+										$scope.totalItems = 0;
+										$scope.loadingControlCodigos = false;
+									});
 							}
 						});
 					} else {
