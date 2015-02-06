@@ -1,0 +1,21 @@
+{
+  "name": "TerminalsUI",
+  "version": "0.0.0",
+  "homepage": "https://github.com/reyesdiego/TerminalsUI",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+	"angular": "~1.3.12",
+	"angular-cookies": "~1.3.9",
+    "angular-ui-router": "~0.2.13",
+    "angular-ui-bootstrap-bower": "~0.12.0"
+  }
+}
