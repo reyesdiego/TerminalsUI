@@ -4,7 +4,7 @@
 
 <div class="col-lg-12" ng-hide="loadingState">
 	<div ng-hide="datosGates.length != undefined && datosGates.length > 0 || detallesGates">
-		<div-panel config-panel="configPanel">No se encontraron Gates para los filtros seleccionados.</div-panel>
+		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
 	<div ng-show="datosGates.length != undefined && datosGates.length > 0">
 		<h5 ng-hide="detallesGates"><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>

@@ -6,6 +6,11 @@
 		$scope.totalItems = 0;
 		$scope.turnosGates = true;
 		//$scope.currentPage = 1;
+		$scope.configPanel = {
+			tipo: 'panel-info',
+			titulo: 'Gates',
+			mensaje: 'No se han encontrado gates para los filtros seleccionados.'
+		};
 
 		// Fecha (dia y hora)
 		$scope.fechaDesde = new Date();
@@ -63,10 +68,21 @@
 
 		$scope.cargaGates = function () {
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+			$scope.configPanel = {
+				tipo: 'panel-info',
+				titulo: 'Gates',
+				mensaje: 'No se han encontrado gates para los filtros seleccionados.'
+			};
 			gatesFactory.getGate($scope.model, $scope.page, function (data) {
 				if (data.status === "OK") {
 					$scope.gates = data.data;
 					$scope.totalItems = data.totalCount;
+				} else {
+					$scope.configPanel = {
+						tipo: 'panel-danger',
+						titulo: 'Gates',
+						mensaje: 'Se ha producido un error al cargar los gates.'
+					};
 				}
 			});
 		};
