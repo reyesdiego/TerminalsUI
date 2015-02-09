@@ -45,11 +45,15 @@
 	});
 
 	myapp.filter('conversionMoneda', function($rootScope){
-		return function(importe, codMoneda, cotiMoneda){
-			var importeDevuelto = importe;
-			if ($rootScope.moneda == 'PES' && codMoneda == 'DOL'){ importeDevuelto = (importe * cotiMoneda); }
-			else if ($rootScope.moneda == 'DOL' && codMoneda == 'PES'){ importeDevuelto = (importe / cotiMoneda); }
-			return importeDevuelto;
+		return function(importe, moneda){
+			if (angular.isDefined(importe) && angular.isDefined(moneda)) {
+				var importeDevuelto = importe;
+				if ($rootScope.moneda == 'PES' && moneda.codMoneda == 'DOL'){ importeDevuelto = (importe * moneda.cotiMoneda); }
+				else if ($rootScope.moneda == 'DOL' && moneda.codMoneda == 'PES'){ importeDevuelto = (importe / moneda.cotiMoneda); }
+				return importeDevuelto;
+			} else {
+				return null;
+			}
 		}
 	});
 

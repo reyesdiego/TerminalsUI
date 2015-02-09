@@ -53,7 +53,6 @@
 		$scope.itemsPerPage = 10;
 
 		$scope.$on('cambioPagina', function(event, data){
-			console.log(data);
 			$scope.currentPage = data;
 			$scope.cargaGates();
 		});

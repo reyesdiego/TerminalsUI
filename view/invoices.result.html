@@ -49,27 +49,27 @@
 				<td><a href class="hidden-print" ng-click="filtrado('codigo', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
 				<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="existeDescripcion(item.id)"></span> <text-pop text="{{ item.descripcion }}" max="200"></text-pop></td>
 				<td>{{ item.cnt }}</td>
-				<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+				<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle | currency }}</td>
 				<td>{{ item.uniMed }}</td>
-				<td>{{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+				<td>{{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle | currency }}</td>
 			</tr>
 			</tbody>
 			<tfoot class="text-right">
 			<tr>
 				<td colspan="2">Subtotal</td>
-				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.subtotal | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.subtotal | conversionMoneda: verDetalle | currency }}</td>
 			</tr>
 			<tr>
 				<td colspan="2">IVA</td>
-				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.iva | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.iva | conversionMoneda: verDetalle | currency }}</td>
 			</tr>
 			<tr>
 				<td colspan="2">Otros Tributos</td>
-				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | conversionMoneda: verDetalle | currency }}</td>
 			</tr>
 			<tr>
 				<td colspan="2">Total</td>
-				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.total | conversionMoneda: verDetalle.codMoneda: verDetalle.cotiMoneda | currency }}</td>
+				<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.total | conversionMoneda: verDetalle | currency }}</td>
 			</tr>
 			<tr class="text-center">
 				<td colspan="6">
