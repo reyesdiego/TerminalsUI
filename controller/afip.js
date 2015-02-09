@@ -7,7 +7,7 @@
 
 		$scope.tabs = [
 			{ heading: 'Afectación',	select: 'afectacion1',	uisref: 'afip.afectacion.afectacion1' },
-			{ heading: 'Detalles',		select: 'detimpo1',		uisref: 'afip.detalle.detimpo1' },
+			{ heading: 'Detallada',		select: 'detimpo1',		uisref: 'afip.detalle.detimpo1' },
 			{ heading: 'Solicitud',		select: 'solicitud1',	uisref: 'afip.solicitud.solicitud1' },
 			{ heading: 'Sumarias',		select: 'impo1',		uisref: 'afip.sumatorias.impo1' }
 		];
