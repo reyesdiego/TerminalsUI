@@ -684,7 +684,9 @@
 			restrict:		'E',
 			templateUrl:	'view/table.tasas.cargas.html',
 			scope: {
-				configPanel:		'='
+				configPanel:		'=',
+				tasas:				'=',
+				totalTasas:			'='
 			}
 		}
 	});
