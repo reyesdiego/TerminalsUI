@@ -8,6 +8,7 @@
 		$rootScope.esUsuario = '';
 		$rootScope.terminal = '';
 		$scope.acceso = '';
+		$scope.grupo = '';
 		$rootScope.filtroTerminal = '';
 
 		$scope.salir = function(){
@@ -31,6 +32,7 @@
 		if (loginService.getStatus()){
 			$rootScope.esUsuario = loginService.getType();
 			$rootScope.terminal = loginService.getInfo();
+			$rootScope.grupo = loginService.getGroup();
 			//Esta carga se realiza en el caso de haber actualizado la página
 			invoiceFactory.getDescriptionItem(function(data){
 				$rootScope.itemsDescriptionInvoices = data.data;
@@ -48,6 +50,7 @@
 		$scope.$watch(function(){
 			$scope.acceso = $rootScope.esUsuario;
 			$scope.terminal = $rootScope.terminal;
+			$scope.grupo = $rootScope.grupo;
 		});
 
 		$scope.switchMoneda = function(){

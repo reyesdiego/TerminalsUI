@@ -75,6 +75,7 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 
 				$rootScope.esUsuario = loginService.getType();
 				$rootScope.terminal = loginService.getInfo();
+				$rootScope.grupo = loginService.getGroup();
 
 				//Si el rol es terminal, queda como filtro de si misma para las consultas
 				//De lo contrario, dejo a BACTSSA como filtro por default
