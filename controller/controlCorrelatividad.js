@@ -64,7 +64,7 @@
 			});
 		};
 
-		socket.emit('newUser', function callback(sess){
+		socket.emit('newUser', function (sess){
 
 			socketIoRegister = sess;
 			socket.on('correlative_' + sess, function (data) {

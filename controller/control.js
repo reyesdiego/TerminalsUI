@@ -130,6 +130,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	socket.on('invoice', function () {
 		$scope.chartData[2][1]++;
 		$scope.control.invoicesCount++;
+		$scope.$apply();
 	});
 
 	$scope.$on('errorGetByDay', function(event, error){
