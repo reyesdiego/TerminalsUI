@@ -84,6 +84,8 @@
 					$scope.mostrarBotonImprimir = true;
 					$scope.puntosDeVenta.push(angular.copy(pantalla));
 				}
+				$scope.$apply();
+
 			});
 		});
 
