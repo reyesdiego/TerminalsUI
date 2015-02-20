@@ -90,7 +90,7 @@
 			if (angular.isString($rootScope.vouchers[numero].description)) {
 				return $rootScope.vouchers[numero].description;
 			} else {
-				return 'Error de comprobante'
+				return 'Error de comprobante';
 			}
 		})
 	});
