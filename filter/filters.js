@@ -75,4 +75,13 @@
 		};
 	});
 
+	myapp.filter('numero', function() {
+		return function(numero) {
+			if (angular.isNumber(numero)) {
+				return numero
+			} else {
+				return 0;
+			}
+		}
+	})
 })();

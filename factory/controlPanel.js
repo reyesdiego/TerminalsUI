@@ -8,15 +8,14 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		var inserturl = serverUrl + '/invoices/counts?fecha=' + dia;
 		$http.get(inserturl)
 			.success(function(data){
-				var result = [];
 				if (data.status === 'OK'){
 					var total = 0;
 					for (var i = 0, len=data.data.length; i< len; i++){
-						total += data.data[i].cnt;
+						total += data.data[i].total;
 					}
-					result = {"invoicesCount": total};
+					data.data.invoicesCount = total;
 				}
-				callback(result);
+				callback(data);
 			}).error(function(errorText){
 				errorFactory.raiseError(errorText, inserturl, 'errorGetByDay', 'Error al el conteo diario de comprobantes.');
 			});

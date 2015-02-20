@@ -198,6 +198,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 			$scope.loadingTotales = false;
 			$scope.control.invoicesCount = data.invoicesCount;
 			$scope.fecha = fecha;
+			$scope.comprobantesCantidad = data.data;
 		});
 	};
 
