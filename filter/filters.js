@@ -77,7 +77,7 @@
 
 	myapp.filter('numero', function() {
 		return function(numero) {
-			if (angular.isNumber(numero)) {
+			if (angular.isDefined(numero) && angular.isNumber(numero)) {
 				return numero
 			} else {
 				return 0;
@@ -87,7 +87,7 @@
 
 	myapp.filter('nombreComprobante', function($rootScope) {
 		return (function(numero) {
-			if (angular.isString($rootScope.vouchers[numero].description)) {
+			if (angular.isDefined(numero) && angular.isString($rootScope.vouchers[numero].description)) {
 				return $rootScope.vouchers[numero].description;
 			} else {
 				return 'Error de comprobante';
