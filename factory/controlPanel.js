@@ -14,6 +14,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 						total += data.data[i].total;
 					}
 					data.data.invoicesCount = total;
+					data.invoicesCount = total;
 				}
 				callback(data);
 			}).error(function(errorText){

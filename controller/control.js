@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, datosGrafico, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatDate){
+var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatDate){
 
 	var fecha = formatDate.formatearFecha(new Date());
 
@@ -26,7 +26,6 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.chartTitle = "Datos enviados";
 	$scope.chartWidth = 300;
 	$scope.chartHeight = 380;
-	$scope.chartData = datosGrafico;
 
 	$scope.chartsWidthTasas = 390;
 
@@ -127,10 +126,46 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.visibleGates = 'hidden';
 	$scope.visibleGatesTurnos = 'hidden';
 
-	socket.on('invoice', function () {
-		$scope.chartData[2][1]++;
-		$scope.control.invoicesCount++;
-		$scope.$apply();
+	socket.on('invoice', function (data) {
+		if (data.status === 'OK') {
+			var fecha1 = formatDate.formatearFecha($scope.desde);
+			var fecha2 = data.data.emision.substring(0,10);
+			if (fecha1 == fecha2) {
+				var response = Enumerable.From($scope.comprobantesCantidad)
+					.Where('$.codTipoComprob==' + data.data.codTipoComprob)
+					.ToArray();
+				if (response.length == 1) {
+					response[0].total++;
+					response[0][data.data.terminal][0]++;
+					for (var obj in response[0]){
+						if (typeof response[0][obj] === 'object'){
+							response[0][obj][1] = response[0][obj][0] * 100 / response[0].total;
+						}
+					}
+				} else {
+					var nuevoComprobante = {
+						codTipoComprob : data.data.codTipoComprob,
+						total : 1,
+						BACTSSA : [
+							0, 0
+						],
+						TERMINAL4 : [
+							0, 0
+						],
+						TRP : [
+							0, 0
+						]
+					};
+					nuevoComprobante[data.data.terminal][0] = 1;
+					nuevoComprobante[data.data.terminal][1] = 100;
+					$scope.comprobantesCantidad.push(nuevoComprobante);
+				}
+				$scope.comprobantesCantidad.invoicesCount++;
+				$scope.$apply();
+			} else {
+				console.log('La fecha no coincide')
+			}
+		}
 	});
 
 	$scope.$on('errorGetByDay', function(event, error){
@@ -194,7 +229,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.traerTotales = function(){
 		$scope.errorTotales = false;
 		$scope.loadingTotales = true;
-		controlPanelFactory.getByDay(fecha, function(data){
+		controlPanelFactory.getByDay(formatDate.formatearFecha($scope.desde), function(data){
 			$scope.loadingTotales = false;
 			$scope.control.invoicesCount = data.invoicesCount;
 			$scope.fecha = fecha;
@@ -291,6 +326,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	};
 
 	$scope.traerDatosFacturadoDia = function(){
+		$scope.traerTotales();
 		$scope.errorFacturadoDia = false;
 		$scope.isCollapsedDay = true;
 		$scope.loadingFacturadoDia = true;
@@ -421,7 +457,7 @@ controlCtrl.prepararMatrizVaciaGatesTurnos = function($q){
 	return defer.promise;
 };
 
-controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
+/*controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 	var defer = $q.defer();
 	var fecha = new Date();
 	controlPanelFactory.getTotales(fecha, function(graf){
@@ -433,13 +469,14 @@ controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
 		];
 		var i = 1;
 		graf.forEach(function(terminal){
+			console.log(terminal);
 			base[i] = [terminal._id.terminal, terminal.cnt,''];
 			i++;
 		});
 		defer.resolve(base);
 	});
 	return defer.promise;
-};
+};*/
 
 controlCtrl.prepararDatosMes = function(datosGrafico, traerTotal){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
