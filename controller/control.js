@@ -131,7 +131,11 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 					.ToArray();
 				if (response.length == 1) {
 					response[0].total++;
-					response[0][data.data.terminal][0]++;
+					if (angular.isDefined(response[0][data.data.terminal][0]) && angular.isNumber(response[0][data.data.terminal][0])) {
+						response[0][data.data.terminal][0]++;
+					} else {
+						response[0][data.data.terminal][0] = 1;
+					}
 					for (var obj in response[0]){
 						if (typeof response[0][obj] === 'object'){
 							response[0][obj][1] = response[0][obj][0] * 100 / response[0].total;
@@ -141,15 +145,9 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 					var nuevoComprobante = {
 						codTipoComprob : data.data.codTipoComprob,
 						total : 1,
-						BACTSSA : [
-							0, 0
-						],
-						TERMINAL4 : [
-							0, 0
-						],
-						TRP : [
-							0, 0
-						]
+						BACTSSA : [ 0, 0 ],
+						TERMINAL4 : [ 0, 0 ],
+						TRP : [ 0, 0 ]
 					};
 					nuevoComprobante[data.data.terminal][0] = 1;
 					nuevoComprobante[data.data.terminal][1] = 100;
