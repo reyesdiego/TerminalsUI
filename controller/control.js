@@ -39,15 +39,12 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.chartsWidth = 410;
 	$scope.chartSeries = {3: {type: "line"}};
 
-	$scope.chartTitleFacturas = "Facturado por mes";
 	$scope.chartDataFacturas = datosGraficoPorMes;
 	$scope.chartDataFacturasAR = datosGraficoPorMes;
 	$scope.chartDataFacturasUS = datosGraficoPorMes;
 
-	$scope.chartTitleGates = "Gates cargados";
 	$scope.chartDataGates = datosGraficoPorMes;
 
-	$scope.chartTitleTurnos = "Turnos cargados";
 	$scope.chartDataTurnos = datosGraficoPorMes;
 
 	$scope.chartTitleFacturadoTasas = "Importe de tasa a las cargas por día";
@@ -55,12 +52,10 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.chartDataFacturadoTasasAR = datosFacturadoPorDiaTasas.dataGraf;
 	$scope.chartDataFacturadoTasasUS = datosFacturadoPorDiaTasas.dataGraf;
 
-	$scope.chartTitleFacturado = "Facturado por día";
 	$scope.chartDataFacturado = datosGraficoPorMes;
 	$scope.chartDataFacturadoAR = datosGraficoPorMes;
 	$scope.chartDataFacturadoUS = datosGraficoPorMes;
 
-	$scope.chartTitleDiaGatesTurnos = "Cantidad por día";
 	$scope.chartWidthDiaGatesTurnos = 1140;
 	$scope.chartDataDiaGatesTurnos = datosGraficoGatesTurnosDias;
 

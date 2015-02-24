@@ -10,12 +10,12 @@
 	<div class="row">
 		<br>
 		<div class="col-lg-7">
-			<div class="col-lg-7 input-group">
+			<div class="input-group">
+				<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 				<label for="desde" class="sr-only">Fecha</label>
 				<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="desde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" ng-change="traerDatosFacturadoDia()" disabled/>
-				<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 			</div>
-			<h4>Cantidad de Comprobantes {{ comprobantesCantidad.invoicesCount }}</h4>
+			<h5>Cantidad de Comprobantes {{ comprobantesCantidad.invoicesCount }}</h5>
 			<div class="table-responsive" style="max-height: 220px; max-width: 100%; overflow: auto">
 				<table class="table table-bordered table-hover">
 					<thead>
@@ -56,10 +56,10 @@
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-5" ng-hide="loadingFacturadoDia || errorFacturadoDia">
+			<h4 class="text-center">Facturado diario</h4>
 			<div collapse="!isCollapsedDay">
 				<dynamic-chart
 						data="chartDataFacturado"
-						title="{{chartTitleFacturado}}"
 						width="{{chartsWidthFacturado}}"
 						height="{{chartsHeight}}"
 						select="selectRow(selectedRowIndexFacturado)"
@@ -88,6 +88,7 @@
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-4" ng-hide="loadingFacturadoMes || errorFacturadoMes">
+			<h4 class="text-center">Facturado Mensual</h4>
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" />
 				<span class="input-group-btn">
@@ -102,7 +103,6 @@
 			<div collapse="!isCollapsedMonth">
 				<dynamic-chart
 						data="chartDataFacturas"
-						title="{{chartTitleFacturas}}"
 						width="{{chartsWidthFacturadoMes}}"
 						height="{{chartsHeight}}"
 						select="selectRow(selectedRowIndexFacturas)"
@@ -129,6 +129,7 @@
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-4" ng-show="!loadingGates || errorGates" style="visibility: {{ visibleGates }}">
+			<h4 class="text-center">Cantidad de Gates</h4>
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeGates" />
 				<span class="input-group-btn">
@@ -168,6 +169,7 @@
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-4" ng-hide="loadingTurnos || errorTurnos" style="visibility: {{ visibleTurnos }}">
+			<h4 class="text-center">Cantidad de Turnos</h4>
 			<p class="input-group">
 				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeTurnos" />
 				<span class="input-group-btn">
@@ -182,7 +184,6 @@
 			<div collapse="!isCollapsedTurnos">
 				<dynamic-chart
 						data="chartDataTurnos"
-						title="{{chartTitleTurnos}}"
 						width="{{chartsWidth}}"
 						height="{{chartsHeight}}"
 						select="selectRow(selectedRowIndexTurnos)"
@@ -208,30 +209,36 @@
 		<div class="col-lg-4" ng-show="loadingGatesTurnos">
 			<img class="media-object" style="margin-left: 480px; margin-top: 75px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4 col-lg-offset-3" ng-hide="loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
-			<p class="input-group">
-				<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="diaGatesTurnos" />
-				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="isCollapsedDayGatesTurnos = !isCollapsedDayGatesTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
-				</span>
-			</p>
-			<div collapse="isCollapsedDayGatesTurnos">
-				<div class="well well-lg">
-					<datepicker ng-model="diaGatesTurnos" show-weeks="false" ng-change="traerDatosGatesTurnosDia()" max-date="maxDateGatesTurnos"></datepicker>
+		<div class="col-lg-12" ng-hide="loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
+			<h4 class="text-center">Cantidad por hora</h4>
+			<div class="col-lg-4 col-lg-offset-3">
+				<div class="input-group">
+					<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="diaGatesTurnos" />
+					<span class="input-group-btn">
+						<button class="btn btn-default" ng-click="isCollapsedDayGatesTurnos = !isCollapsedDayGatesTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-2" ng-hide="loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
-			<div class="btn-group">
-				<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Gates'" ng-change="traerDatosGatesTurnosDia()">Gates</label>
-				<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Turnos'" ng-change="traerDatosGatesTurnosDia()">Turnos</label>
+			<div class="col-lg-4">
+				<div class="input-group">
+					<div class="btn-group">
+						<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Gates'" ng-change="traerDatosGatesTurnosDia()">Gates</label>
+						<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Turnos'" ng-change="traerDatosGatesTurnosDia()">Turnos</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-lg-offset-3">
+				<div collapse="isCollapsedDayGatesTurnos">
+					<div class="well well-lg">
+						<datepicker ng-model="diaGatesTurnos" show-weeks="false" ng-change="traerDatosGatesTurnosDia()" max-date="maxDateGatesTurnos"></datepicker>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
 			<div class="table-responsive">
 				<dynamic-chart
 						data="chartDataDiaGatesTurnos"
-						title="{{chartTitleDiaGatesTurnos}}"
 						width="{{chartWidthDiaGatesTurnos}}"
 						height="{{chartsHeight}}"
 						select="selectRow(selectedRowIndexFacturado)"
