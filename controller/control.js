@@ -360,6 +360,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 				$scope.loadingGatesTurnos = false;
 				$scope.visibleGatesTurnos = 'block';
 				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
+				$scope.labelPorHora = 'Gates por hora'
 			});
 		}
 		else if ($scope.radioModel == 'Turnos'){
@@ -367,6 +368,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 				$scope.loadingGatesTurnos = false;
 				$scope.visibleGatesTurnos = 'block';
 				$scope.chartDataDiaGatesTurnos = controlCtrl.prepararDatosGatesTurnosDia(graf);
+				$scope.labelPorHora = 'Turnos por hora'
 			});
 		}
 	};
