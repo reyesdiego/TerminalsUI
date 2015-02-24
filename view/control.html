@@ -10,17 +10,17 @@
 	<div class="row">
 		<br>
 		<div class="col-lg-7">
-			<div class="input-group">
-				<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+			<h4 class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
+			<div class="input-group text-left">
 				<label for="desde" class="sr-only">Fecha</label>
+				<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 				<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="desde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" ng-change="traerDatosFacturadoDia()" disabled/>
 			</div>
-			<h5>Cantidad de Comprobantes {{ comprobantesCantidad.invoicesCount }}</h5>
 			<div class="table-responsive" style="max-height: 220px; max-width: 100%; overflow: auto">
 				<table class="table table-bordered table-hover">
 					<thead>
 					<tr>
-						<th class="text-center"><span class="glyphicon glyphicon-list-alt"></span> Comprobante</th>
+						<th class="text-left"><span class="glyphicon glyphicon-list-alt"></span> Comprobante</th>
 						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> BACTSSA</th>
 						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> TERMINAL 4</th>
 						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> TRP</th>
@@ -29,11 +29,11 @@
 					</thead>
 					<tbody>
 					<tr ng-repeat="comprobante in comprobantesCantidad">
-						<td class="text-center">{{ comprobante.codTipoComprob | nombreComprobante }}</td>
-						<td class="text-center">{{ comprobante.BACTSSA[0] | numero }} ({{ comprobante.BACTSSA[1] | numero | number:2 }} %)</td>
-						<td class="text-center">{{ comprobante.TERMINAL4[0] | numero }} ({{ comprobante.TERMINAL4[1] | numero | number:2 }} %)</td>
-						<td class="text-center">{{ comprobante.TRP[0] | numero }} ({{ comprobante.TRP[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.total }}</td>
+						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante }}</td>
+						<td class="text-right">{{ comprobante.BACTSSA[0] | numero }} ({{ comprobante.BACTSSA[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TERMINAL4[0] | numero }} ({{ comprobante.TERMINAL4[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TRP[0] | numero }} ({{ comprobante.TRP[1] | numero | number:2 }} %)</td>
+						<td class="text-right"><b>{{ comprobante.total }}</b></td>
 					</tr>
 					<tr>
 						<th class="text-right" colspan="4">Total</th>
@@ -43,7 +43,6 @@
 				</table>
 			</div>
 		</div>
-
 		<div class="col-lg-4" ng-show="errorCargaTasas">
 			<div class="alert alert-danger">
 				<strong>Error</strong> - No se han podido cargar los datos de los facturado por tasas a las cargas.
@@ -56,7 +55,7 @@
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-5" ng-hide="loadingFacturadoDia || errorFacturadoDia">
-			<h4 class="text-center">Facturado diario</h4>
+			<h4 class="text-left">Facturado diario</h4>
 			<div collapse="!isCollapsedDay">
 				<dynamic-chart
 						data="chartDataFacturado"
@@ -88,12 +87,12 @@
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-4" ng-hide="loadingFacturadoMes || errorFacturadoMes">
-			<h4 class="text-center">Facturado Mensual</h4>
+			<h4 class="text-left">Facturado mensual</h4>
 			<p class="input-group">
-				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" />
 				<span class="input-group-btn">
 					<button class="btn btn-default" ng-click="isCollapsedMonth = !isCollapsedMonth"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesde" />
 			</p>
 			<div collapse="isCollapsedMonth">
 				<div class="well well-lg">
@@ -129,12 +128,12 @@
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-4" ng-show="!loadingGates || errorGates" style="visibility: {{ visibleGates }}">
-			<h4 class="text-center">Cantidad de Gates</h4>
+			<h4 class="text-left">Gates mensuales</h4>
 			<p class="input-group">
-				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeGates" />
 				<span class="input-group-btn">
 					<button class="btn btn-default" ng-click="isCollapsedGates = !isCollapsedGates"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeGates" />
 			</p>
 			<div collapse="isCollapsedGates">
 				<div class="well well-lg">
@@ -169,12 +168,12 @@
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-4" ng-hide="loadingTurnos || errorTurnos" style="visibility: {{ visibleTurnos }}">
-			<h4 class="text-center">Cantidad de Turnos</h4>
+			<h4 class="text-left">Turnos mensuales</h4>
 			<p class="input-group">
-				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeTurnos" />
 				<span class="input-group-btn">
 					<button class="btn btn-default" ng-click="isCollapsedTurnos = !isCollapsedTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
 				</span>
+				<input type="text" readonly="true" class="form-control" datepicker-popup="{{formatSoloMes}}" ng-model="mesDesdeTurnos" />
 			</p>
 			<div collapse="isCollapsedTurnos">
 				<div class="well well-lg">
@@ -210,13 +209,13 @@
 			<img class="media-object" style="margin-left: 480px; margin-top: 75px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
 		<div class="col-lg-12" ng-hide="loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
-			<h4 class="text-center">Cantidad por hora</h4>
-			<div class="col-lg-4 col-lg-offset-3">
-				<div class="input-group">
-					<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="diaGatesTurnos" />
+			<h4 class="text-left">{{ labelPorHora }}</h4>
+			<div class="col-lg-4 col-lg-offset-2">
+				<div class="input-group text-left">
 					<span class="input-group-btn">
 						<button class="btn btn-default" ng-click="isCollapsedDayGatesTurnos = !isCollapsedDayGatesTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
 					</span>
+					<input type="text" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="diaGatesTurnos" />
 				</div>
 			</div>
 			<div class="col-lg-4">
