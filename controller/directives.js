@@ -532,7 +532,6 @@
 											comprobante.controlTarifas.push(tarifaError);
 										}
 									}
-
 								} else {
 									$scope.noMatch = true;
 								}
@@ -542,7 +541,6 @@
 					} else {
 						$scope.realizarControl = true;
 					}
-
 				};
 
 				$scope.chequearTarifas = function(comprobante){
