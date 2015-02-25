@@ -9,8 +9,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		if (datos){ inserturl = inserturl + '?onlyRates=true' }
 		$http({
 			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
+			url: inserturl
 		}).success(function (data){
 			callback(data);
 		}).error(function(error){
@@ -37,8 +36,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		}
 		$http({
 			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
+			url: inserturl
 		}).success(function (data){
 			callback(data);
 		}).error(function(error){
@@ -85,8 +83,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		var inserturl = serverUrl + '/matchprices/price/' + terminal;
 		$http({
 			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
+			url: inserturl
 		}).success(function (data){
 			callback(data);
 		}).error(function(error){
@@ -101,7 +98,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			method: "POST",
 			url: inserturl,
 			data: JSON.stringify(data),
-			headers:{"Content-Type":"application/json", token: loginService.getToken()}
+			headers:{"Content-Type":"application/json"}
 		}).success(function (response) {
 			callback(response);
 		}).error(function(error) {
@@ -139,8 +136,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		$http({
 			method: 'POST',
 			url: inserturl,
-			data: data,
-			headers:{ token: loginService.getToken() }
+			data: data
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {
@@ -153,8 +149,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		var inserturl = serverUrl + '/price/' + id + '/' + loginService.getFiltro();
 		$http({
 			method: 'GET',
-			url: inserturl,
-			headers:{ token: loginService.getToken() }
+			url: inserturl
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {
@@ -172,7 +167,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			method: 'PUT',
 			url: inserturl,
 			data: JSON.stringify(formData),
-			headers:{"Content-Type":"application/json", token: loginService.getToken() }
+			headers:{"Content-Type":"application/json"}
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {
@@ -185,8 +180,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		var inserturl = serverUrl + '/unitTypes'; //ver direccion
 		$http({
 			method: 'GET',
-			url: inserturl,
-			headers:{ token: loginService.getToken() }
+			url: inserturl
 		}).success(function(response) {
 			callback(response);
 		}).error(function(errorText) {
@@ -199,8 +193,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		var inserturl = serverUrl + '/unitTypes?type=array'; //ver direccion
 		$http({
 			method: 'GET',
-			url: inserturl,
-			headers:{ token: loginService.getToken() }
+			url: inserturl
 		}).success(function(response) {
 			callback(response);
 		}).error(function(errorText) {
@@ -213,8 +206,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		var inserturl = serverUrl + '/price/' + id;
 		$http({
 			method: 'DELETE',
-			url: inserturl,
-			headers:{ token: loginService.getToken() }
+			url: inserturl
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {

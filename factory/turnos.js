@@ -25,8 +25,7 @@ myapp.factory('turnosFactory', function($http, dialogs, formatDate, loginService
 
 		$http({
 			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
+			url: inserturl
 		})
 			.success(function(data){
 				callback(data);

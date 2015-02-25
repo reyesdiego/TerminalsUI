@@ -20,8 +20,7 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 		console.log(inserturl);
 		$http({
 			method: 'GET',
-			url: inserturl,
-			headers:{token: loginService.getToken()}
+			url: inserturl
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
@@ -36,7 +35,7 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 			method: "POST",
 			url: inserturl,
 			data: JSON.stringify(tarifas),
-			headers:{"Content-Type":"application/json", token: loginService.getToken()}
+			headers:{"Content-Type":"application/json"}
 		}).success(function (response) {
 			callback(response);
 		}).error(function(errorText) {
