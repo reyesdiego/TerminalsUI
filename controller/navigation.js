@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 (function() {
-	myapp.controller('navigationCtrl', function($scope, $rootScope, $state, invoiceFactory, loginService, authFactory) {
+	myapp.controller('navigationCtrl', function($scope, $rootScope, $state, invoiceFactory, loginService, authFactory, $injector) {
 
 		"use strict";
 		$rootScope.esUsuario = '';
@@ -40,6 +40,11 @@
 			if (loginService.getType() == 'agp'){
 				$rootScope.filtroTerminal = loginService.getFiltro();
 			}
+			// Le agrega el token a todas las consultas $http
+			$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+				if (loginService) headersGetter()['token'] = loginService.getToken();
+				if (data) { return angular.toJson(data); }
+			};
 
 			// Carga el tema de la terminal
 			$rootScope.switchTheme(loginService.getFiltro());
