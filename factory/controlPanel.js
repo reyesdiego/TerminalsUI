@@ -91,30 +91,22 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 
 	factory.getGatesMeses = function(fecha, callback){
 		var inserturl = serverUrl + '/gatesByMonth?fecha=' + formatDate.formatearFecha(fecha);
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
+			});
 	};
 
 	factory.getTurnosMeses = function(fecha, callback){
 		var inserturl = serverUrl + '/appointmentsByMonth?fecha=' + formatDate.formatearFecha(fecha);
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'turnosMeses', 'Error al cargar gráfico de cantidad de turnos por mes.');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'turnosMeses', 'Error al cargar gráfico de cantidad de turnos por mes.');
+			});
 	};
 
 	//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
@@ -130,132 +122,96 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 
 	factory.getGatesDia = function(fecha, callback){
 		var inserturl = serverUrl + '/gatesByHour?fecha=' + formatDate.formatearFecha(fecha);
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
+			});
 	};
 
 	factory.getTurnosDia = function(fecha, callback){
 		var inserturl = serverUrl + '/appointmentsByHour?fecha=' + formatDate.formatearFecha(fecha);
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de turnos por día.');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de turnos por día.');
+			});
 	};
 
 	factory.getClients = function(callback){
 		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/clients';
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de clientes.');
-			console.log(errorText);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de clientes.');
+				console.log(errorText);
+			});
 	};
 
 	factory.getContainers = function(callback){
 		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/containers';
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
-			console.log(errorText);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+				console.log(errorText);
+			});
 	};
 
 	factory.getShips = function(callback){
 		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/ships';
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
+			});
 	};
 
 	factory.getContainersGates = function(callback){
 		var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/containers';
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
-			console.log(errorText);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+				console.log(errorText);
+			});
 	};
 
 	factory.getShipsGates = function(callback){
 		var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/ships';
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
+			});
 	};
 
 	factory.getContainersTurnos = function(callback){
 		var inserturl = serverUrl + '/appointments/'+loginService.getFiltro()+'/containers';
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
-			console.log(errorText);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				//errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de containers.');
+				console.log(errorText);
+			});
 	};
 
 	factory.getShipsTurnos = function(callback){
 		var inserturl = serverUrl + '/appointments/'+loginService.getFiltro()+'/ships';
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
+			});
 	};
 
 	factory.ponerDescripcionCodigoItem = function(data){

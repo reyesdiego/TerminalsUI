@@ -7,16 +7,10 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 	factory.getGate = function(datos, page, callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
-		})
+		$http.get(inserturl)
 			.success(function(data){
 				callback(data);
 			}).error(function(error){
-				/*console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista de Gates');*/
 				callback(error);
 			});
 	};
@@ -24,43 +18,32 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 	factory.getReporteHorarios = function(datos, callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
+			});
 	};
 
 	factory.getMissingGates = function(callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingGates';
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(error){
-			//dialogs.error('Error', 'Error al obtener gates faltantes');
-			callback(error);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
 	};
 
 	factory.getMissingInvoices = function(callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingInvoices';
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(error){
-			//dialogs.error('Error', 'Error al obtener comprobantes faltantes');
-			callback(error);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
 	};
 
 	factory.aplicarFiltros = function(unaUrl, datos){

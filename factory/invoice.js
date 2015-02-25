@@ -7,44 +7,30 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			data = factory.ponerDescripcionComprobantes(data);
-			callback(factory.setearInterfaz(data));
-		}).error(function(error){
-			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de comprobantes.');
-			callback(error);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				data = factory.ponerDescripcionComprobantes(data);
+				callback(factory.setearInterfaz(data));
+			}).error(function(error) {
+				callback(error);
+			});
 	};
 
 	factory.getDescriptionItem = function(callback){
 		var inserturl = serverUrl + '/matches/' + loginService.getFiltro();
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data) {
-			callback(data);
-		}).error(function(errorText) {
-			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar las descripciones de los códigos');
-			console.log(errorText);
+		$http.get(inserturl)
+			.success(function(data) {
+				callback(data);
+			}).error(function(errorText) {
+				console.log(errorText);
 		});
 	};
 
 	factory.getSinTasaCargas = function(datos, terminal, page, callback){
 		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
+		$http.get(inserturl)
+			.success(function (data){
 				data = factory.ponerDescripcionComprobantes(data);
 				callback(factory.setearInterfaz(data));
 			}).error(function(errorText){
@@ -54,114 +40,82 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getTarifasTerminal = function(callback){
 		var inserturl = serverUrl + '/matches/' + loginService.getFiltro() + '?type=prices';
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar las tarifas asociadas de la terminal.');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar las tarifas asociadas de la terminal.');
+			});
 	};
 
 	factory.getInvoicesNoMatches = function(datos, page, callback){
 		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los códigos no asociados por la terminal.');
-		});
+		$http.get(inserturl)
+			.success(function (data) {
+				callback(data);
+			}).error(function(errorText) {
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los códigos no asociados por la terminal.');
+			});
 	};
 
 	factory.getCorrelative = function(datos, socketIoRegister, callback){
 		var inserturl = serverUrl + '/invoices/correlative/' + loginService.getFiltro() + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
 		inserturl += '&x='+socketIoRegister;
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(error){
-			//errorFactory.raiseError(errorText, inserturl, 'errorCorrelatividad', 'Error al cargar la lista de comprobantes faltantes.');
-			callback(error);
-		});
+		$http.get(inserturl)
+			.success(function (data) {
+				callback(data);
+			}).error(function(error) {
+				callback(error);
+			});
 	};
 
 	factory.getCashbox = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro() + '?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			data.data.sort(function(a,b){
-				return a - b;
+		$http.get(inserturl)
+			.success(function(data){
+				data.data.sort(function(a,b){
+					return a - b;
+				});
+				callback(data);
+			}).error(function(error){
+				callback(error);
 			});
-			callback(data);
-		}).error(function(error){
-			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los distintos puntos de venta.');
-			callback(error);
-		});
 	};
 
 	factory.getShipTrips = function(callback){
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipTrips';
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los datos de buques y viajes.');
-			console.log(errorText);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				console.log(errorText);
+			});
 	};
 
 	factory.getShipContainers = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers?';
 		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al traer los contenedores para el buque y el viaje seleccionado.');
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al traer los contenedores para el buque y el viaje seleccionado.');
+			});
 	};
 
 	factory.invoiceById = function(id, callback){
 		var inserturl = serverUrl + '/invoice/' + id;
-		$http({
-			method: "GET",
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function (data){
-			data.data = factory.setearInterfazComprobante(data.data);
-			data.data.transferencia = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
-			callback(factory.ponerDescripcionComprobante(data.data));
-		}).error(function(error){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
-			//callback(error);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				data.data = factory.setearInterfazComprobante(data.data);
+				data.data.transferencia = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
+				callback(factory.ponerDescripcionComprobante(data.data));
+			}).error(function(error){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
+			});
 	};
 
 	factory.aplicarFiltros = function(unaUrl, datos){
@@ -274,8 +228,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		$http({
 			method: 'GET',
 			url: inserturl,
-			cache: false,
-			headers:{ token: loginService.getToken()}
+			cache: false
 		}).success(function (data){
 			data.data = factory.filtrarComentarios(data.data);
 			data.data.forEach(function(comment){

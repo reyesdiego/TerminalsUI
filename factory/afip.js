@@ -113,399 +113,311 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 	factory.getRegistro1Afectacion = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_afectacion/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro1detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_detexpo/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro1detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_detimpo/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro1Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_solicitud/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro1sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_sumexpomane/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro1sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_sumimpomani/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
 		});
 	};
 
 	factory.getRegistro2Afectacion = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_afectacion/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro2detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_detexpo/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro2detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_detimpo/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro2Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_solicitud/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro2sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_sumexpomane/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro2sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_sumimpomani/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro3detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_detexpo/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro3detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_detimpo/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro3Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_solicitud/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro3sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_sumexpomane/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro3sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_sumimpomani/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro4sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro4_sumexpomane/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro4sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro4_sumimpomani/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getRegistro5sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro5_sumexpomane/' + page.skip + '/' + page.limit;
 		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			var data={
-				status: 'ERROR'
-			};
-			callback(data);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				var data={
+					status: 'ERROR'
+				};
+				callback(data);
+			});
 	};
 
 	factory.getContainerSumaria = function(container, callback){
 		var inserturl = serverUrl + '/afip/sumariaImpo/' + container;
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(error){
-			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
-			/*var data={
-				status: 'ERROR'
-			};*/
-			callback(error);
-		});
+		$http.get(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
 	};
 
 	factory.aplicarFiltros = function(unaUrl, filtros){

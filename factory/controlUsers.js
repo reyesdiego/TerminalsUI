@@ -7,17 +7,12 @@
 
 		factory.getUsers = function(callback){
 			var inserturl = serverUrl + '/agp/accounts';
-			$http({
-				method: 'GET',
-				url: inserturl,
-				headers:
-				{token: loginService.getToken()}
-			}).success(function(data){
-				callback(data);
-			}).error(function(error){
-				callback(error);
-				//errorFactory.raiseError(error.data, inserturl, 'errorDatos', error.data);
-			});
+			$http.get(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				});
 		};
 
 		factory.userEnabled = function(id, callback) {
@@ -30,7 +25,6 @@
 			}).success(function(data){
 				callback(data);
 			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al intentar habilitar un usuario');
 				callback(error);
 			});
 		};
@@ -45,7 +39,6 @@
 			}).success(function(data){
 				callback(data);
 			}).error(function(error){
-				//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al intentar deshabilitar un usuario');
 				callback(error);
 			});
 		};

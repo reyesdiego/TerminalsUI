@@ -40,11 +40,6 @@
 			if (loginService.getType() == 'agp'){
 				$rootScope.filtroTerminal = loginService.getFiltro();
 			}
-			// Le agrega el token a todas las consultas $http
-			$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-				if (loginService) headersGetter()['token'] = loginService.getToken();
-				if (data) { return angular.toJson(data); }
-			};
 
 			// Carga el tema de la terminal
 			$rootScope.switchTheme(loginService.getFiltro());

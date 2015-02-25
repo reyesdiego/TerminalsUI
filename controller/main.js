@@ -260,7 +260,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 
 });
 
-myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory){
+myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory, $injector){
 	"use strict";
 
 	$rootScope.cambioMoneda = true;
@@ -277,6 +277,12 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.listaContenedoresTurnos = [];
 
 	$rootScope.cargaGeneral = function(){
+
+		// Le agrega el token a todas las consultas $http
+		$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+			if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
+			if (data) { return angular.toJson(data); }
+		};
 
 		statesFactory.getStatesArray(function(data){
 			$rootScope.estadosComprobantesArray = data.data;
