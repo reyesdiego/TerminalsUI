@@ -75,8 +75,18 @@
 
 				$scope.comprobantesControlados = [];
 
+				$scope.arrayMatchesListo = false;
+				$scope.realizarControl = false;
+
 				priceFactory.getArrayMatches(loginService.getFiltro(), function(arrayMatches){
-					$rootScope.matchesTerminal = arrayMatches;
+					$rootScope.matchesTerminal = arrayMatches.data;
+					$scope.arrayMatchesListo = true;
+					if ($scope.realizarControl){
+						$scope.datosInvoices.forEach(function(comprobante){
+							$scope.controlarTarifas(comprobante);
+						});
+						$scope.realizarControl = false;
+					}
 				});
 
 				priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: true}, function (data){
@@ -470,70 +480,82 @@
 				};
 
 				$scope.controlarTarifas = function(comprobante){
-					var valorTomado;
-					var tarifaError;
 
-					var precioALaFecha;
-					var monedaALaFecha;
+					if ($scope.arrayMatchesListo){
+						$scope.realizarControl = false;
 
-					comprobante.controlTarifas = [];
-					var lookup = {};
-					for (var i = 0, len = $rootScope.matchesTerminal.length; i < len; i++) {
-						lookup[$rootScope.matchesTerminal[i].codigo] = $rootScope.matchesTerminal[i];
+						var valorTomado;
+						var tarifaError;
+
+						var precioALaFecha;
+						var monedaALaFecha;
+
+						comprobante.controlTarifas = [];
+						var lookup = {};
+						for (var i = 0, len = $rootScope.matchesTerminal.length; i < len; i++) {
+							lookup[$rootScope.matchesTerminal[i].code] = $rootScope.matchesTerminal[i];
+						}
+
+						$scope.noMatch = false;
+
+						comprobante.detalle.forEach(function(detalle){
+							detalle.items.forEach(function(item){
+								if (angular.isDefined(lookup[item.id])){
+									valorTomado = item.impUnit;
+									lookup[item.id].topPrices.forEach(function(precioMatch){
+										if (comprobante.fecha.emision > precioMatch.from){
+											precioALaFecha = precioMatch.price;
+											monedaALaFecha = precioMatch.currency
+										}
+									});
+									if (monedaALaFecha != 'DOL'){
+										valorTomado = item.impUnit * comprobante.cotiMoneda
+									}
+									if ($rootScope.tasaCargasTerminal.indexOf(item.id) >= 0){
+										if (valorTomado != precioALaFecha){
+											tarifaError = {
+												codigo: item.id,
+												currency: monedaALaFecha,
+												topPrice: precioALaFecha,
+												current: item.impUnit
+											};
+											comprobante.controlTarifas.push(tarifaError);
+										}
+									} else {
+										if (valorTomado > precioALaFecha){
+											tarifaError = {
+												codigo: item.id,
+												currency: monedaALaFecha,
+												topPrice: precioALaFecha,
+												current: item.impUnit
+											};
+											comprobante.controlTarifas.push(tarifaError);
+										}
+									}
+
+								} else {
+									$scope.noMatch = true;
+								}
+							});
+						});
+						$rootScope.noMatch = $scope.noMatch;
+					} else {
+						$scope.realizarControl = true;
 					}
 
-					$scope.noMatch = false;
-
-					comprobante.detalle.forEach(function(detalle){
-						detalle.items.forEach(function(item){
-							if (angular.isDefined(lookup[item.id])){
-								valorTomado = item.impUnit;
-								lookup[item.id].topPrices.forEach(function(precioMatch){
-									if (comprobante.fecha.emision > precioMatch.from){
-										precioALaFecha = precioMatch.price;
-										monedaALaFecha = precioMatch.currency
-									}
-								});
-								if (monedaALaFecha != 'DOL'){
-									valorTomado = item.impUnit * comprobante.cotiMoneda
-								}
-								if ($rootScope.tasaCargasTerminal.indexOf(item.id) >= 0){
-									if (valorTomado != precioALaFecha){
-										tarifaError = {
-											codigo: item.id,
-											currency: monedaALaFecha,
-											topPrice: precioALaFecha,
-											current: item.impUnit
-										};
-										comprobante.controlTarifas.push(tarifaError);
-									}
-								} else {
-									if (valorTomado > precioALaFecha){
-										tarifaError = {
-											codigo: item.id,
-											currency: monedaALaFecha,
-											topPrice: precioALaFecha,
-											current: item.impUnit
-										};
-										comprobante.controlTarifas.push(tarifaError);
-									}
-								}
-
-							} else {
-								$scope.noMatch = true;
-							}
-						});
-					});
-					$rootScope.noMatch = $scope.noMatch;
 				};
 
 				$scope.chequearTarifas = function(comprobante){
-					if (angular.isDefined($scope.comprobantesControlados[comprobante._id])){
-						return $scope.comprobantesControlados[comprobante._id];
+					if ($scope.arrayMatchesListo){
+						if (angular.isDefined($scope.comprobantesControlados[comprobante._id])){
+							return $scope.comprobantesControlados[comprobante._id];
+						} else {
+							$scope.controlarTarifas(comprobante);
+							$scope.comprobantesControlados[comprobante._id] = (comprobante.controlTarifas.length > 0);
+							return comprobante.controlTarifas.length > 0;
+						}
 					} else {
-						$scope.controlarTarifas(comprobante);
-						$scope.comprobantesControlados[comprobante._id] = (comprobante.controlTarifas.length > 0);
-						return comprobante.controlTarifas.length > 0;
+						return false;
 					}
 				};
 

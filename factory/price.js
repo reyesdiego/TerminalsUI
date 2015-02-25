@@ -47,7 +47,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		});
 	};
 
-	factory.getArrayMatches = function(terminal, callback){
+	/*factory.getArrayMatches = function(terminal, callback){
 		var inserturl = serverUrl + '/matchprices/' + terminal + '?';
 		$http({
 			method: 'GET',
@@ -75,6 +75,20 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 				}
 			});
 			callback(arrayMatches);
+		}).error(function(error){
+			//dialogs.error('Error', 'Error al cargar la lista');
+			console.log(error);
+		});
+	};*/
+
+	factory.getArrayMatches = function(terminal, callback){
+		var inserturl = serverUrl + '/matchprices/price/' + terminal;
+		$http({
+			method: 'GET',
+			url: inserturl,
+			headers: { token: loginService.getToken() }
+		}).success(function (data){
+			callback(data);
 		}).error(function(error){
 			//dialogs.error('Error', 'Error al cargar la lista');
 			console.log(error);
