@@ -41,7 +41,6 @@ myapp.factory('userFactory', function($http, dialogs){
 		}).success(function(data) {
 				callback(data);
 			}).error(function(err) {
-				//dialogs.error('Error en Cambio de Contraseña', err.data);
 				callback(err);
 			});
 	};
@@ -55,7 +54,6 @@ myapp.factory('userFactory', function($http, dialogs){
 		}).success(function(data) {
 			callback(data);
 		}).error(function(err) {
-			//dialogs.error('Error en registro.', err.data);
 			callback(err);
 		});
 	};
@@ -68,7 +66,6 @@ myapp.factory('userFactory', function($http, dialogs){
 		}).success(function(data) {
 			callback(data);
 		}).error(function(err) {
-			//dialogs.error('Error en cambio de contraseña.', err.data);
 			callback(err);
 		});
 	};

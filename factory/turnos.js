@@ -23,15 +23,10 @@ myapp.factory('turnosFactory', function($http, dialogs, formatDate, loginService
 			inserturl = inserturl + 'buque=' + datos.buque.toUpperCase();
 		}
 
-		$http({
-			method: 'GET',
-			url: inserturl
-		})
+		$http.get(inserturl)
 			.success(function(data){
 				callback(data);
 			}).error(function(error){
-				/*console.log(errorText);
-				dialogs.error('Error', 'Error al cargar la lista de Turnos');*/
 				callback(error);
 			});
 	};

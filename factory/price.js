@@ -7,15 +7,12 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 	factory.getPrice = function(terminal, datos, callback) {
 		var inserturl = serverUrl + '/prices/' + terminal;
 		if (datos){ inserturl = inserturl + '?onlyRates=true' }
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function (data){
-			callback(data);
-		}).error(function(error){
-			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar el tarifario.');
-			callback(error);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
 	};
 
 	factory.getMatchPrices = function(terminal, datos, callback) {
@@ -34,62 +31,21 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 				inserturl = inserturl + 'onlyRates=' + datos.tasaCargas;
 			}
 		}
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function (data){
+		$http.get(inserturl).success(function (data){
 			callback(data);
 		}).error(function(error){
-			//dialogs.error('Error', 'Error al cargar la lista');
 			callback(error);
 		});
 	};
 
-	/*factory.getArrayMatches = function(terminal, callback){
-		var inserturl = serverUrl + '/matchprices/' + terminal + '?';
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
-		}).success(function (data){
-			var arrayMatches = [];
-			var addMatch;
-			data.data.forEach(function(price){
-				if (price.matches != null && price.matches.length > 0){
-					factory.getPriceById(price._id, function(priceComplete){
-						if (data.status == 'OK'){
-							price.matches[0].match.forEach(function(code){
-								addMatch = {
-									codigo: code,
-									topPrices: priceComplete.data.topPrices
-								};
-								addMatch.topPrices.sort(function(a, b){
-									return a.from > b.from;
-								});
-								arrayMatches.push(addMatch);
-							});
-						}
-					});
-				}
-			});
-			callback(arrayMatches);
-		}).error(function(error){
-			//dialogs.error('Error', 'Error al cargar la lista');
-			console.log(error);
-		});
-	};*/
-
 	factory.getArrayMatches = function(terminal, callback){
 		var inserturl = serverUrl + '/matchprices/price/' + terminal;
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function (data){
-			callback(data);
-		}).error(function(error){
-			//dialogs.error('Error', 'Error al cargar la lista');
-			console.log(error);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				console.log(error);
+			});
 	};
 
 	factory.addMatchPrice = function (data, callback) {
@@ -102,7 +58,6 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		}).success(function (response) {
 			callback(response);
 		}).error(function(error) {
-			//dialogs.error('Error', 'Error al añadir el Match en la base');
 			callback(error);
 		});
 	};
@@ -119,16 +74,12 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 
 			inserturl += 'fechaFin=' + formatDate.formatearFecha(hasta);
 		}
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers: { token: loginService.getToken() }
-		}).success(function (data){
-			callback(data);
-		}).error(function(error){
-			//dialogs.error('Error', 'Error al cargar la lista');
-			callback(error);
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
 	};
 
 	factory.addPrice = function (data, callback) {
@@ -140,22 +91,18 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {
-			//dialogs.error('Error', 'Error al añadir el Precio en la base');
 			callback(error);
 		});
 	};
 
 	factory.getPriceById = function(id, callback){
 		var inserturl = serverUrl + '/price/' + id + '/' + loginService.getFiltro();
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function(response) {
-			callback(response);
-		}).error(function(error) {
-			//dialogs.error('Error', 'Error al añadir el Precio en la base');
-			callback(error);
-		});
+		$http.get(inserturl)
+			.success(function(response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
+			});
 	};
 
 	factory.savePriceChanges = function(formData, id, callback){
@@ -171,48 +118,38 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {
-			//dialogs.error('Error', 'Error al añadir el Precio en la base');
 			callback(error);
 		});
 	};
 
 	factory.getUnitTypes = function(callback){
 		var inserturl = serverUrl + '/unitTypes'; //ver direccion
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function(response) {
-			callback(response);
-		}).error(function(errorText) {
-			//dialogs.error('Error', 'Error al añadir el Precio en la base');
-			console.log(errorText);
-		});
+		$http.get(inserturl)
+			.success(function(response) {
+				callback(response);
+			}).error(function(errorText) {
+				console.log(errorText);
+			});
 	};
 
 	factory.getUnitTypesArray = function(callback){
 		var inserturl = serverUrl + '/unitTypes?type=array'; //ver direccion
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function(response) {
-			callback(response);
-		}).error(function(errorText) {
-			//dialogs.error('Error', 'Error al añadir el Precio en la base');
-			console.log(errorText);
-		});
+		$http.get(inserturl)
+			.success(function(response) {
+				callback(response);
+			}).error(function(errorText) {
+				console.log(errorText);
+			});
 	};
 
 	factory.removePrice = function(id, callback){
 		var inserturl = serverUrl + '/price/' + id;
-		$http({
-			method: 'DELETE',
-			url: inserturl
-		}).success(function(response) {
-			callback(response);
-		}).error(function(error) {
-			//dialogs.error('Error', 'Error al añadir el Precio en la base');
-			callback(error);
-		});
+		$http.delete(inserturl)
+			.success(function(response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
+			});
 	};
 
 	return factory;

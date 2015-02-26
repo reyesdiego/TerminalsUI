@@ -5,13 +5,10 @@ myapp.factory('vouchersFactory', function($http){
 	var factory = {};
 
 	factory.getVouchersArray = function(callback){
-		"use strict";
 		var inserturl = serverUrl + '/voucherTypes?type=array';
 
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function (data){
+		$http.get(inserturl)
+			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);
@@ -19,13 +16,10 @@ myapp.factory('vouchersFactory', function($http){
 	};
 
 	factory.getVouchersType = function(callback){
-		"use strict";
 		var inserturl = serverUrl + '/voucherTypes';
 
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function (data){
+		$http.get(inserturl)
+			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
 				console.log(errorText);

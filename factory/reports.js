@@ -18,19 +18,16 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 	factory.getReporteHorarios = function(fecha, callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?fechaInicio=' + formatDate.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatDate.formatearFecha(fecha.fechaFin);
 		console.log(inserturl);
-		$http({
-			method: 'GET',
-			url: inserturl
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
-		});
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
+			});
 	};
 
 	factory.getReporteTarifas = function(fecha, tarifas, callback){
 		var inserturl = serverUrl + '/invoices/byRates?fechaInicio=' + formatDate.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatDate.formatearFecha(fecha.fechaFin);
-		//El método que se va a usar para mandar la información
 		$http({
 			method: "POST",
 			url: inserturl,
