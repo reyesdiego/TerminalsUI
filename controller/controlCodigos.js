@@ -3,7 +3,7 @@
  */
 (function() {
 	myapp.controller('codigosCtrl', function($scope, invoiceFactory, priceFactory, dialogs, $q) {
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+		$scope.ocultarFiltros = ['nroPtoVenta'];
 
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -25,20 +25,10 @@
 			'itemsPerPage': 15
 		};
 
-		$scope.controlFiltros = 'codigos';
-		$scope.hayFiltros = false;
-
 		$scope.currentPageCodigos = 1;
 		$scope.totalItemsCodigos = 0;
 		$scope.pageCodigos = {
 			skip: 0,
-			limit: $scope.model.itemsPerPage
-		};
-
-		$scope.currentPageFiltros = 1;
-		$scope.totalItemsFiltros = 0;
-		$scope.pageFiltros = {
-			skip:0,
 			limit: $scope.model.itemsPerPage
 		};
 
@@ -52,58 +42,21 @@
 		$scope.anteriorCargaCodigos = [];
 		$scope.totalItemsSinFiltrar = 0;
 
-		$scope.mostrarPtosVentas = false;
+		$scope.mostrarPtosVentas = true;
 
 		$scope.$on('cambioPagina', function(event, data){
-			if ($scope.controlFiltros == 'codigos'){
-				$scope.currentPageCodigos = data;
-				$scope.pageChangedCodigos();
-			} else {
-				$scope.currentPageFiltros = data;
-				$scope.controlCodigosFiltrados();
-			}
+			$scope.currentPageCodigos = data;
+			$scope.pageChangedCodigos();
 		});
 
 		$scope.$on('cambioFiltro', function(event, data){
 			$scope.currentPageCodigos = 1;
-			$scope.currentPageFiltros = 1;
 			$scope.model = data;
-			if ($scope.controlFiltros == 'codigos'){
-				if ($scope.model.codigo != ''){
-					$scope.controlFiltros = 'filtros';
-					$scope.ocultarFiltros = ['nroPtoVenta'];
-					$scope.anteriorCargaCodigos = $scope.comprobantesRotos;
-					$scope.totalItemsSinFiltrar = $scope.totalItems;
-					$scope.mostrarPtosVentas = true;
-					$scope.controlCodigosFiltrados();
-				} else {
-					$scope.controlDeCodigos();
-				}
-			} else {
-				if ($scope.model.codigo == ''){
-					$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
-					$scope.controlFiltros = 'codigos';
-					$scope.mostrarPtosVentas = false;
-					$scope.controlDeCodigos();
-				} else {
-					$scope.controlCodigosFiltrados();
-				}
-			}
+			$scope.controlDeCodigos();
 		});
 
-		$scope.infoReal = function(id){
-			var deferred = $q.defer();
-			invoiceFactory.invoiceById(id, function(realData){
-				deferred.resolve(realData);
-			});
-			return deferred.promise;
-		};
-
 		$scope.controlDeCodigos = function(){
-			$scope.controlFiltros = 'codigos';
 			$scope.loadingControlCodigos = true;
-			$scope.hayFiltros = false;
-			$scope.model.codigo = '';
 			$scope.comprobantesRotos = [];
 			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 			$scope.pageCodigos.limit = $scope.model.itemsPerPage;
@@ -112,7 +65,6 @@
 					$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
 					$scope.codigosSinAsociar.codigos = dataNoMatches.data;
 				} else {
-					//dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos.');
 					$scope.mensajeResultado = {
 						titulo: 'Error',
 						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
@@ -122,38 +74,16 @@
 				}
 			});
 			invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
-
-				$scope.comprobantesRotos = invoicesNoMatches.data;
-				$scope.totalItems = invoicesNoMatches.totalCount;
-				$scope.loadingControlCodigos = false;
-
-				/*var infoComprobantes = [];
-				 if (invoicesNoMatches.data != null){
-				 invoicesNoMatches.data.forEach(function(unComprobante){
-				 infoComprobantes.push($scope.infoReal(unComprobante._id._id));
-				 });
-				 $q.all(infoComprobantes)
-				 .then(function(result){
-				 $scope.comprobantesRotos = angular.copy(result);
-				 $scope.totalItems = invoicesNoMatches.totalCount;
-				 $scope.loadingControlCodigos = false;
-				 },
-				 function(errors) {
-				 dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos de los comprobantes.');
-				 $scope.totalItems = 0;
-				 $scope.loadingControlCodigos = false;
-				 });
-				 }*/
-			});
-		};
-
-		$scope.controlCodigosFiltrados = function(){
-			$scope.loadingControlCodigos = true;
-			$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.model.itemsPerPage);
-			$scope.pageFiltros.limit = $scope.model.itemsPerPage;
-			invoiceFactory.getInvoice($scope.model, $scope.pageFiltros, function(data){
-				$scope.totalItems = data.totalCount;
-				$scope.comprobantesRotos = data.data;
+				if (invoicesNoMatches.status == 'OK'){
+					$scope.comprobantesRotos = invoicesNoMatches.data;
+					$scope.totalItems = invoicesNoMatches.totalCount;
+				} else {
+					$scope.mensajeResultado = {
+						titulo: 'Error',
+						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+						tipo: 'panel-danger'
+					};
+				}
 				$scope.loadingControlCodigos = false;
 			});
 		};
@@ -164,12 +94,16 @@
 			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 			$scope.pageCodigos.limit = $scope.model.itemsPerPage;
 			invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(data){
-				data.data.forEach(function(unComprobante){
-					invoiceFactory.invoiceById(unComprobante._id._id, function(realData){
-						$scope.comprobantesRotos.push(realData);
-					});
-					$scope.loadingControlCodigos = false;
-				});
+				if (data.status == 'OK'){
+					$scope.comprobantesRotos = data.data;
+				} else {
+					$scope.mensajeResultado = {
+						titulo: 'Error',
+						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+						tipo: 'panel-danger'
+					};
+				}
+				$scope.loadingControlCodigos = false;
 			});
 		};
 

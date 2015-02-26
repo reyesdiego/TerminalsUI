@@ -53,7 +53,11 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		inserturl = this.aplicarFiltros(inserturl, datos);
 		$http.get(inserturl)
 			.success(function (data) {
-				callback(data);
+				if (data.data == null) data.data = [];
+
+				data = factory.ponerDescripcionComprobantes(data);
+				callback(factory.setearInterfaz(data));
+
 			}).error(function(errorText) {
 				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los códigos no asociados por la terminal.');
 			});
