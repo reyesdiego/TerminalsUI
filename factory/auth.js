@@ -35,10 +35,10 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 				loginService.setToken(data.token.token);
 
 				// Le agrega el token a todas las consultas $http
-				$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+				/*$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
 					if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
 					if (data) { return angular.toJson(data); }
-				};
+				};*/
 
 				///Hardcodeo de nuevas rutas agregadas
 				///Cuando ya estén todas definidas, estos valores deben venir desde el servidor

@@ -18,7 +18,6 @@
 			loginService.unsetLogin();
 			$rootScope.filtroTerminal = '';
 			$rootScope.switchTheme('BACTSSA');
-			window.location.reload();
 		};
 
 		$scope.irA = function(){

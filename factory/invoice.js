@@ -201,7 +201,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			method: 'PUT',
 			url: inserturl,
 			data: { estado: estado },
-			headers: {"Content-Type":"application/x-www-form-urlencoded; charset=utf-8", "token": loginService.getToken() }
+			headers: {"token": loginService.getToken() }
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){
@@ -214,8 +214,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		$http({
 			method: 'POST',
 			url: inserturl,
-			data: JSON.stringify(data),
-			headers:{"Content-Type":"application/json", token: loginService.getToken()}
+			data: data,
+			headers:{token: loginService.getToken()}
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){

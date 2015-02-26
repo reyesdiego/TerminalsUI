@@ -53,8 +53,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		$http({
 			method: "POST",
 			url: inserturl,
-			data: JSON.stringify(data),
-			headers:{"Content-Type":"application/json"}
+			data: data
 		}).success(function (response) {
 			callback(response);
 		}).error(function(error) {
@@ -113,8 +112,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		$http({
 			method: 'PUT',
 			url: inserturl,
-			data: JSON.stringify(formData),
-			headers:{"Content-Type":"application/json"}
+			data: formData
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {
