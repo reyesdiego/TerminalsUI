@@ -63,19 +63,15 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	factory.getTasasContenedor = function(data, callback){
 		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + data.contenedor + '/' + data.currency;
 		if (data.contenedor != undefined && data.contenedor != ''){
-			$http({
-				method: "GET",
-				url: inserturl,
-				headers:
-				{token: loginService.getToken()}
-			}).success(function (data){
-				data.data = factory.ponerDescripcionCodigoItem(data.data);
-				data = factory.calcularTotalTasas(data);
-				callback(data);
-			}).error(function(errorText){
-				console.log(errorText);
-				dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
-			});
+			$http.get(inserturl)
+				.success(function (data){
+					data.data = factory.ponerDescripcionCodigoItem(data.data);
+					data = factory.calcularTotalTasas(data);
+					callback(data);
+				}).error(function(errorText){
+					console.log(errorText);
+					dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
+				});
 		}
 	};
 
