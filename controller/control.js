@@ -56,7 +56,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.chartDataFacturadoAR = datosGraficoPorMes;
 	$scope.chartDataFacturadoUS = datosGraficoPorMes;
 
-	$scope.chartWidthDiaGatesTurnos = 1140;
+	$scope.chartWidthDiaGatesTurnos = 1120;
 	$scope.chartDataDiaGatesTurnos = datosGraficoGatesTurnosDias;
 
 	$scope.isCollapsedMonth = true;
