@@ -111,30 +111,6 @@
 				if (dataNoMatches.status == 'OK'){
 					$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
 					$scope.codigosSinAsociar.codigos = dataNoMatches.data;
-					if ($scope.codigosSinAsociar.total > 0){
-						invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
-							var infoComprobantes = [];
-							if (invoicesNoMatches.data != null){
-								invoicesNoMatches.data.forEach(function(unComprobante){
-									infoComprobantes.push($scope.infoReal(unComprobante._id._id));
-								});
-								$q.all(infoComprobantes)
-									.then(function(result){
-										$scope.comprobantesRotos = angular.copy(result);
-										$scope.totalItems = invoicesNoMatches.totalCount;
-										$scope.loadingControlCodigos = false;
-									},
-									function(errors) {
-										dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos de los comprobantes.');
-										$scope.totalItems = 0;
-										$scope.loadingControlCodigos = false;
-									});
-							}
-						});
-					} else {
-						$scope.totalItems = 0;
-						$scope.loadingControlCodigos = false;
-					}
 				} else {
 					//dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos.');
 					$scope.mensajeResultado = {
@@ -144,6 +120,30 @@
 					};
 					$scope.loadingControlCodigos = false;
 				}
+			});
+			invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
+
+				$scope.comprobantesRotos = invoicesNoMatches.data;
+				$scope.totalItems = invoicesNoMatches.totalCount;
+				$scope.loadingControlCodigos = false;
+
+				/*var infoComprobantes = [];
+				 if (invoicesNoMatches.data != null){
+				 invoicesNoMatches.data.forEach(function(unComprobante){
+				 infoComprobantes.push($scope.infoReal(unComprobante._id._id));
+				 });
+				 $q.all(infoComprobantes)
+				 .then(function(result){
+				 $scope.comprobantesRotos = angular.copy(result);
+				 $scope.totalItems = invoicesNoMatches.totalCount;
+				 $scope.loadingControlCodigos = false;
+				 },
+				 function(errors) {
+				 dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos de los comprobantes.');
+				 $scope.totalItems = 0;
+				 $scope.loadingControlCodigos = false;
+				 });
+				 }*/
 			});
 		};
 
