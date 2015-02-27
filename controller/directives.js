@@ -109,6 +109,7 @@
 					$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 					$scope.listaBuques = $rootScope.listaBuques;
 					$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
+					$scope.vouchers = $rootScope.vouchers;
 				});
 
 				$scope.$on('iniciarBusqueda', function(event, data){
