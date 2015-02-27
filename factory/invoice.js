@@ -59,7 +59,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				callback(factory.setearInterfaz(data));
 
 			}).error(function(errorText) {
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los códigos no asociados por la terminal.');
+				//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los códigos no asociados por la terminal.');
+				callback(errorText);
 			});
 	};
 
@@ -118,7 +119,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				data.data.transferencia = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
 				callback(factory.ponerDescripcionComprobante(data.data));
 			}).error(function(error){
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
+				errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
 			});
 	};
 

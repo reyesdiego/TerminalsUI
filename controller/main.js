@@ -399,7 +399,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.addError = function(error){
 		$rootScope.mensajeResultado = {
 			titulo: 'Error',
-			mensaje: 'Se ha producido un error inesperado: ' + error.reason,
+			mensaje: 'Se ha producido un error inesperado. Intente recargar la página. Si el error persiste, comuníquese con A.G.P. S.E. ',
 			tipo: 'panel-danger'
 		};
 		$rootScope.$broadcast('errorInesperado', error);
