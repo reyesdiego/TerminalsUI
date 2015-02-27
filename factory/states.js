@@ -23,7 +23,7 @@ myapp.factory('statesFactory', function($http){
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
+				callback(errorText);
 			});
 	};
 
