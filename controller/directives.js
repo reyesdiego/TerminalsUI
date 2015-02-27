@@ -1050,9 +1050,21 @@
 				$scope.loadingTasas = false;
 				$scope.detalleGates = false;
 				$scope.ocultarFiltros = ['buque', 'contenedor', 'comprobantes', 'razonSocial', 'codComprobante', 'nroComprobante', 'fechaDesde'];
+				$scope.mensajeResultado = $rootScope.mensajeResultado;
+				$scope.configPanelTasas = {
+					tipo: 'panel-info',
+					titulo: 'Tasas a las cargas',
+					mensaje: 'No se encontraron tasas a las cargas para los filtros seleccionados.'
+				};
+				$scope.configPanelGates = {
+					tipo: 'panel-info',
+					titulo: 'Gates',
+					mensaje: 'No se encontraron gates para los filtros seleccionados.'
+				};
 				$scope.configPanelTurnos = {
 					tipo: 'panel-info',
-					titulo: 'Turnos'
+					titulo: 'Turnos',
+					mensaje: 'No se encontraron turnos para los filtros seleccionados.'
 				};
 				$scope.detalle = false;
 				$scope.contenedorElegido = {};
@@ -1066,7 +1078,8 @@
 				};
 				$scope.sumariaConfigPanel = {
 					tipo: 'panel-info',
-					titulo: 'A.F.I.P. sumaria'
+					titulo: 'A.F.I.P. sumaria',
+					mensaje: 'No se encontraron datos de sumarias de A.F.I.P relacionados.'
 				};
 				$scope.model = {
 					buque: '',
@@ -1167,7 +1180,12 @@
 							$scope.invoices = data.data;
 							$scope.invoicesTotalItems = data.totalCount;
 						} else {
-							dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos de los comprobantes.');
+							//dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos de los comprobantes.');
+							$scope.mensajeResultado = {
+								titulo: 'Comprobantes',
+								mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
+								tipo: 'panel-danger'
+							}
 						}
 						$scope.loadingInvoices = false;
 					});
@@ -1180,7 +1198,12 @@
 							$scope.tasas = data.data;
 							$scope.totalTasas = data.totalTasas;
 						} else {
-							dialogs.error('Contenedor', 'Se ha producido un error al cargar las tasas por contenedor.');
+							//dialogs.error('Contenedor', 'Se ha producido un error al cargar las tasas por contenedor.');
+							$scope.configPanelTasas = {
+								tipo: 'panel-danger',
+								titulo: 'Tasas a las cargas',
+								mensaje: 'Se ha producido un error al cargar los datos de tasas a las cargas.'
+							}
 						}
 						$scope.loadingTasas = false;
 					});
@@ -1194,7 +1217,12 @@
 							$scope.gates = data.data;
 							$scope.gatesTotalItems = data.totalCount;
 						} else  {
-							dialogs.error('Gates', 'Se ha producido un error al cargar los datos de los gates.')
+							//dialogs.error('Gates', 'Se ha producido un error al cargar los datos de los gates.')
+							$scope.configPanelGates = {
+								tipo: 'panel-danger',
+								titulo: 'Gates',
+								mensaje: 'Se ha producido un error al cargar los datos de los gates.'
+							}
 						}
 						$scope.loadingGates = false;
 					});
@@ -1207,7 +1235,12 @@
 							$scope.turnos = data.data;
 							$scope.turnosTotalItems = data.totalCount;
 						} else {
-							dialogs.error('Turnos', 'Se ha producido un error al cargar los datos de los turnos.');
+							//dialogs.error('Turnos', 'Se ha producido un error al cargar los datos de los turnos.');
+							$scope.configPanelTurnos = {
+								tipo: 'panel-danger',
+								titulo: 'Turnos',
+								mensaje: 'Se ha producido un error al cargar los datos de los turnos.'
+							}
 						}
 						$scope.loadingTurnos = false;
 					});
@@ -1219,7 +1252,12 @@
 						if (data.status == 'OK'){
 							$scope.sumariaAfip = data.data;
 						} else {
-							dialogs.error('Sumaria', 'Se ha producido un error al cargar los datos de la sumaria del contenedor.');
+							//dialogs.error('Sumaria', 'Se ha producido un error al cargar los datos de la sumaria del contenedor.');
+							$scope.sumariaConfigPanel = {
+								tipo: 'panel-danger',
+								titulo: 'A.F.I.P. sumaria',
+								mensaje: 'Se ha producido un error al cargar los datos de la sumaria de A.F.I.P.'
+							}
 						}
 						$scope.cargandoSumaria = false;
 					})
