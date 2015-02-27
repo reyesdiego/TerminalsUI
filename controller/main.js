@@ -248,7 +248,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.estadosComprobantesArray = data.data;
 				deferred.resolve()
 			} else {
-				deferred.reject()
+				deferred.reject(data)
 			}
 		});
 		return deferred.promise;
@@ -278,7 +278,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				});
 				deferred.resolve();
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -291,7 +291,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.itemsDescriptionInvoices = data.data;
 				deferred.resolve();
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -304,7 +304,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.unidadesTarifas = data.data;
 				deferred.resolve()
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -317,7 +317,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.arrayUnidades = data.data;
 				deferred.resolve();
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -338,7 +338,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				});
 				deferred.resolve();
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -359,7 +359,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				});
 				deferred.resolve();
 			} else {
-				deferred.reject()
+				deferred.reject(data)
 			}
 		});
 		return deferred.promise;
@@ -372,7 +372,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.listaBuques = data.data;
 				deferred.resolve();
 			} else {
-				deferred.reject()
+				deferred.reject(data)
 			}
 		});
 		return deferred.promise;
@@ -395,7 +395,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				});
 				deferred.resolve();
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -418,7 +418,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				});
 				deferred.resolve();
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -431,7 +431,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.vouchersType = data.data;
 				deferred.resolve();
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -444,7 +444,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 				$rootScope.vouchers = data.data;
 				deferred.resolve();
 			} else {
-				deferred.reject();
+				deferred.reject(data);
 			}
 		});
 		return deferred.promise;
@@ -470,8 +470,9 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 			function(){
 				$rootScope.$broadcast('cargaGeneral');
 			},
-			function(){
-				$rootScope.addError('');
+			function(error){
+				console.log(error);
+				$rootScope.addError(error);
 			}
 		)
 	};
