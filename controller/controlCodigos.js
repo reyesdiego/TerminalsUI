@@ -54,6 +54,11 @@
 
 		$scope.mostrarPtosVentas = false;
 
+		$scope.$on('errorInesperado', function(){
+			$scope.loadingControlCodigos = false;
+			$scope.comprobantesRotos = [];
+		});
+
 		$scope.$on('cambioPagina', function(event, data){
 			if ($scope.controlFiltros == 'codigos'){
 				$scope.currentPageCodigos = data;

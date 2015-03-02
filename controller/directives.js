@@ -39,7 +39,7 @@
 				$scope.listaContenedores = $rootScope.listaContenedores;
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 				$scope.listaBuques = $rootScope.listaBuques;
-				$scope.itemsDescription = $rootScope.itemsDescriptionInvoices
+				$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
 				$scope.listaViajes = [];
 				$scope.itemsPorPagina = [
 					{ value: 10, description: '10 items por página', ticked: false},
@@ -477,7 +477,6 @@
 				};
 
 				$scope.controlarTarifas = function(comprobante){
-
 					if ($scope.arrayMatchesListo){
 						$scope.realizarControl = false;
 
@@ -494,6 +493,7 @@
 						}
 
 						$scope.noMatch = false;
+						comprobante.noMatch = false;
 
 						comprobante.detalle.forEach(function(detalle){
 							detalle.items.forEach(function(item){
@@ -531,6 +531,7 @@
 									}
 								} else {
 									$scope.noMatch = true;
+									comprobante.noMatch = true;
 								}
 							});
 						});
@@ -543,10 +544,14 @@
 				$scope.chequearTarifas = function(comprobante){
 					if ($scope.arrayMatchesListo){
 						if (angular.isDefined($scope.comprobantesControlados[comprobante._id])){
-							return $scope.comprobantesControlados[comprobante._id];
+							comprobante.noMatch = $scope.comprobantesControlados[comprobante._id].codigos;
+							return $scope.comprobantesControlados[comprobante._id].tarifas;
 						} else {
 							$scope.controlarTarifas(comprobante);
-							$scope.comprobantesControlados[comprobante._id] = (comprobante.controlTarifas.length > 0);
+							$scope.comprobantesControlados[comprobante._id] = {
+								tarifas: (comprobante.controlTarifas.length > 0),
+								codigos: comprobante.noMatch
+							};
 							return comprobante.controlTarifas.length > 0;
 						}
 					} else {
