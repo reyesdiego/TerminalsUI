@@ -219,7 +219,7 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 
 });
 
-myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory, $injector){
+myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory, $injector, $q){
 	"use strict";
 
 	$rootScope.cambioMoneda = true;
@@ -235,141 +235,246 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.listaContenedoresGates = [];
 	$rootScope.listaContenedoresTurnos = [];
 
-	$rootScope.cargaGeneral = function(){
+	// Le agrega el token a todas las consultas $http
+	$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+		if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
+		if (data) { return angular.toJson(data); }
+	};
 
-		// Le agrega el token a todas las consultas $http
-		$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-			if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
-			if (data) { return angular.toJson(data); }
-		};
-
+	$rootScope.obtenerEstadosArray = function(){
+		var deferred = $q.defer();
 		statesFactory.getStatesArray(function(data){
-			$rootScope.estadosComprobantesArray = data.data;
+			if (data.status = 'OK'){
+				$rootScope.estadosComprobantesArray = data.data;
+				deferred.resolve()
+			} else {
+				deferred.reject(data)
+			}
 		});
+		return deferred.promise;
+	};
 
+	$rootScope.obtenerEstados = function(){
+		var deferred = $q.defer();
 		statesFactory.getStatesType(function(data){
-			$rootScope.estadosComprobantes = data.data;
-			$rootScope.estadosComprobantes.forEach(function(estado){
-				switch (estado.type){
-					case 'WARN':
-						estado.icon = '<img src="images/warn.png" />';
-						break;
-					case 'ERROR':
-						estado.icon = '<img src="images/error.png" />';
-						break;
-					case 'UNKNOWN':
-						estado.icon = '<img src="images/unknown.png" />';
-						break;
-					case 'OK':
-						estado.icon = '<img src="images/ok.png" />';
-						break;
-				}
-				estado.ticked = false;
-			})
+			if (data.status == 'OK'){
+				$rootScope.estadosComprobantes = data.data;
+				$rootScope.estadosComprobantes.forEach(function(estado){
+					switch (estado.type){
+						case 'WARN':
+							estado.icon = '<img src="images/warn.png" />';
+							break;
+						case 'ERROR':
+							estado.icon = '<img src="images/error.png" />';
+							break;
+						case 'UNKNOWN':
+							estado.icon = '<img src="images/unknown.png" />';
+							break;
+						case 'OK':
+							estado.icon = '<img src="images/ok.png" />';
+							break;
+					}
+					estado.ticked = false;
+				});
+				deferred.resolve();
+			} else {
+				deferred.reject(data);
+			}
 		});
+		return deferred.promise;
+	};
 
+	$rootScope.obtenerDescripciones = function(){
+		var deferred = $q.defer();
 		invoiceFactory.getDescriptionItem(function (data) {
-			$rootScope.itemsDescriptionInvoices = data.data;
+			if (data.status == 'OK'){
+				$rootScope.itemsDescriptionInvoices = data.data;
+				deferred.resolve();
+			} else {
+				deferred.reject(data);
+			}
 		});
+		return deferred.promise;
+	};
 
+	$rootScope.obtenerUnidades = function(){
+		var deferred = $q.defer();
 		priceFactory.getUnitTypes(function(data){
-			$rootScope.unidadesTarifas = data.data;
+			if (data.status == 'OK'){
+				$rootScope.unidadesTarifas = data.data;
+				deferred.resolve()
+			} else {
+				deferred.reject(data);
+			}
 		});
+		return deferred.promise;
+	};
 
+	$rootScope.obtenerUnidadesArray = function(){
+		var deferred = $q.defer();
 		priceFactory.getUnitTypesArray(function(data){
-			$rootScope.arrayUnidades = data.data;
+			if (data.status == 'OK'){
+				$rootScope.arrayUnidades = data.data;
+				deferred.resolve();
+			} else {
+				deferred.reject(data);
+			}
 		});
+		return deferred.promise;
+	};
 
+	$rootScope.obtenerClientes = function(){
+		var deferred = $q.defer();
 		controlPanelFactory.getClients(function(data){
-			var i = 0;
-			data.data.forEach(function(cliente){
-				var objetoCliente = {
-					'id': i,
-					'nombre': cliente
-				};
-				$rootScope.listaRazonSocial.push(objetoCliente);
-				i++;
-			});
-			$rootScope.$broadcast('cargaGeneral');
+			if (data.status == 'OK'){
+				var i = 0;
+				data.data.forEach(function(cliente){
+					var objetoCliente = {
+						'id': i,
+						'nombre': cliente
+					};
+					$rootScope.listaRazonSocial.push(objetoCliente);
+					i++;
+				});
+				deferred.resolve();
+			} else {
+				deferred.reject(data);
+			}
 		});
+		return deferred.promise;
+	};
 
+	$rootScope.obtenerContainers = function(){
+		var deferred = $q.defer();
 		controlPanelFactory.getContainers(function(data){
-			var i = 0;
-			data.data.forEach(function(contenedor){
-				var objetoContenedor = {
-					'id': i,
-					'contenedor': contenedor
-				};
-				$rootScope.listaContenedores.push(objetoContenedor);
-				i++;
-			});
-			$rootScope.$broadcast('cargaGeneral');
+			if (data.status == 'OK'){
+				var i = 0;
+				data.data.forEach(function(contenedor){
+					var objetoContenedor = {
+						'id': i,
+						'contenedor': contenedor
+					};
+					$rootScope.listaContenedores.push(objetoContenedor);
+					i++;
+				});
+				deferred.resolve();
+			} else {
+				deferred.reject(data)
+			}
 		});
+		return deferred.promise;
+	};
 
+	$rootScope.obtenerBuquesViajes = function(){
+		var deferred = $q.defer();
 		invoiceFactory.getShipTrips(function(data){
-			$rootScope.listaBuques = data.data;
-			$rootScope.$broadcast('cargaGeneral');
+			if (data.status == 'OK'){
+				$rootScope.listaBuques = data.data;
+				deferred.resolve();
+			} else {
+				deferred.reject(data)
+			}
 		});
+		return deferred.promise;
+	};
 
+	$rootScope.obtenerContainersGates = function(){
+		var deferred = $q.defer();
 		controlPanelFactory.getContainersGates(function(data){
-			var i = 0;
-			data.data.forEach(function(container){
-				if (angular.isDefined(container) && container != null){
-					var objetoContainer = {
-						'id': i,
-						'contenedor': container
-					};
-					$rootScope.listaContenedoresGates.push(objetoContainer);
-					i++;
-				}
-			});
-			$rootScope.$broadcast('cargaGeneral');
+			if (data.status == 'OK'){
+				var i = 0;
+				data.data.forEach(function(container){
+					if (angular.isDefined(container) && container != null){
+						var objetoContainer = {
+							'id': i,
+							'contenedor': container
+						};
+						$rootScope.listaContenedoresGates.push(objetoContainer);
+						i++;
+					}
+				});
+				deferred.resolve();
+			} else {
+				deferred.reject(data);
+			}
 		});
+		return deferred.promise;
+	};
 
-		/*controlPanelFactory.getShipsGates(function(data){
-			var i = 0;
-			data.data.forEach(function(buque){
-				if (angular.isDefined(buque) && buque != null){
-					var objetoBuque = {
-						'id': i,
-						'buque': buque
-					};
-					$rootScope.listaBuquesGates.push(objetoBuque);
-					i++;
-				}
-			});
-			$rootScope.$broadcast('cargaGeneral');
-		});*/
-
+	$rootScope.obtenerContainersTurnos = function(){
+		var deferred = $q.defer();
 		controlPanelFactory.getContainersTurnos(function(data){
-			var i = 0;
-			data.data.forEach(function(container){
-				if (angular.isDefined(container) && container != null){
-					var objetoContainer = {
-						'id': i,
-						'contenedor': container
-					};
-					$rootScope.listaContenedoresTurnos.push(objetoContainer);
-					i++;
-				}
-			});
-			$rootScope.$broadcast('cargaGeneral');
+			if (data.status == 'OK'){
+				var i = 0;
+				data.data.forEach(function(container){
+					if (angular.isDefined(container) && container != null){
+						var objetoContainer = {
+							'id': i,
+							'contenedor': container
+						};
+						$rootScope.listaContenedoresTurnos.push(objetoContainer);
+						i++;
+					}
+				});
+				deferred.resolve();
+			} else {
+				deferred.reject(data);
+			}
 		});
+		return deferred.promise;
+	};
 
-		/*controlPanelFactory.getShipsTurnos(function(data){
-			var i = 0;
-			data.data.forEach(function(buque){
-				if (angular.isDefined(buque) && buque != null){
-					var objetoBuque = {
-						'id': i,
-						'buque': buque
-					};
-					$rootScope.listaBuquesTurnos.push(objetoBuque);
-					i++;
-				}
-			});
-			$rootScope.$broadcast('cargaGeneral');
-		});*/
+	$rootScope.obtenerTiposComprobantesArray = function(){
+		var deferred = $q.defer();
+		vouchersFactory.getVouchersArray(function(data){
+			if (data.status == 'OK'){
+				$rootScope.vouchersType = data.data;
+				deferred.resolve();
+			} else {
+				deferred.reject(data);
+			}
+		});
+		return deferred.promise;
+	};
+
+	$rootScope.obtenerTiposComprobantes = function(){
+		var deferred = $q.defer();
+		vouchersFactory.getVouchersType(function(data){
+			if (data.status == 'OK'){
+				$rootScope.vouchers = data.data;
+				deferred.resolve();
+			} else {
+				deferred.reject(data);
+			}
+		});
+		return deferred.promise;
+	};
+
+	$rootScope.cargaGeneral = function(){
+		var llamadas = [
+			$rootScope.obtenerEstadosArray(),
+			$rootScope.obtenerEstados(),
+			$rootScope.obtenerDescripciones(),
+			$rootScope.obtenerUnidades(),
+			$rootScope.obtenerUnidadesArray(),
+			$rootScope.obtenerClientes(),
+			$rootScope.obtenerContainers(),
+			$rootScope.obtenerBuquesViajes(),
+			$rootScope.obtenerContainersGates(),
+			$rootScope.obtenerContainersTurnos(),
+			$rootScope.obtenerTiposComprobantesArray(),
+			$rootScope.obtenerTiposComprobantes()
+		];
+		$q.all(llamadas)
+			.then(
+			function(){
+				$rootScope.$broadcast('cargaGeneral');
+			},
+			function(error){
+				console.log(error);
+				$rootScope.addError(error);
+			}
+		)
 	};
 
 	// Carga la sesion por cookies
@@ -460,14 +565,6 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.isDefined = function(element){
 		return angular.isDefined(element);
 	};
-
-	vouchersFactory.getVouchersArray(function(data){
-		$rootScope.vouchersType = data.data;
-	});
-
-	vouchersFactory.getVouchersType(function(data){
-		$rootScope.vouchers = data.data;
-	});
 
 	$rootScope.switchTheme = function(title){
 		var i, a;

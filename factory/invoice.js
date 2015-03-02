@@ -22,7 +22,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			.success(function(data) {
 				callback(data);
 			}).error(function(errorText) {
-				console.log(errorText);
+				callback(errorText);
 		});
 	};
 
@@ -96,7 +96,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
+				callback(errorText);
 			});
 	};
 

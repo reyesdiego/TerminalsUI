@@ -11,7 +11,7 @@ myapp.factory('vouchersFactory', function($http){
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
+				callback(errorText);
 		});
 	};
 
@@ -22,7 +22,7 @@ myapp.factory('vouchersFactory', function($http){
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
-				console.log(errorText);
+				callback(data);
 			});
 	};
 

@@ -126,7 +126,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			.success(function(response) {
 				callback(response);
 			}).error(function(errorText) {
-				console.log(errorText);
+				callback(errorText);
 			});
 	};
 
@@ -136,7 +136,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 			.success(function(response) {
 				callback(response);
 			}).error(function(errorText) {
-				console.log(errorText);
+				callback(errorText);
 			});
 	};
 

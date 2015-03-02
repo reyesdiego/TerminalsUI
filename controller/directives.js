@@ -31,6 +31,7 @@
 				$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 				//Tipos de comprobantes
 				$scope.vouchers = $rootScope.vouchers;
+				$scope.vouchersType = $rootScope.vouchersType;
 				//Opciones de fecha para calendarios
 				$scope.formatDate = $rootScope.formatDate;
 				$scope.dateOptions = $rootScope.dateOptions;
@@ -38,6 +39,7 @@
 				$scope.listaContenedores = $rootScope.listaContenedores;
 				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 				$scope.listaBuques = $rootScope.listaBuques;
+				$scope.itemsDescription = $rootScope.itemsDescriptionInvoices
 				$scope.listaViajes = [];
 				$scope.itemsPorPagina = [
 					{ value: 10, description: '10 items por página', ticked: false},
@@ -52,10 +54,6 @@
 				});
 
 				$scope.comprobantesVistos = [];
-
-				vouchersFactory.getVouchersArray(function(data){
-					$scope.vouchersType = data.data;
-				});
 
 				$scope.acceso = $rootScope.esUsuario;
 
@@ -100,15 +98,14 @@
 					}
 				});
 
-				invoiceFactory.getDescriptionItem(function(data){
-					$scope.itemsDescription = data.data;
-				});
-
 				$scope.$on('cargaGeneral', function(){
 					$scope.listaContenedores = $rootScope.listaContenedores;
 					$scope.listaRazonSocial = $rootScope.listaRazonSocial;
 					$scope.listaBuques = $rootScope.listaBuques;
 					$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
+					$scope.vouchers = $rootScope.vouchers;
+					$scope.vouchersType = $rootScope.vouchersType;
+					$scope.itemsDescription = $rootScope.itemsDescriptionInvoices
 				});
 
 				$scope.$on('iniciarBusqueda', function(event, data){

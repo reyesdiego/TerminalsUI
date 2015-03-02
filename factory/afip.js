@@ -402,7 +402,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
+				//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Se ha producido un error al cargar los datos.');
 				var data={
 					status: 'ERROR'
 				};
@@ -416,6 +416,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 			.success(function(data){
 				callback(data);
 			}).error(function(error){
+				if (error == null){
+					error = {
+						status: 'ERROR'
+					};
+				}
 				callback(error);
 			});
 	};
