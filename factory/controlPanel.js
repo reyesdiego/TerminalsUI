@@ -89,7 +89,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		var inserturl = serverUrl + '/gatesByMonth?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
-				callback(data);
+				callback(data.data);
 			}).error(function(errorText){
 				errorFactory.raiseError(errorText, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
 			});
@@ -120,7 +120,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 		var inserturl = serverUrl + '/gatesByHour?fecha=' + formatDate.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
-				callback(data);
+				callback(data.data);
 			}).error(function(errorText){
 				errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
 			});
