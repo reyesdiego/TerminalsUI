@@ -1283,6 +1283,13 @@
 		}
 	});
 
+	myapp.directive('buqueViajeDetail', function() {
+		return {
+			restrict:		'E',
+			templateUrl:	'view/buque.viaje.detail.html'
+		}
+	});
+
 	myapp.directive('encabezadoTablaOrdenado', function() {
 		return {
 			restrict:		'E',
