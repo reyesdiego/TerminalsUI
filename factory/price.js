@@ -9,8 +9,19 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		if (datos){ inserturl = inserturl + '?onlyRates=true' }
 		$http.get(inserturl)
 			.success(function (data){
+				if (data == null) {
+					data = {
+						status: 'ERROR',
+						data: []
+					}
+				}
 				callback(data);
 			}).error(function(error){
+				if (error == null){
+					error = {
+						status: 'ERROR'
+					}
+				}
 				callback(error);
 			});
 	};

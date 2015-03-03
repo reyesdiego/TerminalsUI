@@ -58,6 +58,11 @@
 			$scope.cargaDatos($scope.actualRegistro);
 		});
 
+		$scope.$on('errorInesperado', function(){
+			$scope.cargando = false;
+			$scope.datosRegistro = [];
+		});
+
 		$scope.hitEnter = function(evt){
 			if(angular.equals(evt.keyCode,13))
 				$scope.cargaDatos($scope.actualRegistro);
@@ -178,7 +183,7 @@
 			}
 			$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
 			$scope.page.limit = $scope.itemsPerPage;
-			$scope.invoices = [];
+			$scope.datosRegistro = [];
 			afipFactory.getAfip(registro, $scope.model, $scope.page, function(data){
 				if(data.status === 'OK'){
 					$scope.datosRegistro = data.data;

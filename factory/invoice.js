@@ -64,6 +64,12 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		inserturl = this.aplicarFiltros(inserturl, datos);
 		$http.get(inserturl)
 			.success(function (data) {
+				if (data == null) {
+					data = {
+						status: 'ERROR',
+						data: []
+					}
+				}
 				if (data.data == null) data.data = [];
 
 				data = factory.ponerDescripcionComprobantes(data);
@@ -92,6 +98,12 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		inserturl = this.aplicarFiltros(inserturl, datos);
 		$http.get(inserturl)
 			.success(function(data){
+				if (data == null){
+					data = {
+						status: 'ERROR',
+						data: []
+					}
+				}
 				data.data.sort(function(a,b){
 					return a - b;
 				});

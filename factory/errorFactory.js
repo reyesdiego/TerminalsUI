@@ -7,8 +7,12 @@ myapp.factory('errorFactory', function($rootScope, dialogs){
 	var factory = {};
 
 	factory.raiseError = function(error, url, evento, mensaje){
+		if (error == null){
+			error = {
+				ruta: ''
+			}
+		}
 		error.ruta = url;
-		console.log(error);
 		dialogs.error('Error', mensaje);
 		$rootScope.$broadcast(evento, error);
 	};
