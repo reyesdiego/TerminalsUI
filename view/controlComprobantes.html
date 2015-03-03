@@ -17,11 +17,14 @@
 	</div>
 	<br>
 	<accordion-invoices-search></accordion-invoices-search>
-	<div class="col-lg-12">
-		<div-panel config-panel="{tipo: 'panel-info', titulo: 'Contenedores sin tasa a las cargas'}">
+	<div class="col-lg-12 text-center" ng-show="loadingTasaCargas">
+		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+	</div>
+	<div class="col-lg-12" ng-hide="loadingTasaCargas">
+		<div-panel config-panel="{tipo: 'panel-info', titulo: 'Contenedores sin tasa a las cargas ' + totalContenedores}">
 			<div style="max-height: 200px; max-width: 100%; overflow: auto">
 				<span ng-repeat="tasa in tasaCargas.resultado">
-					<a href ng-click="filtrado('contenedor', tasa.contenedor.contenedor)">{{ tasa.contenedor.contenedor }}</a> -
+					<a href ng-click="verContenedor(tasa.contenedor.contenedor)">{{ tasa.contenedor.contenedor }}</a> -
 				</span>
 			</div>
 		</div-panel>

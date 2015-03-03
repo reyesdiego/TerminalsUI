@@ -3,7 +3,7 @@
  */
 (function() {
 	myapp.controller('tasaCargasCtrl', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, loginService) {
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage'];
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor'];
 
 		$scope.ocultaTasas = true;
 		$scope.loadingState = false;
@@ -96,25 +96,13 @@
 
 		$scope.filtrado = function(filtro, contenido){
 			$scope.model[filtro] = contenido;
-			if ($scope.model.contenedor != '') {
-				$scope.contenedorElegido.contenedor = $scope.model.contenedor;
-				$scope.loadingInvoices = true;
-				$scope.invoices = [];
-				$scope.loadingGates = true;
-				$scope.gates = [];
-				$scope.loadingTurnos = true;
-				$scope.turnos = [];
-				$scope.detalle = true;
-				$scope.currentPageContainers = 1;
-				$scope.cargaComprobantes();
-				$scope.cargaGates();
-				$scope.cargaTurnos();
-				$scope.cargaSumaria();
-			} else {
-				$scope.loadingInvoices = false;
-				$scope.loadingGates = false;
-				$scope.loadingTurnos = false;
-				$scope.detalle = false;
+			$scope.controlTasaCargas();
+		};
+
+		$scope.clientSelected = function(selected){
+			if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
+				$scope.model.razonSocial = selected.title;
+				$scope.filtrado('razonSocial', selected.title);
 			}
 		};
 
@@ -125,10 +113,27 @@
 			}
 		};
 
+		$scope.verContenedor = function(contenedor) {
+			$scope.model.contenedor = contenedor;
+			$scope.contenedorElegido.contenedor = contenedor;
+			$scope.loadingInvoices = true;
+			$scope.invoices = [];
+			$scope.loadingGates = true;
+			$scope.gates = [];
+			$scope.loadingTurnos = true;
+			$scope.turnos = [];
+			$scope.detalle = true;
+			$scope.currentPageContainers = 1;
+			$scope.cargaComprobantes();
+			$scope.cargaGates();
+			$scope.cargaTurnos();
+			$scope.cargaSumaria();
+		};
+
 		$scope.cargaComprobantes = function(page){
 			page = page || { skip:0, limit: $scope.itemsPerPage };
 			if (page.skip == 0){ $scope.currentPage = 1}
-			invoiceFactory.getInvoice($scope.model, page, function(data){
+			invoiceFactory.getInvoice({contenedor: $scope.model.contenedor}, page, function(data){
 				if(data.status === 'OK'){
 					$scope.invoices = data.data;
 					$scope.invoicesTotalItems = data.totalCount;
@@ -147,7 +152,7 @@
 		$scope.cargaGates = function(page){
 			page = page || { skip: 0, limit: $scope.itemsPerPage };
 			if (page.skip == 0){ $scope.currentPage = 1}
-			gatesFactory.getGate($scope.model, page, function (data) {
+			gatesFactory.getGate({contenedor: $scope.model.contenedor}, page, function (data) {
 				if (data.status === "OK") {
 					$scope.gates = data.data;
 					$scope.gatesTotalItems = data.totalCount;
@@ -165,7 +170,7 @@
 
 		$scope.cargaTurnos = function(page){
 			page = page || { skip:0, limit: $scope.itemsPerPage };
-			turnosFactory.getTurnos($scope.model, page, function(data){
+			turnosFactory.getTurnos({contenedor: $scope.model.contenedor}, page, function(data){
 				if (data.status === "OK"){
 					$scope.turnos = data.data;
 					$scope.turnosTotalItems = data.totalCount;
@@ -201,15 +206,15 @@
 		$scope.controlTasaCargas = function(){
 			/*Acá control de tasa a las cargas*/
 			$scope.loadingTasaCargas = true;
-			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
-			$scope.page.limit = $scope.model.itemsPerPage;
-			invoiceFactory.getContainersSinTasaCargas($scope.model, loginService.getFiltro(), $scope.page, function(data){
+			$scope.model.contenedor = '';
+			invoiceFactory.getContainersSinTasaCargas($scope.model, loginService.getFiltro(), function(data){
 				if (data.status == "ERROR"){
 					$scope.tasaCargas.titulo = "Error";
 					$scope.tasaCargas.cartel = "panel-danger";
 					$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
 					$scope.tasaCargas.mostrarResultado = 0;
 				} else {
+					$scope.totalContenedores = data.totalCount;
 					$scope.tasaCargas.resultado = data.data;
 					if ($scope.tasaCargas.resultado.length > 0){
 						$scope.totalItems = data.totalCount;

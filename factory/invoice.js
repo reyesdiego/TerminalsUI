@@ -38,8 +38,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 	};
 
-	factory.getContainersSinTasaCargas = function(datos, terminal, page, callback) {
-		var inserturl = serverUrl + '/invoices/containersNoRates/' + terminal;
+	factory.getContainersSinTasaCargas = function(datos, terminal, callback) {
+		var inserturl = serverUrl + '/invoices/containersNoRates/' + terminal + '?';
+		inserturl = this.aplicarFiltros(inserturl, datos);
 		$http.get(inserturl)
 			.success(function(data) {
 				callback(data);
