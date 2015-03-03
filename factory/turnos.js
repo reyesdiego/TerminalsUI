@@ -7,10 +7,10 @@ myapp.factory('turnosFactory', function($http, dialogs, formatDate, loginService
 	factory.getTurnos = function(datos, page, callback){
 		var inserturl = serverUrl + '/appointments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
 		var insertAux = inserturl;
-		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != ''){
+		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != '' && datos.fechaDesde != null){
 			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaDesde);
 		}
-		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != ''){
+		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != '' && datos.fechaHasta != null){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
 			inserturl = inserturl + 'fechaFin=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaHasta);
 		}

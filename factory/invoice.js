@@ -38,6 +38,17 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			});
 	};
 
+	factory.getContainersSinTasaCargas = function(datos, terminal, page, callback) {
+		var inserturl = serverUrl + '/invoices/containersNoRates/' + terminal;
+		$http.get(inserturl)
+			.success(function(data) {
+				callback(data);
+			})
+			.error(function(error) {
+				callback(error)
+			});
+	};
+
 	factory.getTarifasTerminal = function(callback){
 		var inserturl = serverUrl + '/matches/' + loginService.getFiltro() + '?type=prices';
 		$http.get(inserturl)

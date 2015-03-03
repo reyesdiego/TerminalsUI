@@ -16,7 +16,17 @@
 		<h3>Sin Tasa a las cargas</h3>
 	</div>
 	<br>
-	<vista-comprobantes model="model" datos-invoices="tasaCargas.resultado" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingTasaCargas" control-codigos="false" mostrar-ptos-venta="false" panel-mensaje="mensajeResultado"></vista-comprobantes>
+	<accordion-invoices-search></accordion-invoices-search>
+	<div class="col-lg-12">
+		<div-panel config-panel="{tipo: 'panel-info', titulo: 'Contenedores sin tasa a las cargas'}">
+			<div style="max-height: 200px; max-width: 100%; overflow: auto">
+				<span ng-repeat="tasa in tasaCargas.resultado">
+					<a href ng-click="filtrado('contenedor', tasa.contenedor.contenedor)">{{ tasa.contenedor.contenedor }}</a> -
+				</span>
+			</div>
+		</div-panel>
+	</div>
+	<buque-viaje-detail></buque-viaje-detail>
 </tab>
 
 <tab class="hidden-print" heading="Control de Correlatividad" ng-controller="correlatividadCtrl">
