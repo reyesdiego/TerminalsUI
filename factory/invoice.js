@@ -254,17 +254,15 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getTrackInvoice = function(invoiceId, callback){
 		var inserturl = serverUrl + '/invoice/' + invoiceId + '/comments';
-		$http({
-			method: 'GET',
-			url: inserturl,
-			cache: false
-		}).success(function (data){
-			data.data = factory.filtrarComentarios(data.data);
-			data.data.forEach(function(comment){
-				comment.fecha = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(comment._id));
-			});
-			callback(data);
-		}).error(function(error){
+		$http(inserturl)
+			.success(function (data){
+				data.data = factory.filtrarComentarios(data.data);
+				data.data.forEach(function(comment){
+					comment.fecha = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(comment._id));
+				});
+				callback(data);
+			})
+			.error(function(error){
 			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al obtener los comentarios del comprobante ' + invoiceId);
 			callback(error);
 		});

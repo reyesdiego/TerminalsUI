@@ -206,6 +206,7 @@
 		$scope.controlTasaCargas = function(){
 			/*Acá control de tasa a las cargas*/
 			$scope.loadingTasaCargas = true;
+			$scope.detalle = false;
 			$scope.model.contenedor = '';
 			invoiceFactory.getContainersSinTasaCargas($scope.model, loginService.getFiltro(), function(data){
 				if (data.status == "ERROR"){

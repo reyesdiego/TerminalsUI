@@ -24,7 +24,7 @@
 		<div-panel config-panel="{tipo: 'panel-info', titulo: 'Contenedores sin tasa a las cargas ' + totalContenedores}">
 			<div style="max-height: 200px; max-width: 100%; overflow: auto">
 				<span ng-repeat="tasa in tasaCargas.resultado">
-					<a href ng-click="verContenedor(tasa.contenedor.contenedor)">{{ tasa.contenedor.contenedor }}</a> -
+					<a href ng-class="{mark: (model.contenedor == tasa.contenedor.contenedor)}" ng-click="verContenedor(tasa.contenedor.contenedor)">{{ tasa.contenedor.contenedor }}</a> -
 				</span>
 			</div>
 		</div-panel>
