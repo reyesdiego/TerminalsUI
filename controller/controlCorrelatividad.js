@@ -37,12 +37,12 @@
 			$scope.controlCorrelatividad();
 		});
 
-		$scope.$on('errorCorrelatividad', function(){
-			$scope.pantalla.titulo =  "Error";
-			$scope.pantalla.mensajeCorrelativo = 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.';
-			$scope.pantalla.tipo = "panel-danger";
-			$scope.pantalla.resultadoCorrelativo = [];
+		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.loadingCorrelatividad = false;
+			$scope.pantalla.titulo = mensaje.titulo;
+			$scope.pantalla.tipo = mensaje.tipo;
+			$scope.pantalla.mensajeCorrelativo = mensaje.mensaje;
+			$scope.pantalla.puntosDeVenta = [];
 		});
 
 		$scope.controlCorrelatividad = function(){
@@ -51,16 +51,26 @@
 			$scope.tipoComprob = $rootScope.vouchersType[$scope.model.codTipoComprob];
 			$scope.mostrarBotonImprimir = false;
 			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
-				$scope.totalFaltantes = dataComprob.totalCount;
+				if (dataComprob.status == 'OK'){
+					$scope.totalFaltantes = dataComprob.totalCount;
 
-				if (dataComprob.totalCount === 0){
+					if (dataComprob.totalCount === 0){
+						$scope.pantalla = {
+							titulo:  "Correlatividad",
+							tipo: "panel-info",
+							mensajeCorrelativo : 'No se hallaron comprobantes faltantes.',
+							puntosDeVenta: []
+						};
+					}
+				} else {
 					$scope.pantalla = {
 						titulo:  "Correlatividad",
-						tipo: "panel-info",
-						mensajeCorrelativo : 'No se hallaron comprobantes faltantes.',
+						tipo: "panel-danger",
+						mensajeCorrelativo : 'Se ha producido un error al cargar los datos.',
 						puntosDeVenta: []
 					};
 				}
+
 				$scope.loadingCorrelatividad = false;
 			});
 		};

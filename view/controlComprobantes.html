@@ -29,7 +29,7 @@
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 				<br>
-				<span ng-repeat="tasa in tasaCargas.resultado | filter: search">
+				<span ng-repeat="tasa in resultado | filter: search">
 					<a href ng-class="{mark: (model.contenedor == tasa.contenedor)}" ng-click="verContenedor(tasa.contenedor)">{{ tasa.contenedor }}</a><span ng-show="!$last"> - </span>
 				</span>
 			</div>
