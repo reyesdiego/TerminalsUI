@@ -26,9 +26,9 @@
 				<div class="col-lg-12 well hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
 					<div class="row">
 						<div class="col-lg-6">
-							<label for="fechaDesde">Desde</label>
+							<label for="fechaInicio">Desde</label>
 							<p class="input-group">
-								<input type="text" id="fechaDesde" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
+								<input type="text" id="fechaInicio" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="desde" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="isCollapsedDesde = !isCollapsedDesde"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>
@@ -40,9 +40,9 @@
 							</div>
 						</div>
 						<div class="col-lg-6">
-							<label for="fechaHasta">Hasta</label>
+							<label for="fechaFin">Hasta</label>
 							<p class="input-group">
-								<input type="text" id="fechaHasta" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="hasta" />
+								<input type="text" id="fechaFin" readonly="true" class="form-control" datepicker-popup="{{format}}" ng-model="hasta" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="isCollapsedHasta = !isCollapsedHasta"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>

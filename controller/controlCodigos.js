@@ -2,6 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 (function() {
+
 	myapp.controller('codigosCtrl', function($scope, invoiceFactory, priceFactory, dialogs, $q) {
 		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 
@@ -11,8 +12,8 @@
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': $scope.fechaDesde,
-			'fechaHasta': $scope.fechaHasta,
+			'fechaInicio': $scope.fechaInicio,
+			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
 			'buque': '',
 			'viaje': '',
@@ -104,7 +105,7 @@
 			$scope.comprobantesRotos = [];
 			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 			$scope.pageCodigos.limit = $scope.model.itemsPerPage;
-			priceFactory.noMatches($scope.model.fechaDesde, $scope.model.fechaHasta, function(dataNoMatches){
+			priceFactory.noMatches($scope.model.fechaInicio, $scope.model.fechaFin, function(dataNoMatches){
 				if (dataNoMatches.status == 'OK'){
 					$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
 					$scope.codigosSinAsociar.codigos = dataNoMatches.data;
@@ -173,4 +174,5 @@
 		};
 
 	});
+
 })();

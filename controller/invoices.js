@@ -2,6 +2,7 @@
  * Created by Diego Reyes on 2/3/14.
 */
 (function(){
+
 	myapp.controller('invoicesCtrl', function($scope, invoiceFactory, loginService){
 
 		$scope.ocultarFiltros = ['nroPtoVenta'];
@@ -12,8 +13,8 @@
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': $scope.fechaDesde,
-			'fechaHasta': $scope.fechaHasta,
+			'fechaInicio': $scope.fechaInicio,
+			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
 			'buque': '',
 			'viaje': '',

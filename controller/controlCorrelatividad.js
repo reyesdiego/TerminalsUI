@@ -2,6 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 (function() {
+
 	myapp.controller('correlatividadCtrl', function($rootScope, $scope, invoiceFactory, socket) {
 
 		var socketIoRegister;
@@ -14,8 +15,8 @@
 		$scope.model = {
 			'nroPtoVenta': '',
 			'codTipoComprob': 0,
-			'fechaDesde': $scope.desde,
-			'fechaHasta': $scope.hasta
+			'fechaInicio': $scope.desde,
+			'fechaFin': $scope.hasta
 		};
 
 		$scope.tipoComprob = '';
@@ -90,4 +91,5 @@
 		});
 
 	});
+
 })();

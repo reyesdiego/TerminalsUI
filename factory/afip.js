@@ -431,13 +431,13 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'buqueNombre=' + filtros.buque;
 		}
-		if(angular.isDefined(filtros.fechaDesde) && filtros.fechaDesde != null && filtros.fechaDesde != ''){
+		if(angular.isDefined(filtros.fechaInicio) && filtros.fechaInicio != null && filtros.fechaInicio != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(filtros.fechaDesde);
+			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(filtros.fechaInicio);
 		}
-		if(angular.isDefined(filtros.fechaHasta) && filtros.fechaHasta != null && filtros.fechaHasta != ''){
+		if(angular.isDefined(filtros.fechaFin) && filtros.fechaFin != null && filtros.fechaFin != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFecha(filtros.fechaHasta);
+			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFecha(filtros.fechaFin);
 		}
 		if(angular.isDefined(filtros.order) && filtros.order != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}

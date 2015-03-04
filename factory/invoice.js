@@ -185,13 +185,13 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'estado=' + datos.estado;
 		}
-		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != null && datos.fechaDesde != ''){
+		if(angular.isDefined(datos.fechaInicio) && datos.fechaInicio != null && datos.fechaInicio != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(datos.fechaDesde);
+			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(datos.fechaInicio);
 		}
-		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != null && datos.fechaHasta != ''){
+		if(angular.isDefined(datos.fechaFin) && datos.fechaFin != null && datos.fechaFin != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFecha(datos.fechaHasta);
+			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFecha(datos.fechaFin);
 		}
 		if(angular.isDefined(datos.codigo) && datos.codigo != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}

@@ -5,29 +5,29 @@
 				<strong>Filtrar por</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
 			</accordion-heading>
 			<div class="row">
-				<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaDesde', 0) >= 0">
+				<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon">Desde</span>
-							<label class="sr-only" for="fechaDesde">Fecha Desde</label>
-							<input id="fechaDesde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" />
+							<label class="sr-only" for="fechaInicio">Fecha Desde</label>
+							<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaInicio" is-open="openFechaInicio" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" />
 							<span class="input-group-btn">
-								<button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button>
+								<button class="btn btn-default" ng-click="openDate($event); openFechaInicio = !openFechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 							</span>
-							<timepicker-pop class="input-group" input-time="model.fechaDesde"></timepicker-pop>
+							<timepicker-pop class="input-group" input-time="model.fechaInicio"></timepicker-pop>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaHasta', 0) >= 0">
+				<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon">Hasta</span>
-							<label class="sr-only" for="fechaHasta">Fecha Hasta</label>
-							<input id="fechaHasta" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaHasta" is-open="openFechaHasta" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" />
+							<label class="sr-only" for="fechaFin">Fecha Hasta</label>
+							<input id="fechaFin" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaFin" is-open="openfechaFin" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" />
 							<span class="input-group-btn">
-								<button class="btn btn-default" ng-click="openDate($event); openFechaHasta = !openFechaHasta;"><span class="glyphicon glyphicon-calendar"></span></button>
+								<button class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin;"><span class="glyphicon glyphicon-calendar"></span></button>
 							</span>
-							<timepicker-pop class="input-group" input-time="model.fechaHasta"></timepicker-pop>
+							<timepicker-pop class="input-group" input-time="model.fechaFin"></timepicker-pop>
 						</div>
 					</div>
 				</div>
@@ -88,7 +88,7 @@
 				</div>
 				<div class="col-lg-4 col-sm-6">
 					<div class="form-group">
-						<button class="btn btn-primary" ng-click="cargaPorFiltros()" ng-disabled="model.fechaDesde > model.fechaHasta">Cargar</button>
+						<button class="btn btn-primary" ng-click="cargaPorFiltros()" ng-disabled="model.fechaInicio > model.fechaFin">Cargar</button>
 					</div>
 				</div>
 			</div>

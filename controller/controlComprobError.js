@@ -11,8 +11,8 @@
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': $scope.fechaDesde,
-			'fechaHasta': $scope.fechaHasta,
+			'fechaInicio': $scope.fechaInicio,
+			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
 			'buque': '',
 			'viaje': '',
@@ -76,4 +76,5 @@
 			})
 		};
 	});
+
 })();

@@ -488,8 +488,8 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		}
 	}
 
-	$rootScope.fechaDesde = new Date();
-	$rootScope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+	$rootScope.fechaInicio = new Date();
+	$rootScope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 	$rootScope.colorBactssa = '';
 	$rootScope.colorTerminal4 = '';

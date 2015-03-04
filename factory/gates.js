@@ -48,12 +48,12 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 
 	factory.aplicarFiltros = function(unaUrl, datos){
 		var insertAux = unaUrl;
-		if(angular.isDefined(datos.fechaDesde) && datos.fechaDesde != '' && datos.fechaDesde != null){
-			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaDesde);
+		if(angular.isDefined(datos.fechaInicio) && datos.fechaInicio != '' && datos.fechaInicio != null){
+			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio);
 		}
-		if(angular.isDefined(datos.fechaHasta) && datos.fechaHasta != '' && datos.fechaHasta != null){
+		if(angular.isDefined(datos.fechaFin) && datos.fechaFin != '' && datos.fechaFin != null){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaHasta);
+			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaFin);
 		}
 		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
