@@ -50,7 +50,7 @@
 			$scope.tipoComprob = $rootScope.vouchersType[$scope.model.codTipoComprob];
 			$scope.mostrarBotonImprimir = false;
 			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
-				if (data.status == 'OK'){
+				if (dataComprob.status == 'OK'){
 					$scope.totalFaltantes = dataComprob.totalCount;
 
 					if (dataComprob.totalCount === 0){
