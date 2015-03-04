@@ -17,7 +17,7 @@
 			$scope.currentPage = data;
 		});
 
-		$scope.$on('errorInesperado', function(mensaje){
+		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.hayError = true;
 			$scope.mensajeResultado = mensaje;
 		});

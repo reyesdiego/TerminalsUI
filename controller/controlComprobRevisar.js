@@ -41,7 +41,7 @@
 			$scope.traerComprobantes();
 		});
 
-		$scope.$on('errorInesperado', function(mensaje){
+		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.loadingRevisar = false;
 			$scope.comprobantesRevisar = [];
 			$scope.mensajeResultado = mensaje;

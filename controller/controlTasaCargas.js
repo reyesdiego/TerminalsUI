@@ -64,17 +64,12 @@
 			'itemsPerPage': 15
 		};
 
-		$scope.tasaCargas = {
-			"titulo":"Éxito",
-			"cartel": "panel-success",
-			"mensaje": "No se hallaron comprobantes sin tasa a las cargas.",
-			"resultado": [],
-			"mostrarResultado": 0
-		};
+		$scope.resultado = [];
 
 		$scope.comprobantesVistosTasas = [];
 
 		$scope.loadingTasaCargas = true;
+		$scope.hayError = false;
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
@@ -93,6 +88,14 @@
 				tipo: 'panel-danger'
 			};
 			$scope.loadingTasaCargas = false;
+		});
+
+		$scope.$on('errorInesperado', function(e, mensaje){
+			$scope.hayError = true;
+			$scope.loadingTasaCargas = false;
+			$scope.totalContenedores = 0;
+			$scope.resultado = [];
+			$scope.mensajeResultado = mensaje;
 		});
 
 		$scope.filtrado = function(filtro, contenido){
@@ -207,33 +210,23 @@
 
 		$scope.controlTasaCargas = function(){
 			/*Acá control de tasa a las cargas*/
+			$scope.hayError = false;
 			$scope.loadingTasaCargas = true;
 			$scope.detalle = false;
 			$scope.model.contenedor = '';
 			invoiceFactory.getContainersSinTasaCargas($scope.model, loginService.getFiltro(), function(data){
-				if (data.status == "ERROR"){
-					$scope.tasaCargas.titulo = "Error";
-					$scope.tasaCargas.cartel = "panel-danger";
-					$scope.tasaCargas.mensaje = "La terminal seleccionada no tiene códigos asociados.";
-					$scope.tasaCargas.mostrarResultado = 0;
-				} else {
+				if (data.status == "OK"){
 					$scope.totalContenedores = data.totalCount;
-					$scope.tasaCargas.resultado = data.data;
-					if ($scope.tasaCargas.resultado.length > 0){
-						$scope.totalItems = data.totalCount;
-						$scope.tasaCargas.titulo = "Error";
-						$scope.tasaCargas.cartel = "panel-danger";
-						$scope.tasaCargas.mensaje = "Se hallaron comprobantes sin tasa a las cargas.";
-						$scope.tasaCargas.mostrarResultado = 1;
-					} else {
-						$scope.tasaCargas = {
-							"titulo":"Éxito",
-							"cartel": "panel-success",
-							"mensaje": "No se hallaron comprobantes sin tasa a las cargas.",
-							"resultado": [],
-							"mostrarResultado": 0
-						};
-					}
+					data.data.forEach(function(contenedor){
+						$scope.resultado.push(contenedor.contenedor);
+					});
+				} else {
+					$scope.hayError = true;
+					$scope.mensajeResultado = {
+						titulo: 'Error',
+						mensaje: 'Se ha producido un error al cargar los datos.',
+						tipo: 'panel-danger'
+					};
 				}
 				$scope.loadingTasaCargas = false;
 			});

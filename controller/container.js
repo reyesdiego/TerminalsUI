@@ -90,7 +90,7 @@ myapp.controller('containerCtrl', function($scope, $stateParams, invoiceFactory,
 		}
 	});
 
-	$scope.$on('errorInesperado', function(mensaje){
+	$scope.$on('errorInesperado', function(e, mensaje){
 		$scope.hayError = true;
 		$scope.mensajeGeneral = mensaje;
 	});
