@@ -215,6 +215,7 @@
 			$scope.loadingTasaCargas = true;
 			$scope.detalle = false;
 			$scope.model.contenedor = '';
+			$scope.resultado = [];
 			invoiceFactory.getContainersSinTasaCargas($scope.model, loginService.getFiltro(), function(data){
 				if (data.status == "OK"){
 					$scope.totalContenedores = data.totalCount;
