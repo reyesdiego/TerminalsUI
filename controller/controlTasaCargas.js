@@ -3,7 +3,7 @@
  */
 (function() {
 	myapp.controller('tasaCargasCtrl', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, loginService) {
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor'];
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
 
 		$scope.ocultaTasas = true;
 		$scope.loadingState = false;
@@ -16,6 +16,7 @@
 		$scope.tasas = [];
 		$scope.loadingTasas = false;
 		$scope.detalleGates = false;
+		$scope.volverAPrincipalComprobantes = false;
 
 		$scope.configPanelGates = {
 			tipo: 'panel-info',
@@ -124,6 +125,7 @@
 			$scope.turnos = [];
 			$scope.detalle = true;
 			$scope.currentPageContainers = 1;
+			$scope.volverAPrincipalComprobantes = !$scope.volverAPrincipalComprobantes;
 			$scope.cargaComprobantes();
 			$scope.cargaGates();
 			$scope.cargaTurnos();
