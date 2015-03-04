@@ -17,7 +17,6 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 
 	factory.getReporteHorarios = function(fecha, callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?fechaInicio=' + formatDate.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatDate.formatearFecha(fecha.fechaFin);
-		console.log(inserturl);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -31,8 +30,8 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 		$http({
 			method: "POST",
 			url: inserturl,
-			data: JSON.stringify(tarifas),
-			headers:{"Content-Type":"application/json"}
+			data: tarifas,
+			headers: {token: loginService.getToken() }
 		}).success(function (response) {
 			callback(response);
 		}).error(function(errorText) {

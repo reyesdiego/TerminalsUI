@@ -218,7 +218,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.calcularTotalTasas = function(data){
-		datos = data;
+		var datos = data;
 		datos.totalTasas = 0;
 		data.data.forEach(function(detalle){
 			datos.totalTasas += detalle.total;

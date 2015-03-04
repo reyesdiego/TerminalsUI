@@ -64,7 +64,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		$http({
 			method: "POST",
 			url: inserturl,
-			data: data
+			data: data,
+			headers: {token: loginService.getToken() }
 		}).success(function (response) {
 			callback(response);
 		}).error(function(error) {
@@ -97,7 +98,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		$http({
 			method: 'POST',
 			url: inserturl,
-			data: data
+			data: data,
+			headers: {token: loginService.getToken() }
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {
@@ -123,7 +125,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		$http({
 			method: 'PUT',
 			url: inserturl,
-			data: formData
+			data: formData,
+			headers: {token: loginService.getToken() }
 		}).success(function(response) {
 			callback(response);
 		}).error(function(error) {
