@@ -26,11 +26,11 @@
 		$scope.pantalla = {
 			titulo:  "Correlatividad",
 			tipo: "panel-info",
-			mensajeCorrelativo : 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.',
-			puntosDeVenta: []
+			mensajeCorrelativo : 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.'
 		};
-		$scope.puntosDeVenta.push(angular.copy($scope.pantalla));
+
 		$scope.mostrarBotonImprimir = false;
+		$scope.puntosDeVenta = [];
 
 		$scope.$on('cambioFiltro', function(event, data){
 			$scope.model = data;
@@ -58,16 +58,14 @@
 						$scope.pantalla = {
 							titulo:  "Correlatividad",
 							tipo: "panel-info",
-							mensajeCorrelativo : 'No se hallaron comprobantes faltantes.',
-							puntosDeVenta: []
+							mensajeCorrelativo : 'No se hallaron comprobantes faltantes.'
 						};
 					}
 				} else {
 					$scope.pantalla = {
 						titulo:  "Correlatividad",
 						tipo: "panel-danger",
-						mensajeCorrelativo : 'Se ha producido un error al cargar los datos.',
-						puntosDeVenta: []
+						mensajeCorrelativo : 'Se ha producido un error al cargar los datos.'
 					};
 				}
 
