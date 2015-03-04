@@ -45,13 +45,10 @@
 			$scope.traerComprobantes();
 		});
 
-		$scope.$on('errorDatos', function(){
-			$scope.mensajeResultado = {
-				titulo: 'Error',
-				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-				tipo: 'panel-danger'
-			};
+		$scope.$on('errorInesperado', function(mensaje){
 			$scope.loadingError = false;
+			$scope.comprobantesError = [];
+			$scope.mensajeResultado = mensaje;
 		});
 
 		$scope.traerComprobantes = function(){
@@ -59,14 +56,23 @@
 			$scope.page.limit = $scope.model.itemsPerPage;
 			$scope.loadingError = true;
 			invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceError){
-				$scope.comprobantesError = invoiceError.data;
-				$scope.totalItems = invoiceError.totalCount;
-				$scope.loadingError = false;
-				$scope.comprobantesError.forEach(function(comprobante){
-					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
-						comprobante.lastComment = dataTrack.data[0].comment + ' - ' + dataTrack.data[0].user;
+				if (invoiceError.status == 'OK'){
+					$scope.comprobantesError = invoiceError.data;
+					$scope.totalItems = invoiceError.totalCount;
+					$scope.comprobantesError.forEach(function(comprobante){
+						invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+							comprobante.lastComment = dataTrack.data[0].comment + ' - ' + dataTrack.data[0].user;
+						})
 					})
-				})
+				} else {
+					$scope.mensajeResultado = {
+						titulo: 'Error',
+						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+						tipo: 'panel-danger'
+					};
+					$scope.comprobantesError = [];
+				}
+				$scope.loadingError = false;
 			})
 		};
 	});

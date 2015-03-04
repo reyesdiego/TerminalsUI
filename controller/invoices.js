@@ -42,9 +42,10 @@
 			$scope.cargaDatos();
 		});
 
-		$scope.$on('errorInesperado', function(){
+		$scope.$on('errorInesperado', function(mensaje){
 			$scope.cargando = false;
 			$scope.invoices = [];
+			$scope.mensajeResultado = mensaje;
 		});
 
 		$scope.cargaDatos = function(){

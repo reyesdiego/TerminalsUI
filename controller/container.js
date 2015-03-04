@@ -1,7 +1,7 @@
 /**
  * Created by leo on 29/09/14.
  */
-myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory, afipFactory, dialogs){
+myapp.controller('containerCtrl', function($scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory, afipFactory){
 	$scope.model = {
 		'nroPtoVenta': '',
 		'codTipoComprob': 0,
@@ -52,6 +52,7 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 
 	$scope.cargandoTasas = false;
 	$scope.cargandoSumaria = false;
+	$scope.hayError = false;
 
 	$scope.$on('cambioFiltro', function(){
 		if ($scope.model.contenedor != ''){
@@ -89,7 +90,13 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 		}
 	});
 
+	$scope.$on('errorInesperado', function(mensaje){
+		$scope.hayError = true;
+		$scope.mensajeGeneral = mensaje;
+	});
+
 	$scope.filtrar = function(){
+		$scope.hayError = false;
 		$scope.cargaComprobantes();
 		$scope.cargaTasasCargas();
 		$scope.cargaGates();
@@ -214,7 +221,7 @@ myapp.controller('containerCtrl', function($rootScope, $scope, $stateParams, inv
 		})
 	};
 
-	$rootScope.$watch('moneda', function(){
+	$scope.$watch('moneda', function(){
 		$scope.cargaTasasCargas();
 	});
 
