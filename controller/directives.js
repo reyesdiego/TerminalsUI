@@ -18,6 +18,7 @@
 				ocultarAccordionInvoicesSearch:		'=',
 				ocultarAccordionComprobantesVistos:	'=',
 				panelMensaje:						'=',
+				volverAPrincipal:					'=',
 				filtroEstados:						'@'
 			},
 			controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, dialogs){
@@ -132,6 +133,10 @@
 							tipo: 'panel-info'
 						};
 					}
+				});
+
+				$scope.$watch('volverAPrincipal', function() {
+					$scope.mostrarResultado = false;
 				});
 
 				$scope.cambioItemsPorPagina = function(data){
