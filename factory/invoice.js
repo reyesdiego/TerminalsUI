@@ -230,7 +230,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			method: 'PUT',
 			url: inserturl,
 			data: { estado: estado },
-			headers: {"token": loginService.getToken() }
+			headers: {token: loginService.getToken() }
 		}).success(function (data){
 			callback(data);
 		}).error(function(errorText){

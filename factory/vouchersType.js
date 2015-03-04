@@ -10,8 +10,8 @@ myapp.factory('vouchersFactory', function($http){
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
-			}).error(function(errorText){
-				callback(errorText);
+			}).error(function(error){
+				callback(error);
 		});
 	};
 
@@ -21,8 +21,8 @@ myapp.factory('vouchersFactory', function($http){
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
-			}).error(function(errorText){
-				callback(data);
+			}).error(function(error){
+				callback(error);
 			});
 	};
 
