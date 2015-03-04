@@ -254,7 +254,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getTrackInvoice = function(invoiceId, callback){
 		var inserturl = serverUrl + '/invoice/' + invoiceId + '/comments';
-		$http(inserturl)
+		$http.get(inserturl)
 			.success(function (data){
 				data.data = factory.filtrarComentarios(data.data);
 				data.data.forEach(function(comment){
