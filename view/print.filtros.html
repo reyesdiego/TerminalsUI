@@ -30,13 +30,13 @@
 		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.buque == ''">
 			<span>Buque: {{ model.buque }}</span>
 		</div>
-		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.fechaDesde == ''">
-			<span ng-hide="turnosGates">Desde: {{ model.fechaDesde | date: 'dd/MM/yyyy' }}</span>
-			<span ng-show="turnosGates">Desde: {{ model.fechaDesde | date: 'dd/MM/yyyy HH:mm' }}</span>
+		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.fechaInicio == ''">
+			<span ng-hide="turnosGates">Desde: {{ model.fechaInicio | date: 'dd/MM/yyyy' }}</span>
+			<span ng-show="turnosGates">Desde: {{ model.fechaInicio | date: 'dd/MM/yyyy HH:mm' }}</span>
 		</div>
-		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.fechaHasta == ''">
-			<span ng-hide="turnosGates">Hasta: {{ model.fechaHasta | date: 'dd/MM/yyyy' }}</span>
-			<span ng-show="turnosGates">Hasta: {{ model.fechaHasta | date: 'dd/MM/yyyy HH:mm' }}</span>
+		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.fechaFin == ''">
+			<span ng-hide="turnosGates">Hasta: {{ model.fechaFin | date: 'dd/MM/yyyy' }}</span>
+			<span ng-show="turnosGates">Hasta: {{ model.fechaFin | date: 'dd/MM/yyyy HH:mm' }}</span>
 		</div>
 	</div>
 </div>

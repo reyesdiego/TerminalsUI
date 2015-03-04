@@ -9,10 +9,10 @@
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon">Día</span>
-							<label class="sr-only" for="fechaDesde">Día</label>
-							<input id="fechaDesde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaDesde" is-open="openFechaDesde" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" />
+							<label class="sr-only" for="fechaInicio">Día</label>
+							<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaInicio" is-open="openfechaInicio" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" />
 							<span class="input-group-btn">
-								<button class="btn btn-default" ng-click="openDate($event); openFechaDesde = !openFechaDesde;"><span class="glyphicon glyphicon-calendar"></span></button>
+								<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 							</span>
 						</div>
 					</div>
@@ -21,7 +21,7 @@
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon">Hora desde</span>
-							<timepicker-pop class="input-group" input-time="model.fechaDesde"></timepicker-pop>
+							<timepicker-pop class="input-group" input-time="model.fechaInicio"></timepicker-pop>
 						</div>
 					</div>
 				</div>
@@ -29,7 +29,7 @@
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon">Hora hasta</span>
-							<timepicker-pop class="input-group" input-time="model.fechaHasta"></timepicker-pop>
+							<timepicker-pop class="input-group" input-time="model.fechaFin"></timepicker-pop>
 						</div>
 					</div>
 				</div>

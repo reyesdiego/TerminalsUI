@@ -87,11 +87,11 @@
 				case 'conocimiento':
 					$scope.model.conocimiento = contenido;
 					break;
-				case 'fechaDesde':
-					$scope.model.fechaDesde = contenido;
+				case 'fechaInicio':
+					$scope.model.fechaInicio = contenido;
 					break;
-				case 'fechaHasta':
-					$scope.model.fechaHasta = contenido;
+				case 'fechaFin':
+					$scope.model.fechaFin = contenido;
 					break;
 				case 'contenedor':
 					$scope.model.contenedor = contenido;
@@ -100,9 +100,9 @@
 					$scope.model.buque = contenido;
 					break;
 			}
-			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
+				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
 			$scope.cargaDatos($scope.actualRegistro);
 		};

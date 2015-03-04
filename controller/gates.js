@@ -2,6 +2,7 @@
  * Created by leo on 31/03/14.
  */
 (function(){
+
 	myapp.controller('gatesCtrl', function ($scope, gatesFactory) {
 		$scope.totalItems = 0;
 		$scope.turnosGates = true;
@@ -13,18 +14,18 @@
 		};
 
 		// Fecha (dia y hora)
-		$scope.fechaDesde = new Date();
-		$scope.fechaHasta = new Date();
-		$scope.fechaDesde.setHours(0, 0);
-		$scope.fechaHasta.setMinutes(0);
+		$scope.fechaInicio = new Date();
+		$scope.fechaFin = new Date();
+		$scope.fechaInicio.setHours(0, 0);
+		$scope.fechaFin.setMinutes(0);
 
 		// Variable para almacenar la info principal que trae del factory
 		$scope.gates = {};
 		$scope.detalles = false;
 
-		$scope.filtrosGates = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaDesde', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
+		$scope.filtrosGates = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
-		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'fechaDesde', 'codigo', 'razonSocial', 'contenedor', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
+		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'fechaInicio', 'codigo', 'razonSocial', 'contenedor', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -32,8 +33,8 @@
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': $scope.fechaDesde,
-			'fechaHasta': $scope.fechaHasta,
+			'fechaInicio': $scope.fechaInicio,
+			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
 			'buque': '',
 			'viaje': '',

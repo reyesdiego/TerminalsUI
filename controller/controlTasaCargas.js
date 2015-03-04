@@ -2,6 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 (function() {
+
 	myapp.controller('tasaCargasCtrl', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, loginService) {
 		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
 
@@ -50,8 +51,8 @@
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': $scope.fechaDesde,
-			'fechaHasta': $scope.fechaHasta,
+			'fechaInicio': $scope.fechaInicio,
+			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
 			'buque': '',
 			'viaje': '',
@@ -232,4 +233,5 @@
 			});
 		};
 	});
+
 })();

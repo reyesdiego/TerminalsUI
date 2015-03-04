@@ -2,6 +2,7 @@
  * Created by artiom on 24/09/14.
  */
 (function() {
+
 	myapp.controller('comprobantesRevisarCtrl', function($scope, invoiceFactory) {
 		$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
 
@@ -11,8 +12,8 @@
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': $scope.fechaDesde,
-			'fechaHasta': $scope.fechaHasta,
+			'fechaInicio': $scope.fechaInicio,
+			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
 			'buque': '',
 			'viaje': '',
@@ -68,4 +69,5 @@
 			})
 		};
 	});
+
 })();

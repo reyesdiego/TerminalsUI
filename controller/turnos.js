@@ -2,6 +2,7 @@
  * Created by leo on 28/04/14.
  */
 (function(){
+
 	myapp.controller('turnosCtrl', function($scope, turnosFactory){
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = 15;
@@ -19,8 +20,8 @@
 			'nroComprobante': '',
 			'razonSocial': '',
 			'documentoCliente': '',
-			'fechaDesde': $scope.fechaDesde,
-			'fechaHasta': $scope.fechaHasta,
+			'fechaInicio': $scope.fechaInicio,
+			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
 			'buque': '',
 			'viaje': '',
@@ -32,8 +33,8 @@
 			'order': ''
 		};
 
-		$scope.model.fechaDesde.setHours(0,0);
-		$scope.model.fechaHasta.setMinutes(0);
+		$scope.model.fechaInicio.setHours(0,0);
+		$scope.model.fechaFin.setMinutes(0);
 
 		$scope.fechaAuxDesde = new Date();
 		$scope.fechaAuxHasta = new Date();
@@ -47,10 +48,10 @@
 		});
 
 		$scope.$on('cambioFiltro', function(event, data){
-			$scope.fechaAuxHasta = new Date($scope.model.fechaHasta);
-			$scope.fechaAuxDesde = new Date($scope.model.fechaDesde);
-			$scope.model.fechaHasta = $scope.fechaAuxDesde;
-			$scope.model.fechaHasta.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
+			$scope.fechaAuxHasta = new Date($scope.model.fechaFin);
+			$scope.fechaAuxDesde = new Date($scope.model.fechaInicio);
+			$scope.model.fechaFin = $scope.fechaAuxDesde;
+			$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
 			$scope.currentPage = 1;
 			$scope.cargaTurnos();
 			if (angular.isDefined(data) && data.length > 0){
@@ -90,4 +91,5 @@
 		$scope.cargaTurnos();
 
 	});
+
 })();

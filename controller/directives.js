@@ -2,6 +2,7 @@
  * Created by leo on 05/09/14.
  */
 (function(){
+
 	myapp.directive('vistaComprobantes', function(){
 		return {
 			restrict:		'E',
@@ -238,11 +239,11 @@
 						case 'estado':
 							$scope.model.estado = contenido;
 							break;
-						case 'fechaDesde':
-							$scope.model.fechaDesde = contenido;
+						case 'fechaInicio':
+							$scope.model.fechaInicio = contenido;
 							break;
-						case 'fechaHasta':
-							$scope.model.fechaHasta = contenido;
+						case 'fechaFin':
+							$scope.model.fechaFin = contenido;
 							break;
 						case 'contenedor':
 							$scope.model.contenedor = contenido;
@@ -257,9 +258,9 @@
 							$scope.model.itemsPerPage = contenido;
 							break;
 					}
-					if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-						$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+					if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+						$scope.model.fechaFin = new Date($scope.model.fechaInicio);
+						$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 					}
 					if (filtro == 'nroPtoVenta'){
 						$scope.$emit('cambioFiltro', $scope.model);
@@ -806,11 +807,11 @@
 		};
 		$scope.filtrado = function(filtro, contenido){
 			switch (filtro){
-				case 'fechaDesde':
-					$scope.model.fechaDesde = contenido;
+				case 'fechaInicio':
+					$scope.model.fechaInicio = contenido;
 					break;
-				case 'fechaHasta':
-					$scope.model.fechaHasta = contenido;
+				case 'fechaFin':
+					$scope.model.fechaFin = contenido;
 					break;
 				case 'contenedor':
 					$scope.model.contenedor = contenido;
@@ -839,9 +840,9 @@
 					$scope.model.viaje = contenido;
 					break;
 			}
-			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
+				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
 			$scope.$emit('cambioFiltro', $scope.listaViajes);
 		};
@@ -958,8 +959,8 @@
 					open: true
 				};
 				$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje', 'itemsPerPage'];
-				$scope.fechaDesde = new Date();
-				$scope.fechaHasta = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+				$scope.fechaInicio = new Date();
+				$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 				$scope.maxDate = new Date();
 				$scope.formatDate = $rootScope.formatDate;
 				$scope.dateOptions = $rootScope.dateOptions;
@@ -971,8 +972,8 @@
 				$scope.model = {
 					'nroPtoVenta': '',
 					'codTipoComprob': 1,
-					'fechaDesde': $scope.fechaDesde,
-					'fechaHasta': $scope.fechaHasta
+					'fechaInicio': $scope.fechaInicio,
+					'fechaFin': $scope.fechaFin
 				};
 				$scope.traerPuntosDeVenta = function(){
 					invoiceFactory.getCashbox({}, function(data){
@@ -1004,16 +1005,16 @@
 						case 'codComprobante':
 							$scope.model.codTipoComprob = contenido;
 							break;
-						case 'fechaDesde':
-							$scope.model.fechaDesde = contenido;
+						case 'fechaInicio':
+							$scope.model.fechaInicio = contenido;
 							break;
-						case 'fechaHasta':
-							$scope.model.fechaHasta = contenido;
+						case 'fechaFin':
+							$scope.model.fechaFin = contenido;
 							break;
 					}
-					if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-						$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-						$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+					if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+						$scope.model.fechaFin = new Date($scope.model.fechaInicio);
+						$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 					}
 					if ($scope.model.nroPtoVenta != '' && $scope.model.codTipoComprob != ''){
 						$scope.$emit('cambioFiltro', cargaDatos());
@@ -1024,8 +1025,8 @@
 					return {
 						'nroPtoVenta':		$scope.model.nroPtoVenta,
 						'codTipoComprob':	$scope.model.codTipoComprob,
-						'fechaDesde':		$scope.model.fechaDesde,
-						'fechaHasta':		$scope.model.fechaHasta
+						'fechaInicio':		$scope.model.fechaInicio,
+						'fechaFin':		$scope.model.fechaFin
 					};
 				}
 
@@ -1056,7 +1057,7 @@
 				$scope.tasas = [];
 				$scope.loadingTasas = false;
 				$scope.detalleGates = false;
-				$scope.ocultarFiltros = ['buque', 'contenedor', 'comprobantes', 'razonSocial', 'codComprobante', 'nroComprobante', 'fechaDesde'];
+				$scope.ocultarFiltros = ['buque', 'contenedor', 'comprobantes', 'razonSocial', 'codComprobante', 'nroComprobante', 'fechaInicio'];
 				$scope.mensajeResultado = $rootScope.mensajeResultado;
 				$scope.configPanelTasas = {
 					tipo: 'panel-info',
@@ -1367,8 +1368,8 @@
 		};
 
 		$scope.model = {
-			fechaDesde: new Date(),
-			fechaHasta: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+			fechaInicio: new Date(),
+			fechaFin: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
 			itemsPerPage: 15
 		};
 
@@ -1376,19 +1377,19 @@
 
 		$scope.filtrado = function(filtro, contenido){
 			switch (filtro){
-				case 'fechaDesde':
-					$scope.model.fechaDesde = contenido;
+				case 'fechaInicio':
+					$scope.model.fechaInicio = contenido;
 					break;
-				case 'fechaHasta':
-					$scope.model.fechaHasta = contenido;
+				case 'fechaFin':
+					$scope.model.fechaFin = contenido;
 					break;
 				case 'itemsPorPagina':
 					$scope.model.itemsPerPage = contenido;
 					break;
 			}
-			if ($scope.model.fechaDesde > $scope.model.fechaHasta && $scope.model.fechaHasta != ''){
-				$scope.model.fechaHasta = new Date($scope.model.fechaDesde);
-				$scope.model.fechaHasta.setDate($scope.model.fechaHasta.getDate() + 1);
+			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
+				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
 		};
 
@@ -1489,4 +1490,5 @@
 			}
 		}
 	});
+
 })();
