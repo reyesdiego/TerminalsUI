@@ -4,7 +4,7 @@
 (function() {
 
 	myapp.controller('tasaCargasCtrl', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, loginService) {
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
 
 		$scope.ocultaTasas = true;
 		$scope.loadingState = false;

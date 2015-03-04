@@ -32,14 +32,7 @@
 		$scope.tarifasElegidas = 1;
 
 		$scope.filtrar = function (filtro, contenido) {
-			switch (filtro) {
-				case 'contenedor':
-					$scope.model.contenedor = contenido;
-					break;
-				case 'buque':
-					$scope.model.buque = contenido;
-					break;
-			}
+			$scope.model[filtro] = contenido;
 			$scope.cargarReporteHorarios();
 		};
 

@@ -71,35 +71,7 @@
 		$scope.filtrado = function(filtro, contenido){
 			$scope.cargando = true;
 			$scope.model.currentPage = 1;
-			switch (filtro){
-				case 'afectacion':
-					$scope.model.afectacion = contenido;
-					break;
-				case 'detalle':
-					$scope.model.detalle = contenido;
-					break;
-				case 'solicitud':
-					$scope.model.solicitud = contenido;
-					break;
-				case 'sumaria':
-					$scope.model.sumaria = contenido;
-					break;
-				case 'conocimiento':
-					$scope.model.conocimiento = contenido;
-					break;
-				case 'fechaInicio':
-					$scope.model.fechaInicio = contenido;
-					break;
-				case 'fechaFin':
-					$scope.model.fechaFin = contenido;
-					break;
-				case 'contenedor':
-					$scope.model.contenedor = contenido;
-					break;
-				case 'buque':
-					$scope.model.buque = contenido;
-					break;
-			}
+			$scope.model[filtro] = contenido;
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);

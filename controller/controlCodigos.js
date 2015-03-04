@@ -4,7 +4,7 @@
 (function() {
 
 	myapp.controller('codigosCtrl', function($scope, invoiceFactory, priceFactory, dialogs, $q) {
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -87,7 +87,7 @@
 				}
 			} else {
 				if ($scope.model.codigo == ''){
-					$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+					$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 					$scope.controlFiltros = 'codigos';
 					$scope.mostrarPtosVentas = false;
 					$scope.controlDeCodigos();

@@ -23,9 +23,9 @@
 		$scope.gates = {};
 		$scope.detalles = false;
 
-		$scope.filtrosGates = ['codComprobante', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
+		$scope.filtrosGates = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
-		$scope.filtrosComprobantes = ['codComprobante', 'nroComprobante', 'fechaInicio', 'codigo', 'razonSocial', 'contenedor', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
+		$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'fechaInicio', 'codigo', 'razonSocial', 'contenedor', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
 		$scope.model = {
 			'nroPtoVenta': '',

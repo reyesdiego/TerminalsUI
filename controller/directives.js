@@ -43,7 +43,7 @@
 				$scope.listaBuques = $rootScope.listaBuques;
 				$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
 				$scope.listaViajes = [];
-				$scope.itemsPorPagina = [
+				$scope.itemsPerPage = [
 					{ value: 10, description: '10 items por página', ticked: false},
 					{ value: 15, description: '15 items por página', ticked: true},
 					{ value: 20, description: '20 items por página', ticked: false},
@@ -141,7 +141,7 @@
 				});
 
 				$scope.cambioItemsPorPagina = function(data){
-					$scope.filtrado('itemsPorPagina', data.value);
+					$scope.filtrado('itemsPerPage', data.value);
 				};
 
 				$scope.estadoSeleccionado = function(data){
@@ -217,46 +217,9 @@
 					$scope.loadingState = true;
 					$scope.mostrarResultado = false;
 					$scope.currentPage = 1;
-					switch (filtro){
-						case 'nroPtoVenta':
-							$scope.model.nroPtoVenta = contenido;
-							break;
-						case 'codigo':
-							$scope.model.codigo = contenido;
-							break;
-						case 'codComprobante':
-							$scope.model.codTipoComprob = contenido;
-							break;
-						case 'nroComprobante':
-							$scope.model.nroComprobante = contenido;
-							break;
-						case 'razonSocial':
-							$scope.model.razonSocial = $scope.filtrarCaracteresInvalidos(contenido);
-							break;
-						case 'documentoCliente':
-							$scope.model.documentoCliente = contenido;
-							break;
-						case 'estado':
-							$scope.model.estado = contenido;
-							break;
-						case 'fechaInicio':
-							$scope.model.fechaInicio = contenido;
-							break;
-						case 'fechaFin':
-							$scope.model.fechaFin = contenido;
-							break;
-						case 'contenedor':
-							$scope.model.contenedor = contenido;
-							break;
-						case 'buque':
-							$scope.model.buque = contenido;
-							break;
-						case 'viaje':
-							$scope.model.viaje = contenido;
-							break;
-						case 'itemsPorPagina':
-							$scope.model.itemsPerPage = contenido;
-							break;
+					$scope.model[filtro] = contenido;
+					if (filtro == 'razonSocial') {
+						$scope.model[filtro] = $scope.filtrarCaracteresInvalidos(contenido);
 					}
 					if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 						$scope.model.fechaFin = new Date($scope.model.fechaInicio);
@@ -639,26 +602,21 @@
 					});
 				};
 				$scope.filtrado = function(filtro, contenido){
-					switch (filtro){
-						case 'contenedor':
-							$scope.model.contenedor = contenido;
-							break;
-						case 'buque':
-							$scope.model.buque = contenido;
-							var i = 0;
-							$scope.listaBuques.forEach(function(buque){
-								if (buque.buque == contenido){
-									buque.viajes.forEach(function(viaje){
-										var objetoViaje = {
-											'id': i,
-											'viaje': viaje
-										};
-										$scope.listaViajes.push(objetoViaje);
-										i++;
-									})
-								}
-							});
-							break;
+					$scope.model[filtro] = contenido;
+					if (filtro == 'buque') {
+						var i = 0;
+						$scope.listaBuques.forEach(function(buque){
+							if (buque.buque == contenido){
+								buque.viajes.forEach(function(viaje){
+									var objetoViaje = {
+										'id': i,
+										'viaje': viaje
+									};
+									$scope.listaViajes.push(objetoViaje);
+									i++;
+								})
+							}
+						});
 					}
 					$scope.$emit('cambioFiltro', $scope.listaViajes);
 				};
@@ -806,39 +764,26 @@
 			}
 		};
 		$scope.filtrado = function(filtro, contenido){
-			switch (filtro){
-				case 'fechaInicio':
-					$scope.model.fechaInicio = contenido;
-					break;
-				case 'fechaFin':
-					$scope.model.fechaFin = contenido;
-					break;
-				case 'contenedor':
-					$scope.model.contenedor = contenido;
-					break;
-				case 'buque':
-					$scope.model.buque = contenido;
-					if (contenido != ''){
-						var i = 0;
-						$scope.listaBuques.forEach(function(buque){
-							if (buque.buque == contenido){
-								buque.viajes.forEach(function(viaje){
-									var objetoViaje = {
-										'id': i,
-										'viaje': viaje
-									};
-									$scope.listaViajes.push(objetoViaje);
-									i++;
-								})
-							}
-						});
-					} else {
-						$scope.model.viaje = '';
-					}
-					break;
-				case 'viaje':
-					$scope.model.viaje = contenido;
-					break;
+
+			$scope.model[filtro] = contenido;
+			if (filtro == 'buque') {
+				if (contenido != ''){
+					var i = 0;
+					$scope.listaBuques.forEach(function(buque){
+						if (buque.buque == contenido){
+							buque.viajes.forEach(function(viaje){
+								var objetoViaje = {
+									'id': i,
+									'viaje': viaje
+								};
+								$scope.listaViajes.push(objetoViaje);
+								i++;
+							})
+						}
+					});
+				} else {
+					$scope.model.viaje = '';
+				}
 			}
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
@@ -998,20 +943,7 @@
 				$scope.filtrado = function(filtro, contenido){
 					$scope.mostrarResultado = false;
 					$scope.currentPage = 1;
-					switch (filtro){
-						case 'nroPtoVenta':
-							$scope.model.nroPtoVenta = contenido;
-							break;
-						case 'codComprobante':
-							$scope.model.codTipoComprob = contenido;
-							break;
-						case 'fechaInicio':
-							$scope.model.fechaInicio = contenido;
-							break;
-						case 'fechaFin':
-							$scope.model.fechaFin = contenido;
-							break;
-					}
+					$scope.model[filtro] = contenido;
 					if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 						$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 						$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
@@ -1057,7 +989,7 @@
 				$scope.tasas = [];
 				$scope.loadingTasas = false;
 				$scope.detalleGates = false;
-				$scope.ocultarFiltros = ['buque', 'contenedor', 'comprobantes', 'razonSocial', 'codComprobante', 'nroComprobante', 'fechaInicio'];
+				$scope.ocultarFiltros = ['buque', 'contenedor', 'comprobantes', 'razonSocial', 'codTipoComprob', 'nroComprobante', 'fechaInicio'];
 				$scope.mensajeResultado = $rootScope.mensajeResultado;
 				$scope.configPanelTasas = {
 					tipo: 'panel-info',
@@ -1332,7 +1264,7 @@
 	myapp.controller('missingInfo', function($rootScope, $scope, vouchersFactory, gatesFactory, dialogs){
 		$scope.currentPage = 1;
 
-		$scope.itemsPorPagina = [
+		$scope.itemsPerPage = [
 			{ value: 10, description: '10 items por página', ticked: false},
 			{ value: 15, description: '15 items por página', ticked: true},
 			{ value: 20, description: '20 items por página', ticked: false},
@@ -1359,7 +1291,7 @@
 		};
 
 		$scope.cambioItemsPorPagina = function(data){
-			$scope.filtrado('itemsPorPagina', data.value);
+			$scope.filtrado('itemsPerPage', data.value);
 		};
 
 		$scope.configPanel = {
@@ -1373,20 +1305,10 @@
 			itemsPerPage: 15
 		};
 
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codComprobante', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar'];
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar'];
 
 		$scope.filtrado = function(filtro, contenido){
-			switch (filtro){
-				case 'fechaInicio':
-					$scope.model.fechaInicio = contenido;
-					break;
-				case 'fechaFin':
-					$scope.model.fechaFin = contenido;
-					break;
-				case 'itemsPorPagina':
-					$scope.model.itemsPerPage = contenido;
-					break;
-			}
+			$scope.model[filtro] = contenido;
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
