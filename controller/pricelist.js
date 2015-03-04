@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 1/29/14.
  */
 (function() {
-	myapp.controller('pricelistCtrl', function($rootScope, $scope, priceFactory, loginService) {
+	myapp.controller('pricelistCtrl', function($scope, priceFactory, loginService) {
 		'use strict';
 		// Variable para almacenar la info principal que trae del factory
 		$scope.pricelist = [];
@@ -12,15 +12,14 @@
 		$scope.predicate = '';
 		$scope.itemsPerPage = 10;
 		$scope.hayError = false;
-		$scope.mensajeResultado = $rootScope.mensajeResultado;
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
 		});
 
-		$scope.$on('errorInesperado', function(){
+		$scope.$on('errorInesperado', function(mensaje){
 			$scope.hayError = true;
-			$scope.mensajeResultado = $rootScope.mensajeResultado;
+			$scope.mensajeResultado = mensaje;
 		});
 
 		$scope.cargaPricelist = function(){
@@ -40,7 +39,7 @@
 					$scope.totalItems = $scope.pricelist.length;
 				} else {
 					$scope.hayError = true;
-					$rootScope.mensajeResultado = {
+					$scope.mensajeResultado = {
 						titulo: 'Tarifario',
 						mensaje: 'Se ha producido un error al cargar los datos del tarifario.',
 						tipo: 'panel-danger'
