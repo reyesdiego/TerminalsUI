@@ -642,6 +642,7 @@
 				model:				'=',
 				datosTurnos:		'=',
 				totalItems:			'=',
+				itemsPerPage:		'=',
 				configPanel:		'=',
 				currentPage:		'=',
 				ocultarFiltros:		'=',
@@ -779,7 +780,6 @@
 		};
 
 		$scope.cargaPorFiltros = function () {
-			$scope.status.open = !$scope.status.open;
 			$scope.$emit('cambioFiltro');
 		};
 	}]);
