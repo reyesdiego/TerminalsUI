@@ -66,6 +66,11 @@
 			}
 		});
 
+		$scope.$on('errorInesperado', function(e, mensaje){
+			$scope.gates = [];
+			$scope.configPanel = mensaje;
+		});
+
 		$scope.cargaGates = function () {
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.configPanel = {
