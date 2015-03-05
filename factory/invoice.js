@@ -286,6 +286,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
 					encontrado = true;
 					comprobante.interfazEstado = $rootScope.estadosComprobantesArray[estadoGrupo.estado];
+					comprobante.interfazEstado._id = estadoGrupo.estado;
 					switch (comprobante.interfazEstado.type){
 						case 'WARN':
 							comprobante.interfazEstado.btnEstado = 'text-warning';
@@ -317,7 +318,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 					'name': 'Sin ver',
 					'description': 'Sin ver',
 					'btnEstado': 'text-info',
-					'imagen': 'images/unknown.png'
+					'imagen': 'images/unknown.png',
+					'_id': 'Y'
 				};
 			}
 		} else {
@@ -326,7 +328,8 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				'name': 'Sin ver',
 				'description': 'Sin ver',
 				'btnEstado': 'text-info',
-				'imagen': 'images/unknown.png'
+				'imagen': 'images/unknown.png',
+				'_id': 'Y'
 			};
 		}
 		return comprobante;
