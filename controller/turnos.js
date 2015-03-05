@@ -61,6 +61,12 @@
 			}
 		});
 
+		$scope.$on('errorInesperado', function(e, mensaje){
+			$scope.cargando = false;
+			$scope.turnos = [];
+			$scope.configPanel = mensaje;
+		});
+
 		// Carga los turnos por fechas
 		$scope.cargaPorFiltros = function(){
 			$scope.currentPage = 1;

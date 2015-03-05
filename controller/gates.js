@@ -95,7 +95,6 @@
 				$scope.cargando = false;
 			});
 		};
-
 	});
 
 })();
