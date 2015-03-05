@@ -52,6 +52,7 @@
 		};
 
 		$scope.itemsPerPage = 10;
+		$scope.cargando = true;
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
@@ -72,6 +73,7 @@
 		});
 
 		$scope.cargaGates = function () {
+			$scope.cargando = true;
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.configPanel = {
 				tipo: 'panel-info',
@@ -89,6 +91,7 @@
 						mensaje: 'Se ha producido un error al cargar los gates.'
 					};
 				}
+				$scope.cargando = false;
 			});
 		};
 
