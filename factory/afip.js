@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 17/12/14.
  */
-myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, formatDate, errorFactory){
+myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, formatService, errorFactory){
 
 	var factory = {};
 
@@ -433,11 +433,11 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 		}
 		if(angular.isDefined(filtros.fechaInicio) && filtros.fechaInicio != null && filtros.fechaInicio != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(filtros.fechaInicio);
+			unaUrl = unaUrl + 'fechaInicio=' + formatService.formatearFecha(filtros.fechaInicio);
 		}
 		if(angular.isDefined(filtros.fechaFin) && filtros.fechaFin != null && filtros.fechaFin != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFecha(filtros.fechaFin);
+			unaUrl = unaUrl + 'fechaFin=' + formatService.formatearFecha(filtros.fechaFin);
 		}
 		if(angular.isDefined(filtros.order) && filtros.order != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}

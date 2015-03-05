@@ -43,7 +43,8 @@
 			'filtroOrden': 'gateTimestamp',
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': true,
-			'order': '"gateTimestamp": -1'
+			'order': '"gateTimestamp": -1',
+			'fechaConGMT': true
 		};
 
 		$scope.page = {
