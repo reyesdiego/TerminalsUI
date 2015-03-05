@@ -564,6 +564,9 @@
 				$scope.$on('cargaGeneral', function(){
 					$scope.listaBuques = $rootScope.listaBuques;
 				});
+				$scope.$on('errorInesperado', function(e, mensaje){
+					$scope.detallesGates = false;
+				});
 				$scope.colorHorario = function (gate) {
 					var horarioGate = new Date(gate.gateTimestamp);
 					var horarioInicio = new Date(gate.turnoInicio);

@@ -68,6 +68,7 @@
 		});
 
 		$scope.$on('errorInesperado', function(e, mensaje){
+			$scope.cargando = false;
 			$scope.gates = [];
 			$scope.configPanel = mensaje;
 		});
