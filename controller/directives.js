@@ -1289,6 +1289,21 @@
 			$scope.configPanel = mensaje;
 		});
 
+		$rootScope.$watch('moneda', function(){
+			$scope.moneda = $rootScope.moneda;
+		});
+
+		$scope.colorHorario = function (gate) {
+			var horarioGate = new Date(gate.gateTimestamp);
+			var horarioInicio = new Date(gate.turnoInicio);
+			var horarioFin = new Date(gate.turnoFin);
+			if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
+				return 'green';
+			} else {
+				return 'red';
+			}
+		};
+
 		$scope.existeDescripcion = function(itemId){
 			return angular.isDefined($scope.itemsDescription[itemId]);
 		};
