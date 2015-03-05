@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate, errorFactory){
+myapp.factory('priceFactory', function($http, dialogs, loginService, formatService){
 	var factory = {};
 
 	factory.getPrice = function(terminal, datos, callback) {
@@ -66,13 +66,13 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 		var flagFea = false;
 		var inserturl = serverUrl + '/noMatches/' + loginService.getFiltro() + '?';
 		if (desde && desde != null) {
-			inserturl += 'fechaInicio=' + formatDate.formatearFecha(desde);
+			inserturl += 'fechaInicio=' + formatService.formatearFecha(desde);
 			flagFea = true;
 		}
 		if (hasta && hasta != null) {
 			if (flagFea) inserturl += '&';
 
-			inserturl += 'fechaFin=' + formatDate.formatearFecha(hasta);
+			inserturl += 'fechaFin=' + formatService.formatearFecha(hasta);
 		}
 		$http.get(inserturl)
 			.success(function (data){
@@ -108,7 +108,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatDate,
 
 	factory.savePriceChanges = function(formData, id, callback){
 		formData.topPrices.forEach(function(unPrecio){
-			unPrecio.from = formatDate.formatearFecha(unPrecio.from);
+			unPrecio.from = formatService.formatearFecha(unPrecio.from);
 		});
 		var inserturl = serverUrl + '/price/' + id;
 		$http({

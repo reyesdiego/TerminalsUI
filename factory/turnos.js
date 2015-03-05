@@ -1,18 +1,18 @@
 /**
  * Created by leo on 28/04/14.
  */
-myapp.factory('turnosFactory', function($http, dialogs, formatDate, loginService){
+myapp.factory('turnosFactory', function($http, dialogs, formatService, loginService){
 	var factory = {};
 
 	factory.getTurnos = function(datos, page, callback){
 		var inserturl = serverUrl + '/appointments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
 		var insertAux = inserturl;
 		if(angular.isDefined(datos.fechaInicio) && datos.fechaInicio != '' && datos.fechaInicio != null){
-			inserturl = inserturl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio);
+			inserturl = inserturl + 'fechaInicio=' + formatService.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio);
 		}
 		if(angular.isDefined(datos.fechaFin) && datos.fechaFin != '' && datos.fechaFin != null){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}
-			inserturl = inserturl + 'fechaFin=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaFin);
+			inserturl = inserturl + 'fechaFin=' + formatService.formatearFechaHorasMinutosGMTLocal(datos.fechaFin);
 		}
 		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
 			if(inserturl != insertAux){ inserturl = inserturl + '&'}

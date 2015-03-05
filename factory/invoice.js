@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginService, formatDate, errorFactory){
+myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginService, formatService, errorFactory){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
@@ -140,7 +140,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		$http.get(inserturl)
 			.success(function (data){
 				data.data = factory.setearInterfazComprobante(data.data);
-				data.data.transferencia = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
+				data.data.transferencia = formatService.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
 				callback(factory.ponerDescripcionComprobante(data.data));
 			}).error(function(error){
 				errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
@@ -187,11 +187,11 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		}
 		if(angular.isDefined(datos.fechaInicio) && datos.fechaInicio != null && datos.fechaInicio != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFecha(datos.fechaInicio);
+			unaUrl = unaUrl + 'fechaInicio=' + formatService.formatearFecha(datos.fechaInicio);
 		}
 		if(angular.isDefined(datos.fechaFin) && datos.fechaFin != null && datos.fechaFin != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFecha(datos.fechaFin);
+			unaUrl = unaUrl + 'fechaFin=' + formatService.formatearFecha(datos.fechaFin);
 		}
 		if(angular.isDefined(datos.codigo) && datos.codigo != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
@@ -258,7 +258,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			.success(function (data){
 				data.data = factory.filtrarComentarios(data.data);
 				data.data.forEach(function(comment){
-					comment.fecha = formatDate.formatearFechaHorasMinutosSinGMT(idToDate(comment._id));
+					comment.fecha = formatService.formatearFechaHorasMinutosSinGMT(idToDate(comment._id));
 				});
 				callback(data);
 			})

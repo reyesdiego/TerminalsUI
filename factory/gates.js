@@ -1,7 +1,7 @@
 /**
  * Created by leo on 14/04/14.
  */
-myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService){
+myapp.factory('gatesFactory', function($http, dialogs, formatService, loginService){
 	var factory = {};
 
 	factory.getGate = function(datos, page, callback){
@@ -49,11 +49,11 @@ myapp.factory('gatesFactory', function($http, dialogs, formatDate, loginService)
 	factory.aplicarFiltros = function(unaUrl, datos){
 		var insertAux = unaUrl;
 		if(angular.isDefined(datos.fechaInicio) && datos.fechaInicio != '' && datos.fechaInicio != null){
-			unaUrl = unaUrl + 'fechaInicio=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio);
+			unaUrl = unaUrl + 'fechaInicio=' + formatService.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio);
 		}
 		if(angular.isDefined(datos.fechaFin) && datos.fechaFin != '' && datos.fechaFin != null){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatDate.formatearFechaHorasMinutosGMTLocal(datos.fechaFin);
+			unaUrl = unaUrl + 'fechaFin=' + formatService.formatearFechaHorasMinutosGMTLocal(datos.fechaFin);
 		}
 		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}

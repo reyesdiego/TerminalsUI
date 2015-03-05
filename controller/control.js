@@ -2,9 +2,9 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatDate){
+var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatService){
 
-	var fecha = formatDate.formatearFecha(new Date());
+	var fecha = formatService.formatearFecha(new Date());
 
 	$scope.prefijo = 'AR$';
 	$scope.otraMoneda = 'DOL';
@@ -123,7 +123,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 
 	socket.on('invoice', function (data) {
 		if (data.status === 'OK') {
-			var fecha1 = formatDate.formatearFecha($scope.desde);
+			var fecha1 = formatService.formatearFecha($scope.desde);
 			var fecha2 = data.data.emision.substring(0,10);
 			if (fecha1 == fecha2) {
 				var response = Enumerable.From($scope.comprobantesCantidad)
@@ -222,7 +222,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.traerTotales = function(){
 		$scope.errorTotales = false;
 		$scope.loadingTotales = true;
-		controlPanelFactory.getByDay(formatDate.formatearFecha($scope.desde), function(data){
+		controlPanelFactory.getByDay(formatService.formatearFecha($scope.desde), function(data){
 			$scope.loadingTotales = false;
 			$scope.control.invoicesCount = data.invoicesCount;
 			$scope.fecha = fecha;

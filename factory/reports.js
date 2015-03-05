@@ -2,7 +2,7 @@
  * Created by Artiom on 17/06/14.
  */
 
-myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginService){
+myapp.factory('reportsFactory', function($http, dialogs, formatService, loginService){
 	var factory = {};
 
 	factory.getCumplimientoTurnos = function(fecha, callback){
@@ -16,7 +16,7 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 	};
 
 	factory.getReporteHorarios = function(fecha, callback){
-		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?fechaInicio=' + formatDate.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatDate.formatearFecha(fecha.fechaFin);
+		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?fechaInicio=' + formatService.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatService.formatearFecha(fecha.fechaFin);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -26,7 +26,7 @@ myapp.factory('reportsFactory', function($http, dialogs, formatDate, loginServic
 	};
 
 	factory.getReporteTarifas = function(fecha, tarifas, callback){
-		var inserturl = serverUrl + '/invoices/byRates?fechaInicio=' + formatDate.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatDate.formatearFecha(fecha.fechaFin);
+		var inserturl = serverUrl + '/invoices/byRates?fechaInicio=' + formatService.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatService.formatearFecha(fecha.fechaFin);
 		$http({
 			method: "POST",
 			url: inserturl,
