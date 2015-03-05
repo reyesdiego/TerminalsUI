@@ -6,7 +6,9 @@
 	myapp.controller('turnosCtrl', function($scope, turnosFactory){
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = 15;
+		$scope.totalItems = 0;
 		$scope.turnosGates = true;
+		$scope.cargando = false;
 		$scope.configPanel = {
 			tipo: 'panel-info',
 			titulo: 'Turnos',
@@ -61,12 +63,12 @@
 
 		// Carga los turnos por fechas
 		$scope.cargaPorFiltros = function(){
-			$scope.status.open = !$scope.status.open;
 			$scope.currentPage = 1;
 			$scope.cargaTurnos();
 		};
 
 		$scope.cargaTurnos = function(){
+			$scope.cargando = true;
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 			$scope.configPanel = {
 				tipo: 'panel-info',
@@ -84,6 +86,7 @@
 						mensaje: 'Se ha producido un error al cargar los turnos.'
 					};
 				}
+				$scope.cargando = false;
 			});
 		};
 

@@ -41,8 +41,8 @@
 				$scope.interfazModal.imagen = 'images/error.png';
 				break;
 			case 'WARN':
-				$scope.interfazModal.tipoModal = 'bg-danger';
-				$scope.interfazModal.divCuerpo = 'bg-danger';
+				$scope.interfazModal.tipoModal = 'bg-warning';
+				$scope.interfazModal.divCuerpo = 'bg-warning';
 				$scope.interfazModal.imagen = 'images/warn.png';
 				break;
 		}
@@ -63,7 +63,7 @@
 				cuerpoClass = 'bg-success';
 			}
 			else if (estado.type === 'UNKNOWN'){
-				cuerpoClass = 'bg-warning';
+				cuerpoClass = 'bg-info';
 			}
 			$scope.interfazModal.estado = estado.description;
 			$scope.interfazModal.divCuerpo = cuerpoClass;

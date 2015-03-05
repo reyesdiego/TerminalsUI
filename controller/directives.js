@@ -107,7 +107,7 @@
 					$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
 					$scope.vouchers = $rootScope.vouchers;
 					$scope.vouchersType = $rootScope.vouchersType;
-					$scope.itemsDescription = $rootScope.itemsDescriptionInvoices
+					$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
 				});
 
 				$scope.$on('iniciarBusqueda', function(event, data){
@@ -293,7 +293,7 @@
 							dataTrack = [];
 							modalInstance.result.then(function (dataComment) {
 								invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
-									$scope.recargarResultado = true;
+									//$scope.recargarResultado = true;
 									var logInvoice = {
 										title: dataComment.title,
 										state: dataComment.newState._id,
@@ -305,16 +305,16 @@
 											comprobante.interfazEstado = dataComment.newState;
 											switch (dataComment.newState.type){
 												case 'WARN':
-													comprobante.interfazEstado.btnEstado = 'btn-warning';
+													comprobante.interfazEstado.btnEstado = 'text-warning';
 													break;
 												case 'OK':
-													comprobante.interfazEstado.btnEstado = 'btn-success';
+													comprobante.interfazEstado.btnEstado = 'text-success';
 													break;
 												case 'ERROR':
-													comprobante.interfazEstado.btnEstado = 'btn-danger';
+													comprobante.interfazEstado.btnEstado = 'text-danger';
 													break;
 												case 'UNKNOWN':
-													comprobante.interfazEstado.btnEstado = 'btn-info';
+													comprobante.interfazEstado.btnEstado = 'text-info';
 													break;
 											}
 											var nuevoEstado = {
@@ -339,19 +339,14 @@
 
 				$scope.ocultarResultado = function(comprobante){
 					$scope.mostrarResultado = false;
-					if ($scope.recargarResultado){
-						$scope.datosInvoices.forEach(function(comprob){
-							if (comprob._id == comprobante._id){
-								comprob.interfazEstado = comprobante.interfazEstado;
-								comprob.estado = comprobante.estado;
-							}
-						});
-						$scope.comprobantesVistos.forEach(function(visto){
-							if (visto._id == comprobante._id){
-								visto.interfazEstado = comprobante.interfazEstado;
-								visto.estado = comprobante.estado;
-							}
-						});
+					var encontrado = false;
+					$scope.comprobantesVistos.forEach(function(unComprobante){
+						if (unComprobante._id == comprobante._id){
+							encontrado = true;
+						}
+					});
+					if (!encontrado){
+						$scope.comprobantesVistos.push(comprobante);
 					}
 				};
 
@@ -400,15 +395,6 @@
 					$scope.recargarResultado = false;
 
 					$scope.loadingState = true;
-					var encontrado = false;
-					$scope.comprobantesVistos.forEach(function(unComprobante){
-						if (unComprobante._id == comprobante._id){
-							encontrado = true;
-						}
-					});
-					if (!encontrado){
-						$scope.comprobantesVistos.push(comprobante);
-					}
 
 					invoiceFactory.invoiceById(comprobante._id, function(callback){
 
@@ -578,6 +564,9 @@
 				$scope.$on('cargaGeneral', function(){
 					$scope.listaBuques = $rootScope.listaBuques;
 				});
+				$scope.$on('errorInesperado', function(e, mensaje){
+					$scope.detallesGates = false;
+				});
 				$scope.colorHorario = function (gate) {
 					var horarioGate = new Date(gate.gateTimestamp);
 					var horarioInicio = new Date(gate.turnoInicio);
@@ -656,6 +645,7 @@
 				model:				'=',
 				datosTurnos:		'=',
 				totalItems:			'=',
+				itemsPerPage:		'=',
 				configPanel:		'=',
 				currentPage:		'=',
 				ocultarFiltros:		'=',
@@ -793,7 +783,6 @@
 		};
 
 		$scope.cargaPorFiltros = function () {
-			$scope.status.open = !$scope.status.open;
 			$scope.$emit('cambioFiltro');
 		};
 	}]);
@@ -1261,7 +1250,7 @@
 		}
 	});
 
-	myapp.controller('missingInfo', function($rootScope, $scope, vouchersFactory, gatesFactory, dialogs){
+	myapp.controller('missingInfo', function($rootScope, $scope, vouchersFactory, gatesFactory, invoiceFactory, $modal, loginService, dialogs){
 		$scope.currentPage = 1;
 
 		$scope.itemsPerPage = [
@@ -1285,6 +1274,47 @@
 		//Opciones de fecha para calendarios
 		$scope.formatDate = $rootScope.formatDate;
 		$scope.dateOptions = $rootScope.dateOptions;
+		$scope.comprobantesVistos = [];
+		$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
+		$scope.estadosComprobantes = $rootScope.estadosComprobantes;
+		$scope.itemDescriptionInvoices = $rootScope.itemsDescriptionInvoices;
+		$scope.acceso = $rootScope.esUsuario;
+
+		$scope.$on('cargaGeneral', function(){
+			$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
+			$scope.estadosComprobantes = $rootScope.estadosComprobantes;
+			$scope.itemDescriptionInvoices = $rootScope.itemsDescriptionInvoices;
+		});
+
+		$scope.$on('errorInesperado', function(e, mensaje){
+			$scope.cargando = false;
+			$scope.datosFaltantes = [];
+			$scope.configPanel = mensaje;
+		});
+
+		$rootScope.$watch('moneda', function(){
+			$scope.moneda = $rootScope.moneda;
+		});
+
+		$scope.colorHorario = function (gate) {
+			var horarioGate = new Date(gate.gateTimestamp);
+			var horarioInicio = new Date(gate.turnoInicio);
+			var horarioFin = new Date(gate.turnoFin);
+			if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
+				return 'green';
+			} else {
+				return 'red';
+			}
+		};
+
+		$scope.existeDescripcion = function(itemId){
+			return angular.isDefined($scope.itemsDescription[itemId]);
+		};
+
+		$scope.quitarVista = function (comprobante) {
+			var pos = $scope.comprobantesVistos.indexOf(comprobante);
+			$scope.comprobantesVistos.splice(pos, 1);
+		};
 
 		$scope.openDate = function(event){
 			$rootScope.openDate(event);
@@ -1294,9 +1324,77 @@
 			$scope.filtrado('itemsPerPage', data.value);
 		};
 
+		$scope.trackInvoice = function(comprobante){
+			var estado;
+			estado = comprobante.interfazEstado;
+			invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+				if (dataTrack.status == 'OK'){
+					var modalInstance = $modal.open({
+						templateUrl: 'view/trackingInvoice.html',
+						controller: 'trackingInvoiceCtrl',
+						backdrop: 'static',
+						resolve: {
+							estado: function () {
+								return estado;
+							},
+							track: function() {
+								return dataTrack;
+							},
+							states : function() {
+								return angular.copy($scope.estadosComprobantes);
+							}
+						}
+					});
+
+					dataTrack = [];
+					modalInstance.result.then(function (dataComment) {
+						invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
+							$scope.recargarResultado = true;
+							var logInvoice = {
+								title: dataComment.title,
+								state: dataComment.newState._id,
+								comment: dataComment.comment,
+								invoice: comprobante._id
+							};
+							invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+								if (dataRes.status == 'OK'){
+									comprobante.interfazEstado = dataComment.newState;
+									switch (dataComment.newState.type){
+										case 'WARN':
+											comprobante.interfazEstado.btnEstado = 'text-warning';
+											break;
+										case 'OK':
+											comprobante.interfazEstado.btnEstado = 'text-success';
+											break;
+										case 'ERROR':
+											comprobante.interfazEstado.btnEstado = 'text-danger';
+											break;
+										case 'UNKNOWN':
+											comprobante.interfazEstado.btnEstado = 'text-info';
+											break;
+									}
+									var nuevoEstado = {
+										_id: comprobante._id,
+										estado: dataComment.newState,
+										grupo: loginService.getGroup(),
+										user: loginService.getInfo().user
+									};
+									comprobante.estado.push(nuevoEstado);
+								}
+							});
+						});
+					});
+				} else {
+					dialogs.error('Comprobantes', 'Se ha producido un error al cargar los comentarios del comprobante');
+				}
+
+			});
+		};
+
 		$scope.configPanel = {
 			tipo: 'panel-success',
-			titulo: 'Control gates'
+			titulo: 'Control gates',
+			mensaje: 'No se encontraron comprobantes con gates faltantes para los filtros seleccionados.'
 		};
 
 		$scope.model = {
@@ -1324,9 +1422,20 @@
 						if (data.status == 'OK'){
 							$scope.datosFaltantes = data.data;
 							$scope.totalItems = $scope.datosFaltantes.length;
+							$scope.datosFaltantes.forEach(function(comprob){
+								if (angular.isDefined($scope.itemDescriptionInvoices[comprob.code])) {
+									comprob.code = comprob.code + ' - ' + $scope.itemDescriptionInvoices[comprob.code];
+								} else {
+									comprob.code = comprob.code +  ' - No se halló la descripción, verifique que el código esté asociado.';
+								}
+							});
 							$scope.cargando = false;
 						} else {
-							dialogs.error('Gates faltantes', 'Se ha producido un error al cargar los gates faltantes.');
+							$scope.configPanel = {
+								tipo: 'panel-success',
+								titulo: 'Control gates',
+								mensaje: 'Se ha producido un error al cargar los gates faltantes.'
+							};
 						}
 					});
 					break;
@@ -1341,7 +1450,11 @@
 								registro.fecha = registro.gateTimestamp;
 							})
 						} else {
-							dialogs.error('Comprobantes faltantes', 'Se ha producido un error al cargar los comprobantes faltantes.');
+							$scope.configPanel = {
+								tipo: 'panel-success',
+								titulo: 'Control gates',
+								mensaje: 'Se ha producido un error al cargar los comprobantes faltantes.'
+							};
 						}
 					});
 					break;
@@ -1357,6 +1470,37 @@
 				$scope.reverse = !$scope.reverse;
 			}
 			$scope.predicate = filtro;
+		};
+
+		$scope.mostrarDetalle = function(comprobante){
+			$scope.cargando = true;
+			invoiceFactory.invoiceById(comprobante._id, function(dataComprob){
+				$scope.verDetalle = dataComprob;
+				$scope.mostrarResultado = true;
+				$scope.cargando = false;
+
+			});
+		};
+
+		$scope.ocultarResultado = function(comprobante){
+			var encontrado = false;
+			$scope.comprobantesVistos.forEach(function(unComprobante){
+				if (unComprobante._id == comprobante._id){
+					encontrado = true;
+				}
+			});
+			if (!encontrado){
+				$scope.comprobantesVistos.push(comprobante);
+			}
+			if ($scope.recargarResultado){
+				$scope.comprobantesVistos.forEach(function(visto){
+					if (visto._id == comprobante._id){
+						visto.interfazEstado = comprobante.interfazEstado;
+						visto.estado = comprobante.estado;
+					}
+				});
+			}
+			$scope.mostrarResultado = false;
 		};
 
 		$scope.cargaDatos();
