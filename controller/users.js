@@ -6,6 +6,17 @@
 		$scope.permiso = false;
 		$scope.cargando = true;
 		$scope.datosUsers = [];
+		$scope.panelMensaje = {
+			tipo: 'panel-info',
+			titulo: 'Control de usuarios',
+			mensaje: 'No posee permisos para requerir estos datos.'
+		};
+
+		$scope.$on('errorInesperado', function(e, mensaje){
+			$scope.cargando = false;
+			$scope.panelMensaje = mensaje;
+			$scope.permiso = false;
+		});
 
 		ctrlUsersFactory.getUsers(function(data) {
 			if (data.status === 'OK'){
