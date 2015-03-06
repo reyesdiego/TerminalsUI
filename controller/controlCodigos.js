@@ -18,7 +18,7 @@
 			'buqueNombre': '',
 			'viaje': '',
 			'estado': 'N',
-			'codigo': '',
+			'code': '',
 			'filtroOrden': 'fecha.emision',
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': false,
@@ -75,7 +75,7 @@
 			$scope.currentPageFiltros = 1;
 			$scope.model = data;
 			if ($scope.controlFiltros == 'codigos'){
-				if ($scope.model.codigo != ''){
+				if ($scope.model.code != ''){
 					$scope.controlFiltros = 'filtros';
 					$scope.ocultarFiltros = ['nroPtoVenta'];
 					$scope.anteriorCargaCodigos = $scope.comprobantesRotos;
@@ -86,7 +86,7 @@
 					$scope.controlDeCodigos();
 				}
 			} else {
-				if ($scope.model.codigo == ''){
+				if ($scope.model.code == ''){
 					$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 					$scope.controlFiltros = 'codigos';
 					$scope.mostrarPtosVentas = false;
@@ -101,7 +101,7 @@
 			$scope.controlFiltros = 'codigos';
 			$scope.loadingControlCodigos = true;
 			$scope.hayFiltros = false;
-			$scope.model.codigo = '';
+			$scope.model.code = '';
 			$scope.comprobantesRotos = [];
 			$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 			$scope.pageCodigos.limit = $scope.model.itemsPerPage;
