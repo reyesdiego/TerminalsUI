@@ -1129,7 +1129,6 @@
 					var datos = { contenedor: $scope.contenedorElegido.contenedor, currency: $scope.moneda};
 					controlPanelFactory.getTasasContenedor(datos, function(data){
 						if (data.status === 'OK'){
-							console.log(data.data);
 							$scope.tasas = data.data;
 							$scope.totalTasas = data.totalTasas;
 						} else {
