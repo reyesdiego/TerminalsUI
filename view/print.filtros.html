@@ -27,8 +27,8 @@
 		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.estado == 'N'">
 			<span>Estado: {{ devolverEstado(model.estado) }}</span>
 		</div>
-		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.buque == ''">
-			<span>Buque: {{ model.buque }}</span>
+		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.buqueNombre == ''">
+			<span>Buque: {{ model.buqueNombre }}</span>
 		</div>
 		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.fechaInicio == ''">
 			<span ng-hide="turnosGates">Desde: {{ model.fechaInicio | date: 'dd/MM/yyyy' }}</span>

@@ -54,7 +54,7 @@
 			'fechaInicio': $scope.fechaInicio,
 			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
-			'buque': '',
+			'buqueNombre': '',
 			'viaje': '',
 			'estado': 'N',
 			'codigo': '',
@@ -144,7 +144,6 @@
 					$scope.invoices = data.data;
 					$scope.invoicesTotalItems = data.totalCount;
 				} else {
-					//dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos de los comprobantes.');
 					$scope.mensajeResultado = {
 						titulo: 'Comprobantes',
 						mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
@@ -163,7 +162,6 @@
 					$scope.gates = data.data;
 					$scope.gatesTotalItems = data.totalCount;
 				} else  {
-					//dialogs.error('Gates', 'Se ha producido un error al cargar los datos de los gates.')
 					$scope.configPanelGates = {
 						tipo: 'panel-danger',
 						titulo: 'Gates',
@@ -181,7 +179,6 @@
 					$scope.turnos = data.data;
 					$scope.turnosTotalItems = data.totalCount;
 				} else {
-					//dialogs.error('Turnos', 'Se ha producido un error al cargar los datos de los turnos.');
 					$scope.configPanelTurnos = {
 						tipo: 'panel-danger',
 						titulo: 'Turnos',
@@ -198,7 +195,6 @@
 				if (data.status == 'OK'){
 					$scope.sumariaAfip = data.data;
 				} else {
-					//dialogs.error('Sumaria', 'Se ha producido un error al cargar los datos de la sumaria del contenedor.');
 					$scope.sumariaConfigPanel = {
 						tipo: 'panel-danger',
 						titulo: 'A.F.I.P. sumaria',

@@ -59,9 +59,9 @@ myapp.factory('gatesFactory', function($http, dialogs, formatService, loginServi
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'contenedor=' + datos.contenedor.toUpperCase();
 		}
-		if(angular.isDefined(datos.buque) && datos.buque != ''){
+		if(angular.isDefined(datos.buqueNombre) && datos.buqueNombre != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'buqueNombre=' + datos.buque.toUpperCase();
+			unaUrl = unaUrl + 'buqueNombre=' + datos.buqueNombre.toUpperCase();
 		}if(angular.isDefined(datos.viaje) && datos.viaje != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'viaje=' + datos.viaje.toUpperCase();

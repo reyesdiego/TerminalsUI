@@ -173,9 +173,9 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'documentoCliente=' + datos.documentoCliente;
 		}
-		if(angular.isDefined(datos.buque) && datos.buque != ''){
+		if(angular.isDefined(datos.buqueNombre) && datos.buqueNombre != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'buqueNombre=' + datos.buque;
+			unaUrl = unaUrl + 'buqueNombre=' + datos.buqueNombre;
 		}
 		if(angular.isDefined(datos.viaje) && datos.viaje != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
