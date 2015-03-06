@@ -57,6 +57,13 @@
 			$scope.pageChanged();
 		});
 
+		$scope.$on('errorInesperado', function(e, mensaje){
+			$scope.hayError = true;
+			$scope.mensajeResultado = mensaje;
+			$scope.totalItems = 0;
+			$scope.pricelist = [];
+		});
+
 		$scope.prepararDatos = function(){
 			priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: $scope.tasas}, function (data) {
 				if (data.status == 'OK'){
