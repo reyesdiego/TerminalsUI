@@ -19,7 +19,7 @@
 			'buqueNombre': '',
 			'viaje': '',
 			'estado': 'N',
-			'codigo': '',
+			'code': '',
 			'filtroOrden': 'fecha.emision',
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': false,

@@ -39,7 +39,7 @@
 			'buqueNombre': '',
 			'viaje': '',
 			'estado': 'N',
-			'codigo': '',
+			'code': '',
 			'filtroOrden': 'gateTimestamp',
 			'filtroOrdenAnterior': '',
 			'filtroOrdenReverse': true,

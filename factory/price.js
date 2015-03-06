@@ -19,8 +19,8 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 		var inserturl = serverUrl + '/matchprices/' + terminal + '?';
 		var insertAux = inserturl;
 		if (datos && datos != null){
-			if(angular.isDefined(datos.codigo) && datos.codigo != ''){
-				inserturl = inserturl + 'code=' + datos.codigo.toUpperCase();
+			if(angular.isDefined(datos.code) && datos.code != ''){
+				inserturl = inserturl + 'code=' + datos.code.toUpperCase();
 			}
 			if(angular.isDefined(datos.codigoAsociado) && datos.codigoAsociado != ''){
 				if(inserturl != insertAux){ inserturl = inserturl + '&'}

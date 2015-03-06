@@ -6,8 +6,7 @@ myapp.factory('gatesFactory', function($http, dialogs, formatService, loginServi
 
 	factory.getGate = function(datos, page, callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				callback(data);
 			}).error(function(error){
@@ -17,8 +16,7 @@ myapp.factory('gatesFactory', function($http, dialogs, formatService, loginServi
 
 	factory.getReporteHorarios = function(datos, callback){
 		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?';
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
@@ -44,33 +42,6 @@ myapp.factory('gatesFactory', function($http, dialogs, formatService, loginServi
 			}).error(function(error){
 				callback(error);
 			});
-	};
-
-	factory.aplicarFiltros = function(unaUrl, datos){
-		var insertAux = unaUrl;
-		if(angular.isDefined(datos.fechaInicio) && datos.fechaInicio != '' && datos.fechaInicio != null){
-			unaUrl = unaUrl + 'fechaInicio=' + formatService.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio);
-		}
-		if(angular.isDefined(datos.fechaFin) && datos.fechaFin != '' && datos.fechaFin != null){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatService.formatearFechaHorasMinutosGMTLocal(datos.fechaFin);
-		}
-		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'contenedor=' + datos.contenedor.toUpperCase();
-		}
-		if(angular.isDefined(datos.buqueNombre) && datos.buqueNombre != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'buqueNombre=' + datos.buqueNombre.toUpperCase();
-		}if(angular.isDefined(datos.viaje) && datos.viaje != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'viaje=' + datos.viaje.toUpperCase();
-		}
-		if(angular.isDefined(datos.order) && datos.order != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'order=' + '[{' + datos.order + '}]';
-		}
-		return unaUrl
 	};
 
 	return factory;

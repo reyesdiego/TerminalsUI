@@ -6,8 +6,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getInvoice = function(datos, page, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				data = factory.ponerDescripcionComprobantes(data);
 				callback(factory.setearInterfaz(data));
@@ -28,8 +27,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getSinTasaCargas = function(datos, terminal, page, callback){
 		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit + '?';
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				data = factory.ponerDescripcionComprobantes(data);
 				callback(factory.setearInterfaz(data));
@@ -40,8 +38,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getContainersSinTasaCargas = function(datos, terminal, callback) {
 		var inserturl = serverUrl + '/invoices/containersNoRates/' + terminal + '?';
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data) {
 				callback(data);
 			})
@@ -62,8 +59,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getInvoicesNoMatches = function(datos, page, callback){
 		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data) {
 				if (data == null) {
 					data = {
@@ -77,16 +73,15 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				callback(factory.setearInterfaz(data));
 
 			}).error(function(errorText) {
-				//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar los códigos no asociados por la terminal.');
 				callback(errorText);
 			});
 	};
 
 	factory.getCorrelative = function(datos, socketIoRegister, callback){
 		var inserturl = serverUrl + '/invoices/correlative/' + loginService.getFiltro() + '?';
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		inserturl += '&x='+socketIoRegister;
-		$http.get(inserturl)
+		var param = formatService.formatearDatos(datos);
+		param.x = socketIoRegister;
+		$http.get(inserturl, { params: param })
 			.success(function (data) {
 				callback(data);
 			}).error(function(error) {
@@ -96,8 +91,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getCashbox = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro() + '?';
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				if (data == null){
 					data = {
@@ -126,8 +120,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	factory.getShipContainers = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers?';
-		inserturl = this.aplicarFiltros(inserturl, datos);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -145,63 +138,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 			}).error(function(error){
 				errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
 			});
-	};
-
-	factory.aplicarFiltros = function(unaUrl, datos){
-		var insertAux = unaUrl;
-		if (angular.isDefined(datos.nroPtoVenta) && datos.nroPtoVenta != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'nroPtoVenta=' + datos.nroPtoVenta;
-		}
-		if(angular.isDefined(datos.contenedor) && datos.contenedor != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'contenedor=' + datos.contenedor.toUpperCase();
-		}
-		if(angular.isDefined(datos.nroComprobante) && datos.nroComprobante != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'nroComprobante=' + datos.nroComprobante;
-		}
-		if(angular.isDefined(datos.codTipoComprob) && datos.codTipoComprob != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'codTipoComprob=' + datos.codTipoComprob;
-		}
-		if(angular.isDefined(datos.razonSocial) && datos.razonSocial != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'razonSocial=' + datos.razonSocial.toUpperCase();
-		}
-		if(angular.isDefined(datos.documentoCliente) && datos.documentoCliente != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'documentoCliente=' + datos.documentoCliente;
-		}
-		if(angular.isDefined(datos.buqueNombre) && datos.buqueNombre != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'buqueNombre=' + datos.buqueNombre;
-		}
-		if(angular.isDefined(datos.viaje) && datos.viaje != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'viaje=' + datos.viaje;
-		}
-		if(angular.isDefined(datos.estado) && datos.estado != '' && datos.estado != 'N'){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'estado=' + datos.estado;
-		}
-		if(angular.isDefined(datos.fechaInicio) && datos.fechaInicio != null && datos.fechaInicio != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaInicio=' + formatService.formatearFecha(datos.fechaInicio);
-		}
-		if(angular.isDefined(datos.fechaFin) && datos.fechaFin != null && datos.fechaFin != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatService.formatearFecha(datos.fechaFin);
-		}
-		if(angular.isDefined(datos.codigo) && datos.codigo != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'code=' + datos.codigo;
-		}
-		if(angular.isDefined(datos.order) && datos.order != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'order=' + '[{' + datos.order + '}]';
-		}
-		return unaUrl;
 	};
 
 	factory.ponerDescripcionComprobante = function(comprobante){
@@ -263,7 +199,6 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 				callback(data);
 			})
 			.error(function(error){
-			//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al obtener los comentarios del comprobante ' + invoiceId);
 			callback(error);
 		});
 	};

@@ -112,8 +112,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro1Afectacion = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_afectacion/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -126,8 +125,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro1detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_detexpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -140,8 +138,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro1detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_detimpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -154,8 +151,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro1Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_solicitud/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -168,8 +164,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro1sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -182,8 +177,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro1sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro1_sumimpomani/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -196,8 +190,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro2Afectacion = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_afectacion/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -210,8 +203,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro2detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_detexpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -224,8 +216,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro2detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_detimpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -238,8 +229,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro2Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_solicitud/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -252,8 +242,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro2sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -266,8 +255,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro2sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro2_sumimpomani/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -280,8 +268,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro3detExpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_detexpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -294,8 +281,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro3detImpo = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_detimpo/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -308,8 +294,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro3Solicitud = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_solicitud/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -322,8 +307,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro3sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -336,8 +320,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro3sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro3_sumimpomani/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -350,8 +333,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro4sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro4_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -364,8 +346,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro4sumImpoMani = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro4_sumimpomani/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -378,8 +359,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	factory.getRegistro5sumExpoMane = function(filtros, page, callback){
 		var inserturl = serverUrl + '/afip/registro5_sumexpomane/' + page.skip + '/' + page.limit;
-		inserturl = factory.aplicarFiltros(inserturl, filtros);
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 			.success(function(data){
 				callback(data);
 			}).error(function(errorText){
@@ -403,47 +383,6 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 				}
 				callback(error);
 			});
-	};
-
-	factory.aplicarFiltros = function(unaUrl, filtros){
-		var insertAux = unaUrl;
-		if (angular.isDefined(filtros.afectacion) && filtros.afectacion != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'afectacion=' + filtros.afectacion;
-		}
-		if(angular.isDefined(filtros.detalle) && filtros.detalle != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'detalle=' + filtros.detalle;
-		}
-		if(angular.isDefined(filtros.solicitud) && filtros.solicitud != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'solicitud=' + filtros.solicitud;
-		}
-		if(angular.isDefined(filtros.sumaria) && filtros.sumaria != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'sumaria=' + filtros.sumaria;
-		}
-		if(angular.isDefined(filtros.conocimiento) && filtros.conocimiento != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'conocimiento=' + filtros.conocimiento;
-		}
-		if(angular.isDefined(filtros.buqueNombre) && filtros.buqueNombre != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'buqueNombre=' + filtros.buqueNombre;
-		}
-		if(angular.isDefined(filtros.fechaInicio) && filtros.fechaInicio != null && filtros.fechaInicio != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaInicio=' + formatService.formatearFecha(filtros.fechaInicio);
-		}
-		if(angular.isDefined(filtros.fechaFin) && filtros.fechaFin != null && filtros.fechaFin != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'fechaFin=' + formatService.formatearFecha(filtros.fechaFin);
-		}
-		if(angular.isDefined(filtros.order) && filtros.order != ''){
-			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'order=' + '[{' + filtros.order + '}]';
-		}
-		return unaUrl;
 	};
 
 	return factory;
