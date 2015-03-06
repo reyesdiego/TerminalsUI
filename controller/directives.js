@@ -1014,6 +1014,13 @@
 				$scope.loadingState = false;
 				$scope.cargandoSumaria = false;
 
+				$scope.$on('errorInesperado', function(e, mensaje){
+					$scope.loadingState = false;
+					$scope.panelMensaje = mensaje;
+					$scope.totalItems = 0;
+					$scope.datosContainers = [];
+				});
+
 				invoiceFactory.getShipTrips(function(data){
 					$scope.buques = data.data;
 				});

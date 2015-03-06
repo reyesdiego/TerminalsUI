@@ -6,8 +6,8 @@
 	</div>
 
 	<div class=" row col-lg-12" ng-hide="permiso || cargando">
-		<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error' }">
-			<p>No posee permisos para requerir estos datos.</p>
+		<div-panel config-panel="panelMensaje">
+			<p>{{ panelMensaje.mensaje}}</p>
 		</div-panel>
 	</div>
 
