@@ -69,8 +69,9 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 					data = factory.calcularTotalTasas(data);
 					callback(data);
 				}).error(function(errorText){
-					console.log(errorText);
-					dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
+					//console.log(errorText);
+					//dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
+					callback(errorText);
 				});
 		}
 	};
