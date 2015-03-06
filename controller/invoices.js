@@ -16,7 +16,7 @@
 			'fechaInicio': $scope.fechaInicio,
 			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
-			'buque': '',
+			'buqueNombre': '',
 			'viaje': '',
 			'estado': 'N',
 			'codigo': '',

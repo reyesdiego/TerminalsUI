@@ -17,7 +17,7 @@
 			'fechaInicio': $scope.fechaInicio,
 			'fechaFin': $scope.fechaFin,
 			'contenedor': '',
-			'buque': '',
+			'buqueNombre': '',
 			'order': '"gateTimestamp":-1'
 		};
 
@@ -130,8 +130,8 @@
 
 		$scope.buqueSelected = function (selected) {
 			if (angular.isDefined(selected)) {
-				$scope.model.buque = selected.title;
-				$scope.filtrar('buque', selected.title);
+				$scope.model.buqueNombre = selected.title;
+				$scope.filtrar('buqueNombre', selected.title);
 			}
 		};
 
@@ -151,7 +151,7 @@
 				'fechaInicio': $scope.model.fechaInicio,
 				'fechaFin': $scope.model.fechaFin,
 				'contenedor': $scope.model.contenedor,
-				'buque': $scope.model.buque,
+				'buqueNombre': $scope.model.buqueNombre,
 				'order': $scope.model.order
 			};
 		}

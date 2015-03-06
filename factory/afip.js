@@ -427,9 +427,9 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
 			unaUrl = unaUrl + 'conocimiento=' + filtros.conocimiento;
 		}
-		if(angular.isDefined(filtros.buque) && filtros.buque != ''){
+		if(angular.isDefined(filtros.buqueNombre) && filtros.buqueNombre != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}
-			unaUrl = unaUrl + 'buqueNombre=' + filtros.buque;
+			unaUrl = unaUrl + 'buqueNombre=' + filtros.buqueNombre;
 		}
 		if(angular.isDefined(filtros.fechaInicio) && filtros.fechaInicio != null && filtros.fechaInicio != ''){
 			if(unaUrl != insertAux){ unaUrl = unaUrl + '&'}

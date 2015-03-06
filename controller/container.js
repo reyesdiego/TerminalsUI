@@ -13,7 +13,7 @@
 			'fechaInicio': '',
 			'fechaFin': '',
 			'contenedor': '',
-			'buque': '',
+			'buqueNombre': '',
 			'viaje': '',
 			'estado': 'N',
 			'codigo': '',

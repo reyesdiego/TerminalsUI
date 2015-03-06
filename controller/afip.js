@@ -18,7 +18,7 @@
 			solicitud: '',
 			sumaria: '',
 			conocimiento: '',
-			buque: '',
+			buqueNombre: '',
 			contenedor: '',
 			filtroOrden: '',
 			filtroOrdenReverse: false,

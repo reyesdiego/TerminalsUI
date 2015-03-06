@@ -191,9 +191,8 @@
 				};
 
 				$scope.buqueSelected = function(selected){
-					if (angular.isDefined(selected) && selected.title != $scope.model.buque){
-						$scope.model.buque = selected.originalObject.buque;
-						//$scope.filtrado('buque', $scope.model.buque);
+					if (angular.isDefined(selected) && selected.title != $scope.model.buqueNombre){
+						$scope.model.buqueNombre = selected.originalObject.buque;
 						var i = 0;
 						selected.originalObject.viajes.forEach(function(viaje){
 							var objetoViaje = {
@@ -592,7 +591,7 @@
 				};
 				$scope.filtrado = function(filtro, contenido){
 					$scope.model[filtro] = contenido;
-					if (filtro == 'buque') {
+					if (filtro == 'buqueNombre') {
 						var i = 0;
 						$scope.listaBuques.forEach(function(buque){
 							if (buque.buque == contenido){
@@ -702,17 +701,12 @@
 		$scope.maxDate = new Date();
 		$scope.formatDate = $rootScope.formatDate;
 		$scope.dateOptions = $rootScope.dateOptions;
-		//$scope.listaBuquesGates = $rootScope.listaBuquesGates;
 		$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
-		//$scope.listaBuquesTurnos = $rootScope.listaBuquesTurnos;
 		$scope.listaContenedoresTurnos = $rootScope.listaContenedoresTurnos;
-		//$scope.listaViajes = $rootScope.listaViajes;
 		$scope.listaBuques = $rootScope.listaBuques;
 		$scope.listaViajes = [];
 		$scope.$on('cargaGeneral', function(){
-			//$scope.listaBuquesGates = $rootScope.listaBuquesGates;
 			$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
-			//$scope.listaBuquesTurnos = $rootScope.listaBuquesTurnos;
 			$scope.listaContenedoresTurnos = $rootScope.listaContenedoresTurnos;
 			$scope.listaBuques = $rootScope.listaBuques;
 		});
@@ -728,8 +722,7 @@
 		};
 		$scope.buqueSelected = function(selected){
 			if (angular.isDefined(selected)){
-				$scope.model.buque = selected.originalObject.buque;
-				//$scope.filtrado('buque', $scope.model.buque);
+				$scope.model.buqueNombre = selected.originalObject.buque;
 				var i = 0;
 				selected.originalObject.viajes.forEach(function(viaje){
 					var objetoViaje = {
@@ -756,7 +749,7 @@
 		$scope.filtrado = function(filtro, contenido){
 
 			$scope.model[filtro] = contenido;
-			if (filtro == 'buque') {
+			if (filtro == 'buqueNombre') {
 				if (contenido != ''){
 					var i = 0;
 					$scope.listaBuques.forEach(function(buque){
@@ -1011,7 +1004,7 @@
 					mensaje: 'No se encontraron datos de sumarias de A.F.I.P relacionados.'
 				};
 				$scope.model = {
-					buque: '',
+					buqueNombre: '',
 					viaje: '',
 					contenedor: ''
 				};
@@ -1028,7 +1021,7 @@
 				$scope.buqueSelected = function(selected){
 					if (angular.isDefined(selected)){
 						$scope.buqueElegido = selected.originalObject;
-						$scope.model.buque = selected.originalObject.buque;
+						$scope.model.buqueNombre = selected.originalObject.buque;
 						$scope.model.viaje = selected.originalObject.viajes[0];
 						$scope.traerResultados();
 					}
@@ -1041,10 +1034,10 @@
 					$scope.model.contenedor = '';
 					var cargar = true;
 					switch (filtro){
-						case 'buque':
+						case 'buqueNombre':
 							if (contenido == '') {
 								$scope.model = {
-									buque: '',
+									buqueNombre: '',
 									viaje: ''
 								};
 								$scope.datosContainers = [];
@@ -1052,7 +1045,7 @@
 								$scope.loadingState = false;
 								cargar = false;
 							} else {
-								$scope.model.buque = contenido;
+								$scope.model.buqueNombre = contenido;
 							}
 							break;
 						case 'viaje':
@@ -1109,7 +1102,6 @@
 							$scope.invoices = data.data;
 							$scope.invoicesTotalItems = data.totalCount;
 						} else {
-							//dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos de los comprobantes.');
 							$scope.mensajeResultado = {
 								titulo: 'Comprobantes',
 								mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
@@ -1127,7 +1119,6 @@
 							$scope.tasas = data.data;
 							$scope.totalTasas = data.totalTasas;
 						} else {
-							//dialogs.error('Contenedor', 'Se ha producido un error al cargar las tasas por contenedor.');
 							$scope.configPanelTasas = {
 								tipo: 'panel-danger',
 								titulo: 'Tasas a las cargas',
@@ -1146,7 +1137,6 @@
 							$scope.gates = data.data;
 							$scope.gatesTotalItems = data.totalCount;
 						} else  {
-							//dialogs.error('Gates', 'Se ha producido un error al cargar los datos de los gates.')
 							$scope.configPanelGates = {
 								tipo: 'panel-danger',
 								titulo: 'Gates',
@@ -1164,7 +1154,6 @@
 							$scope.turnos = data.data;
 							$scope.turnosTotalItems = data.totalCount;
 						} else {
-							//dialogs.error('Turnos', 'Se ha producido un error al cargar los datos de los turnos.');
 							$scope.configPanelTurnos = {
 								tipo: 'panel-danger',
 								titulo: 'Turnos',
@@ -1181,7 +1170,6 @@
 						if (data.status == 'OK'){
 							$scope.sumariaAfip = data.data;
 						} else {
-							//dialogs.error('Sumaria', 'Se ha producido un error al cargar los datos de la sumaria del contenedor.');
 							$scope.sumariaConfigPanel = {
 								tipo: 'panel-danger',
 								titulo: 'A.F.I.P. sumaria',
