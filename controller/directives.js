@@ -661,7 +661,8 @@
 			scope: {
 				configPanel:		'=',
 				tasas:				'=',
-				totalTasas:			'='
+				totalTasas:			'=',
+				moneda:				'='
 			}
 		}
 	});
@@ -1013,6 +1014,11 @@
 				$scope.datosContainers = [];
 				$scope.loadingState = false;
 				$scope.cargandoSumaria = false;
+				$scope.moneda = $rootScope.moneda;
+
+				$rootScope.$watch('moneda', function(){
+					$scope.moneda = $rootScope.moneda;
+				});
 
 				$scope.$on('errorInesperado', function(e, mensaje){
 					$scope.loadingState = false;
@@ -1123,6 +1129,7 @@
 					var datos = { contenedor: $scope.contenedorElegido.contenedor, currency: $scope.moneda};
 					controlPanelFactory.getTasasContenedor(datos, function(data){
 						if (data.status === 'OK'){
+							console.log(data.data);
 							$scope.tasas = data.data;
 							$scope.totalTasas = data.totalTasas;
 						} else {

@@ -60,13 +60,15 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 			});
 	};
 
-	factory.getTasasContenedor = function(data, callback){
-		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + data.contenedor + '/' + data.currency;
-		if (data.contenedor != undefined && data.contenedor != ''){
+	factory.getTasasContenedor = function(datos, callback){
+		console.log(datos);
+		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + datos.contenedor + '/' + datos.currency;
+		if (datos.contenedor != undefined && datos.contenedor != ''){
 			$http.get(inserturl)
 				.success(function (data){
 					data.data = factory.ponerDescripcionCodigoItem(data.data);
 					data = factory.calcularTotalTasas(data);
+					console.log(data);
 					callback(data);
 				}).error(function(errorText){
 					console.log(errorText);
