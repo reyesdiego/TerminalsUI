@@ -65,7 +65,10 @@
 		});
 
 		$scope.$on('loginComplete', function(){
-			$scope.prepararDatos()
+			$scope.prepararDatos();
+			$scope.acceso = loginService.getType();
+			$scope.nombre = loginService.getFiltro();
+			$scope.puedeEditar = (loginService.getType() == 'terminal');
 		});
 
 		$scope.prepararDatos = function(){
