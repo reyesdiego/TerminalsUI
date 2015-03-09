@@ -81,7 +81,7 @@
 							</tr>
 							</thead>
 							<tbody>
-							<tr style="height:60px" ng-repeat="price in filteredPrices = (pricelist | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage | filter:search)">
+							<tr style="height:60px" ng-repeat="price in filteredPrices = (selectedList | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 								<td class="col-lg-1">{{ price.code }}</td>
 								<td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 								<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="price.graficar"></td>
@@ -92,8 +92,8 @@
 				</div>
 
 				<div class="row hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
-					<div class="col-lg-10 hidden-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					<div class="col-lg-10 visible-xs"><pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="col-lg-10 hidden-xs"><pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+					<div class="col-lg-10 visible-xs"><pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class="col-lg-2 text-right" style="margin-top: 20px">
 						<button class="btn btn-primary" ng-click="armarGraficoTarifas()"><span class="glyphicon glyphicon-asterisk"></span> Cargar gráfico</button>
 					</div>

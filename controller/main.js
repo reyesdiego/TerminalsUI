@@ -485,6 +485,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
 		authFactory.login().then(function(){
 			$rootScope.estaLogeado = true;
+			$rootScope.$broadcast('loginComplete');
 		});
 	} else {
 		if (loginService.getStatus()){

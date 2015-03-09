@@ -3,7 +3,7 @@
  */
 (function(){
 
-	myapp.controller('turnosCtrl', function($scope, turnosFactory){
+	myapp.controller('turnosCtrl', function($scope, turnosFactory, loginService){
 		$scope.currentPage = 1;
 		$scope.itemsPerPage = 15;
 		$scope.totalItems = 0;
@@ -68,6 +68,10 @@
 			$scope.configPanel = mensaje;
 		});
 
+		$scope.$on('loginComplete', function(){
+			$scope.cargaTurnos();
+		});
+
 		// Carga los turnos por fechas
 		$scope.cargaPorFiltros = function(){
 			$scope.currentPage = 1;
@@ -98,7 +102,9 @@
 		};
 
 		// Carga los turnos del día hasta la hora del usuario
-		$scope.cargaTurnos();
+		if (loginService.getStatus()){
+			$scope.cargaTurnos();
+		}
 
 	});
 

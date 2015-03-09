@@ -64,6 +64,10 @@
 			$scope.pricelist = [];
 		});
 
+		$scope.$on('loginComplete', function(){
+			$scope.prepararDatos()
+		});
+
 		$scope.prepararDatos = function(){
 			priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: $scope.tasas}, function (data) {
 				if (data.status == 'OK'){
@@ -93,7 +97,9 @@
 			});
 		};
 
-		$scope.prepararDatos();
+		if (loginService.getStatus()){
+			$scope.prepararDatos();
+		}
 
 		$scope.pageChanged = function(){
 			$scope.guardar();

@@ -22,9 +22,14 @@
 			$scope.mensajeResultado = mensaje;
 		});
 
+		$scope.$on('loginComplete', function(){
+			$scope.cargaPricelist();
+		});
+
 		$scope.cargaPricelist = function(){
 			priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
 				if (data.status == 'OK'){
+					$scope.hayError = false;
 					$scope.pricelist = data.data;
 					$scope.pricelist.forEach(function(tarifa){
 						if (angular.isDefined($scope.arrayUnidades[tarifa.unit])){
@@ -55,6 +60,8 @@
 			$scope.predicate = filtro;
 		};
 
-		$scope.cargaPricelist();
+		if (loginService.getStatus()){
+			$scope.cargaPricelist();
+		}
 	});
 })();
