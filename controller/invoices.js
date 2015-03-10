@@ -49,6 +49,10 @@
 			$scope.mensajeResultado = mensaje;
 		});
 
+		$scope.$on('loginComplete', function(){
+			$scope.nombre = loginService.getFiltro();
+		});
+
 		$scope.cargaDatos = function(){
 			$scope.cargando = true;
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
