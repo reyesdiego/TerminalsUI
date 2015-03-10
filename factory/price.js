@@ -16,7 +16,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 	};
 
 	factory.getMatchPrices = function(terminal, datos, callback) {
-		var inserturl = serverUrl + '/matchprices/' + terminal + '?';
+		var inserturl = serverUrl + '/matchPrices/' + terminal + '?';
 		var insertAux = inserturl;
 		if (datos && datos != null){
 			if(angular.isDefined(datos.code) && datos.code != ''){
@@ -39,7 +39,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 	};
 
 	factory.getArrayMatches = function(terminal, callback){
-		var inserturl = serverUrl + '/matchprices/price/' + terminal;
+		var inserturl = serverUrl + '/matchPrices/price/' + terminal;
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -49,7 +49,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 	};
 
 	factory.addMatchPrice = function (data, callback) {
-		var inserturl = serverUrl + '/matchprice';
+		var inserturl = serverUrl + '/matchPrices/matchprice';
 		$http({
 			method: "POST",
 			url: inserturl,
@@ -64,7 +64,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 
 	factory.noMatches = function (desde, hasta, callback){
 		var flagFea = false;
-		var inserturl = serverUrl + '/noMatches/' + loginService.getFiltro() + '?';
+		var inserturl = serverUrl + '/matchPrices/noMatches/' + loginService.getFiltro() + '?';
 		if (desde && desde != null) {
 			inserturl += 'fechaInicio=' + formatService.formatearFecha(desde);
 			flagFea = true;
@@ -83,7 +83,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 	};
 
 	factory.addPrice = function (data, callback) {
-		var inserturl = serverUrl + '/price';
+		var inserturl = serverUrl + '/prices/price';
 		$http({
 			method: 'POST',
 			url: inserturl,
@@ -110,7 +110,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 		formData.topPrices.forEach(function(unPrecio){
 			unPrecio.from = formatService.formatearFecha(unPrecio.from);
 		});
-		var inserturl = serverUrl + '/price/' + id;
+		var inserturl = serverUrl + '/prices/price/' + id;
 		$http({
 			method: 'PUT',
 			url: inserturl,
@@ -144,7 +144,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 	};
 
 	factory.removePrice = function(id, callback){
-		var inserturl = serverUrl + '/price/' + id;
+		var inserturl = serverUrl + '/prices/price/' + id;
 		$http.delete(inserturl)
 			.success(function(response) {
 				callback(response);

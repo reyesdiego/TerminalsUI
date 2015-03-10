@@ -87,7 +87,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getGatesMeses = function(fecha, callback){
-		var inserturl = serverUrl + '/gatesByMonth?fecha=' + formatService.formatearFecha(fecha);
+		var inserturl = serverUrl + '/gates/ByMonth?fecha=' + formatService.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data.data);
@@ -97,7 +97,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getTurnosMeses = function(fecha, callback){
-		var inserturl = serverUrl + '/appointmentsByMonth?fecha=' + formatService.formatearFecha(fecha);
+		var inserturl = serverUrl + '/appointments/ByMonth?fecha=' + formatService.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -118,7 +118,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getGatesDia = function(fecha, callback){
-		var inserturl = serverUrl + '/gatesByHour?fecha=' + formatService.formatearFecha(fecha);
+		var inserturl = serverUrl + '/gates/ByHour?fecha=' + formatService.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data.data);
@@ -128,7 +128,7 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	factory.getTurnosDia = function(fecha, callback){
-		var inserturl = serverUrl + '/appointmentsByHour?fecha=' + formatService.formatearFecha(fecha);
+		var inserturl = serverUrl + '/appointments/ByHour?fecha=' + formatService.formatearFecha(fecha);
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);

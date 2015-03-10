@@ -16,7 +16,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.getDescriptionItem = function(callback){
-		var inserturl = serverUrl + '/matches/' + loginService.getFiltro();
+		var inserturl = serverUrl + '/matchPrices/matches/' + loginService.getFiltro();
 		$http.get(inserturl)
 			.success(function(data) {
 				callback(data);
@@ -129,7 +129,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.invoiceById = function(id, callback){
-		var inserturl = serverUrl + '/invoice/' + id;
+		var inserturl = serverUrl + '/invoices/invoice/' + id;
 		$http.get(inserturl)
 			.success(function (data){
 				data.data = factory.setearInterfazComprobante(data.data);
@@ -161,7 +161,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.cambiarEstado = function(invoiceId, estado, callback){
-		var inserturl = serverUrl + '/invoice/setState/' + loginService.getFiltro() + '/' + invoiceId;
+		var inserturl = serverUrl + '/invoices/setState/' + loginService.getFiltro() + '/' + invoiceId;
 		$http({
 			method: 'PUT',
 			url: inserturl,
@@ -175,7 +175,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.commentInvoice = function(data, callback){
-		var inserturl = serverUrl + '/comment';
+		var inserturl = serverUrl + '/comments/comment';
 		$http({
 			method: 'POST',
 			url: inserturl,
@@ -189,7 +189,7 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 	};
 
 	factory.getTrackInvoice = function(invoiceId, callback){
-		var inserturl = serverUrl + '/invoice/' + invoiceId + '/comments';
+		var inserturl = serverUrl + '/comments/' + invoiceId;
 		$http.get(inserturl)
 			.success(function (data){
 				data.data = factory.filtrarComentarios(data.data);
