@@ -326,7 +326,6 @@
 												user: loginService.getInfo().user
 											};
 											comprobante.estado.push(nuevoEstado);
-											console.log($scope.model.estado);
 											if ($scope.model.estado != 'N')
 												$scope.cargaPuntosDeVenta();
 										}
