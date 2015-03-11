@@ -161,7 +161,7 @@
 				if (data.status === "OK") {
 					$scope.gates = data.data;
 					$scope.gatesTotalItems = data.totalCount;
-				} else  {
+				} else {
 					$scope.configPanelGates = {
 						tipo: 'panel-danger',
 						titulo: 'Gates',

@@ -78,6 +78,8 @@
 				$scope.arrayMatchesListo = false;
 				$scope.realizarControl = false;
 
+				$scope.actualizarComprobante = null;
+
 				priceFactory.getArrayMatches(loginService.getFiltro(), function(arrayMatches){
 					$rootScope.matchesTerminal = arrayMatches.data;
 					$scope.arrayMatchesListo = true;
@@ -302,6 +304,7 @@
 									invoiceFactory.commentInvoice(logInvoice, function(dataRes){
 										if (dataRes.status == 'OK'){
 											comprobante.interfazEstado = dataComment.newState;
+											$scope.checkComprobantes(comprobante);
 											switch (dataComment.newState.type){
 												case 'WARN':
 													comprobante.interfazEstado.btnEstado = 'text-warning';
@@ -323,7 +326,8 @@
 												user: loginService.getInfo().user
 											};
 											comprobante.estado.push(nuevoEstado);
-											if (!$scope.ocultarAccordionInvoicesSearch && !$scope.mostrarResultado)
+											console.log($scope.model.estado);
+											if ($scope.model.estado != 'N')
 												$scope.cargaPuntosDeVenta();
 										}
 									});
@@ -336,17 +340,27 @@
 					});
 				};
 
-				$scope.ocultarResultado = function(comprobante){
-					$scope.mostrarResultado = false;
+				$scope.checkComprobantes = function(comprobante){
 					var encontrado = false;
 					$scope.comprobantesVistos.forEach(function(unComprobante){
 						if (unComprobante._id == comprobante._id){
 							encontrado = true;
+							unComprobante.interfazEstado = comprobante.interfazEstado;
+						}
+					});
+					$scope.datosInvoices.forEach(function(otroComprobante){
+						if (otroComprobante._id == comprobante._id){
+							otroComprobante.interfazEstado = comprobante.interfazEstado;
 						}
 					});
 					if (!encontrado){
 						$scope.comprobantesVistos.push(comprobante);
 					}
+				};
+
+				$scope.ocultarResultado = function(comprobante){
+					$scope.checkComprobantes(comprobante);
+					$scope.mostrarResultado = false;
 				};
 
 				$scope.quitarVista = function (comprobante) {
