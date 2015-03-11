@@ -97,7 +97,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 	};
 
 	factory.getPriceById = function(id, callback){
-		var inserturl = serverUrl + '/price/' + id + '/' + loginService.getFiltro();
+		var inserturl = serverUrl + '/prices/' + id + '/' + loginService.getFiltro();
 		$http.get(inserturl)
 			.success(function(response) {
 				callback(response);
