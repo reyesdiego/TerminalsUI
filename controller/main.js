@@ -216,11 +216,22 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 			url: "/users",
 			templateUrl: "view/users.html"
 		})
+		.state('rates', {
+			url: "/rates",
+			templateUrl: 'view/invoicesRates.html'
+		})
 
 });
 
 myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory, $injector, $q){
 	"use strict";
+
+	$rootScope.ordenarPor = function(filtro){
+		if ($rootScope.predicate == filtro){
+			$rootScope.reverse = !$rootScope.reverse;
+		}
+		$rootScope.predicate = filtro;
+	};
 
 	$rootScope.cambioMoneda = true;
 
@@ -483,6 +494,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 
 	// Carga la sesion por cookies
 	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
+		console.log('hola');
 		authFactory.login().then(function(){
 			$rootScope.estaLogeado = true;
 			$rootScope.$broadcast('loginComplete');

@@ -1,0 +1,92 @@
+<div class="container" ng-controller="ratesCtrl">
+
+	<div>
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="hidden-xs"><img src="images/icon-gates.png" height="64" width="64">Tasas a las cargas</h1>
+				<h1 class="visible-xs">Tasas a las cargas</h1>
+			</div>
+		</div>
+
+		<div class="col-lg-12" ng-init="status.open = true">
+			<accordion>
+				<accordion-group is-open="status.open">
+					<accordion-heading>
+						<strong>Filtrar por</strong><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+					</accordion-heading>
+					<div class="row">
+						<div class="col-lg-4 col-sm-6">
+							<div class="form-group">
+								<div class="input-group">
+									<span class="input-group-addon">Día</span>
+									<label class="sr-only" for="fechaInicio">Día</label>
+									<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fecha" is-open="openfechaInicio" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" />
+									<span class="input-group-btn">
+										<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-sm-6">
+							<div class="form-group">
+								<button class="btn btn-primary" ng-click="cargaRates()">Buscar</button>
+							</div>
+						</div>
+					</div>
+				</accordion-group>
+			</accordion>
+		</div>
+	</div>
+
+	<div class="col-lg-12 text-center" ng-show="cargando">
+		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
+	</div>
+	<div class="col-lg-12" ng-hide="cargando">
+		<div ng-hide="rates.length != undefined && rates.length > 0">
+			<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
+		</div>
+		<div ng-show="rates.length != undefined && rates.length > 0">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+					<tr>
+						<th><a href="" ng-click="ordenarPor('_id.terminal')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == '_id.terminal' && !reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == '_id.terminal' && reverse"></span>
+							Terminal
+						</a></th>
+						<th>C&oacute;digo</th>
+						<th>Descripci&oacute;n</th>
+						<th><a href="" ng-click="ordenarPor('ton')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'ton' && !reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'ton' && reverse"></span>
+							Toneladas
+						</a></th>
+						<th class="text-right"><a href="" ng-click="ordenarPor('total')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'total' && !reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'total' && reverse"></span>
+							Total
+						</a></th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="tasa in rates | orderBy : predicate : reverse">
+						<td>{{ tasa._id.terminal }}</td>
+						<td>{{ tasa._id.code }}</td>
+						<td>{{ tasa._id.description }}</td>
+						<td class="text-right">{{ tasa.ton }}</td>
+						<td class="text-right">{{ moneda | formatCurrency }} {{ tasa.total | currency }}</td>
+					</tr>
+					</tbody>
+					<!--<tfoot>
+					<tr>
+						<th colspan="3" class="text-right">Total</th>
+						<td class="text-right">{{ moneda | formatCurrency}} {{ totalTasas | currency }}</td>
+					</tr>
+					</tfoot>-->
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>

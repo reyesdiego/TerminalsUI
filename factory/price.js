@@ -124,7 +124,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 	};
 
 	factory.getUnitTypes = function(callback){
-		var inserturl = serverUrl + '/unitTypes'; //ver direccion
+		var inserturl = serverUrl + '/unitTypes';
 		$http.get(inserturl)
 			.success(function(response) {
 				callback(response);
@@ -134,7 +134,7 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 	};
 
 	factory.getUnitTypesArray = function(callback){
-		var inserturl = serverUrl + '/unitTypes?type=array'; //ver direccion
+		var inserturl = serverUrl + '/unitTypes?type=array';
 		$http.get(inserturl)
 			.success(function(response) {
 				callback(response);

@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 1/29/14.
  */
 (function() {
-	myapp.controller('matchPricesCtrl', function($scope, priceFactory, $timeout, dialogs, loginService, $filter) {
+	myapp.controller('matchPricesCtrl', function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter) {
 		'use strict';
 		$scope.nombre = loginService.getFiltro();
 
@@ -31,9 +31,6 @@
 		$scope.codigosConMatch = [];
 		$scope.conMatch = false;
 		$scope.tasas = false;
-
-		$scope.predicate = '';
-		$scope.reverse = true;
 
 		$scope.preciosHistoricos = [];
 
@@ -211,13 +208,6 @@
 					}
 				});
 			}
-		};
-
-		$scope.ordenarPor = function(filtro){
-			if ($scope.predicate == filtro){
-				$scope.reverse = !$scope.reverse;
-			}
-			$scope.predicate = filtro;
 		};
 
 		$scope.guardarNuevoConcepto = function(){

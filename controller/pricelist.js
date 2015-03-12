@@ -2,14 +2,12 @@
  * Created by Diego Reyes on 1/29/14.
  */
 (function() {
-	myapp.controller('pricelistCtrl', function($scope, priceFactory, loginService) {
+	myapp.controller('pricelistCtrl', function($rootScope, $scope, priceFactory, loginService) {
 		'use strict';
 		// Variable para almacenar la info principal que trae del factory
 		$scope.pricelist = [];
 		$scope.filteredPrices = [];
 		$scope.tasas = false;
-		$scope.reverse = true;
-		$scope.predicate = '';
 		$scope.itemsPerPage = 10;
 		$scope.hayError = false;
 
@@ -51,13 +49,6 @@
 					};
 				}
 			});
-		};
-
-		$scope.ordenarPor = function(filtro){
-			if ($scope.predicate == filtro){
-				$scope.reverse = !$scope.reverse;
-			}
-			$scope.predicate = filtro;
 		};
 
 		if (loginService.getStatus()){

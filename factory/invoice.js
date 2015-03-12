@@ -203,6 +203,17 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 		});
 	};
 
+	factory.getRatesInvoices = function(datos, callback){
+		var inserturl = serverUrl + '/invoices/rates';
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			.success(function(data){
+				callback(data);
+			})
+			.error(function(error){
+				callback(error)
+			});
+	};
+
 	factory.setearInterfaz = function(comprobantes){
 		comprobantes.data.forEach(function(comprobante) {
 			factory.setearInterfazComprobante(comprobante);
