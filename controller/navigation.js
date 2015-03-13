@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 (function() {
-	myapp.controller('navigationCtrl', function($scope, $rootScope, $state, invoiceFactory, loginService, authFactory, $injector) {
+	myapp.controller('navigationCtrl', function($scope, $rootScope, $state, invoiceFactory, loginService, authFactory, cacheFactory) {
 
 		"use strict";
 		$rootScope.esUsuario = '';
@@ -18,6 +18,7 @@
 			loginService.unsetLogin();
 			$rootScope.filtroTerminal = '';
 			$rootScope.switchTheme('BACTSSA');
+			cacheFactory.borraCache();
 		};
 
 		$scope.irA = function(){

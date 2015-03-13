@@ -42,7 +42,7 @@ function idToDate(objectId){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'timepickerPop', 'multi-select']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'timepickerPop', 'multi-select', 'angular-data.DSCacheFactory']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -255,7 +255,7 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 	$rootScope.obtenerEstadosArray = function(){
 		var deferred = $q.defer();
 		statesFactory.getStatesArray(function(data){
-			if (data.status = 'OK'){
+			if (data.status == 'OK'){
 				$rootScope.estadosComprobantesArray = data.data;
 				deferred.resolve()
 			} else {
