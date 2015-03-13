@@ -12,8 +12,8 @@ module.exports = function(grunt) {
 			},
 			js : {
 				src : [
-					'main/*',
 					'includes/js/utils/configProd.js',
+					'main/*',
 					'controller/*',
 					'directives/*',
 					'factory/*',
@@ -27,6 +27,18 @@ module.exports = function(grunt) {
 			css: {
 				src: 'build/css/aditional.css',
 				dest: 'build/css/aditional-min.css'
+			},
+			bactssa: {
+				src: 'css/bootstrap.cerulean.css',
+				dest: 'build/css/bootstrap.cerulean.css'
+			},
+			terminal4: {
+				src: 'css/bootstrap.united.css',
+				dest: 'build/css/bootstrap.united.css'
+			},
+			trp: {
+				src: 'css/bootstrap.flaty.css',
+				dest: 'build/css/bootstrap.flaty.css'
 			}
 		},
 		uglify: {
@@ -42,6 +54,37 @@ module.exports = function(grunt) {
 					'build/index.html' : 'index.html'
 				}
 			}
+		},
+		copy: {
+			main: {
+				files: [
+					{
+						expand: true,
+						src: ['bower_components/**'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['fonts/*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['images/*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['js/*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['view/*'],
+						dest: 'build'
+					}
+				]
+			}
 		}
 	});
 
@@ -49,8 +92,19 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-processhtml');
 
 	// Default task(s).
-	grunt.registerTask('default', ['concat:css','concat:js', 'cssmin:css', 'uglify:js', 'processhtml:dist']);
+	grunt.registerTask('default', [
+		'concat:css',
+		'concat:js',
+		'cssmin:css',
+		'cssmin:bactssa',
+		'cssmin:terminal4',
+		'cssmin:trp',
+		'uglify:js',
+		'processhtml:dist',
+		'copy:main'
+	]);
 };
