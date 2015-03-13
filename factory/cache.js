@@ -76,7 +76,28 @@
 			// States cache
 			statesFactory.getStatesType(function (data) {
 				if (data.status == 'OK') {
-					estadosComprobantesCache.put('estadosComprobantes', data.data);
+					var estados = data.data;
+					estados.forEach(function (estado) {
+						switch (estado.type) {
+							case 'WARN':
+								estado.icon = '<img src="images/warn.png" />';
+								estado.imagen = 'images/warn.png';
+								break;
+							case 'ERROR':
+								estado.icon = '<img src="images/error.png" />';
+								estado.imagen = 'images/error.png';
+								break;
+							case 'UNKNOWN':
+								estado.icon = '<img src="images/unknown.png" />';
+								estado.imagen = 'images/unknown.png';
+								break;
+							case 'OK':
+								estado.icon = '<img src="images/ok.png" />';
+								estado.imagen = 'images/ok.png';
+								break;
+						}
+					});
+					estadosComprobantesCache.put('estadosComprobantes', estados);
 					data.data.forEach(function (dato) {
 						estadosComprobantesArrayCache.put(dato._id, dato);
 					});
