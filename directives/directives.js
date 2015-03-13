@@ -961,7 +961,7 @@ myapp.directive('buqueViajeSearch', function(){
 				if (angular.isDefined(selected)){
 					$scope.buqueElegido = selected.originalObject;
 					$scope.model.buqueNombre = selected.originalObject.buque;
-					$scope.model.viaje = selected.originalObject.viajes[0];
+					$scope.model.viaje = selected.originalObject.viajes[0].viaje;
 					$scope.traerResultados();
 				}
 			};

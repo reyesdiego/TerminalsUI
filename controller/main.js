@@ -492,7 +492,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'controlPanelFactory', '$http
 
 	// Carga la sesion por cookies
 	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
-		console.log('hola');
 		authFactory.login().then(function(){
 			$rootScope.estaLogeado = true;
 			$rootScope.$broadcast('loginComplete');

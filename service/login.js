@@ -2,7 +2,7 @@
  * Created by diego on 3/26/14.
  */
 
-myapp.service('loginService', function () {
+myapp.service('loginService', [function () {
 	return {
 		getStatus: function () {
 			return sessionStorage.getItem('loginStatus');
@@ -50,4 +50,4 @@ myapp.service('loginService', function () {
 			sessionStorage.clear();
 		}
 	};
-});
+}]);
