@@ -2,7 +2,7 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', function afectacion1Ctrl($scope, afipFactory, $state){
+myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', function($scope, afipFactory, $state){
 
 	$scope.tabs = [
 		{ heading: 'Afectación',	select: 'afectacion1',	uisref: 'afip.afectacion.afectacion1' },
