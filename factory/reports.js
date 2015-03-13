@@ -2,7 +2,7 @@
  * Created by Artiom on 17/06/14.
  */
 
-myapp.factory('reportsFactory', function($http, dialogs, formatService, loginService){
+myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', function($http, dialogs, formatService, loginService){
 	var factory = {};
 
 	factory.getCumplimientoTurnos = function(fecha, callback){
@@ -40,4 +40,4 @@ myapp.factory('reportsFactory', function($http, dialogs, formatService, loginSer
 	};
 
 	return factory;
-});
+}]);

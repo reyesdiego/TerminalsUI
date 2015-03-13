@@ -15,7 +15,7 @@ angular.module('timepickerPop', [ 'ui.bootstrap' ])
 			}
 		};
 	})
-	.directive("timeFormat", function($filter) {
+	.directive("timeFormat", ['$filter', function($filter) {
 		return {
 			restrict : 'A',
 			require : 'ngModel',
@@ -76,9 +76,9 @@ angular.module('timepickerPop', [ 'ui.bootstrap' ])
 				});
 			}
 		};
-	})
+	}])
 
-	.directive('timepickerPop', function($document, timepickerState) {
+	.directive('timepickerPop', ['$document', 'timepickerState', function($document, timepickerState) {
 		return {
 			restrict : 'E',
 			transclude : false,
@@ -88,7 +88,7 @@ angular.module('timepickerPop', [ 'ui.bootstrap' ])
 				disabled : "=",
 				class: "="
 			},
-			controller : function($scope) {
+			controller : ['$scope', function($scope) {
 				$scope.isOpen = false;
 
 				$scope.disabledInt = angular.isUndefined($scope.disabled)? false : $scope.disabled;
@@ -100,8 +100,8 @@ angular.module('timepickerPop', [ 'ui.bootstrap' ])
 						$scope.open();
 					}
 				};
-			},
-			link : function(scope, element) {
+			}],
+			link : ['$scope', 'element', function(scope, element) {
 				var picker = {
 					open : function () {
 						timepickerState.closeAll();
@@ -141,7 +141,7 @@ angular.module('timepickerPop', [ 'ui.bootstrap' ])
 					});
 				});
 
-			},
+			}],
 			template : "<input type='text' class='form-control' ng-model='inputTime' ng-disabled='disabledInt' time-format show-meridian='showMeridian' ng-focus='open()' />"
 				+ "  <div class='input-group-btn' ng-class='{open:isOpen}'> "
 				+ "    <button type='button' ng-disabled='disabledInt' class='btn btn-default' ng-class=\"{'btn-primary':isOpen}\" data-toggle='dropdown' ng-click='toggle()'> "
@@ -150,4 +150,4 @@ angular.module('timepickerPop', [ 'ui.bootstrap' ])
 				+ "            <timepicker ng-model='inputTime' show-meridian='showMeridian'></timepicker> "
 				+ "           </div> " + "  </div>"
 		};
-	});
+	}]);

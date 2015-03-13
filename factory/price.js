@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', function($http, dialogs, loginService, formatService){
+myapp.factory('priceFactory', ['$http', 'dialogs', 'loginService', 'formatService', function($http, dialogs, loginService, formatService){
 	var factory = {};
 
 	factory.getPrice = function(terminal, datos, callback) {
@@ -155,4 +155,4 @@ myapp.factory('priceFactory', function($http, dialogs, loginService, formatServi
 
 	return factory;
 
-});
+}]);

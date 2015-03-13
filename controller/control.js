@@ -1,8 +1,7 @@
 /**
  * Created by kolesnikov-a on 21/02/14.
  */
-
-var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatService){
+var controlCtrl = myapp.controller('controlCtrl', ['$rootScope', '$scope', 'datosGraficoPorMes', 'datosFacturadoPorDiaTasas', 'datosGraficoGatesTurnosDias', 'controlPanelFactory', 'socket', 'formatService', function ($rootScope, $scope, datosGraficoPorMes, datosFacturadoPorDiaTasas, datosGraficoGatesTurnosDias, controlPanelFactory, socket, formatService){
 
 	var fecha = formatService.formatearFecha(new Date());
 
@@ -407,7 +406,7 @@ var controlCtrl = myapp.controller('controlCtrl', function ($rootScope, $scope, 
 	$scope.traerDatosTurnos();
 	$scope.traerDatosGatesTurnosDia();
 
-});
+}]);
 
 controlCtrl.prepararMatrizVacía = function($q){
 	var defer = $q.defer();
@@ -451,27 +450,6 @@ controlCtrl.prepararMatrizVaciaGatesTurnos = function($q){
 	defer.resolve(base);
 	return defer.promise;
 };
-
-/*controlCtrl.primerCargaComprobantes = function(controlPanelFactory, $q){
-	var defer = $q.defer();
-	var fecha = new Date();
-	controlPanelFactory.getTotales(fecha, function(graf){
-		var base = [
-			['Datos', 'Comprobantes', { role: 'annotation' } ],
-			['BACTSSA', 0, ''],
-			['TRP', 0, ''],
-			['TERMINAL 4', 0, '']
-		];
-		var i = 1;
-		graf.forEach(function(terminal){
-			console.log(terminal);
-			base[i] = [terminal._id.terminal, terminal.cnt,''];
-			i++;
-		});
-		defer.resolve(base);
-	});
-	return defer.promise;
-};*/
 
 controlCtrl.prepararDatosMes = function(datosGrafico, traerTotal){
 	//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales

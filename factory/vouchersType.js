@@ -1,7 +1,8 @@
 /**
  * Created by Artiom on 12/06/14.
  */
-myapp.factory('vouchersFactory', function($http){
+
+myapp.factory('vouchersFactory', ['$http', function($http){
 	var factory = {};
 
 	factory.getVouchersArray = function(callback){
@@ -27,4 +28,4 @@ myapp.factory('vouchersFactory', function($http){
 	};
 
 	return factory;
-});
+}]);

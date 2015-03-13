@@ -1,7 +1,8 @@
 /**
  * Created by leo on 28/04/14.
  */
-myapp.factory('turnosFactory', function($http, dialogs, formatService, loginService){
+
+myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginService', function($http, dialogs, formatService, loginService){
 	var factory = {};
 
 	factory.getTurnos = function(datos, page, callback){
@@ -15,4 +16,4 @@ myapp.factory('turnosFactory', function($http, dialogs, formatService, loginServ
 	};
 
 	return factory;
-});
+}]);

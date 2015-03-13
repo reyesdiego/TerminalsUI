@@ -1,8 +1,7 @@
 /**
  * Created by leo on 05/03/15.
  */
-(function () {
-	myapp.service('formatService', function() {
+	myapp.service('formatService', [function() {
 
 		function estaDefinido(o) {
 			return angular.isDefined(o) && o != null && o != '';
@@ -90,5 +89,4 @@
 				return null;
 		};
 
-	})
-})();
+	}]);

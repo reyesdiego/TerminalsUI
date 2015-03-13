@@ -1,7 +1,8 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('userFactory', function($http, dialogs){
+
+myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
 	var factory = {};
 
 	factory.login = function(user, pass, callback){
@@ -71,4 +72,4 @@ myapp.factory('userFactory', function($http, dialogs){
 	};
 
 	return factory;
-});
+}]);

@@ -2,7 +2,7 @@
  * Created by artiom on 08/10/14.
  */
 
-myapp.factory('errorFactory', function($rootScope, dialogs){
+myapp.factory('errorFactory', ['$rootScope', 'dialogs', function($rootScope, dialogs){
 
 	var factory = {};
 
@@ -19,4 +19,5 @@ myapp.factory('errorFactory', function($rootScope, dialogs){
 
 	return factory;
 
-});
+}]);
+

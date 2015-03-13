@@ -1,7 +1,8 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, formatService, loginService, errorFactory){
+
+myapp.factory('controlPanelFactory', ['$http', '$rootScope', 'dialogs', 'formatService', 'loginService', 'errorFactory', function($http, $rootScope, dialogs, formatService, loginService, errorFactory){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -228,4 +229,4 @@ myapp.factory('controlPanelFactory', function($http, $rootScope, dialogs, format
 	};
 
 	return factory;
-});
+}]);
