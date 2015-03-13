@@ -86,6 +86,24 @@
 					</tfoot>-->
 				</table>
 			</div>
+			<div class="row" ng-show="mostrarGrafico">
+				<div class="col-lg-12 text-center">
+					<dynamic-chart
+							data="chartDataReporteTarifas"
+							title="{{chartTitleReporteTarifas}}"
+							width="{{chartWidthReporteTarifas}}"
+							height="{{chartHeightReporteTarifas}}"
+							select="selectRow(selectedRowIndexReporteTarifas)"
+							type="{{columnChart}}"
+							currency="true"
+							stacked="false"
+							is3-d="false"
+							money="monedaFija"
+							columns="{{ tarifasElegidas }}">
+					</dynamic-chart>
+
+				</div>
+			</div>
 		</div>
 	</div>
 
