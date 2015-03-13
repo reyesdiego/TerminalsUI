@@ -1,7 +1,8 @@
 /**
  * Created by artiom on 03/02/15.
  */
-myapp.controller('resetPasswordDialogCtrl',function($scope,$modalInstance){
+
+myapp.controller('resetPasswordDialogCtrl', ['$scope', '$modalInstance', function($scope,$modalInstance){
 	$scope.data = {mail: ''};
 	$scope.validEmail = false;
 	$scope.helpText = 'Ingrese la dirección de e-mail con la cual registró su cuenta.';
@@ -31,4 +32,4 @@ myapp.controller('resetPasswordDialogCtrl',function($scope,$modalInstance){
 		var expr = /^([a-zA-Z0-9_\.\-])+\@(bactssa|trp|apmterminals|puertobuenosaires)\.([a-zA-Z0-9]{2,4})+(\.[a-zA-Z]{2})?$/;
 		$scope.validEmail = expr.test($scope.data.mail);
 	})
-});
+}]);

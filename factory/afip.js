@@ -1,7 +1,8 @@
 /**
  * Created by artiom on 17/12/14.
  */
-myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, formatService, errorFactory){
+
+myapp.factory('afipFactory', ['$http', '$rootScope', 'dialogs', 'loginService', 'formatService', function($http, $rootScope, dialogs, loginService, formatService){
 
 	var factory = {};
 
@@ -185,7 +186,7 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 					status: 'ERROR'
 				};
 				callback(data);
-		});
+			});
 	};
 
 	factory.getRegistro2Afectacion = function(filtros, page, callback){
@@ -387,4 +388,4 @@ myapp.factory('afipFactory', function($http, $rootScope, dialogs, loginService, 
 
 	return factory;
 
-});
+}]);

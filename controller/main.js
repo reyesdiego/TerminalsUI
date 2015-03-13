@@ -50,7 +50,7 @@ myapp.config(['$httpProvider', function ($httpProvider) {
 
 }]);
 
-myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
+myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($stateProvider, $urlRouterProvider, $provide) {
 
 	$provide.decorator("$exceptionHandler", function($delegate, $injector){
 		return function(exception, cause){
@@ -221,11 +221,9 @@ myapp.config(function ($stateProvider, $urlRouterProvider, $provide) {
 			templateUrl: 'view/invoicesRates.html'
 		})
 
-});
+}]);
 
-myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory, $injector, $q){
-	"use strict";
-
+myapp.run(['$rootScope', '$state', 'loginService', 'controlPanelFactory', '$http', 'vouchersFactory', 'authFactory', 'dialogs', 'invoiceFactory', 'statesFactory', 'priceFactory', '$injector', '$q', function($rootScope, $state, loginService, controlPanelFactory, $http, vouchersFactory, authFactory, dialogs, invoiceFactory, statesFactory, priceFactory, $injector, $q){
 	$rootScope.ordenarPor = function(filtro){
 		if ($rootScope.predicate == filtro){
 			$rootScope.reverse = !$rootScope.reverse;
@@ -623,4 +621,4 @@ myapp.run(function($rootScope, $state, loginService, controlPanelFactory, $http,
 		event.preventDefault();
 		$state.transitionTo('forbidden');
 	};
-});
+}]);

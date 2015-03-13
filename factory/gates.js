@@ -1,7 +1,8 @@
 /**
  * Created by leo on 14/04/14.
  */
-myapp.factory('gatesFactory', function($http, dialogs, formatService, loginService){
+
+myapp.factory('gatesFactory', ['$http', 'dialogs', 'formatService', 'loginService', function($http, dialogs, formatService, loginService){
 	var factory = {};
 
 	factory.getGate = function(datos, page, callback){
@@ -45,4 +46,4 @@ myapp.factory('gatesFactory', function($http, dialogs, formatService, loginServi
 	};
 
 	return factory;
-});
+}]);

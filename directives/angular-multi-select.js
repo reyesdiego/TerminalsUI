@@ -436,7 +436,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 						}
 					}
 				});
-			}
+			};
 
 			// refresh output model as well
 			$scope.refreshOutputModel = function() {
@@ -448,7 +448,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 						delete value[ $scope.spacingProperty ];
 					});
 				}
-			}
+			};
 
 			// refresh button label
 			$scope.refreshButton = function() {
@@ -493,7 +493,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 					}
 				}
 				$scope.varButtonLabel = $sce.trustAsHtml( $scope.varButtonLabel + '<span class="caret"></span>' );
-			}
+			};
 
 			// Check if a checkbox is disabled or enabled. It will check the granular control (disableProperty) and global control (isDisabled)
 			// Take note that the granular control has higher priority.
@@ -511,7 +511,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 					}
 				}
 
-			}
+			};
 
 			// A simple function to parse the item label settings
 			$scope.writeLabel = function( item, type ) {
@@ -530,7 +530,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 					return label;
 				}
 				return $sce.trustAsHtml( label );
-			}
+			};
 
 			// UI operations to show/hide checkboxes based on click event..
 			$scope.toggleCheckboxes = function( e ) {
@@ -696,7 +696,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 						break;
 					default:
 				}
-			}
+			};
 
 			// just to create a random variable name
 			genRandomString = function( length ) {
@@ -706,7 +706,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 					temp += possible.charAt( Math.floor( Math.random() * possible.length ));
 				}
 				return temp;
-			}
+			};
 
 			// count leading spaces
 			$scope.prepareGrouping = function() {
@@ -720,7 +720,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 						spacing-=2;
 					}
 				});
-			}
+			};
 
 			// prepare original index
 			$scope.prepareIndex = function() {
@@ -729,7 +729,7 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 					value[ $scope.indexProperty ] = ctr;
 					ctr++;
 				});
-			}
+			};
 
 			// navigate using up and down arrow
 			$scope.keyboardListener = function( e ) {
@@ -799,17 +799,17 @@ angular.module( 'multi-select', ['ng'] ).directive( 'multiSelect' , [ '$sce', '$
 				}
 
 				isNavigationKey = false;
-			}
+			};
 
 			// set (add) CSS style on selected row
 			$scope.setFocusStyle = function( tabIndex ) {
 				angular.element( $scope.formElements[ tabIndex ] ).parent().parent().parent().addClass( 'multiSelectFocus' );
-			}
+			};
 
 			// remove CSS style on selected row
 			$scope.removeFocusStyle = function( tabIndex ) {
 				angular.element( $scope.formElements[ tabIndex ] ).parent().parent().parent().removeClass( 'multiSelectFocus' );
-			}
+			};
 
 			///////////////////////////////////////////////////////
 			//

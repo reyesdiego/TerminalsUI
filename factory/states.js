@@ -2,7 +2,7 @@
  * Created by diego on 12/10/14.
  */
 
-myapp.factory('statesFactory', function($http){
+myapp.factory('statesFactory', ['$http', function($http){
 	var factory = {};
 
 	factory.getStatesArray = function(callback){
@@ -28,4 +28,4 @@ myapp.factory('statesFactory', function($http){
 	};
 
 	return factory;
-});
+}]);

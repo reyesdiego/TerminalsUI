@@ -1,9 +1,8 @@
 /**
  * Created by leo on 18/07/14.
  */
-(function(){
 
-myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, invoiceFactory, $q, $injector){
+myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory', 'loginService', '$rootScope', 'invoiceFactory', '$q', '$injector', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, invoiceFactory, $q, $injector){
 	var factory = {};
 
 	factory.loginWithCookies = function(user, pass){
@@ -130,6 +129,4 @@ myapp.factory('authFactory', function($state, $cookies, $cookieStore, userFactor
 	};
 
 	return factory;
-});
-
-})();
+}]);

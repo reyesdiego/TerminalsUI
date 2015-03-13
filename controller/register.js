@@ -2,7 +2,8 @@
  * Created by artiom on 29/01/15.
  */
 
-myapp.controller('registerCtrl', function ($scope, dialogs, userFactory, $state) {
+
+myapp.controller('registerCtrl', ['$scope', 'dialogs', 'userFactory', '$state', function ($scope, dialogs, userFactory, $state) {
 
 	$scope.nombre = '';
 	$scope.apellido = '';
@@ -79,5 +80,4 @@ myapp.controller('registerCtrl', function ($scope, dialogs, userFactory, $state)
 			}
 		})
 	};
-
-});
+}]);

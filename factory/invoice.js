@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginService, formatService, errorFactory){
+myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService', 'formatService', 'errorFactory', function($http, $rootScope, dialogs, loginService, formatService, errorFactory){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
@@ -293,4 +293,4 @@ myapp.factory('invoiceFactory', function($http, $rootScope, dialogs, loginServic
 
 	return factory;
 
-});
+}]);

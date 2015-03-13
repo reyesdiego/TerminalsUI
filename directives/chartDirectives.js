@@ -2,7 +2,7 @@
  * Created by Artiom on 28/04/14.
  */
 
-myapp.directive('dynamicChart', function($timeout, $rootScope){
+myapp.directive('dynamicChart', ['$timeout', function($timeout){
 	return {
 		restrict: 'E',
 		scope: {
@@ -118,7 +118,7 @@ myapp.directive('dynamicChart', function($timeout, $rootScope){
 							formatter.format(data, 1);
 							if (!$scope.stacked){
 								for (var i=2; i<=$scope.columns; i++)
-								formatter.format(data, i);
+									formatter.format(data, i);
 							}
 						}
 						chart.draw(data, options);
@@ -129,24 +129,4 @@ myapp.directive('dynamicChart', function($timeout, $rootScope){
 			}
 		}
 	};
-});
-
-myapp.directive('toupper', function() {
-	return {
-		require: 'ngModel',
-		link: function(scope, element, attrs, modelCtrl) {
-			var mayusculas = function(inputValue) {
-				if (inputValue != undefined && inputValue != ''){
-					var capitalized = inputValue.toUpperCase();
-					if(capitalized !== inputValue) {
-						modelCtrl.$setViewValue(capitalized);
-						modelCtrl.$render();
-					}
-					return capitalized;
-				}
-			};
-			modelCtrl.$parsers.push(mayusculas);
-			mayusculas(scope[attrs.ngModel]);  // capitalize initial value
-		}
-	};
-});
+}]);
