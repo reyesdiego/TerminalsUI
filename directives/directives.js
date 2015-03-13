@@ -941,6 +941,7 @@ myapp.directive('buqueViajeSearch', function(){
 			$scope.loadingState = false;
 			$scope.cargandoSumaria = false;
 			$scope.moneda = $rootScope.moneda;
+			$scope.search = '';
 
 			$rootScope.$watch('moneda', function(){
 				$scope.moneda = $rootScope.moneda;
