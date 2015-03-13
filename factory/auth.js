@@ -2,7 +2,7 @@
  * Created by leo on 18/07/14.
  */
 
-myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory', 'loginService', '$rootScope', 'invoiceFactory', '$q', '$injector', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, invoiceFactory, $q, $injector){
+myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory', 'loginService', '$rootScope', 'invoiceFactory', '$q', '$injector', 'cacheFactory', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, invoiceFactory, $q, $injector, cacheFactory){
 	var factory = {};
 
 	factory.loginWithCookies = function(user, pass){
@@ -99,6 +99,9 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				} else {
 					$rootScope.switchTheme(loginService.getFiltro());
 				}
+
+				// Carga la cache
+				cacheFactory.cargaCache();
 
 				//En el login debe cargar todos los datos que se utilizan
 				$rootScope.cargaGeneral();
