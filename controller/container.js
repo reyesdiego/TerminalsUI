@@ -51,14 +51,17 @@ myapp.controller('containerCtrl', ['$scope', '$stateParams', 'invoiceFactory', '
 		mensaje: 'No se encontraron datos en los registros de A.F.I.P. para el contenedor seleccionado.'
 	};
 
+	$scope.volverAPrincipal = false;
 	$scope.cargandoTasas = false;
 	$scope.cargandoSumaria = false;
 	$scope.hayError = false;
 
 	$scope.$on('cambioFiltro', function(){
+		$scope.volverAPrincipal = !$scope.volverAPrincipal;
 		if ($scope.model.contenedor != ''){
 			$scope.filtrar();
 		} else {
+			$scope.cargandoSumaria = false;
 			$scope.invoices = [];
 			$scope.tasas = [];
 			$scope.gates = [];
