@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache) {
 	'use strict';
 	$scope.nombre = loginService.getFiltro();
 
@@ -40,6 +40,8 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 	$scope.newFrom = new Date();
 	$scope.newCurrency = 'DOL';
+
+	$scope.unidadesTarifas = generalCache.get('unitTypes');
 
 	$scope.openFechaTarifa = false;
 	$scope.dateOptions = { 'showWeeks': false };

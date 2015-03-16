@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService', 'formatService', 'errorFactory', function($http, $rootScope, dialogs, loginService, formatService, errorFactory){
+myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService', 'formatService', 'errorFactory', 'estadosArrayCache', 'generalCache', function($http, $rootScope, dialogs, loginService, formatService, errorFactory, estadosArrayCache, generalCache){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
@@ -143,11 +143,7 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 	factory.ponerDescripcionComprobante = function(comprobante){
 		comprobante.detalle.forEach(function(detalles){
 			detalles.items.forEach(function(item){
-				if (angular.isDefined($rootScope.itemsDescriptionInvoices[item.id])){
-					item.descripcion = $rootScope.itemsDescriptionInvoices[item.id];
-				} else {
-					item.descripcion = "No se halló la descripción, verifique que el código esté asociado";
-				}
+				item.descripcion = (generalCache.get('descripciones')[item.id]) ? generalCache.get('descripciones')[item.id] : 'No se halló la descripción, verifique que el código esté asociadoo';
 			});
 		});
 		return comprobante;
@@ -231,31 +227,7 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 			comprobante.estado.forEach(function(estadoGrupo){
 				if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
 					encontrado = true;
-					comprobante.interfazEstado = $rootScope.estadosComprobantesArray[estadoGrupo.estado];
-					comprobante.interfazEstado._id = estadoGrupo.estado;
-					switch (comprobante.interfazEstado.type){
-						case 'WARN':
-							comprobante.interfazEstado.btnEstado = 'text-warning';
-							comprobante.interfazEstado.imagen = 'images/warn.png';
-							break;
-						case 'OK':
-							comprobante.interfazEstado.btnEstado = 'text-success';
-							comprobante.interfazEstado.imagen = 'images/ok.png';
-							break;
-						case 'ERROR':
-							comprobante.interfazEstado.btnEstado = 'text-danger';
-							comprobante.interfazEstado.imagen = 'images/error.png';
-							break;
-						case 'UNKNOWN':
-							comprobante.interfazEstado.btnEstado = 'text-info';
-							comprobante.interfazEstado.imagen = 'images/unknown.png';
-							break;
-						default :
-							comprobante.estado.push(estadoDefault);
-							comprobante.interfazEstado.btnEstado = 'text-info';
-							comprobante.interfazEstado.imagen = 'images/unknown.png';
-							break;
-					}
+					comprobante.interfazEstado = (estadosArrayCache.get(estadoGrupo.estado)) ? estadosArrayCache.get(estadoGrupo.estado) : estadosArrayCache.get('Y');
 				}
 			});
 			if (!encontrado){

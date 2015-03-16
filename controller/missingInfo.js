@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'vouchersFactory', 'gatesFactory', 'invoiceFactory', '$modal', 'loginService', 'dialogs', function($rootScope, $scope, vouchersFactory, gatesFactory, invoiceFactory, $modal, loginService, dialogs){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'vouchersFactory', 'gatesFactory', 'invoiceFactory', '$modal', 'loginService', 'dialogs', 'generalCache', function($rootScope, $scope, vouchersFactory, gatesFactory, invoiceFactory, $modal, loginService, dialogs, generalCache){
 	$scope.currentPage = 1;
 
 	$scope.itemsPerPage = [
@@ -23,16 +23,11 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'vouchersFactory', 'gat
 	$scope.formatDate = $rootScope.formatDate;
 	$scope.dateOptions = $rootScope.dateOptions;
 	$scope.comprobantesVistos = [];
-	$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
-	$scope.estadosComprobantes = $rootScope.estadosComprobantes;
-	$scope.itemDescriptionInvoices = $rootScope.itemsDescriptionInvoices;
+	$scope.itemsDescription = generalCache.get('descripciones');
+	$scope.estadosComprobantes = generalCache.get('estados');
+	$scope.itemDescriptionInvoices = generalCache.get('descripciones');
+	$scope.listaContenedores = generalCache.get('contenedores');
 	$scope.acceso = $rootScope.esUsuario;
-
-	$scope.$on('cargaGeneral', function(){
-		$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
-		$scope.estadosComprobantes = $rootScope.estadosComprobantes;
-		$scope.itemDescriptionInvoices = $rootScope.itemsDescriptionInvoices;
-	});
 
 	$scope.$on('errorInesperado', function(e, mensaje){
 		$scope.cargando = false;

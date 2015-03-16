@@ -18,7 +18,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFa
 		loginService.unsetLogin();
 		$rootScope.filtroTerminal = '';
 		$rootScope.switchTheme('BACTSSA');
-		cacheFactory.borraCache();
+		cacheFactory.limpiaCache();
 	};
 
 	$scope.irA = function(){
@@ -35,9 +35,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFa
 		$rootScope.terminal = loginService.getInfo();
 		$rootScope.grupo = loginService.getGroup();
 		//Esta carga se realiza en el caso de haber actualizado la página
-		invoiceFactory.getDescriptionItem(function(data){
-			$rootScope.itemsDescriptionInvoices = data.data;
-		});
 		if (loginService.getType() == 'agp'){
 			$rootScope.filtroTerminal = loginService.getFiltro();
 		}

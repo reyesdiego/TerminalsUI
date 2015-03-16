@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 
-myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'socket', function($rootScope, $scope, invoiceFactory, socket) {
+myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'socket', 'generalCache', 'vouchersArrayCache', function($rootScope, $scope, invoiceFactory, socket, generalCache, vouchersArrayCache) {
 
 	var socketIoRegister;
 
@@ -17,6 +17,8 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		'fechaInicio': $scope.desde,
 		'fechaFin': $scope.hasta
 	};
+
+	$scope.listaContenedores = generalCache.get('contenedores');
 
 	$scope.tipoComprob = '';
 	$scope.puntosDeVenta = [];
@@ -47,7 +49,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 	$scope.controlCorrelatividad = function(){
 		$scope.loadingCorrelatividad = true;
 		$scope.puntosDeVenta = [];
-		$scope.tipoComprob = $rootScope.vouchersType[$scope.model.codTipoComprob];
+		$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
 		$scope.mostrarBotonImprimir = false;
 		invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
 			if (dataComprob.status == 'OK'){

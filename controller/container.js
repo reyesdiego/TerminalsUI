@@ -2,7 +2,7 @@
  * Created by leo on 29/09/14.
  */
 
-myapp.controller('containerCtrl', ['$scope', '$stateParams', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'controlPanelFactory', 'afipFactory', function($scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory, afipFactory){
+myapp.controller('containerCtrl', ['$scope', '$stateParams', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'controlPanelFactory', 'afipFactory', 'generalCache', function($scope, $stateParams, invoiceFactory, gatesFactory, turnosFactory, controlPanelFactory, afipFactory, generalCache){
 	$scope.model = {
 		'nroPtoVenta': '',
 		'codTipoComprob': 0,
@@ -50,6 +50,8 @@ myapp.controller('containerCtrl', ['$scope', '$stateParams', 'invoiceFactory', '
 		titulo: 'A.F.I.P. sumaria',
 		mensaje: 'No se encontraron datos en los registros de A.F.I.P. para el contenedor seleccionado.'
 	};
+
+	$scope.listaContenedores = generalCache.get('contenedores');
 
 	$scope.volverAPrincipal = false;
 	$scope.cargandoTasas = false;
