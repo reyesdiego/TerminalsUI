@@ -6,7 +6,8 @@ module.exports = function(grunt) {
 				src: [
 					'css/angucomplete-alt.css',
 					'css/angular-multi-select.css',
-					'css/animation.css'
+					'css/animation.css',
+					'css/dialogs.css'
 				],
 				dest: 'build/css/aditional.css'
 			},
