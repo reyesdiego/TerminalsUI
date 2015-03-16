@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 3/19/14.
  */
 
-myapp.factory('controlPanelFactory', ['$http', '$rootScope', 'dialogs', 'formatService', 'loginService', 'errorFactory', function($http, $rootScope, dialogs, formatService, loginService, errorFactory){
+myapp.factory('controlPanelFactory', ['$http', '$rootScope', 'dialogs', 'formatService', 'loginService', 'errorFactory', 'generalCache', function($http, $rootScope, dialogs, formatService, loginService, errorFactory, generalCache){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -210,11 +210,7 @@ myapp.factory('controlPanelFactory', ['$http', '$rootScope', 'dialogs', 'formatS
 
 	factory.ponerDescripcionCodigoItem = function(data){
 		data.forEach(function(detalle){
-			if (angular.isDefined($rootScope.itemsDescriptionInvoices[detalle._id.id])){
-				detalle._id.descripcion = $rootScope.itemsDescriptionInvoices[detalle._id.id];
-			} else {
-				detalle._id.descripcion = "No se halló la descripción, verifique que el código esté asociado";
-			}
+			detalle._id.descripcion = (generalCache.get('descripciones')[detalle._id.id]) ? generalCache.get('descripciones')[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';
 		});
 		return data;
 	};

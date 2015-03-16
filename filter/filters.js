@@ -85,10 +85,10 @@ myapp.filter('numero', [function() {
 	}
 }]);
 
-myapp.filter('nombreComprobante', ['$rootScope', function($rootScope) {
+myapp.filter('nombreComprobante', ['vouchersArrayCache', function(vouchersArrayCache) {
 	return (function(numero) {
-		if (angular.isDefined(numero) && angular.isString($rootScope.vouchersType[numero])) {
-			return $rootScope.vouchersType[numero];
+		if (angular.isDefined(numero) && angular.isString(vouchersArrayCache.get(numero))) {
+			return vouchersArrayCache.get(numero);
 		} else {
 			return 'Error de comprobante';
 		}

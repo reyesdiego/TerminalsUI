@@ -2,7 +2,7 @@
  * Created by leo on 05/09/14.
  */
 
-myapp.directive('vistaComprobantes', function(){
+myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/vistaComprobantes.html',
@@ -31,16 +31,15 @@ myapp.directive('vistaComprobantes', function(){
 			$scope.maxDateD = new Date();
 			$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 			//Tipos de comprobantes
-			$scope.vouchers = $rootScope.vouchers;
-			$scope.vouchersType = $rootScope.vouchersType;
+			$scope.vouchers = generalCache.get('vouchers');
 			//Opciones de fecha para calendarios
 			$scope.formatDate = $rootScope.formatDate;
 			$scope.dateOptions = $rootScope.dateOptions;
 			//Listas para autocompletado
-			$scope.listaContenedores = $rootScope.listaContenedores;
-			$scope.listaRazonSocial = $rootScope.listaRazonSocial;
-			$scope.listaBuques = $rootScope.listaBuques;
-			$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
+			$scope.listaContenedores = generalCache.get('contenedores');
+			$scope.listaRazonSocial = generalCache.get('clientes');
+			$scope.listaBuques = generalCache.get('buques');
+			$scope.itemsDescription = generalCache.get('descripciones');
 			$scope.listaViajes = [];
 			$scope.itemsPerPage = [
 				{ value: 10, description: '10 items por página', ticked: false},
@@ -48,7 +47,7 @@ myapp.directive('vistaComprobantes', function(){
 				{ value: 20, description: '20 items por página', ticked: false},
 				{ value: 50, description: '50 items por página', ticked: false}
 			];
-			$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
+			$scope.estadosComprobantes = $filter('filter')(generalCache.get('estados'), $scope.filtroEstados);
 
 			$scope.estadosComprobantes.forEach(function(unEstado){
 				unEstado.ticked = false;
@@ -99,16 +98,6 @@ myapp.directive('vistaComprobantes', function(){
 						}
 					})
 				}
-			});
-
-			$scope.$on('cargaGeneral', function(){
-				$scope.listaContenedores = $rootScope.listaContenedores;
-				$scope.listaRazonSocial = $rootScope.listaRazonSocial;
-				$scope.listaBuques = $rootScope.listaBuques;
-				$scope.estadosComprobantes = $filter('filter')($rootScope.estadosComprobantes, $scope.filtroEstados);
-				$scope.vouchers = $rootScope.vouchers;
-				$scope.vouchersType = $rootScope.vouchersType;
-				$scope.itemsDescription = $rootScope.itemsDescriptionInvoices;
 			});
 
 			$scope.$on('iniciarBusqueda', function(event, data){
@@ -285,7 +274,7 @@ myapp.directive('vistaComprobantes', function(){
 									return dataTrack;
 								},
 								states : function() {
-									return angular.copy($rootScope.estadosComprobantes);
+									return angular.copy(generalCache.get('estados'));
 								}
 							}
 						});
@@ -544,7 +533,7 @@ myapp.directive('vistaComprobantes', function(){
 
 		}]
 	}
-});
+}]);
 
 myapp.directive('tableInvoices', function(){
 	return {
@@ -553,7 +542,7 @@ myapp.directive('tableInvoices', function(){
 	}
 });
 
-myapp.directive('tableGates', function(){
+myapp.directive('tableGates', ['generalCache', function(generalCache){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/table.gates.html',
@@ -570,11 +559,8 @@ myapp.directive('tableGates', function(){
 		controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
 			$scope.totalGates = 0;
 			$scope.itemsPerPage = 10;
-			$scope.listaBuques = $rootScope.listaBuques;
+			$scope.listaBuques = generalCache.get('buques');
 			$scope.listaViajes = [];
-			$scope.$on('cargaGeneral', function(){
-				$scope.listaBuques = $rootScope.listaBuques;
-			});
 			$scope.$on('errorInesperado', function(e, mensaje){
 				$scope.detallesGates = false;
 			});
@@ -639,7 +625,7 @@ myapp.directive('tableGates', function(){
 			};
 		}]
 	}
-});
+}]);
 
 myapp.directive('tableGatesResult', function(){
 	return {
@@ -808,7 +794,7 @@ myapp.directive('accordionBusquedaCorrelatividad', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/correlativeControlSearch.html',
-		controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
+		controller: ['$rootScope', '$scope', 'invoiceFactory', 'generalCache', function($rootScope, $scope, invoiceFactory, generalCache){
 			$scope.status = {
 				open: true
 			};
@@ -829,6 +815,7 @@ myapp.directive('accordionBusquedaCorrelatividad', function(){
 				'fechaInicio': $scope.fechaInicio,
 				'fechaFin': $scope.fechaFin
 			};
+			$scope.vouchers = generalCache.get('vouchers');
 			$scope.traerPuntosDeVenta = function(){
 				invoiceFactory.getCashbox({}, function(data){
 					if (data.status == 'OK'){

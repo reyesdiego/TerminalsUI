@@ -4,7 +4,7 @@
 			<thead>
 			<tr>
 				<td colspan="6" style="text-align: center">
-					<div><h3><strong>{{ vouchersType[verDetalle.codTipoComprob] }}</strong></h3></div>
+					<div><h3><strong>{{ verDetalle.codTipoComprob | nombreComprobante }}</strong></h3></div>
 					<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
 					<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
 					<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>

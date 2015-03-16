@@ -103,9 +103,6 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				// Carga la cache
 				cacheFactory.cargaCache();
 
-				//En el login debe cargar todos los datos que se utilizan
-				$rootScope.cargaGeneral();
-
 				deferred.resolve(data);
 			} else {
 				deferred.reject(data);

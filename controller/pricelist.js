@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', function($rootScope, $scope, priceFactory, loginService) {
+myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache) {
 	'use strict';
 	// Variable para almacenar la info principal que trae del factory
 	$scope.pricelist = [];
@@ -30,8 +30,8 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 				$scope.hayError = false;
 				$scope.pricelist = data.data;
 				$scope.pricelist.forEach(function(tarifa){
-					if (angular.isDefined($scope.arrayUnidades[tarifa.unit])){
-						tarifa.unit = $scope.arrayUnidades[tarifa.unit];
+					if (angular.isDefined(unitTypesArrayCache.get(tarifa.unit))){
+						tarifa.unit = unitTypesArrayCache.get(tarifa.unit);
 					}
 					if (!angular.isDefined(tarifa.topPrices[0].price || tarifa.topPrices[0].price == null)){
 						tarifa.orderPrice = 0;

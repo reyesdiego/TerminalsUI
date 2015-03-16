@@ -2,22 +2,18 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$rootScope', '$scope', function($rootScope, $scope){
+myapp.controller("searchController", ['$rootScope', '$scope', 'generalCache', function($rootScope, $scope, generalCache){
 	$scope.status = {
 		open: true
 	};
 	$scope.maxDate = new Date();
 	$scope.formatDate = $rootScope.formatDate;
 	$scope.dateOptions = $rootScope.dateOptions;
-	$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
-	$scope.listaContenedoresTurnos = $rootScope.listaContenedoresTurnos;
-	$scope.listaBuques = $rootScope.listaBuques;
+	$scope.listaContenedoresGates = generalCache.get('contenedoresGates');
+	$scope.listaContenedoresTurnos = generalCache.get('contenedoresTurnos');
+	$scope.listaBuques = generalCache.get('buques');
 	$scope.listaViajes = [];
-	$scope.$on('cargaGeneral', function(){
-		$scope.listaContenedoresGates = $rootScope.listaContenedoresGates;
-		$scope.listaContenedoresTurnos = $rootScope.listaContenedoresTurnos;
-		$scope.listaBuques = $rootScope.listaBuques;
-	});
+
 	$scope.$on('tengoViajes', function(event, data){
 		$scope.listaViajes = data;
 	});
