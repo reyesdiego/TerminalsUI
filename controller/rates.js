@@ -113,7 +113,6 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', function
 				if (data.data.length > 0){
 					$scope.armarGrafico();
 				}
-				console.log($scope.rates);
 			} else {
 				$scope.configPanel = {
 					tipo: 'panel-danger',

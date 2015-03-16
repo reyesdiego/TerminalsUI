@@ -52,7 +52,6 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
 			if (dataComprob.status == 'OK'){
 				$scope.totalFaltantes = dataComprob.totalCount;
-
 				if (dataComprob.totalCount === 0){
 					$scope.pantalla = {
 						titulo:  "Correlatividad",

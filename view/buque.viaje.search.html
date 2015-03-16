@@ -4,8 +4,8 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Buques</h3>
 			</div>
-			<div class="panel-body">
-				<angucomplete-alt id="idBuque"
+			<div class="panel-body" style="max-height: 720px; overflow: scroll">
+				<!--<angucomplete-alt id="idBuque"
 				                  placeholder="Buque"
 				                  pause="100"
 				                  selected-object="buqueSelected"
@@ -18,13 +18,14 @@
 				                  input-field="buque"
 				                  match-class="highlight"
 				                  limit-results="0"
-				                  auto-match="true"></angucomplete-alt>
+				                  auto-match="true"></angucomplete-alt>-->
+				<h5 ng-repeat="buque in buques"><a href ng-click="buqueSelected(buque)"><span class="glyphicon glyphicon-bookmark"></span> {{ buque.buque }}</a></h5>
 			</div>
 		</div>
 	</div>
 	<div class="col-lg-9">
 		<tabset justified="true">
-			<tab ng-repeat="viaje in buqueElegido.viajes" class="hidden-print" heading="{{ viaje.viaje }} - {{ viaje.fecha | date: 'dd/MM/yyyy' }}" ng-click="filtrado('viaje', viaje.viaje)"></tab>
+			<tab ng-repeat="viaje in buqueElegido.viajes" class="hidden-print" heading="{{ viaje.fecha | date: 'dd/MM/yyyy' }} - {{ viaje.viaje }}" ng-click="filtrado('viaje', viaje.viaje)"></tab>
 		</tabset>
 		<br>
 		<div class="col-lg-12" ng-show="datosContainers.length == 0 && !loadingState">

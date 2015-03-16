@@ -936,7 +936,7 @@ myapp.directive('buqueViajeSearch', function(){
 				viaje: '',
 				contenedor: ''
 			};
-			$scope.buques = [];
+			$scope.buques = $rootScope.listaBuques;
 			$scope.buqueElegido = {};
 			$scope.datosContainers = [];
 			$scope.loadingState = false;
@@ -960,17 +960,20 @@ myapp.directive('buqueViajeSearch', function(){
 			});
 
 			$scope.buqueSelected = function(selected){
-				if (angular.isDefined(selected)){
+				$scope.buqueElegido = selected;
+				$scope.model.buqueNombre = selected.buque;
+				$scope.model.viaje = selected.viajes[0].viaje;
+				$scope.traerResultados();
+				/*if (angular.isDefined(selected)){
 					$scope.buqueElegido = selected.originalObject;
 					$scope.model.buqueNombre = selected.originalObject.buque;
 					$scope.model.viaje = selected.originalObject.viajes[0].viaje;
 					$scope.traerResultados();
-				}
+				}*/
 			};
 
 			$scope.filtrado = function(filtro, contenido){
 				$scope.loadingState = true;
-				$scope.detalle = false;
 				$scope.currentPageContainers = 1;
 				$scope.model.contenedor = '';
 				var cargar = true;
@@ -999,6 +1002,7 @@ myapp.directive('buqueViajeSearch', function(){
 			};
 
 			$scope.traerResultados = function(){
+				$scope.detalle = false;
 				$scope.loadingState = true;
 				$scope.datosContainers = [];
 				invoiceFactory.getShipContainers($scope.model, function(data){
