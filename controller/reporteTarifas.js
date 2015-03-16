@@ -146,7 +146,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			"terminales": [],
 			"data": []
 		};
-		$scope.pricelist.forEach(function (price) {
+		$scope.filteredPrices.forEach(function (price) {
 			if (price.graficar){
 				$scope.tarifasGraficar.data.push(price.code);
 				$scope.tablaGrafico.data.push(price);
@@ -202,6 +202,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 						}
 					});
 					$scope.chartDataReporteTarifas = base;
+					console.log($scope.chartDataReporteTarifas);
 					$scope.mostrarGrafico = true;
 				} else {
 					dialogs.notify("Totales por tarifa", "No se encontraron datos para las fechas y tarifas seleccionadas.");

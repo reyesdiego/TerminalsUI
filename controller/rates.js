@@ -6,6 +6,8 @@
 myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', function ($rootScope, $scope, invoiceFactory) {
 
 	$rootScope.predicate = '_id.terminal';
+	$scope.monedaFija = 'DOL';
+	$scope.tarifasElegidas = 1;
 
 	$scope.configPanel = {
 		tipo: 'panel-info',
@@ -24,6 +26,72 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', function
 	};
 
 	$scope.cargando = false;
+	$scope.mostrarGrafico = false;
+
+	$scope.columnChart = 'column';
+
+	$scope.chartTitleReporteTarifas = "Códigos de tarifas";
+	$scope.chartWidthReporteTarifas = 1200;
+	$scope.chartHeightReporteTarifas = 500;
+	$scope.chartDataReporteTarifas = [
+		['Codigos', 'algo'],
+		['hola', 2526]
+	];
+
+	$scope.deleteRow = function (index) {
+		$scope.chartData.splice(index, 1);
+	};
+	$scope.addRow = function () {
+		$scope.chartData.push([]);
+	};
+	$scope.selectRow = function (index) {
+		$scope.selected = index;
+	};
+	$scope.rowClass = function (index) {
+		return ($scope.selected === index) ? "selected" : "";
+	};
+
+	$scope.armarGrafico = function(){
+		$scope.tarifasElegidas = 2;
+		var base =[
+			['Códigos', 'Tasa importación', 'Tasa exportación'],
+			['BACTSSA', 0, 0],
+			['TERMINAL 4', 0, 0],
+			['TRP', 0, 0]
+		];
+		var column, row;
+		$scope.rates.forEach(function(tasa){
+			switch (tasa._id.terminal){
+				case 'BACTSSA':
+					row = 1;
+					if (tasa._id.code == '1465'){
+						column = 1;
+					} else {
+						column = 2;
+					}
+					break;
+				case 'TERMINAL4':
+					row = 2;
+					if (tasa._id.code == 'NAGPI'){
+						column = 1;
+					} else {
+						column = 2;
+					}
+					break;
+				case 'TRP':
+					row = 3;
+					if (tasa._id.code == 'TASAI'){
+						column = 1;
+					} else {
+						column = 2;
+					}
+					break;
+			}
+			base[row][column] = tasa.total;
+		});
+		$scope.chartDataReporteTarifas = base;
+		$scope.mostrarGrafico = true;
+	};
 
 	$scope.$on('errorInesperado', function(e, mensaje){
 		$scope.cargando = false;
@@ -32,6 +100,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', function
 	});
 
 	$scope.cargaRates = function () {
+		$scope.mostrarGrafico = false;
 		$scope.cargando = true;
 		$scope.configPanel = {
 			tipo: 'panel-info',
@@ -41,6 +110,10 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', function
 		invoiceFactory.getRatesInvoices($scope.model, function (data) {
 			if (data.status === "OK") {
 				$scope.rates = data.data;
+				if (data.data.length > 0){
+					$scope.armarGrafico();
+				}
+				console.log($scope.rates);
 			} else {
 				$scope.configPanel = {
 					tipo: 'panel-danger',

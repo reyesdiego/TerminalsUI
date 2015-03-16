@@ -52,13 +52,13 @@ myapp.config(['$httpProvider', function ($httpProvider) {
 
 myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($stateProvider, $urlRouterProvider, $provide) {
 
-	$provide.decorator("$exceptionHandler", function($delegate, $injector){
+	$provide.decorator("$exceptionHandler", ['$delegate', '$injector', function($delegate, $injector){
 		return function(exception, cause){
 			var $rootScope = $injector.get("$rootScope");
 			$rootScope.addError({message:"Exception", reason:exception});
 			$delegate(exception, cause);
 		};
-	});
+	}]);
 
 	// For any unmatched url, send to /login
 	$urlRouterProvider.otherwise("/login");

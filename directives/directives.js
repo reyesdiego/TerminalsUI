@@ -187,7 +187,7 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 					selected.originalObject.viajes.forEach(function(viaje){
 						var objetoViaje = {
 							'id': i,
-							'viaje': viaje
+							'viaje': viaje.viaje
 						};
 						$scope.listaViajes.push(objetoViaje);
 						i++;
@@ -885,6 +885,7 @@ myapp.directive('buqueViajeSearch', function(){
 			$scope.tasas = [];
 			$scope.loadingTasas = false;
 			$scope.detalleGates = false;
+			$scope.volverAPrincipal = false;
 			$scope.ocultarFiltros = ['buque', 'contenedor', 'comprobantes', 'razonSocial', 'codTipoComprob', 'nroComprobante', 'fechaInicio'];
 			$scope.mensajeResultado = $rootScope.mensajeResultado;
 			$scope.configPanelTasas = {
@@ -961,7 +962,7 @@ myapp.directive('buqueViajeSearch', function(){
 				$scope.model.contenedor = '';
 				var cargar = true;
 				switch (filtro){
-					case 'buqueNombre':
+					case 'buque':
 						if (contenido == '') {
 							$scope.model = {
 								buqueNombre: '',
@@ -1003,6 +1004,7 @@ myapp.directive('buqueViajeSearch', function(){
 			};
 
 			$scope.verDetalles = function(contenedor){
+				$scope.volverAPrincipal = !$scope.volverAPrincipal;
 				$scope.loadingInvoices = true;
 				$scope.invoices = [];
 				$scope.loadingGates = true;

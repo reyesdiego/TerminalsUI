@@ -53,14 +53,17 @@ myapp.controller('containerCtrl', ['$scope', '$stateParams', 'invoiceFactory', '
 
 	$scope.listaContenedores = generalCache.get('contenedores');
 
+	$scope.volverAPrincipal = false;
 	$scope.cargandoTasas = false;
 	$scope.cargandoSumaria = false;
 	$scope.hayError = false;
 
 	$scope.$on('cambioFiltro', function(){
+		$scope.volverAPrincipal = !$scope.volverAPrincipal;
 		if ($scope.model.contenedor != ''){
 			$scope.filtrar();
 		} else {
+			$scope.cargandoSumaria = false;
 			$scope.invoices = [];
 			$scope.tasas = [];
 			$scope.gates = [];
