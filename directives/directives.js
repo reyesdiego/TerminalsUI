@@ -874,7 +874,7 @@ myapp.directive('buqueViajeSearch', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/buque.viaje.search.html',
-		controller: ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs',function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs){
+		controller: ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache){
 			$scope.loadingState = false;
 			$scope.invoices = [];
 			$scope.loadingInvoices = false;
@@ -923,7 +923,7 @@ myapp.directive('buqueViajeSearch', function(){
 				viaje: '',
 				contenedor: ''
 			};
-			$scope.buques = $rootScope.listaBuques;
+			$scope.buques = generalCache.get('buques');
 			$scope.buqueElegido = {};
 			$scope.datosContainers = [];
 			$scope.loadingState = false;
@@ -942,21 +942,11 @@ myapp.directive('buqueViajeSearch', function(){
 				$scope.datosContainers = [];
 			});
 
-			invoiceFactory.getShipTrips(function(data){
-				$scope.buques = data.data;
-			});
-
 			$scope.buqueSelected = function(selected){
 				$scope.buqueElegido = selected;
 				$scope.model.buqueNombre = selected.buque;
 				$scope.model.viaje = selected.viajes[0].viaje;
 				$scope.traerResultados();
-				/*if (angular.isDefined(selected)){
-					$scope.buqueElegido = selected.originalObject;
-					$scope.model.buqueNombre = selected.originalObject.buque;
-					$scope.model.viaje = selected.originalObject.viajes[0].viaje;
-					$scope.traerResultados();
-				}*/
 			};
 
 			$scope.filtrado = function(filtro, contenido){
