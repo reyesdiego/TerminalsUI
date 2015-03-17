@@ -6,7 +6,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	$scope.entrando = false;
 	$scope.sesion = false;
 
-	$scope.max = 10;
+	$scope.max = 100;
 
 	$scope.progreso = 0;
 	$scope.msg = [
@@ -23,7 +23,10 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 
 	$scope.$on('progreso', function(e, mensaje){
 		$scope.mostrarMensaje = $scope.msg[mensaje.mensaje];
-		$scope.progreso ++;
+		$scope.progreso += 10;
+		if ($scope.progreso >= 80){
+			$scope.mostrarMensaje = $scope.msg[3];
+		}
 	});
 
 	$scope.login = function(){
