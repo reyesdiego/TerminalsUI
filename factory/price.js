@@ -15,31 +15,18 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 			});
 	};
 
-	factory.getMatchPrices = function(terminal, datos, callback) {
-		var inserturl = serverUrl + '/matchPrices/' + terminal + '?';
-		var insertAux = inserturl;
-		if (datos && datos != null){
-			if(angular.isDefined(datos.code) && datos.code != ''){
-				inserturl = inserturl + 'code=' + datos.code.toUpperCase();
-			}
-			if(angular.isDefined(datos.codigoAsociado) && datos.codigoAsociado != ''){
-				if(inserturl != insertAux){ inserturl = inserturl + '&'}
-				inserturl = inserturl + 'matchCode=' + datos.codigoAsociado.toUpperCase();
-			}
-			if(angular.isDefined(datos.tasaCargas) && datos.tasaCargas != ''){
-				if(inserturl != insertAux){ inserturl = inserturl + '&'}
-				inserturl = inserturl + 'onlyRates=' + datos.tasaCargas;
-			}
-		}
-		$http.get(inserturl).success(function (data){
-			callback(data);
-		}).error(function(error){
-			callback(error);
-		});
+	factory.getMatchPrices = function(datos, callback) {
+		var inserturl = serverUrl + '/matchPrices/' + loginService.getFiltro();
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
 	};
 
-	factory.getArrayMatches = function(terminal, callback){
-		var inserturl = serverUrl + '/matchPrices/price/' + terminal;
+	factory.getArrayMatches = function(callback){
+		var inserturl = serverUrl + '/matchPrices/price/' + loginService.getFiltro();
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
@@ -58,19 +45,9 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 			});
 	};
 
-	factory.noMatches = function (desde, hasta, callback){
-		var flagFea = false;
-		var inserturl = serverUrl + '/matchPrices/noMatches/' + loginService.getFiltro() + '?';
-		if (desde && desde != null) {
-			inserturl += 'fechaInicio=' + formatService.formatearFecha(desde);
-			flagFea = true;
-		}
-		if (hasta && hasta != null) {
-			if (flagFea) inserturl += '&';
-
-			inserturl += 'fechaFin=' + formatService.formatearFecha(hasta);
-		}
-		$http.get(inserturl)
+	factory.noMatches = function (data, callback){
+		var inserturl = serverUrl + '/matchPrices/noMatches/' + loginService.getFiltro();
+		$http.get(inserturl, { params: formatService.formatearDatos(data) })
 			.success(function (data){
 				callback(data);
 			}).error(function(error){
@@ -113,16 +90,6 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 
 	factory.getUnitTypes = function(callback){
 		var inserturl = serverUrl + '/unitTypes';
-		$http.get(inserturl)
-			.success(function(response) {
-				callback(response);
-			}).error(function(errorText) {
-				callback(errorText);
-			});
-	};
-
-	factory.getUnitTypesArray = function(callback){
-		var inserturl = serverUrl + '/unitTypes?type=array';
 		$http.get(inserturl)
 			.success(function(response) {
 				callback(response);

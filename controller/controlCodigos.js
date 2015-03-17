@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 
-myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', function($scope, invoiceFactory, priceFactory) {
+myapp.controller('codigosCtrl', ['$scope', 'formatService', 'invoiceFactory', 'priceFactory', function($scope, formatService, invoiceFactory, priceFactory) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 
 	$scope.model = {
@@ -97,6 +97,10 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 	});
 
 	$scope.controlDeCodigos = function(){
+		var model = {
+			fechaInicio:	$scope.model.fechaInicio,
+			fechaFin:		$scope.model.fechaFin
+		};
 		$scope.controlFiltros = 'codigos';
 		$scope.loadingControlCodigos = true;
 		$scope.hayFiltros = false;
@@ -104,7 +108,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		$scope.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 		$scope.pageCodigos.limit = $scope.model.itemsPerPage;
-		priceFactory.noMatches($scope.model.fechaInicio, $scope.model.fechaFin, function(dataNoMatches){
+		priceFactory.noMatches(model, function(dataNoMatches){
 			if (dataNoMatches.status == 'OK'){
 				$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
 				$scope.codigosSinAsociar.codigos = dataNoMatches.data;

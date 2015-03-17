@@ -78,7 +78,7 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 
 			$scope.actualizarComprobante = null;
 
-			priceFactory.getArrayMatches(loginService.getFiltro(), function(arrayMatches){
+			priceFactory.getArrayMatches(function(arrayMatches){
 				$rootScope.matchesTerminal = arrayMatches.data;
 				$scope.arrayMatchesListo = true;
 				if ($scope.realizarControl){
@@ -89,7 +89,7 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 				}
 			});
 
-			priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: true}, function (data){
+			priceFactory.getMatchPrices({onlyRates: true}, function (data){
 				$rootScope.tasaCargasTerminal = [];
 				if (data.status == 'OK'){
 					data.data.forEach(function(tasaCargas){
