@@ -113,54 +113,54 @@
 		</div>
 		<div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-show="acceso==''"><a ui-sref="register" ng-click="isCollapsed = false"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
-				<li ng-show="acceso!=''"><a ui-sref="tarifario" ng-click="isCollapsed = false">Tarifario</a></li>
-				<li ng-show="acceso!=''"><a ui-sref="matches" ng-click="isCollapsed = false">Asociar</a></li>
+				<li ng-show="acceso==''"><a collap ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
+				<li ng-show="acceso!=''"><a collap ui-sref="tarifario">Tarifario</a></li>
+				<li ng-show="acceso!=''"><a collap ui-sref="matches">Asociar</a></li>
 				<li ng-show="acceso!=''" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a ui-sref="invoices" ng-click="isCollapsed = false">Ver</a></li>
-						<li><a ui-sref="cfacturas" ng-click="isCollapsed = false">Control</a></li>
+						<li><a collap ui-sref="invoices">Ver</a></li>
+						<li><a collap ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso!=''" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a ui-sref="gates" ng-click="isCollapsed = false">Ver</a></li>
-						<li><a ui-sref="cgates" ng-click="isCollapsed = false">Control</a></li>
+						<li><a collap ui-sref="gates">Ver</a></li>
+						<li><a collap ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso=='agp'" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a ui-sref="control" ng-click="isCollapsed = false">Control</a></li>
-						<li><a ui-sref="reports" ng-click="isCollapsed = false">Reportes</a></li>
-						<li><a ui-sref="turnos" ng-click="isCollapsed = false">Turnos</a></li>
-						<li><a ui-sref="rates" ng-click="isCollapsed = false">Tasas a las cargas</a></li>
-						<li><a ui-sref="container" ng-click="isCollapsed = false">Contenedor</a></li>
-						<li><a ui-sref="buque" ng-click="isCollapsed = false">Buque - Viaje</a></li>
-						<li><a ui-sref="afip" ng-click="isCollapsed = false">A.F.I.P</a></li>
-						<li><a ui-sref="users" ng-click="isCollapsed = false" ng-show="grupo=='ADMIN'">Usuarios</a></li>
+						<li><a collap ui-sref="control">Control</a></li>
+						<li><a collap ui-sref="reports">Reportes</a></li>
+						<li><a collap ui-sref="turnos">Turnos</a></li>
+						<li><a collap ui-sref="rates">Tasas a las cargas</a></li>
+						<li><a collap ui-sref="container">Contenedor</a></li>
+						<li><a collap ui-sref="buque">Buque - Viaje</a></li>
+						<li><a collap ui-sref="afip">A.F.I.P</a></li>
+						<li><a collap ui-sref="users" ng-show="grupo=='ADMIN'">Usuarios</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
-						<li class="visible-sm"><a ng-click="isCollapsed = false; setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
-						<li class="visible-sm"><a ng-click="isCollapsed = false; setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
-						<li class="visible-sm"><a ng-click="isCollapsed = false; setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li class="visible-sm"><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li class="visible-sm"><a collap ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li class="visible-sm"><a collap ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso=='agp'" class="hidden-sm" dropdown>
 					<a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a ng-click="isCollapsed = false; setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
-						<li><a ng-click="isCollapsed = false; setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
-						<li><a ng-click="isCollapsed = false; setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li><a collap ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li><a collap ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 				<li ng-show="acceso!=''" dropdown>
 					<a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ terminal.user }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-click="salir();"><a href ng-click="isCollapsed = false"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+						<li ng-click="salir();"><a href collap><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
 					</ul>
 				</li>
 			</ul>

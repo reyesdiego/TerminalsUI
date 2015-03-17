@@ -36,9 +36,6 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 			$scope.formatDate = $rootScope.formatDate;
 			$scope.dateOptions = $rootScope.dateOptions;
 			//Listas para autocompletado
-			$scope.listaContenedores = generalCache.get('contenedores');
-			$scope.listaRazonSocial = generalCache.get('clientes');
-			$scope.listaBuques = generalCache.get('buques');
 			$scope.itemsDescription = generalCache.get('descripciones');
 			$scope.listaViajes = [];
 			$scope.itemsPerPage = [
@@ -559,7 +556,6 @@ myapp.directive('tableGates', ['generalCache', function(generalCache){
 		controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
 			$scope.totalGates = 0;
 			$scope.itemsPerPage = 10;
-			$scope.listaBuques = generalCache.get('buques');
 			$scope.listaViajes = [];
 			$scope.$on('errorInesperado', function(e, mensaje){
 				$scope.detallesGates = false;
@@ -672,12 +668,17 @@ myapp.directive('accordionComprobantesVistos', function(){
 	}
 });
 
-myapp.directive('accordionInvoicesSearch', function(){
+myapp.directive('accordionInvoicesSearch', ['generalCache', function(generalCache){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/accordion.invoices.search.html'
+		templateUrl:	'view/accordion.invoices.search.html',
+		link: function ($scope) {
+			$scope.listaRazonSocial = generalCache.get('clientes');
+			$scope.listaContenedores = generalCache.get('contenedores');
+			$scope.listaBuques = generalCache.get('buques');
+		}
 	}
-});
+}]);
 
 myapp.directive('invoicesResult', function(){
 	return {
@@ -693,7 +694,7 @@ myapp.directive('invoiceTrack', function(){
 	}
 });
 
-myapp.directive('containersGatesSearch', function(){
+myapp.directive('containersGatesSearch', [function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.gates.search.html',
@@ -704,9 +705,9 @@ myapp.directive('containersGatesSearch', function(){
 		},
 		controller: 'searchController'
 	}
-});
+}]);
 
-myapp.directive('accordionTurnosSearch', function(){
+myapp.directive('accordionTurnosSearch', [function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.turnos.search.html',
@@ -716,7 +717,7 @@ myapp.directive('accordionTurnosSearch', function(){
 		},
 		controller: 'searchController'
 	}
-});
+}]);
 
 myapp.directive('divPagination', function(){
 	return {
@@ -1228,6 +1229,17 @@ myapp.directive('toupper', [function() {
 			};
 			modelCtrl.$parsers.push(mayusculas);
 			mayusculas(scope[attrs.ngModel]);  // capitalize initial value
+		}
+	};
+}]);
+
+myapp.directive('collap', [function() {
+	return {
+		restrict: 'A',
+		link: function(scope, element) {
+			element.bind('click', function () {
+				scope.isCollapsed = false;
+			});
 		}
 	};
 }]);

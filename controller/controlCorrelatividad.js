@@ -18,8 +18,6 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		'fechaFin': $scope.hasta
 	};
 
-	$scope.listaContenedores = generalCache.get('contenedores');
-
 	$scope.tipoComprob = '';
 	$scope.puntosDeVenta = [];
 	$scope.totalFaltantes = 0;

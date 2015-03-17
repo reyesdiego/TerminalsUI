@@ -26,7 +26,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 	$scope.itemsDescription = generalCache.get('descripciones');
 	$scope.estadosComprobantes = generalCache.get('estados');
 	$scope.itemDescriptionInvoices = generalCache.get('descripciones');
-	$scope.listaContenedores = generalCache.get('contenedores');
 	$scope.acceso = $rootScope.esUsuario;
 
 	$scope.$on('errorInesperado', function(e, mensaje){
