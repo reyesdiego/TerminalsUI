@@ -6,15 +6,29 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 	var factory = {};
 
 	factory.loginWithCookies = function(user, pass){
+		var deferred = $q.defer();
 		this.login(user, pass).then(function(){
 			$cookies.username = user;
 			$cookies.password = pass;
 			$cookies.themeTerminal = loginService.getFiltro();
+			deferred.resolve();
+		},
+		function(){
+			deferred.reject();
 		});
+		return deferred.promise;
 	};
 
 	factory.loginWithoutCookies = function(user, pass){
-		this.login(user, pass);
+		var deferred = $q.defer();
+		this.login(user, pass)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
+		return deferred.promise;
 	};
 
 	factory.login = function(user, pass){
@@ -25,6 +39,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 
 		userFactory.login(user, pass, function(data, error){
 			if (!error && typeof data.data.token === 'object') {
+				$rootScope.$broadcast('progreso', {mensaje: 1});
 				data = data.data;
 				loginService.setInfo(data);
 				loginService.setStatus(true);
@@ -74,9 +89,6 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				///-------------------------------------------------------------------------
 
 				loginService.setAcceso(data.acceso);
-				if ($state.current.name == 'login') {
-					$state.transitionTo('tarifario');
-				}
 
 				$rootScope.esUsuario = loginService.getType();
 				$rootScope.terminal = loginService.getInfo();
@@ -101,9 +113,14 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				}
 
 				// Carga la cache
-				cacheFactory.cargaCache();
+				cacheFactory.cargaCache()
+					.then(function(){
+						deferred.resolve();
+					},
+					function(){
+						deferred.reject();
+					});
 
-				deferred.resolve(data);
 			} else {
 				deferred.reject(data);
 			}

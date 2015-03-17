@@ -1,19 +1,26 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('cacheFactory', ['DSCacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', function (DSCacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache) {
+myapp.factory('cacheFactory', ['$rootScope', 'DSCacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', '$q', function ($rootScope, DSCacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, $q) {
 	var factory = {};
 
-	factory.cargaCache = function () {
-		// Buque viaje cache
+	factory.cargaBuques = function(){
+		var deferred = $q.defer();
 		invoiceFactory.getShipTrips(function (data) {
 			if (data.status == 'OK') {
 				generalCache.put('buques', data.data);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
 				//console.log(generalCache.get('buqueViaje'));
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
 
-		// Clientes cache
+	factory.cargaClientes = function(){
+		var deferred = $q.defer();
 		controlPanelFactory.getClients(function (data) {
 			if (data.status == 'OK') {
 				var clientes = [];
@@ -22,11 +29,18 @@ myapp.factory('cacheFactory', ['DSCacheFactory', 'controlPanelFactory', 'invoice
 					clientes.push({id: i++, nombre: dato})
 				});
 				generalCache.put('clientes', clientes);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
 				//console.log(generalCache.get('clientes'));
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
 
-		// Contenedores cache
+	factory.cargaContenedores = function(){
+		var deferred = $q.defer();
 		controlPanelFactory.getContainers(function (data) {
 			if (data.status == 'OK') {
 				var contenedores = [];
@@ -35,11 +49,18 @@ myapp.factory('cacheFactory', ['DSCacheFactory', 'controlPanelFactory', 'invoice
 					contenedores.push({id: i++, contenedor: dato})
 				});
 				generalCache.put('contenedores', contenedores);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
 				//console.log(generalCache.get('contenedores'));
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
 
-		// Contenedores gates cache
+	factory.cargaContenedoresGates = function(){
+		var deferred = $q.defer();
 		controlPanelFactory.getContainersGates(function (data) {
 			if (data.status == 'OK') {
 				var contenedores = [];
@@ -49,10 +70,17 @@ myapp.factory('cacheFactory', ['DSCacheFactory', 'controlPanelFactory', 'invoice
 				});
 				generalCache.put('contenedoresGates', contenedores);
 				//console.log(generalCache.get('contenedoresGates'));
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
 
-		// Contenedores turnos cache
+	factory.cargaContenedoresTurnos = function(){
+		var deferred = $q.defer();
 		controlPanelFactory.getContainersTurnos(function (data) {
 			if (data.status == 'OK') {
 				var contenedores = [];
@@ -62,18 +90,32 @@ myapp.factory('cacheFactory', ['DSCacheFactory', 'controlPanelFactory', 'invoice
 				});
 				generalCache.put('contenedoresTurnos', contenedores);
 				//console.log(generalCache.get('contenedoresTurnos'));
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
 
-		// Descripciones cache
+	factory.cargaDescripciones = function(){
+		var deferred = $q.defer();
 		invoiceFactory.getDescriptionItem(function (data) {
 			if (data.status == 'OK') {
 				generalCache.put('descripciones', data.data);
 				//console.log(generalCache.get('descripciones'));
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
 
-		// Vouchers cache
+	factory.cargaVouchers = function(){
+		var deferred = $q.defer();
 		vouchersFactory.getVouchersType(function (data) {
 			if (data.status == 'OK') {
 				generalCache.put('vouchers', data.data);
@@ -81,10 +123,17 @@ myapp.factory('cacheFactory', ['DSCacheFactory', 'controlPanelFactory', 'invoice
 					vouchersArrayCache.put(dato._id, dato.description);
 				});
 				//console.log(generalCache.get('vouchers'));
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
 
-		// Unit Type cache
+	factory.cargaUnidades = function(){
+		var deferred = $q.defer();
 		priceFactory.getUnitTypes(function (data) {
 			if (data.status == 'OK') {
 				generalCache.put('unitTypes', data.data);
@@ -92,10 +141,17 @@ myapp.factory('cacheFactory', ['DSCacheFactory', 'controlPanelFactory', 'invoice
 					unitTypesArrayCache.put(dato._id, dato.description);
 				});
 				//console.log(generalCache.get('unitTypes'));
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
 
-		// States cache
+	factory.cargaEstados = function(){
+		var deferred = $q.defer();
 		statesFactory.getStatesType(function (data) {
 			if (data.status == 'OK') {
 				var estados = data.data;
@@ -129,8 +185,45 @@ myapp.factory('cacheFactory', ['DSCacheFactory', 'controlPanelFactory', 'invoice
 				});
 				//console.log(generalCache.get('estados'));
 				//console.log(estadosArrayCache.get('Y'))
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			} else {
+				deferred.reject();
 			}
 		});
+		return deferred.promise;
+	};
+
+	factory.cargaCache = function () {
+		var deferred = $q.defer();
+		var llamadas = [];
+		// Buque viaje cache
+		llamadas.push(factory.cargaBuques());
+		// Clientes cache
+		llamadas.push(factory.cargaClientes());
+		// Contenedores cache
+		llamadas.push(factory.cargaContenedores());
+		// Contenedores gates cache
+		llamadas.push(factory.cargaContenedoresGates());
+		// Contenedores turnos cache
+		llamadas.push(factory.cargaContenedoresTurnos());
+		// Descripciones cache
+		llamadas.push(factory.cargaDescripciones());
+		// Vouchers cache
+		llamadas.push(factory.cargaVouchers());
+		// Unit Type cache
+		llamadas.push(factory.cargaUnidades());
+		// States cache
+		llamadas.push(factory.cargaEstados());
+
+		$q.all(llamadas)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
+		return deferred.promise;
 	};
 
 	factory.limpiaCache = function () {
