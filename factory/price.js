@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', ['$http', 'dialogs', 'loginService', 'formatService', function($http, dialogs, loginService, formatService){
+myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', function($http, loginService, formatService){
 	var factory = {};
 
 	factory.getPrice = function(terminal, datos, callback) {
@@ -50,16 +50,12 @@ myapp.factory('priceFactory', ['$http', 'dialogs', 'loginService', 'formatServic
 
 	factory.addMatchPrice = function (data, callback) {
 		var inserturl = serverUrl + '/matchPrices/matchprice';
-		$http({
-			method: "POST",
-			url: inserturl,
-			data: data,
-			headers: {token: loginService.getToken() }
-		}).success(function (response) {
-			callback(response);
-		}).error(function(error) {
-			callback(error);
-		});
+		$http.post(inserturl, data)
+			.success(function (response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
+			});
 	};
 
 	factory.noMatches = function (desde, hasta, callback){
@@ -84,16 +80,12 @@ myapp.factory('priceFactory', ['$http', 'dialogs', 'loginService', 'formatServic
 
 	factory.addPrice = function (data, callback) {
 		var inserturl = serverUrl + '/prices/price';
-		$http({
-			method: 'POST',
-			url: inserturl,
-			data: data,
-			headers: {token: loginService.getToken() }
-		}).success(function(response) {
-			callback(response);
-		}).error(function(error) {
-			callback(error);
-		});
+		$http.post(inserturl, data)
+			.success(function(response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
+			});
 	};
 
 	factory.getPriceById = function(id, callback){
@@ -111,16 +103,12 @@ myapp.factory('priceFactory', ['$http', 'dialogs', 'loginService', 'formatServic
 			unPrecio.from = formatService.formatearFecha(unPrecio.from);
 		});
 		var inserturl = serverUrl + '/prices/price/' + id;
-		$http({
-			method: 'PUT',
-			url: inserturl,
-			data: formData,
-			headers: {token: loginService.getToken() }
-		}).success(function(response) {
-			callback(response);
-		}).error(function(error) {
-			callback(error);
-		});
+		$http.put(inserturl, formData)
+			.success(function(response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
+			});
 	};
 
 	factory.getUnitTypes = function(callback){

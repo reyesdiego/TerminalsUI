@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'vouchersFactory', 'gatesFactory', 'invoiceFactory', '$modal', 'loginService', 'dialogs', 'generalCache', function($rootScope, $scope, vouchersFactory, gatesFactory, invoiceFactory, $modal, loginService, dialogs, generalCache){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoiceFactory', '$modal', 'loginService', 'dialogs', 'generalCache', function($rootScope, $scope, gatesFactory, invoiceFactory, $modal, loginService, dialogs, generalCache){
 	$scope.currentPage = 1;
 
 	$scope.itemsPerPage = [
@@ -203,10 +203,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'vouchersFactory', 'gat
 				break;
 		}
 	};
-
-	vouchersFactory.getVouchersArray(function(data){
-		$scope.vouchersType = data.data;
-	});
 
 	$scope.mostrarDetalle = function(comprobante){
 		$scope.cargando = true;

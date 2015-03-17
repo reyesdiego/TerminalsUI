@@ -6,7 +6,7 @@ myapp.factory('gatesFactory', ['$http', 'dialogs', 'formatService', 'loginServic
 	var factory = {};
 
 	factory.getGate = function(datos, page, callback){
-		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
+		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				callback(data);
@@ -16,7 +16,7 @@ myapp.factory('gatesFactory', ['$http', 'dialogs', 'formatService', 'loginServic
 	};
 
 	factory.getReporteHorarios = function(datos, callback){
-		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report?';
+		var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report';
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data);

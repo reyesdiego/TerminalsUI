@@ -1,11 +1,11 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService', 'formatService', 'errorFactory', 'estadosArrayCache', 'generalCache', function($http, $rootScope, dialogs, loginService, formatService, errorFactory, estadosArrayCache, generalCache){
+myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'errorFactory', 'estadosArrayCache', 'generalCache', function($http, loginService, formatService, errorFactory, estadosArrayCache, generalCache){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
-		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?'; // El que se va a usar
+		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				data = factory.ponerDescripcionComprobantes(data);
@@ -26,7 +26,7 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 	};
 
 	factory.getSinTasaCargas = function(datos, terminal, page, callback){
-		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit + '?';
+		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				data = factory.ponerDescripcionComprobantes(data);
@@ -37,7 +37,7 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 	};
 
 	factory.getContainersSinTasaCargas = function(datos, terminal, callback) {
-		var inserturl = serverUrl + '/invoices/containersNoRates/' + terminal + '?';
+		var inserturl = serverUrl + '/invoices/containersNoRates/' + terminal;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data) {
 				callback(data);
@@ -47,18 +47,8 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 			});
 	};
 
-	factory.getTarifasTerminal = function(callback){
-		var inserturl = serverUrl + '/matches/' + loginService.getFiltro() + '?type=prices';
-		$http.get(inserturl)
-			.success(function (data){
-				callback(data);
-			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al cargar las tarifas asociadas de la terminal.');
-			});
-	};
-
 	factory.getInvoicesNoMatches = function(datos, page, callback){
-		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit + '?';
+		var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data) {
 				if (data == null) {
@@ -78,7 +68,7 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 	};
 
 	factory.getCorrelative = function(datos, socketIoRegister, callback){
-		var inserturl = serverUrl + '/invoices/correlative/' + loginService.getFiltro() + '?';
+		var inserturl = serverUrl + '/invoices/correlative/' + loginService.getFiltro();
 		var param = formatService.formatearDatos(datos);
 		param.x = socketIoRegister;
 		$http.get(inserturl, { params: param })
@@ -90,7 +80,7 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 	};
 
 	factory.getCashbox = function(datos, callback){
-		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro() + '?';
+		var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro();
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				if (data == null){
@@ -119,7 +109,7 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 	};
 
 	factory.getShipContainers = function(datos, callback){
-		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers?';
+		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers';
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				callback(data);
@@ -172,16 +162,12 @@ myapp.factory('invoiceFactory', ['$http', '$rootScope', 'dialogs', 'loginService
 
 	factory.commentInvoice = function(data, callback){
 		var inserturl = serverUrl + '/comments/comment';
-		$http({
-			method: 'POST',
-			url: inserturl,
-			data: data,
-			headers:{token: loginService.getToken()}
-		}).success(function (data){
-			callback(data);
-		}).error(function(errorText){
-			errorFactory.raiseError(errorText, inserturl, 'errorTrack', 'Error al añadir comentario al comprobante.');
-		});
+		$http.post(inserturl, data)
+			.success(function (data){
+				callback(data);
+			}).error(function(errorText){
+				errorFactory.raiseError(errorText, inserturl, 'errorTrack', 'Error al añadir comentario al comprobante.');
+			});
 	};
 
 	factory.getTrackInvoice = function(invoiceId, callback){

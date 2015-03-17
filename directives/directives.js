@@ -21,7 +21,7 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 			volverAPrincipal:					'=',
 			filtroEstados:						'@'
 		},
-		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, dialogs){
+		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'statesFactory', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, dialogs){
 			$scope.status = {
 				open: true
 			};

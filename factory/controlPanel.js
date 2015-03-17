@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 3/19/14.
  */
 
-myapp.factory('controlPanelFactory', ['$http', '$rootScope', 'dialogs', 'formatService', 'loginService', 'errorFactory', 'generalCache', function($http, $rootScope, dialogs, formatService, loginService, errorFactory, generalCache){
+myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 'errorFactory', 'generalCache', function($http, formatService, loginService, errorFactory, generalCache){
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
@@ -70,8 +70,6 @@ myapp.factory('controlPanelFactory', ['$http', '$rootScope', 'dialogs', 'formatS
 					data = factory.calcularTotalTasas(data);
 					callback(data);
 				}).error(function(errorText){
-					//console.log(errorText);
-					//dialogs.error('Error', 'Error al cargar las tasas por Contenedor');
 					callback(errorText);
 				});
 		}
