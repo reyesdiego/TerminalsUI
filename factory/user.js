@@ -5,13 +5,9 @@
 myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
 	var factory = {};
 
-	factory.login = function(user, pass, callback){
-		var formData = {
-			"email": user,
-			"password": pass
-		};
+	factory.login = function(datos, callback){
 		var inserturl = serverUrl + '/login';
-		$http.post(inserturl, formData)
+		$http.post(inserturl, datos)
 			.success(function(data) {
 				callback(data, false);
 			}).error(function(error, status) {
