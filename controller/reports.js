@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 17/06/14.
  */
 
-myapp.controller('reportsCtrl', ['$scope', 'reportsFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'gatesFactory', 'loginService', 'dialogs', '$state', function ($scope, reportsFactory, invoiceFactory, vouchersFactory, priceFactory, gatesFactory, loginService, dialogs, $state){
+myapp.controller('reportsCtrl', ['$scope', 'gatesFactory', '$state', function ($scope, gatesFactory, $state){
 
 	$scope.fechaInicio = new Date();
 	$scope.fechaFin = new Date();
@@ -36,10 +36,6 @@ myapp.controller('reportsCtrl', ['$scope', 'reportsFactory', 'invoiceFactory', '
 	};
 
 	$scope.maxDate = new Date();
-
-	vouchersFactory.getVouchersType(function(data){
-		$scope.comprobantesTipos = data.data;
-	});
 
 	$scope.tablaGrafico = [];
 

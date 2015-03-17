@@ -54,7 +54,7 @@
 					<tbody>
 					<tr ng-repeat="invoice in filteredDatos = (datosFaltantes | dateRange : model.fechaInicio : model.fechaFin) | orderBy: $parent.predicate : $parent.reverse | startFrom:(currentPage-1) * model.itemsPerPage | limitTo:model.itemsPerPage">
 						<td style="text-align: right">{{ invoice.nroPtoVenta }}</td>
-						<td style="text-align: left">{{ vouchersType[invoice.codTipoComprob] }}</td>
+						<td style="text-align: left">{{ invoice.codTipoComprob | nombreComprobante }}</td>
 						<td style="text-align: right">{{ invoice.nroComprob }}</td>
 						<td>{{ invoice.code }}</td>
 						<td>{{ invoice.contenedor }}</td>

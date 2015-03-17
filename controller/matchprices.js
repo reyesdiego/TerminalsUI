@@ -71,7 +71,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 	});
 
 	$scope.prepararDatos = function(){
-		priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: $scope.tasas}, function (data) {
+		priceFactory.getMatchPrices({onlyRates: $scope.tasas}, function (data) {
 			if (data.status == 'OK'){
 				$scope.pricelist = data.data;
 				$scope.codigosConMatch = [];

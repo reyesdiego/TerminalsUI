@@ -21,7 +21,7 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 			volverAPrincipal:					'=',
 			filtroEstados:						'@'
 		},
-		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'vouchersFactory', 'statesFactory', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, vouchersFactory, dialogs){
+		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'statesFactory', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, dialogs){
 			$scope.status = {
 				open: true
 			};
@@ -78,7 +78,7 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 
 			$scope.actualizarComprobante = null;
 
-			priceFactory.getArrayMatches(loginService.getFiltro(), function(arrayMatches){
+			priceFactory.getArrayMatches(function(arrayMatches){
 				$rootScope.matchesTerminal = arrayMatches.data;
 				$scope.arrayMatchesListo = true;
 				if ($scope.realizarControl){
@@ -89,7 +89,7 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 				}
 			});
 
-			priceFactory.getMatchPrices(loginService.getFiltro(), {tasaCargas: true}, function (data){
+			priceFactory.getMatchPrices({onlyRates: true}, function (data){
 				$rootScope.tasaCargasTerminal = [];
 				if (data.status == 'OK'){
 					data.data.forEach(function(tasaCargas){

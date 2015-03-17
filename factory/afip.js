@@ -2,7 +2,7 @@
  * Created by artiom on 17/12/14.
  */
 
-myapp.factory('afipFactory', ['$http', '$rootScope', 'dialogs', 'loginService', 'formatService', function($http, $rootScope, dialogs, loginService, formatService){
+myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function($http, loginService, formatService){
 
 	var factory = {};
 

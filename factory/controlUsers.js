@@ -2,7 +2,7 @@
  * Created by leo on 02/02/15.
  */
 
-myapp.factory('ctrlUsersFactory', ['$http', 'loginService', function($http, loginService){
+myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	var factory = {};
 
 	factory.getUsers = function(callback){
@@ -17,30 +17,22 @@ myapp.factory('ctrlUsersFactory', ['$http', 'loginService', function($http, logi
 
 	factory.userEnabled = function(id, callback) {
 		var inserturl = serverUrl + '/agp/account/' + id + '/enable';
-		$http({
-			method: 'PUT',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(error){
-			callback(error);
-		});
+		$http.put(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
 	};
 
 	factory.userDisabled = function(id, callback) {
 		var inserturl = serverUrl + '/agp/account/' + id + '/disable';
-		$http({
-			method: 'PUT',
-			url: inserturl,
-			headers:
-			{token: loginService.getToken()}
-		}).success(function(data){
-			callback(data);
-		}).error(function(error){
-			callback(error);
-		});
+		$http.put(inserturl)
+			.success(function(data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
 	};
 
 	return factory;
