@@ -19,9 +19,10 @@
 				                  match-class="highlight"
 				                  limit-results="0"
 				                  auto-match="true"></angucomplete-alt>-->
-				<h5 ng-repeat="buque in buques"><a href ng-click="buqueSelected(buque)"><span class="glyphicon glyphicon-bookmark"></span> {{ buque.buque }}</a></h5>
+				<h5 ng-repeat="buque in buques"><a href ng-click="buqueSelected(buque)">{{ buque.buque }} <span class="glyphicon glyphicon-certificate" ng-show="buque.both"></span></a></h5>
 			</div>
 		</div>
+		<h6><span class="glyphicon glyphicon-certificate"></span> - Contiene datos de la AFIP</h6>
 	</div>
 	<div class="col-lg-9">
 		<tabset justified="true">
