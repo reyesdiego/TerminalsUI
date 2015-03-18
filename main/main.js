@@ -229,6 +229,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 
 myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dialogs', '$injector', function($rootScope, $state, loginService, $http, authFactory, dialogs, $injector){
 	$rootScope.previousState = '';
+	$rootScope.cambioTerminal = false;
+	$rootScope.cargarCache = false;
+	$rootScope.primerRuteo = false;
 
 	$rootScope.ordenarPor = function(filtro){
 		if ($rootScope.predicate == filtro){
@@ -251,6 +254,11 @@ myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dial
 			$rootScope.estaLogeado = true;
 			$rootScope.$broadcast('loginComplete');
 		});
+	}
+
+	if (loginService.getStatus()){
+		$rootScope.cargarCache = true;
+		$rootScope.primerRuteo = true;
 	}
 
 	$rootScope.fechaInicio = new Date();
@@ -342,7 +350,11 @@ myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dial
 	};
 
 	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-		$rootScope.previousState = from;
+		if (!$rootScope.primerRuteo){
+			$rootScope.previousState = from;
+		} else {
+			$rootScope.primerRuteo = false;
+		}
 	});
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
@@ -364,6 +376,13 @@ myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dial
 			if (loginService.getStatus()){
 				if(!in_array(toState.name, loginService.getAcceso())){
 					$rootScope.usuarioNoAutorizado(event);
+				} else {
+					if ($rootScope.cargarCache){
+						$rootScope.cargarCache = false;
+						$rootScope.previousState = toState.name;
+						event.preventDefault();
+						$state.transitionTo('cambioTerminal');
+					}
 				}
 			} else {
 				$rootScope.usuarioNoAutorizado(event);

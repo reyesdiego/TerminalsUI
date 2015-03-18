@@ -119,14 +119,17 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				}
 
 				// Carga la cache
-				cacheFactory.cargaCache()
-					.then(function(){
-						deferred.resolve();
-					},
-					function(){
-						deferred.reject();
-					});
-
+				if (!factory.userEstaLogeado()){
+					cacheFactory.cargaCache()
+						.then(function(){
+							deferred.resolve();
+						},
+						function(){
+							deferred.reject();
+						});
+				} else {
+					deferred.resolve();
+				}
 			} else {
 				deferred.reject(data);
 			}

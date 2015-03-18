@@ -60,6 +60,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFa
 
 	$scope.setearTerminal = function(terminal){
 		if ($rootScope.filtroTerminal != terminal){
+			$rootScope.cambioTerminal = true;
 			cacheFactory.limpiarCacheTerminal();
 			$rootScope.filtroTerminal = terminal;
 			loginService.setFiltro(terminal);

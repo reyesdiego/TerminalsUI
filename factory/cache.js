@@ -50,6 +50,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				});
 				contenedoresCache.put('contenedores', contenedores);
 				$rootScope.$broadcast('progreso', {mensaje: 2});
+				console.log(contenedoresCache.info('contenedores'));
 				deferred.resolve();
 				//console.log(contenedoresCache.get('contenedores'));
 			} else {
@@ -252,6 +253,25 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		// Descripciones cache
 		llamadas.push(factory.cargaDescripciones());
 
+		$q.all(llamadas)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
+		return deferred.promise;
+	};
+
+	factory.cargaMemoryCache = function(){
+		var deferred = $q.defer();
+		var llamadas = [];
+		// Contenedores cache
+		llamadas.push(factory.cargaContenedores());
+		// Contenedores gates cache
+		llamadas.push(factory.cargaContenedoresGates());
+		// Contenedores turnos cache
+		llamadas.push(factory.cargaContenedoresTurnos());
 		$q.all(llamadas)
 			.then(function(){
 				deferred.resolve();
