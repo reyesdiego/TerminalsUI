@@ -1,10 +1,12 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal) {
+myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout) {
 	'use strict';
+	$scope.barType = "progress-bar-info";
 	$scope.entrando = false;
 	$scope.sesion = false;
+	$scope.hayError = false;
 
 	$scope.max = 100;
 
@@ -13,7 +15,9 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		'Autenticando...',
 		'Sesión iniciada',
 		'Cargando datos de la aplicación...',
-		'Finalizando'
+		'Finalizando',
+		'Se ha producido un error...',
+		'Cerrando sesión'
 	];
 	$scope.mostrarMensaje = $scope.msg[0];
 
@@ -22,12 +26,39 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	}
 
 	$scope.$on('progreso', function(e, mensaje){
-		$scope.mostrarMensaje = $scope.msg[mensaje.mensaje];
-		$scope.progreso += 10;
-		if ($scope.progreso >= 80){
-			$scope.mostrarMensaje = $scope.msg[3];
+		if (!$scope.hayError){
+			$scope.mostrarMensaje = $scope.msg[mensaje.mensaje];
+			$scope.progreso += 10;
+			if ($scope.progreso >= 80){
+				$scope.mostrarMensaje = $scope.msg[3];
+			}
 		}
 	});
+
+	$scope.cerrarSesión = function(){
+		$scope.hayError = true;
+		$scope.barType = 'progress-bar-danger';
+		$scope.mostrarMensaje = $scope.msg[4];
+		authFactory.logout();
+		$rootScope.esUsuario = '';
+		loginService.unsetLogin();
+		$rootScope.filtroTerminal = '';
+		$rootScope.switchTheme('BACTSSA');
+		$scope.volver();
+	};
+
+	$scope.volver = function(){
+		$timeout(function(){
+			if ($scope.progreso > 0){
+				$scope.progreso -= 10;
+				$scope.mostrarMensaje = $scope.msg[5];
+				$scope.volver();
+			} else {
+				$scope.entrando = false;
+				$scope.hayError = false;
+			}
+		}, 1000);
+	};
 
 	$scope.login = function(){
 		$scope.entrando = true;
@@ -35,11 +66,17 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 			authFactory.loginWithCookies($scope.email, $scope.password)
 				.then(function(result){
 					$state.transitionTo('tarifario');
+				},
+				function(){
+					$scope.cerrarSesión();
 				});
 		} else {
 			authFactory.loginWithoutCookies($scope.email, $scope.password)
 				.then(function(result){
 					$state.transitionTo('tarifario');
+				},
+				function(){
+					$scope.cerrarSesión();
 				});
 		}
 	};

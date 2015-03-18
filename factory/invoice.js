@@ -21,6 +21,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			.success(function(data) {
 				callback(data);
 			}).error(function(errorText) {
+				if (errorText == null) errorText = {status: 'ERROR'};
 				callback(errorText);
 		});
 	};
@@ -100,10 +101,13 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 
 	factory.getShipTrips = function(callback){
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipTrips';
+		console.log(inserturl);
 		$http.get(inserturl)
 			.success(function(data){
+				console.log(data);
 				callback(data);
 			}).error(function(errorText){
+				if(errorText == null) errorText = {status: 'ERROR'};
 				callback(errorText);
 			});
 	};

@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 
-myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFactory', 'loginService', 'authFactory', 'cacheFactory', function($scope, $rootScope, $state, invoiceFactory, loginService, authFactory, cacheFactory) {
+myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFactory', 'loginService', 'authFactory', 'cacheFactory', 'generalCache', function($scope, $rootScope, $state, invoiceFactory, loginService, authFactory, cacheFactory, generalCache) {
 
 	"use strict";
 	$rootScope.esUsuario = '';
@@ -18,7 +18,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFa
 		loginService.unsetLogin();
 		$rootScope.filtroTerminal = '';
 		$rootScope.switchTheme('BACTSSA');
-		cacheFactory.limpiaCache();
 	};
 
 	$scope.irA = function(){
@@ -61,11 +60,12 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFa
 
 	$scope.setearTerminal = function(terminal){
 		if ($rootScope.filtroTerminal != terminal){
+			cacheFactory.limpiarCacheTerminal();
 			$rootScope.filtroTerminal = terminal;
-			$scope.irA();
 			loginService.setFiltro(terminal);
 			$rootScope.switchTheme(terminal);
 			authFactory.setTheme(terminal);
+			$state.transitionTo('cambioTerminal');
 		}
 	};
 }]);

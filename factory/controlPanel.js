@@ -142,6 +142,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
+				if (errorText == null) errorText = {status: 'ERROR'};
 				callback(errorText);
 			});
 	};
@@ -152,6 +153,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
+				if (errorText == null) errorText = {status: 'ERROR'};
 				callback(errorText);
 			});
 	};
@@ -172,6 +174,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
+				if (errorText == null) errorText = {status: 'ERROR'};
 				callback(errorText);
 			});
 	};
@@ -192,6 +195,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
+				if (errorText == null) errorText = {status: 'ERROR'};
 				callback(errorText);
 			});
 	};

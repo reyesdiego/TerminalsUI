@@ -220,10 +220,16 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/rates",
 			templateUrl: 'view/invoicesRates.html'
 		})
+		.state('cambioTerminal', {
+			url: "/cambioTerminal",
+			templateUrl: 'view/cambioTerminal.html'
+		})
 
 }]);
 
 myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dialogs', '$injector', function($rootScope, $state, loginService, $http, authFactory, dialogs, $injector){
+	$rootScope.previousState = '';
+
 	$rootScope.ordenarPor = function(filtro){
 		if ($rootScope.predicate == filtro){
 			$rootScope.reverse = !$rootScope.reverse;
@@ -335,7 +341,12 @@ myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dial
 		}
 	};
 
+	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+		$rootScope.previousState = from;
+	});
+
 	$rootScope.$on('$stateChangeStart', function(event, toState){
+		console.log(event);
 		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 		}

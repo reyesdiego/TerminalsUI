@@ -49,6 +49,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'DSCacheFactory', 'controlPanelFact
 					contenedores.push({id: i++, contenedor: dato})
 				});
 				generalCache.put('contenedores', contenedores);
+				console.log(generalCache.info('contenedores'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 				//console.log(generalCache.get('contenedores'));
@@ -215,6 +216,42 @@ myapp.factory('cacheFactory', ['$rootScope', 'DSCacheFactory', 'controlPanelFact
 		llamadas.push(factory.cargaUnidades());
 		// States cache
 		llamadas.push(factory.cargaEstados());
+
+		$q.all(llamadas)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
+		return deferred.promise;
+	};
+
+	factory.limpiarCacheTerminal = function(){
+		generalCache.remove('buques');
+		generalCache.remove('clientes');
+		generalCache.remove('contenedores');
+		generalCache.remove('contenedoresGates');
+		generalCache.remove('contenedoreTurnos');
+		generalCache.remove('descripciones');
+	};
+
+	factory.cambioTerminal = function(){
+		factory.limpiarCacheTerminal();
+		var deferred = $q.defer();
+		var llamadas = [];
+		// Buque viaje cache
+		llamadas.push(factory.cargaBuques());
+		// Clientes cache
+		llamadas.push(factory.cargaClientes());
+		// Contenedores cache
+		llamadas.push(factory.cargaContenedores());
+		// Contenedores gates cache
+		llamadas.push(factory.cargaContenedoresGates());
+		// Contenedores turnos cache
+		llamadas.push(factory.cargaContenedoresTurnos());
+		// Descripciones cache
+		llamadas.push(factory.cargaDescripciones());
 
 		$q.all(llamadas)
 			.then(function(){

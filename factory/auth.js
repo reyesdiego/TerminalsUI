@@ -86,6 +86,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				data.acceso.push("cgates");
 				data.acceso.push("users");
 				data.acceso.push("rates");
+				data.acceso.push("cambioTerminal");
 				///-------------------------------------------------------------------------
 
 				loginService.setAcceso(data.acceso);
@@ -133,6 +134,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 		$cookieStore.remove('username');
 		$cookieStore.remove('password');
 		$cookieStore.remove('themeTerminal');
+		cacheFactory.limpiaCache();
 	};
 
 	factory.userEstaLogeado = function(){
