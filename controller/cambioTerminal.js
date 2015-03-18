@@ -32,8 +32,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 				$scope.mostrarMensaje = 'Cerrando sesiónn';
 				$scope.volver();
 			} else {
-				$scope.entrando = false;
-				$scope.hayError = false;
+				$state.transitionTo('login');
 			}
 		}, 1000);
 	};
