@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoiceFactory', '$modal', 'loginService', 'dialogs', 'generalCache', function($rootScope, $scope, gatesFactory, invoiceFactory, $modal, loginService, dialogs, generalCache){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoiceFactory', '$modal', 'loginService', 'dialogs', 'generalFunctions', 'generalCache', function($rootScope, $scope, gatesFactory, invoiceFactory, $modal, loginService, dialogs, generalFunctions, generalCache){
 	$scope.currentPage = 1;
 
 	$scope.itemsPerPage = [
@@ -39,14 +39,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 	});
 
 	$scope.colorHorario = function (gate) {
-		var horarioGate = new Date(gate.gateTimestamp);
-		var horarioInicio = new Date(gate.turnoInicio);
-		var horarioFin = new Date(gate.turnoFin);
-		if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
-			return 'green';
-		} else {
-			return 'red';
-		}
+		return generalFunctions.colorHorario(gate);
 	};
 
 	$scope.existeDescripcion = function(itemId){

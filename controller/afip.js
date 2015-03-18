@@ -2,7 +2,7 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', function($scope, afipFactory, $state){
+myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunctions', function($scope, afipFactory, $state, generalFunctions){
 
 	$scope.tabs = [
 		{ heading: 'Afectación',	select: 'afectacion1',	uisref: 'afip.afectacion.afectacion1' },
@@ -79,22 +79,7 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', function($scope,
 	};
 
 	$scope.filtrarOrden = function(filtro){
-		var filtroModo;
-		$scope.model.currentPage = 1;
-		$scope.model.filtroOrden = filtro;
-		if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
-			$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
-		} else {
-			$scope.model.filtroOrdenReverse = false;
-		}
-		if ($scope.model.filtroOrdenReverse){
-			filtroModo = -1;
-		} else {
-			filtroModo = 1;
-		}
-		$scope.model.order = '"' + filtro + '":' + filtroModo;
-		$scope.model.filtroAnterior = filtro;
-
+		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
 		$scope.cargaDatos($scope.actualRegistro);
 	};
 

@@ -2,7 +2,7 @@
  * Created by leo on 05/09/14.
  */
 
-myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
+myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', function(generalCache, generalFunctions){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/vistaComprobantes.html',
@@ -235,22 +235,8 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 			};
 
 			$scope.filtrarOrden = function(filtro){
-				var filtroModo;
 				$scope.currentPage = 1;
-				$scope.model.filtroOrden = filtro;
-				if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
-					$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
-				} else {
-					$scope.model.filtroOrdenReverse = false;
-				}
-				if ($scope.model.filtroOrdenReverse){
-					filtroModo = -1;
-				} else {
-					filtroModo = 1;
-				}
-				$scope.model.order = '"' + filtro + '":' + filtroModo;
-				$scope.model.filtroAnterior = filtro;
-
+				$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
 				$scope.$emit('cambioFiltro', $scope.model);
 			};
 
@@ -539,7 +525,7 @@ myapp.directive('tableInvoices', function(){
 	}
 });
 
-myapp.directive('tableGates', ['generalCache', function(generalCache){
+myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/table.gates.html',
@@ -553,7 +539,7 @@ myapp.directive('tableGates', ['generalCache', function(generalCache){
 			configPanel:		'=',
 			loadingState:		'='
 		},
-		controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
+		controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
 			$scope.totalGates = 0;
 			$scope.itemsPerPage = 10;
 			$scope.listaViajes = [];
@@ -561,14 +547,7 @@ myapp.directive('tableGates', ['generalCache', function(generalCache){
 				$scope.detallesGates = false;
 			});
 			$scope.colorHorario = function (gate) {
-				var horarioGate = new Date(gate.gateTimestamp);
-				var horarioInicio = new Date(gate.turnoInicio);
-				var horarioFin = new Date(gate.turnoFin);
-				if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
-					return 'green';
-				} else {
-					return 'red';
-				}
+				return generalFunctions.colorHorario(gate);
 			};
 			$scope.mostrarDetalle = function(contenedor){
 				$scope.paginaAnterior = $scope.currentPage;
@@ -603,20 +582,7 @@ myapp.directive('tableGates', ['generalCache', function(generalCache){
 				$scope.$emit('cambioFiltro', $scope.listaViajes);
 			};
 			$scope.filtrarOrden = function(filtro){
-				var filtroModo;
-				$scope.model.filtroOrden = filtro;
-				if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
-					$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
-				} else {
-					$scope.model.filtroOrdenReverse = false;
-				}
-				if ($scope.model.filtroOrdenReverse){
-					filtroModo = -1;
-				} else {
-					filtroModo = 1;
-				}
-				$scope.model.order = '"' + filtro + '":' + filtroModo;
-				$scope.model.filtroAnterior = filtro;
+				$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
 				$scope.$emit('cambioFiltro');
 			};
 		}]
