@@ -2,15 +2,15 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$rootScope', '$scope', 'generalCache', function($rootScope, $scope, generalCache){
+myapp.controller("searchController", ['$rootScope', '$scope', 'generalCache', 'contenedoresCache', function($rootScope, $scope, generalCache, contenedoresCache){
 	$scope.status = {
 		open: true
 	};
 	$scope.maxDate = new Date();
 	$scope.formatDate = $rootScope.formatDate;
 	$scope.dateOptions = $rootScope.dateOptions;
-	$scope.listaContenedoresGates = generalCache.get('contenedoresGates');
-	$scope.listaContenedoresTurnos = generalCache.get('contenedoresTurnos');
+	$scope.listaContenedoresGates = contenedoresCache.get('contenedoresGates');
+	$scope.listaContenedoresTurnos = contenedoresCache.get('contenedoresTurnos');
 	$scope.listaBuques = generalCache.get('buques');
 	$scope.listaViajes = [];
 
