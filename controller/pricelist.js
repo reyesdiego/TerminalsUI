@@ -30,7 +30,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 				$scope.hayError = false;
 				$scope.pricelist = data.data;
 				$scope.pricelist.forEach(function(tarifa){
-					if (angular.isDefined(unitTypesArrayCache.get(tarifa.unit))){
+					if (angular.isDefined(tarifa.unit) && tarifa.unit != null && angular.isDefined(unitTypesArrayCache.get(tarifa.unit))){
 						tarifa.unit = unitTypesArrayCache.get(tarifa.unit);
 					}
 					if (!angular.isDefined(tarifa.topPrices[0].price || tarifa.topPrices[0].price == null)){

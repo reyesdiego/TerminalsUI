@@ -1,7 +1,7 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', '$q', function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, $q) {
+myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', '$q', function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, $q) {
 	var factory = {};
 
 	factory.cargaBuques = function(){
@@ -48,11 +48,10 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				data.data.forEach(function (dato) {
 					contenedores.push({id: i++, contenedor: dato})
 				});
-				generalCache.put('contenedores', contenedores);
-				console.log(generalCache.info('contenedores'));
+				contenedoresCache.put('contenedores', contenedores);
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
-				//console.log(generalCache.get('contenedores'));
+				//console.log(contenedoresCache.get('contenedores'));
 			} else {
 				deferred.reject();
 			}
@@ -69,8 +68,8 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				data.data.forEach(function (dato) {
 					contenedores.push({id: i++, contenedor: dato})
 				});
-				generalCache.put('contenedoresGates', contenedores);
-				//console.log(generalCache.get('contenedoresGates'));
+				contenedoresCache.put('contenedoresGates', contenedores);
+				//console.log(contenedoresCache.get('contenedoresGates'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 			} else {
@@ -89,8 +88,8 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				data.data.forEach(function (dato) {
 					contenedores.push({id: i++, contenedor: dato})
 				});
-				generalCache.put('contenedoresTurnos', contenedores);
-				//console.log(generalCache.get('contenedoresTurnos'));
+				contenedoresCache.put('contenedoresTurnos', contenedores);
+				//console.log(contenedoresCache.get('contenedoresTurnos'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 			} else {

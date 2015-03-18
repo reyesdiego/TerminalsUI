@@ -16,3 +16,7 @@ myapp.service('unitTypesArrayCache', ['CacheFactory', function (CacheFactory) {
 myapp.service('vouchersArrayCache', ['CacheFactory', function (CacheFactory) {
 	return CacheFactory.createCache('vouchersArrayCache', { storageMode: 'localStorage' });
 }]);
+
+myapp.service('contenedoresCache', ['CacheFactory', function (CacheFactory) {
+	return CacheFactory.createCache('contenedoresCache');
+}]);

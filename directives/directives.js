@@ -634,13 +634,13 @@ myapp.directive('accordionComprobantesVistos', function(){
 	}
 });
 
-myapp.directive('accordionInvoicesSearch', ['generalCache', function(generalCache){
+myapp.directive('accordionInvoicesSearch', ['generalCache', 'contenedoresCache', function(generalCache, contenedoresCache){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.invoices.search.html',
 		link: function ($scope) {
 			$scope.listaRazonSocial = generalCache.get('clientes');
-			$scope.listaContenedores = generalCache.get('contenedores');
+			$scope.listaContenedores = contenedoresCache.get('contenedores');
 			$scope.listaBuques = generalCache.get('buques');
 		}
 	}
