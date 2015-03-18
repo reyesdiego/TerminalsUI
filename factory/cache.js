@@ -49,7 +49,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 					contenedores.push({id: i++, contenedor: dato})
 				});
 				generalCache.put('contenedores', contenedores);
-				console.log(generalCache.info('contenedores'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 				//console.log(generalCache.get('contenedores'));
