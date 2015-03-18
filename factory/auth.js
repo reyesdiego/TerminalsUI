@@ -37,7 +37,12 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 		user = user || $cookies.username;
 		pass = pass || $cookies.password;
 
-		userFactory.login(user, pass, function(data, error){
+		var usuario = {
+			email:		user,
+			password:	pass
+		};
+
+		userFactory.login(usuario, function(data, error){
 			if (!error && typeof data.data.token === 'object') {
 				$rootScope.$broadcast('progreso', {mensaje: 1});
 				data = data.data;

@@ -51,8 +51,6 @@ myapp.controller('containerCtrl', ['$scope', '$stateParams', 'invoiceFactory', '
 		mensaje: 'No se encontraron datos en los registros de A.F.I.P. para el contenedor seleccionado.'
 	};
 
-	$scope.listaContenedores = generalCache.get('contenedores');
-
 	$scope.volverAPrincipal = false;
 	$scope.cargandoTasas = false;
 	$scope.cargandoSumaria = false;

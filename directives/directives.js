@@ -2,7 +2,7 @@
  * Created by leo on 05/09/14.
  */
 
-myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
+myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', function(generalCache, generalFunctions){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/vistaComprobantes.html',
@@ -36,9 +36,6 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 			$scope.formatDate = $rootScope.formatDate;
 			$scope.dateOptions = $rootScope.dateOptions;
 			//Listas para autocompletado
-			$scope.listaContenedores = generalCache.get('contenedores');
-			$scope.listaRazonSocial = generalCache.get('clientes');
-			$scope.listaBuques = generalCache.get('buques');
 			$scope.itemsDescription = generalCache.get('descripciones');
 			$scope.listaViajes = [];
 			$scope.itemsPerPage = [
@@ -238,22 +235,8 @@ myapp.directive('vistaComprobantes', ['generalCache', function(generalCache){
 			};
 
 			$scope.filtrarOrden = function(filtro){
-				var filtroModo;
 				$scope.currentPage = 1;
-				$scope.model.filtroOrden = filtro;
-				if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
-					$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
-				} else {
-					$scope.model.filtroOrdenReverse = false;
-				}
-				if ($scope.model.filtroOrdenReverse){
-					filtroModo = -1;
-				} else {
-					filtroModo = 1;
-				}
-				$scope.model.order = '"' + filtro + '":' + filtroModo;
-				$scope.model.filtroAnterior = filtro;
-
+				$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
 				$scope.$emit('cambioFiltro', $scope.model);
 			};
 
@@ -542,7 +525,7 @@ myapp.directive('tableInvoices', function(){
 	}
 });
 
-myapp.directive('tableGates', ['generalCache', function(generalCache){
+myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/table.gates.html',
@@ -556,23 +539,15 @@ myapp.directive('tableGates', ['generalCache', function(generalCache){
 			configPanel:		'=',
 			loadingState:		'='
 		},
-		controller: ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
+		controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
 			$scope.totalGates = 0;
 			$scope.itemsPerPage = 10;
-			$scope.listaBuques = generalCache.get('buques');
 			$scope.listaViajes = [];
 			$scope.$on('errorInesperado', function(e, mensaje){
 				$scope.detallesGates = false;
 			});
 			$scope.colorHorario = function (gate) {
-				var horarioGate = new Date(gate.gateTimestamp);
-				var horarioInicio = new Date(gate.turnoInicio);
-				var horarioFin = new Date(gate.turnoFin);
-				if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
-					return 'green';
-				} else {
-					return 'red';
-				}
+				return generalFunctions.colorHorario(gate);
 			};
 			$scope.mostrarDetalle = function(contenedor){
 				$scope.paginaAnterior = $scope.currentPage;
@@ -607,20 +582,7 @@ myapp.directive('tableGates', ['generalCache', function(generalCache){
 				$scope.$emit('cambioFiltro', $scope.listaViajes);
 			};
 			$scope.filtrarOrden = function(filtro){
-				var filtroModo;
-				$scope.model.filtroOrden = filtro;
-				if ($scope.model.filtroOrden == $scope.model.filtroAnterior){
-					$scope.model.filtroOrdenReverse = !$scope.model.filtroOrdenReverse;
-				} else {
-					$scope.model.filtroOrdenReverse = false;
-				}
-				if ($scope.model.filtroOrdenReverse){
-					filtroModo = -1;
-				} else {
-					filtroModo = 1;
-				}
-				$scope.model.order = '"' + filtro + '":' + filtroModo;
-				$scope.model.filtroAnterior = filtro;
+				$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
 				$scope.$emit('cambioFiltro');
 			};
 		}]
@@ -672,12 +634,17 @@ myapp.directive('accordionComprobantesVistos', function(){
 	}
 });
 
-myapp.directive('accordionInvoicesSearch', function(){
+myapp.directive('accordionInvoicesSearch', ['generalCache', function(generalCache){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/accordion.invoices.search.html'
+		templateUrl:	'view/accordion.invoices.search.html',
+		link: function ($scope) {
+			$scope.listaRazonSocial = generalCache.get('clientes');
+			$scope.listaContenedores = generalCache.get('contenedores');
+			$scope.listaBuques = generalCache.get('buques');
+		}
 	}
-});
+}]);
 
 myapp.directive('invoicesResult', function(){
 	return {
@@ -693,7 +660,7 @@ myapp.directive('invoiceTrack', function(){
 	}
 });
 
-myapp.directive('containersGatesSearch', function(){
+myapp.directive('containersGatesSearch', [function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.gates.search.html',
@@ -704,9 +671,9 @@ myapp.directive('containersGatesSearch', function(){
 		},
 		controller: 'searchController'
 	}
-});
+}]);
 
-myapp.directive('accordionTurnosSearch', function(){
+myapp.directive('accordionTurnosSearch', [function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.turnos.search.html',
@@ -716,7 +683,7 @@ myapp.directive('accordionTurnosSearch', function(){
 		},
 		controller: 'searchController'
 	}
-});
+}]);
 
 myapp.directive('divPagination', function(){
 	return {
@@ -1228,6 +1195,17 @@ myapp.directive('toupper', [function() {
 			};
 			modelCtrl.$parsers.push(mayusculas);
 			mayusculas(scope[attrs.ngModel]);  // capitalize initial value
+		}
+	};
+}]);
+
+myapp.directive('collap', [function() {
+	return {
+		restrict: 'A',
+		link: function(scope, element) {
+			element.bind('click', function () {
+				scope.isCollapsed = false;
+			});
 		}
 	};
 }]);

@@ -10,7 +10,7 @@
 		this.formatearDatos = function(datos) {
 			var array = {};
 			angular.forEach(datos, function(value, key) {
-				if (value != null && value != '' && key != 'fechaConGMT' && key != 'filtroOrden' && key != 'filtroOrdenReverse' && key != 'filtroAnterior' && key != 'itemsPerPage' && ((key != 'estado') || (key == 'estado' && value != 'N'))) array[key] = value;
+				if (value != null && value != '' && key != 'fechaConGMT' && key != 'filtroOrden' && key != 'filtroOrdenReverse' && key != 'filtroAnterior' && key != 'itemsPerPage' && key != 'currentPage' && ((key != 'estado') || (key == 'estado' && value != 'N'))) array[key] = value;
 			});
 			if (estaDefinido(array.contenedor)) array.contenedor = datos.contenedor.toUpperCase();
 			if (estaDefinido(array.razonSocial)) array.razonSocial = datos.razonSocial.toUpperCase();

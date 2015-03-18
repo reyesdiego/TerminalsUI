@@ -1,7 +1,7 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('cacheFactory', ['$rootScope', 'DSCacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', '$q', function ($rootScope, DSCacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, $q) {
+myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', '$q', function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, $q) {
 	var factory = {};
 
 	factory.cargaBuques = function(){
@@ -264,7 +264,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'DSCacheFactory', 'controlPanelFact
 	};
 
 	factory.limpiaCache = function () {
-		DSCacheFactory.clearAll();
+		CacheFactory.clearAll();
 	};
 
 	return factory;
