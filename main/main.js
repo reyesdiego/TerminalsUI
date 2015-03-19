@@ -89,12 +89,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		.state('control', {
 			url: "/control",
 			templateUrl: "view/control.html",
-			controller: "controlCtrl",
-			resolve: { //Los datos de los gráficos deben venir cargados antes de llamar a la vista, por eso se utiliza el resolve
-				datosGraficoPorMes: controlCtrl.prepararMatrizVacía,
-				datosFacturadoPorDiaTasas: controlCtrl.prepararMatrizTasas,
-				datosGraficoGatesTurnosDias: controlCtrl.prepararMatrizVaciaGatesTurnos
-			}
+			controller: "controlCtrl"
 		})
 		.state('cfacturas', {
 			url: "/cfacturas",
