@@ -222,7 +222,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dialogs', '$injector', function($rootScope, $state, loginService, $http, authFactory, dialogs, $injector){
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', function($rootScope, $state, loginService, authFactory, dialogs, $injector){
 	$rootScope.previousState = '';
 	$rootScope.cambioTerminal = false;
 	$rootScope.cargarCache = false;
