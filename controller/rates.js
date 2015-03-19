@@ -3,7 +3,7 @@
  */
 
 
-myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', function ($rootScope, $scope, invoiceFactory) {
+myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', function ($rootScope, $scope, invoiceFactory, generalFunctions) {
 
 	$rootScope.predicate = '_id.terminal';
 	$scope.monedaFija = 'DOL';
@@ -91,6 +91,14 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', function
 		});
 		$scope.chartDataReporteTarifas = base;
 		$scope.mostrarGrafico = true;
+	};
+
+	$scope.openDate = function(event){
+		generalFunctions.openDate(event);
+	};
+	$scope.hitEnter = function(evt){
+		if(angular.equals(evt.keyCode,13))
+			$scope.filtrar();
 	};
 
 	$scope.$on('errorInesperado', function(e, mensaje){
