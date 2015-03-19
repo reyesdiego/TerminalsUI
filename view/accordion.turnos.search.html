@@ -15,7 +15,10 @@
 		<div class="form-group">
 			<div class="input-group">
 				<span class="input-group-addon">Hora desde</span>
-				<timepicker-pop class="input-group" input-time="model.fechaInicio"></timepicker-pop>
+				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaInicio" enable-date="false" is-open="openHoraInicio" datepicker-options="dateOptions" today-text="Hoy" now-text="Ahora" date-text="Fecha" time-text="Hora" clear-text="Limpiar" close-text="Cerrar"/>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="openDate($event); openHoraInicio = !openHoraInicio"><span class="glyphicon glyphicon-time"></span></button>
+				</span>
 			</div>
 		</div>
 	</div>
@@ -23,7 +26,10 @@
 		<div class="form-group">
 			<div class="input-group">
 				<span class="input-group-addon">Hora hasta</span>
-				<timepicker-pop class="input-group" input-time="model.fechaFin"></timepicker-pop>
+				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaFin" enable-date="false" is-open="openHoraFin" datepicker-options="dateOptions" max-date="model.fechaInicio" today-text="Hoy" now-text="Ahora" date-text="Fecha" time-text="Hora" clear-text="Limpiar" close-text="Cerrar"/>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="openDate($event); openHoraFin = !openHoraFin"><span class="glyphicon glyphicon-time"></span></button>
+				</span>
 			</div>
 		</div>
 	</div>

@@ -42,7 +42,7 @@ function idToDate(objectId){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'timepickerPop', 'multi-select', 'angular-cache']);
+var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
