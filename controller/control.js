@@ -1,9 +1,18 @@
 /**
  * Created by kolesnikov-a on 21/02/14.
  */
-myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'socket', 'formatService', function ($rootScope, $scope, controlPanelFactory, socket, formatService){
+myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'socket', 'formatService', 'generalFunctions', function ($rootScope, $scope, controlPanelFactory, socket, formatService, generalFunctions){
 
 	var fecha = formatService.formatearFecha(new Date());
+
+	$scope.openDate = function(event){
+		generalFunctions.openDate(event);
+	};
+	$scope.hitEnter = function(evt){
+		if(angular.equals(evt.keyCode,13))
+			$scope.filtrar();
+	};
+	$scope.maxDate = new Date();
 
 	$scope.prefijo = 'AR$';
 	$scope.otraMoneda = 'DOL';

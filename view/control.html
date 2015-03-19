@@ -14,7 +14,7 @@
 			<div class="input-group text-left">
 				<label for="desde" class="sr-only">Fecha</label>
 				<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button></span>
-				<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="desde" is-open="openfechaInicio" datepicker-options="dateOptions" show-button-bar="false" ng-change="traerDatosFacturadoDia()" disabled/>
+				<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="desde" is-open="openfechaInicio" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" ng-change="traerDatosFacturadoDia()" disabled/>
 			</div>
 			<div class="table-responsive" style="max-height: 220px; max-width: 100%; overflow: auto">
 				<table class="table table-bordered table-hover">
