@@ -479,7 +479,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', functi
 				return datos;
 			}
 
-			$scope.cargaTodosLosPuntosDeVentas();
+			if (loginService.getStatus) $scope.cargaTodosLosPuntosDeVentas();
 
 		}]
 	}
