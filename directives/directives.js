@@ -1176,3 +1176,18 @@ myapp.directive('collap', [function() {
 		}
 	};
 }]);
+
+myapp.directive('accordionMin', [function () {
+	return {
+		restrict:		'E',
+		transclude:		true,
+		templateUrl:	'view/accordion.html',
+		scope: {
+			heading:	'@',
+			open:		'='
+		},
+		link: function (scope) {
+			if (angular.isDefined(scope.open)) scope.estado = scope.open;
+		}
+	}
+}]);
