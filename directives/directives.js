@@ -137,7 +137,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', functi
 			};
 
 			$scope.openDate = function(event){
-				$rootScope.openDate(event);
+				generalFunctions.openDate(event);
 			};
 
 			$scope.clientSelected = function(selected){
@@ -728,7 +728,7 @@ myapp.directive('accordionBusquedaCorrelatividad', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/correlativeControlSearch.html',
-		controller: ['$rootScope', '$scope', 'invoiceFactory', 'generalCache', function($rootScope, $scope, invoiceFactory, generalCache){
+		controller: ['$rootScope', '$scope', 'invoiceFactory', 'generalCache', 'generalFunctions', function($rootScope, $scope, invoiceFactory, generalCache, generalFunctions){
 			$scope.status = {
 				open: true
 			};
@@ -764,7 +764,7 @@ myapp.directive('accordionBusquedaCorrelatividad', function(){
 				})
 			};
 			$scope.openDate = function(event){
-				$rootScope.openDate(event);
+				generalFunctions.openDate(event);
 			};
 			$scope.hitEnter = function(evt){
 				if(angular.equals(evt.keyCode,13))

@@ -23,4 +23,9 @@ myapp.service('generalFunctions', [function () {
 			return 'red';
 		}
 	};
+
+	this.openDate = function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+	}
 }]);

@@ -2,7 +2,7 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$rootScope', '$scope', 'generalCache', 'contenedoresCache', function($rootScope, $scope, generalCache, contenedoresCache){
+myapp.controller("searchController", ['$rootScope', '$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', function($rootScope, $scope, generalCache, contenedoresCache, generalFunctions){
 	$scope.status = {
 		open: true
 	};
@@ -18,7 +18,7 @@ myapp.controller("searchController", ['$rootScope', '$scope', 'generalCache', 'c
 		$scope.listaViajes = data;
 	});
 	$scope.openDate = function(event){
-		$rootScope.openDate(event);
+		generalFunctions.openDate(event);
 	};
 	$scope.hitEnter = function(evt){
 		if(angular.equals(evt.keyCode,13))
