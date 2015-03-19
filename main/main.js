@@ -251,6 +251,8 @@ myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dial
 	// Carga la sesion por cookies
 	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
 		authFactory.login().then(function(){
+			$rootScope.cargarCache = true;
+			$rootScope.primerRuteo = true;
 			$rootScope.estaLogeado = true;
 			$rootScope.$broadcast('loginComplete');
 		});

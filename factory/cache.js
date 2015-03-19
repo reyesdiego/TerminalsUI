@@ -50,7 +50,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				});
 				contenedoresCache.put('contenedores', contenedores);
 				$rootScope.$broadcast('progreso', {mensaje: 2});
-				console.log(contenedoresCache.info('contenedores'));
 				deferred.resolve();
 				//console.log(contenedoresCache.get('contenedores'));
 			} else {
@@ -195,6 +194,40 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		return deferred.promise;
 	};
 
+	factory.cargaMatchesArray = function(){
+		var deferred = $q.defer();
+		priceFactory.getArrayMatches(function(data){
+			if (data.status == 'OK'){
+				generalCache.put('matches', data.data);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			} else {
+				deferred.reject()
+			}
+		});
+		return deferred.promise;
+	};
+
+	factory.cargaMatchesRates = function(){
+		var deferred = $q.defer();
+		priceFactory.getMatchPrices({onlyRates: true}, function (data){
+			if (data.status == 'OK'){
+				var tasasCargasTerminal = [];
+				data.data.forEach(function(tasaCargas){
+					if (tasaCargas.matches != null && tasaCargas.matches.length > 0){
+						tasasCargasTerminal.push(tasaCargas.matches[0].match[0])
+					}
+				});
+				generalCache.put('ratesMatches', tasasCargasTerminal);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			} else {
+				deferred.reject();
+			}
+		});
+		return deferred.promise;
+	};
+
 	factory.cargaCache = function () {
 		var deferred = $q.defer();
 		var llamadas = [];
@@ -216,6 +249,10 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		llamadas.push(factory.cargaUnidades());
 		// States cache
 		llamadas.push(factory.cargaEstados());
+		// Matches cache
+		llamadas.push(factory.cargaMatchesArray());
+		// Rates matches cache
+		llamadas.push(factory.cargaMatchesRates());
 
 		$q.all(llamadas)
 			.then(function(){
@@ -234,6 +271,8 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		generalCache.remove('contenedoresGates');
 		generalCache.remove('contenedoreTurnos');
 		generalCache.remove('descripciones');
+		generalCache.remove('matches');
+		generalCache.remove('ratesMatches');
 	};
 
 	factory.cambioTerminal = function(){
@@ -252,6 +291,10 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		llamadas.push(factory.cargaContenedoresTurnos());
 		// Descripciones cache
 		llamadas.push(factory.cargaDescripciones());
+		// Matches cache
+		llamadas.push(factory.cargaMatchesArray());
+		// Rates matches cache
+		llamadas.push(factory.cargaMatchesRates());
 
 		$q.all(llamadas)
 			.then(function(){
