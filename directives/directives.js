@@ -2,7 +2,7 @@
  * Created by leo on 05/09/14.
  */
 
-myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', function(generalCache, generalFunctions){
+myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialogs', function(generalCache, generalFunctions, dialogs){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/vistaComprobantes.html',
@@ -21,7 +21,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', functi
 			volverAPrincipal:					'=',
 			filtroEstados:						'@'
 		},
-		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'statesFactory', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, dialogs){
+		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory){
 			$scope.status = {
 				open: true
 			};
