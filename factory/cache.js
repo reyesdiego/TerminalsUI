@@ -228,6 +228,16 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		return deferred.promise;
 	};
 
+	factory.cargaAllRates = function(){
+		var deferred = $q.defer();
+		priceFactory.getAllRates(function(data){
+			generalCache.put('allRates', data);
+			$rootScope.$broadcast('progreso', {mensaje: 2});
+			deferred.resolve();
+		});
+		return deferred.promise;
+	};
+
 	factory.cargaCache = function () {
 		var deferred = $q.defer();
 		var llamadas = [];
@@ -253,6 +263,8 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		llamadas.push(factory.cargaMatchesArray());
 		// Rates matches cache
 		llamadas.push(factory.cargaMatchesRates());
+		// All rates cache
+		llamadas.push(factory.cargaAllRates());
 
 		$q.all(llamadas)
 			.then(function(){

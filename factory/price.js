@@ -4,6 +4,16 @@
 myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', function($http, loginService, formatService){
 	var factory = {};
 
+	factory.getAllRates = function(callback){
+		var inserturl = serverUrl + '/prices/rates/1/all';
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
+	};
+
 	factory.getPrice = function(terminal, datos, callback) {
 		var inserturl = serverUrl + '/prices/' + terminal;
 		if (datos){ inserturl = inserturl + '?onlyRates=true' }

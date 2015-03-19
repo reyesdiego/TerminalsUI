@@ -3,11 +3,13 @@
  */
 
 
-myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', function ($rootScope, $scope, invoiceFactory, generalFunctions) {
+myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache) {
 
 	$rootScope.predicate = '_id.terminal';
 	$scope.monedaFija = 'DOL';
 	$scope.tarifasElegidas = 1;
+
+	$scope.allRates = generalCache.get('allRates');
 
 	$scope.configPanel = {
 		tipo: 'panel-info',
@@ -61,30 +63,20 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		];
 		var column, row;
 		$scope.rates.forEach(function(tasa){
+			if ($scope.ponerDescripcion(tasa._id.code).indexOf('Importacion') != -1){
+				column = 1;
+			} else {
+				column = 2;
+			}
 			switch (tasa._id.terminal){
 				case 'BACTSSA':
 					row = 1;
-					if (tasa._id.code == '1465'){
-						column = 1;
-					} else {
-						column = 2;
-					}
 					break;
 				case 'TERMINAL4':
 					row = 2;
-					if (tasa._id.code == 'NAGPI'){
-						column = 1;
-					} else {
-						column = 2;
-					}
 					break;
 				case 'TRP':
 					row = 3;
-					if (tasa._id.code == 'TASAI'){
-						column = 1;
-					} else {
-						column = 2;
-					}
 					break;
 			}
 			base[row][column] = tasa.total;
@@ -100,12 +92,17 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		if(angular.equals(evt.keyCode,13))
 			$scope.filtrar();
 	};
+	$scope.maxDate = new Date();
 
 	$scope.$on('errorInesperado', function(e, mensaje){
 		$scope.cargando = false;
 		$scope.rates = [];
 		$scope.configPanel = mensaje;
 	});
+
+	$scope.ponerDescripcion = function(codigo){
+		return $scope.allRates[codigo];
+	};
 
 	$scope.cargaRates = function () {
 		$scope.mostrarGrafico = false;
