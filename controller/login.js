@@ -8,7 +8,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	$scope.sesion = false;
 	$scope.hayError = false;
 
-	$scope.max = 100;
+	$scope.max = 120;
 
 	$scope.progreso = 0;
 	$scope.msg = [
@@ -29,7 +29,8 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		if (!$scope.hayError){
 			$scope.mostrarMensaje = $scope.msg[mensaje.mensaje];
 			$scope.progreso += 10;
-			if ($scope.progreso >= 80){
+			$scope.porcentaje = ($scope.progreso * 100 / $scope.max).toFixed();
+			if ($scope.porcentaje >= 80){
 				$scope.mostrarMensaje = $scope.msg[3];
 			}
 		}

@@ -2,7 +2,7 @@
  * Created by leo on 05/09/14.
  */
 
-myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', function(generalCache, generalFunctions){
+myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialogs', function(generalCache, generalFunctions, dialogs){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/vistaComprobantes.html',
@@ -21,7 +21,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', functi
 			volverAPrincipal:					'=',
 			filtroEstados:						'@'
 		},
-		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'statesFactory', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory, dialogs){
+		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory){
 			$scope.status = {
 				open: true
 			};
@@ -37,6 +37,8 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', functi
 			$scope.dateOptions = $rootScope.dateOptions;
 			//Listas para autocompletado
 			$scope.itemsDescription = generalCache.get('descripciones');
+			$scope.matchesTerminal = generalCache.get('matches');
+			$scope.tasaCargasTerminal = generalCache.get('ratesMatches');
 			$scope.listaViajes = [];
 			$scope.itemsPerPage = [
 				{ value: 10, description: '10 items por página', ticked: false},
@@ -70,32 +72,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', functi
 
 			$scope.comprobantesControlados = [];
 
-			$scope.arrayMatchesListo = false;
-			$scope.realizarControl = false;
-
 			$scope.actualizarComprobante = null;
-
-			priceFactory.getArrayMatches(function(arrayMatches){
-				$rootScope.matchesTerminal = arrayMatches.data;
-				$scope.arrayMatchesListo = true;
-				if ($scope.realizarControl){
-					$scope.datosInvoices.forEach(function(comprobante){
-						$scope.controlarTarifas(comprobante);
-					});
-					$scope.realizarControl = false;
-				}
-			});
-
-			priceFactory.getMatchPrices({onlyRates: true}, function (data){
-				$rootScope.tasaCargasTerminal = [];
-				if (data.status == 'OK'){
-					data.data.forEach(function(tasaCargas){
-						if (tasaCargas.matches != null && tasaCargas.matches.length > 0){
-							$rootScope.tasaCargasTerminal.push(tasaCargas.matches[0].match[0])
-						}
-					})
-				}
-			});
 
 			$scope.$on('iniciarBusqueda', function(event, data){
 				$scope.filtrado(data.filtro, data.contenido);
@@ -415,85 +392,75 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', functi
 			};
 
 			$scope.controlarTarifas = function(comprobante){
-				if ($scope.arrayMatchesListo){
-					$scope.realizarControl = false;
+				var valorTomado;
+				var tarifaError;
 
-					var valorTomado;
-					var tarifaError;
+				var precioALaFecha;
+				var monedaALaFecha;
 
-					var precioALaFecha;
-					var monedaALaFecha;
+				comprobante.controlTarifas = [];
+				var lookup = {};
+				for (var i = 0, len = $scope.matchesTerminal.length; i < len; i++) {
+					lookup[$scope.matchesTerminal[i].code] = $scope.matchesTerminal[i];
+				}
 
-					comprobante.controlTarifas = [];
-					var lookup = {};
-					for (var i = 0, len = $rootScope.matchesTerminal.length; i < len; i++) {
-						lookup[$rootScope.matchesTerminal[i].code] = $rootScope.matchesTerminal[i];
-					}
+				$scope.noMatch = false;
+				comprobante.noMatch = false;
 
-					$scope.noMatch = false;
-					comprobante.noMatch = false;
-
-					comprobante.detalle.forEach(function(detalle){
-						detalle.items.forEach(function(item){
-							if (angular.isDefined(lookup[item.id])){
-								valorTomado = item.impUnit;
-								lookup[item.id].topPrices.forEach(function(precioMatch){
-									if (comprobante.fecha.emision > precioMatch.from){
-										precioALaFecha = precioMatch.price;
-										monedaALaFecha = precioMatch.currency
-									}
-								});
-								if (monedaALaFecha != 'DOL'){
-									valorTomado = item.impUnit * comprobante.cotiMoneda
+				comprobante.detalle.forEach(function(detalle){
+					detalle.items.forEach(function(item){
+						if (angular.isDefined(lookup[item.id])){
+							valorTomado = item.impUnit;
+							lookup[item.id].topPrices.forEach(function(precioMatch){
+								if (comprobante.fecha.emision > precioMatch.from){
+									precioALaFecha = precioMatch.price;
+									monedaALaFecha = precioMatch.currency
 								}
-								if ($rootScope.tasaCargasTerminal.indexOf(item.id) >= 0){
-									if (valorTomado != precioALaFecha){
-										tarifaError = {
-											codigo: item.id,
-											currency: monedaALaFecha,
-											topPrice: precioALaFecha,
-											current: item.impUnit
-										};
-										comprobante.controlTarifas.push(tarifaError);
-									}
-								} else {
-									if (valorTomado > precioALaFecha){
-										tarifaError = {
-											codigo: item.id,
-											currency: monedaALaFecha,
-											topPrice: precioALaFecha,
-											current: item.impUnit
-										};
-										comprobante.controlTarifas.push(tarifaError);
-									}
+							});
+							if (monedaALaFecha != 'DOL'){
+								valorTomado = item.impUnit * comprobante.cotiMoneda
+							}
+							if ($scope.tasaCargasTerminal.indexOf(item.id) >= 0){
+								if (valorTomado != precioALaFecha){
+									tarifaError = {
+										codigo: item.id,
+										currency: monedaALaFecha,
+										topPrice: precioALaFecha,
+										current: item.impUnit
+									};
+									comprobante.controlTarifas.push(tarifaError);
 								}
 							} else {
-								$scope.noMatch = true;
-								comprobante.noMatch = true;
+								if (valorTomado > precioALaFecha){
+									tarifaError = {
+										codigo: item.id,
+										currency: monedaALaFecha,
+										topPrice: precioALaFecha,
+										current: item.impUnit
+									};
+									comprobante.controlTarifas.push(tarifaError);
+								}
 							}
-						});
+						} else {
+							$scope.noMatch = true;
+							comprobante.noMatch = true;
+						}
 					});
-					$rootScope.noMatch = $scope.noMatch;
-				} else {
-					$scope.realizarControl = true;
-				}
+				});
+				$rootScope.noMatch = $scope.noMatch;
 			};
 
 			$scope.chequearTarifas = function(comprobante){
-				if ($scope.arrayMatchesListo){
-					if (angular.isDefined($scope.comprobantesControlados[comprobante._id])){
-						comprobante.noMatch = $scope.comprobantesControlados[comprobante._id].codigos;
-						return $scope.comprobantesControlados[comprobante._id].tarifas;
-					} else {
-						$scope.controlarTarifas(comprobante);
-						$scope.comprobantesControlados[comprobante._id] = {
-							tarifas: (comprobante.controlTarifas.length > 0),
-							codigos: comprobante.noMatch
-						};
-						return comprobante.controlTarifas.length > 0;
-					}
+				if (angular.isDefined($scope.comprobantesControlados[comprobante._id])){
+					comprobante.noMatch = $scope.comprobantesControlados[comprobante._id].codigos;
+					return $scope.comprobantesControlados[comprobante._id].tarifas;
 				} else {
-					return false;
+					$scope.controlarTarifas(comprobante);
+					$scope.comprobantesControlados[comprobante._id] = {
+						tarifas: (comprobante.controlTarifas.length > 0),
+						codigos: comprobante.noMatch
+					};
+					return comprobante.controlTarifas.length > 0;
 				}
 			};
 
@@ -512,7 +479,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', functi
 				return datos;
 			}
 
-			$scope.cargaTodosLosPuntosDeVentas();
+			if (loginService.getStatus) $scope.cargaTodosLosPuntosDeVentas();
 
 		}]
 	}
