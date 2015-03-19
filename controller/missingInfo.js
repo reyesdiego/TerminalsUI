@@ -52,7 +52,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 	};
 
 	$scope.openDate = function(event){
-		$rootScope.openDate(event);
+		generalFunctions.openDate(event);
 	};
 
 	$scope.cambioItemsPorPagina = function(data){

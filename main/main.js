@@ -331,10 +331,6 @@ myapp.run(['$rootScope', '$state', 'loginService', '$http', 'authFactory', 'dial
 	// Variables Globales de Fecha
 	$rootScope.dateOptions = { 'showWeeks': false };
 	$rootScope.formatDate = 'yyyy-MM-dd';
-	$rootScope.openDate = function($event) {
-		$event.preventDefault();
-		$event.stopPropagation();
-	};
 
 	$rootScope.isDefined = function(element){
 		return angular.isDefined(element);
