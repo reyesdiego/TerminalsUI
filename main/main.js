@@ -372,10 +372,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.currentPage = 1;
 	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 
-	$rootScope.isDefined = function(element){
-		return angular.isDefined(element);
-	};
-
 	$rootScope.switchTheme = function(title){
 		var i, a;
 		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
