@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout) {
+myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', 'generalFunctions', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout, generalFunctions) {
 	'use strict';
 	$scope.barType = "progress-bar-info";
 	$scope.entrando = false;
@@ -36,15 +36,13 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		}
 	});
 
-	$scope.cerrarSesión = function(){
+	$scope.cerrarSesion = function(){
 		$scope.hayError = true;
 		$scope.barType = 'progress-bar-danger';
 		$scope.mostrarMensaje = $scope.msg[4];
 		authFactory.logout();
 		$rootScope.esUsuario = '';
-		loginService.unsetLogin();
 		$rootScope.filtroTerminal = '';
-		$rootScope.switchTheme('BACTSSA');
 		$scope.volver();
 	};
 
@@ -69,7 +67,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					$state.transitionTo('tarifario');
 				},
 				function(){
-					$scope.cerrarSesión();
+					$scope.cerrarSesion();
 				});
 		} else {
 			authFactory.loginWithoutCookies($scope.email, $scope.password)
@@ -77,7 +75,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					$state.transitionTo('tarifario');
 				},
 				function(){
-					$scope.cerrarSesión();
+					$scope.cerrarSesion();
 				});
 		}
 	};

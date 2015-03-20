@@ -27,5 +27,14 @@ myapp.service('generalFunctions', [function () {
 	this.openDate = function (event) {
 		event.preventDefault();
 		event.stopPropagation();
+	};
+
+	this.switchTheme = function (title) {
+		var i, a;
+		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+			if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
+				a.disabled = a.getAttribute("title") != title;
+			}
+		}
 	}
 }]);

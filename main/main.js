@@ -222,6 +222,51 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 
 }]);
 
+myapp.config(['$provide', function ($provide) {
+	$provide.decorator('daypickerDirective', function ($delegate) {
+		var directive = $delegate[0];
+		var compile = directive.compile;
+		directive.compile = function(tElement, tAttrs) {
+			var link = compile.apply(this, arguments);
+			return function(scope, elem, attrs) {
+				link.apply(this, arguments);
+				scope.showWeeks = false;
+			};
+		};
+		return $delegate;
+	});
+	$provide.decorator('datepickerPopupDirective', function ($delegate) {
+		var directive = $delegate[0];
+		var compile = directive.compile;
+		directive.compile = function(tElement, tAttrs) {
+			var link = compile.apply(this, arguments);
+			return function(scope, elem, attrs) {
+				link.apply(this, arguments);
+				scope.showButtonBar = false;
+			};
+		};
+		return $delegate;
+	});
+	$provide.decorator('datetimePickerDirective', function ($delegate) {
+		var directive = $delegate[0];
+		var compile = directive.compile;
+		directive.compile = function(tElement, tAttrs) {
+			var link = compile.apply(this, arguments);
+			return function(scope, elem, attrs) {
+				link.apply(this, arguments);
+				scope.todayText = "Hoy";
+				scope.nowText = "Ahora";
+				scope.dateText = "Fecha";
+				scope.timeText = "Hora";
+				scope.clearText = "Limpiar";
+				scope.closeText = "Cerrar";
+			};
+		};
+		return $delegate;
+	});
+
+}]);
+
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', function($rootScope, $state, loginService, authFactory, dialogs, $injector){
 	$rootScope.previousState = '';
 	$rootScope.cambioTerminal = false;
@@ -261,10 +306,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.fechaInicio = new Date();
 	$rootScope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
-	$rootScope.colorBactssa = '';
-	$rootScope.colorTerminal4 = '';
-	$rootScope.colorTrp = '';
-
 	$rootScope.mensajeResultado = {
 		titulo: 'Comprobantes',
 		mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
@@ -281,42 +322,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.$broadcast('errorInesperado', $rootScope.mensajeResultado);
 	};
 
-	var styles=document.styleSheets;
-	for(var i=0,l=styles.length; i<l; ++i){
-		var sheet=styles[i];
-		var rules, rule, j, l2;
-		if(sheet.title === "BACTSSA"){
-			rules=sheet.cssRules;
-			for(j=0, l2=rules.length; j<l2; j++){
-				rule=rules[j];
-
-				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorBactssa = rule.style['backgroundColor'];
-				}
-			}
-		}
-		if(sheet.title === "TRP"){
-			rules=sheet.cssRules;
-			for(j=0, l2=rules.length; j<l2; j++){
-				rule=rules[j];
-
-				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorTrp = rule.style['backgroundColor'];
-				}
-			}
-		}
-		if(sheet.title === "TERMINAL4"){
-			rules=sheet.cssRules;
-			for(j=0, l2=rules.length; j<l2; j++){
-				rule=rules[j];
-
-				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorTerminal4 = rule.style['backgroundColor'];
-				}
-			}
-		}
-	}
-
 	$rootScope.moneda = "DOL";
 
 	var rutasComunes = ['login', 'forbidden', 'changepass', 'register'];
@@ -326,22 +331,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.itemsPerPage = 15;
 	$rootScope.currentPage = 1;
 	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
-	// Variables Globales de Fecha
-	$rootScope.dateOptions = { 'showWeeks': false };
-	$rootScope.formatDate = 'yyyy-MM-dd';
-
-	$rootScope.isDefined = function(element){
-		return angular.isDefined(element);
-	};
-
-	$rootScope.switchTheme = function(title){
-		var i, a;
-		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-			if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
-				a.disabled = a.getAttribute("title") != title;
-			}
-		}
-	};
 
 	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
 		if (!$rootScope.primerRuteo){

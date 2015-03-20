@@ -215,7 +215,7 @@
 						<tr ng-repeat="price in preciosHistoricos">
 							<td class="col-lg-4 text-center">
 								<div class="input-group">
-									<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="price.from" is-open="openFechaTarifa" datepicker-options="dateOptions" show-button-bar="false"/>
+									<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="price.from" is-open="openFechaTarifa"/>
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaTarifa = !openFechaTarifa;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 								</div>
 							</td>
@@ -232,7 +232,7 @@
 						<tr>
 							<td class="col-lg-4 text-center">
 								<div class="input-group">
-									<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="newFrom" is-open="openNewFrom" datepicker-options="dateOptions" show-button-bar="false"/>
+									<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="newFrom" is-open="openNewFrom"/>
 									<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openNewFrom = !openNewFrom;"><span class="glyphicon glyphicon-calendar"></span></button></span>
 								</div>
 							</td>

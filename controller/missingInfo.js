@@ -19,9 +19,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 	//Variables para control de fechas
 	$scope.maxDateD = new Date();
 	$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-	//Opciones de fecha para calendarios
-	$scope.formatDate = $rootScope.formatDate;
-	$scope.dateOptions = $rootScope.dateOptions;
 	$scope.comprobantesVistos = [];
 	$scope.itemsDescription = generalCache.get('descripciones');
 	$scope.estadosComprobantes = generalCache.get('estados');

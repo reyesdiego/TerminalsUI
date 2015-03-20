@@ -5,7 +5,7 @@
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio">Desde <span class="glyphicon glyphicon-calendar"></span></button>
 				</span>
-				<input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="model.fechaInicio" is-open="openfechaInicio" datepicker-options="dateOptions" max-date="maxDate" today-text="Hoy" now-text="Ahora" date-text="Fecha" time-text="Hora" clear-text="Limpiar" close-text="Cerrar"/>
+				<input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate"/>
 			</div>
 		</div>
 	</div>
@@ -15,7 +15,7 @@
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin">Hasta <span class="glyphicon glyphicon-calendar"></span></button>
 				</span>
-				<input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="model.fechaFin" is-open="openfechaFin" datepicker-options="dateOptions" min-date="model.fechaInicio" max-date="maxDate" today-text="Hoy" now-text="Ahora" date-text="Fecha" time-text="Hora" clear-text="Limpiar" close-text="Cerrar"/>
+				<input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="model.fechaFin" is-open="openfechaFin" min-date="model.fechaInicio" max-date="maxDate"/>
 			</div>
 		</div>
 	</div>

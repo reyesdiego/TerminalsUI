@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 17/06/14.
  */
 
-myapp.controller('reportsCtrl', ['$scope', 'gatesFactory', '$state', function ($scope, gatesFactory, $state){
+myapp.controller('reportsCtrl', ['$scope', 'gatesFactory', '$state', 'colorTerminalesCache', function ($scope, gatesFactory, $state, colorTerminalesCache){
 
 	$scope.fechaInicio = new Date();
 	$scope.fechaFin = new Date();
@@ -42,10 +42,11 @@ myapp.controller('reportsCtrl', ['$scope', 'gatesFactory', '$state', function ($
 	$scope.mostrarGrafico = false;
 
 	$scope.barColors = {
-		"bactssa":$scope.colorBactssa,
-		"terminal4": $scope.colorTerminal4,
-		"trp": $scope.colorTrp
+		"bactssa": colorTerminalesCache.get('Bacttsa'),
+		"terminal4": colorTerminalesCache.get('Terminal4'),
+		"trp": colorTerminalesCache.get('Trp')
 	};
+
 	$scope.chartSeries = {3: {type: "line"}};
 
 	$scope.columnChart = 'column';
@@ -80,9 +81,6 @@ myapp.controller('reportsCtrl', ['$scope', 'gatesFactory', '$state', function ($
 	$scope.mesDesdeHorarios = new Date($scope.hasta.getFullYear() + '-' + ($scope.hasta.getMonth() + 1) + '-01' );
 
 	$scope.monthMode = 'month';
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
-	$scope.format = $scope.formats['yyyy-MM-dd'];
-	$scope.formatSoloMes = $scope.formats[3];
 	$scope.terminoCarga = false;
 	$scope.tipoComprobante = "0";
 

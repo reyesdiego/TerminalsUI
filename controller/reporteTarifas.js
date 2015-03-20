@@ -113,9 +113,6 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
-	$scope.format = $scope.formats['yyyy-MM-dd'];
-
 	$scope.isCollapsedDesde = true;
 	$scope.isCollapsedHasta = true;
 
