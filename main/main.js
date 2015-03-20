@@ -306,10 +306,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.fechaInicio = new Date();
 	$rootScope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
-	$rootScope.colorBactssa = '';
-	$rootScope.colorTerminal4 = '';
-	$rootScope.colorTrp = '';
-
 	$rootScope.mensajeResultado = {
 		titulo: 'Comprobantes',
 		mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
@@ -326,42 +322,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.$broadcast('errorInesperado', $rootScope.mensajeResultado);
 	};
 
-	var styles=document.styleSheets;
-	for(var i=0,l=styles.length; i<l; ++i){
-		var sheet=styles[i];
-		var rules, rule, j, l2;
-		if(sheet.title === "BACTSSA"){
-			rules=sheet.cssRules;
-			for(j=0, l2=rules.length; j<l2; j++){
-				rule=rules[j];
-
-				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorBactssa = rule.style['backgroundColor'];
-				}
-			}
-		}
-		if(sheet.title === "TRP"){
-			rules=sheet.cssRules;
-			for(j=0, l2=rules.length; j<l2; j++){
-				rule=rules[j];
-
-				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorTrp = rule.style['backgroundColor'];
-				}
-			}
-		}
-		if(sheet.title === "TERMINAL4"){
-			rules=sheet.cssRules;
-			for(j=0, l2=rules.length; j<l2; j++){
-				rule=rules[j];
-
-				if('.navbar-default' === rule.selectorText){
-					$rootScope.colorTerminal4 = rule.style['backgroundColor'];
-				}
-			}
-		}
-	}
-
 	$rootScope.moneda = "DOL";
 
 	var rutasComunes = ['login', 'forbidden', 'changepass', 'register'];
@@ -371,15 +331,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.itemsPerPage = 15;
 	$rootScope.currentPage = 1;
 	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
-
-	$rootScope.switchTheme = function(title){
-		var i, a;
-		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-			if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
-				a.disabled = a.getAttribute("title") != title;
-			}
-		}
-	};
 
 	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
 		if (!$rootScope.primerRuteo){

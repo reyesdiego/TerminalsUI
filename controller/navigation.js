@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 
-myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFactory', 'loginService', 'authFactory', 'cacheFactory', 'generalCache', function($scope, $rootScope, $state, invoiceFactory, loginService, authFactory, cacheFactory, generalCache) {
+myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'authFactory', 'cacheFactory', 'generalFunctions', function($scope, $rootScope, $state, loginService, authFactory, cacheFactory, generalFunctions) {
 
 	"use strict";
 	$rootScope.esUsuario = '';
@@ -17,7 +17,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFa
 		$state.transitionTo('login');
 		loginService.unsetLogin();
 		$rootScope.filtroTerminal = '';
-		$rootScope.switchTheme('BACTSSA');
+		generalFunctions.switchTheme('BACTSSA');
 	};
 
 	$scope.irA = function(){
@@ -39,9 +39,9 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFa
 		}
 
 		// Carga el tema de la terminal
-		$rootScope.switchTheme(loginService.getFiltro());
+		generalFunctions.switchTheme(loginService.getFiltro());
 	} else {
-		$rootScope.switchTheme('BACTSSA');
+		generalFunctions.switchTheme('BACTSSA');
 	}
 
 	$scope.$watch(function(){
@@ -64,7 +64,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'invoiceFa
 			cacheFactory.limpiarCacheTerminal();
 			$rootScope.filtroTerminal = terminal;
 			loginService.setFiltro(terminal);
-			$rootScope.switchTheme(terminal);
+			generalFunctions.switchTheme(terminal);
 			authFactory.setTheme(terminal);
 			$state.transitionTo('cambioTerminal');
 		}

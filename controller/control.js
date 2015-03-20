@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 21/02/14.
  */
-myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'socket', 'formatService', 'generalFunctions', function ($rootScope, $scope, controlPanelFactory, socket, formatService, generalFunctions){
+myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'socket', 'formatService', 'generalFunctions', 'colorTerminalesCache', function ($rootScope, $scope, controlPanelFactory, socket, formatService, generalFunctions, colorTerminalesCache){
 
 	var fecha = formatService.formatearFecha(new Date());
 
@@ -24,9 +24,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	};
 
 	$scope.barColors = {
-		"bactssa":$scope.colorBactssa,
-		"terminal4": $scope.colorTerminal4,
-		"trp": $scope.colorTrp
+		"bactssa": colorTerminalesCache.get('Bactssa'),
+		"terminal4": colorTerminalesCache.get('Terminal4'),
+		"trp": colorTerminalesCache.get('Trp')
 	};
 
 	$scope.radioModel = 'Gates';

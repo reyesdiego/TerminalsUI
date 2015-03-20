@@ -2,7 +2,7 @@
  * Created by artiom on 17/03/15.
  */
 
-myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', '$state', 'authFactory', 'loginService', '$timeout', function($rootScope, $scope, cacheFactory, $state, authFactory, loginService, $timeout){
+myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', '$state', 'authFactory', 'loginService', '$timeout', 'generalFunctions', function($rootScope, $scope, cacheFactory, $state, authFactory, loginService, $timeout, generalFunctions){
 
 	$scope.max = 80;
 	$scope.progreso = 0;
@@ -13,7 +13,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 		$scope.porcentaje = ($scope.progreso * 100 / $scope.max).toFixed();
 	});
 
-	$scope.cerrarSesión = function(){
+	$scope.cerrarSesion = function(){
 		$scope.hayError = true;
 		$scope.barType = 'progress-bar-danger';
 		$scope.mostrarMensaje = 'Se ha producido un error...';
@@ -21,7 +21,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 		$rootScope.esUsuario = '';
 		loginService.unsetLogin();
 		$rootScope.filtroTerminal = '';
-		$rootScope.switchTheme('BACTSSA');
+		generalFunctions.switchTheme('BACTSSA');
 		$scope.volver();
 	};
 
@@ -46,7 +46,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 				}, 500)
 			},
 			function(){
-				$scope.cerrarSesión();
+				$scope.cerrarSesion();
 			})
 	} else {
 		$scope.max = 30;
@@ -57,7 +57,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 				}, 500)
 			},
 			function(){
-				$scope.cerrarSesión();
+				$scope.cerrarSesion();
 			})
 	}
 

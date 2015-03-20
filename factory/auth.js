@@ -2,7 +2,7 @@
  * Created by leo on 18/07/14.
  */
 
-myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory', 'loginService', '$rootScope', '$q', '$injector', 'cacheFactory', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, $q, $injector, cacheFactory){
+myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory', 'loginService', '$rootScope', '$q', '$injector', 'cacheFactory', 'generalFunctions', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, $q, $injector, cacheFactory, generalFunctions){
 	var factory = {};
 
 	factory.loginWithCookies = function(user, pass){
@@ -113,9 +113,9 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				if (typeof ($cookies.themeTerminal) != 'undefined') {
 					loginService.setFiltro($cookies.themeTerminal);
 					$rootScope.filtroTerminal = $cookies.themeTerminal;
-					$rootScope.switchTheme($cookies.themeTerminal);
+					generalFunctions.switchTheme($cookies.themeTerminal);
 				} else {
-					$rootScope.switchTheme(loginService.getFiltro());
+					generalFunctions.switchTheme(loginService.getFiltro());
 				}
 
 				// Carga la cache
