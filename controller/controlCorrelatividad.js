@@ -8,6 +8,10 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
+	$scope.deshabilitarBuscar = false;
+	$scope.totalPuntos = 0;
+	$scope.leerData = true;
+	$scope.arrayCargados = [];
 
 	$scope.loadingCorrelatividad = false;
 
@@ -44,13 +48,48 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		$scope.pantalla.puntosDeVenta = [];
 	});
 
+	$scope.generarInterfaz = function(punto){
+		$scope.loadingCorrelatividad = false;
+		var pantalla = {
+			mensajeCorrelativo: '',
+			tipo: '',
+			titulo: '',
+			resultadoCorrelativo: ''
+		};
+		pantalla.nroPtoVenta = punto.nroPtoVenta;
+		pantalla.titulo = "Punto de Venta " + punto.nroPtoVenta;
+		if (punto.totalCount > 0){
+			pantalla.totalCnt = punto.totalCount;
+			pantalla.tipo = "panel-danger";
+			pantalla.resultadoCorrelativo = punto.data;
+			$scope.mostrarBotonImprimir = true;
+			$scope.puntosDeVenta.push(angular.copy(pantalla));
+		}
+		$scope.arrayCargados.push(punto.nroPtoVenta);
+		$scope.totalPuntos--
+	};
+
 	$scope.controlCorrelatividad = function(){
+		$scope.arrayCargados = [];
+		$scope.leerData = true;
+		$scope.totalFaltantes = 0;
+		$scope.totalPuntos = $scope.model.nroPtoVenta.split(',').length;
+		$scope.deshabilitarBuscar = true;
 		$scope.loadingCorrelatividad = true;
 		$scope.puntosDeVenta = [];
 		$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
 		$scope.mostrarBotonImprimir = false;
 		invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
 			if (dataComprob.status == 'OK'){
+				if ($scope.totalPuntos > 0){
+					$scope.leerData = false;
+					dataComprob.data.forEach(function(punto){
+						if (!in_array(punto.nroPtoVenta, $scope.arrayCargados)){
+							$scope.generarInterfaz(punto);
+						}
+					});
+					$scope.totalPuntos = 0;
+				}
 				$scope.totalFaltantes = dataComprob.totalCount;
 				if (dataComprob.totalCount === 0){
 					$scope.pantalla = {
@@ -71,27 +110,20 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		});
 	};
 
+	$scope.$watch('totalPuntos', function(){
+		if ($scope.totalPuntos == 0){
+			$scope.deshabilitarBuscar = false;
+		}
+	});
+
 	socket.emit('newUser', function (sess){
 
 		socketIoRegister = sess;
 		socket.on('correlative_' + sess, function (data) {
-			$scope.loadingCorrelatividad = false;
-			var pantalla = {
-				mensajeCorrelativo: '',
-				tipo: '',
-				titulo: '',
-				resultadoCorrelativo: ''
-			};
-			pantalla.nroPtoVenta = data.nroPtoVenta;
-			pantalla.titulo = "Punto de Venta " + data.nroPtoVenta;
-			if (data.totalCount > 0){
-				pantalla.totalCnt = data.totalCount;
-				pantalla.tipo = "panel-danger";
-				pantalla.resultadoCorrelativo = data.data;
-				$scope.mostrarBotonImprimir = true;
-				$scope.puntosDeVenta.push(angular.copy(pantalla));
+			if ($scope.leerData){
+				$scope.generarInterfaz(data);
+				$scope.$apply();
 			}
-			$scope.$apply();
 		});
 	});
 }]);

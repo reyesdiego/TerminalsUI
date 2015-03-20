@@ -858,12 +858,28 @@ myapp.directive('buqueViajeSearch', function(){
 				contenedor: ''
 			};
 			$scope.buques = generalCache.get('buques');
-			$scope.buqueElegido = {};
+			$scope.buqueElegido = {
+				viajes:[]
+			};
 			$scope.datosContainers = [];
 			$scope.loadingState = false;
 			$scope.cargandoSumaria = false;
 			$scope.moneda = $rootScope.moneda;
 			$scope.search = '';
+			$scope.filtrarDesde = 0;
+			$scope.mostrarAnterior = false;
+
+			$scope.mostrarMenosViajes = function(){
+				$scope.filtrarDesde -= 5;
+				if ($scope.filtrarDesde == 0){
+					$scope.mostrarAnterior = false;
+				}
+			};
+
+			$scope.mostrarMasViajes = function(){
+				$scope.filtrarDesde += 5;
+				$scope.mostrarAnterior = true;
+			};
 
 			$rootScope.$watch('moneda', function(){
 				$scope.moneda = $rootScope.moneda;
@@ -877,7 +893,10 @@ myapp.directive('buqueViajeSearch', function(){
 			});
 
 			$scope.buqueSelected = function(selected){
+				$scope.buqueElegido.elegido = '';
+				selected.elegido = 'bg-info';
 				$scope.buqueElegido = selected;
+				$scope.buqueElegido.viajes[0].active = true;
 				$scope.model.buqueNombre = selected.buque;
 				$scope.model.viaje = selected.viajes[0].viaje;
 				$scope.traerResultados();
