@@ -432,7 +432,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	$scope.traerTotales = function(){
 		$scope.errorTotales = false;
 		$scope.loadingTotales = true;
-		controlPanelFactory.getByDay(formatService.formatearFecha($scope.desde), function(data){
+		controlPanelFactory.getByDay({ fecha: $scope.desde }, function(data){
 			$scope.loadingTotales = false;
 			$scope.control.invoicesCount = data.invoicesCount;
 			$scope.fecha = fecha;
@@ -441,11 +441,15 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	};
 
 	$scope.traerDatosFacturadoMes = function(){
+		var datos = {
+			fecha: $scope.mesDesde,
+			moneda: $rootScope.moneda
+		};
 		$scope.errorFacturadoMes = false;
 		$scope.isCollapsedMonth = true;
 		$scope.loadingFacturadoMes = true;
 		$scope.recargarFacturadoMes = false;
-		controlPanelFactory.getFacturasMeses($scope.mesDesde, $rootScope.moneda, function(graf){
+		controlPanelFactory.getFacturasMeses(datos, function(graf){
 			$scope.loadingFacturadoMes = false;
 			var datosPreparados = $scope.prepararDatosMes(graf.data, true);
 			switch ($rootScope.moneda){
@@ -458,7 +462,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			}
 			$scope.chartDataFacturas = $scope.prepararDatosMes(graf.data, true);
 		});
-		controlPanelFactory.getFacturasMeses($scope.mesDesde, $scope.otraMoneda, function(graf){
+		datos.moneda = $scope.otraMoneda;
+		controlPanelFactory.getFacturasMeses(datos, function(graf){
 			var datosPreparados = $scope.prepararDatosMes(graf.data, true);
 			switch ($scope.otraMoneda){
 				case 'PES':
@@ -476,7 +481,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.isCollapsedGates = true;
 		$scope.loadingGates = true;
 		$scope.visibleGates = 'hidden';
-		controlPanelFactory.getGatesMeses($scope.mesDesdeGates, function(graf){
+		controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}, function(graf){
 			$scope.loadingGates = false;
 			$scope.visibleGates = 'block';
 			$scope.chartDataGates = $scope.prepararDatosMes(graf, false);
@@ -488,7 +493,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.isCollapsedTurnos = true;
 		$scope.loadingTurnos = true;
 		$scope.visibleTurnos = 'hidden';
-		controlPanelFactory.getTurnosMeses($scope.mesDesdeTurnos, function(graf){
+		controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }, function(graf){
 			$scope.loadingTurnos = false;
 			$scope.visibleTurnos = 'block';
 			$scope.chartDataTurnos = $scope.prepararDatosMes(graf, false);
@@ -496,11 +501,15 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	};
 
 	$scope.traerDatosFacturadoDiaTasas = function(){
+		var datos = {
+			fecha: $scope.desdeTasas,
+			moneda: $rootScope.moneda
+		};
 		$scope.errorCargaTasas = false;
 		$scope.loadingTasas = true;
 		$scope.isCollapsedDayTasas = true;
 		$scope.recargarTasas = false;
-		controlPanelFactory.getTasas($scope.desdeTasas, $rootScope.moneda, function(graf){
+		controlPanelFactory.getTasas(datos, function(graf){
 			$scope.loadingTasas = false;
 			var result = $scope.prepararDatosFacturadoDiaTasas(graf);
 			switch ($rootScope.moneda){
@@ -515,7 +524,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.control.ratesCount = result.ratesCount;
 			$scope.control.ratesTotal = result.ratesTotal;
 		});
-		controlPanelFactory.getTasas($scope.desdeTasas, $scope.otraMoneda, function(graf){
+		datos.moneda = $scope.otraMoneda;
+		controlPanelFactory.getTasas(datos, function(graf){
 			var result = $scope.prepararDatosFacturadoDiaTasas(graf);
 			switch ($scope.otraMoneda){
 				case 'PES':
@@ -529,12 +539,16 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	};
 
 	$scope.traerDatosFacturadoDia = function(){
+		var datos = {
+			fecha: $scope.desde,
+			moneda: $rootScope.moneda
+		};
 		$scope.traerTotales();
 		$scope.errorFacturadoDia = false;
 		$scope.isCollapsedDay = true;
 		$scope.loadingFacturadoDia = true;
 		$scope.recargarFacturadoDia = false;
-		controlPanelFactory.getFacturadoPorDia($scope.desde, $rootScope.moneda, function(graf){
+		controlPanelFactory.getFacturadoPorDia(datos, function(graf){
 			$scope.loadingFacturadoDia = false;
 			var datosPreparados = $scope.prepararDatosFacturadoDia(graf.data);
 			switch ($rootScope.moneda){
@@ -546,7 +560,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			}
 			$scope.chartDataFacturado = datosPreparados;
 		});
-		controlPanelFactory.getFacturadoPorDia($scope.desde, $scope.otraMoneda, function(graf){
+		datos.moneda = $scope.otraMoneda;
+		controlPanelFactory.getFacturadoPorDia(datos, function(graf){
 			var datosPreparados = $scope.prepararDatosFacturadoDia(graf.data);
 			switch ($scope.otraMoneda){
 				case 'PES':
@@ -564,7 +579,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.loadingGatesTurnos = true;
 		$scope.visibleGatesTurnos = 'hidden';
 		if ($scope.radioModel == 'Gates'){
-			controlPanelFactory.getGatesDia($scope.diaGatesTurnos, function(graf){
+			controlPanelFactory.getGatesDia({ fecha: $scope.diaGatesTurnos }, function(graf){
 				$scope.loadingGatesTurnos = false;
 				$scope.visibleGatesTurnos = 'block';
 				$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);
@@ -572,7 +587,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			});
 		}
 		else if ($scope.radioModel == 'Turnos'){
-			controlPanelFactory.getTurnosDia($scope.diaGatesTurnos, function(graf){
+			controlPanelFactory.getTurnosDia({ fecha: $scope.diaGatesTurnos }, function(graf){
 				$scope.loadingGatesTurnos = false;
 				$scope.visibleGatesTurnos = 'block';
 				$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);

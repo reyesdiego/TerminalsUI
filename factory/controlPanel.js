@@ -6,8 +6,8 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 	var factory = {};
 
 	factory.getByDay = function(dia, callback){
-		var inserturl = serverUrl + '/invoices/counts?fecha=' + dia;
-		$http.get(inserturl)
+		var inserturl = serverUrl + '/invoices/counts';
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				if (data.status === 'OK'){
 					var total = 0;
@@ -23,9 +23,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			});
 	};
 
-	factory.getTasas = function(fecha, moneda, callback){
-		var inserturl = serverUrl + '/invoices/ratesTotal/' + moneda + '/?fecha=' + formatService.formatearFecha(fecha);
-		$http.get(inserturl)
+	factory.getTasas = function(datos, callback){
+		var inserturl = serverUrl + '/invoices/ratesTotal/' + datos.moneda + '/';
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				var result = {
 					"ratesCount": 0,
@@ -51,23 +51,12 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			});
 	};
 
-	factory.getTotales = function(fecha, callback){
-		var inserturl = serverUrl + '/invoices/counts';
-		$http.get(inserturl)
-			.success(function (data){
-				callback(data.data);
-			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorTotales', 'Error al cargar conteo total de comprobantes.');
-			});
-	};
-
 	factory.getTasasContenedor = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + datos.contenedor + '/' + datos.currency;
 		if (datos.contenedor != undefined && datos.contenedor != ''){
 			$http.get(inserturl)
 				.success(function (data){
-					data.data = factory.ponerDescripcionCodigoItem(data.data);
-					data = factory.calcularTotalTasas(data);
+					data = ponerDescripcionYTasas(data);
 					callback(data);
 				}).error(function(errorText){
 					callback(errorText);
@@ -75,9 +64,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 		}
 	};
 
-	factory.getFacturasMeses = function(fecha, moneda, callback){
-		var inserturl = serverUrl + '/invoices/countsByMonth/' + moneda + '?fecha=' + formatService.formatearFecha(fecha);
-		$http.get(inserturl)
+	factory.getFacturasMeses = function(datos, callback){
+		var inserturl = serverUrl + '/invoices/countsByMonth/' + datos.moneda;
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
@@ -85,9 +74,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			});
 	};
 
-	factory.getGatesMeses = function(fecha, callback){
-		var inserturl = serverUrl + '/gates/ByMonth?fecha=' + formatService.formatearFecha(fecha);
-		$http.get(inserturl)
+	factory.getGatesMeses = function(datos, callback){
+		var inserturl = serverUrl + '/gates/ByMonth';
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data.data);
 			}).error(function(errorText){
@@ -95,9 +84,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			});
 	};
 
-	factory.getTurnosMeses = function(fecha, callback){
-		var inserturl = serverUrl + '/appointments/ByMonth?fecha=' + formatService.formatearFecha(fecha);
-		$http.get(inserturl)
+	factory.getTurnosMeses = function(datos, callback){
+		var inserturl = serverUrl + '/appointments/ByMonth';
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
@@ -106,9 +95,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 	};
 
 	//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
-	factory.getFacturadoPorDia = function(fecha, moneda, callback){
-		var inserturl = serverUrl + '/invoices/countsByDate/' + moneda +'/?fecha=' + formatService.formatearFecha(fecha);
-		$http.get(inserturl)
+	factory.getFacturadoPorDia = function(datos, callback){
+		var inserturl = serverUrl + '/invoices/countsByDate/' + datos.moneda +'/';
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
@@ -116,9 +105,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			});
 	};
 
-	factory.getGatesDia = function(fecha, callback){
-		var inserturl = serverUrl + '/gates/ByHour?fecha=' + formatService.formatearFecha(fecha);
-		$http.get(inserturl)
+	factory.getGatesDia = function(datos, callback){
+		var inserturl = serverUrl + '/gates/ByHour';
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data.data);
 			}).error(function(errorText){
@@ -126,9 +115,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			});
 	};
 
-	factory.getTurnosDia = function(fecha, callback){
-		var inserturl = serverUrl + '/appointments/ByHour?fecha=' + formatService.formatearFecha(fecha);
-		$http.get(inserturl)
+	factory.getTurnosDia = function(datos, callback){
+		var inserturl = serverUrl + '/appointments/ByHour';
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data);
 			}).error(function(errorText){
@@ -210,21 +199,15 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			});
 	};
 
-	factory.ponerDescripcionCodigoItem = function(data){
-		data.forEach(function(detalle){
-			detalle._id.descripcion = (generalCache.get('descripciones')[detalle._id.id]) ? generalCache.get('descripciones')[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';
-		});
-		return data;
-	};
-
-	factory.calcularTotalTasas = function(data){
+	function ponerDescripcionYTasas(data) {
 		var datos = data;
 		datos.totalTasas = 0;
 		data.data.forEach(function(detalle){
+			detalle._id.descripcion = (generalCache.get('descripciones')[detalle._id.id]) ? generalCache.get('descripciones')[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';
 			datos.totalTasas += detalle.total;
 		});
 		return datos;
-	};
+	}
 
 	return factory;
 }]);
