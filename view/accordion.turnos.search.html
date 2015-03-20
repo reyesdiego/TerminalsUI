@@ -4,7 +4,7 @@
 			<div class="input-group">
 				<span class="input-group-addon">Día</span>
 				<label class="sr-only" for="fechaInicio">Día</label>
-				<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="{{formatDate}}" ng-model="model.fechaInicio" is-open="openfechaInicio" datepicker-options="dateOptions" show-button-bar="false" max-date="maxDate" />
+				<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" />
 						<span class="input-group-btn">
 							<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 						</span>
@@ -15,7 +15,7 @@
 		<div class="form-group">
 			<div class="input-group">
 				<span class="input-group-addon">Hora desde</span>
-				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaInicio" enable-date="false" is-open="openHoraInicio" datepicker-options="dateOptions" today-text="Hoy" now-text="Ahora" date-text="Fecha" time-text="Hora" clear-text="Limpiar" close-text="Cerrar"/>
+				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaInicio" enable-date="false" is-open="openHoraInicio"/>
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="openDate($event); openHoraInicio = !openHoraInicio"><span class="glyphicon glyphicon-time"></span></button>
 				</span>
@@ -26,7 +26,7 @@
 		<div class="form-group">
 			<div class="input-group">
 				<span class="input-group-addon">Hora hasta</span>
-				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaFin" enable-date="false" is-open="openHoraFin" datepicker-options="dateOptions" max-date="model.fechaInicio" today-text="Hoy" now-text="Ahora" date-text="Fecha" time-text="Hora" clear-text="Limpiar" close-text="Cerrar"/>
+				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaFin" enable-date="false" is-open="openHoraFin" max-date="model.fechaInicio"/>
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="openDate($event); openHoraFin = !openHoraFin"><span class="glyphicon glyphicon-time"></span></button>
 				</span>

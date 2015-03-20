@@ -44,8 +44,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 	$scope.unidadesTarifas = generalCache.get('unitTypes');
 
 	$scope.openFechaTarifa = false;
-	$scope.dateOptions = { 'showWeeks': false };
-	$scope.formatDate = 'yyyy-MM-dd';
 	$scope.openDate = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();

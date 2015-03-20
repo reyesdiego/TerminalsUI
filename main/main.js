@@ -222,6 +222,51 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 
 }]);
 
+myapp.config(['$provide', function ($provide) {
+	$provide.decorator('daypickerDirective', function ($delegate) {
+		var directive = $delegate[0];
+		var compile = directive.compile;
+		directive.compile = function(tElement, tAttrs) {
+			var link = compile.apply(this, arguments);
+			return function(scope, elem, attrs) {
+				link.apply(this, arguments);
+				scope.showWeeks = false;
+			};
+		};
+		return $delegate;
+	});
+	$provide.decorator('datepickerPopupDirective', function ($delegate) {
+		var directive = $delegate[0];
+		var compile = directive.compile;
+		directive.compile = function(tElement, tAttrs) {
+			var link = compile.apply(this, arguments);
+			return function(scope, elem, attrs) {
+				link.apply(this, arguments);
+				scope.showButtonBar = false;
+			};
+		};
+		return $delegate;
+	});
+	$provide.decorator('datetimePickerDirective', function ($delegate) {
+		var directive = $delegate[0];
+		var compile = directive.compile;
+		directive.compile = function(tElement, tAttrs) {
+			var link = compile.apply(this, arguments);
+			return function(scope, elem, attrs) {
+				link.apply(this, arguments);
+				scope.todayText = "Hoy";
+				scope.nowText = "Ahora";
+				scope.dateText = "Fecha";
+				scope.timeText = "Hora";
+				scope.clearText = "Limpiar";
+				scope.closeText = "Cerrar";
+			};
+		};
+		return $delegate;
+	});
+
+}]);
+
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', function($rootScope, $state, loginService, authFactory, dialogs, $injector){
 	$rootScope.previousState = '';
 	$rootScope.cambioTerminal = false;
@@ -326,9 +371,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.itemsPerPage = 15;
 	$rootScope.currentPage = 1;
 	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
-	// Variables Globales de Fecha
-	$rootScope.dateOptions = { 'showWeeks': false };
-	$rootScope.formatDate = 'yyyy-MM-dd';
 
 	$rootScope.isDefined = function(element){
 		return angular.isDefined(element);

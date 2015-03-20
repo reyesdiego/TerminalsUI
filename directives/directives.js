@@ -21,7 +21,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 			volverAPrincipal:					'=',
 			filtroEstados:						'@'
 		},
-		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'priceFactory', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, priceFactory){
+		controller: ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'statesFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService){
 			$scope.status = {
 				open: true
 			};
@@ -32,9 +32,6 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 			$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 			//Tipos de comprobantes
 			$scope.vouchers = generalCache.get('vouchers');
-			//Opciones de fecha para calendarios
-			$scope.formatDate = $rootScope.formatDate;
-			$scope.dateOptions = $rootScope.dateOptions;
 			//Listas para autocompletado
 			$scope.itemsDescription = generalCache.get('descripciones');
 			$scope.matchesTerminal = generalCache.get('matches');
@@ -728,7 +725,7 @@ myapp.directive('accordionBusquedaCorrelatividad', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/correlativeControlSearch.html',
-		controller: ['$rootScope', '$scope', 'invoiceFactory', 'generalCache', 'generalFunctions', function($rootScope, $scope, invoiceFactory, generalCache, generalFunctions){
+		controller: ['$scope', 'invoiceFactory', 'generalCache', 'generalFunctions', function($scope, invoiceFactory, generalCache, generalFunctions){
 			$scope.status = {
 				open: true
 			};
@@ -736,8 +733,6 @@ myapp.directive('accordionBusquedaCorrelatividad', function(){
 			$scope.fechaInicio = new Date();
 			$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 			$scope.maxDate = new Date();
-			$scope.formatDate = $rootScope.formatDate;
-			$scope.dateOptions = $rootScope.dateOptions;
 			$scope.terminalSellPoints = [];
 			$scope.configPanel = {
 				tipo: 'panel-info',
@@ -788,7 +783,7 @@ myapp.directive('accordionBusquedaCorrelatividad', function(){
 					'nroPtoVenta':		$scope.model.nroPtoVenta,
 					'codTipoComprob':	$scope.model.codTipoComprob,
 					'fechaInicio':		$scope.model.fechaInicio,
-					'fechaFin':		$scope.model.fechaFin
+					'fechaFin':			$scope.model.fechaFin
 				};
 			}
 
@@ -864,10 +859,6 @@ myapp.directive('buqueViajeSearch', function(){
 			$scope.cargandoSumaria = false;
 			$scope.moneda = $rootScope.moneda;
 			$scope.search = '';
-
-			$rootScope.$watch('moneda', function(){
-				$scope.moneda = $rootScope.moneda;
-			});
 
 			$scope.$on('errorInesperado', function(e, mensaje){
 				$scope.loadingState = false;
@@ -1038,6 +1029,7 @@ myapp.directive('buqueViajeSearch', function(){
 			};
 
 			$rootScope.$watch('moneda', function(){
+				$scope.moneda = $rootScope.moneda;
 				if ($scope.detalle){
 					$scope.loadingTasas = true;
 					$scope.cargaTasasCargas();

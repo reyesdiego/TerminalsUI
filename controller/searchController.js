@@ -2,13 +2,11 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$rootScope', '$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', function($rootScope, $scope, generalCache, contenedoresCache, generalFunctions){
+myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', function($scope, generalCache, contenedoresCache, generalFunctions){
 	$scope.status = {
 		open: true
 	};
 	$scope.maxDate = new Date();
-	$scope.formatDate = $rootScope.formatDate;
-	$scope.dateOptions = $rootScope.dateOptions;
 	$scope.listaContenedoresGates = contenedoresCache.get('contenedoresGates');
 	$scope.listaContenedoresTurnos = contenedoresCache.get('contenedoresTurnos');
 	$scope.listaBuques = generalCache.get('buques');

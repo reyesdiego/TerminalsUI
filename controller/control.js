@@ -120,9 +120,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	$scope.maxDateGatesTurnos = new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 2), 0 );
 
 	$scope.monthMode = 'month';
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
-	$scope.format = $scope.formats['yyyy-MM-dd'];
-	$scope.formatSoloMes = $scope.formats[3];
 	//Flag para mostrar los tabs con los resultados una vez recibidos los datos
 	$scope.terminoCarga = false;
 

@@ -80,9 +80,6 @@ myapp.controller('reportsCtrl', ['$scope', 'gatesFactory', '$state', function ($
 	$scope.mesDesdeHorarios = new Date($scope.hasta.getFullYear() + '-' + ($scope.hasta.getMonth() + 1) + '-01' );
 
 	$scope.monthMode = 'month';
-	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'shortDate', 'yyyy-MM'];
-	$scope.format = $scope.formats['yyyy-MM-dd'];
-	$scope.formatSoloMes = $scope.formats[3];
 	$scope.terminoCarga = false;
 	$scope.tipoComprobante = "0";
 
