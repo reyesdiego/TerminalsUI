@@ -223,7 +223,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 }]);
 
 myapp.config(['$provide', function ($provide) {
-	$provide.decorator('daypickerDirective', function ($delegate) {
+	$provide.decorator('daypickerDirective', ['$delegate', function ($delegate) {
 		var directive = $delegate[0];
 		var compile = directive.compile;
 		directive.compile = function(tElement, tAttrs) {
@@ -234,8 +234,8 @@ myapp.config(['$provide', function ($provide) {
 			};
 		};
 		return $delegate;
-	});
-	$provide.decorator('datepickerPopupDirective', function ($delegate) {
+	}]);
+	$provide.decorator('datepickerPopupDirective', ['$delegate', function ($delegate) {
 		var directive = $delegate[0];
 		var compile = directive.compile;
 		directive.compile = function(tElement, tAttrs) {
@@ -246,8 +246,8 @@ myapp.config(['$provide', function ($provide) {
 			};
 		};
 		return $delegate;
-	});
-	$provide.decorator('datetimePickerDirective', function ($delegate) {
+	}]);
+	$provide.decorator('datetimePickerDirective', ['$delegate', function ($delegate) {
 		var directive = $delegate[0];
 		var compile = directive.compile;
 		directive.compile = function(tElement, tAttrs) {
@@ -263,7 +263,7 @@ myapp.config(['$provide', function ($provide) {
 			};
 		};
 		return $delegate;
-	});
+	}]);
 
 }]);
 
