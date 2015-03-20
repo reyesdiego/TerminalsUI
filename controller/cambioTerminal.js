@@ -19,9 +19,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 		$scope.mostrarMensaje = 'Se ha producido un error...';
 		authFactory.logout();
 		$rootScope.esUsuario = '';
-		loginService.unsetLogin();
 		$rootScope.filtroTerminal = '';
-		generalFunctions.switchTheme('BACTSSA');
 		$scope.volver();
 	};
 

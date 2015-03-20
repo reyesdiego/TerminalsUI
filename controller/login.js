@@ -42,9 +42,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$scope.mostrarMensaje = $scope.msg[4];
 		authFactory.logout();
 		$rootScope.esUsuario = '';
-		loginService.unsetLogin();
 		$rootScope.filtroTerminal = '';
-		generalFunctions.switchTheme('BACTSSA');
 		$scope.volver();
 	};
 

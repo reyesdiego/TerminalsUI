@@ -143,6 +143,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 		$cookieStore.remove('password');
 		$cookieStore.remove('themeTerminal');
 		cacheFactory.limpiaCache();
+		loginService.unsetLogin();
+		generalFunctions.switchTheme('BACTSSA');
 	};
 
 	factory.userEstaLogeado = function(){

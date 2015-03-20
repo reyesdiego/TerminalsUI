@@ -15,9 +15,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		authFactory.logout();
 		$rootScope.esUsuario = '';
 		$state.transitionTo('login');
-		loginService.unsetLogin();
 		$rootScope.filtroTerminal = '';
-		generalFunctions.switchTheme('BACTSSA');
 	};
 
 	$scope.irA = function(){
