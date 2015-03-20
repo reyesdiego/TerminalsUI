@@ -10,12 +10,13 @@
 		this.formatearDatos = function(datos) {
 			var array = {};
 			angular.forEach(datos, function(value, key) {
-				if (value != null && value != '' && key != 'fechaConGMT' && key != 'filtroOrden' && key != 'filtroOrdenReverse' && key != 'filtroAnterior' && key != 'itemsPerPage' && key != 'currentPage' && ((key != 'estado') || (key == 'estado' && value != 'N'))) array[key] = value;
+				if (value != null && value != '' && key != 'fechaConGMT' && key != 'filtroOrden' && key != 'filtroOrdenReverse' && key != 'filtroAnterior' && key != 'itemsPerPage' && key != 'currentPage' && key != 'moneda' && ((key != 'estado') || (key == 'estado' && value != 'N'))) array[key] = value;
 			});
 			if (estaDefinido(array.contenedor)) array.contenedor = datos.contenedor.toUpperCase();
 			if (estaDefinido(array.razonSocial)) array.razonSocial = datos.razonSocial.toUpperCase();
 			if (estaDefinido(array.fechaInicio)) array.fechaInicio = (estaDefinido(datos.fechaConGMT) && datos.fechaConGMT) ? this.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio) : this.formatearFecha(datos.fechaInicio);
 			if (estaDefinido(array.fechaFin)) array.fechaFin = (estaDefinido(datos.fechaConGMT) && datos.fechaConGMT) ? this.formatearFechaHorasMinutosGMTLocal(datos.fechaFin) : this.formatearFecha(datos.fechaFin);
+			if (estaDefinido(array.fecha)) array.fecha = this.formatearFecha(datos.fecha);
 			if (estaDefinido(array.order)) array.order = '[{' + datos.order + '}]';
 
 			return array;
