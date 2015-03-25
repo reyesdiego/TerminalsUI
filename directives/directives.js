@@ -556,7 +556,16 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 myapp.directive('tableGatesResult', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/gates.invoices.html'
+		template:
+			'<div class="container">' +
+			'	<div class="row">' +
+			'		<div class="col-lg-12">' +
+			'			<h4>Comprobantes del contenedor {{ contenedor }}</h4>' +
+			'			<vista-comprobantes model="$parent.model" datos-invoices="invoices" ocultar-filtros="$parent.filtrosComprobantes" total-items="totalItems" loading-state="cargando" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado"></vista-comprobantes>' +
+			'			<button class="btn btn-default hidden-print" ng-hide="mostrarResultado" ng-click="detallesGates = false; totalItems = totalGates; currentPage = paginaAnterior"><span class="glyphicon glyphicon-arrow-left"></span> Volver a Gates</button>' +
+			'		</div>' +
+			'	</div>' +
+			'</div>'
 	}
 });
 
@@ -620,7 +629,27 @@ myapp.directive('invoicesResult', function(){
 myapp.directive('invoiceTrack', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/comments.invoice.html'
+		template:
+			'<div class="table-responsive col-lg-12 center-block visible-print-block">' +
+			'	<table class="table table-striped table-bordered table-hover" ng-show="commentsInvoice.length > 0">' +
+			'		<thead>' +
+			'			<tr>' +
+			'				<th>Fecha</th>' +
+			'				<th>Usuario</th>' +
+			'				<th>Comentario</th>' +
+			'				<th>Estado</th>' +
+			'			</tr>' +
+			'		</thead>' +
+			'		<tbody>' +
+			'			<tr ng-repeat="comment in commentsInvoice">' +
+			'				<td>{{ comment.fecha }}</td>' +
+			'				<td>{{ comment.user }}</td>' +
+			'				<td>{{ comment.comment }}</td>' +
+			'				<td>{{ devolverEstado(comment.state) }}</td>' +
+			'			</tr>' +
+			'		</tbody>' +
+			'	</table>' +
+			'</div>'
 	}
 });
 
@@ -652,7 +681,6 @@ myapp.directive('accordionTurnosSearch', [function(){
 myapp.directive('divPagination', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/div.pagination.html',
 		scope: {
 			totalItems:			'=',
 			currentPage:		'=',
@@ -699,7 +727,15 @@ myapp.directive('divPagination', function(){
 			$scope.pageChanged = function(){
 				$scope.$emit('cambioPagina', $scope.currentPage);
 			}
-		}
+		},
+		template:
+			'<div class="col-lg-12 hidden-print" ng-show="totalItems > itemsPerPage">' +
+			'	<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="5" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
+			'	<div class="text-center visible-sm"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeSM" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
+			'	<div class="text-center visible-md"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeMD" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
+			'	<div class="text-center visible-lg"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeLG" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
+			'</div>'
+
 	}
 });
 
@@ -710,7 +746,8 @@ myapp.directive('divPanel', function(){
 		scope:	{
 			configPanel:	'='
 		},
-		template:		'<div class="panel {{ configPanel.tipo }}">' +
+		template:
+			'<div class="panel {{ configPanel.tipo }}">' +
 			'	<div class="panel-heading">' +
 			'		<h3 class="panel-title">{{ configPanel.titulo }}</h3>' +
 			'	</div>' +
@@ -724,7 +761,6 @@ myapp.directive('divPanel', function(){
 myapp.directive('accordionBusquedaCorrelatividad', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/correlativeControlSearch.html',
 		controller: ['$scope', 'invoiceFactory', 'generalCache', 'generalFunctions', function($scope, invoiceFactory, generalCache, generalFunctions){
 			$scope.status = {
 				open: true
@@ -788,7 +824,11 @@ myapp.directive('accordionBusquedaCorrelatividad', function(){
 			}
 
 			$scope.traerPuntosDeVenta();
-		}]
+		}],
+		template:
+			'<div class="row">' +
+			'	<accordion-invoices-search></accordion-invoices-search>' +
+			'</div>'
 	}
 });
 
@@ -1135,7 +1175,11 @@ myapp.directive('textPop', function() {
 			text:		'@',
 			max:		'@'
 		},
-		template: '<span class="hidden-print">{{ text | maxLength : max }}<a href ng-show="(text.length > max)" popover="{{ text }}" popover-trigger="mouseenter"> (...)</a></span><span class="visible-print">{{ text }}</span>'
+		template:
+			'<span class="hidden-print">{{ text | maxLength : max }}>' +
+			'	<a href ng-show="(text.length > max)" popover="{{ text }}" popover-trigger="mouseenter"> (...)</a>' +
+			'</span>' +
+			'<span class="visible-print">{{ text }}</span>'
 	}
 });
 
@@ -1192,13 +1236,25 @@ myapp.directive('accordionMin', [function () {
 	return {
 		restrict:		'E',
 		transclude:		true,
-		templateUrl:	'view/accordion.html',
 		scope: {
 			heading:	'@',
 			open:		'='
 		},
 		link: function (scope) {
 			if (angular.isDefined(scope.open)) scope.estado = scope.open;
-		}
+		},
+		template:
+			'<div class="col-lg-12 hidden-print" ng-init="estado = true">' +
+			'	<accordion>' +
+			'		<accordion-group is-open="estado">' +
+			'			<accordion-heading>' +
+			'				<strong>{{ heading }}</strong><i class="pull-right glyphicon" ng-class="{\'glyphicon-chevron-down\': estado, \'glyphicon-chevron-right\': !estado}"></i>' +
+			'			</accordion-heading>' +
+			'			<div class="row">' +
+			'				<div ng-transclude></div>' +
+			'			</div>' +
+			'		</accordion-group>' +
+			'	</accordion>' +
+			'</div>'
 	}
 }]);
