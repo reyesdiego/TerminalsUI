@@ -498,9 +498,10 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 			configPanel:		'=',
 			loadingState:		'='
 		},
-		controller: ['$scope', 'invoiceFactory', function($scope, invoiceFactory){
+		controller: ['$scope', 'invoiceFactory', 'generalCache', function($scope, invoiceFactory, generalCache){
 			$scope.totalGates = 0;
 			$scope.itemsPerPage = 10;
+			$scope.listaBuques = generalCache.get('buques');
 			$scope.listaViajes = [];
 			$scope.$on('errorInesperado', function(){
 				$scope.detallesGates = false;
@@ -527,6 +528,7 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 				$scope.currentPage = $scope.paginaAnterior
 			};
 			$scope.filtrado = function(filtro, contenido){
+				$scope.currentPage = 1;
 				$scope.model[filtro] = contenido;
 				if (filtro == 'buqueNombre') {
 					var i = 0;
@@ -535,7 +537,7 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 							buque.viajes.forEach(function(viaje){
 								var objetoViaje = {
 									'id': i,
-									'viaje': viaje
+									'viaje': viaje.viaje
 								};
 								$scope.listaViajes.push(objetoViaje);
 								i++;
