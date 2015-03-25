@@ -59,7 +59,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 						buque.viajes.forEach(function(viaje){
 							var objetoViaje = {
 								'id': i,
-								'viaje': viaje
+								'viaje': viaje.viaje
 							};
 							$scope.listaViajes.push(objetoViaje);
 							i++;
