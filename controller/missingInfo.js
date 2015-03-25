@@ -43,11 +43,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 		return angular.isDefined($scope.itemsDescription[itemId]);
 	};
 
-	$scope.quitarVista = function (comprobante) {
-		var pos = $scope.comprobantesVistos.indexOf(comprobante);
-		$scope.comprobantesVistos.splice(pos, 1);
-	};
-
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
 	};
