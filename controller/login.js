@@ -20,6 +20,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		'Cerrando sesión'
 	];
 	$scope.mostrarMensaje = $scope.msg[0];
+	$scope.porcentaje = 0;
 
 	if (loginService.getStatus()){
 		$state.transitionTo('tarifario');

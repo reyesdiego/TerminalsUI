@@ -56,17 +56,23 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 	$scope.armarGrafico = function(){
 		$scope.tarifasElegidas = 2;
 		var base =[
-			['Códigos', 'Tasa importación', 'Tasa exportación'],
-			['BACTSSA', 0, 0],
-			['TERMINAL 4', 0, 0],
-			['TRP', 0, 0]
+			['Códigos', 'Tasa importación', 'Tasa exportación', 'Tasa removido'],
+			['BACTSSA', 0, 0, 0],
+			['TERMINAL 4', 0, 0, 0],
+			['TRP', 0, 0, 0]
 		];
 		var column, row;
 		$scope.rates.forEach(function(tasa){
-			if ($scope.ponerDescripcion(tasa.code).indexOf('Importacion') != -1){
-				column = 1;
-			} else {
-				column = 2;
+			switch (tasa.rate){
+				case 'IMPO':
+					column = 1;
+					break;
+				case 'EXPO':
+					column = 2;
+					break;
+				case 'REMOVIDO':
+					column = 3;
+					break;
 			}
 			switch (tasa.terminal){
 				case 'BACTSSA':

@@ -7,6 +7,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 	$scope.max = 80;
 	$scope.progreso = 0;
 	$scope.mostrarMensaje = 'Actualizando datos de la aplicación...';
+	$scope.porcentaje = 0;
 
 	$scope.$on('progreso', function(e, mensaje){
 		$scope.progreso += 10;
