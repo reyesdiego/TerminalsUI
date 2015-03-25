@@ -33,9 +33,9 @@
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 					<tr>
-						<th><a href="" ng-click="ordenarPor('_id.terminal')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == '_id.terminal' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == '_id.terminal' && reverse"></span>
+						<th><a href="" ng-click="ordenarPor('terminal')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'terminal' && !reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'terminal' && reverse"></span>
 							Terminal
 						</a></th>
 						<th>C&oacute;digo</th>
@@ -54,9 +54,9 @@
 					</thead>
 					<tbody>
 					<tr ng-repeat="tasa in rates | orderBy : predicate : reverse">
-						<td>{{ tasa._id.terminal }}</td>
-						<td>{{ tasa._id.code }}</td>
-						<td>{{ ponerDescripcion(tasa._id.code) }}</td>
+						<td>{{ tasa.terminal }}</td>
+						<td>{{ tasa.code }}</td>
+						<td>{{ ponerDescripcion(tasa.code) }}</td>
 						<td class="text-right">{{ tasa.ton }}</td>
 						<td class="text-right">{{ moneda | formatCurrency }} {{ tasa.total | currency }}</td>
 					</tr>

@@ -5,7 +5,7 @@
 
 myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache) {
 
-	$rootScope.predicate = '_id.terminal';
+	$rootScope.predicate = 'terminal';
 	$scope.monedaFija = 'DOL';
 	$scope.tarifasElegidas = 1;
 
@@ -63,12 +63,12 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		];
 		var column, row;
 		$scope.rates.forEach(function(tasa){
-			if ($scope.ponerDescripcion(tasa._id.code).indexOf('Importacion') != -1){
+			if ($scope.ponerDescripcion(tasa.code).indexOf('Importacion') != -1){
 				column = 1;
 			} else {
 				column = 2;
 			}
-			switch (tasa._id.terminal){
+			switch (tasa.terminal){
 				case 'BACTSSA':
 					row = 1;
 					break;
