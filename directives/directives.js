@@ -1258,3 +1258,21 @@ myapp.directive('accordionMin', [function () {
 			'</div>'
 	}
 }]);
+
+myapp.directive('divCargando', [function () {
+	return {
+		restrict:		'E',
+		transclude:		true,
+		scope: {
+			mostrar:	'='
+		},
+		template:
+			'<div class="col-lg-12 text-center" ng-show="mostrar">' +
+			'	<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">' +
+			'</div>' +
+			'<div class="col-lg-12" ng-hide="mostrar">' +
+			'	<div ng-transclude></div>' +
+			'</div>'
+
+	}
+}]);

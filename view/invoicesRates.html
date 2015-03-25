@@ -1,38 +1,30 @@
 <div class="container" ng-controller="ratesCtrl">
-
-	<div>
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="hidden-xs"><img src="images/icon-gates.png" height="64" width="64">Tasas a las cargas</h1>
-				<h1 class="visible-xs">Tasas a las cargas</h1>
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="hidden-xs"><img src="images/icon-gates.png" height="64" width="64">Tasas a las cargas</h1>
+			<h1 class="visible-xs">Tasas a las cargas</h1>
+		</div>
+	</div>
+	<accordion-min heading="Filtrar por">
+		<div class="col-lg-4 col-sm-6">
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">Día</span>
+					<label class="sr-only" for="fechaInicio">Día</label>
+					<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fecha" is-open="openfechaInicio" max-date="maxDate" />
+								<span class="input-group-btn">
+									<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+				</div>
 			</div>
 		</div>
-
-		<accordion-min heading="Filtrar por">
-			<div class="col-lg-4 col-sm-6">
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon">Día</span>
-						<label class="sr-only" for="fechaInicio">Día</label>
-						<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fecha" is-open="openfechaInicio" max-date="maxDate" />
-									<span class="input-group-btn">
-										<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
-									</span>
-					</div>
-				</div>
+		<div class="col-lg-4 col-sm-6">
+			<div class="form-group">
+				<button class="btn btn-primary" ng-click="cargaRates()">Buscar</button>
 			</div>
-			<div class="col-lg-4 col-sm-6">
-				<div class="form-group">
-					<button class="btn btn-primary" ng-click="cargaRates()">Buscar</button>
-				</div>
-			</div>
-		</accordion-min>
-	</div>
-
-	<div class="col-lg-12 text-center" ng-show="cargando">
-		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-	</div>
-	<div class="col-lg-12" ng-hide="cargando">
+		</div>
+	</accordion-min>
+	<div-cargando mostrar="cargando">
 		<div ng-hide="rates.length != undefined && rates.length > 0">
 			<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 		</div>
@@ -69,12 +61,6 @@
 						<td class="text-right">{{ moneda | formatCurrency }} {{ tasa.total | currency }}</td>
 					</tr>
 					</tbody>
-					<!--<tfoot>
-					<tr>
-						<th colspan="3" class="text-right">Total</th>
-						<td class="text-right">{{ moneda | formatCurrency}} {{ totalTasas | currency }}</td>
-					</tr>
-					</tfoot>-->
 				</table>
 			</div>
 			<div class="row" ng-show="mostrarGrafico">
@@ -96,6 +82,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
+	</div-cargando>
 </div>

@@ -5,10 +5,7 @@
 	<div class="row hidden-print">
 		<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
 	</div>
-	<div class="col-lg-12 text-center" ng-show="cargando">
-		<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
-	</div>
-	<div class="col-lg-12" ng-hide="cargando">
+	<div-cargando mostrar="cargando">
 		<div ng-hide="datosFaltantes.length != undefined && filteredDatos.length > 0">
 			<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 		</div>
@@ -64,7 +61,7 @@
 				</table>
 			</div>
 		</div>
-	</div>
+	</div-cargando>
 
 	<div-pagination total-items="filteredDatos.length" current-page="currentPage" items-per-page="model.itemsPerPage" ng-show="filteredDatos.length > 0"></div-pagination>
 </div>
