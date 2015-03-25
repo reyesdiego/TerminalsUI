@@ -156,9 +156,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	$scope.loadingGatesTurnos = false;
 	$scope.errorGatesTurnos = false;
 	$scope.mensajeErrorGatesTurnos = '';
-	$scope.visibleTurnos = 'hidden';
-	$scope.visibleGates = 'hidden';
-	$scope.visibleGatesTurnos = 'hidden';
 
 	$scope.prepararDatosMes = function(datosGrafico, traerTotal){
 		//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
@@ -480,10 +477,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.errorGates = false;
 		$scope.isCollapsedGates = true;
 		$scope.loadingGates = true;
-		$scope.visibleGates = 'hidden';
 		controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}, function(graf){
 			$scope.loadingGates = false;
-			$scope.visibleGates = 'block';
 			$scope.chartDataGates = $scope.prepararDatosMes(graf, false);
 		});
 	};
@@ -492,10 +487,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.errorTurnos = false;
 		$scope.isCollapsedTurnos = true;
 		$scope.loadingTurnos = true;
-		$scope.visibleTurnos = 'hidden';
 		controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }, function(graf){
 			$scope.loadingTurnos = false;
-			$scope.visibleTurnos = 'block';
 			$scope.chartDataTurnos = $scope.prepararDatosMes(graf, false);
 		});
 	};
@@ -577,11 +570,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.errorGatesTurnos = false;
 		$scope.isCollapsedDayGatesTurnos = true;
 		$scope.loadingGatesTurnos = true;
-		$scope.visibleGatesTurnos = 'hidden';
 		if ($scope.radioModel == 'Gates'){
 			controlPanelFactory.getGatesDia({ fecha: $scope.diaGatesTurnos }, function(graf){
 				$scope.loadingGatesTurnos = false;
-				$scope.visibleGatesTurnos = 'block';
 				$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);
 				$scope.labelPorHora = 'Gates por hora'
 			});
@@ -589,7 +580,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		else if ($scope.radioModel == 'Turnos'){
 			controlPanelFactory.getTurnosDia({ fecha: $scope.diaGatesTurnos }, function(graf){
 				$scope.loadingGatesTurnos = false;
-				$scope.visibleGatesTurnos = 'block';
 				$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);
 				$scope.labelPorHora = 'Turnos por hora'
 			});

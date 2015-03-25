@@ -127,7 +127,7 @@
 		<div class="col-lg-4" ng-show="loadingGates">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-show="!loadingGates || errorGates" style="visibility: {{ visibleGates }}">
+		<div class="col-lg-4" ng-show="!loadingGates || errorGates">
 			<h4 class="text-left">Gates mensuales</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -167,7 +167,7 @@
 		<div class="col-lg-4" ng-show="loadingTurnos">
 			<img class="media-object" style="margin-left: 50px; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingTurnos || errorTurnos" style="visibility: {{ visibleTurnos }}">
+		<div class="col-lg-4" ng-hide="loadingTurnos || errorTurnos">
 			<h4 class="text-left">Turnos mensuales</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -208,7 +208,7 @@
 		<div class="col-lg-4" ng-show="loadingGatesTurnos">
 			<img class="media-object" style="margin-left: 480px; margin-top: 75px" src="images/ajax_loader_gray_512.gif" width="252" height="252">
 		</div>
-		<div class="col-lg-12" ng-hide="loadingGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
+		<div class="col-lg-12" ng-hide="loadingGatesTurnos">
 			<h4 class="text-left">{{ labelPorHora }}</h4>
 			<div class="col-lg-4 col-lg-offset-2">
 				<div class="input-group text-left">
@@ -234,7 +234,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos" style="visibility: {{ visibleGatesTurnos }}">
+		<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
 			<div class="table-responsive" style="max-height: 340px; max-width: 100%; overflow: auto">
 				<dynamic-chart
 						data="chartDataDiaGatesTurnos"
