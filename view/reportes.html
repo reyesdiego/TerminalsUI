@@ -114,8 +114,12 @@
 						</thead>
 						<tbody>
 						<tr ng-repeat="tarifa in tablaGrafico.data">
-							<td class="text-center"><strong>{{ tarifa.code }}</strong></td>
+							<td class="text-center">{{ tarifa.code }}</td>
 							<td ng-repeat="cantidad in tarifa.conteo track by $index" class="text-center"><span ng-show="!$last">U$S {{ cantidad | number:2 }} </span><span ng-show="!$last">({{ tarifa.porcentaje[$index] | number:2 }} %)</span><strong ng-show="$last">U$S {{ cantidad | number:2 }}</strong></td>
+						</tr>
+						<tr>
+							<td class="text-center"><strong>Totales</strong></td>
+							<td ng-repeat="total in totales track by $index" class="text-center"><strong>U$S {{ total | number:2 }}</strong></td>
 						</tr>
 						</tbody>
 					</table>
@@ -136,7 +140,38 @@
 								money="monedaFija"
 								columns="{{ tarifasElegidas }}">
 						</dynamic-chart>
+					</div>
+				</div>
 
+				<div class="row" ng-show="mostrarGrafico && !errorTarifario">
+					<div class="col-lg-6 text-center">
+						<dynamic-chart
+								data="chartDataTotalesTarifas"
+								title="{{chartTitleTotalesTarifas}}"
+								width="{{chartWidthTotales}}"
+								height="{{chartHeightTotales}}"
+								select="selectRow(selectedRowIndexTotalesTarifas)"
+								type="{{pieChart}}"
+								currency="true"
+								stacked="false"
+								is3-d="true"
+								money="monedaFija">
+						</dynamic-chart>
+					</div>
+					<div class="col-lg-6 text-center">
+						<dynamic-chart
+								data="chartDataTotalesTerminal"
+								title="{{chartTitleTotalesTerminal}}"
+								width="{{chartWidthTotales}}"
+								height="{{chartHeightTotales}}"
+								select="selectRow(selectedRowIndexTotalesTerminal)"
+								colors="barColors"
+								type="{{pieChart}}"
+								currency="true"
+								stacked="false"
+								is3-d="true"
+								money="monedaFija">
+						</dynamic-chart>
 					</div>
 				</div>
 

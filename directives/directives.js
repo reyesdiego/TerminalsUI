@@ -476,7 +476,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 				return datos;
 			}
 
-			if (loginService.getStatus) $scope.cargaTodosLosPuntosDeVentas();
+			if (loginService.getStatus()) $scope.cargaTodosLosPuntosDeVentas();
 
 		}]
 	}
