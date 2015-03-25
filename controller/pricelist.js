@@ -20,10 +20,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		$scope.mensajeResultado = mensaje;
 	});
 
-	$scope.$on('loginComplete', function(){
-		$scope.cargaPricelist();
-	});
-
 	$scope.cargaPricelist = function(){
 		priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
 			if (data.status == 'OK'){

@@ -2,7 +2,7 @@
  * Created by artiom on 02/10/14.
  */
 
-myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', function($scope, reportsFactory, priceFactory, dialogs, loginService) {
+myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'colorTerminalesCache', function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache) {
 	$scope.maxDate = new Date();
 	$scope.monedaFija = 'DOL';
 	$scope.search = '';
@@ -40,24 +40,10 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 	$scope.tasas = false;
 
+	$scope.totales = [0, 0, 0, 0];
+
 	$scope.$on('errorDatos', function(){
 		$scope.errorTarifario = true;
-	});
-
-	$scope.$on('loginComplete', function(){
-		priceFactory.getPrice('agp', false, function (data) {
-			$scope.pricelist = data.data;
-			$scope.pricelist.forEach(function (price) {
-				price.graficar = false;
-			});
-			$scope.selectedList = $scope.pricelist;
-		});
-		priceFactory.getPrice('agp', true, function (data) {
-			$scope.pricelistTasas = data.data;
-			$scope.pricelistTasas.forEach(function (price) {
-				price.graficar = false;
-			});
-		});
 	});
 
 	if (loginService.getStatus()){
@@ -101,6 +87,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 	$scope.mostrarGrafico = false;
 
 	$scope.columnChart = 'column';
+	$scope.pieChart = 'pie';
 
 	$scope.chartTitleReporteTarifas = "Códigos de tarifas";
 	$scope.chartWidthReporteTarifas = 1200;
@@ -109,6 +96,26 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		['Codigos', 'algo'],
 		['hola', 2526]
 	];
+
+	$scope.chartTitleTotalesTarifas = "Totales por tarifas";
+	$scope.chartWidthTotales = 600;
+	$scope.chartHeightTotales = 300;
+	$scope.chartDataTotalesTarifas = [
+		['Codigos', 0],
+		['hola', 2526]
+	];
+
+	$scope.chartTitleTotalesTerminal = "Totales por terminal";
+	$scope.chartDataTotalesTerminal = [
+		['Codigos', 0],
+		['hola', 2526]
+	];
+
+	$scope.barColors = {
+		"bactssa": colorTerminalesCache.get('Bactssa'),
+		"terminal4": colorTerminalesCache.get('Terminal4'),
+		"trp": colorTerminalesCache.get('Trp')
+	};
 
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
@@ -167,18 +174,25 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			reportsFactory.getReporteTarifas(fecha, $scope.tarifasGraficar, function(data){
 				contarTerminales = data.data.length;
 				if (contarTerminales != 0){
+					var totalesTerminal = [];
+					var nuevaLineaTerminal = ['terminal', 0];
 					data.data.forEach(function(resultado){
 						nuevaLinea.push(resultado.terminal);
+						nuevaLineaTerminal[0] = resultado.terminal;
 						base.push(nuevaLinea.slice());
+						totalesTerminal.push(nuevaLineaTerminal.slice());
 						terminales.push(resultado.terminal);
 						nuevaLinea = [];
 					});
 					var i = 1;
+					var totalesTarifas = [];
+					var nuevaLineaTarifas = [];
 					$scope.tarifasElegidas = $scope.tablaGrafico.data.length;
 					$scope.tablaGrafico.terminales = terminales;
 					$scope.tablaGrafico.data.forEach(function(tarifa){
 						var total = 0;
 						var code = tarifa.code;
+						nuevaLineaTarifas.push(code);
 						tarifa.conteo = [];
 						tarifa.porcentaje = [];
 						base[0].push(code);
@@ -187,19 +201,26 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 								base[i].push(data.data[i-1].data[code]);
 								tarifa.conteo.push(data.data[i-1].data[code]);
 								total+=data.data[i-1].data[code];
+								$scope.totales[i-1] += data.data[i-1].data[code];
+								totalesTerminal[i-1][1] += data.data[i-1].data[code];
 							} else {
 								base[i].push(0);
 								tarifa.conteo.push(0);
 							}
 						}
 						tarifa.conteo.push(total);
+						$scope.totales[contarTerminales] += total;
+						nuevaLineaTarifas.push(total);
+						totalesTarifas.push(nuevaLineaTarifas.slice());
+						nuevaLineaTarifas = [];
 						for (i=0; i<=contarTerminales-1; i++){
 							var cuenta = (tarifa.conteo[i]*100)/tarifa.conteo[contarTerminales];
 							tarifa.porcentaje.push(cuenta);
 						}
 					});
+					$scope.chartDataTotalesTerminal = totalesTerminal;
+					$scope.chartDataTotalesTarifas = totalesTarifas;
 					$scope.chartDataReporteTarifas = base;
-					console.log($scope.chartDataReporteTarifas);
 					$scope.mostrarGrafico = true;
 				} else {
 					dialogs.notify("Totales por tarifa", "No se encontraron datos para las fechas y tarifas seleccionadas.");

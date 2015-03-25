@@ -61,13 +61,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.pricelist = [];
 	});
 
-	$scope.$on('loginComplete', function(){
-		$scope.prepararDatos();
-		$scope.acceso = loginService.getType();
-		$scope.nombre = loginService.getFiltro();
-		$scope.puedeEditar = (loginService.getType() == 'terminal');
-	});
-
 	$scope.prepararDatos = function(){
 		priceFactory.getMatchPrices({onlyRates: $scope.tasas}, function (data) {
 			if (data.status == 'OK'){

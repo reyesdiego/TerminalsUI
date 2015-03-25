@@ -67,10 +67,6 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		$scope.configPanel = mensaje;
 	});
 
-	$scope.$on('loginComplete', function(){
-		$scope.cargaTurnos();
-	});
-
 	// Carga los turnos por fechas
 	$scope.cargaPorFiltros = function(){
 		$scope.currentPage = 1;

@@ -294,7 +294,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.cargarCache = true;
 			$rootScope.primerRuteo = true;
 			$rootScope.estaLogeado = true;
-			$rootScope.$broadcast('loginComplete');
 		});
 	}
 
