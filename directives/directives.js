@@ -318,7 +318,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 					if (data.status == 'OK'){
 						$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
 							todosPtos.hide = data.data.indexOf(todosPtos.punto, 0) < 0;
-							if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
+							if ($scope.model != undefined && todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
 								$scope.model.nroPtoVenta = '';
 								$scope.todosLosPuntosDeVentas[0].active = true;
 							}
@@ -471,7 +471,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 			};
 
 			function cargaDatosSinPtoVenta(){
-				var datos = $scope.model;
+				var datos = $scope.model || { nroPtoVenta : '' };
 				datos.nroPtoVenta = '';
 				return datos;
 			}
