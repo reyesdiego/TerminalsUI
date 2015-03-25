@@ -7,7 +7,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 	factory.getByDay = function(dia, callback){
 		var inserturl = serverUrl + '/invoices/counts';
-		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+		$http.get(inserturl, { params: formatService.formatearDatos(dia) })
 			.success(function(data){
 				if (data.status === 'OK'){
 					var total = 0;
