@@ -25,21 +25,25 @@
 				</tr>
 				<tr ng-repeat="gate in datosGates">
 					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || gate.buque == ''" ng-click="filtrado('buqueNombre', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO'" ng-click="filtrado('buqueNombre', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
 					<td>{{ gate.viaje }}</td>
-					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.contenedor == ''" ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO'" ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
 					<td>{{ gate.patenteCamion }}</td>
 					<td><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
 					<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
 					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
 					<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
 					<td>{{ gate.mov }}</td>
-					<td class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+					<td class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)" ng-hide="gate.carga == 'NO'"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			</table>
 			<div-pagination total-items="totalItems" current-page="currentPage" items-per-page="itemsPerPage"></div-pagination>
 		</div>
 	</div>
 	<div class="row" ng-show="detallesGates">
-		<table-gates-result></table-gates-result>
+		<div class="col-lg-12">
+			<h4>Comprobantes del contenedor {{ contenedor }}</h4>
+			<vista-comprobantes model="$parent.model" datos-invoices="invoices" ocultar-filtros="$parent.filtrosComprobantes" total-items="totalItems" loading-state="cargando" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
+			<button class="btn btn-default hidden-print" ng-hide="mostrarResultado" ng-click="ocultarDetallesGates()"><span class="glyphicon glyphicon-arrow-left"></span> Volver a Gates</button>
+		</div>
 	</div>
 </div-cargando>

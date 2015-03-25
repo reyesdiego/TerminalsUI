@@ -526,6 +526,11 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 					}
 				});
 			};
+			$scope.ocultarDetallesGates = function(){
+				$scope.detallesGates = false;
+				$scope.totalItems = $scope.totalGates;
+				$scope.currentPage = $scope.paginaAnterior
+			};
 			$scope.filtrado = function(filtro, contenido){
 				$scope.model[filtro] = contenido;
 				if (filtro == 'buqueNombre') {
@@ -552,22 +557,6 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 		}]
 	}
 }]);
-
-myapp.directive('tableGatesResult', function(){
-	return {
-		restrict:		'E',
-		template:
-			'<div class="container">' +
-			'	<div class="row">' +
-			'		<div class="col-lg-12">' +
-			'			<h4>Comprobantes del contenedor {{ contenedor }}</h4>' +
-			'			<vista-comprobantes model="$parent.model" datos-invoices="invoices" ocultar-filtros="$parent.filtrosComprobantes" total-items="totalItems" loading-state="cargando" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado"></vista-comprobantes>' +
-			'			<button class="btn btn-default hidden-print" ng-hide="mostrarResultado" ng-click="detallesGates = false; totalItems = totalGates; currentPage = paginaAnterior"><span class="glyphicon glyphicon-arrow-left"></span> Volver a Gates</button>' +
-			'		</div>' +
-			'	</div>' +
-			'</div>'
-	}
-});
 
 myapp.directive('tableTurnos', function(){
 	return {

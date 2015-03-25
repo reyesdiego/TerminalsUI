@@ -20,7 +20,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', function ($scope, gates
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.gates = {};
-	$scope.detalles = false;
+	$scope.detallesGates = false;
 
 	$scope.filtrosGates = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
