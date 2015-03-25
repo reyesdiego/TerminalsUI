@@ -307,11 +307,6 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 				$scope.mostrarResultado = false;
 			};
 
-			$scope.quitarVista = function (comprobante) {
-				var pos = $scope.comprobantesVistos.indexOf(comprobante);
-				$scope.comprobantesVistos.splice(pos, 1);
-			};
-
 			// Funciones de Puntos de Venta
 			$scope.cargaPuntosDeVenta = function(){
 				invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
@@ -507,7 +502,7 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 			$scope.totalGates = 0;
 			$scope.itemsPerPage = 10;
 			$scope.listaViajes = [];
-			$scope.$on('errorInesperado', function(e, mensaje){
+			$scope.$on('errorInesperado', function(){
 				$scope.detallesGates = false;
 			});
 			$scope.colorHorario = function (gate) {
@@ -592,7 +587,13 @@ myapp.directive('tableTasasCargas', function(){
 myapp.directive('accordionComprobantesVistos', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/accordion.comprobantes.vistos.html'
+		templateUrl:	'view/accordion.comprobantes.vistos.html',
+		link: function ($scope) {
+			$scope.quitarVista = function (comprobante) {
+				var pos = $scope.comprobantesVistos.indexOf(comprobante);
+				$scope.comprobantesVistos.splice(pos, 1);
+			};
+		}
 	}
 });
 
@@ -1257,7 +1258,7 @@ myapp.directive('divCargando', [function () {
 		},
 		template:
 			'<div class="col-lg-12 text-center" ng-show="mostrar">' +
-			'	<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">' +
+			'	<img class="media-object" style="margin-left: 40%; margin-top: 50px" ng-src="images/ajax_loader_gray_512.gif" width="252" height="252">' +
 			'</div>' +
 			'<div class="col-lg-12" ng-hide="mostrar">' +
 			'	<div ng-transclude></div>' +
