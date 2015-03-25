@@ -37,8 +37,8 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			});
 	};
 
-	factory.getContainersSinTasaCargas = function(datos, terminal, callback) {
-		var inserturl = serverUrl + '/invoices/containersNoRates/' + terminal;
+	factory.getContainersSinTasaCargas = function(datos, callback) {
+		var inserturl = serverUrl + '/invoices/containersNoRates/' + loginService.getFiltro();
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data) {
 				callback(data);

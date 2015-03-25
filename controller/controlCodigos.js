@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 
-myapp.controller('codigosCtrl', ['$scope', 'formatService', 'invoiceFactory', 'priceFactory', function($scope, formatService, invoiceFactory, priceFactory) {
+myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', function($scope, invoiceFactory, priceFactory) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
 
 	$scope.model = {
