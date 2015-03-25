@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 
-myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'loginService', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, loginService) {
+myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
 
 	$scope.ocultaTasas = true;
@@ -211,7 +211,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.detalle = false;
 		$scope.model.contenedor = '';
 		$scope.resultado = [];
-		invoiceFactory.getContainersSinTasaCargas($scope.model, loginService.getFiltro(), function(data){
+		invoiceFactory.getContainersSinTasaCargas($scope.model, function(data){
 			if (data.status == "OK"){
 				$scope.totalContenedores = data.totalCount;
 				data.data.forEach(function(contenedor){

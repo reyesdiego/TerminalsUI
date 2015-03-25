@@ -318,7 +318,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 					if (data.status == 'OK'){
 						$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
 							todosPtos.hide = data.data.indexOf(todosPtos.punto, 0) < 0;
-							if (todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
+							if ($scope.model != undefined && todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
 								$scope.model.nroPtoVenta = '';
 								$scope.todosLosPuntosDeVentas[0].active = true;
 							}
@@ -471,7 +471,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 			};
 
 			function cargaDatosSinPtoVenta(){
-				var datos = $scope.model;
+				var datos = $scope.model || { nroPtoVenta : '' };
 				datos.nroPtoVenta = '';
 				return datos;
 			}
@@ -1256,5 +1256,23 @@ myapp.directive('accordionMin', [function () {
 			'		</accordion-group>' +
 			'	</accordion>' +
 			'</div>'
+	}
+}]);
+
+myapp.directive('divCargando', [function () {
+	return {
+		restrict:		'E',
+		transclude:		true,
+		scope: {
+			mostrar:	'='
+		},
+		template:
+			'<div class="col-lg-12 text-center" ng-show="mostrar">' +
+			'	<img class="media-object" style="margin-left: 40%; margin-top: 50px" src="images/ajax_loader_gray_512.gif" width="252" height="252">' +
+			'</div>' +
+			'<div class="col-lg-12" ng-hide="mostrar">' +
+			'	<div ng-transclude></div>' +
+			'</div>'
+
 	}
 }]);

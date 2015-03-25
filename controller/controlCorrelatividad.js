@@ -2,7 +2,7 @@
  * Created by artiom on 23/09/14.
  */
 
-myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'socket', 'generalCache', 'vouchersArrayCache', function($rootScope, $scope, invoiceFactory, socket, generalCache, vouchersArrayCache) {
+myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'socket', 'vouchersArrayCache', function($rootScope, $scope, invoiceFactory, socket, vouchersArrayCache) {
 
 	var socketIoRegister;
 
