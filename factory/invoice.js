@@ -236,7 +236,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 
 	function ponerDescripcionComprobantes (data) {
 		data.data.forEach(function(factura){
-			factory.ponerDescripcionComprobante(factura);
+			ponerDescripcionComprobante(factura);
 		});
 		return data;
 	}
