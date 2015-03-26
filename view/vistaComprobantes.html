@@ -27,10 +27,11 @@
 	<div-cargando mostrar="loadingState">
 		<div ng-hide="datosInvoices.length == 0">
 			<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong> Mostrando del {{ currentPage * model.itemsPerPage - (model.itemsPerPage - 1) }} al {{ mostrarTope() }} (página {{ currentPage }})</strong></span></h5>
-			<tabset ng-show="mostrarPtosVenta" class="hidden-print">
-				<tab ng-repeat="tab in todosLosPuntosDeVentas" active="tab.active" heading="{{tab.heading}}" ng-hide="tab.hide" ng-click="filtrado('nroPtoVenta', tab.punto)"></tab>
-			</tabset>
-			<br>
+			<ul ng-show="mostrarPtosVenta" class="nav nav-tabs hidden-print">
+				<li ng-repeat="punto in todosLosPuntosDeVentas" ng-class="{'active': punto.active}" ng-hide="punto.hide">
+					<a ng-click="cambiaPtoVenta(punto);">{{ punto.heading }}</a>
+				</li>
+			</ul>
 			<table-invoices></table-invoices>
 			<div-pagination total-items="totalItems" items-per-page="model.itemsPerPage" current-page="currentPage"></div-pagination>
 		</div>
