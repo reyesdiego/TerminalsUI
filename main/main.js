@@ -205,10 +205,6 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/users",
 			templateUrl: "view/users.html"
 		})
-		.state('rates', {
-			url: "/rates",
-			templateUrl: 'view/invoicesRates.html'
-		})
 		.state('cambioTerminal', {
 			url: "/cambioTerminal",
 			templateUrl: 'view/cambioTerminal.html'
@@ -318,7 +314,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.moneda = "DOL";
 
 	var rutasComunes = ['login', 'forbidden', 'changepass', 'register'];
-	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'rates'];
+	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users'];
 	$rootScope.$state = $state;
 	// Variables Globales de Paginacion
 	$rootScope.itemsPerPage = 15;
