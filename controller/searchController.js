@@ -2,7 +2,7 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', function($scope, generalCache, contenedoresCache, generalFunctions){
+myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory){
 	$scope.status = {
 		open: true
 	};
@@ -29,7 +29,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			selected.originalObject.viajes.forEach(function(viaje){
 				var objetoViaje = {
 					'id': i,
-					'viaje': viaje
+					'viaje': viaje.viaje
 				};
 				$scope.listaViajes.push(objetoViaje);
 				i++;
@@ -49,7 +49,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		}
 	};
 	$scope.filtrado = function(filtro, contenido){
-
+		console.log(filtro);
 		$scope.model[filtro] = contenido;
 		if (filtro == 'buqueNombre') {
 			if (contenido != ''){
@@ -76,7 +76,34 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		}
 		$scope.$emit('cambioFiltro', $scope.listaViajes);
 	};
+	//FUNCIONES DE TABLE GATES //////////////////////////////////////////////////////////////////////
+	$scope.colorHorario = function (gate) {
+		return generalFunctions.colorHorario(gate);
+	};
+	$scope.mostrarDetalle = function(contenedor){
+		$scope.paginaAnterior = $scope.currentPage;
+		$scope.totalGates = $scope.totalItems;
+		$scope.detallesGates = true;
+		$scope.contenedor = contenedor.contenedor;
+		var datos = { 'contenedor': contenedor.contenedor };
+		invoiceFactory.getInvoice(datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
+			if (data.status === 'OK') {
+				$scope.invoices = data.data;
+				$scope.totalItems = data.totalCount;
+			}
+		});
+	};
+	$scope.ocultarDetallesGates = function(){
+		$scope.detallesGates = false;
+		$scope.totalItems = $scope.totalGates;
+		$scope.currentPage = $scope.paginaAnterior
+	};
 
+	$scope.filtrarOrden = function(filtro){
+		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
+		$scope.$emit('cambioFiltro');
+	};
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 	$scope.cargaPorFiltros = function () {
 		$scope.$emit('cambioFiltro');
 	};

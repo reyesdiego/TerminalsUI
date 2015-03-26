@@ -55,6 +55,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		$scope.model.fechaFin = $scope.fechaAuxDesde;
 		$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
 		$scope.currentPage = 1;
+		$scope.$broadcast('actualizarPagina', 1);
 		$scope.cargaTurnos();
 		if (angular.isDefined(data) && data.length > 0){
 			$scope.$broadcast('tengoViajes', data);
