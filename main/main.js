@@ -20,24 +20,18 @@ function in_array(needle, haystack, argStrict){
 
 	if(strict){
 		for(key in haystack){
-			if(haystack[key] === needle){
+			if(haystack.hasOwnProperty(key) && haystack[key] === needle){
 				return true;
 			}
 		}
 	}else{
 		for(key in haystack){
-			if(haystack[key] == needle){
+			if(haystack.hasOwnProperty(key) && haystack[key] == needle){
 				return true;
 			}
 		}
 	}
 	return false;
-}
-
-function idToDate(objectId){
-	var fechaGMT0 = new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
-	fechaGMT0.setUTCHours(fechaGMT0.getHours(), fechaGMT0.getMinutes(), fechaGMT0.getSeconds());
-	return fechaGMT0;
 }
 
 var serverUrl = config.url();
@@ -331,7 +325,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.currentPage = 1;
 	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 
-	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
 		if (!$rootScope.primerRuteo){
 			$rootScope.previousState = from;
 		} else {

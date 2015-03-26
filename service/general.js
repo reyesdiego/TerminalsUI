@@ -36,5 +36,11 @@ myapp.service('generalFunctions', [function () {
 				a.disabled = a.getAttribute("title") != title;
 			}
 		}
-	}
+	};
+
+	this.idToDate = function (id) {
+		var fechaGMT0 = new Date(parseInt(id.substring(0, 8), 16) * 1000);
+		fechaGMT0.setUTCHours(fechaGMT0.getHours(), fechaGMT0.getMinutes(), fechaGMT0.getSeconds());
+		return fechaGMT0;
+	};
 }]);

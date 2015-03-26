@@ -2,7 +2,7 @@
  * Created by leo on 02/02/15.
  */
 
-myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', function($scope, ctrlUsersFactory, dialogs, $q) {
+myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'generalFunctions', function($scope, ctrlUsersFactory, dialogs, $q, generalFunctions) {
 	$scope.permiso = false;
 	$scope.cargando = true;
 	$scope.datosUsers = [];
@@ -36,7 +36,7 @@ myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', fu
 	});
 
 	$scope.convertirIdAFecha = function(id) {
-		return idToDate(id);
+		return generalFunctions.idToDate(id);
 	};
 
 	$scope.estaDefinido = function(data) {
@@ -102,10 +102,10 @@ myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', fu
 		});
 		$q.all(llamadas)
 			.then(
-			function(results) {
+			function() {
 				dialogs.notify('Control de usuarios', 'Los datos se han guardado correctamente.');
 			},
-			function(errors) {
+			function() {
 				dialogs.error('Control de usuarios', 'Se ha producido un error al actualizar los datos.');
 			});
 	}

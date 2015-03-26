@@ -238,7 +238,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 
 						dataTrack = [];
 						modalInstance.result.then(function (dataComment) {
-							invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
+							invoiceFactory.putCambiarEstado(comprobante._id, dataComment.newState._id, function(){
 								//$scope.recargarResultado = true;
 								var logInvoice = {
 									title: dataComment.title,
@@ -246,7 +246,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 									comment: dataComment.comment,
 									invoice: comprobante._id
 								};
-								invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+								invoiceFactory.postCommentInvoice(logInvoice, function(dataRes){
 									if (dataRes.status == 'OK'){
 										comprobante.interfazEstado = dataComment.newState;
 										$scope.checkComprobantes(comprobante);
@@ -348,7 +348,7 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 
 				$scope.loadingState = true;
 
-				invoiceFactory.invoiceById(comprobante._id, function(callback){
+				invoiceFactory.getInvoiceById(comprobante._id, function(callback){
 
 					$scope.verDetalle = callback;
 					$scope.controlarTarifas($scope.verDetalle);
