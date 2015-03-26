@@ -42,6 +42,7 @@ myapp.controller('comprobantesErrorCtrl', ['$scope', 'invoiceFactory', function(
 		if ($scope.model.estado == 'N'){
 			$scope.model.estado = 'R,T';
 		}
+		$scope.$broadcast('actualizarPagina', 1);
 		$scope.traerComprobantes();
 	});
 

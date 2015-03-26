@@ -490,7 +490,7 @@ myapp.directive('tableInvoices', function(){
 	}
 });
 
-myapp.directive('tableGates', [function(){
+myapp.directive('tableGates', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/table.gates.html',
@@ -507,7 +507,7 @@ myapp.directive('tableGates', [function(){
 		},
 		controller: 'searchController'
 	}
-}]);
+});
 
 myapp.directive('tableTurnos', function(){
 	return {

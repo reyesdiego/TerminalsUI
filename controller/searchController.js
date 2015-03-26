@@ -49,7 +49,6 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		}
 	};
 	$scope.filtrado = function(filtro, contenido){
-		console.log(filtro);
 		$scope.model[filtro] = contenido;
 		if (filtro == 'buqueNombre') {
 			if (contenido != ''){

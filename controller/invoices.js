@@ -39,6 +39,7 @@ myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', fu
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
+		$scope.$broadcast('actualizarPagina', 1);
 		$scope.cargaDatos();
 	});
 
