@@ -492,13 +492,15 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 			model:				'=',
 			datosGates:			'=',
 			totalItems:			'=',
+			itemsPerPage:		'=',
 			detallesGates:		'=',
 			ocultarFiltros:		'=',
 			currentPage:		'=',
 			configPanel:		'=',
 			loadingState:		'='
 		},
-		controller: ['$scope', 'invoiceFactory', 'generalCache', function($scope, invoiceFactory, generalCache){
+		controller: 'searchController'
+		/*controller: ['$scope', 'invoiceFactory', 'generalCache', function($scope, invoiceFactory, generalCache){
 			$scope.totalGates = 0;
 			$scope.itemsPerPage = 10;
 			$scope.listaBuques = generalCache.get('buques');
@@ -551,7 +553,7 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 				$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
 				$scope.$emit('cambioFiltro');
 			};
-		}]
+		}]*/
 	}
 }]);
 
@@ -718,7 +720,10 @@ myapp.directive('divPagination', function(){
 			});
 			$scope.pageChanged = function(){
 				$scope.$emit('cambioPagina', $scope.currentPage);
-			}
+			};
+			$scope.$on('actualizarPagina', function(event, data){
+				$scope.currentPage = data;
+			})
 		},
 		template:
 			'<div class="col-lg-12 hidden-print" ng-show="totalItems > itemsPerPage">' +

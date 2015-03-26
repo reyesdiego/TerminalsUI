@@ -55,6 +55,7 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 			inputChanged: '=',
 			autoMatch: '@',
 			filtrar: '&',
+			filterField: '@',
 			inputField: '@',
 			limitResults: '@',
 			outsideModel: '='
@@ -62,7 +63,7 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 		template:
 			'<div class="angucomplete-holder input-group">' +
 			'  <input id="{{id}}_value" ng-model="searchStr" type="text" placeholder="{{placeholder}}" class="{{inputClass}}" ng-focus="resetHideResults()" ng-blur="hideResults()" autocapitalize="off" autocorrect="off" autocomplete="off" ng-change="inputChangeHandler(searchStr)" toupper/>' +
-			'  <span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtrar: inputField, contenido: \'\'}); searchStr = null"><span class="glyphicon glyphicon-remove-circle"></span></button></span>' +
+			'  <span class="input-group-btn"><button class="btn btn-default" ng-click="filtrar({filtrar: filterField, contenido: \'\'}); searchStr = null"><span class="glyphicon glyphicon-remove-circle"></span></button></span>' +
 			'</div>' +
 			'  <div id="{{id}}_dropdown" class="angucomplete-dropdown" ng-if="showDropdown">' +
 			'    <div class="angucomplete-searching" ng-show="searching" ng-bind="textSearching"></div>' +

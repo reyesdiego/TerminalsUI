@@ -61,6 +61,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', function ($scope, gates
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
+		$scope.$broadcast('actualizarPagina', 1);
 		$scope.cargaGates();
 		if (angular.isDefined(data) && data.length > 0){
 			$scope.$broadcast('tengoViajes', data);
