@@ -8,8 +8,8 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
-				data = factory.ponerDescripcionComprobantes(data);
-				callback(factory.setearInterfaz(data));
+				data = ponerDescripcionComprobantes(data);
+				callback(setearInterfaz(data));
 			}).error(function(error) {
 				callback(error);
 			});
@@ -30,8 +30,8 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
-				data = factory.ponerDescripcionComprobantes(data);
-				callback(factory.setearInterfaz(data));
+				data = ponerDescripcionComprobantes(data);
+				callback(setearInterfaz(data));
 			}).error(function(errorText){
 				errorFactory.raiseError(errorText, inserturl, 'errorSinTasaCargas', 'Error al cargar la lista de comprobantes sin tasa a las cargas.');
 			});
@@ -60,8 +60,8 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				}
 				if (data.data == null) data.data = [];
 
-				data = factory.ponerDescripcionComprobantes(data);
-				callback(factory.setearInterfaz(data));
+				data = ponerDescripcionComprobantes(data);
+				callback(setearInterfaz(data));
 
 			}).error(function(errorText) {
 				callback(errorText);
@@ -120,35 +120,19 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			});
 	};
 
-	factory.invoiceById = function(id, callback){
+	factory.getInvoiceById = function(id, callback){
 		var inserturl = serverUrl + '/invoices/invoice/' + id;
 		$http.get(inserturl)
 			.success(function (data){
-				data.data = factory.setearInterfazComprobante(data.data);
+				data.data = setearInterfazComprobante(data.data);
 				data.data.transferencia = formatService.formatearFechaHorasMinutosSinGMT(generalFunctions.idToDate(data.data._id));
-				callback(factory.ponerDescripcionComprobante(data.data));
+				callback(ponerDescripcionComprobante(data.data));
 			}).error(function(error){
 				errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
 			});
 	};
 
-	factory.ponerDescripcionComprobante = function(comprobante){
-		comprobante.detalle.forEach(function(detalles){
-			detalles.items.forEach(function(item){
-				item.descripcion = (generalCache.get('descripciones')[item.id]) ? generalCache.get('descripciones')[item.id] : 'No se halló la descripción, verifique que el código esté asociadoo';
-			});
-		});
-		return comprobante;
-	};
-
-	factory.ponerDescripcionComprobantes = function(data){
-		data.data.forEach(function(factura){
-			factory.ponerDescripcionComprobante(factura);
-		});
-		return data;
-	};
-
-	factory.cambiarEstado = function(invoiceId, estado, callback){
+	factory.putCambiarEstado = function(invoiceId, estado, callback){
 		var inserturl = serverUrl + '/invoices/setState/' + loginService.getFiltro() + '/' + invoiceId;
 		$http({
 			method: 'PUT',
@@ -162,7 +146,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		});
 	};
 
-	factory.commentInvoice = function(data, callback){
+	factory.postCommentInvoice = function(data, callback){
 		var inserturl = serverUrl + '/comments/comment';
 		$http.post(inserturl, data)
 			.success(function (data){
@@ -198,14 +182,14 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			});
 	};
 
-	factory.setearInterfaz = function(comprobantes){
+	function setearInterfaz (comprobantes) {
 		comprobantes.data.forEach(function(comprobante) {
-			factory.setearInterfazComprobante(comprobante);
+			setearInterfazComprobante(comprobante);
 		});
 		return comprobantes;
-	};
+	}
 
-	factory.setearInterfazComprobante = function(comprobante){
+	function setearInterfazComprobante (comprobante) {
 		var estadoDefault = {
 			'grupo': loginService.getGroup(),
 			'estado': 'Y'
@@ -239,7 +223,23 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			};
 		}
 		return comprobante;
-	};
+	}
+
+	function ponerDescripcionComprobante (comprobante) {
+		comprobante.detalle.forEach(function(detalles){
+			detalles.items.forEach(function(item){
+				item.descripcion = (generalCache.get('descripciones')[item.id]) ? generalCache.get('descripciones')[item.id] : 'No se halló la descripción, verifique que el código esté asociadoo';
+			});
+		});
+		return comprobante;
+	}
+
+	function ponerDescripcionComprobantes (data) {
+		data.data.forEach(function(factura){
+			factory.ponerDescripcionComprobante(factura);
+		});
+		return data;
+	}
 
 	function filtrarComentarios(dataComentarios) {
 		var comentariosFiltrados = [];

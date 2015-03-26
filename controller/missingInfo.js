@@ -75,7 +75,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 
 				dataTrack = [];
 				modalInstance.result.then(function (dataComment) {
-					invoiceFactory.cambiarEstado(comprobante._id, dataComment.newState._id, function(){
+					invoiceFactory.putCambiarEstado(comprobante._id, dataComment.newState._id, function(){
 						$scope.recargarResultado = true;
 						var logInvoice = {
 							title: dataComment.title,
@@ -83,7 +83,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 							comment: dataComment.comment,
 							invoice: comprobante._id
 						};
-						invoiceFactory.commentInvoice(logInvoice, function(dataRes){
+						invoiceFactory.postCommentInvoice(logInvoice, function(dataRes){
 							if (dataRes.status == 'OK'){
 								comprobante.interfazEstado = dataComment.newState;
 								switch (dataComment.newState.type){
@@ -190,7 +190,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 
 	$scope.mostrarDetalle = function(comprobante){
 		$scope.cargando = true;
-		invoiceFactory.invoiceById(comprobante._id, function(dataComprob){
+		invoiceFactory.getInvoiceById(comprobante._id, function(dataComprob){
 			$scope.verDetalle = dataComprob;
 			$scope.mostrarResultado = true;
 			$scope.cargando = false;
