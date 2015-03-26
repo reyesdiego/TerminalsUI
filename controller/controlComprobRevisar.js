@@ -37,6 +37,7 @@ myapp.controller('comprobantesRevisarCtrl', ['$scope', 'invoiceFactory', functio
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.currentPage = 1;
+		$scope.$broadcast('actualizarPagina', 1);
 		$scope.model.estado = 'C';
 		$scope.traerComprobantes();
 	});

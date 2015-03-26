@@ -484,7 +484,7 @@ myapp.directive('tableInvoices', function(){
 	}
 });
 
-myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
+myapp.directive('tableGates', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/table.gates.html',
@@ -500,62 +500,8 @@ myapp.directive('tableGates', ['generalFunctions', function(generalFunctions){
 			loadingState:		'='
 		},
 		controller: 'searchController'
-		/*controller: ['$scope', 'invoiceFactory', 'generalCache', function($scope, invoiceFactory, generalCache){
-			$scope.totalGates = 0;
-			$scope.itemsPerPage = 10;
-			$scope.listaBuques = generalCache.get('buques');
-			$scope.listaViajes = [];
-			$scope.$on('errorInesperado', function(){
-				$scope.detallesGates = false;
-			});
-			$scope.colorHorario = function (gate) {
-				return generalFunctions.colorHorario(gate);
-			};
-			$scope.mostrarDetalle = function(contenedor){
-				$scope.paginaAnterior = $scope.currentPage;
-				$scope.totalGates = $scope.totalItems;
-				$scope.detallesGates = true;
-				$scope.contenedor = contenedor.contenedor;
-				var datos = { 'contenedor': contenedor.contenedor };
-				invoiceFactory.getInvoice(datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
-					if (data.status === 'OK') {
-						$scope.invoices = data.data;
-						$scope.totalItems = data.totalCount;
-					}
-				});
-			};
-			$scope.ocultarDetallesGates = function(){
-				$scope.detallesGates = false;
-				$scope.totalItems = $scope.totalGates;
-				$scope.currentPage = $scope.paginaAnterior
-			};
-			$scope.filtrado = function(filtro, contenido){
-				$scope.currentPage = 1;
-				$scope.model[filtro] = contenido;
-				if (filtro == 'buqueNombre') {
-					var i = 0;
-					$scope.listaBuques.forEach(function(buque){
-						if (buque.buque == contenido){
-							buque.viajes.forEach(function(viaje){
-								var objetoViaje = {
-									'id': i,
-									'viaje': viaje.viaje
-								};
-								$scope.listaViajes.push(objetoViaje);
-								i++;
-							})
-						}
-					});
-				}
-				$scope.$emit('cambioFiltro', $scope.listaViajes);
-			};
-			$scope.filtrarOrden = function(filtro){
-				$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
-				$scope.$emit('cambioFiltro');
-			};
-		}]*/
 	}
-}]);
+});
 
 myapp.directive('tableTurnos', function(){
 	return {
