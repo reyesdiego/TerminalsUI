@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'errorFactory', 'estadosArrayCache', 'generalCache', function($http, loginService, formatService, errorFactory, estadosArrayCache, generalCache){
+myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'errorFactory', 'estadosArrayCache', 'generalCache', 'generalFunctions', function($http, loginService, formatService, errorFactory, estadosArrayCache, generalCache, generalFunctions){
 	var factory = {};
 
 	factory.getInvoice = function(datos, page, callback) {
@@ -125,7 +125,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		$http.get(inserturl)
 			.success(function (data){
 				data.data = factory.setearInterfazComprobante(data.data);
-				data.data.transferencia = formatService.formatearFechaHorasMinutosSinGMT(idToDate(data.data._id));
+				data.data.transferencia = formatService.formatearFechaHorasMinutosSinGMT(generalFunctions.idToDate(data.data._id));
 				callback(factory.ponerDescripcionComprobante(data.data));
 			}).error(function(error){
 				errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
@@ -176,9 +176,9 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		var inserturl = serverUrl + '/comments/' + invoiceId;
 		$http.get(inserturl)
 			.success(function (data){
-				data.data = factory.filtrarComentarios(data.data);
+				data.data = filtrarComentarios(data.data);
 				data.data.forEach(function(comment){
-					comment.fecha = formatService.formatearFechaHorasMinutosSinGMT(idToDate(comment._id));
+					comment.fecha = formatService.formatearFechaHorasMinutosSinGMT(generalFunctions.idToDate(comment._id));
 				});
 				callback(data);
 			})
@@ -241,7 +241,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		return comprobante;
 	};
 
-	factory.filtrarComentarios = function(dataComentarios){
+	function filtrarComentarios(dataComentarios) {
 		var comentariosFiltrados = [];
 		dataComentarios.forEach(function(comentario){
 			if (comentario.group == loginService.getGroup() || comentario.group === 'ALL'){
@@ -249,7 +249,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			}
 		});
 		return comentariosFiltrados;
-	};
+	}
 
 	return factory;
 
