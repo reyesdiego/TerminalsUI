@@ -4,7 +4,7 @@
 
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="hidden-xs"><img src="images/asociar.png" height="64" width="64">Asociación de tarifario</h1>
+				<h1 class="hidden-xs"><img ng-src="images/asociar.png" height="64" width="64">Asociación de tarifario</h1>
 				<h1 class="visible-xs">Asoc. de tarifario</h1>
 				<h3>{{terminal.full_name}} <span ng-show="acceso=='agp'">({{nombre}})</span></h3>
 			</div>
@@ -26,14 +26,6 @@
 				</div>
 			</div>
 		</div>
-		<!--<div class="row" ng-show="acceso=='terminal'">
-			<div class="col-lg-12">
-				<div class="input-group">
-					<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
-					<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-				</div>
-			</div>
-		</div>-->
 		<div class="row" ng-hide="flagGuardado">
 			<div class="col-lg-6">
 				<div class="alert alert-dismissable alert-success">
