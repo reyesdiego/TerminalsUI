@@ -307,6 +307,12 @@ myapp.directive('vistaComprobantes', ['generalCache', 'generalFunctions', 'dialo
 				$scope.mostrarResultado = false;
 			};
 
+			$scope.cambiaPtoVenta = function (pto) {
+				$scope.todosLosPuntosDeVentas.forEach(function (ptos) { ptos.active = false; });
+				pto.active = true;
+				$scope.filtrado('nroPtoVenta', pto.punto);
+			};
+
 			// Funciones de Puntos de Venta
 			$scope.cargaPuntosDeVenta = function(){
 				invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
