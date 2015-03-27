@@ -603,12 +603,6 @@ myapp.directive('containersGatesSearch', [function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.gates.search.html'
-		/*scope: {
-			model:			'=',
-			ocultarFiltros:	'=',
-			currentPage:	'='
-		},
-		controller: 'searchController'*/
 	}
 }]);
 
@@ -668,9 +662,6 @@ myapp.directive('divPagination', function(){
 			$scope.pageChanged = function(){
 				$scope.$emit('cambioPagina', $scope.currentPage);
 			};
-			$scope.$on('actualizarPagina', function(event, data){
-				$scope.currentPage = data;
-			})
 		},
 		template:
 			'<div class="col-lg-12 hidden-print" ng-show="totalItems > itemsPerPage">' +
