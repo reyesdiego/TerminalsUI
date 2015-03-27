@@ -19,11 +19,13 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	};
 
 	$scope.irA = function(){
-		if (loginService.getStatus()){
-			$state.transitionTo($state.current.name);
-			window.location.reload();
-		} else{
-			$state.transitionTo('login');
+		if (!$rootScope.cargandoCache) {
+			if (loginService.getStatus()){
+				$state.transitionTo($state.current.name);
+				window.location.reload();
+			} else{
+				$state.transitionTo('login');
+			}
 		}
 	};
 
