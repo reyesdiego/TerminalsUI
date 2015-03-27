@@ -495,6 +495,7 @@ myapp.directive('tableGates', function(){
 		restrict:		'E',
 		templateUrl:	'view/table.gates.html',
 		scope: {
+			ocultarBusqueda:	'@',
 			model:				'=',
 			datosGates:			'=',
 			totalItems:			'=',
@@ -514,6 +515,7 @@ myapp.directive('tableTurnos', function(){
 		restrict:		'E',
 		templateUrl:	'view/table.turnos.html',
 		scope: {
+			ocultarBusqueda:	'@',
 			model:				'=',
 			datosTurnos:		'=',
 			totalItems:			'=',
