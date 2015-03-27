@@ -10,8 +10,8 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 		{ value: 20, description: '20 items por página', ticked: false},
 		{ value: 50, description: '50 items por página', ticked: false}
 	];
-
 	$scope.filteredDatos = [];
+	$scope.search = '';
 
 	$scope.datosFaltantes = [];
 	$scope.cargando = false;
