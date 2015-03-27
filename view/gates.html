@@ -7,14 +7,6 @@
 			</div>
 		</div>
 
-		<div class="row hidden-print" ng-hide="detallesGates">
-			<containers-gates-search model="model" current-page="currentPage"></containers-gates-search>
-		</div>
-
-		<div class="row visible-print-block">
-			<impresion-filtros></impresion-filtros>
-		</div>
-
 		<div class="row">
 			<table-gates model="model" datos-gates="gates" detalles-gates="detallesGates" total-items="totalItems" items-per-page="itemsPerPage" current-page="currentPage" config-panel="configPanel" loading-state="cargando"></table-gates>
 		</div>

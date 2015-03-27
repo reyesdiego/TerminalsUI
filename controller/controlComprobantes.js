@@ -567,7 +567,6 @@ myapp.controller('comprobantesRevisarCtrl', ['$scope', 'invoiceFactory', functio
 
 	$scope.$on('cambioFiltro', function(){
 		$scope.currentPage = 1;
-		$scope.$broadcast('actualizarPagina', 1);
 		$scope.model.estado = 'C';
 		$scope.traerComprobantes();
 	});
@@ -640,7 +639,6 @@ myapp.controller('comprobantesErrorCtrl', ['$scope', 'invoiceFactory', function(
 		if ($scope.model.estado == 'N'){
 			$scope.model.estado = 'R,T';
 		}
-		$scope.$broadcast('actualizarPagina', 1);
 		$scope.traerComprobantes();
 	});
 

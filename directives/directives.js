@@ -602,25 +602,20 @@ myapp.directive('invoiceTrack', function(){
 myapp.directive('containersGatesSearch', [function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/accordion.gates.search.html',
-		scope: {
+		templateUrl:	'view/accordion.gates.search.html'
+		/*scope: {
 			model:			'=',
 			ocultarFiltros:	'=',
 			currentPage:	'='
 		},
-		controller: 'searchController'
+		controller: 'searchController'*/
 	}
 }]);
 
 myapp.directive('accordionTurnosSearch', [function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/accordion.turnos.search.html',
-		scope: {
-			model:			'=',
-			currentPage:	'='
-		},
-		controller: 'searchController'
+		templateUrl:	'view/accordion.turnos.search.html'
 	}
 }]);
 

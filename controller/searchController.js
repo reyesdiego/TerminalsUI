@@ -12,9 +12,6 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	$scope.listaBuques = generalCache.get('buques');
 	$scope.listaViajes = [];
 
-	$scope.$on('tengoViajes', function(event, data){
-		$scope.listaViajes = data;
-	});
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
 	};
