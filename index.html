@@ -109,7 +109,7 @@
 			</button>
 		</div>
 		<div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
-			<ul class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right" ng-hide="cargandoCache">
 				<li ng-show="acceso==''"><a collap ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
 				<li ng-show="acceso!=''"><a collap ui-sref="tarifario">Tarifario</a></li>
 				<li ng-show="acceso!=''"><a collap ui-sref="matches">Asociar</a></li>

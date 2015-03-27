@@ -15,6 +15,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 	});
 
 	$scope.cerrarSesion = function(){
+		$rootScope.cargandoCache = false;
 		$scope.hayError = true;
 		$scope.barType = 'progress-bar-danger';
 		$scope.mostrarMensaje = 'Se ha producido un error...';
@@ -36,11 +37,14 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 		}, 1000);
 	};
 
+	$rootScope.cargandoCache = true;
+
 	if ($rootScope.cambioTerminal){
 		$rootScope.cambioTerminal = false;
 		cacheFactory.cambioTerminal()
 			.then(function(){
 				$timeout(function(){
+					$rootScope.cargandoCache = false;
 					$state.transitionTo($rootScope.previousState);
 				}, 500)
 			},
@@ -52,6 +56,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 		cacheFactory.cargaMemoryCache()
 			.then(function(){
 				$timeout(function(){
+					$rootScope.cargandoCache = false;
 					$state.transitionTo($rootScope.previousState);
 				}, 500)
 			},

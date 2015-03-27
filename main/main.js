@@ -262,6 +262,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.cambioTerminal = false;
 	$rootScope.cargarCache = false;
 	$rootScope.primerRuteo = false;
+	$rootScope.cargandoCache = false;
 
 	$rootScope.ordenarPor = function(filtro){
 		if ($rootScope.predicate == filtro){

@@ -38,6 +38,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	});
 
 	$scope.cerrarSesion = function(){
+		$rootScope.cargandoCache = false;
 		$scope.hayError = true;
 		$scope.barType = 'progress-bar-danger';
 		$scope.mostrarMensaje = $scope.msg[4];
@@ -62,9 +63,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 
 	$scope.login = function(){
 		$scope.entrando = true;
+		$rootScope.cargandoCache = true;
 		if ($scope.sesion){
 			authFactory.loginWithCookies($scope.email, $scope.password)
 				.then(function(result){
+					$rootScope.cargandoCache = false;
 					$state.transitionTo('tarifario');
 				},
 				function(){
@@ -73,6 +76,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		} else {
 			authFactory.loginWithoutCookies($scope.email, $scope.password)
 				.then(function(result){
+					$rootScope.cargandoCache = false;
 					$state.transitionTo('tarifario');
 				},
 				function(){
