@@ -29,6 +29,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 		$timeout(function(){
 			if ($scope.progreso > 0){
 				$scope.progreso -= 10;
+				$scope.porcentaje = ($scope.progreso * 100 / $scope.max).toFixed();
 				$scope.mostrarMensaje = 'Cerrando sesiónn';
 				$scope.volver();
 			} else {

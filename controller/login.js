@@ -52,6 +52,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$timeout(function(){
 			if ($scope.progreso > 0){
 				$scope.progreso -= 10;
+				$scope.porcentaje = ($scope.progreso * 100 / $scope.max).toFixed();
 				$scope.mostrarMensaje = $scope.msg[5];
 				$scope.volver();
 			} else {
