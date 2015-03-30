@@ -688,7 +688,7 @@ myapp.directive('divCargando', [function () {
 		},
 		template:
 			'<div class="col-lg-12 text-center" ng-show="mostrar">' +
-			'	<img class="media-object" style="margin-left: 40%; margin-top: 50px" ng-src="images/grua_carga.gif" width="252" height="252">' +
+			'	<img class="media-object" style="margin-left: 40%; margin-top: 50px" ng-src="images/loading.gif" width="252" height="252">' +
 			'</div>' +
 			'<div class="col-lg-12" ng-hide="mostrar">' +
 			'	<div ng-transclude></div>' +
