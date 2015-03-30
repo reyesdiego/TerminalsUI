@@ -242,7 +242,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		var deferred = $q.defer();
 		var llamadas = [];
 		// Buque viaje cache
-		//llamadas.push(factory.cargaBuques());
+		llamadas.push(factory.cargaBuques());
 		// Clientes cache
 		llamadas.push(factory.cargaClientes());
 		// Contenedores cache
@@ -292,7 +292,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		var deferred = $q.defer();
 		var llamadas = [];
 		// Buque viaje cache
-		//llamadas.push(factory.cargaBuques());
+		llamadas.push(factory.cargaBuques());
 		// Clientes cache
 		llamadas.push(factory.cargaClientes());
 		// Contenedores cache
