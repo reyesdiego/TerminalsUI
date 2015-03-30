@@ -141,6 +141,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 	};
 
 	$scope.armarGraficoTarifas = function () {
+		$scope.totales = [0, 0, 0, 0];
+
 		$scope.loadingReporteTarifas = true;
 		$scope.tarifasGraficar = {
 			"field": "code",

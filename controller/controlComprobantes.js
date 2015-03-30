@@ -234,20 +234,37 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 
 	var socketIoRegister;
 
+	$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje', 'itemsPerPage'];
+
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 	$scope.deshabilitarBuscar = false;
 	$scope.totalPuntos = 0;
 	$scope.leerData = true;
 	$scope.arrayCargados = [];
+	$scope.terminalSellPoints = [];
 
 	$scope.loadingCorrelatividad = false;
 
 	$scope.model = {
 		'nroPtoVenta': '',
-		'codTipoComprob': 0,
+		'codTipoComprob': 1,
 		'fechaInicio': $scope.desde,
 		'fechaFin': $scope.hasta
+	};
+
+	$scope.traerPuntosDeVenta = function(){
+		invoiceFactory.getCashbox({}, function(data){
+			if (data.status == 'OK'){
+				var i;
+				$scope.terminalSellPoints = data.data;
+				$scope.model.codTipoComprob = 1;
+				$scope.model.nroPtoVenta = $scope.terminalSellPoints[0];
+				for (i = 1; i<$scope.terminalSellPoints.length; i++){
+					$scope.model.nroPtoVenta = $scope.model.nroPtoVenta + ',' + $scope.terminalSellPoints[i];
+				}
+			}
+		})
 	};
 
 	$scope.tipoComprob = '';
@@ -264,8 +281,18 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 	$scope.puntosDeVenta = [];
 
 	$scope.$on('cambioFiltro', function(event, data){
-		$scope.model = data;
-		$scope.controlCorrelatividad();
+		if ($scope.model.codTipoComprob == 0){
+			$scope.mostrarBotonImprimir = false;
+			$scope.totalFaltantes = 0;
+			$scope.puntosDeVenta = [];
+			$scope.pantalla = {
+				titulo:  "Correlatividad",
+				tipo: "panel-info",
+				mensajeCorrelativo : 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.'
+			};
+		} else {
+			$scope.controlCorrelatividad();
+		}
 	});
 
 	$scope.$on('errorInesperado', function(e, mensaje){
@@ -354,6 +381,9 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			}
 		});
 	});
+
+	$scope.traerPuntosDeVenta();
+
 }]);
 
 myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', function($scope, invoiceFactory, priceFactory) {

@@ -10,6 +10,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	$scope.listaContenedoresGates = contenedoresCache.get('contenedoresGates');
 	$scope.listaContenedoresTurnos = contenedoresCache.get('contenedoresTurnos');
 	$scope.listaBuques = generalCache.get('buques');
+	$scope.vouchers = generalCache.get('vouchers');
 	$scope.listaViajes = [];
 
 	$scope.openDate = function(event){
@@ -70,7 +71,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 			$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 		}
-		$scope.$emit('cambioFiltro', $scope.listaViajes);
+		$scope.$emit('cambioFiltro', $scope.model);
 	};
 	//FUNCIONES DE TABLE GATES //////////////////////////////////////////////////////////////////////
 	$scope.colorHorario = function (gate) {
