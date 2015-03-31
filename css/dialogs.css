@@ -1,3 +1,9 @@
+.imagenCargando{
+    content: url("../images/loading.gif");
+    width: 252px;
+    height: 252px;
+}
+
 /* Custom dialog/modal headers */
 
 .dialog-header-error { background-color: #d2322d; }
