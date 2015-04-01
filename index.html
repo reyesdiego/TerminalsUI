@@ -3,6 +3,7 @@
 
 <head>
 	<title>Administraci&oacute;n General de Puertos S.E.</title>
+	<link rel="shortcut icon" href="/images/favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Default-Style" content="BACTSSA">
 	<meta charset="utf-8">
@@ -102,7 +103,7 @@
 <div class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
-			<a ng-click="irA()" class="nav navbar-brand"><img src="images/LogoPUERTO.png" width="30" height="30"> AGP S.E.</a>
+			<a ng-click="irA()" class="nav navbar-brand"><img src="images/LogoPUERTO_30x30.png" width="30" height="30"> AGP S.E.</a>
 			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse" ng-show="acceso!=''" ng-click="isCollapsed = !isCollapsed">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -112,8 +113,13 @@
 		<div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
 			<ul class="nav navbar-nav navbar-right" ng-hide="cargandoCache">
 				<li ng-show="acceso==''"><a collap ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
-				<li ng-show="acceso!=''"><a collap ui-sref="tarifario">Tarifario</a></li>
-				<li ng-show="acceso!=''"><a collap ui-sref="matches">Asociar</a></li>
+				<li ng-show="acceso!=''" dropdown>
+					<a data-ng-hide="dropdown" dropdown-toggle>Tarifas<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a collap ui-sref="tarifario">Tarifario</a></li>
+						<li><a collap ui-sref="matches">Asociar</a></li>
+					</ul>
+				</li>
 				<li ng-show="acceso!=''" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b></a>
 					<ul class="dropdown-menu">
