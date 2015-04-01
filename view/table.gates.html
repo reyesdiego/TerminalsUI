@@ -49,8 +49,9 @@
 	<div class="row" ng-show="detallesGates">
 		<div class="col-lg-12">
 			<h4>Comprobantes del contenedor {{ contenedor }}</h4>
-			<vista-comprobantes model="$parent.model" datos-invoices="invoices" ocultar-filtros="$parent.filtrosComprobantes" total-items="totalItems" loading-state="cargando" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
+			<vista-comprobantes model="$parent.model" datos-invoices="invoices" ocultar-filtros="$parent.filtrosComprobantes" total-items="totalItems" loading-state="cargando" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
 			<button class="btn btn-default hidden-print" ng-hide="mostrarResultado" ng-click="ocultarDetallesGates()"><span class="glyphicon glyphicon-arrow-left"></span> Volver a Gates</button>
+			<br>
 		</div>
 	</div>
 </div>

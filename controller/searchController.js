@@ -12,6 +12,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	$scope.listaBuques = generalCache.get('buques');
 	$scope.vouchers = generalCache.get('vouchers');
 	$scope.listaViajes = [];
+	$scope.volverAPrincipal = true;
 
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
@@ -91,6 +92,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		});
 	};
 	$scope.ocultarDetallesGates = function(){
+		$scope.volverAPrincipal = !$scope.volverAPrincipal;
 		$scope.detallesGates = false;
 		$scope.totalItems = $scope.totalGates;
 		$scope.currentPage = $scope.paginaAnterior
