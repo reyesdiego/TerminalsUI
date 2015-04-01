@@ -15,7 +15,7 @@
 		</div>
 		<div ng-show="datosFaltantes.length != undefined && filteredDatos.length > 0">
 			<h5><strong>Resultados: {{ filteredDatos.length }}</strong><span class="visible-print-block"><strong>Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ currentPage * itemsPerPage > totalItems ? totalItems : currentPage * itemsPerPage }} (página {{ currentPage }})</strong></span></h5>
-			<div class="table-responsive" ng-hide="cargando">
+			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 					<tr>
@@ -64,9 +64,9 @@
 					</tr>
 				</table>
 			</div>
+			<div-pagination total-items="filteredDatos.length" current-page="currentPage" items-per-page="model.itemsPerPage"></div-pagination>
 		</div>
 	</div>
-	<div-pagination total-items="filteredDatos.length" current-page="currentPage" items-per-page="model.itemsPerPage"></div-pagination>
 </div>
 
 <div ng-show="mostrarResultado">

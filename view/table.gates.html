@@ -1,7 +1,7 @@
-<div class="row hidden-print" ng-hide="detallesGates || ocultarBusqueda">
+<div class="hidden-print" ng-hide="detallesGates || ocultarBusqueda">
 	<containers-gates-search></containers-gates-search>
 </div>
-<div class="row visible-print-block" ng-hide="ocultarBusqueda">
+<div class="visible-print-block" ng-hide="ocultarBusqueda">
 	<impresion-filtros></impresion-filtros>
 </div>
 <div class="col-lg-12 text-center" ng-show="loadingState">
@@ -13,38 +13,36 @@
 	</div>
 	<div ng-show="datosGates.length != undefined && datosGates.length > 0">
 		<h5 ng-hide="detallesGates"><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
-		<div class="table-responsive" ng-hide="detallesGates">
-			<table class="table table-bordered table-hover" style="text-align: center">
-				<tr>
-					<th style="text-align: center">
-						<encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado>
-					</th>
-					<th style="text-align: center">Buque</th>
-					<th style="text-align: center">Viaje</th>
-					<th style="text-align: center">Contenedor</th>
-					<th style="text-align: center">Patente cami&oacute;n</th>
-					<th style="text-align: center">Tipo</th>
-					<th style="text-align: center">
-						<encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado>
-					</th>
-					<th style="text-align: center">Inicio turno</th>
-					<th style="text-align: center">Fin turno</th>
-					<th style="text-align: center"><span class="visible-sm">Movim.</span><span class="hidden-sm">Movimiento</span></th>
-					<th class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center">Facturas</th>
-				</tr>
-				<tr ng-repeat="gate in datosGates">
-					<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO'" ng-click="filtrado('buqueNombre', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
-					<td>{{ gate.viaje }}</td>
-					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO'" ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
-					<td>{{ gate.patenteCamion }}</td>
-					<td><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
-					<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
-					<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
-					<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
-					<td>{{ gate.mov }}</td>
-					<td class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)" ng-hide="gate.carga == 'NO'"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-			</table>
+		<div ng-hide="detallesGates">
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover" style="text-align: center">
+					<tr>
+						<th style="text-align: center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
+						<th style="text-align: center">Buque</th>
+						<th style="text-align: center">Viaje</th>
+						<th style="text-align: center">Contenedor</th>
+						<th style="text-align: center">Patente cami&oacute;n</th>
+						<th style="text-align: center">Tipo</th>
+						<th style="text-align: center"><encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
+						<th style="text-align: center">Inicio turno</th>
+						<th style="text-align: center">Fin turno</th>
+						<th style="text-align: center"><span class="visible-sm">Movim.</span><span class="hidden-sm">Movimiento</span></th>
+						<th class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center">Facturas</th>
+					</tr>
+					<tr ng-repeat="gate in datosGates">
+						<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
+						<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO'" ng-click="filtrado('buqueNombre', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
+						<td>{{ gate.viaje }}</td>
+						<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO'" ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
+						<td>{{ gate.patenteCamion }}</td>
+						<td><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
+						<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
+						<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
+						<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
+						<td>{{ gate.mov }}</td>
+						<td class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)" ng-hide="gate.carga == 'NO'"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+				</table>
+			</div>
 			<div-pagination total-items="totalItems" current-page="currentPage" items-per-page="itemsPerPage"></div-pagination>
 		</div>
 	</div>

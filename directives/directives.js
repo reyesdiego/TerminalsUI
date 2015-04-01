@@ -143,19 +143,19 @@ myapp.directive('invoiceTrack', function(){
 	}
 });
 
-myapp.directive('containersGatesSearch', [function(){
+myapp.directive('containersGatesSearch', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.gates.search.html'
 	}
-}]);
+});
 
-myapp.directive('accordionTurnosSearch', [function(){
+myapp.directive('accordionTurnosSearch', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.turnos.search.html'
 	}
-}]);
+});
 
 myapp.directive('divPagination', function(){
 	return {
@@ -621,7 +621,7 @@ myapp.directive('datepickerPopup', function (){
 	}
 });
 
-myapp.directive('toupper', [function() {
+myapp.directive('toupper', function() {
 	return {
 		require: 'ngModel',
 		link: function(scope, element, attrs, modelCtrl) {
@@ -639,9 +639,9 @@ myapp.directive('toupper', [function() {
 			mayusculas(scope[attrs.ngModel]);  // capitalize initial value
 		}
 	};
-}]);
+});
 
-myapp.directive('collap', [function() {
+myapp.directive('collap', function() {
 	return {
 		restrict: 'A',
 		link: function(scope, element) {
@@ -650,7 +650,7 @@ myapp.directive('collap', [function() {
 			});
 		}
 	};
-}]);
+});
 
 myapp.directive('accordionMin', [function () {
 	return {
@@ -679,7 +679,7 @@ myapp.directive('accordionMin', [function () {
 	}
 }]);
 
-myapp.directive('divCargando', [function () {
+myapp.directive('divCargando', function () {
 	return {
 		restrict:		'E',
 		transclude:		true,
@@ -695,4 +695,4 @@ myapp.directive('divCargando', [function () {
 			'</div>'
 
 	}
-}]);
+});
