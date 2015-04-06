@@ -74,7 +74,7 @@
 				</table>
 			</div>
 			<div class="row" ng-show="mostrarGrafico">
-				<div class="col-lg-12 text-center">
+				<div class="col-lg-6 text-center">
 					<dynamic-chart
 							data="chartDataReporteTarifas"
 							title="{{chartTitleReporteTarifas}}"
@@ -88,7 +88,21 @@
 							money="monedaFija"
 							columns="{{ tarifasElegidas }}">
 					</dynamic-chart>
-
+				</div>
+				<div class="col-lg-6 text-center center-block">
+					<dynamic-chart
+							data="totalesPorTerminal"
+							title="Totales por terminal"
+							width="500"
+							height="500"
+							select="selectRow(selectedRowIndexTotalesTerminal)"
+							colors="barColors"
+							type="{{pieChart}}"
+							currency="true"
+							stacked="false"
+							is3-d="true"
+							money="monedaFija">
+					</dynamic-chart>
 				</div>
 			</div>
 		</div>

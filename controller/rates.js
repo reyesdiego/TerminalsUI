@@ -3,12 +3,24 @@
  */
 
 
-myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache) {
+myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache) {
 
 	$rootScope.predicate = 'terminal';
 	$scope.monedaFija = 'DOL';
 	$scope.tarifasElegidas = 1;
 	$scope.total = 0;
+
+	$scope.totalesPorTerminal = [
+		['BACTSSA', 0],
+		['TERMINAL 4', 0],
+		['TRP', 0]
+	];
+
+	$scope.barColors = {
+		"bactssa": colorTerminalesCache.get('Bactssa'),
+		"terminal4": colorTerminalesCache.get('Terminal4'),
+		"trp": colorTerminalesCache.get('Trp')
+	};
 
 	$scope.allRates = generalCache.get('allRates');
 
@@ -32,9 +44,10 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 	$scope.mostrarGrafico = false;
 
 	$scope.columnChart = 'column';
+	$scope.pieChart = 'pie';
 
 	$scope.chartTitleReporteTarifas = "Códigos de tarifas";
-	$scope.chartWidthReporteTarifas = 1200;
+	$scope.chartWidthReporteTarifas = 600;
 	$scope.chartHeightReporteTarifas = 500;
 	$scope.chartDataReporteTarifas = [
 		['Codigos', 'algo'],
@@ -88,6 +101,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			}
 			base[row][column] = tasa.total;
 			$scope.total += tasa.total;
+			$scope.totalesPorTerminal[row - 1][1] += tasa.total;
 		});
 		$scope.chartDataReporteTarifas = base;
 		$scope.mostrarGrafico = true;
