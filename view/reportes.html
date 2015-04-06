@@ -54,7 +54,7 @@
 						<th class="text-right"><a href="" ng-click="ordenarPor('total')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'total' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'total' && reverse"></span>
-							Total
+							Subtotal
 						</a></th>
 					</tr>
 					</thead>
@@ -65,6 +65,10 @@
 						<td>{{ ponerDescripcion(tasa.code) }}</td>
 						<td class="text-right">{{ tasa.ton }}</td>
 						<td class="text-right">{{ moneda | formatCurrency }} {{ tasa.total | currency }}</td>
+					</tr>
+					<tr>
+						<td colspan="4" class="text-right"><strong>Total</strong></td>
+						<td class="text-right">{{ moneda | formatCurrency }} {{ total | currency }}</td>
 					</tr>
 					</tbody>
 				</table>

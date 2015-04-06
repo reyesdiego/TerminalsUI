@@ -8,6 +8,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 	$rootScope.predicate = 'terminal';
 	$scope.monedaFija = 'DOL';
 	$scope.tarifasElegidas = 1;
+	$scope.total = 0;
 
 	$scope.allRates = generalCache.get('allRates');
 
@@ -86,6 +87,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 					break;
 			}
 			base[row][column] = tasa.total;
+			$scope.total += tasa.total;
 		});
 		$scope.chartDataReporteTarifas = base;
 		$scope.mostrarGrafico = true;
