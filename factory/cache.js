@@ -11,7 +11,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				generalCache.put('buques', data.data);
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
-				//console.log(generalCache.get('buqueViaje'));
 			} else {
 				deferred.reject();
 			}
@@ -31,7 +30,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				generalCache.put('clientes', clientes);
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
-				//console.log(generalCache.get('clientes'));
 			} else {
 				deferred.reject();
 			}
@@ -51,7 +49,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				contenedoresCache.put('contenedores', contenedores);
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
-				//console.log(contenedoresCache.get('contenedores'));
 			} else {
 				deferred.reject();
 			}
@@ -69,7 +66,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 					contenedores.push({id: i++, contenedor: dato})
 				});
 				contenedoresCache.put('contenedoresGates', contenedores);
-				//console.log(contenedoresCache.get('contenedoresGates'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 			} else {
@@ -89,7 +85,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 					contenedores.push({id: i++, contenedor: dato})
 				});
 				contenedoresCache.put('contenedoresTurnos', contenedores);
-				//console.log(contenedoresCache.get('contenedoresTurnos'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 			} else {
@@ -104,7 +99,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		invoiceFactory.getDescriptionItem(function (data) {
 			if (data.status == 'OK') {
 				generalCache.put('descripciones', data.data);
-				//console.log(generalCache.get('descripciones'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 			} else {
@@ -122,7 +116,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				data.data.forEach(function (dato) {
 					vouchersArrayCache.put(dato._id, dato.description);
 				});
-				//console.log(generalCache.get('vouchers'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 			} else {
@@ -140,7 +133,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				data.data.forEach(function (dato) {
 					unitTypesArrayCache.put(dato._id, dato.description);
 				});
-				//console.log(generalCache.get('unitTypes'));
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 			} else {
@@ -183,8 +175,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				data.data.forEach(function (dato) {
 					estadosArrayCache.put(dato._id, dato);
 				});
-				//console.log(generalCache.get('estados'));
-				//console.log(estadosArrayCache.get('Y'))
 				$rootScope.$broadcast('progreso', {mensaje: 2});
 				deferred.resolve();
 			} else {
