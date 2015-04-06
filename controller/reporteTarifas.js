@@ -220,6 +220,14 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 							tarifa.porcentaje.push(cuenta);
 						}
 					});
+					totalesTerminal.sort(function(a, b){
+						var terminalA = a[0].toLowerCase(), terminalB = b[0].toLowerCase();
+						if (terminalA < terminalB) //sort string ascending
+							return -1;
+						if (terminalA > terminalB)
+							return 1;
+						return 0; //default return value (no sorting)
+					});
 					$scope.chartDataTotalesTerminal = totalesTerminal;
 					$scope.chartDataTotalesTarifas = totalesTarifas;
 					$scope.chartDataReporteTarifas = base;
