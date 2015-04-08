@@ -562,7 +562,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 
 }]);
 
-myapp.controller('comprobantesPorEstadoCtrl', ['$scope', 'invoiceFactory', function($scope, invoiceFactory) {
+myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory) {
 
 	var misEstados = $scope.estado.split(',');
 
@@ -603,6 +603,18 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$scope', 'invoiceFactory', funct
 
 	$scope.loadingState = false;
 
+	$scope.recargar = true;
+
+	$scope.$on('actualizarListado', function(event, data){
+		if ($scope.estado != data){
+			$scope.currentPage = 1;
+			if ($scope.model.estado == 'N'){
+				$scope.model.estado = $scope.estado;
+			}
+			$scope.traerComprobantes();
+		}
+	});
+
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
 		if ($scope.model.estado == 'N'){
@@ -612,6 +624,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$scope', 'invoiceFactory', funct
 	});
 
 	$scope.$on('cambioFiltro', function(){
+		$scope.recargar = false;
 		$scope.currentPage = 1;
 		if ($scope.model.estado == 'N'){
 			$scope.model.estado = $scope.estado;
