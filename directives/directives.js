@@ -19,9 +19,21 @@ myapp.directive('vistaComprobantes', function(){
 			ocultarAccordionComprobantesVistos:	'=',
 			panelMensaje:						'=',
 			volverAPrincipal:					'=',
-			filtroEstados:						'@'
+			filtroEstados:						'='
 		},
 		controller: 'vistaComprobantesCtrl'
+	}
+});
+
+myapp.directive('comprobantesPorEstado', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/comprobantesPorEstado.html',
+		scope: {
+			estado:								'@',
+			filtroEstados:						'@'
+		},
+		controller: 'comprobantesPorEstadoCtrl'
 	}
 });
 

@@ -562,8 +562,17 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 
 }]);
 
-myapp.controller('comprobantesRevisarCtrl', ['$scope', 'invoiceFactory', function($scope, invoiceFactory) {
-	$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
+myapp.controller('comprobantesPorEstadoCtrl', ['$scope', 'invoiceFactory', function($scope, invoiceFactory) {
+
+	var misEstados = $scope.estado.split(',');
+
+	if (misEstados.length == 1){
+		$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
+	} else {
+		$scope.ocultarFiltros = ['nroPtoVenta'];
+	}
+
+	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 	$scope.model = {
 		'nroPtoVenta': '',
@@ -571,12 +580,12 @@ myapp.controller('comprobantesRevisarCtrl', ['$scope', 'invoiceFactory', functio
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
-		'fechaInicio': $scope.fechaInicio,
+		'fechaInicio': '',
 		'fechaFin': $scope.fechaFin,
 		'contenedor': '',
 		'buqueNombre': '',
 		'viaje': '',
-		'estado': 'N',
+		'estado': $scope.estado,
 		'code': '',
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
@@ -585,81 +594,19 @@ myapp.controller('comprobantesRevisarCtrl', ['$scope', 'invoiceFactory', functio
 		'itemsPerPage': 15
 	};
 
-	$scope.comprobantesRevisar = [];
-
-	$scope.loadingRevisar = false;
-
-	$scope.$on('cambioPagina', function(event, data){
-		$scope.currentPage = data;
-		$scope.model.estado = 'C';
-		$scope.traerComprobantes();
-	});
-
-	$scope.$on('cambioFiltro', function(){
-		$scope.currentPage = 1;
-		$scope.model.estado = 'C';
-		$scope.traerComprobantes();
-	});
-
-	$scope.$on('errorInesperado', function(e, mensaje){
-		$scope.loadingRevisar = false;
-		$scope.comprobantesRevisar = [];
-		$scope.mensajeResultado = mensaje;
-	});
-
-	$scope.traerComprobantes = function(){
-		$scope.loadingRevisar = true;
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
-		$scope.page.limit = $scope.model.itemsPerPage;
-		$scope.comprobantesRevisar = [];
-		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceRevisar){
-			if (invoiceRevisar.status == 'OK'){
-				$scope.comprobantesRevisar = invoiceRevisar.data;
-				$scope.totalItems = invoiceRevisar.totalCount;
-			} else {
-				$scope.mensajeResultado = {
-					titulo: 'Error',
-					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-					tipo: 'panel-danger'
-				};
-				$scope.comprobantesRevisar = [];
-			}
-			$scope.loadingRevisar = false;
-		})
-	};
-}]);
-
-myapp.controller('comprobantesErrorCtrl', ['$scope', 'invoiceFactory', function($scope, invoiceFactory) {
-	$scope.ocultarFiltros = ['nroPtoVenta'];
-
-	$scope.model = {
-		'nroPtoVenta': '',
-		'codTipoComprob': 0,
-		'nroComprobante': '',
-		'razonSocial': '',
-		'documentoCliente': '',
-		'fechaInicio': $scope.fechaInicio,
-		'fechaFin': $scope.fechaFin,
-		'contenedor': '',
-		'buqueNombre': '',
-		'viaje': '',
-		'estado': 'N',
-		'code': '',
-		'filtroOrden': 'gateTimestamp',
-		'filtroOrdenAnterior': '',
-		'filtroOrdenReverse': false,
-		'order': '',
-		'itemsPerPage': 15
+	$scope.page = {
+		skip:0,
+		limit: $scope.model.itemsPerPage
 	};
 
-	$scope.comprobantesError = [];
+	$scope.comprobantes = [];
 
-	$scope.loadingError = false;
+	$scope.loadingState = false;
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
 		if ($scope.model.estado == 'N'){
-			$scope.model.estado = 'R,T';
+			$scope.model.estado = $scope.estado;
 		}
 		$scope.traerComprobantes();
 	});
@@ -667,39 +614,39 @@ myapp.controller('comprobantesErrorCtrl', ['$scope', 'invoiceFactory', function(
 	$scope.$on('cambioFiltro', function(){
 		$scope.currentPage = 1;
 		if ($scope.model.estado == 'N'){
-			$scope.model.estado = 'R,T';
+			$scope.model.estado = $scope.estado;
 		}
 		$scope.traerComprobantes();
 	});
 
 	$scope.$on('errorInesperado', function(e, mensaje){
-		$scope.loadingError = false;
-		$scope.comprobantesError = [];
+		$scope.loadingState = false;
+		$scope.comprobantes = [];
 		$scope.mensajeResultado = mensaje;
 	});
 
 	$scope.traerComprobantes = function(){
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
-		$scope.loadingError = true;
+		$scope.loadingState = true;
 		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceError){
 			if (invoiceError.status == 'OK'){
-				$scope.comprobantesError = invoiceError.data;
+				$scope.comprobantes = invoiceError.data;
 				$scope.totalItems = invoiceError.totalCount;
-				$scope.comprobantesError.forEach(function(comprobante){
+				/*$scope.comprobantes.forEach(function(comprobante){
 					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 						comprobante.lastComment = dataTrack.data[0].comment + ' - ' + dataTrack.data[0].user;
 					})
-				})
+				})*/
 			} else {
 				$scope.mensajeResultado = {
 					titulo: 'Error',
 					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
 					tipo: 'panel-danger'
 				};
-				$scope.comprobantesError = [];
+				$scope.comprobantes = [];
 			}
-			$scope.loadingError = false;
+			$scope.loadingState = false;
 		})
 	};
 }]);

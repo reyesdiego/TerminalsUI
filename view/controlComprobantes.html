@@ -75,20 +75,28 @@
 	<vista-comprobantes model="model" datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas" panel-mensaje="mensajeResultado"></vista-comprobantes>
 </tab>
 
-<tab class="hidden-print" heading="Comprobantes sin revisar" ng-controller="comprobantesRevisarCtrl" ng-show="acceso == 'agp'">
+<tab class="hidden-print" heading="Sin revisar" ng-show="acceso == 'agp'">
 	<div class="visible-print-block">
 		<h3>Comprobantes sin revisar</h3>
 	</div>
 	<br>
-	<vista-comprobantes model="model" datos-invoices="comprobantesRevisar" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingRevisar" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado"></vista-comprobantes>
+	<comprobantes-por-estado estado="C" filtro-estados=""></comprobantes-por-estado>
 </tab>
 
-<tab class="hidden-print" heading="Comprobantes erróneos" ng-controller="comprobantesErrorCtrl">
+<tab class="hidden-print" heading="Erróneos">
 	<div class="visible-print-block">
 		<h3>Comprobantes erróneos</h3>
 	</div>
 	<br>
-	<vista-comprobantes model="model" datos-invoices="comprobantesError" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingError" control-codigos="false" mostrar-ptos-venta="true" panel-mensaje="mensajeResultado" filtro-estados="ERROR"></vista-comprobantes>
+	<comprobantes-por-estado estado="R,T,E" filtro-estados="ERROR"></comprobantes-por-estado>
+</tab>
+
+<tab class="hidden-print" heading="A reenviar">
+	<div class="visible-print-block">
+		<h3>Comprobantes a reenviar</h3>
+	</div>
+	<br>
+	<comprobantes-por-estado estado="E" filtro-estados=""></comprobantes-por-estado>
 </tab>
 
 </tabset>
