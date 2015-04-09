@@ -1,5 +1,5 @@
-<div class="col-lg-12" ng-show="detalle">
-	<div class="row">
+<div class="col-lg-12">
+	<div class="row" ng-show="contenedorElegido.contenedor != ''">
 		<div class="col-lg-12">
 			<h1>Detalles del contenedor {{ contenedorElegido.contenedor }}</h1>
 		</div>
@@ -8,16 +8,14 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h3>Comprobantes</h3>
-			<vista-comprobantes model="model" datos-invoices="invoices" ocultar-filtros="ocultarFiltros" total-items="invoicesTotalItems" loading-state="loadingInvoices" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
+			<vista-comprobantes model="model" datos-invoices="invoices" ocultar-filtros="filtrosComprobantes" total-items="invoicesTotalItems" loading-state="loadingInvoices" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
 		</div>
 	</div>
 
 	<div class="row" ng-hide="ocultaTasas">
 		<div class="col-lg-12">
 			<h3>Tasas Cargas</h3>
-			<div-cargando mostrar="loadingTasas">
-				<table-tasas-cargas tasas="tasas" total-tasas="totalTasas" config-panel="configPanelTasas" moneda="moneda"></table-tasas-cargas>
-			</div-cargando>
+			<table-tasas-cargas tasas="tasas" total-tasas="totalTasas" config-panel="configPanelTasas" loading-state="loadingTasas" moneda="moneda"></table-tasas-cargas>
 		</div>
 	</div>
 

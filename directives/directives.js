@@ -91,6 +91,7 @@ myapp.directive('tableTasasCargas', function(){
 			configPanel:		'=',
 			tasas:				'=',
 			totalTasas:			'=',
+			loadingState:		'=',
 			moneda:				'='
 		}
 	}

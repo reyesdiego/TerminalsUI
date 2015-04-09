@@ -3,6 +3,27 @@
  */
 
 myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache){
+	////// Para containers /////////////
+	$scope.model = {
+		'nroPtoVenta': '',
+		'codTipoComprob': 0,
+		'nroComprobante': '',
+		'razonSocial': '',
+		'documentoCliente': '',
+		'fechaInicio': '',
+		'fechaFin': '',
+		'contenedor': '',
+		'buqueNombre': '',
+		'viaje': '',
+		'estado': 'N',
+		'code': '',
+		'filtroOrden': 'gateTimestamp',
+		'filtroOrdenAnterior': '',
+		'filtroOrdenReverse': false,
+		'order': ''
+	};
+	//////////////////////////////////////
+
 	$scope.loadingState = false;
 	$scope.invoices = [];
 	$scope.loadingInvoices = false;
@@ -14,7 +35,8 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 	$scope.loadingTasas = false;
 	$scope.detalleGates = false;
 	$scope.volverAPrincipal = false;
-	$scope.ocultarFiltros = ['buque', 'contenedor', 'comprobantes', 'razonSocial', 'codTipoComprob', 'nroComprobante', 'fechaInicio'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'codTipoComprob', 'nroComprobante', 'razonSocial', 'documentoCliente', 'codigo', 'estado', 'itemsPerPage', 'fechaInicio', 'fechaFin', 'buque'];
+	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
 	$scope.mensajeResultado = $rootScope.mensajeResultado;
 	$scope.configPanelTasas = {
 		tipo: 'panel-info',
@@ -32,7 +54,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		mensaje: 'No se encontraron turnos para los filtros seleccionados.'
 	};
 	$scope.detalle = false;
-	$scope.contenedorElegido = {};
+	$scope.contenedorElegido = {
+		contenedor: ''
+	};
 	$scope.currentPageContainers = 1;
 	$scope.itemsPerPage = 10;
 	$scope.totalItems = 0;
@@ -75,11 +99,52 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		$scope.mostrarAnterior = true;
 	};
 
+	////// Para containers ///////
+	$scope.$on('cambioFiltro', function(){
+		$scope.volverAPrincipal = !$scope.volverAPrincipal;
+		if ($scope.model.contenedor != ''){
+			$scope.filtrar();
+		} else {
+			$scope.invoices = [];
+			$scope.tasas = [];
+			$scope.gates = [];
+			$scope.turnos = [];
+			$scope.sumariaConfigPanel = {
+				tipo: 'panel-info',
+				titulo: 'A.F.I.P. sumaria',
+				mensaje: 'No se encontraron datos en los registros de A.F.I.P. para el contenedor seleccionado.'
+			};
+			$scope.configPanelTurnos = {
+				tipo: 'panel-info',
+				titulo: 'Turnos',
+				mensaje: 'No se encontraron Turnos para los filtros seleccionados.'
+			};
+			$scope.configPanelGates = {
+				tipo: 'panel-info',
+				titulo: 'Gates',
+				mensaje: 'No se encontraron gates para los filtros seleccionados.'
+			};
+			$scope.configPanelTasas = {
+				tipo: 'panel-info',
+				titulo: 'Tasas',
+				mensaje: 'No se encontraron tasas para los filtros seleccionados.'
+			};
+			$scope.mensajeResultado = {
+				titulo: 'Comprobantes',
+				mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
+				tipo: 'panel-info'
+			};
+		}
+	});
+
 	$scope.$on('errorInesperado', function(e, mensaje){
 		$scope.loadingState = false;
 		$scope.panelMensaje = mensaje;
 		$scope.totalItems = 0;
 		$scope.datosContainers = [];
+		//// Para containers /////
+		$scope.hayError = true;
+		$scope.mensajeGeneral = mensaje;
 	});
 
 	$scope.buqueSelected = function(selected){
@@ -140,19 +205,8 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		});
 	};
 
-	$scope.verDetalles = function(contenedor){
-		$scope.volverAPrincipal = !$scope.volverAPrincipal;
-		$scope.loadingInvoices = true;
-		$scope.invoices = [];
-		$scope.loadingGates = true;
-		$scope.gates = [];
-		$scope.loadingTurnos = true;
-		$scope.turnos = [];
-		$scope.loadingTasas = true;
-		$scope.tasas = [];
-		$scope.detalle = true;
-		$scope.contenedorElegido = contenedor;
-		$scope.model.contenedor = contenedor.contenedor;
+	$scope.filtrar = function(){
+		$scope.hayError = false;
 		$scope.cargaComprobantes();
 		$scope.cargaTasasCargas();
 		$scope.cargaGates();
@@ -160,7 +214,25 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		$scope.cargaSumaria();
 	};
 
+	$scope.verDetalles = function(contenedor){
+		$scope.volverAPrincipal = !$scope.volverAPrincipal;
+		$scope.invoices = [];
+		$scope.gates = [];
+		$scope.turnos = [];
+		$scope.tasas = [];
+		$scope.detalle = true;
+		$scope.contenedorElegido = contenedor;
+		$scope.model.contenedor = contenedor.contenedor;
+		$scope.filtrar();
+	};
+
 	$scope.cargaComprobantes = function(page){
+		$scope.loadingInvoices = true;
+		$scope.mensajeResultado = {
+			titulo: 'Comprobantes',
+			mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
+			tipo: 'panel-info'
+		};
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		invoiceFactory.getInvoice($scope.model, page, function(data){
@@ -172,48 +244,68 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 					titulo: 'Comprobantes',
 					mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
 					tipo: 'panel-danger'
-				}
+				};
 			}
 			$scope.loadingInvoices = false;
 		});
 	};
 
 	$scope.cargaTasasCargas = function(){
-		var datos = { contenedor: $scope.contenedorElegido.contenedor, currency: $scope.moneda};
-		controlPanelFactory.getTasasContenedor(datos, function(data){
-			if (data.status === 'OK'){
-				$scope.tasas = data.data;
-				$scope.totalTasas = data.totalTasas;
-			} else {
-				$scope.configPanelTasas = {
-					tipo: 'panel-danger',
-					titulo: 'Tasas a las cargas',
-					mensaje: 'Se ha producido un error al cargar los datos de tasas a las cargas.'
+		if (angular.isDefined($scope.model.contenedor) && $scope.model.contenedor != ''){
+			$scope.loadingTasas = true;
+			$scope.configPanelTasas = {
+				tipo: 'panel-info',
+				titulo: 'Tasas',
+				mensaje: 'No se encontraron tasas para los filtros seleccionados.'
+			};
+			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
+			controlPanelFactory.getTasasContenedor(datos, function(data){
+				if (data.status === 'OK'){
+					$scope.tasas = data.data;
+					$scope.totalTasas = data.totalTasas;
+				} else {
+					$scope.configPanelTasas = {
+						tipo: 'panel-danger',
+						titulo: 'Tasas',
+						mensaje: 'Se ha producido un error al cargar los datos de las tasas.'
+					};
 				}
-			}
-			$scope.loadingTasas = false;
-		});
+				$scope.loadingTasas = false;
+			});
+		}
 	};
 
 	$scope.cargaGates = function(page){
+		$scope.loadingGates = true;
+		$scope.configPanelGates = {
+			tipo: 'panel-info',
+			titulo: 'Gates',
+			mensaje: 'No se encontraron gates para los filtros seleccionados.'
+		};
 		page = page || { skip: 0, limit: $scope.itemsPerPage };
 		if (page.skip == 0){ $scope.currentPage = 1}
 		gatesFactory.getGate($scope.model, page, function (data) {
 			if (data.status === "OK") {
 				$scope.gates = data.data;
 				$scope.gatesTotalItems = data.totalCount;
-			} else  {
+			} else {
 				$scope.configPanelGates = {
 					tipo: 'panel-danger',
 					titulo: 'Gates',
-					mensaje: 'Se ha producido un error al cargar los datos de los gates.'
-				}
+					mensaje: 'Se ha producido un error al cargar los gates.'
+				};
 			}
 			$scope.loadingGates = false;
 		});
 	};
 
 	$scope.cargaTurnos = function(page){
+		$scope.loadingTurnos = true;
+		$scope.configPanelTurnos = {
+			tipo: 'panel-info',
+			titulo: 'Turnos',
+			mensaje: 'No se encontraron Turnos para los filtros seleccionados.'
+		};
 		page = page || { skip:0, limit: $scope.itemsPerPage };
 		turnosFactory.getTurnos($scope.model, page, function(data){
 			if (data.status === "OK"){
@@ -223,8 +315,8 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 				$scope.configPanelTurnos = {
 					tipo: 'panel-danger',
 					titulo: 'Turnos',
-					mensaje: 'Se ha producido un error al cargar los datos de los turnos.'
-				}
+					mensaje: 'Se ha producido un error al cargar los turnos.'
+				};
 			}
 			$scope.loadingTurnos = false;
 		});
@@ -232,6 +324,11 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 
 	$scope.cargaSumaria = function(){
 		$scope.cargandoSumaria = true;
+		$scope.sumariaConfigPanel = {
+			tipo: 'panel-info',
+			titulo: 'A.F.I.P. sumaria',
+			mensaje: 'No se encontraron datos en los registros de A.F.I.P. para el contenedor seleccionado.'
+		};
 		afipFactory.getContainerSumaria($scope.model.contenedor, function(data){
 			if (data.status == 'OK'){
 				$scope.sumariaAfip = data.data;
@@ -239,8 +336,8 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 				$scope.sumariaConfigPanel = {
 					tipo: 'panel-danger',
 					titulo: 'A.F.I.P. sumaria',
-					mensaje: 'Se ha producido un error al cargar los datos de la sumaria de A.F.I.P.'
-				}
+					mensaje: 'Se ha producido un error al cargar los datos de la sumaria del contenedor.'
+				};
 			}
 			$scope.cargandoSumaria = false;
 		})
@@ -249,7 +346,6 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 	$rootScope.$watch('moneda', function(){
 		$scope.moneda = $rootScope.moneda;
 		if ($scope.detalle){
-			$scope.loadingTasas = true;
 			$scope.cargaTasasCargas();
 		}
 	});
