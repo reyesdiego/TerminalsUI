@@ -99,7 +99,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		$scope.mostrarAnterior = true;
 	};
 
-	////// Para containers ///////
+	////// Para containers ////////////////////////////////////////////////////////////////////////////////
 	$scope.$on('cambioFiltro', function(){
 		$scope.volverAPrincipal = !$scope.volverAPrincipal;
 		if ($scope.model.contenedor != ''){
@@ -136,6 +136,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			};
 		}
 	});
+	///////////////////////////////////////////////////////////////////////////////////////
 
 	$scope.$on('errorInesperado', function(e, mensaje){
 		$scope.loadingState = false;
@@ -145,6 +146,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		//// Para containers /////
 		$scope.hayError = true;
 		$scope.mensajeGeneral = mensaje;
+		///////////////////////////////
 	});
 
 	$scope.buqueSelected = function(selected){

@@ -38,7 +38,9 @@
 			<span>{{ mensajeResultado.mensaje }}</span>
 		</div-panel>
 	</div>
-	<buque-viaje-detail></buque-viaje-detail>
+	<div ng-show="detalle">
+		<buque-viaje-detail></buque-viaje-detail>
+	</div>
 </tab>
 
 <tab class="hidden-print" heading="Control de Correlatividad" ng-controller="correlatividadCtrl">

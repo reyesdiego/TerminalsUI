@@ -103,20 +103,6 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.controlTasaCargas();
 	};
 
-	$scope.clientSelected = function(selected){
-		if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
-			$scope.model.razonSocial = selected.title;
-			$scope.filtrado('razonSocial', selected.title);
-		}
-	};
-
-	$scope.containerSelected = function(selected){
-		if (angular.isDefined(selected) && selected.title != $scope.model.contenedor){
-			$scope.model.contenedor = selected.title;
-			$scope.filtrado('contenedor', selected.title);
-		}
-	};
-
 	$scope.verContenedor = function(contenedor) {
 		$scope.model.contenedor = contenedor;
 		$scope.contenedorElegido.contenedor = contenedor;
@@ -228,6 +214,9 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 			$scope.loadingTasaCargas = false;
 		});
 	};
+
+	$scope.controlTasaCargas();
+
 }]);
 
 myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'socket', 'vouchersArrayCache', function($rootScope, $scope, invoiceFactory, socket, vouchersArrayCache) {
@@ -562,7 +551,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 
 }]);
 
-myapp.controller('comprobantesPorEstadoCtrl', ['$scope', 'invoiceFactory', function($scope, invoiceFactory) {
+myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory) {
 
 	var misEstados = $scope.estado.split(',');
 
@@ -603,8 +592,12 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$scope', 'invoiceFactory', funct
 
 	$scope.loadingState = false;
 
+	$scope.recargar = true;
+
 	$scope.$on('actualizarListado', function(event, data){
+		console.log(data);
 		if ($scope.estado != data){
+			console.log('entro');
 			$scope.currentPage = 1;
 			if ($scope.model.estado == 'N'){
 				$scope.model.estado = $scope.estado;
@@ -622,6 +615,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$scope', 'invoiceFactory', funct
 	});
 
 	$scope.$on('cambioFiltro', function(){
+		$scope.recargar = false;
 		$scope.currentPage = 1;
 		if ($scope.model.estado == 'N'){
 			$scope.model.estado = $scope.estado;
