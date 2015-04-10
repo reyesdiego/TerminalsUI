@@ -251,7 +251,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 									user: loginService.getInfo().user
 								};
 								comprobante.estado.push(nuevoEstado);
-								if ($scope.model.estado != 'N'){
+								if ($scope.model.estado != 'N' && $scope.mostrarPtosVenta){
 									$rootScope.$broadcast('actualizarListado', $scope.model.estado);
 									$scope.cargaPuntosDeVenta();
 								}
