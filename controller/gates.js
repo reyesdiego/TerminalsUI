@@ -92,4 +92,6 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', function ($scope, gates
 			$scope.cargando = false;
 		});
 	};
+
+	$scope.cargaGates();
 }]);
