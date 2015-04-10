@@ -29,8 +29,11 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 	$scope.flagEditando = false;
 	$scope.codigosConMatch = [];
-	$scope.conMatch = false;
 	$scope.tasas = false;
+
+	$scope.tipoFiltro = 'sinFiltro';
+
+	$scope.propiosTerminal = [];
 
 	$scope.preciosHistoricos = [];
 
@@ -66,6 +69,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			if (data.status == 'OK'){
 				$scope.pricelist = data.data;
 				$scope.codigosConMatch = [];
+				$scope.propiosTerminal = [];
 				//Cargo todos los códigos ya asociados de la terminal para control
 				$scope.pricelist.forEach(function(price){
 					$scope.matchesTerminal.push(price.code);
@@ -73,13 +77,22 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 						$scope.codigosConMatch.push(price);
 						price.matches[0].match.forEach(function(codigo){
 							$scope.matchesTerminal.push(codigo);
-						})
+						});
+						if (price.matches[0].match.length == 1 && price.matches[0].match[0] == price.code){
+							$scope.propiosTerminal.push(price);
+						}
 					}
 				});
-				if ($scope.conMatch){
-					$scope.listaSeleccionada = $scope.codigosConMatch;
-				} else {
-					$scope.listaSeleccionada = $scope.pricelist;
+				switch ($scope.tipoFiltro){
+					case 'conMatch':
+						$scope.listaSeleccionada = $scope.codigosConMatch;
+						break;
+					case 'propios':
+						$scope.listaSeleccionada = $scope.propiosTerminal;
+						break;
+					case 'sinFiltro':
+						$scope.listaSeleccionada = $scope.pricelist;
+						break;
 				}
 				$scope.totalItems = $scope.pricelist.length;
 			} else {
@@ -99,18 +112,19 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.flagCambios = false;
 	};
 
-	$scope.$watch('conMatch', function(){
-		if ($scope.conMatch){
-			$scope.listaSeleccionada = $scope.codigosConMatch;
-		} else {
-			$scope.listaSeleccionada = $scope.pricelist;
+	$scope.cambiarLista = function(){
+		switch ($scope.tipoFiltro){
+			case 'conMatch':
+				$scope.listaSeleccionada = $scope.codigosConMatch;
+				break;
+			case 'propios':
+				$scope.listaSeleccionada = $scope.propiosTerminal;
+				break;
+			case 'sinFiltro':
+				$scope.listaSeleccionada = $scope.pricelist;
+				break;
 		}
-		if ($scope.search != ""){
-			$scope.totalItems = 1
-		} else {
-			$scope.totalItems = $scope.listaSeleccionada.length;
-		}
-	});
+	};
 
 	$scope.agregarCodigo = function(price){
 		if (!$scope.matchesTerminal.contains(price.new)){
