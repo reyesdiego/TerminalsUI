@@ -89,7 +89,7 @@
 		<p style="text-align: left">Transferido: {{ verDetalle.transferencia }}</p>
 	</div>
 </div>
-<div class="row col-lg-12 center-block" ng-show="verDetalle.controlTarifas.length > 0">
+<div class="row col-lg-12 center-block hidden-print" ng-show="verDetalle.controlTarifas.length > 0">
 	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error en tarifas' }">
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover table-striped" style="text-align: center">
@@ -107,7 +107,7 @@
 		</div>
 	</div-panel>
 </div>
-<div class="row col-lg-12 center-block" ng-show="noMatch">
+<div class="row col-lg-12 center-block hidden-print" ng-show="noMatch">
 	<div-panel config-panel="{ tipo: 'panel-info', titulo: 'Control de tarifas' }">
 		<p>No se ha podido completar el control de tarifas, dado que se hayaron tarifas sin asociar.</p>
 	</div-panel>
