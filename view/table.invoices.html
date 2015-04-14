@@ -9,7 +9,7 @@
 			<th style="text-align: center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fecha.emision" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
 			<th style="text-align: right"><encabezado-tabla-ordenado titulo="Importe Total" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="importe.total" filtro-orden="importeOrden"></encabezado-tabla-ordenado></th>
 			<th class="hidden-print" style="text-align: center"><span class="glyphicon glyphicon-zoom-in"></span></th>
-			<th style="text-align: center" ng-show="acceso=='agp'" class="col-lg-1">Estado</th>
+			<th style="text-align: center" ng-show="acceso=='agp'" class="col-lg-1 hidden-print">Estado</th>
 		</tr>
 		</thead>
 		<tbody ng-show="acceso == 'agp'">
@@ -21,7 +21,7 @@
 			<td style="text-align: center; width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy' }}</td>
 			<td style="text-align: right; width: 12%"><a class="hidden-print" ng-show="chequearTarifas(invoice)" href="" popover="Error en tarifas" popover-trigger="mouseenter"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a><a class="hidden-print" ng-show="invoice.noMatch && !chequearTarifas(invoice)" href="" popover="Códigos sin asociar" popover-trigger="mouseenter"><span class="text-warning glyphicon glyphicon-question-sign"></span></a> {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice | currency }}</td>
 			<td class="hidden-print" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-			<td style="text-align: left; width: 14%">
+			<td style="text-align: left; width: 14%" class="hidden-print">
 				<a href ng-click="trackInvoice(invoice)" popover="{{ invoice.lastComment }}" popover-trigger="mouseenter"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
 			</td>
 		</tr>

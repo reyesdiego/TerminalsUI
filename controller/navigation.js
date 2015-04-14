@@ -69,4 +69,9 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 			$state.transitionTo('cambioTerminal');
 		}
 	};
+
+	$scope.imprimirVista = function(){
+		window.print();
+	};
+
 }]);

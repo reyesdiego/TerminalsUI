@@ -160,6 +160,7 @@
 					</ul>
 				</li>
 				<li ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
+				<li ng-show="acceso!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
 				<li ng-show="acceso!=''" dropdown>
 					<a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ terminal.user }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">

@@ -69,7 +69,7 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr style="height:60px" ng-repeat="price in filteredPrices = (listaSeleccionada | filter: search) | orderBy : predicate : reverse | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage" class="{{ price.claseFila }}">
+						<tr style="height:60px" ng-repeat="price in filteredPrices = (listaSeleccionada | filter: search) | orderBy : predicate : reverse | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage" class="{{ price.claseFila }} hidden-print">
 							<td class="col-lg-1">
 								<span>{{ price.code }}</span>
 							</td>
@@ -99,6 +99,23 @@
 							</td>
 							<td ng-show="price.terminal != 'AGP' && puedeEditar">
 								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
+							</td>
+						</tr>
+						<tr style="height:60px" class="visible-print" ng-repeat="price in listaSeleccionada">
+							<td class="col-lg-1">
+								<span>{{ price.code }}</span>
+							</td>
+							<td class="col-lg-5">
+								<span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
+							</td>
+							<td class="col-lg-2 text-right">
+								<span>{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</span>
+							</td>
+							<td class="col-lg-2" style="text-align: right">
+								<span ng-repeat="codigo in price.matches[0].match track by $index">
+									<span>{{ codigo }}</span>
+									<span ng-show="!$last">, </span>
+								</span>
 							</td>
 						</tr>
 						</tbody>
