@@ -29,10 +29,10 @@ module.exports = function(grunt) {
 				src: 'build/css/aditional.css',
 				dest: 'build/css/aditional-min.css'
 			},
-			bactssa: {
+			/*bactssa: {
 				src: 'css/bootstrap.cerulean.css',
 				dest: 'build/css/bootstrap.cerulean.css'
-			},
+			},*/
 			terminal4: {
 				src: 'css/bootstrap.united.css',
 				dest: 'build/css/bootstrap.united.css'
@@ -59,6 +59,10 @@ module.exports = function(grunt) {
 		copy: {
 			main: {
 				files: [
+					{
+						src: 'css/bootstrap.cerulean.css',
+						dest: 'build/css/bootstrap.cerulean.css'
+					},
 					{
 						expand: true,
 						src: ['bower_components/**'],
@@ -101,7 +105,7 @@ module.exports = function(grunt) {
 		'concat:css',
 		'concat:js',
 		'cssmin:css',
-		'cssmin:bactssa',
+		//'cssmin:bactssa',
 		'cssmin:terminal4',
 		'cssmin:trp',
 		'uglify:js',
