@@ -5163,7 +5163,7 @@ a.list-group-item-danger.active:focus {
   border-bottom: 1px solid #dddddd;
 }
 .panel-default {
-  border-color: #dddddd;
+  border-color: #dddddd !important;
 }
 .panel-default > .panel-heading {
   color: #555555;
