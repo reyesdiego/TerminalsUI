@@ -4,6 +4,7 @@
 
 myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
+	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
 
 	$scope.ocultaTasas = true;
 	$scope.loadingState = false;
@@ -30,7 +31,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	};
 	$scope.detalle = false;
 	$scope.contenedorElegido = {};
-	$scope.currentPageContainers = 1;
+
 	$scope.itemsPerPage = 10;
 	$scope.totalItems = 0;
 	$scope.panelMensaje = {
@@ -71,13 +72,19 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	$scope.loadingTasaCargas = true;
 	$scope.hayError = false;
 
+	$scope.currentPageComprobantes = 1;
+	$scope.pageComprobantes = {
+		skip: 0,
+		limit: $scope.model.itemsPerPage
+	};
+
 	$scope.$on('cambioPagina', function(event, data){
-		$scope.currentPage = data;
-		$scope.controlTasaCargas();
+		$scope.currentPageComprobantes = data;
+		$scope.loadingInvoices = true;
+		$scope.cargaComprobantes();
 	});
 
 	$scope.$on('cambioFiltro', function(){
-		$scope.currentPage = 1;
 		$scope.controlTasaCargas()
 	});
 
@@ -121,10 +128,10 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.cargaSumaria();
 	};
 
-	$scope.cargaComprobantes = function(page){
-		page = page || { skip:0, limit: $scope.itemsPerPage };
-		if (page.skip == 0){ $scope.currentPage = 1}
-		invoiceFactory.getInvoice({contenedor: $scope.model.contenedor}, page, function(data){
+	$scope.cargaComprobantes = function(){
+		$scope.pageComprobantes.skip = (($scope.currentPageComprobantes - 1) * $scope.model.itemsPerPage);
+		$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
+		invoiceFactory.getInvoice({contenedor: $scope.model.contenedor}, $scope.pageComprobantes, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.invoicesTotalItems = data.totalCount;
@@ -595,9 +602,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 	$scope.recargar = true;
 
 	$scope.$on('actualizarListado', function(event, data){
-		console.log(data);
 		if ($scope.estado != data){
-			console.log('entro');
 			$scope.currentPage = 1;
 			if ($scope.model.estado == 'N'){
 				$scope.model.estado = $scope.estado;

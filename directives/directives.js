@@ -236,7 +236,7 @@ myapp.directive('divPagination', function(){
 						} else {
 							$scope.maxSizeSM = 10;
 							$scope.maxSizeMD = 15;
-							$scope.maxSizeLG = 20;
+							$scope.maxSizeLG = 19;
 						}
 						break;
 					case 10:

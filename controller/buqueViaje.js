@@ -20,9 +20,15 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
-		'order': ''
+		'order': '',
+		'itemsPerPage': 15
 	};
 	//////////////////////////////////////
+
+	$scope.pageComprobantes = {
+		skip: 0,
+		limit: $scope.model.itemsPerPage
+	};
 
 	$scope.loadingState = false;
 	$scope.invoices = [];
@@ -70,11 +76,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		titulo: 'A.F.I.P. sumaria',
 		mensaje: 'No se encontraron datos de sumarias de A.F.I.P relacionados.'
 	};
-	$scope.model = {
-		buqueNombre: '',
-		viaje: '',
-		contenedor: ''
-	};
+
 	$scope.buques = generalCache.get('buques');
 	$scope.buqueElegido = {
 		viajes:[]
@@ -98,6 +100,11 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		$scope.filtrarDesde += 5;
 		$scope.mostrarAnterior = true;
 	};
+
+	$scope.$on('cambioPagina', function(event, data){
+		$scope.currentPage = data;
+		$scope.cargaComprobantes();
+	});
 
 	////// Para containers ////////////////////////////////////////////////////////////////////////////////
 	$scope.$on('cambioFiltro', function(){
@@ -228,16 +235,16 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		$scope.filtrar();
 	};
 
-	$scope.cargaComprobantes = function(page){
+	$scope.cargaComprobantes = function(){
 		$scope.loadingInvoices = true;
 		$scope.mensajeResultado = {
 			titulo: 'Comprobantes',
 			mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
 			tipo: 'panel-info'
 		};
-		page = page || { skip:0, limit: $scope.itemsPerPage };
-		if (page.skip == 0){ $scope.currentPage = 1}
-		invoiceFactory.getInvoice($scope.model, page, function(data){
+		$scope.pageComprobantes.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
+		$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
+		invoiceFactory.getInvoice($scope.model, $scope.pageComprobantes, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.invoicesTotalItems = data.totalCount;
