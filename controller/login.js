@@ -63,6 +63,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	};
 
 	$scope.login = function(){
+		$scope.barType = "progress-bar-info";
 		$scope.entrando = true;
 		$rootScope.cargandoCache = true;
 		if ($scope.sesion){
