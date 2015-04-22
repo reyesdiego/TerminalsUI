@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory) {
+myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'generalFunctions', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, generalFunctions) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
 	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
 
@@ -18,6 +18,10 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	$scope.loadingTasas = false;
 	$scope.detalleGates = false;
 	$scope.volverAPrincipalComprobantes = false;
+
+	$scope.openDate = function(event){
+		generalFunctions.openDate(event);
+	};
 
 	$scope.configPanelGates = {
 		tipo: 'panel-info',
