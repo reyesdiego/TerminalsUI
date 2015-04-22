@@ -27,7 +27,7 @@
 					</div>
 					<br>
 					<span ng-repeat="tasa in resultado | filter: search">
-						<div style="width: 100px; float:left; text-align:center"><a href ng-class="{mark: (model.contenedor == tasa.contenedor)}" ng-click="verContenedor(tasa.contenedor)">{{ tasa.contenedor }}</a></div>
+						<div style="width: auto; float:left; text-align:center"><a href ng-class="{mark: (model.contenedor == tasa.contenedor)}" ng-click="verContenedor(tasa.contenedor)"><span class="glyphicon glyphicon-info-sign"></span> {{ tasa.contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
 				</div>
 			</div-panel>
