@@ -459,6 +459,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 		return datos;
 	}
 
-	if (loginService.getStatus() && $scope.mostrarPtosVenta) $scope.cargaTodosLosPuntosDeVentas();
+	if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) $scope.cargaTodosLosPuntosDeVentas();
 
 }]);

@@ -12,7 +12,7 @@ myapp.directive('vistaComprobantes', function(){
 			ocultarFiltros:						'=',
 			totalItems:							'=',
 			loadingState:						'=',
-			controlCodigos:						'&',
+			controlCodigos:						'=',
 			codigosSinAsociar:					'=',
 			mostrarPtosVenta:					'=',
 			ocultarAccordionInvoicesSearch:		'=',
