@@ -21,3 +21,12 @@
 	background-color: #eeeeee;
 	border-radius: 4px;
 }
+
+@media print{
+	.anchoFijoImpresion{
+		max-width: 200px !important;
+	}
+	.altoFijoImpresion{
+		max-height: 30px !important;
+	}
+}

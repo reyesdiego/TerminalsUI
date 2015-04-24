@@ -101,7 +101,7 @@
 								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
 							</td>
 						</tr>
-						<tr style="height:60px" class="visible-print" ng-repeat="price in listaSeleccionada">
+						<tr class="visible-print" ng-repeat="price in listaSeleccionada">
 							<td class="col-lg-1">
 								<span>{{ price.code }}</span>
 							</td>
@@ -111,7 +111,7 @@
 							<td class="col-lg-2 text-right">
 								<span>{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</span>
 							</td>
-							<td class="col-lg-2" style="text-align: right">
+							<td class="col-lg-2 anchoFijoImpresion" style="text-align: right">
 								<span ng-repeat="codigo in price.matches[0].match track by $index">
 									<span>{{ codigo }}</span>
 									<span ng-show="!$last">, </span>
