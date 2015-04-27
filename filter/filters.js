@@ -67,7 +67,7 @@ myapp.filter("dateRange", [function() {
 		var result = [];
 		for (var i=0; i<items.length; i++){
 			var fecha = new Date(items[i].fecha);
-			if (fecha > desde && fecha < hasta)  {
+			if (fecha >= desde && fecha <= hasta)  {
 				result.push(items[i]);
 			}
 		}

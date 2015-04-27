@@ -130,6 +130,9 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 		itemsPerPage: 15
 	};
 
+	$scope.model.fechaInicio.setHours(0, 0, 0, 0);
+	$scope.model.fechaFin.setHours(0, 0, 0, 0);
+
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar'];
 
 	$scope.filtrado = function(filtro, contenido){
