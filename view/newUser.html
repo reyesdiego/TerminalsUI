@@ -49,7 +49,7 @@
 						<div class="form-group row">
 							<label for="inputConfirmMail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-inbox"></span> Confirme E-Mail</label>
 							<div class="col-lg-8">
-								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="confirmEmail" id="inputConfirmMail" placeholder="Ingresar correo electrónico" ng-required="true"/>
+								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="confirmEmail" id="inputConfirmMail" placeholder="Ingresar correo electrónico" ng-required="true" onpaste="return false"/>
 							</div>
 							<div class="col-lg-1">
 								<a href="" popover="La direcciones ingresadas no coinciden" popover-trigger="mouseenter" ng-show="confirmEmail != '' && email != confirmEmail"><span class="text-danger glyphicon glyphicon-remove"></span></a>
@@ -65,7 +65,7 @@
 						<div class="form-group row">
 							<label for="inputConfirmPassword" class="col-lg-3 control-label"><span class="glyphicon glyphicon-asterisk"></span> Confirme contraseña</label>
 							<div class="col-lg-8">
-								<input type="password" class="form-control" ng-model="confirmPassword" id="inputConfirmPassword" placeholder="Ingresar contraseña" ng-required="true"/>
+								<input type="password" class="form-control" ng-model="confirmPassword" id="inputConfirmPassword" placeholder="Ingresar contraseña" ng-required="true" onpaste="return false"/>
 							</div>
 							<div class="col-lg-1">
 								<a href="" popover="La contraseñas ingresadas no coinciden" popover-trigger="mouseenter" ng-show="confirmPassword != '' && password != confirmPassword"><span class="text-danger glyphicon glyphicon-remove"></span></a>
