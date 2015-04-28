@@ -13,18 +13,31 @@
 	</div>
 	<div ng-show="datosTurnos.length != undefined && datosTurnos.length > 0">
 		<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
+		<tabset>
+			<tab heading="IMPO" select="cambiarTipoMov('IMPO')"></tab>
+			<tab heading="EXPO" select="cambiarTipoMov('EXPO')"></tab>
+		</tabset>
+
+		<!--<ul class="nav nav-tabs hidden-print">
+			<li>
+				<a ng-click="cambiarTipoMov('IMPO');">IMPO</a>
+			</li>
+			<li>
+				<a ng-click="cambiarTipoMov('EXPO');">EXPO</a>
+			</li>
+		</ul>-->
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover" style="text-align: center">
 				<tr>
-					<th style="text-align: center" colspan="3">Turno</th>
+					<th style="text-align: center" colspan="3"><encabezado-tabla-ordenado titulo="Turno" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fechaInicio" filtro-orden="fechaInicioOrden"></encabezado-tabla-ordenado></th>
 					<!--<th style="text-align: center">Inicio del turno</th>-->
 					<!--<th style="text-align: center">Fin del turno</th>-->
-					<th style="text-align: center">Buque</th>
-					<th style="text-align: center">Viaje</th>
-					<th style="text-align: center">Contenedor</th>
+					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
+					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Viaje" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="viaje" filtro-orden="viajeOrden"></encabezado-tabla-ordenado></th>
+					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="contenedor" filtro-orden="contenedorOrden"></encabezado-tabla-ordenado></th>
 					<th style="text-align: center">Tipo</th>
-					<th style="text-align: center">Alta</th>
-					<th style="text-align: center">Usuario</th>
+					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Alta" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="alta" filtro-orden="altaOrden"></encabezado-tabla-ordenado></th>
+					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fechInicio" filtro-orden="fechaInicioOrden"></encabezado-tabla-ordenado></th>
 				</tr>
 				<tr ng-repeat="turno in datosTurnos">
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>

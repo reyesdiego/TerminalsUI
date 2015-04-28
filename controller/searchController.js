@@ -98,6 +98,11 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.currentPage = $scope.paginaAnterior
 	};
 
+	$scope.cambiarTipoMov = function(tipoMov){
+		$scope.model.mov = tipoMov;
+		$scope.$emit('cambioFiltro');
+	};
+
 	$scope.filtrarOrden = function(filtro){
 		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
 		$scope.$emit('cambioFiltro');
