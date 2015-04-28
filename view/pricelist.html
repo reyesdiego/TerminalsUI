@@ -57,7 +57,7 @@
 							<span ng-show="!(price.topPrices[0].price > 0)" class="glyphicon glyphicon-warning-sign text-danger"> Sin definir</span> <span ng-show="price.topPrices[0].price > 0">{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</span>
 						</td>
 					</tr>
-					<tr style="height:60px" class="visible-print" ng-repeat="price in pricelist">
+					<tr style="height:60px" class="visible-print" ng-repeat="price in pricelist | filter:search | orderBy: predicate : reverse">
 						<td style="width: 10%">{{ price.code }}</td>
 						<td style="width: 64%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 12%">{{ price.unit}}</td>

@@ -101,7 +101,7 @@
 								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
 							</td>
 						</tr>
-						<tr class="visible-print" ng-repeat="price in listaSeleccionada">
+						<tr class="visible-print" ng-repeat="price in listaSeleccionada | filter: search | orderBy : predicate : reverse">
 							<td class="col-lg-1">
 								<span>{{ price.code }}</span>
 							</td>
