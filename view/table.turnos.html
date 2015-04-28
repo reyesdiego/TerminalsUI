@@ -16,22 +16,26 @@
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover" style="text-align: center">
 				<tr>
-					<th style="text-align: center">Fecha</th>
+					<th style="text-align: center" colspan="3">Turno</th>
+					<!--<th style="text-align: center">Inicio del turno</th>-->
+					<!--<th style="text-align: center">Fin del turno</th>-->
 					<th style="text-align: center">Buque</th>
 					<th style="text-align: center">Viaje</th>
 					<th style="text-align: center">Contenedor</th>
-					<th style="text-align: center">Inicio del turno</th>
-					<th style="text-align: center">Fin del turno</th>
-					<th style="text-align: center">Movimiento</th>
+					<th style="text-align: center">Tipo</th>
+					<th style="text-align: center">Alta</th>
+					<th style="text-align: center">Usuario</th>
 				</tr>
 				<tr ng-repeat="turno in datosTurnos">
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
+					<td>{{ turno.fin | date: 'HH:mm' }}</td>
 					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0" ng-click="filtrado('buqueNombre', turno.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
 					<td>{{ turno.viaje }}</td>
 					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0" ng-click="filtrado('contenedor', turno.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
-					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
-					<td>{{ turno.fin | date: 'HH:mm' }}</td>
 					<td>{{ turno.mov }}</td>
+					<td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
+					<td>{{ turno.user }}</td>
 				</tr>
 			</table>
 		</div>

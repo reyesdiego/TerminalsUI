@@ -2,7 +2,7 @@
 	<div class="col-lg-4 col-sm-6">
 		<div class="form-group">
 			<div class="input-group">
-				<span class="input-group-addon">Día</span>
+				<span class="input-group-addon">Turno</span>
 				<label class="sr-only" for="fechaInicio">Día</label>
 				<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" />
 						<span class="input-group-btn">
@@ -14,7 +14,7 @@
 	<div class="col-lg-4 col-sm-6">
 		<div class="form-group">
 			<div class="input-group">
-				<span class="input-group-addon">Hora desde</span>
+				<span class="input-group-addon">Inicio</span>
 				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaInicio" enable-date="false" is-open="openHoraInicio"/>
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="openDate($event); openHoraInicio = !openHoraInicio"><span class="glyphicon glyphicon-time"></span></button>
@@ -25,7 +25,7 @@
 	<div class="col-lg-4 col-sm-6">
 		<div class="form-group">
 			<div class="input-group">
-				<span class="input-group-addon">Hora hasta</span>
+				<span class="input-group-addon">Fin</span>
 				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaFin" enable-date="false" is-open="openHoraFin" max-date="model.fechaInicio"/>
 				<span class="input-group-btn">
 					<button type="button" class="btn btn-default" ng-click="openDate($event); openHoraFin = !openHoraFin"><span class="glyphicon glyphicon-time"></span></button>
