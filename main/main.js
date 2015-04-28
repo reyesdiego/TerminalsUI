@@ -36,7 +36,7 @@ function in_array(needle, haystack, argStrict){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router','ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker']);
+var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -209,6 +209,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/cambioTerminal",
 			templateUrl: 'view/cambioTerminal.html'
 		})
+		.state('agenda', {
+			url: "/agendaTurnos",
+			templateUrl: 'view/turnosAgenda.html'
+		})
 
 }]);
 
@@ -257,7 +261,11 @@ myapp.config(['$provide', function ($provide) {
 
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', function($rootScope, $state, loginService, authFactory, dialogs, $injector){
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment){
+
+	moment().format();
+	moment.locale('es');
+
 	$rootScope.previousState = '';
 	$rootScope.cambioTerminal = false;
 	$rootScope.cargarCache = false;

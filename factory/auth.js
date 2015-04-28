@@ -92,6 +92,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				data.acceso.push("users");
 				data.acceso.push("rates");
 				data.acceso.push("cambioTerminal");
+				data.acceso.push("agenda");
 				///-------------------------------------------------------------------------
 
 				loginService.setAcceso(data.acceso);

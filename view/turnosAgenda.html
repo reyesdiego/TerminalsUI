@@ -1,0 +1,56 @@
+<div class="container" ng-controller="turnosAgendaCtrl">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1><img ng-src="images/controlUsers.png" height="64" width="64" class="hidden-xs">Agenda de turnos</h1>
+		</div>
+	</div>
+
+	<div class="col-lg-12">
+		<h2 class="text-center">{{ calendarControl.getTitle() }}</h2>
+
+		<div class="row">
+
+			<div class="col-lg-6 text-center">
+				<div class="btn-group">
+
+					<button class="btn btn-primary" ng-click="calendarControl.prev()">Anterior</button>
+					<button class="btn btn-default" ng-click="setCalendarToToday()">Hoy</button>
+					<button class="btn btn-primary" ng-click="calendarControl.next()">Siguiente</button>
+				</div>
+			</div>
+
+			<br class="visible-xs visible-sm">
+
+			<div class="col-lg-6 text-center">
+				<div class="btn-group">
+					<label class="btn btn-primary" ng-model="calendarView" btn-radio="'year'">Año</label>
+					<label class="btn btn-primary" ng-model="calendarView" btn-radio="'month'">Mes</label>
+					<label class="btn btn-primary" ng-model="calendarView" btn-radio="'week'">Semana</label>
+					<label class="btn btn-primary" ng-model="calendarView" btn-radio="'day'">Día</label>
+				</div>
+			</div>
+		</div>
+
+		<br>
+
+		<mwl-calendar
+				calendar-events="events"
+				calendar-view="calendarView"
+				calendar-current-day="calendarDay"
+				calendar-control="calendarControl"
+				calendar-event-click="eventClicked(calendarEvent)"
+				calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+				calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+				calendar-edit-event-click="eventEdited(calendarEvent)"
+				calendar-delete-event-click="eventDeleted(calendarEvent)"
+				calendar-timespan-click="timeSpanClicked(calendarDate)"
+				calendar-auto-open="true"
+				calendar-event-label="Turnos"
+				calendar-time-label="Horario"
+		></mwl-calendar>
+
+		<br><br><br>
+
+	</div>
+
+</div>

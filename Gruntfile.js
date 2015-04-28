@@ -61,7 +61,57 @@ module.exports = function(grunt) {
 				files: [
 					{
 						expand: true,
-						src: ['bower_components/**'],
+						src: ['bower_components/angular/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular/angular-csp.css'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-bootstrap-calendar/dist/css/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-bootstrap-calendar/dist/js/*-tpls.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-cache/dist/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-cookies/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-sanitize/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-ui-bootstrap-bower/*-tpls.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-ui-router/release/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/bootstrap-ui-datetime-picker/dist/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/moment/min/moment-with-locales.min.*'],
 						dest: 'build'
 					},
 					{
