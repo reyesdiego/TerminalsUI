@@ -71,16 +71,6 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['bower_components/angular-bootstrap-calendar/dist/css/*.min.*'],
-						dest: 'build'
-					},
-					{
-						expand: true,
-						src: ['bower_components/angular-bootstrap-calendar/dist/js/*-tpls.min.*'],
-						dest: 'build'
-					},
-					{
-						expand: true,
 						src: ['bower_components/angular-cache/dist/*.min.*'],
 						dest: 'build'
 					},
@@ -107,11 +97,6 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						src: ['bower_components/bootstrap-ui-datetime-picker/dist/*.min.*'],
-						dest: 'build'
-					},
-					{
-						expand: true,
-						src: ['bower_components/moment/min/moment-with-locales.min.*'],
 						dest: 'build'
 					},
 					{
