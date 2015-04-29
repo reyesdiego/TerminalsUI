@@ -111,7 +111,7 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['js/*'],
+						src: ['js/**'],
 						dest: 'build'
 					},
 					{
