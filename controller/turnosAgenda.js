@@ -2,7 +2,7 @@
  * Created by artiom on 27/04/15.
  */
 
-myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory', 'loginService', '$filter', function($scope, moment, controlPanelFactory, loginService, $filter){
+myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory', 'loginService', '$filter', 'turnosFactory', function($scope, moment, controlPanelFactory, loginService, $filter, turnosFactory){
 
 	var currentYear = moment().year();
 	var currentMonth = moment().month();
@@ -19,7 +19,32 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		fechaFin: new Date(currentYear, currentMonth + 1, 0)
 	};
 
+	$scope.model = {
+		'fechaInicio': $scope.fechaInicio,
+		'fechaFin': $scope.fechaFin,
+		'fechaConGMT': true,
+		'mov': 'IMPO',
+		'filtroOrden': 'gateTimestamp',
+		'filtroOrdenAnterior': '',
+		'filtroOrdenReverse': false,
+		'order': ''
+	};
+
+	$scope.verDetalle = false;
+	$scope.currentPage = 1;
+	$scope.itemsPerPage = 15;
+	$scope.totalItems = 0;
+	$scope.turnosGates = true;
+	$scope.cargando = false;
+	$scope.configPanel = {
+		tipo: 'panel-info',
+		titulo: 'Turnos',
+		mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
+	};
+
+
 	$scope.actualizarTurnos = function(calendarDate){
+		$scope.verDetalle = false;
 		$scope.diaElegido = calendarDate.getDate();
 		if ($scope.diaAnterior.getMonth() != calendarDate.getMonth()){
 			$scope.datosTurnos = {
@@ -44,7 +69,12 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	};
 
 	$scope.eventClicked = function(calendarEvent){
-		console.log(calendarEvent);
+		$scope.model.fechaInicio = calendarEvent.starts_at;
+		$scope.model.fechaFin = calendarEvent.ends_at;
+		$scope.itemsPerPage = calendarEvent.cantidad;
+		$scope.page.limit = calendarEvent.cantidad;
+		$scope.verDetalle = true;
+		$scope.detalleTurnos();
 	};
 
 	$scope.eventEdited = function(calendarEvent){
@@ -60,6 +90,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	};
 
 	$scope.seleccionarLista = function(){
+		$scope.verDetalle = false;
 		switch ($scope.calendarView){
 			case 'month':
 			case 'week':
@@ -110,19 +141,12 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 					starts_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour),
 					ends_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour+2),
 					editable: false,
-					deletable: false
+					deletable: false,
+					cantidad: turno.cnt
 				};
-				$scope.eventosPorDia.forEach(function(dia){
-					if (dia.dia == turno._id.day){
-						dia.eventos.push(eventoDia);
-					}
-				});
+				$scope.eventosPorDia[turno._id.day - 1].eventos.push(eventoDia);
 				if (eventoDia.starts_at.getDate() != eventoDia.ends_at.getDate()){
-					$scope.eventosPorDia.forEach(function(dia){
-						if (dia.dia == eventoDia.ends_at.getDate()){
-							dia.eventos.push(eventoDia);
-						}
-					});
+					$scope.eventosPorDia[eventoDia.ends_at.getDate() - 1].eventos.push(eventoDia);
 				}
 				for (i=1; i <= turno.cnt; i++){
 					var nuevoEvento = {
@@ -131,7 +155,8 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 						starts_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour),
 						ends_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour+2),
 						editable: false,
-						deletable: false
+						deletable: false,
+						cantidad: turno.cnt
 					};
 					j++;
 					$scope.eventsMes.push(nuevoEvento);
@@ -139,6 +164,30 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			});
 			$scope.seleccionarLista();
 			$scope.loadingState = false;
+		});
+	};
+
+	$scope.detalleTurnos = function(){
+		$scope.cargando = true;
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
+		$scope.configPanel = {
+			tipo: 'panel-info',
+			titulo: 'Turnos',
+			mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
+		};
+		console.log($scope.page);
+		turnosFactory.getTurnos($scope.model, $scope.page, function(data){
+			if (data.status === "OK"){
+				$scope.turnos = data.data;
+				$scope.totalItems = data.totalCount;
+			} else {
+				$scope.configPanel = {
+					tipo: 'panel-danger',
+					titulo: 'Turnos',
+					mensaje: 'Se ha producido un error al cargar los turnos.'
+				};
+			}
+			$scope.cargando = false;
 		});
 	};
 
