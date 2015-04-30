@@ -43,7 +43,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	$scope.fechaAuxHasta = new Date();
 
 	// Variable para almacenar la info principal que trae del factory
-	$scope.turnos = {};
+	$scope.turnos = [];
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.currentPage = data;
@@ -73,6 +73,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 
 	$scope.cargaTurnos = function(){
 		$scope.cargando = true;
+		$scope.turnos = [];
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.page.limit = $scope.itemsPerPage;
 		$scope.configPanel = {
