@@ -7,6 +7,8 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	var currentYear = moment().year();
 	var currentMonth = moment().month();
 
+	$scope.dayViewStart = '00:00';
+
 	$scope.loadingState = false;
 
 	$scope.events = [];
@@ -71,8 +73,6 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	$scope.eventClicked = function(calendarEvent){
 		$scope.model.fechaInicio = calendarEvent.starts_at;
 		$scope.model.fechaFin = calendarEvent.ends_at;
-		$scope.itemsPerPage = calendarEvent.cantidad;
-		$scope.page.limit = calendarEvent.cantidad;
 		$scope.verDetalle = true;
 		$scope.detalleTurnos();
 	};
@@ -104,6 +104,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 					}
 				});
 				$scope.events = angular.copy(diaSelected);
+				$scope.dayViewStart = moment($scope.events[0].starts_at.getHours(), 'H').format('HH:mm');
 				break;
 		}
 	};
@@ -167,6 +168,11 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		});
 	};
 
+	$scope.$on('cambioPagina', function(event, data){
+		$scope.currentPage = data;
+		$scope.detalleTurnos();
+	});
+
 	$scope.detalleTurnos = function(){
 		$scope.cargando = true;
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
@@ -175,7 +181,6 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			titulo: 'Turnos',
 			mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 		};
-		console.log($scope.page);
 		turnosFactory.getTurnos($scope.model, $scope.page, function(data){
 			if (data.status === "OK"){
 				$scope.turnos = data.data;

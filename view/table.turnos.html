@@ -41,8 +41,8 @@
 				</tr>
 				<tr ng-repeat="turno in datosTurnos">
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
-					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
-					<td>{{ turno.fin | date: 'HH:mm' }}</td>
+					<td>{{ turno.inicio | date: 'HH:mm':'UTC' }}</td>
+					<td>{{ turno.fin | date: 'HH:mm':'UTC' }}</td>
 					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0" ng-click="filtrado('buqueNombre', turno.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
 					<td>{{ turno.viaje }}</td>
 					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0" ng-click="filtrado('contenedor', turno.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>

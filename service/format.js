@@ -50,7 +50,7 @@
 				if(fecha.getMinutes() < 10){
 					fechaAux = fechaAux + '0';
 				}
-				fechaAux = fechaAux + fecha.getMinutes() + ' -0300';
+				fechaAux = fechaAux + fecha.getMinutes() + ' -0000';
 				return fechaAux;
 			}else
 				return null;
