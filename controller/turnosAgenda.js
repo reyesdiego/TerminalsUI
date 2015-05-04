@@ -43,7 +43,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	};
 
 	socket.on('appointment', function (data) {
-		var fecha = new Date(data.data.inicio);
+		/*var fecha = new Date(data.data.inicio);
 		if (fecha.getMonth() == $scope.calendarDay.getMonth()){
 			var horaHasta = fecha.getHours() + 2;
 			if (horaHasta > 24) horaHasta = horaHasta - 24;
@@ -81,7 +81,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		$scope.seleccionarLista();
 		$scope.$apply();
 		console.log($scope.eventosPorDia);
-		console.log($scope.eventsMes);
+		console.log($scope.eventsMes);*/
 	});
 
 	$scope.actualizarTurnos = function(calendarDate){
