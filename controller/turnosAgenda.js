@@ -2,7 +2,7 @@
  * Created by artiom on 27/04/15.
  */
 
-myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory', 'loginService', '$filter', 'turnosFactory', 'socket', '$timeout', function($scope, moment, controlPanelFactory, loginService, $filter, turnosFactory, socket, $timeout){
+myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory', 'loginService', '$filter', 'turnosFactory', 'socket', function($scope, moment, controlPanelFactory, loginService, $filter, turnosFactory, socket){
 
 	var currentYear = moment().year();
 	var currentMonth = moment().month();
@@ -52,7 +52,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			var horaHasta = fecha.getHours() + 2;
 			if (horaHasta > 24) horaHasta = horaHasta - 24;
 			var eventoDia = {
-				title: '1 turnos de ' + fecha.getHours() + ' a ' + horaHasta,
+				title: '1 turno de ' + fecha.getHours() + ' a ' + horaHasta,
 				type: 'info',
 				starts_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()),
 				ends_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()+2),
@@ -61,67 +61,32 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 				cantidad: 1
 			};
 			if ($scope.eventosPorDia[fecha.getDate() - 1].eventos.length == 0){
-				$scope.eventosPorDia[fecha.getDate() - 1].eventos.push(eventoDia);var fecha = new Date(data.data.inicio);
-		 if (fecha.getMonth() == $scope.calendarDay.getMonth()){
-		 var horaHasta = fecha.getHours() + 2;
-		 if (horaHasta > 24) horaHasta = horaHasta - 24;
-		 var eventoDia = {
-		 title: '1 turnos de ' + fecha.getHours() + ' a ' + horaHasta,
-		 type: 'info',
-		 starts_at: new Date(fecha.getFullYear(), fecha.getMonth() - 1, fecha.getDate(), fecha.getHours()),
-		 ends_at: new Date(fecha.getFullYear(), fecha.getMonth() - 1, fecha.getDate(), fecha.getHours()+2),
-		 editable: false,
-		 deletable: false,
-		 cantidad: 1
-		 };
-		 if ($scope.eventosPorDia[fecha.getDate() - 1].eventos.length == 0){
-		 $scope.eventosPorDia[fecha.getDate() - 1].eventos.push(eventoDia);
-		 } else {
-		 $scope.eventosPorDia[fecha.getDate() - 1].eventos[0].cantidad+= 1;
-		 $scope.eventosPorDia[fecha.getDate() - 1].eventos[0].title = $scope.eventosPorDia[fecha.getDate() - 1].eventos[0].cantidad + ' turnos de ' + fecha.getHours() + ' a ' + horaHasta
-		 }
-		 $scope.eventsMes.forEach(function (eventos) {
-		 eventos.cantidad+= 1;
-		 });
-
-		 var nuevoEvento = {
-		 title: 'Turno ' + $scope.eventsMes[0].cantidad || 1,
-		 type: 'info',
-		 starts_at: new Date(fecha.getFullYear(), fecha.getMonth() - 1, fecha.getDate(), fecha.getHours()),
-		 ends_at: new Date(fecha.getFullYear(), fecha.getMonth() - 1, fecha.getDate(), fecha.getHours()+2),
-		 editable: false,
-		 deletable: false,
-		 cantidad: $scope.eventsMes[0].cantidad || 1
-		 };
-		 $scope.eventsMes.push(nuevoEvento);
-
-		 }
-		 $scope.seleccionarLista();
-		 $scope.$apply();
-		 console.log($scope.eventosPorDia);
-		 console.log($scope.eventsMes);
+				$scope.eventosPorDia[fecha.getDate() - 1].eventos.push(eventoDia);
 			} else {
-				$scope.eventosPorDia[fecha.getDate() - 1].eventos[0].cantidad+= 1;
-				$scope.eventosPorDia[fecha.getDate() - 1].eventos[0].title = $scope.eventosPorDia[fecha.getDate() - 1].eventos[0].cantidad + ' turnos de ' + fecha.getHours() + ' a ' + horaHasta
+				var coincide = false;
+				$scope.eventosPorDia[fecha.getDate() - 1].eventos.forEach(function(evento){
+					if (eventoDia.starts_at == evento.starts_at){
+						coincide = true;
+						evento.cantidad += 1;
+						evento.title = evento.cantidad + ' turnos de ' + eventoDia.starts_at.getHours() + ' a ' + eventoDia.ends_at.getHours();
+					}
+				});
+				if (!coincide){
+					$scope.eventosPorDia[fecha.getDate() - 1].eventos.push(eventoDia);
+				}
 			}
-			$scope.eventsMes.forEach(function (eventos) {
-				eventos.cantidad+= 1;
-			});
 
 			var nuevoEvento = {
 				title: 'Turno ' + $scope.j,
 				type: 'info',
 				starts_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()),
-				ends_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()+2),
+				ends_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours() + 2),
 				editable: false,
-				deletable: false,
-				cantidad: $scope.j++
+				deletable: false
 			};
 			$scope.eventsMes.push(nuevoEvento);
-
+			$scope.seleccionarLista();
 		}
-		$scope.seleccionarLista();
-		$scope.$apply();
 	});
 
 	$scope.actualizarTurnos = function(calendarDate){
@@ -225,15 +190,12 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 					title: turno.cnt + ' turnos de ' + turno._id.hour + ' a ' + horaHasta,
 					type: 'info',
 					starts_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour),
-					ends_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour+2),
+					ends_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour + 2),
 					editable: false,
 					deletable: false,
 					cantidad: turno.cnt
 				};
 				$scope.eventosPorDia[turno._id.day - 1].eventos.push(eventoDia);
-				if (eventoDia.starts_at.getDate() != eventoDia.ends_at.getDate()){
-					$scope.eventosPorDia[eventoDia.ends_at.getDate() - 1].eventos.push(eventoDia);
-				}
 				for (i=1; i <= turno.cnt; i++){
 					var nuevoEvento = {
 						title: 'Turno ' + $scope.j,
@@ -241,8 +203,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 						starts_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour),
 						ends_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour+2),
 						editable: false,
-						deletable: false,
-						cantidad: turno.cnt
+						deletable: false
 					};
 					$scope.j++;
 					$scope.eventsMes.push(nuevoEvento);
