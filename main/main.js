@@ -266,6 +266,12 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	moment().format();
 	moment.locale('es');
 
+	moment.locale('es', {
+		week : {
+			dow : 7 // Domingo primer día de la semana
+		}
+	});
+
 	$rootScope.previousState = '';
 	$rootScope.cambioTerminal = false;
 	$rootScope.cargarCache = false;
