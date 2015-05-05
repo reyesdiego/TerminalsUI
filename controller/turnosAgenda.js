@@ -89,8 +89,8 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		}
 	});
 
-	$scope.openDate = function(){
-		generalFunctions.openDate();
+	$scope.openDate = function(event){
+		generalFunctions.openDate(event);
 	};
 
 	$scope.actualizarTurnos = function(calendarDate){
@@ -157,8 +157,12 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		}
 	};
 
-	$scope.$on('cambioFechaCalendar', function(event, calendarDate){
+	/*$scope.$on('cambioFechaCalendar', function(event, calendarDate){
 		$scope.actualizarTurnos(calendarDate);
+	});*/
+
+	$scope.$watch('calendarDay', function(){
+		$scope.actualizarTurnos($scope.calendarDay);
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){

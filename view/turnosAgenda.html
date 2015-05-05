@@ -24,10 +24,9 @@
 
 			<div class="col-lg-4">
 				<div class="input-group">
-					<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openCalendarDay = !openCalendarDay;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openCalendarDay = !openCalendarDay;">Fecha <span class="glyphicon glyphicon-calendar"></span></button></span>
 					<label for="calendarDay" class="sr-only">Fecha</label>
 					<input id="calendarDay" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="calendarDay" is-open="openCalendarDay" />
-					<span class="input-group-btn"><button class="btn btn-default"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 			</div>
 
