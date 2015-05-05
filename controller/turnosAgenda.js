@@ -2,7 +2,7 @@
  * Created by artiom on 27/04/15.
  */
 
-myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory', 'loginService', '$filter', 'turnosFactory', 'socket', function($scope, moment, controlPanelFactory, loginService, $filter, turnosFactory, socket){
+myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory', 'loginService', '$filter', 'turnosFactory', 'socket', 'generalFunctions', function($scope, moment, controlPanelFactory, loginService, $filter, turnosFactory, socket, generalFunctions){
 
 	var currentYear = moment().year();
 	var currentMonth = moment().month();
@@ -88,6 +88,10 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			$scope.seleccionarLista();
 		}
 	});
+
+	$scope.openDate = function(){
+		generalFunctions.openDate();
+	};
 
 	$scope.actualizarTurnos = function(calendarDate){
 		$scope.verDetalle = false;
