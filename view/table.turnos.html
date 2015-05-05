@@ -8,16 +8,16 @@
 	<img class="media-object imagenCargando" style="margin-left: 40%; margin-top: 50px">
 </div>
 <div class="col-lg-12" ng-hide="loadingState">
+	<tabset>
+		<tab heading="IMPO" select="cambiarTipoMov('IMPO')"></tab>
+		<tab heading="EXPO" select="cambiarTipoMov('EXPO')"></tab>
+	</tabset>
+	<br>
 	<div ng-hide="datosTurnos.length != undefined && datosTurnos.length > 0">
 		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
 	<div ng-show="datosTurnos.length != undefined && datosTurnos.length > 0">
 		<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
-		<tabset>
-			<tab heading="IMPO" select="cambiarTipoMov('IMPO')"></tab>
-			<tab heading="EXPO" select="cambiarTipoMov('EXPO')"></tab>
-		</tabset>
-
 		<!--<ul class="nav nav-tabs hidden-print">
 			<li>
 				<a ng-click="cambiarTipoMov('IMPO');">IMPO</a>
