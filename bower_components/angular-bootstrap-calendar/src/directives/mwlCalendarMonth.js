@@ -20,7 +20,7 @@ angular
         useIsoWeek: '=calendarUseIsoWeek',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: ['$scope', '$sce', '$timeout', 'moment', 'calendarHelper', 'eventCountBadgeTotalFilter', function($scope, $sce, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
+      controller: function($scope, $sce, $timeout, moment, calendarHelper, eventCountBadgeTotalFilter) {
         var firstRun = false;
 
         $scope.$sce = $sce;
@@ -92,7 +92,7 @@ angular
           });
 
         };
-      }],
+      },
       link: function(scope, element, attrs, calendarCtrl) {
         scope.calendarCtrl = calendarCtrl;
       }

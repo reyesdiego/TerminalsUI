@@ -19,7 +19,7 @@ angular
         autoOpen: '=calendarAutoOpen',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: ['$scope', '$sce', '$timeout', 'calendarHelper', 'eventCountBadgeTotalFilter', function($scope, $sce, $timeout, calendarHelper, eventCountBadgeTotalFilter) {
+      controller: function($scope, $sce, $timeout, calendarHelper, eventCountBadgeTotalFilter) {
         var firstRun = false;
 
         $scope.$sce = $sce;
@@ -64,7 +64,7 @@ angular
             $scope.calendarCtrl.changeView('month', date);
           }
         };
-      }],
+      },
       link: function(scope, element, attrs, calendarCtrl) {
         scope.calendarCtrl = calendarCtrl;
       }

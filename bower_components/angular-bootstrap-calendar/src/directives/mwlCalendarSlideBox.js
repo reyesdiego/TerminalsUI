@@ -8,7 +8,7 @@ angular
       restrict: 'EA',
       templateUrl: 'templates/calendarSlideBox.html',
       replace: true,
-      controller: ['$scope', '$attrs', function($scope, $attrs) {
+      controller: function($scope, $attrs) {
         var unbindWatcher = $scope.$watch($attrs.isOpen, function(shouldCollapse) {
           $scope.shouldCollapse = shouldCollapse;
         });
@@ -18,7 +18,7 @@ angular
           unbindWatcher();
         });
 
-      }],
+      },
       require: ['^?mwlCalendarMonth', '^?mwlCalendarYear'],
       link: function(scope, elm, attrs, ctrls) {
         scope.isMonthView = !!ctrls[0];

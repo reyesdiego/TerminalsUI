@@ -12,7 +12,7 @@ angular.module('mwl.calendar')
 
     var defaultTitleFormats = {
       day: 'dddd D MMMM, YYYY',
-      week: 'Semana {week} del {year}',
+      week: 'Week {week} of {year}',
       month: 'MMMM YYYY',
       year: 'YYYY'
     };

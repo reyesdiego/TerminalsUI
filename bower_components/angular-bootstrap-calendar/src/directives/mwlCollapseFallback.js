@@ -10,7 +10,7 @@ angular
 
     return {
       restrict: 'A',
-      controller: ['$scope', '$attrs', '$element', function($scope, $attrs, $element) {
+      controller: function($scope, $attrs, $element) {
         var unbindWatcher = $scope.$watch($attrs.mwlCollapseFallback, function(shouldCollapse) {
           if (shouldCollapse) {
             $element.addClass('ng-hide');
@@ -24,7 +24,7 @@ angular
           unbindWatcher();
         });
 
-      }]
+      }
     };
 
   });

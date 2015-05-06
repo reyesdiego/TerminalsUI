@@ -15,7 +15,7 @@ angular
         useIsoWeek: '=calendarUseIsoWeek',
         timespanClick: '=calendarTimespanClick'
       },
-      controller: ['$scope', 'moment', 'calendarHelper', function($scope, moment, calendarHelper) {
+      controller: function($scope, moment, calendarHelper) {
         function updateView() {
           $scope.view = calendarHelper.getWeekView($scope.events, $scope.currentDay, $scope.useIsoWeek);
         }
@@ -29,7 +29,7 @@ angular
 
         $scope.$watch('currentDay', updateView);
         $scope.$watch('events', updateView, true);
-      }],
+      },
       link: function(scope, element, attrs, calendarCtrl) {
         scope.calendarCtrl = calendarCtrl;
       }

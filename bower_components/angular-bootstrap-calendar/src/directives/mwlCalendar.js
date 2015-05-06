@@ -21,13 +21,13 @@ angular
         useIsoWeek: '=calendarUseIsoWeek',
         eventLabel: '@calendarEventLabel',
         timeLabel: '@calendarTimeLabel',
-        dayViewStart: '=calendarDayViewStart',
+        dayViewStart: '@calendarDayViewStart',
         dayViewEnd: '@calendarDayViewEnd',
         weekTitleLabel: '@calendarWeekTitleLabel',
         timespanClick: '&calendarTimespanClick',
         dayViewSplit: '@calendarDayViewSplit'
       },
-      controller: ['$scope', '$timeout', 'moment', 'calendarConfig', function($scope, $timeout, moment, calendarConfig) {
+      controller: function($scope, $timeout, moment, calendarConfig) {
 
         var self = this;
 
@@ -56,12 +56,10 @@ angular
 
         $scope.control.prev = function() {
           $scope.currentDay = moment($scope.currentDay).subtract(1, $scope.view).toDate();
-			$scope.$emit('cambioFechaCalendar', $scope.currentDay);
         };
 
         $scope.control.next = function() {
           $scope.currentDay = moment($scope.currentDay).add(1, $scope.view).toDate();
-			$scope.$emit('cambioFechaCalendar', $scope.currentDay);
         };
 
         $scope.control.getTitle = function() {
@@ -93,7 +91,7 @@ angular
           unbindWatcher();
         });
 
-      }]
+      }
     };
 
   });

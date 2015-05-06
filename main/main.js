@@ -259,6 +259,45 @@ myapp.config(['$provide', function ($provide) {
 		return $delegate;
 	}]);
 
+	$provide.decorator('calendarConfig', ['$delegate', function ($delegate) {
+		$delegate.titleFormats.week = 'Semana {week} del {year}';
+		return $delegate;
+	}]);
+	$provide.decorator('mwlCalendarDirective', ['$delegate', function ($delegate) {
+		$delegate[0].$$isolateBindings.dayViewStart.mode = '=';
+		$delegate[0].scope.dayViewStart = '=calendarDayViewStart';
+		return $delegate;
+	}]);
+	$provide.decorator('mwlCalendarDayDirective', ['$delegate', function ($delegate) {
+		$delegate[0].controller = ['$scope', 'moment', 'calendarHelper', 'calendarConfig', function($scope, moment, calendarHelper, calendarConfig) {
+			function updateView() {
+				var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
+				var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
+				$scope.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), $scope.dayHeight);
+			}
+			function updateViewStart() {
+				var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
+				var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
+				$scope.dayViewSplit = parseInt($scope.dayViewSplit);
+				$scope.dayHeight = (60 / $scope.dayViewSplit) * 30;
+				$scope.days = [];
+				var dayCounter = moment(dayViewStart);
+				for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
+					$scope.days.push({
+						label: dayCounter.format(calendarConfig.dateFormats.hour)
+					});
+					dayCounter.add(1, 'hour');
+				}
+				updateView();
+			}
+			updateViewStart();
+			$scope.$watch('currentDay', updateView);
+			$scope.$watch('events', updateView, true);
+			$scope.$watch('dayViewStart', updateViewStart);
+		}];
+		return $delegate;
+	}]);
+
 }]);
 
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment){
