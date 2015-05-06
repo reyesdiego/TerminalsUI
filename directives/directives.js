@@ -64,51 +64,6 @@ myapp.directive('tableGates', function(){
 	}
 });
 
-/*myapp.directive('tableGatesBis', function(){
-	return {
-		restrict:		'E',
-		templateUrl:	'view/table.gates.bis.html',
-		link: function($scope, gatesFactory){
-
-			$scope.$on('cargarDatos', function(){
-				$scope.cargaGates();
-			});
-
-			$scope.filtrado = function(filtro, contenido){
-				var datos = {
-					filtro: filtro,
-					contenido: contenido
-				};
-
-				$scope.$emit('filtrado', datos);
-			};
-
-			$scope.cargaGates = function () {
-				$scope.cargando = true;
-				$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-				$scope.configPanel = {
-					tipo: 'panel-info',
-					titulo: 'Gates',
-					mensaje: 'No se han encontrado gates para los filtros seleccionados.'
-				};
-				gatesFactory.getGate($scope.model, $scope.page, function (data) {
-					if (data.status === "OK") {
-						$scope.gates = data.data;
-						$scope.totalItems = data.totalCount;
-					} else {
-						$scope.configPanel = {
-							tipo: 'panel-danger',
-							titulo: 'Gates',
-							mensaje: 'Se ha producido un error al cargar los gates.'
-						};
-					}
-					$scope.cargando = false;
-				});
-			};
-		}
-	}
-});*/
-
 myapp.directive('tableTurnos', function(){
 	return {
 		restrict:		'E',

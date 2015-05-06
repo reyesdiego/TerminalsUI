@@ -39,6 +39,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', function ($scope, gates
 		'viaje': '',
 		'estado': 'N',
 		'code': '',
+		'mov': '',
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': true,
