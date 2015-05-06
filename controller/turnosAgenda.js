@@ -86,6 +86,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			};
 			$scope.eventsMes.push(nuevoEvento);
 			$scope.seleccionarLista();
+			$scope.$apply();
 		}
 	});
 
