@@ -457,3 +457,16 @@ myapp.directive('divCargando', function () {
 
 	}
 });
+
+myapp.directive('buttonActualizar', ['$state', function ($state) {
+	return {
+		restrict:		'E',
+		template:
+			'<button class="btn btn-primary" ng-click="actualizar()"><span class="glyphicon glyphicon-refresh"></span></button>',
+		link: function (scope) {
+			scope.actualizar = function () {
+				$state.reload();
+			}
+		}
+	}
+}]);

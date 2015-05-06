@@ -4,7 +4,6 @@
 
 myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'generalFunctions', function($scope, ctrlUsersFactory, dialogs, $q, generalFunctions) {
 	$scope.permiso = false;
-	$scope.cargando = true;
 	$scope.datosUsers = [];
 	$scope.panelMensaje = {
 		tipo: 'panel-info',
@@ -18,22 +17,26 @@ myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'g
 		$scope.permiso = false;
 	});
 
-	ctrlUsersFactory.getUsers(function(data) {
-		if (data.status === 'OK'){
-			$scope.permiso = true;
-			$scope.datosUsers = data.data;
-			$scope.datosUsers.forEach(function(user){
-				if (user.status){
-					user.claseFila = 'success';
-				} else if (angular.isDefined(user.token) && user.token != null){
-					user.claseFila = 'danger';
-				} else {
-					user.claseFila = 'warning';
-				}
-			})
-		}
-		$scope.cargando = false;
-	});
+	$scope.cargaUsuarios = function () {
+		$scope.cargando = true;
+		ctrlUsersFactory.getUsers(function(data) {
+			console.log(data);
+			if (data.status === 'OK'){
+				$scope.permiso = true;
+				$scope.datosUsers = data.data;
+				$scope.datosUsers.forEach(function(user){
+					if (user.status){
+						user.claseFila = 'success';
+					} else if (angular.isDefined(user.token) && user.token != null){
+						user.claseFila = 'danger';
+					} else {
+						user.claseFila = 'warning';
+					}
+				})
+			}
+			$scope.cargando = false;
+		});
+	};
 
 	$scope.convertirIdAFecha = function(id) {
 		return generalFunctions.idToDate(id);
@@ -108,5 +111,7 @@ myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'g
 			function() {
 				dialogs.error('Control de usuarios', 'Se ha producido un error al actualizar los datos.');
 			});
-	}
+	};
+
+	$scope.cargaUsuarios();
 }]);
