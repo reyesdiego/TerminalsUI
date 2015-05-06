@@ -1,6 +1,6 @@
 {
   "name": "TerminalsUI",
-  "version": "0.0.0",
+  "version": "1.2.0",
   "description": "TerminalsUI =========== Version 1.2",
   "main": "Gruntfile.js",
   "devDependencies": {

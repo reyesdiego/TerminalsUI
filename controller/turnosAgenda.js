@@ -152,7 +152,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 					}
 				});
 				$scope.events = angular.copy(diaSelected);
-				$scope.dayViewStart = moment($scope.events[0].starts_at.getHours(), 'H').format('HH:mm');
+				if ($scope.events.length > 0) $scope.dayViewStart = moment($scope.events[0].starts_at.getHours(), 'H').format('HH:mm');
 				break;
 		}
 	};
