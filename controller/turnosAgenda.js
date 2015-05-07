@@ -49,7 +49,13 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 
 	socket.on('appointment', function (data) {
 		var fecha = new Date(data.data.inicio);
-		if (fecha.getMonth() == $scope.calendarDay._d.getMonth()){
+		var fechaCalendario;
+		if (moment.isMoment($scope.calendarDay)){
+			fechaCalendario = $scope.calendarDay._d;
+		} else {
+			fechaCalendario = $scope.calendarDay;
+		};
+		if (fecha.getMonth() == fechaCalendario.getMonth()){
 			var horaHasta = fecha.getHours() + 2;
 			if (horaHasta > 24) horaHasta = horaHasta - 24;
 			var eventoDia = {
