@@ -93,7 +93,6 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			};
 			$scope.eventsMes.push(nuevoEvento);
 			$scope.seleccionarLista();
-			$scope.$apply();
 		}
 	});
 
@@ -166,10 +165,6 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 				break;
 		}
 	};
-
-	/*$scope.$on('cambioFechaCalendar', function(event, calendarDate){
-		$scope.actualizarTurnos(calendarDate);
-	});*/
 
 	$scope.$watch('calendarDay', function(){
 		if (moment.isMoment($scope.calendarDay)){
