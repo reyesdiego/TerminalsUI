@@ -386,6 +386,28 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 			});
 	};
 
+	factory.getBuquesImpo = function (callback) {
+		var inserturl = serverUrl + '/afip/registro1_sumimpomani/buques';
+		$http.get(inserturl)
+			.success(function (data) {
+				callback(data);
+			})
+			.error(function (error) {
+				callback(error);
+			})
+	};
+
+	factory.getBuquesExpo = function (callback) {
+		var inserturl = serverUrl + '/afip/registro1_sumexpomane/buques';
+		$http.get(inserturl)
+			.success(function (data) {
+				callback(data);
+			})
+			.error(function (error) {
+				callback(error);
+			})
+	};
+
 	return factory;
 
 }]);
