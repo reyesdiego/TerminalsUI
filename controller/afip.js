@@ -11,6 +11,10 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		{ heading: 'Sumarias',		select: 'impo1',		uisref: 'afip.sumatorias.impo1' }
 	];
 
+	// Fecha (dia y hora)
+	$scope.fechaInicio = new Date();
+	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
 	$scope.model = {
 		afectacion: '',
 		detalle: '',
@@ -19,6 +23,8 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		conocimiento: '',
 		buqueNombre: '',
 		contenedor: '',
+		fechaInicio: $scope.fechaInicio,
+		fechaFin: $scope.fechaFin,
 		filtroOrden: '',
 		filtroOrdenReverse: false,
 		filtroAnterior: '',

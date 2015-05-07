@@ -357,7 +357,7 @@ myapp.directive('textPop', function() {
 			max:		'@'
 		},
 		template:
-			'<span class="hidden-print">{{ text | maxLength : max }}>' +
+			'<span class="hidden-print">{{ text | maxLength : max }}' +
 			'	<a href ng-show="(text.length > max)" popover="{{ text }}" popover-trigger="mouseenter"> (...)</a>' +
 			'</span>' +
 			'<span class="visible-print">{{ text }}</span>'
