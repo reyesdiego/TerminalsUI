@@ -265,44 +265,64 @@ myapp.config(['$provide', function ($provide) {
 	}]);
 	$provide.decorator('mwlCalendarDirective', ['$delegate', function ($delegate) {
 		$delegate[0].$$isolateBindings.dayViewStart.mode = '=';
-		$delegate[0].scope.dayViewStart = '=calendarDayViewStart';
 		return $delegate;
 	}]);
 	$provide.decorator('mwlCalendarDayDirective', ['$delegate', function ($delegate) {
-		$delegate[0].controller = ['$scope', 'moment', 'calendarHelper', 'calendarConfig', function($scope, moment, calendarHelper, calendarConfig) {
-			function updateView() {
-				var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
-				var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
-				$scope.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), $scope.dayHeight);
-			}
-			function updateViewStart() {
-				var dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
-				var dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
-				$scope.dayViewSplit = parseInt($scope.dayViewSplit);
-				$scope.dayHeight = (60 / $scope.dayViewSplit) * 30;
-				$scope.days = [];
+		$delegate[0].controller = ['$scope', '$timeout', 'moment', 'calendarHelper', 'calendarConfig', function($scope, $timeout, moment, calendarHelper, calendarConfig) {
+
+			var vm = this;
+			var dayViewStart, dayViewEnd;
+
+			vm.calendarConfig = calendarConfig;
+
+			function updateDays() {
+				dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
+				dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
+				vm.dayViewSplit = parseInt($scope.dayViewSplit);
+				vm.hourHeight = (60 / $scope.dayViewSplit) * 30;
+				vm.hours = [];
 				var dayCounter = moment(dayViewStart);
 				for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
-					$scope.days.push({
+					vm.hours.push({
 						label: dayCounter.format(calendarConfig.dateFormats.hour)
 					});
 					dayCounter.add(1, 'hour');
 				}
-				updateView();
 			}
-			updateViewStart();
-			$scope.$watch('currentDay', updateView);
-			$scope.$watch('events', updateView, true);
-			$scope.$watch('dayViewStart', updateViewStart);
+
+			var originalLocale = moment.locale();
+
+			$scope.$on('calendar.refreshView', function() {
+
+				if (originalLocale !== moment.locale()) {
+					originalLocale = moment.locale();
+					updateDays();
+				}
+
+				vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), vm.hourHeight);
+
+			});
+
+			$scope.$watch('dayViewStart', updateDays);
+
+			updateDays();
+
 		}];
 		return $delegate;
 	}]);
 
 }]);
 
+myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
+	calendarConfigProvider.setI18nStrings({
+		eventsLabel: 'Turnos',
+		timeLabel: 'Hora'
+	});
+}]);
+
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment){
 
-	moment().format();
+	moment().format('YYYY-MM-DD');
 	moment.locale('es');
 
 	moment.locale('es', {

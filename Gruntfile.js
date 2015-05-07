@@ -66,6 +66,16 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
+						src: ['bower_components/angular-bootstrap-calendar/dist/css/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-bootstrap-calendar/dist/js/*-tpls.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
 						src: ['bower_components/angular/angular-csp.css'],
 						dest: 'build'
 					},

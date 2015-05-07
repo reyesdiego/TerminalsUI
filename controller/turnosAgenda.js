@@ -16,6 +16,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	$scope.eventosPorDia = [];
 	$scope.diaElegido = '';
 
+	$scope.watchDayView = false;
 	$scope.j = 1;
 
 	$scope.datosTurnos = {
@@ -48,14 +49,14 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 
 	socket.on('appointment', function (data) {
 		var fecha = new Date(data.data.inicio);
-		if (fecha.getMonth() == $scope.calendarDay.getMonth()){
+		if (fecha.getMonth() == $scope.calendarDay._d.getMonth()){
 			var horaHasta = fecha.getHours() + 2;
 			if (horaHasta > 24) horaHasta = horaHasta - 24;
 			var eventoDia = {
 				title: '1 turno de ' + fecha.getHours() + ' a ' + horaHasta,
 				type: 'info',
-				starts_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()),
-				ends_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()+2),
+				startsAt: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()),
+				endsAt: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()+2),
 				editable: false,
 				deletable: false,
 				cantidad: 1
@@ -65,10 +66,10 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			} else {
 				var coincide = false;
 				$scope.eventosPorDia[fecha.getDate() - 1].eventos.forEach(function(evento){
-					if (eventoDia.starts_at == evento.starts_at){
+					if (eventoDia.startsAt == evento.startsAt){
 						coincide = true;
 						evento.cantidad += 1;
-						evento.title = evento.cantidad + ' turnos de ' + eventoDia.starts_at.getHours() + ' a ' + eventoDia.ends_at.getHours();
+						evento.title = evento.cantidad + ' turnos de ' + eventoDia.startsAt.getHours() + ' a ' + eventoDia.endsAt.getHours();
 					}
 				});
 				if (!coincide){
@@ -79,8 +80,8 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			var nuevoEvento = {
 				title: 'Turno ' + $scope.j,
 				type: 'info',
-				starts_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()),
-				ends_at: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours() + 2),
+				startsAt: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours()),
+				endsAt: new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate(), fecha.getHours() + 2),
 				editable: false,
 				deletable: false
 			};
@@ -95,6 +96,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	};
 
 	$scope.actualizarTurnos = function(calendarDate){
+		//if (moment.isMoment(calendarDate)) calendarDate = calendarDate._d;
 		$scope.verDetalle = false;
 		$scope.diaElegido = calendarDate.getDate();
 		if ($scope.diaAnterior.getMonth() != calendarDate.getMonth()){
@@ -111,17 +113,17 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 
 	//These variables MUST be set as a minimum for the calendar to work
 	$scope.calendarView = 'month';
-	$scope.calendarDay = new Date();
+	$scope.calendarDay = moment();
 	$scope.diaAnterior = new Date();
 
 	$scope.setCalendarToToday = function() {
-		$scope.calendarDay = new Date();
-		$scope.actualizarTurnos($scope.calendarDay);
+		$scope.calendarDay = moment();
+		$scope.actualizarTurnos($scope.calendarDay._d);
 	};
 
 	$scope.eventClicked = function(calendarEvent){
-		$scope.model.fechaInicio = calendarEvent.starts_at;
-		$scope.model.fechaFin = calendarEvent.ends_at;
+		$scope.model.fechaInicio = calendarEvent.startsAt;
+		$scope.model.fechaFin = calendarEvent.endsAt;
 		$scope.verDetalle = true;
 		$scope.detalleTurnos();
 	};
@@ -135,7 +137,22 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	};
 
 	$scope.timeSpanClicked = function(calendarDate){
+		$scope.calendarDay = moment(calendarDate);
 		$scope.actualizarTurnos(calendarDate);
+	};
+
+	$scope.fechaAnterior = function(){
+		$scope.calendarDay = $scope.calendarDay.subtract(1, 'day');
+		console.log($scope.calendarDay);
+	};
+
+	$scope.fechaHoy = function(){
+		$scope.calendarDay = moment();
+	};
+
+	$scope.fechaSiguiente = function(){
+		$scope.calendarDay = $scope.calendarDay.add(1, 'day');
+		console.log($scope.calendarDay);
 	};
 
 	$scope.seleccionarLista = function(){
@@ -153,7 +170,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 					}
 				});
 				$scope.events = angular.copy(diaSelected);
-				if ($scope.events.length > 0) $scope.dayViewStart = moment($scope.events[0].starts_at.getHours(), 'H').format('HH:mm');
+				if ($scope.events.length > 0) $scope.dayViewStart = moment($scope.events[0].startsAt.getHours(), 'H').format('HH:mm');
 				break;
 		}
 	};
@@ -163,7 +180,11 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	});*/
 
 	$scope.$watch('calendarDay', function(){
-		$scope.actualizarTurnos($scope.calendarDay);
+		if (moment.isMoment($scope.calendarDay)){
+			$scope.actualizarTurnos($scope.calendarDay._d);
+		} else {
+			$scope.actualizarTurnos($scope.calendarDay);
+		}
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
@@ -198,8 +219,8 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 				var eventoDia = {
 					title: turno.cnt + ' turnos de ' + turno._id.hour + ' a ' + horaHasta,
 					type: 'info',
-					starts_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour),
-					ends_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour + 2),
+					startsAt: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour),
+					endsAt: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour + 2),
 					editable: false,
 					deletable: false,
 					cantidad: turno.cnt
@@ -209,8 +230,8 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 					var nuevoEvento = {
 						title: 'Turno ' + $scope.j,
 						type: 'info',
-						starts_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour),
-						ends_at: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour+2),
+						startsAt: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour),
+						endsAt: new Date(turno._id.year, turno._id.month - 1, turno._id.day, turno._id.hour+2),
 						editable: false,
 						deletable: false
 					};
