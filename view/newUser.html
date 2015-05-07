@@ -1,0 +1,94 @@
+<div class="container" ng-controller="registerCtrl">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="xpage-header">
+				<h1 id="forms"><img src="images/Acceso.gif" height="64" width="64"> Registro</h1>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-8">
+			<div class="well">
+				<form ng-submit="register()" class="bs-example form-horizontal">
+					<fieldset>
+						<div class="form-group">
+							<label for="inputName" class="col-lg-3 control-label"> Nombre</label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" ng-model="nombre" id="inputName" placeholder="Ingresar nombre" ng-required="true">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputSurname" class="col-lg-3 control-label"> Apellido</label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" ng-model="apellido" id="inputSurname" placeholder="Ingresar apellido" ng-required="true">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEntity" class="col-lg-3 control-label"> Entidad</label>
+							<div class="col-lg-8">
+								<select id="inputEntity" class="form-control" ng-model="entidad" ng-required="true">
+									<option value="bactssa">BACTSSA</option>
+									<option value="trp">TRP</option>
+									<option value="apmterminals">TERMINAL 4</option>
+									<option value="puertobuenosaires">PUERTO BUENOS AIRES</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-inbox"></span> E-Mail</label>
+							<div class="col-lg-8">
+								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar correo electrónico" ng-required="true">
+							</div>
+							<div class="col-lg-1">
+								<a href="" popover="La dirección ingresada no es válida" popover-trigger="mouseenter" ng-show="email != '' && !validEmail"><span class="text-danger glyphicon glyphicon-remove"></span></a>
+								<span class="text-success glyphicon glyphicon-check" ng-show="email != '' && validEmail"></span>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="inputConfirmMail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-inbox"></span> Confirme E-Mail</label>
+							<div class="col-lg-8">
+								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="confirmEmail" id="inputConfirmMail" placeholder="Ingresar correo electrónico" ng-required="true" onpaste="return false"/>
+							</div>
+							<div class="col-lg-1">
+								<a href="" popover="La direcciones ingresadas no coinciden" popover-trigger="mouseenter" ng-show="confirmEmail != '' && email != confirmEmail"><span class="text-danger glyphicon glyphicon-remove"></span></a>
+								<span class="text-success glyphicon glyphicon-check" ng-show="confirmEmail != '' && email == confirmEmail"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword" class="col-lg-3 control-label"><span class="glyphicon glyphicon-asterisk"></span> Contraseña</label>
+							<div class="col-lg-8">
+								<input type="password" class="form-control" ng-model="password" id="inputPassword" placeholder="Ingresar contraseña" ng-required="true">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="inputConfirmPassword" class="col-lg-3 control-label"><span class="glyphicon glyphicon-asterisk"></span> Confirme contraseña</label>
+							<div class="col-lg-8">
+								<input type="password" class="form-control" ng-model="confirmPassword" id="inputConfirmPassword" placeholder="Ingresar contraseña" ng-required="true" onpaste="return false"/>
+							</div>
+							<div class="col-lg-1">
+								<a href="" popover="La contraseñas ingresadas no coinciden" popover-trigger="mouseenter" ng-show="confirmPassword != '' && password != confirmPassword"><span class="text-danger glyphicon glyphicon-remove"></span></a>
+								<span class="text-success glyphicon glyphicon-check" ng-show="confirmPassword != '' && password == confirmPassword"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputUser" class="col-lg-3 control-label"><span class="glyphicon glyphicon-user"></span> Usuario</label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" ng-model="usuario" id="inputUser" ng-required="true" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<br>
+							<div class="col-lg-12 text-right">
+								<button type="submit" class="btn btn-primary" ng-disabled="entrando"><span class="glyphicon glyphicon-log-in"></span> Enviar</button>
+								<button type="button" ui-sref="login" class="btn"><span class="glyphicon glyphicon-remove-sign"></span> Cancelar</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>

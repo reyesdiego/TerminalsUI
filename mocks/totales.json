@@ -1,0 +1,41 @@
+/*{
+	"terminales": [{
+		"nombre": "BACTSSA",
+		"invoices": 156,
+		"gates": 89,
+		"turnos": 105
+	},{
+		"nombre": "TRP",
+		"invoices": 206,
+		"gates": 147,
+		"turnos": 160
+	},{
+		"nombre": "Terminal 4",
+		"invoices": 91,
+		"gates": 54,
+		"turnos": 68
+	}]
+}
+*/
+{
+	"terminales": [
+					{
+					"_id": {
+						"terminal": "BACTSSA"
+						},
+					"invoicesCount": 3
+					},
+					{
+					"_id": {
+					"terminal": "TERMINAL4"
+					},
+					"invoicesCount": 2
+					},
+					{
+					"_id": {
+					"terminal": "TRP"
+					},
+					"invoicesCount": 1
+					}
+	]
+}

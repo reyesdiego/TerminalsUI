@@ -1,23 +1,260 @@
 <div class="container">
 
-	<!-- Tables
-	================================================== -->
-	<!--<div class="bs-docs-section">-->
+	<div class="row">
+		<div class="col-lg-12">
+			<h1><img ng-src="images/paneldecontrol.png" height="64" width="80" class="hidden-xs">Panel de control</h1>
+		</div>
+	</div>
 
 	<div class="row">
-		<div class="col-lg-11">
-			<div class="xpage-header">
-				<h1 id="forms">Panel de control</h1>
+		<br>
+		<div class="col-lg-7">
+			<h4 class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
+			<div class="input-group text-left">
+				<label for="desde" class="sr-only">Fecha</label>
+				<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+				<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="desde" is-open="openfechaInicio" max-date="maxDate" ng-change="traerDatosFacturadoDia()" disabled/>
+			</div>
+			<div class="table-responsive" style="max-height: 220px; max-width: 100%; overflow: auto">
+				<table class="table table-bordered table-hover">
+					<thead>
+					<tr>
+						<th class="text-left"><span class="glyphicon glyphicon-list-alt"></span> Comprobante</th>
+						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> BACTSSA</th>
+						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> TERMINAL 4</th>
+						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> TRP</th>
+						<th class="text-right">Subtotal</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="comprobante in comprobantesCantidad">
+						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante }}</td>
+						<td class="text-right">{{ comprobante.BACTSSA[0] | numero }} ({{ comprobante.BACTSSA[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TERMINAL4[0] | numero }} ({{ comprobante.TERMINAL4[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TRP[0] | numero }} ({{ comprobante.TRP[1] | numero | number:2 }} %)</td>
+						<td class="text-right"><b>{{ comprobante.total }}</b></td>
+					</tr>
+					<tr>
+						<th class="text-right" colspan="4">Total</th>
+						<th class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-lg-4" ng-show="errorCargaTasas">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los facturado por tasas a las cargas.
+				<h6>{{mensajeErrorCargaTasas}}</h6>
+				<span>Presione <a href ng-click="traerDatosFacturadoDiaTasas()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
+
+		<div class="col-lg-5" ng-show="loadingFacturadoDia">
+			<img class="media-object imagenCargando" style="margin-left: 50px; margin-top: 50px">
+		</div>
+		<div class="col-lg-5" ng-hide="loadingFacturadoDia || errorFacturadoDia">
+			<h4 class="text-left">Facturado diario</h4>
+			<div collapse="!isCollapsedDay">
+				<dynamic-chart
+						data="chartDataFacturado"
+						width="{{chartsWidthFacturado}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexFacturado)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						stacked="false"
+						currency="true"
+						is3-d="false"
+						money="moneda"
+						columns="4">
+				</dynamic-chart>
+			</div>
+		</div>
+		<div class="col-lg-4" ng-show="errorFacturadoDia">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los facturado por día.
+				<h6>{{mensajeErrorFacturadoDia}}</h6>
+				<span>Presione <a href ng-click="traerDatosFacturadoDia()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-lg-11">
-			<button type="button" ui-sref="correlativo" class="btn btn-primary btn-lg">Correlatividad</button>
-			<!--<button type="button" ui-sref="cdiario" class="btn btn-primary btn-lg">Control Diario</button>-->
+		<div class="col-lg-4" ng-show="loadingFacturadoMes">
+			<img class="media-object imagenCargando" style="margin-left: 50px; margin-top: 50px">
+		</div>
+		<div class="col-lg-4" ng-hide="loadingFacturadoMes || errorFacturadoMes">
+			<h4 class="text-left">Facturado mensual</h4>
+			<p class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="isCollapsedMonth = !isCollapsedMonth"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+				<input type="text" readonly="true" class="form-control" datepicker-popup="yyyy-MM" ng-model="mesDesde" />
+			</p>
+			<div collapse="isCollapsedMonth">
+				<div class="well well-lg">
+					<datepicker ng-model="mesDesde" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosFacturadoMes()" max-date="maxDate"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedMonth">
+				<dynamic-chart
+						data="chartDataFacturas"
+						width="{{chartsWidthFacturadoMes}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexFacturas)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						stacked="false"
+						currency="true"
+						is3-d="false"
+						money="moneda"
+						columns="4">
+				</dynamic-chart>
+			</div>
+		</div>
+		<div class="col-lg-4" ng-show="errorFacturadoMes">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los facturado por mes.
+				<h6>{{mensajeErrorFacturadoMes}}</h6>
+				<span>Presione <a href ng-click="traerDatosFacturadoMes()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
+
+		<div class="col-lg-4" ng-show="loadingGates">
+			<img class="media-object imagenCargando" style="margin-left: 50px; margin-top: 50px">
+		</div>
+		<div class="col-lg-4" ng-show="!loadingGates || errorGates">
+			<h4 class="text-left">Gates mensuales</h4>
+			<p class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="isCollapsedGates = !isCollapsedGates"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+				<input type="text" readonly="true" class="form-control" datepicker-popup="yyyy-MM" ng-model="mesDesdeGates" />
+			</p>
+			<div collapse="isCollapsedGates">
+				<div class="well well-lg">
+					<datepicker ng-model="mesDesdeGates" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosGates()" max-date="maxDate"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedGates">
+				<dynamic-chart
+						data="chartDataGates"
+						title="{{chartTitleGates}}"
+						width="{{chartsWidth}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexGates)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						stacked="false"
+						currency="false"
+						is3-d="false">
+				</dynamic-chart>
+			</div>
+		</div>
+		<div class="col-lg-4" ng-show="errorGates">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los gates.
+				<h6>{{mensajeErrorGates}}</h6>
+				<span>Presione <a href ng-click="traerDatosGates()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
+
+		<div class="col-lg-4" ng-show="loadingTurnos">
+			<img class="media-object imagenCargando" style="margin-left: 50px; margin-top: 50px">
+		</div>
+		<div class="col-lg-4" ng-hide="loadingTurnos || errorTurnos">
+			<h4 class="text-left">Turnos mensuales</h4>
+			<p class="input-group">
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="isCollapsedTurnos = !isCollapsedTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>
+				<input type="text" readonly="true" class="form-control" datepicker-popup="yyyy-MM" ng-model="mesDesdeTurnos" />
+			</p>
+			<div collapse="isCollapsedTurnos">
+				<div class="well well-lg">
+					<datepicker ng-model="mesDesdeTurnos" min-mode="month" datepicker-mode="monthMode" show-weeks="false" ng-change="traerDatosTurnos()" max-date="maxDateTurnos"></datepicker>
+				</div>
+			</div>
+			<div collapse="!isCollapsedTurnos">
+				<dynamic-chart
+						data="chartDataTurnos"
+						width="{{chartsWidth}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexTurnos)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						stacked="false"
+						currency="false"
+						is3-d="false">
+				</dynamic-chart>
+			</div>
+		</div>
+		<div class="col-lg-4" ng-show="errorTurnos">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los turnos.
+				<h6>{{mensajeErrorTurnos}}</h6>
+				<span>Presione <a href ng-click="traerDatosTurnos()">aquí</a> para reintentar.</span>
+			</div>
 		</div>
 	</div>
 
-	<!--</div>-->
+	<div class="row">
+		<div class="col-lg-4" ng-show="loadingGatesTurnos">
+			<img class="media-object imagenCargando" style="margin-left: 480px; margin-top: 75px">
+		</div>
+		<div class="col-lg-12" ng-hide="loadingGatesTurnos">
+			<h4 class="text-left">{{ labelPorHora }}</h4>
+			<div class="col-lg-4 col-lg-offset-2">
+				<div class="input-group text-left">
+					<span class="input-group-btn">
+						<button class="btn btn-default" ng-click="isCollapsedDayGatesTurnos = !isCollapsedDayGatesTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+					<input type="text" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="diaGatesTurnos" />
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="input-group">
+					<div class="btn-group">
+						<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Gates'" ng-change="traerDatosGatesTurnosDia()">Gates</label>
+						<label class="btn btn-primary" ng-model="radioModel" btn-radio="'Turnos'" ng-change="traerDatosGatesTurnosDia()">Turnos</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-lg-offset-3">
+				<div collapse="isCollapsedDayGatesTurnos">
+					<div class="well well-lg">
+						<datepicker ng-model="diaGatesTurnos" show-weeks="false" ng-change="traerDatosGatesTurnosDia()" max-date="maxDateGatesTurnos"></datepicker>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
+			<div class="table-responsive" style="max-height: 340px; max-width: 100%; overflow: auto">
+				<dynamic-chart
+						data="chartDataDiaGatesTurnos"
+						width="{{chartWidthDiaGatesTurnos}}"
+						height="{{chartsHeight}}"
+						select="selectRow(selectedRowIndexFacturado)"
+						series="chartSeries"
+						colors="barColors"
+						type="{{columnChart}}"
+						currency="false"
+						stacked="false"
+						is3-d="false">
+				</dynamic-chart>
+			</div>
+		</div>
+		<div class="col-lg-4" ng-show="errorGatesTurnos">
+			<div class="alert alert-danger">
+				<strong>Error</strong> - No se han podido cargar los datos de los turnos.
+				<h6>{{mensajeErrorGatesTurnos}}</h6>
+				<span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
+			</div>
+		</div>
+	</div>
 </div>

@@ -1,0 +1,80 @@
+[
+	{
+		"buque":			"Titanic",
+		"viaje":			"15/45",
+		"contenedor":		"CAXU1236547",
+		"mov":				"Importacion",
+		"tipo":				"IN",
+		"patenteCamion":	"ADR325",
+		"gateTimestamp":	"2014-01-23T12:30:00.000Z",
+		"turnoInicio":		"2014-01-23T11:00:00.000Z",
+		"turnoFin":			"2014-01-23T13:00:00.000Z"
+	},
+	{
+		"buque":			"Morgam",
+		"viaje":			"15/22",
+		"contenedor":		"ISCU1236547",
+		"mov":				"Exportacion",
+		"tipo":				"OUT",
+		"patenteCamion":	"FDR325",
+		"gateTimestamp":	"2014-01-21T12:30:00.000Z",
+		"turnoInicio":		"2014-01-21T11:00:00.000Z",
+		"turnoFin":			"2014-01-21T13:00:00.000Z"
+	},
+	{
+		"buque":			"Otro",
+		"viaje":			"15/23",
+		"contenedor":		"ISCU1236547",
+		"mov":				"Exportacion",
+		"tipo":				"OUT",
+		"patenteCamion":	"FDR325",
+		"gateTimestamp":	"2014-01-21T12:30:00.000Z",
+		"turnoInicio":		"2014-01-21T11:00:00.000Z",
+		"turnoFin":			"2014-01-21T13:00:00.000Z"
+	},
+	{
+		"buque":			"Tarde",
+		"viaje":			"15/24",
+		"contenedor":		"ISCU1236547",
+		"mov":				"Exportacion",
+		"tipo":				"OUT",
+		"patenteCamion":	"FDR325",
+		"gateTimestamp":	"2014-01-21T14:30:00.000Z",
+		"turnoInicio":		"2014-01-21T11:00:00.000Z",
+		"turnoFin":			"2014-01-21T13:00:00.000Z"
+	},
+	{
+		"buque":			"Temprano",
+		"viaje":			"15/25",
+		"contenedor":		"ISCU1236547",
+		"mov":				"Exportacion",
+		"tipo":				"OUT",
+		"patenteCamion":	"FDR325",
+		"gateTimestamp":	"2014-01-21T10:30:00.000Z",
+		"turnoInicio":		"2014-01-21T11:00:00.000Z",
+		"turnoFin":			"2014-01-21T13:00:00.000Z"
+	},
+	{
+		"buque":			"JIT",
+		"viaje":			"15/26",
+		"contenedor":		"ISCU1236547",
+		"mov":				"Exportacion",
+		"tipo":				"OUT",
+		"patenteCamion":	"FDR325",
+		"gateTimestamp":	"2014-01-21T13:00:00.000Z",
+		"turnoInicio":		"2014-01-21T11:00:00.000Z",
+		"turnoFin":			"2014-01-21T13:00:00.000Z"
+	}
+	,
+	{
+		"buque":			"Ouch",
+		"viaje":			"15/27",
+		"contenedor":		"ISCU1236547",
+		"mov":				"Exportacion",
+		"tipo":				"OUT",
+		"patenteCamion":	"FDR325",
+		"gateTimestamp":	"2014-01-21T13:01:00.000Z",
+		"turnoInicio":		"2014-01-21T11:00:00.000Z",
+		"turnoFin":			"2014-01-21T13:00:00.000Z"
+	}
+]

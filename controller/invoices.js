@@ -2,56 +2,71 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-function invoicesCtrl ($scope, invoiceFactory) {
-	'use strict';
-	$scope.filteredInvoices = []
-	$scope.itemsPerPage = 10;
-	$scope.currentPage = 1;
-	$scope.maxSize = 5;
-	$scope.onOff = false;
-	$scope.onOffDetalle = true;
+myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', function($scope, invoiceFactory, loginService){
 
-	var page = {skip:0, limit: $scope.itemsPerPage};
+	$scope.ocultarFiltros = ['nroPtoVenta'];
 
-	invoiceFactory.getInvoice(page, function(data){
-		$scope.invoices = data;
+	$scope.model = {
+		'nroPtoVenta': '',
+		'codTipoComprob': 0,
+		'nroComprobante': '',
+		'razonSocial': '',
+		'documentoCliente': '',
+		'fechaInicio': $scope.fechaInicio,
+		'fechaFin': $scope.fechaFin,
+		'contenedor': '',
+		'buqueNombre': '',
+		'viaje': '',
+		'estado': 'N',
+		'code': '',
+		'filtroOrden': 'fecha.emision',
+		'filtroOrdenAnterior': '',
+		'filtroOrdenReverse': false,
+		'order': '',
+		'itemsPerPage': 15
+	};
 
-		$scope.totalItems = $scope.invoices.totalCount;
+	$scope.invoices = [];
 
-		$scope.setPage = function (pageNo) {
-			$scope.currentPage = pageNo;
-		};
+	$scope.nombre = loginService.getFiltro();
 
-		//esta funcion debe ser reemplazada por una llamada al servidor que devuelva el total de facturas
-		$scope.numPages = function () {
-			return Math.ceil($scope.totalItems / $scope.itemsPerPage);
-		};
+	$scope.cargando = true;
 
-		$scope.$watch('currentPage + itemsPerPage', function() {
-			var skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
-			page.skip = skip;
-			invoiceFactory.getInvoice(page, function(data) {
-				$scope.invoices = data;
-			})
-			$scope.filtro = '';
-		});
-
-		// init the filtered items
-		$scope.search = function () {
-			//$scope.filteredInvoices = $scope.invoices;
-		};
-
-		$scope.cargar = function(factura){
-			$scope.verDetalle = factura;
-			$scope.onOff = true;
-			$scope.onOffDetalle = false;
-		};
-
-		$scope.volver = function(){
-			$scope.onOff = false;
-			$scope.onOffDetalle = true;
-		}
-
+	$scope.$on('cambioPagina', function(event, data){
+		$scope.currentPage = data;
+		$scope.cargaDatos();
 	});
 
-}
+	$scope.$on('cambioFiltro', function(event, data){
+		$scope.currentPage = 1;
+		$scope.cargaDatos();
+	});
+
+	$scope.$on('errorInesperado', function(e, mensaje){
+		$scope.cargando = false;
+		$scope.invoices = [];
+		$scope.mensajeResultado = mensaje;
+	});
+
+	$scope.cargaDatos = function(){
+		$scope.cargando = true;
+		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
+		$scope.page.limit = $scope.model.itemsPerPage;
+		$scope.invoices = [];
+		invoiceFactory.getInvoice($scope.model, $scope.page, function(data){
+			if(data.status === 'OK'){
+				$scope.invoices = data.data;
+				$scope.totalItems = data.totalCount;
+				$scope.cargando = false;
+			} else {
+				$scope.mensajeResultado = {
+					titulo: 'Error',
+					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+					tipo: 'panel-danger'
+				};
+				$scope.invoices = [];
+				$scope.cargando = false;
+			}
+		});
+	};
+}]);

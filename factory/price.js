@@ -1,147 +1,123 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', function($http){
+myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', function($http, loginService, formatService){
 	var factory = {};
 
-	factory.getPrice = function(callback) {
-		var inserturl = serverUrl + '/agp/prices';
+	factory.getAllRates = function(callback){
+		var inserturl = serverUrl + '/prices/rates/1/all';
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
+			}).error(function(error){
+				callback(error);
 			});
 	};
 
-	factory.getMatchPrices = function(terminal, callback) {
-		var inserturl = serverUrl + '/agp/matchprices/' + terminal;
+	factory.getPrice = function(terminal, datos, callback) {
+		var inserturl = serverUrl + '/prices/' + terminal;
+		if (datos){ inserturl = inserturl + '?onlyRates=true' }
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
+			}).error(function(error){
+				callback(error);
 			});
-		};
+	};
+
+	factory.getMatchPrices = function(datos, callback) {
+		var inserturl = serverUrl + '/matchPrices/' + loginService.getFiltro();
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
+	};
+
+	factory.getArrayMatches = function(callback){
+		var inserturl = serverUrl + '/matchPrices/price/' + loginService.getFiltro();
+		$http.get(inserturl)
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				console.log(error);
+			});
+	};
 
 	factory.addMatchPrice = function (data, callback) {
-		var inserturl = serverUrl + '/agp/matchprice';
-		$http({
-			method: "POST",
-			url: inserturl,
-			data: JSON.stringify(data),
-			headers:{"Content-Type":"application/json"}
-		}).success(function (response) {
-				console.log("success");
+		var inserturl = serverUrl + '/matchPrices/matchprice';
+		$http.post(inserturl, data)
+			.success(function (response) {
 				callback(response);
-			}).error(function () {
-				console.log("error");
+			}).error(function(error) {
+				callback(error);
+			});
+	};
+
+	factory.noMatches = function (data, callback){
+		var inserturl = serverUrl + '/matchPrices/noMatches/' + loginService.getFiltro();
+		$http.get(inserturl, { params: formatService.formatearDatos(data) })
+			.success(function (data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
 			});
 	};
 
 	factory.addPrice = function (data, callback) {
-		var inserturl = serverUrl + '/agp/price';
-		$http({
-			method: 'POST',
-			url: inserturl,
-			data: data
-		}).
-			success(function(response) {
-				console.log("success");
+		var inserturl = serverUrl + '/prices/price';
+		$http.post(inserturl, data)
+			.success(function(response) {
 				callback(response);
-			}).
-			error(function(response) {
-				console.log("error");
+			}).error(function(error) {
+				callback(error);
 			});
 	};
 
-	/*factory.getPriceWithMatch = function(terminal){
-		this.getPrice(function(price){
-			var priceList = price;
-			console.log(priceList);
-		});
-		this.getMatchPrices(terminal, function(match){
-			var matchList = match;
-			console.log(matchList);
-		})
-	}*/
-
-	return factory;
-
-});
-
-myapp.factory('invoiceFactory', function($http){
-	var factory = {};
-
-	factory.getInvoice = function(page, callback) {
-		var inserturl = serverUrl + '/invoices/' + page.skip + '/' + page.limit;
-		$http({
-			method: 'GET',
-			url: inserturl,
-			headers:
-			{token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InJleWVzZGllZ29AaG90bWFpbC5jb20ifQ.hpgNN2-eae3CPYvZFupIHctKW9ZWwLwvVA7HiFsr2rA'}
-		}).success(function(data) {
-				callback(data);
-			}).error(function(response) {
-				console.log(response);
-				console.log("Error al cargar la lista Invoice");
-			});
-	};
-
-	factory.getByDate = function(page, desde, hasta, terminal, callback) {
-		//Por ahora trabaja solo con un mock
-		$http.get('correlativo.json')
-			.success(function (data){
-				callback(data);
-			}).error(function(){
-				console.log("Error al cargar la lista PriceList")
-			});
-	};
-
-	return factory;
-
-});
-
-myapp.factory('controlFactory', function($http){
-	var factory = {};
-
-	factory.getByDay = function(dia, callback){
-		//var inserturl = serverUrl + '/controldia/' + dia; // El que realmente se va a usar
-		var inserturl = 'controlday.json';
+	factory.getPriceById = function(id, callback){
+		var inserturl = serverUrl + '/prices/' + id + '/' + loginService.getFiltro();
 		$http.get(inserturl)
-			.success(function(data){
-				callback(data);
-			}).error(function(){
-				console.log('Error al cargar lista por día')
+			.success(function(response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
+			});
+	};
+
+	factory.savePriceChanges = function(formData, id, callback){
+		formData.topPrices.forEach(function(unPrecio){
+			unPrecio.from = formatService.formatearFecha(unPrecio.from);
+		});
+		var inserturl = serverUrl + '/prices/price/' + id;
+		$http.put(inserturl, formData)
+			.success(function(response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
+			});
+	};
+
+	factory.getUnitTypes = function(callback){
+		var inserturl = serverUrl + '/unitTypes';
+		$http.get(inserturl)
+			.success(function(response) {
+				callback(response);
+			}).error(function(errorText) {
+				callback(errorText);
+			});
+	};
+
+	factory.removePrice = function(id, callback){
+		var inserturl = serverUrl + '/prices/price/' + id;
+		$http.delete(inserturl)
+			.success(function(response) {
+				callback(response);
+			}).error(function(error) {
+				callback(error);
 			});
 	};
 
 	return factory;
-});
 
-myapp.factory('userService', function($http, $dialogs){
-	var factory = {};
-
-	factory.loginApp = function(user, pass, callback){
-		"use strict";
-		var formData = {
-			"email": user,
-			"password": pass
-		};
-		console.log(formData);
-		var inserturl = serverUrl + '/login';
-		$http({
-			method: 'POST',
-			url: inserturl,
-			data: formData
-		}).success(function(data) {
-				console.log("success");
-				callback(data)
-			}).error(function(response) {
-				console.log("error");
-				$dialogs.error("Ha ocurrido un error al conectarse con el servidor, inténtelo nuevamente más tarde")
-			});
-	};
-
-	return factory;
-});
+}]);

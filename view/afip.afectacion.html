@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-2">
+			<br>
+			<ul class="nav nav-pills nav-stacked">
+				<li><b>Afectación</b></li>
+				<li ng-class="{selectedOption: 'afectacion1' == actualRegistro}"><a ui-sref="afip.afectacion.afectacion1" ng-click="cargaDatos('afectacion1')">Módulo 1</a></li>
+				<li ng-class="{selectedOption: 'afectacion2' == actualRegistro}"><a ui-sref="afip.afectacion.afectacion2" ng-click="cargaDatos('afectacion2')">Módulo 2</a></li>
+			</ul>
+		</div>
+		<div class="col-md-10">
+			<div class="col-lg-12" ng-show="datosRegistro.length == 0 && !cargando">
+				<br>
+				<div-panel config-panel="panelMensaje">
+					<span>{{ panelMensaje.mensaje }}</span>
+				</div-panel>
+			</div>
+			<div-cargando mostrar="cargando">
+				<div ng-hide="totalItems == 0">
+					<div ui-view></div>
+				</div>
+			</div-cargando>
+		</div>
+	</div>
+</div>

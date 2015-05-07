@@ -2,10 +2,15 @@
  * Created by Artiom on 11/03/14.
  */
 
-function changePassCtrl ($scope, $templateCache, $http) {
+myapp.controller('changePassCtrl', ['$scope', 'userFactory', 'dialogs', '$state', function($scope, userFactory, dialogs, $state) {
 	'use strict';
 
 	$scope.changePass = function(){
+
+		if ($scope.newPass != $scope.confirmPass){
+			dialogs.notify('Cambiar contraseña', 'Las contraseñas no coinciden');
+			return;
+		}
 
 		var formData = {
 			"email": $scope.email,
@@ -14,23 +19,18 @@ function changePassCtrl ($scope, $templateCache, $http) {
 			"confirmPass": $scope.confirmPass
 		};
 
-		var inserturl = serverUrl + '/agp/password';
-		$http({
-			method: 'POST',
-			url: inserturl,
-			data: formData,
-			cache: $templateCache
-		}).success(function(response) {
-				console.log("success");
-				$scope.codeStatus = response.data;
-				console.log($scope.codeStatus);
+		userFactory.cambiarContraseña(formData, function(data){
+			if (data.status === 'OK'){
+				$scope.codStatus = data.data;
+				var dl = dialogs.notify('Cambio de contraseña', $scope.codStatus);
+				dl.result.then(function(){
+					$state.transitionTo('login');
+				})
+			} else {
+				dialogs.error('Cambio de contraseña', data.data);
+			}
 
-			}).error(function(response) {
-				console.log("error");
-				$scope.codeStatus = response || "Request failed";
-				console.log($scope.codeStatus);
-			});
+		});
 
 	}
-
-}
+}]);
