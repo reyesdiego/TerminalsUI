@@ -54,7 +54,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			fechaCalendario = $scope.calendarDay._d;
 		} else {
 			fechaCalendario = $scope.calendarDay;
-		};
+		}
 		if (fecha.getMonth() == fechaCalendario.getMonth()){
 			var horaHasta = fecha.getHours() + 2;
 			if (horaHasta > 24) horaHasta = horaHasta - 24;
@@ -120,12 +120,8 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	//These variables MUST be set as a minimum for the calendar to work
 	$scope.calendarView = 'month';
 	$scope.calendarDay = moment();
+	$scope.calendarAux = new Date();
 	$scope.diaAnterior = new Date();
-
-	$scope.setCalendarToToday = function() {
-		$scope.calendarDay = moment();
-		$scope.actualizarTurnos($scope.calendarDay._d);
-	};
 
 	$scope.eventClicked = function(calendarEvent){
 		$scope.model.fechaInicio = calendarEvent.startsAt;
@@ -147,18 +143,8 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		$scope.actualizarTurnos(calendarDate);
 	};
 
-	$scope.fechaAnterior = function(){
-		$scope.calendarDay = $scope.calendarDay.subtract(1, 'day');
-		console.log($scope.calendarDay);
-	};
-
-	$scope.fechaHoy = function(){
-		$scope.calendarDay = moment();
-	};
-
-	$scope.fechaSiguiente = function(){
-		$scope.calendarDay = $scope.calendarDay.add(1, 'day');
-		console.log($scope.calendarDay);
+	$scope.irAFecha = function(){
+		$scope.calendarDay = moment($scope.calendarAux);
 	};
 
 	$scope.seleccionarLista = function(){
@@ -188,8 +174,10 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	$scope.$watch('calendarDay', function(){
 		if (moment.isMoment($scope.calendarDay)){
 			$scope.actualizarTurnos($scope.calendarDay._d);
+			$scope.calendarAux = $scope.calendarDay._d;
 		} else {
 			$scope.actualizarTurnos($scope.calendarDay);
+			$scope.calendarAux = $scope.calendarDay;
 		}
 	});
 

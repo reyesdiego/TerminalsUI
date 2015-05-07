@@ -44,7 +44,8 @@
 				<div class="input-group">
 					<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openCalendarDay = !openCalendarDay;">Fecha <span class="glyphicon glyphicon-calendar"></span></button></span>
 					<label for="calendarDay" class="sr-only">Fecha</label>
-					<input id="calendarDay" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="calendarDay" is-open="openCalendarDay" />
+					<input id="calendarDay" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="calendarAux" is-open="openCalendarDay" />
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="irAFecha();">Ir</button></span>
 				</div>
 			</div>
 

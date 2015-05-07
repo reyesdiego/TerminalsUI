@@ -44,6 +44,10 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 	$scope.actualRegistro = 'afectacion1';
 	$scope.afectacionActiva = true;
 
+	$scope.openDate = function(event){
+		generalFunctions.openDate(event)
+	};
+
 	$scope.$watch('$state.current', function(){
 		if ($state.current.name == 'afip'){
 			$state.transitionTo('afip.afectacion.afectacion1');
