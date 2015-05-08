@@ -199,7 +199,6 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
 		$scope.page.limit = $scope.itemsPerPage;
 		$scope.datosRegistro = [];
-		console.log($scope.model);
 		afipFactory.getAfip(registro, $scope.model, $scope.page, function(data){
 			if(data.status === 'OK'){
 				$scope.datosRegistro = data.data;
