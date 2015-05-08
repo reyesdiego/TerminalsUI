@@ -8,18 +8,18 @@
 					<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
 					<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
 					<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
-					<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy' }}</span></div>
+					<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</span></div>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="6" style="text-align: center">
 					<div><a href class="hidden-print" ng-click="filtrado('razonSocial', verDetalle.razon)" ng-hide="ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
-					<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy' }}</span></div>
+					<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy':'UTC' }}</span></div>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="6" style="text-align: center">
-					<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy' }}</span>
+					<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy':'UTC' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy':'UTC' }}</span>
 				</td>
 			</tr>
 			<tr>
@@ -42,7 +42,7 @@
 					<a href class="hidden-print" ng-click="filtrado('contenedor', contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
 					<span ng-show="contenedor.buque.codigo != '' && contenedor.buque.viaje != null"> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>
 					<span ng-show="contenedor.buque.viaje != '' && contenedor.buque.viaje != null"> - Viaje: {{ contenedor.buque.viaje }}</span>
-					<span ng-show="contenedor.buque.fecha != '' && contenedor.buque.viaje != null"> - Fecha: {{ contenedor.buque.fecha | date: 'dd/MM/yyyy'}}</span>
+					<span ng-show="contenedor.buque.fecha != '' && contenedor.buque.viaje != null"> - Fecha: {{ contenedor.buque.fecha | date: 'dd/MM/yyyy':'UTC'}}</span>
 				</td>
 			</tr>
 			<tr style="text-align: right" ng-repeat="item in contenedor.items">

@@ -11,10 +11,6 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		{ heading: 'Sumarias',		select: 'impo1',		uisref: 'afip.sumatorias.impo1' }
 	];
 
-	// Fecha (dia y hora)
-	$scope.fechaInicio = new Date();
-	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-
 	$scope.model = {
 		afectacion: '',
 		detalle: '',
@@ -51,6 +47,7 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 	$scope.afectacionActiva = true;
 
 	$scope.buques = {
+		afectacion: [],
 		impo: [],
 		expo: []
 	};
@@ -59,6 +56,12 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event)
+	};
+
+	$scope.buqueSelected = function(selected){
+		if (angular.isDefined(selected) && selected.title != $scope.model.buqueNombre){
+			$scope.model.buqueNombre = selected.originalObject.D;
+		}
 	};
 
 	$scope.$watch('$state.current', function(){
@@ -85,6 +88,16 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 				});
 			} else {
 				$scope.listaBuques = $scope.buques.expo;
+			}
+			$scope.vistaConBuques = true;
+		} else if ($state.current.name == 'afip.afectacion.afectacion1') {
+			if ($scope.buques.afectacion.length == 0) {
+				afipFactory.getBuquesExpo(function (data) {
+					$scope.buques.afectacion = data.data;
+					$scope.listaBuques = $scope.buques.afectacion;
+				});
+			} else {
+				$scope.listaBuques = $scope.buques.afectacion;
 			}
 			$scope.vistaConBuques = true;
 		}
@@ -125,12 +138,21 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		$scope.cargando = true;
 		if (registro != $scope.actualRegistro){
 			$scope.model = {
+				afectacion: '',
+				detalle: '',
+				solicitud: '',
+				sumaria: '',
+				conocimiento: '',
+				buqueNombre: '',
+				contenedor: '',
+				fechaInicio: $scope.fechaInicio,
+				fechaFin: $scope.fechaFin,
 				filtroOrden: '',
 				filtroOrdenReverse: false,
 				filtroAnterior: '',
-				order: ''
+				order: '',
+				currentPage: 1
 			};
-			$scope.model.currentPage = 1;
 		}
 		$scope.actualRegistro = registro;
 		switch ($scope.actualRegistro){
@@ -139,15 +161,21 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 				break;
 			case 'afectacion2':
 				$scope.ocultarFiltros = ['solicitud', 'detalle', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'detimpo1':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'buque', 'contenedor'];
 				break;
 			case 'detimpo2':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'detimpo3':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'detexpo1':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
@@ -155,15 +183,21 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 			case 'detexpo2':
 			case 'detexpo3':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'solicitud1':
 				$scope.ocultarFiltros = ['afectacion', 'detalle', 'conocimiento', 'contenedor'];
 				break;
 			case 'solicitud2':
 				$scope.ocultarFiltros = ['afectacion', 'detalle', 'sumaria', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'solicitud3':
 				$scope.ocultarFiltros = ['afectacion', 'detalle', 'sumaria', 'conocimiento', 'buque', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'impo1':
 			case 'expo1':
@@ -175,6 +209,8 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 			case 'expo3':
 			case 'expo5':
 				$scope.ocultarFiltros = ['afectacion', 'detalle', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'impo4':
 			case 'expo4':

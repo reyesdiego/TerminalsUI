@@ -408,6 +408,17 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 			})
 	};
 
+	factory.getBuquesExpo = function (callback) {
+		var inserturl = serverUrl + '/afip/registro1_afectacion/buques';
+		$http.get(inserturl)
+			.success(function (data) {
+				callback(data);
+			})
+			.error(function (error) {
+				callback(error);
+			})
+	};
+
 	return factory;
 
 }]);
