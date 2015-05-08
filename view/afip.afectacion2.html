@@ -96,7 +96,7 @@
 						<td><text-pop text="{{ registro.TIPO_MERCADERIA }}" max="17"></text-pop></td>
 						<td>{{ registro.NUMERACION_BULTOS }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy HH:mm'}}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy HH:mm':'UTC'}}</td>
 					</tr>
 					</tbody>
 				</table>

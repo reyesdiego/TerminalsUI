@@ -102,7 +102,7 @@
 						<td>{{ registro.CANTIDADAFECTAR }}</td>
 						<td><text-pop text="{{ registro.COMENTARIOS }}" max="16"></text-pop></td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm'}}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm':'UTC'}}</td>
 					</tr>
 					</tbody>
 				</table>

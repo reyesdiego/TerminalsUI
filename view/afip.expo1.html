@@ -121,8 +121,8 @@
 						<td>{{ registro.CODIGOPROCESO }}</td>
 						<td>{{ registro.MANICONSOLIDADO }}</td>
 						<td>{{ registro.ESTADO }}</td>
-						<td>{{ registro.FECHAREGISTRO | date: 'dd/MM/yyyy'}}</td>
-						<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy'}}</td>
+						<td>{{ registro.FECHAREGISTRO | date: 'dd/MM/yyyy':'UTC'}}</td>
+						<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy':'UTC'}}</td>
 						<td>{{ registro.TRANSPORTEVACIO }}</td>
 						<td>{{ registro.PAISPROCEDENCIA }}</td>
 						<td><text-pop text="{{ registro.TRANSPORTISTA }}" max="16"></text-pop></td>
@@ -138,7 +138,7 @@
 						<td>{{ registro.LUGARDEGIRO }}</td>
 						<td><text-pop text="{{ registro.NOMBREBUQUE }}" max="16"></text-pop></td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm'}}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm':'UTC'}}</td>
 					</tr>
 					</tbody>
 				</table>

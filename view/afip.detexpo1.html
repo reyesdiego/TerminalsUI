@@ -105,13 +105,13 @@
 						<td style="text-align: right">{{ registro.DIVISASEGURO | formatCurrency }} {{ registro.MONTOSEGURO | currency }}</td>
 						<td>{{ registro.ADUANASALIDA }}</td>
 						<td>{{ registro.PAISDESTINO }}</td>
-						<td>{{ registro.FECOFI | date: 'dd/MM/yyyy'}}</td>
-						<td>{{ registro.FECHA_CUMPLIDO | date: 'dd/MM/yyyy'}}</td>
-						<td>{{ registro.FECOFIPOSTEMBARQUE | date: 'dd/MM/yyyy'}}</td>
+						<td>{{ registro.FECOFI | date: 'dd/MM/yyyy':'UTC'}}</td>
+						<td>{{ registro.FECHA_CUMPLIDO | date: 'dd/MM/yyyy':'UTC'}}</td>
+						<td>{{ registro.FECOFIPOSTEMBARQUE | date: 'dd/MM/yyyy':'UTC'}}</td>
 						<td>{{ registro.CODIGOLIQUIDADO }}</td>
 						<td>{{ registro.TOTALDEDERECHOSEXPO }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm' }}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm':'UTC' }}</td>
 					</tr>
 					</tbody>
 				</table>

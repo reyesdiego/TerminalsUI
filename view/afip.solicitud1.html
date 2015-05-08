@@ -119,7 +119,7 @@
 						<td><text-pop text="{{ registro.NOMBREATA }}" max="17"></text-pop></td>
 						<td>{{ registro.ESTADO }}</td>
 						<td>{{ registro.PROCESO }}</td>
-						<td>{{ registro.FECHA_REGISTRO | date: 'dd/MM/yyyy'}}</td>
+						<td>{{ registro.FECHA_REGISTRO | date: 'dd/MM/yyyy':'UTC'}}</td>
 						<td>{{ registro.CUIT_IMPO }}</td>
 						<td>{{ registro.LUGAR_OPERATIVO }}</td>
 						<td>{{ registro.DEPOSITOORIGEN }}</td>
@@ -136,7 +136,7 @@
 						<td>{{ registro.SUM_LETRA_CTRL }}</td>
 						<td>{{ registro.NOMBREBUQUE }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm'}}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm':'UTC'}}</td>
 					</tr>
 					</tbody>
 				</table>
