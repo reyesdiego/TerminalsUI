@@ -8,7 +8,7 @@
 	<img class="media-object imagenCargando" style="margin-left: 40%; margin-top: 50px">
 </div>
 <div class="col-lg-12" ng-hide="loadingState">
-	<tabset>
+	<tabset ng-hide="ocultarBusqueda">
 		<tab heading="IMPO" select="cambiarTipoMov('IMPO')"></tab>
 		<tab heading="EXPO" select="cambiarTipoMov('EXPO')"></tab>
 	</tabset>
