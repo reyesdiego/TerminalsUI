@@ -4,7 +4,6 @@
 			<h3>Solicitud - Módulo 1</h3>
 		</div>
 		<div>
-			<accordion-afip-search></accordion-afip-search>
 			<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong> Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ mostrarTope() }} (página {{ currentPage }})</strong></span></h5>
 			<div class="table-responsive" style="max-height: 670px; max-width: 100%; overflow: auto">
 				<table class="table table-striped table-bordered">
@@ -120,7 +119,7 @@
 						<td><text-pop text="{{ registro.NOMBREATA }}" max="17"></text-pop></td>
 						<td>{{ registro.ESTADO }}</td>
 						<td>{{ registro.PROCESO }}</td>
-						<td>{{ registro.FECHA_REGISTRO | date: 'dd/MM/yyyy'}}</td>
+						<td>{{ registro.FECHA_REGISTRO | date: 'dd/MM/yyyy':'UTC'}}</td>
 						<td>{{ registro.CUIT_IMPO }}</td>
 						<td>{{ registro.LUGAR_OPERATIVO }}</td>
 						<td>{{ registro.DEPOSITOORIGEN }}</td>
@@ -137,7 +136,7 @@
 						<td>{{ registro.SUM_LETRA_CTRL }}</td>
 						<td>{{ registro.NOMBREBUQUE }}</td>
 						<td>{{ registro.REGISTRADO_POR }}</td>
-						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm'}}</td>
+						<td>{{ registro.REGISTRADO_EN | date: 'dd/MM/yyyy hh:mm':'UTC'}}</td>
 					</tr>
 					</tbody>
 				</table>
