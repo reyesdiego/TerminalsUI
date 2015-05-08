@@ -154,15 +154,21 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 				break;
 			case 'afectacion2':
 				$scope.ocultarFiltros = ['solicitud', 'detalle', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'detimpo1':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'buque', 'contenedor'];
 				break;
 			case 'detimpo2':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'detimpo3':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'detexpo1':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
@@ -170,15 +176,21 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 			case 'detexpo2':
 			case 'detexpo3':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'solicitud1':
 				$scope.ocultarFiltros = ['afectacion', 'detalle', 'conocimiento', 'contenedor'];
 				break;
 			case 'solicitud2':
 				$scope.ocultarFiltros = ['afectacion', 'detalle', 'sumaria', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'solicitud3':
 				$scope.ocultarFiltros = ['afectacion', 'detalle', 'sumaria', 'conocimiento', 'buque', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'impo1':
 			case 'expo1':
@@ -190,6 +202,8 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 			case 'expo3':
 			case 'expo5':
 				$scope.ocultarFiltros = ['afectacion', 'detalle', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 			case 'impo4':
 			case 'expo4':
