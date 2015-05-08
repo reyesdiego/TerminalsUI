@@ -65,7 +65,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
-		'mov': 'IMPO',
+		'mov': '',
 		'order': '',
 		'itemsPerPage': 15
 	};
