@@ -61,6 +61,12 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		generalFunctions.openDate(event)
 	};
 
+	$scope.buqueSelected = function(selected){
+		if (angular.isDefined(selected) && selected.title != $scope.model.buqueNombre){
+			$scope.model.buqueNombre = selected.originalObject.D;
+		}
+	};
+
 	$scope.$watch('$state.current', function(){
 		$scope.vistaConBuques = false;
 		if ($state.current.name == 'afip'){
@@ -125,12 +131,21 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		$scope.cargando = true;
 		if (registro != $scope.actualRegistro){
 			$scope.model = {
+				afectacion: '',
+				detalle: '',
+				solicitud: '',
+				sumaria: '',
+				conocimiento: '',
+				buqueNombre: '',
+				contenedor: '',
+				fechaInicio: $scope.fechaInicio,
+				fechaFin: $scope.fechaFin,
 				filtroOrden: '',
 				filtroOrdenReverse: false,
 				filtroAnterior: '',
-				order: ''
+				order: '',
+				currentPage: 1
 			};
-			$scope.model.currentPage = 1;
 		}
 		$scope.actualRegistro = registro;
 		switch ($scope.actualRegistro){
@@ -184,6 +199,7 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
 		$scope.page.limit = $scope.itemsPerPage;
 		$scope.datosRegistro = [];
+		console.log($scope.model);
 		afipFactory.getAfip(registro, $scope.model, $scope.page, function(data){
 			if(data.status === 'OK'){
 				$scope.datosRegistro = data.data;
