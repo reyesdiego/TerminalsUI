@@ -55,7 +55,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		} else {
 			fechaCalendario = $scope.calendarDay;
 		}
-		if (fecha.getMonth() == fechaCalendario.getMonth()){
+		if ((fecha.getMonth() == fechaCalendario.getMonth()) && (data.data.terminal == loginService.getFiltro())){
 			var horaHasta = fecha.getHours() + 2;
 			if (horaHasta > 24) horaHasta = horaHasta - 24;
 			var eventoDia = {
