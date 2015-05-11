@@ -11,10 +11,12 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('solicitud', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('detalle', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('detallada', 0) >= 0">
 		<div class="input-group">
-			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.detalle" class="form-control" placeholder="Detalle"/>
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('detalle', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.detallada" class="form-control"
+				   placeholder="Detallada"/>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('detallada', '');"><span
+					class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('sumaria', 0) >= 0">
