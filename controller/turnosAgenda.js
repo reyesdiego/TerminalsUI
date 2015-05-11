@@ -72,7 +72,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			} else {
 				var coincide = false;
 				$scope.eventosPorDia[fecha.getDate() - 1].eventos.forEach(function(evento){
-					if (eventoDia.startsAt == evento.startsAt){
+					if (eventoDia.startsAt.getHours() == evento.startsAt.getHours()){
 						coincide = true;
 						evento.cantidad += 1;
 						evento.title = evento.cantidad + ' turnos de ' + eventoDia.startsAt.getHours() + ' a ' + eventoDia.endsAt.getHours();
@@ -93,6 +93,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 			};
 			$scope.eventsMes.push(nuevoEvento);
 			$scope.seleccionarLista();
+			$scope.$apply();
 		}
 	});
 
