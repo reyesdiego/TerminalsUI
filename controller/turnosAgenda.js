@@ -125,7 +125,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 
 	$scope.eventClicked = function(calendarEvent){
 		$scope.model.fechaInicio = calendarEvent.startsAt;
-		$scope.model.fechaFin = calendarEvent.endsAt;
+		$scope.model.fechaFin = calendarEvent.startsAt;
 		$scope.verDetalle = true;
 		$scope.detalleTurnos();
 	};
