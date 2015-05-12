@@ -388,7 +388,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.moneda = "DOL";
 
 	var rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
-	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users'];
+	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda'];
 	$rootScope.$state = $state;
 	// Variables Globales de Paginacion
 	$rootScope.itemsPerPage = 15;
