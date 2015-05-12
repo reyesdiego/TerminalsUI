@@ -240,6 +240,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 	});
 
 	$scope.detalleTurnos = function(){
+		$scope.model.mov = '';
 		$scope.cargando = true;
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);
 		$scope.configPanel = {
