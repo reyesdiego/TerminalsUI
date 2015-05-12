@@ -90,11 +90,28 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				data.acceso.push("afip.sumatorias");
 				data.acceso.push("cgates");
 				data.acceso.push("users");
-				data.acceso.push("rates");
-				data.acceso.push("cambioTerminal");
 				data.acceso.push("agenda");
+
+				/*var indice = data.acceso.indexOf("matches.search");
+				data.acceso.splice(indice, 1);
+				indice = data.acceso.indexOf("invoices.result");
+				data.acceso.splice(indice, 1);
+				indice = data.acceso.indexOf("invoices.search");
+				data.acceso.splice(indice, 1);
+				indice = data.acceso.indexOf("cfacturas.result");
+				data.acceso.splice(indice, 1);
+				indice = data.acceso.indexOf("gates.invoices");
+				data.acceso.splice(indice, 1);
+				indice = data.acceso.indexOf("gates.invoices.result");
+				data.acceso.splice(indice, 1);
+				indice = data.acceso.indexOf("gates.result.container");
+				data.acceso.splice(indice, 1);
+				indice = data.acceso.indexOf("turnos.result");
+				data.acceso.splice(indice, 1);*/
 				///-------------------------------------------------------------------------
 
+
+				console.log(data.acceso);
 				loginService.setAcceso(data.acceso);
 
 				$rootScope.esUsuario = loginService.getType();
