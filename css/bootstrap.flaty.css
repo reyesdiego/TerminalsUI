@@ -4681,7 +4681,7 @@ a.thumbnail.active {
 }
 .progress {
   overflow: hidden;
-  height: 20px;
+  height: 20px !important;
   margin-bottom: 20px;
   background-color: #ecf0f1;
   border-radius: 4px;
@@ -6348,10 +6348,10 @@ input:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.progress .progress-bar {
+/*.progress .progress-bar {
   font-size: 10px;
   line-height: 10px;
-}
+}*/
 .well {
   -webkit-box-shadow: none;
   box-shadow: none;
