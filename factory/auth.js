@@ -84,14 +84,14 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				data.acceso.push("afip.solicitud.solicitud1");
 				data.acceso.push("afip.solicitud.solicitud2");
 				data.acceso.push("afip.solicitud.solicitud3");
-				data.acceso.push("afip.afectacion");
+				/*data.acceso.push("afip.afectacion");
 				data.acceso.push("afip.detalle");
 				data.acceso.push("afip.solicitud");
-				data.acceso.push("afip.sumatorias");
+				data.acceso.push("afip.sumatorias");*/
 				data.acceso.push("cgates");
 				data.acceso.push("users");
 				data.acceso.push("agenda");
-
+				data.acceso.push("access");
 				/*var indice = data.acceso.indexOf("matches.search");
 				data.acceso.splice(indice, 1);
 				indice = data.acceso.indexOf("invoices.result");

@@ -107,6 +107,7 @@
 	<script src="controller/vistaComprobantes.js"></script>
 	<script src="controller/buqueViaje.js"></script>
 	<script src="controller/turnosAgenda.js"></script>
+	<script src="controller/accessControl.js"></script>
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
@@ -170,6 +171,7 @@
 						<li><a collap ui-sref="buque">Buque - Viaje</a></li>
 						<li><a collap ui-sref="afip">A.F.I.P</a></li>
 						<li><a collap ui-sref="users" ng-show="grupo=='ADMIN'">Usuarios</a></li>
+						<li><a collap ui-sref="access" ng-show="grupo=='ADMIN'">Control de acceso</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>

@@ -35,5 +35,16 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 			});
 	};
 
+	factory.getRoutes = function(callback){
+		//var inserturl = serverUrl + 'ruta';
+		var mockRoute = 'mocks/rutas.json';
+		$http.get(mockRoute)
+			.success(function(data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
+	};
+
 	return factory;
 }]);

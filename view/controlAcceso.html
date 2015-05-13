@@ -1,0 +1,42 @@
+<div class="container" ng-controller="accessControlCtrl">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="hidden-xs"><img src="images/buqueViaje.png" height="64" width="64"> Control de acceso</h1>
+			<h1 class="visible-xs">Control de acceso</h1>
+		</div>
+	</div>
+
+	<div class="row col-lg-12">
+		<div class="col-lg-3">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Usuarios</h3>
+				</div>
+				<div class="panel-body" style="max-height: 720px; overflow: scroll">
+					<h5 ng-repeat="usuario in usuarios" class="{{ usuario.elegido }}"><a href ng-click="userSelected(usuario)">{{ }} </a></h5>
+				</div>
+			</div>
+		</div>
+		<div class="row col-lg-9">
+			<div class="col-lg-12" ng-show="rutas.length == 0 && !loadingState">
+				<div-panel config-panel="panelMensaje">
+					<span>{{ panelMensaje.mensaje }}</span>
+				</div-panel>
+			</div>
+			<div-cargando mostrar="cargaRutas">
+				<div ng-hide="rutas.length == 0">
+					<table class="table table-bordered table-hover" style="text-align: center">
+						<tr>
+							<th style="text-align: center">Descripción</th>
+							<th style="text-align: center">Acceso</th>
+						</tr>
+						<tr ng-repeat="ruta in rutas">
+							<td>{{ ruta.description }}</td>
+							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="ruta.acceso"></td>
+					</table>
+				</div>
+			</div-cargando>
+		</div>
+	</div>
+
+</div>
