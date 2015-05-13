@@ -17,6 +17,22 @@ myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'g
 		$scope.permiso = false;
 	});
 
+	$scope.ultimaConexion = function (fecha) {
+		var ultimaConex = new Date(fecha);
+		var fechaActual = new Date();
+		ultimaConex.setHours(0, 0, 0, 0);
+		fechaActual.setHours(0, 0, 0, 0);
+		var claseColor = '';
+		if (parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) <= 2) {
+			claseColor = 'success';
+		} else if (parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) > 2 && parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) <= 5) {
+			claseColor = 'warning';
+		} else {
+			claseColor = 'danger';
+		}
+		return claseColor;
+	};
+
 	$scope.cargaUsuarios = function () {
 		$scope.cargando = true;
 		ctrlUsersFactory.getUsers(function(data) {
