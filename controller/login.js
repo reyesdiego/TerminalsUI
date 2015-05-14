@@ -73,7 +73,13 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					$state.transitionTo('tarifario');
 				},
 				function(){
-					$scope.cerrarSesion();
+					var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+					dlg.result.then(function(){
+						$state.transitionTo('tarifario');
+					},
+					function(){
+						$scope.cerrarSesion();
+					})
 				});
 		} else {
 			authFactory.loginWithoutCookies($scope.email, $scope.password)
@@ -82,7 +88,13 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					$state.transitionTo('tarifario');
 				},
 				function(){
-					$scope.cerrarSesion();
+					var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+					dlg.result.then(function(){
+							$state.transitionTo('tarifario');
+						},
+						function(){
+							$scope.cerrarSesion();
+						})
 				});
 		}
 	};
