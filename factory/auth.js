@@ -60,7 +60,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 
 				///Hardcodeo de nuevas rutas agregadas
 				///Cuando ya estén todas definidas, estos valores deben venir desde el servidor
-				data.acceso.push("reports");
+				/*data.acceso.push("reports");
 				data.acceso.push("container");
 				data.acceso.push("buque");
 				data.acceso.push("afip");
@@ -88,9 +88,9 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				data.acceso.push("afip.detalle");
 				data.acceso.push("afip.solicitud");
 				data.acceso.push("afip.sumatorias");*/
-				data.acceso.push("cgates");
+				/*data.acceso.push("cgates");
 				data.acceso.push("users");
-				data.acceso.push("agenda");
+				data.acceso.push("agenda");*/
 				data.acceso.push("access");
 				/*var indice = data.acceso.indexOf("matches.search");
 				data.acceso.splice(indice, 1);
@@ -111,6 +111,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				///-------------------------------------------------------------------------
 
 				loginService.setAcceso(data.acceso);
+
+				$rootScope.rutas = data.acceso;
 
 				$rootScope.esUsuario = loginService.getType();
 				$rootScope.terminal = loginService.getInfo();

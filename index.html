@@ -134,44 +134,44 @@
 		<div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
 			<ul class="nav navbar-nav navbar-right" ng-hide="cargandoCache">
 				<li ng-show="acceso==''"><a collap ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
-				<li ng-show="acceso!=''" dropdown>
+				<li ng-show="acceso!='' && (in_array('tarifario', rutas) || in_array('matches', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Tarifas<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="tarifario">Tarifario</a></li>
-						<li><a collap ui-sref="matches">Asociar</a></li>
+						<li ng-show="in_array('tarifario', rutas)"><a collap ui-sref="tarifario">Tarifario</a></li>
+						<li ng-show="in_array('matches', rutas)"><a collap ui-sref="matches">Asociar</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!=''" dropdown>
+				<li ng-show="acceso!='' && (in_array('invoices', rutas) || in_array('cfacturas', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="invoices">Ver</a></li>
-						<li><a collap ui-sref="cfacturas">Control</a></li>
+						<li ng-show="in_array('invoices', rutas)"><a collap ui-sref="invoices">Ver</a></li>
+						<li ng-show="in_array('cfacturas', rutas)"><a collap ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!=''" dropdown>
+				<li ng-show="acceso!='' && (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="gates">Ver</a></li>
-						<li><a collap ui-sref="cgates">Control</a></li>
+						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
+						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!=''" dropdown>
+				<li ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="turnos">Ver</a></li>
-						<li><a collap ui-sref="agenda">Agenda</a></li>
+						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
+						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso=='agp'" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="control">Control</a></li>
-						<li><a collap ui-sref="reports">Reportes</a></li>
-						<li><a collap ui-sref="container">Contenedor</a></li>
-						<li><a collap ui-sref="buque">Buque - Viaje</a></li>
-						<li><a collap ui-sref="afip">A.F.I.P</a></li>
-						<li><a collap ui-sref="users" ng-show="grupo=='ADMIN'">Usuarios</a></li>
-						<li><a collap ui-sref="access" ng-show="grupo=='ADMIN'">Control de acceso</a></li>
+						<li ng-show="in_array('control', rutas)"><a collap ui-sref="control">Control</a></li>
+						<li ng-show="in_array('reports', rutas)"><a collap ui-sref="reports">Reportes</a></li>
+						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Contenedor</a></li>
+						<li ng-show="in_array('buque', rutas)"><a collap ui-sref="buque">Buque - Viaje</a></li>
+						<li ng-show="in_array('afip', rutas)"><a collap ui-sref="afip">A.F.I.P</a></li>
+						<li ng-show="in_array('users', rutas)"><a collap ui-sref="users" ng-show="grupo=='ADMIN'">Usuarios</a></li>
+						<li ng-show="in_array('access', rutas)"><a collap ui-sref="access" ng-show="grupo=='ADMIN'">Control de acceso</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>

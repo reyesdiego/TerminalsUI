@@ -36,13 +36,22 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	};
 
 	factory.getRoutes = function(callback){
-		//var inserturl = serverUrl + 'ruta';
-		var mockRoute = 'mocks/rutas.json';
-		$http.get(mockRoute)
+		var inserturl = serverUrl + '/tasks';
+		$http.get(inserturl)
 			.success(function(data){
 				callback(data);
 			}).error(function(error){
 				callback(error);
+			});
+	};
+
+	factory.setAccess = function(id, acceso, callback){
+		var inserturl = serverurl + '/agp/accounts/' + id + '/tasks';
+		$http.put(inserturl, acceso)
+			.success(function(data){
+				callback(data);
+			}).error(function(data){
+				callback(data);
 			});
 	};
 

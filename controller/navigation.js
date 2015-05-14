@@ -23,7 +23,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 			if (loginService.getStatus()){
 				$state.transitionTo($state.current.name);
 				window.location.reload();
-			} else{
+			} else {
 				$state.transitionTo('login');
 			}
 		}
@@ -68,6 +68,10 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 			authFactory.setTheme(terminal);
 			$state.transitionTo('cambioTerminal');
 		}
+	};
+
+	$scope.in_array = function(aguja, pajar){
+		return in_array(aguja, pajar);
 	};
 
 	$scope.imprimirVista = function(){
