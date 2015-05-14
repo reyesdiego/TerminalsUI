@@ -2,13 +2,13 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunctions', function($scope, afipFactory, $state, generalFunctions){
+myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', function($scope, $rootScope, afipFactory, $state, generalFunctions){
 
 	$scope.tabs = [
-		{ heading: 'Afectación',	select: 'afectacion1',	uisref: 'afip.afectacion.afectacion1' },
-		{ heading: 'Detallada',		select: 'detimpo1',		uisref: 'afip.detalle.detimpo1' },
-		{ heading: 'Solicitud',		select: 'solicitud1',	uisref: 'afip.solicitud.solicitud1' },
-		{ heading: 'Sumarias',		select: 'impo1',		uisref: 'afip.sumatorias.impo1' }
+		{ heading: 'Afectación',	select: 'afectacion1',	uisref: 'afip.afectacion.afectacion1', mostrar: in_array('afip.afectacion', $rootScope.rutas) },
+		{ heading: 'Detallada',		select: 'detimpo1',		uisref: 'afip.detalle.detimpo1', mostrar: in_array('afip.detalle', $rootScope.rutas) },
+		{ heading: 'Solicitud',		select: 'solicitud1',	uisref: 'afip.solicitud.solicitud1', mostrar: in_array('afip.solicitud', $rootScope.rutas) },
+		{ heading: 'Sumarias',		select: 'impo1',		uisref: 'afip.sumatorias.impo1', mostrar: in_array('afip.sumatorias', $rootScope.rutas) }
 	];
 
 	$scope.model = {
@@ -236,6 +236,10 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 				$scope.cargando = false;
 			}
 		});
+	};
+
+	$scope.in_array = function(aguja, pajar){
+		return in_array(aguja, pajar);
 	};
 
 	$scope.cargaDatos($scope.actualRegistro);

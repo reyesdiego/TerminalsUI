@@ -19,6 +19,11 @@
 			<button type="button" class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-save"></span> Guardar</button>
 		</div>
 		<div class="row col-lg-9">
+			<tabset justified="true" class="hidden-print" ng-show="!loadingState">
+				<tab heading="Tareas" ng-click="cambioModo('tareas')"></tab>
+				<tab heading="Notificaciones" ng-click="cambioModo('notificaciones')"></tab>
+			</tabset>
+			<br>
 			<div class="col-lg-12" ng-show="tareas.length == 0 && !loadingState">
 				<div-panel config-panel="panelMensaje">
 					<span>{{ panelMensaje.mensaje }}</span>
@@ -26,7 +31,7 @@
 			</div>
 			<div-cargando mostrar="cargaRutas">
 				<div ng-hide="tareas.length == 0">
-					<table class="table table-bordered table-hover" style="text-align: center">
+					<table class="table table-bordered table-hover table-striped" style="text-align: center">
 						<tr>
 							<th style="text-align: center">Descripción</th>
 							<th style="text-align: center">Acceso</th>

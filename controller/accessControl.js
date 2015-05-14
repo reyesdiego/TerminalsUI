@@ -2,7 +2,7 @@
  * Created by artiom on 13/05/15.
  */
 
-myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q){
+myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q, loginService){
 
 	$scope.usuarios = [];
 	$scope.tareas = [];
@@ -14,6 +14,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 
 	$scope.rutasUsuario = [];
 	$scope.rutasUsuarioOriginal = [];
+
+	$scope.modo = 'tareas';
 
 	ctrlUsersFactory.getUsers(function(data){
 		if (data.status == 'OK'){
@@ -29,6 +31,10 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		}
 
 	});
+
+	$scope.cambioModo = function(modo){
+		$scope.modo = modo;
+	};
 
 	$scope.chequearRuta = function(ruta){
 		var indice = $scope.rutasUsuario.indexOf(ruta.route);
@@ -46,6 +52,14 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 			}
 		} else {
 			$scope.rutasUsuario.push(ruta.route);
+			if (ruta.route.indexOf('afip') >= 0){
+				if ($scope.rutasUsuario.indexOf('afip') == -1){
+					$scope.rutasUsuario.push('afip');
+					$scope.tareas.forEach(function(unaTarea){
+						if (unaTarea.route == 'afip') unaTarea.acceso = true;
+					})
+				}
+			}
 		}
 	};
 
@@ -76,10 +90,17 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		if (!$scope.rutasUsuario.equals($scope.rutasUsuarioOriginal)){
 			var dlg = dialogs.confirm("Control de acceso", "¿Desea guardar los cambios efectuados para el usuario " + $scope.usuarioElegido.full_name + "?");
 			dlg.result.then(function(){
-				ctrlUsersFactory.setAccess($scope.usuarioElegido._id, $scope.rutasUsuario, function(data){
-					console.log(data);
+				var rutasUsuario = {acceso: $scope.rutasUsuario};
+				ctrlUsersFactory.setAccess($scope.usuarioElegido._id, rutasUsuario, function(data){
 					if (data.status == 'OK') {
-						var dl = dialogs.notify('Control de acceso', 'Las tareas para el usuario se han guardado correctamente');
+						dialogs.notify('Control de acceso', 'Las tareas para el usuario se han guardado correctamente');
+						if (loginService.getInfo()._id == $scope.usuarioElegido._id){
+							loginService.setAcceso($scope.rutasUsuario);
+						}
+						$scope.usuarios.forEach(function(usuario){
+							if (usuario._id == $scope.usuarioElegido._id) angular.copy($scope.rutasUsuario, usuario.acceso)
+						});
+
 						$scope.usuarioElegido = null;
 						$scope.tareas.forEach(function(tarea){
 							tarea.acceso = false;

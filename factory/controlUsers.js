@@ -46,7 +46,7 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	};
 
 	factory.setAccess = function(id, acceso, callback){
-		var inserturl = serverurl + '/agp/accounts/' + id + '/tasks';
+		var inserturl = serverUrl + '/agp/account/' + id + '/tasks';
 		$http.put(inserturl, acceso)
 			.success(function(data){
 				callback(data);
