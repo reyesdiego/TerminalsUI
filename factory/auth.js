@@ -58,58 +58,6 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 					if (data) { return angular.toJson(data); }
 				};
 
-				///Hardcodeo de nuevas rutas agregadas
-				///Cuando ya estén todas definidas, estos valores deben venir desde el servidor
-				/*data.acceso.push("reports");
-				data.acceso.push("container");
-				data.acceso.push("buque");
-				data.acceso.push("afip");
-				data.acceso.push("afip.afectacion.afectacion1");
-				data.acceso.push("afip.afectacion.afectacion2");
-				data.acceso.push("afip.detalle.detexpo1");
-				data.acceso.push("afip.detalle.detexpo2");
-				data.acceso.push("afip.detalle.detexpo3");
-				data.acceso.push("afip.detalle.detimpo1");
-				data.acceso.push("afip.detalle.detimpo2");
-				data.acceso.push("afip.detalle.detimpo3");
-				data.acceso.push("afip.sumatorias.expo1");
-				data.acceso.push("afip.sumatorias.expo2");
-				data.acceso.push("afip.sumatorias.expo3");
-				data.acceso.push("afip.sumatorias.expo4");
-				data.acceso.push("afip.sumatorias.expo5");
-				data.acceso.push("afip.sumatorias.impo1");
-				data.acceso.push("afip.sumatorias.impo2");
-				data.acceso.push("afip.sumatorias.impo3");
-				data.acceso.push("afip.sumatorias.impo4");
-				data.acceso.push("afip.solicitud.solicitud1");
-				data.acceso.push("afip.solicitud.solicitud2");
-				data.acceso.push("afip.solicitud.solicitud3");
-				/*data.acceso.push("afip.afectacion");
-				data.acceso.push("afip.detalle");
-				data.acceso.push("afip.solicitud");
-				data.acceso.push("afip.sumatorias");*/
-				/*data.acceso.push("cgates");
-				data.acceso.push("users");
-				data.acceso.push("agenda");*/
-				data.acceso.push("access");
-				/*var indice = data.acceso.indexOf("matches.search");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("invoices.result");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("invoices.search");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("cfacturas.result");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("gates.invoices");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("gates.invoices.result");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("gates.result.container");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("turnos.result");
-				data.acceso.splice(indice, 1);*/
-				///-------------------------------------------------------------------------
-
 				loginService.setAcceso(data.acceso);
 
 				$rootScope.rutas = data.acceso;

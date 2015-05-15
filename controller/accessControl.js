@@ -7,7 +7,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	$scope.usuarios = [];
 	$scope.tareas = [];
 	$scope.cargaRutas = true;
-	$scope.usuarioElegido = null;
+	$scope.usuarioElegido = {};
 
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 10;
@@ -89,7 +89,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.userSelected = function(usuario){
-		if ($scope.usuarioElegido != null && $scope.usuarioElegido.full_name != usuario.full_name){
+		if ($scope.usuarioElegido != {} && $scope.usuarioElegido.full_name != usuario.full_name){
 			$scope.guardar().then(function(){
 				$scope.setearUsuario(usuario);
 			},
@@ -102,7 +102,9 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.setearUsuario = function(usuario){
+		$scope.usuarioElegido.elegido = '';
 		$scope.usuarioElegido = usuario;
+		usuario.elegido = 'bg-info';
 		angular.copy(usuario.acceso, $scope.rutasUsuario);
 		angular.copy(usuario.acceso, $scope.rutasUsuarioOriginal);
 		$scope.tareas.forEach(function(tarea){
@@ -125,8 +127,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 						$scope.usuarios.forEach(function(usuario){
 							if (usuario._id == $scope.usuarioElegido._id) angular.copy($scope.rutasUsuario, usuario.acceso)
 						});
-
-						$scope.usuarioElegido = null;
+						$scope.usuarioElegido.elegido = '';
+						$scope.usuarioElegido = {};
 						$scope.tareas.forEach(function(tarea){
 							tarea.acceso = false;
 						});

@@ -13,7 +13,7 @@
 					<h3 class="panel-title">Usuarios</h3>
 				</div>
 				<div class="panel-body" style="max-height: 720px; overflow: scroll">
-					<h5 ng-repeat="usuario in usuarios" class="{{ usuario.elegido }}"><a href ng-click="userSelected(usuario)">{{ usuario.full_name }} </a></h5>
+					<h5 ng-repeat="usuario in usuarios"  ng-init="usuario.elegido = ''" class="{{ usuario.elegido }}"><a href ng-click="userSelected(usuario)">{{ usuario.full_name }} </a></h5>
 				</div>
 			</div>
 			<button type="button" class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-save"></span> Guardar</button>
@@ -38,7 +38,7 @@
 						</tr>
 						<tr ng-repeat="ruta in filteredTareas = (tareas | filter:search) | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 							<td>{{ ruta.description }}</td>
-							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="ruta.acceso" ng-disabled="usuarioElegido == null" ng-click="chequearRuta(ruta)"></td>
+							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="ruta.acceso" ng-disabled="usuarioElegido == {}" ng-click="chequearRuta(ruta)"></td>
 						</tr>
 					</table>
 					<div-pagination total-items="filteredTareas.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
@@ -51,7 +51,7 @@
 						</tr>
 						<tr ng-repeat="notificacion in notificaciones">
 							<td>{{ notificacion.description }}</td>
-							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="notificacion.habilitar" ng-disabled="usuarioElegido == null"></td>
+							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="notificacion.habilitar" ng-disabled="usuarioElegido == {}"></td>
 						</tr>
 					</table>
 				</div>
