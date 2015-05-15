@@ -5,7 +5,7 @@
 		</div>
 	</div>
 	<tabset justified="true">
-		<tab ng-repeat="tab in tabs" heading="{{ tab.heading }}" active="tab.active" ui-sref="{{ tab.uisref }}" ng-click="cargaDatos(tab.select)" ng-show="tab.mostrar"></tab>
+		<tab ng-repeat="tab in tabs" heading="{{ tab.heading }}" active="tab.active" ui-sref="{{ tab.uisref }}" ng-click="cargaDatos(tab.uisref)" ng-show="tab.mostrar"></tab>
 	</tabset>
 	<div ui-view></div>
 </div>

@@ -110,6 +110,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				data.acceso.splice(indice, 1);*/
 				///-------------------------------------------------------------------------
 
+				console.log(data.acceso);
 				loginService.setAcceso(data.acceso);
 
 				$rootScope.rutas = data.acceso;

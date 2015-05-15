@@ -17,6 +17,12 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 
 	$scope.modo = 'tareas';
 
+	$scope.notificaciones = [
+		{ description: 'Nuevo usuario', habilitar: false},
+		{ description: 'Nuevo usuario', habilitar: false},
+		{ description: 'Baja del servicio', habilitar: false}
+	];
+
 	ctrlUsersFactory.getUsers(function(data){
 		if (data.status == 'OK'){
 			$scope.usuarios = data.data;
@@ -60,18 +66,54 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 					})
 				}
 			}
+			if (ruta.route.indexOf('afip.afectacion') >= 0){
+				if ($scope.rutasUsuario.indexOf('afip.afectacion') == -1){
+					$scope.rutasUsuario.push('afip.afectacion');
+					$scope.tareas.forEach(function(unaTarea){
+						if (unaTarea.route == 'afip.afectacion') unaTarea.acceso = true;
+					})
+				}
+			}
+			if (ruta.route.indexOf('afip.detalle') >= 0){
+				if ($scope.rutasUsuario.indexOf('afip.detalle') == -1){
+					$scope.rutasUsuario.push('afip.detalle');
+					$scope.tareas.forEach(function(unaTarea){
+						if (unaTarea.route == 'afip.detalle') unaTarea.acceso = true;
+					})
+				}
+			}
+			if (ruta.route.indexOf('afip.solicitud') >= 0){
+				if ($scope.rutasUsuario.indexOf('afip.solicitud') == -1){
+					$scope.rutasUsuario.push('afip.solicitud');
+					$scope.tareas.forEach(function(unaTarea){
+						if (unaTarea.route == 'afip.solicitud') unaTarea.acceso = true;
+					})
+				}
+			}
+			if (ruta.route.indexOf('afip.sumatorias') >= 0){
+				if ($scope.rutasUsuario.indexOf('afip.sumatorias') == -1){
+					$scope.rutasUsuario.push('afip.sumatorias');
+					$scope.tareas.forEach(function(unaTarea){
+						if (unaTarea.route == 'afip.sumatorias') unaTarea.acceso = true;
+					})
+				}
+			}
 		}
 	};
 
 	$scope.userSelected = function(usuario){
+		console.log(usuario);
 		if ($scope.usuarioElegido != null && $scope.usuarioElegido.full_name != usuario.full_name){
 			$scope.guardar().then(function(){
+				console.log('salio bien');
 				$scope.setearUsuario(usuario);
 			},
 			function(){
+				console.log('salio rechazado');
 				$scope.setearUsuario(usuario);
 			});
 		} else {
+			console.log('es el primero');
 			$scope.setearUsuario(usuario);
 		}
 	};
@@ -115,6 +157,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 			function(){
 				deferred.reject();
 			})
+		} else {
+			deferred.resolve();
 		}
 		return deferred.promise;
 	};

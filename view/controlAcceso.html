@@ -1,7 +1,7 @@
 <div class="container" ng-controller="accessControlCtrl">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="hidden-xs"><img src="images/buqueViaje.png" height="64" width="64"> Control de acceso</h1>
+			<h1 class="hidden-xs"><img src="images/controlUsers.png" height="64" width="64"> Control de acceso</h1>
 			<h1 class="visible-xs">Control de acceso</h1>
 		</div>
 	</div>
@@ -30,7 +30,7 @@
 				</div-panel>
 			</div>
 			<div-cargando mostrar="cargaRutas">
-				<div ng-hide="tareas.length == 0">
+				<div ng-hide="tareas.length == 0 || modo == 'notificaciones'">
 					<table class="table table-bordered table-hover table-striped" style="text-align: center">
 						<tr>
 							<th style="text-align: center">Descripción</th>
@@ -39,9 +39,22 @@
 						<tr ng-repeat="ruta in filteredTareas = (tareas | filter:search) | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 							<td>{{ ruta.description }}</td>
 							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="ruta.acceso" ng-disabled="usuarioElegido == null" ng-click="chequearRuta(ruta)"></td>
+						</tr>
+					</table>
+					<div-pagination total-items="filteredTareas.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+				</div>
+				<div ng-hide="modo == 'tareas'">
+					<table class="table table-bordered table-hover table-striped" style="text-align: center">
+						<tr>
+							<th style="text-align: center">Descripción</th>
+							<th style="text-align: center">Habilitar</th>
+						</tr>
+						<tr ng-repeat="notificacion in notificaciones">
+							<td>{{ notificacion.description }}</td>
+							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="notificacion.habilitar" ng-disabled="usuarioElegido == null"></td>
+						</tr>
 					</table>
 				</div>
-				<div-pagination total-items="filteredTareas.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
 			</div-cargando>
 		</div>
 	</div>

@@ -1,7 +1,7 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', '$q', function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, $q) {
+myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', '$q', 'loginService', function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, $q, loginService) {
 	var factory = {};
 
 	factory.cargaBuques = function(){
@@ -220,11 +220,15 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 
 	factory.cargaAllRates = function(){
 		var deferred = $q.defer();
-		priceFactory.getAllRates(function(data){
-			generalCache.put('allRates', data);
-			$rootScope.$broadcast('progreso', {mensaje: 2});
+		if (loginService.getType() == 'agp'){
+			priceFactory.getAllRates(function(data){
+				generalCache.put('allRates', data);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			});
+		} else {
 			deferred.resolve();
-		});
+		}
 		return deferred.promise;
 	};
 
