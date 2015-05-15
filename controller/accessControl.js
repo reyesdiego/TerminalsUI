@@ -44,100 +44,46 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 
 	$scope.chequearRuta = function(ruta){
 		var indice = $scope.rutasUsuario.indexOf(ruta.route);
+		var partesRuta = ruta.route.split('.');
 		if (indice >= 0){
 			$scope.rutasUsuario.splice(indice, 1);
-			var i;
-			if (ruta.route == 'afip'){
-				for(i = $scope.rutasUsuario.length; i--;) {
-					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
-						$scope.tareas.forEach(function(unaTarea){
-							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
-						});
-						$scope.rutasUsuario.splice(i, 1);
-					}
-				}
-			}
-			if (ruta.route == 'afip.afectacion'){
-				for(i = $scope.rutasUsuario.length; i--;) {
-					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
-						$scope.tareas.forEach(function(unaTarea){
-							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
-						});
-						$scope.rutasUsuario.splice(i, 1);
-					}
-				}
-			}
-			if (ruta.route == 'afip.detalle'){
-				for(i = $scope.rutasUsuario.length; i--;) {
-					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
-						$scope.tareas.forEach(function(unaTarea){
-							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
-						});
-						$scope.rutasUsuario.splice(i, 1);
-					}
-				}
-			}
-			if (ruta.route == 'afip.solicitud'){
-				for(i = $scope.rutasUsuario.length; i--;) {
-					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
-						$scope.tareas.forEach(function(unaTarea){
-							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
-						});
-						$scope.rutasUsuario.splice(i, 1);
-					}
-				}
-			}
-			if (ruta.route == 'afip.sumatorias'){
-				for(i = $scope.rutasUsuario.length; i--;) {
-					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
-						$scope.tareas.forEach(function(unaTarea){
-							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
-						});
-						$scope.rutasUsuario.splice(i, 1);
-					}
-				}
-			}
+			$scope.quitarHijos(ruta);
 		} else {
 			$scope.rutasUsuario.push(ruta.route);
-			if (ruta.route.indexOf('afip') >= 0){
-				if ($scope.rutasUsuario.indexOf('afip') == -1){
-					$scope.rutasUsuario.push('afip');
-					$scope.tareas.forEach(function(unaTarea){
-						if (unaTarea.route == 'afip') unaTarea.acceso = true;
-					})
+			if (partesRuta.length > 1){
+				var rutaPadre;
+				rutaPadre = partesRuta[0];
+				if (partesRuta.length > 2){
+					rutaPadre += '.' + partesRuta[1];
 				}
+				$scope.agregarPadres(rutaPadre);
 			}
-			if (ruta.route.indexOf('afip.afectacion') >= 0){
-				if ($scope.rutasUsuario.indexOf('afip.afectacion') == -1){
-					$scope.rutasUsuario.push('afip.afectacion');
-					$scope.tareas.forEach(function(unaTarea){
-						if (unaTarea.route == 'afip.afectacion') unaTarea.acceso = true;
-					})
-				}
-			}
-			if (ruta.route.indexOf('afip.detalle') >= 0){
-				if ($scope.rutasUsuario.indexOf('afip.detalle') == -1){
-					$scope.rutasUsuario.push('afip.detalle');
-					$scope.tareas.forEach(function(unaTarea){
-						if (unaTarea.route == 'afip.detalle') unaTarea.acceso = true;
-					})
-				}
-			}
-			if (ruta.route.indexOf('afip.solicitud') >= 0){
-				if ($scope.rutasUsuario.indexOf('afip.solicitud') == -1){
-					$scope.rutasUsuario.push('afip.solicitud');
-					$scope.tareas.forEach(function(unaTarea){
-						if (unaTarea.route == 'afip.solicitud') unaTarea.acceso = true;
-					})
-				}
-			}
-			if (ruta.route.indexOf('afip.sumatorias') >= 0){
-				if ($scope.rutasUsuario.indexOf('afip.sumatorias') == -1){
-					$scope.rutasUsuario.push('afip.sumatorias');
-					$scope.tareas.forEach(function(unaTarea){
-						if (unaTarea.route == 'afip.sumatorias') unaTarea.acceso = true;
-					})
-				}
+		}
+	};
+
+	$scope.agregarPadres = function(ruta){
+		if ($scope.rutasUsuario.indexOf(ruta) == -1){
+			$scope.rutasUsuario.push(ruta);
+			$scope.tareas.forEach(function(unaTarea){
+				if (unaTarea.route == ruta) unaTarea.acceso = true
+			})
+		}
+
+		var partesRuta = ruta.split('.');
+		if (partesRuta.length > 1){
+			var rutaPadre = partesRuta[0];
+			$scope.agregarPadres(rutaPadre);
+		}
+
+	};
+
+	$scope.quitarHijos = function(ruta){
+		for(var i = $scope.rutasUsuario.length; i--;) {
+			if($scope.rutasUsuario[i].indexOf(ruta.route + '.') >= 0) {
+				$scope.tareas.forEach(function(unaTarea){
+					if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
+				});
+				$scope.rutasUsuario.splice(i, 1);
 			}
 		}
 	};
