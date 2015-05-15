@@ -46,8 +46,49 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		var indice = $scope.rutasUsuario.indexOf(ruta.route);
 		if (indice >= 0){
 			$scope.rutasUsuario.splice(indice, 1);
+			var i;
 			if (ruta.route == 'afip'){
-				for(var i = $scope.rutasUsuario.length; i--;) {
+				for(i = $scope.rutasUsuario.length; i--;) {
+					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
+						$scope.tareas.forEach(function(unaTarea){
+							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
+						});
+						$scope.rutasUsuario.splice(i, 1);
+					}
+				}
+			}
+			if (ruta.route == 'afip.afectacion'){
+				for(i = $scope.rutasUsuario.length; i--;) {
+					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
+						$scope.tareas.forEach(function(unaTarea){
+							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
+						});
+						$scope.rutasUsuario.splice(i, 1);
+					}
+				}
+			}
+			if (ruta.route == 'afip.detalle'){
+				for(i = $scope.rutasUsuario.length; i--;) {
+					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
+						$scope.tareas.forEach(function(unaTarea){
+							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
+						});
+						$scope.rutasUsuario.splice(i, 1);
+					}
+				}
+			}
+			if (ruta.route == 'afip.solicitud'){
+				for(i = $scope.rutasUsuario.length; i--;) {
+					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
+						$scope.tareas.forEach(function(unaTarea){
+							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
+						});
+						$scope.rutasUsuario.splice(i, 1);
+					}
+				}
+			}
+			if (ruta.route == 'afip.sumatorias'){
+				for(i = $scope.rutasUsuario.length; i--;) {
 					if($scope.rutasUsuario[i].indexOf(ruta.route) >= 0) {
 						$scope.tareas.forEach(function(unaTarea){
 							if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
@@ -102,18 +143,14 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.userSelected = function(usuario){
-		console.log(usuario);
 		if ($scope.usuarioElegido != null && $scope.usuarioElegido.full_name != usuario.full_name){
 			$scope.guardar().then(function(){
-				console.log('salio bien');
 				$scope.setearUsuario(usuario);
 			},
 			function(){
-				console.log('salio rechazado');
 				$scope.setearUsuario(usuario);
 			});
 		} else {
-			console.log('es el primero');
 			$scope.setearUsuario(usuario);
 		}
 	};

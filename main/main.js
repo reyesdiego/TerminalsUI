@@ -23,6 +23,9 @@ Array.prototype.equals = function (array) {
 	if (this.length != array.length)
 		return false;
 
+	this.sort();
+	array.sort();
+
 	for (var i = 0, l=this.length; i < l; i++) {
 		// Check if we have nested arrays
 		if (this[i] instanceof Array && array[i] instanceof Array) {
