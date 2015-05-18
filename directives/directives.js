@@ -209,8 +209,8 @@ myapp.directive('divPagination', function(){
 							$scope.maxSizeLG = 15;
 						} else {
 							$scope.maxSizeSM = 8;
-							$scope.maxSizeMD = 13;
-							$scope.maxSizeLG = 18;
+							$scope.maxSizeMD = 12;
+							$scope.maxSizeLG = 17;
 						}
 						break;
 				}
