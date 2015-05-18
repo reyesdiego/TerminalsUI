@@ -24,7 +24,7 @@
 				<tab heading="Notificaciones" ng-click="cambioModo('notificaciones')"></tab>
 			</tabset>
 			<br>
-			<div class="col-lg-12" ng-show="tareas.length == 0 && !loadingState">
+			<div class="col-lg-12" ng-show="tareas.length == 0 && !loadingState && modo != 'notificaciones'">
 				<div-panel config-panel="panelMensaje">
 					<span>{{ panelMensaje.mensaje }}</span>
 				</div-panel>

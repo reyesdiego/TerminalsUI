@@ -25,7 +25,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 
 	$scope.panelMensaje = {
 		titulo: 'Control de acceso',
-		mensaje: '',
+		mensaje: 'No se han encontrado tareas.',
 		tipo: 'panel-info'
 	};
 
