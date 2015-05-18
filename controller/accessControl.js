@@ -19,9 +19,15 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 
 	$scope.notificaciones = [
 		{ description: 'Nuevo usuario', habilitar: false},
-		{ description: 'Nuevo usuario', habilitar: false},
+		{ description: 'Nueva tarifa', habilitar: false},
 		{ description: 'Baja del servicio', habilitar: false}
 	];
+
+	$scope.panelMensaje = {
+		titulo: 'Control de acceso',
+		mensaje: '',
+		tipo: 'panel-info'
+	};
 
 	ctrlUsersFactory.getUsers(function(data){
 		if (data.status == 'OK'){
@@ -30,12 +36,19 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 				if (data.status == 'OK'){
 					$scope.tareas = data.data;
 				} else {
-
+					$scope.panelMensaje.mensaje = 'Se ha producido un error al cargar el listado de tareas.';
+					$scope.panelMensaje.tipo = 'panel-danger';
+					$scope.usuarios = [];
+					$scope.tareas = [];
 				}
 				$scope.cargaRutas = false;
 			})
+		} else {
+			$scope.panelMensaje.mensaje = 'Se ha producido un error al cargar el listado de usuarios.';
+			$scope.panelMensaje.tipo = 'panel-danger';
+			$scope.usuarios = [];
+			$scope.tareas = [];
 		}
-
 	});
 
 	$scope.cambioModo = function(modo){
