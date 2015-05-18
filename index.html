@@ -170,8 +170,8 @@
 						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Contenedor</a></li>
 						<li ng-show="in_array('buque', rutas)"><a collap ui-sref="buque">Buque - Viaje</a></li>
 						<li ng-show="in_array('afip', rutas)"><a collap ui-sref="afip">A.F.I.P</a></li>
-						<li ng-show="in_array('users', rutas) && grupo=='ADMIN'"><a collap ui-sref="users">Usuarios</a></li>
-						<li ng-show="in_array('access', rutas) && grupo=='ADMIN'"><a collap ui-sref="access">Control de acceso</a></li>
+						<li ng-show="in_array('users', rutas)"><a collap ui-sref="users">Usuarios</a></li>
+						<li ng-show="in_array('access', rutas)"><a collap ui-sref="access">Control de acceso</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
