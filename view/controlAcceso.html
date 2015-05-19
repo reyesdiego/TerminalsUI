@@ -1,0 +1,62 @@
+<div class="container" ng-controller="accessControlCtrl">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="hidden-xs"><img src="images/controlUsers.png" height="64" width="64"> Control de acceso</h1>
+			<h1 class="visible-xs">Control de acceso</h1>
+		</div>
+	</div>
+
+	<div class="row col-lg-12">
+		<div class="col-lg-3" ng-show="usuarios.length > 0">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Usuarios</h3>
+				</div>
+				<div class="panel-body" style="max-height: 720px; overflow: scroll">
+					<h5 ng-repeat="usuario in usuarios"  ng-init="usuario.elegido = ''" class="{{ usuario.elegido }}"><a href ng-click="userSelected(usuario)">{{ usuario.full_name }} </a></h5>
+				</div>
+			</div>
+			<button type="button" class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-save"></span> Guardar</button>
+		</div>
+		<div class="row col-lg-9">
+			<tabset justified="true" class="hidden-print" ng-show="!loadingState">
+				<tab heading="Tareas" ng-click="cambioModo('tareas')"></tab>
+				<tab heading="Notificaciones" ng-click="cambioModo('notificaciones')"></tab>
+			</tabset>
+			<br>
+			<div class="col-lg-12" ng-show="tareas.length == 0 && !loadingState && modo != 'notificaciones'">
+				<div-panel config-panel="panelMensaje">
+					<span>{{ panelMensaje.mensaje }}</span>
+				</div-panel>
+			</div>
+			<div-cargando mostrar="cargaRutas">
+				<div ng-hide="tareas.length == 0 || modo == 'notificaciones'">
+					<table class="table table-bordered table-hover table-striped" style="text-align: center">
+						<tr>
+							<th style="text-align: center">Descripción</th>
+							<th style="text-align: center">Acceso</th>
+						</tr>
+						<tr ng-repeat="ruta in filteredTareas = (tareas | filter:search) | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+							<td>{{ ruta.description }}</td>
+							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="ruta.acceso" ng-disabled="usuarioElegido == undefined" ng-click="chequearRuta(ruta)"></td>
+						</tr>
+					</table>
+					<div-pagination total-items="filteredTareas.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+				</div>
+				<div ng-hide="modo == 'tareas'">
+					<table class="table table-bordered table-hover table-striped" style="text-align: center">
+						<tr>
+							<th style="text-align: center">Descripción</th>
+							<th style="text-align: center">Habilitar</th>
+						</tr>
+						<tr ng-repeat="notificacion in notificaciones">
+							<td>{{ notificacion.description }}</td>
+							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="notificacion.habilitar" ng-disabled="usuarioElegido == undefined"></td>
+						</tr>
+					</table>
+				</div>
+			</div-cargando>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,45 @@
+<div-cargando mostrar="loadingState">
+	<div ng-hide="datosSumaria.length != undefined && datosSumaria.length > 0">
+		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
+	</div>
+	<div ng-show="datosSumaria.length != undefined && datosSumaria.length > 0">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered">
+				<thead>
+				<tr>
+					<th rowspan="2">Sumaria</th>
+					<th colspan="5" class="columnaAnidada">Sumaria</th>
+					<th rowspan="2">Conocimiento</th>
+					<th colspan="2" class="columnaAnidada">Fecha</th>
+					<th rowspan="2">Buque</th>
+					<th rowspan="2">Pa&iacute;s Procedencia</th>
+				</tr>
+				<tr>
+					<th>A&ntilde;o</th>
+					<th>Aduana</th>
+					<th>Tipo</th>
+					<th>Nro Manifiesto</th>
+					<th>Letra Control</th>
+					<th>Registro</th>
+					<th>Arribo</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="registro in datosSumaria">
+					<td>{{ registro.SUMARIA }}</td>
+					<td>{{ registro.SUM_ANIO }}</td>
+					<td>{{ registro.SUM_ADUANA }}</td>
+					<td>{{ registro.SUM_TIPO }}</td>
+					<td>{{ registro.SUM_NRO }}</td>
+					<td>{{ registro.SUM_LETRA_CTRL }}</td>
+					<td>{{ registro.CONOCIMIENTO }}</td>
+					<td>{{ registro.FECHAREGISTRO | date: 'dd/MM/yyyy'}}</td>
+					<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy'}}</td>
+					<td>{{ registro.BUQUE }}</td>
+					<td>{{ registro.P_PROCEDENCIA }}</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div-cargando>

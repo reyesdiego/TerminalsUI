@@ -1,0 +1,97 @@
+<accordion-min heading="Filtrar por">
+	<div class="col-lg-4 col-sm-6">
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">Turno</span>
+				<label class="sr-only" for="fechaInicio">Día</label>
+				<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" />
+						<span class="input-group-btn">
+							<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+						</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 col-sm-6">
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">Inicio</span>
+				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaInicio" enable-date="false" is-open="openHoraInicio"/>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="openDate($event); openHoraInicio = !openHoraInicio"><span class="glyphicon glyphicon-time"></span></button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 col-sm-6">
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">Fin</span>
+				<input type="text" class="form-control" datetime-picker="HH:mm" ng-model="model.fechaFin" enable-date="false" is-open="openHoraFin" max-date="model.fechaInicio"/>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="openDate($event); openHoraFin = !openHoraFin"><span class="glyphicon glyphicon-time"></span></button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
+		<div class="form-group">
+			<angucomplete-alt id="idBuque"
+							  placeholder="Buque"
+							  pause="100"
+							  selected-object="buqueSelected"
+							  local-data="listaBuques"
+							  search-fields="buque"
+							  title-field="buque"
+							  minlength="1"
+							  input-class="form-control"
+							  filtrar="filtrado(filtrar, contenido)"
+							  filter-field="buqueNombre"
+							  input-field="buque"
+							  match-class="highlight"
+							  limit-results="15"
+							  outside-model="model.buqueNombre"></angucomplete-alt>
+		</div>
+	</div>
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('viaje', 0) >= 0 || model.buqueNombre.length == 0">
+		<angucomplete-alt id="idViaje"
+						  placeholder="Viaje"
+						  pause="100"
+						  selected-object="viajeSelected"
+						  local-data="listaViajes"
+						  search-fields="viaje"
+						  title-field="viaje"
+						  minlength="1"
+						  input-class="form-control"
+						  filtrar="filtrado(filtrar, contenido)"
+						  filter-field="viaje"
+						  input-field="viaje"
+						  match-class="highlight"
+						  limit-results="15"
+						  outside-model="model.viaje"
+						  auto-match="true"></angucomplete-alt>
+	</div>
+	<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
+		<div class="form-group">
+			<angucomplete-alt id="idContenedor"
+							  placeholder="Contenedor"
+							  pause="100"
+							  selected-object="containerSelected"
+							  local-data="listaContenedoresTurnos"
+							  search-fields="contenedor"
+							  title-field="contenedor"
+							  minlength="1"
+							  input-class="form-control"
+							  filtrar="filtrado(filtrar, contenido)"
+							  filter-field="contenedor"
+							  input-field="contenedor"
+							  match-class="highlight"
+							  limit-results="15"
+							  outside-model="model.contenedor"></angucomplete-alt>
+		</div>
+	</div>
+	<div class="col-lg-4 col-sm-6">
+		<div class="form-group">
+			<button class="btn btn-primary" ng-click="cargaPorFiltros()">Buscar</button>
+		</div>
+	</div>
+</accordion-min>

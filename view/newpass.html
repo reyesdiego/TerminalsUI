@@ -1,0 +1,52 @@
+<div class="container" ng-controller="changePassCtrl">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h1><img ng-src="images/cambiarpass.png" height="64" width="64" class="hidden-xs"> Cambio de contraseña</h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="well">
+				<form ng-submit="changePass()" class="bs-example form-horizontal">
+					<fieldset>
+						<legend>Usuario</legend>
+						<div class="form-group">
+							<label for="inputEmail" class="col-lg-4 control-label"><span class="glyphicon glyphicon-user"></span> Usuario</label>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar usuario o correo electrónico" ng-required="true" autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword" class="col-lg-4 control-label"><span class="glyphicon glyphicon-asterisk"></span> Contraseña actual</label>
+							<div class="col-lg-8">
+								<input type="password" class="form-control" ng-model="password" id="inputPassword" placeholder="Ingresar contraseña" ng-required="true" autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="newPassword" class="col-lg-4 control-label"><span class="glyphicon glyphicon-lock"></span> Nueva Contraseña</label>
+							<div class="col-lg-8">
+								<input type="password" class="form-control" ng-model="newPass" id="newPassword" placeholder="Ingresar nueva contraseña" ng-required="true" autocomplete="off">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="confirmPassword" class="col-lg-4 control-label"><span class="glyphicon glyphicon-check"></span> Confirmar</label>
+							<div class="col-lg-8">
+								<input type="password" class="form-control" ng-model="confirmPass" id="confirmPassword" placeholder="Ingresar nueva contraseña" ng-required="true" autocomplete="off" onpaste="return false">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-12 text-right">
+								<button ui-sref="login" class="btn btn-default"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</button>
+								<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Guardar</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!--</div>-->
+</div>

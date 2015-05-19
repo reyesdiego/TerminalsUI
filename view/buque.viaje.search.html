@@ -1,0 +1,57 @@
+<div class="row col-lg-12">
+	<div class="col-lg-3">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">Buques</h3>
+			</div>
+			<div class="panel-body" style="max-height: 720px; overflow: scroll">
+				<!--<angucomplete-alt id="idBuque"
+				                  placeholder="Buque"
+				                  pause="100"
+				                  selected-object="buqueSelected"
+				                  local-data="buques"
+				                  search-fields="buque"
+				                  title-field="buque"
+				                  minlength="1"
+				                  input-class="form-control"
+				                  filtrar="filtrado(filtrar, contenido)"
+				                  input-field="buque"
+				                  match-class="highlight"
+				                  limit-results="0"
+				                  auto-match="true"></angucomplete-alt>-->
+				<h5 ng-repeat="buque in buques" class="{{ buque.elegido }}"><a href ng-click="buqueSelected(buque)">{{ buque.buque }} <span class="glyphicon glyphicon-certificate" ng-show="buque.both"></span></a></h5>
+			</div>
+		</div>
+		<h6><span class="glyphicon glyphicon-certificate"></span> - Contiene datos de la AFIP</h6>
+	</div>
+	<div class="row col-lg-9">
+		<tabset justified="true" class="hidden-print" ng-show="!loadingState">
+			<tab ng-show="mostrarAnterior" ng-click="mostrarMenosViajes()">
+				<tab-heading>
+					<i class="glyphicon glyphicon-arrow-left"></i> Anterior
+				</tab-heading>
+			</tab>
+			<tab ng-repeat="viaje in buqueElegido.viajes | startFrom: filtrarDesde | limitTo: 6" heading="{{ viaje.fecha | date: 'dd/MM/yyyy' }} - {{ viaje.viaje }}" ng-click="filtrado('viaje', viaje.viaje)" active="viaje.active"></tab>
+			<tab ng-show="buqueElegido.viajes.length > 6 && buqueElegido.viajes.length - filtrarDesde > 6 " ng-click="mostrarMasViajes()">
+				<tab-heading>
+					<i class="glyphicon glyphicon-arrow-right"></i> Siguiente
+				</tab-heading>
+			</tab>
+		</tabset>
+		<br>
+		<div class="col-lg-12" ng-show="datosContainers.length == 0 && !loadingState">
+			<div-panel config-panel="panelMensaje">
+				<span>{{ panelMensaje.mensaje }}</span>
+			</div-panel>
+		</div>
+		<div-cargando mostrar="loadingState">
+			<div ng-hide="datosContainers.length == 0">
+				<table-buque-viaje></table-buque-viaje>
+			</div>
+		</div-cargando>
+	</div>
+</div>
+
+<div ng-show="detalle">
+	<buque-viaje-detail></buque-viaje-detail>
+</div>
