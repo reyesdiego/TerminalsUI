@@ -116,6 +116,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.setearUsuario = function(usuario){
+		if (angular.isDefined($scope.usuarioElegido)) $scope.usuarioElegido.elegido = '';
 		$scope.usuarioElegido = usuario;
 		usuario.elegido = 'bg-info';
 		angular.copy(usuario.acceso, $scope.rutasUsuario);
