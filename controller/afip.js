@@ -5,15 +5,15 @@
 myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', function($scope, $rootScope, afipFactory, $state, generalFunctions){
 
 	$rootScope.rutas.sort();
-	$scope.afectacion = '';
-	$scope.detalle = '';
-	$scope.solicitud = '';
-	$scope.sumatoria = '';
+	$scope.afectacion = 'afip';
+	$scope.detalle = 'afip';
+	$scope.solicitud = 'afip';
+	$scope.sumatoria = 'afip';
 	$scope.actualRegistro = '';
 
 	if (in_array('afip.afectacion', $rootScope.rutas)){
 		$rootScope.rutas.forEach(function(ruta){
-			if (ruta.indexOf('afip.afectacion.') >= 0 && $scope.afectacion == '') {
+			if (ruta.indexOf('afip.afectacion.') >= 0 && $scope.afectacion == 'afip') {
 				$scope.afectacion = ruta;
 				if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
 			}
@@ -22,7 +22,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 	if (in_array('afip.detalle', $rootScope.rutas)){
 		$rootScope.rutas.forEach(function(ruta){
-			if (ruta.indexOf('afip.detalle.') >= 0 && $scope.detalle == '') {
+			if (ruta.indexOf('afip.detalle.') >= 0 && $scope.detalle == 'afip') {
 				$scope.detalle = ruta;
 				if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
 			}
@@ -31,7 +31,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 	if (in_array('afip.solicitud', $rootScope.rutas)){
 		$rootScope.rutas.forEach(function(ruta){
-			if (ruta.indexOf('afip.solicitud.') >= 0 && $scope.solicitud == '') {
+			if (ruta.indexOf('afip.solicitud.') >= 0 && $scope.solicitud == 'afip') {
 				$scope.solicitud = ruta;
 				if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
 			}
@@ -40,7 +40,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 	if (in_array('afip.sumatorias', $rootScope.rutas)){
 		$rootScope.rutas.forEach(function(ruta){
-			if (ruta.indexOf('afip.sumatorias.') >= 0 && $scope.sumatoria == '') {
+			if (ruta.indexOf('afip.sumatorias.') >= 0 && $scope.sumatoria == 'afip') {
 				$scope.sumatoria = ruta;
 				if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
 			}

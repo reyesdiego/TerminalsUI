@@ -137,6 +137,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 						dialogs.notify('Control de acceso', 'Las tareas para el usuario se han guardado correctamente');
 						if (loginService.getInfo()._id == $scope.usuarioElegido._id){
 							loginService.setAcceso($scope.rutasUsuario);
+							angular.copy($scope.rutasUsuario, $rootScope.rutas);
 						}
 						$scope.usuarios.forEach(function(usuario){
 							if (usuario._id == $scope.usuarioElegido._id) angular.copy($scope.rutasUsuario, usuario.acceso)
