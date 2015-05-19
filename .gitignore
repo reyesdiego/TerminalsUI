@@ -1,3 +1,4 @@
 .idea/
 includes/js/utils/config.js
+includes/js/utils/configProd.js
 .bowerrc
