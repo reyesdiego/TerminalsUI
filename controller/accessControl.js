@@ -61,6 +61,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		if (indice >= 0){
 			$scope.rutasUsuario.splice(indice, 1);
 			$scope.quitarHijos(ruta);
+			$scope.quitarPadres(ruta.route);
 		} else {
 			$scope.rutasUsuario.push(ruta.route);
 			if (partesRuta.length > 1){
@@ -71,6 +72,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 				}
 				$scope.agregarPadres(rutaPadre);
 			}
+			$scope.agregarHijos(ruta.route);
 		}
 	};
 
@@ -90,6 +92,30 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 
 	};
 
+	$scope.quitarPadres = function(ruta){
+		$scope.rutasUsuario.sort();
+		var partesRuta = ruta.split('.');
+		if (partesRuta.length > 1){
+			var rutaPadre;
+			rutaPadre = partesRuta[0];
+			if (partesRuta.length > 2){
+				rutaPadre += '.' + partesRuta[1];
+			}
+			var indice = $scope.rutasUsuario.indexOf(rutaPadre);
+			var contar = 0;
+			for (var i = indice + 1; i < $scope.rutasUsuario.length; i++){
+				if ($scope.rutasUsuario[i].indexOf(rutaPadre) >= 0) contar++;
+			}
+			if (contar == 0) {
+				$scope.rutasUsuario.splice(indice, 1);
+				$scope.tareas.forEach(function(unaTarea){
+					if (unaTarea.route == rutaPadre) unaTarea.acceso = false;
+				})
+			}
+			$scope.quitarPadres(rutaPadre);
+		}
+	};
+
 	$scope.quitarHijos = function(ruta){
 		for(var i = $scope.rutasUsuario.length; i--;) {
 			if($scope.rutasUsuario[i].indexOf(ruta.route + '.') >= 0) {
@@ -99,6 +125,26 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 				$scope.rutasUsuario.splice(i, 1);
 			}
 		}
+	};
+
+	$scope.agregarHijos = function(ruta){
+		$scope.rutasUsuario.sort();
+		var contar = 0;
+		var rutaHija = '';
+		$scope.rutasUsuario.forEach(function(unaRuta){
+			if (unaRuta.indexOf(ruta + '.') >= 0) contar++
+		});
+		if (contar == 0){
+			$scope.tareas.forEach(function(unaTarea){
+				if (unaTarea.route.indexOf(ruta + '.') >= 0 && contar == 0){
+					rutaHija = unaTarea.route;
+					unaTarea.acceso = true;
+					$scope.rutasUsuario.push(unaTarea.route);
+					contar++;
+				}
+			})
+		}
+		if (contar == 1) $scope.agregarHijos(rutaHija);
 	};
 
 	$scope.userSelected = function(usuario){
