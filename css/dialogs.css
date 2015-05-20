@@ -4,6 +4,11 @@
     height: 252px;
 }
 
+.textFooter {
+	font-size: small;
+	font-weight: bold;
+}
+
 /* Custom dialog/modal headers */
 
 .dialog-header-error { background-color: #d2322d; }
