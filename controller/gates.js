@@ -2,7 +2,7 @@
  * Created by leo on 31/03/14.
  */
 
-myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', function ($scope, gatesFactory) {
+myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', function ($scope, gatesFactory, loginService) {
 	$scope.totalItems = 0;
 	$scope.turnosGates = true;
 	//$scope.currentPage = 1;
@@ -94,5 +94,5 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', function ($scope, gates
 		});
 	};
 
-	$scope.cargaGates();
+	if (loginService.getStatus()) $scope.cargaGates();
 }]);

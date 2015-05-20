@@ -383,15 +383,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		if (data) { return angular.toJson(data); }
 	};
 
-	// Carga la sesion por cookies
-	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
-		authFactory.login().then(function(){
-			$rootScope.cargarCache = true;
-			$rootScope.primerRuteo = true;
-			$rootScope.estaLogeado = true;
-		});
-	}
-
 	if (loginService.getStatus()){
 		$rootScope.cargarCache = true;
 		$rootScope.primerRuteo = true;
@@ -440,7 +431,14 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		}
 		if (!loginService.getStatus() && authFactory.userEstaLogeado()){
 			authFactory.login().then(function(){
-				$rootScope.verificaRutas(event, toState);
+				$rootScope.cargarCache = true;
+				$rootScope.primerRuteo = true;
+				$rootScope.estaLogeado = true;
+				if (toState.name == 'login') {
+					$state.transitionTo('tarifario');
+				} else {
+					$rootScope.verificaRutas(event, toState);
+				}
 			});
 		} else {
 			$rootScope.verificaRutas(event, toState);
