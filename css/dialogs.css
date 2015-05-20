@@ -7,6 +7,7 @@
 .textFooter {
 	font-size: small;
 	font-weight: bold;
+	text-align: right;
 }
 
 /* Custom dialog/modal headers */
