@@ -148,16 +148,28 @@
 						<li ng-show="in_array('cfacturas', rutas)"><a collap ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!='' && (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
+				<li class="hidden-sm" ng-show="acceso!='' && (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
 						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas))" dropdown>
+				<li class="hidden-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
+						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
+						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
+					</ul>
+				</li>
+				<li class="visible-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas)) || (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
+					<a data-ng-hide="dropdown" dropdown-toggle>Gates/Turnos<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li class="visible-sm dropdown-header">Gates</li>
+						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
+						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
+						<li class="visible-sm divider"></li>
+						<li class="visible-sm dropdown-header">Turnos</li>
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
 						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
 					</ul>
@@ -177,6 +189,9 @@
 						<li class="visible-sm"><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li class="visible-sm divider"></li>
+						<li class="visible-sm dropdown-header">Cambiar moneda</li>
+						<li class="visible-sm"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso=='agp'" class="hidden-sm" dropdown>
@@ -187,7 +202,7 @@
 						<li><a collap ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
+				<li class="hidden-sm" ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 				<li ng-show="acceso!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
 				<li ng-show="acceso!=''" dropdown>
 					<a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ terminal.user }}<b class="caret"></b></a>
