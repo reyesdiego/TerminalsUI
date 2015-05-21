@@ -12,15 +12,17 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 10;
 
-	$scope.rutasUsuario = [];
 	$scope.rutasUsuarioOriginal = [];
+
+	$scope.notificacionesUsuarioOriginal = [];
 
 	$scope.modo = 'tareas';
 
 	$scope.notificaciones = [
-		{ description: 'Nuevo usuario', habilitar: false},
-		{ description: 'Nueva tarifa', habilitar: false},
-		{ description: 'Baja del servicio', habilitar: false}
+		//{ description: 'Nuevo usuario', habilitar: false},
+		{ description: 'Nueva tarifa', habilitar: false, valor: 'price', mostrar: ''},
+		//{ description: 'Baja del servicio', habilitar: false}
+		{ description: 'Enviar mail a cliente por nuevo turno', habilitar: false, valor: 'emailAppointmentToApp', mostrar: 'terminal'}
 	];
 
 	$scope.panelMensaje = {
@@ -56,14 +58,11 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.chequearRuta = function(ruta){
-		var indice = $scope.rutasUsuario.indexOf(ruta.route);
 		var partesRuta = ruta.route.split('.');
-		if (indice >= 0){
-			$scope.rutasUsuario.splice(indice, 1);
+		if (!ruta.acceso){
 			$scope.quitarHijos(ruta);
 			$scope.quitarPadres(ruta.route);
 		} else {
-			$scope.rutasUsuario.push(ruta.route);
 			if (partesRuta.length > 1){
 				var rutaPadre;
 				rutaPadre = partesRuta[0];
@@ -77,12 +76,9 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.agregarPadres = function(ruta){
-		if ($scope.rutasUsuario.indexOf(ruta) == -1){
-			$scope.rutasUsuario.push(ruta);
-			$scope.tareas.forEach(function(unaTarea){
-				if (unaTarea.route == ruta) unaTarea.acceso = true
-			})
-		}
+		$scope.tareas.forEach(function(unaTarea){
+			if (unaTarea.route == ruta) unaTarea.acceso = true
+		});
 
 		var partesRuta = ruta.split('.');
 		if (partesRuta.length > 1){
@@ -93,7 +89,6 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.quitarPadres = function(ruta){
-		$scope.rutasUsuario.sort();
 		var partesRuta = ruta.split('.');
 		if (partesRuta.length > 1){
 			var rutaPadre;
@@ -101,13 +96,11 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 			if (partesRuta.length > 2){
 				rutaPadre += '.' + partesRuta[1];
 			}
-			var indice = $scope.rutasUsuario.indexOf(rutaPadre);
 			var contar = 0;
-			for (var i = indice + 1; i < $scope.rutasUsuario.length; i++){
-				if ($scope.rutasUsuario[i].indexOf(rutaPadre) >= 0) contar++;
-			}
+			$scope.tareas.forEach(function(unaTarea){
+				if (unaTarea.route.indexOf(rutaPadre + '.') >= 0 && unaTarea.acceso) contar++;
+			});
 			if (contar == 0) {
-				$scope.rutasUsuario.splice(indice, 1);
 				$scope.tareas.forEach(function(unaTarea){
 					if (unaTarea.route == rutaPadre) unaTarea.acceso = false;
 				})
@@ -117,29 +110,22 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.quitarHijos = function(ruta){
-		for(var i = $scope.rutasUsuario.length; i--;) {
-			if($scope.rutasUsuario[i].indexOf(ruta.route + '.') >= 0) {
-				$scope.tareas.forEach(function(unaTarea){
-					if (unaTarea.route == $scope.rutasUsuario[i]) unaTarea.acceso = false;
-				});
-				$scope.rutasUsuario.splice(i, 1);
-			}
-		}
+		$scope.tareas.forEach(function(unaTarea){
+			if (unaTarea.route.indexOf(ruta.route + '.') >= 0) unaTarea.acceso = false;
+		});
 	};
 
 	$scope.agregarHijos = function(ruta){
-		$scope.rutasUsuario.sort();
 		var contar = 0;
 		var rutaHija = '';
-		$scope.rutasUsuario.forEach(function(unaRuta){
-			if (unaRuta.indexOf(ruta + '.') >= 0) contar++
+		$scope.tareas.forEach(function(unaTarea){
+			if (unaTarea.route.indexOf(ruta + '.') >= 0 && unaTarea.acceso) contar++;
 		});
 		if (contar == 0){
 			$scope.tareas.forEach(function(unaTarea){
 				if (unaTarea.route.indexOf(ruta + '.') >= 0 && contar == 0){
 					rutaHija = unaTarea.route;
 					unaTarea.acceso = true;
-					$scope.rutasUsuario.push(unaTarea.route);
 					contar++;
 				}
 			})
@@ -165,40 +151,97 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		if (angular.isDefined($scope.usuarioElegido)) $scope.usuarioElegido.elegido = '';
 		$scope.usuarioElegido = usuario;
 		usuario.elegido = 'bg-info';
-		angular.copy(usuario.acceso, $scope.rutasUsuario);
 		angular.copy(usuario.acceso, $scope.rutasUsuarioOriginal);
+		angular.copy(usuario.emailToApp, $scope.notificacionesUsuarioOriginal);
 		$scope.tareas.forEach(function(tarea){
 			tarea.acceso = in_array(tarea.route, usuario.acceso);
+		});
+		$scope.notificaciones.forEach(function(notif){
+			notif.habilitar = in_array(notif.valor, usuario.emailToApp);
 		})
+	};
+
+	$scope.guardarTareas = function(tareas){
+		var deferred = $q.defer();
+		var rutasUsuario = {acceso: tareas};
+		ctrlUsersFactory.setAccess($scope.usuarioElegido._id, rutasUsuario, function(data){
+			if (data.status == 'OK') {
+				if (loginService.getInfo()._id == $scope.usuarioElegido._id){
+					loginService.setAcceso(tareas);
+					angular.copy(tareas, $rootScope.rutas);
+				}
+				$scope.usuarios.forEach(function(usuario){
+					if (usuario._id == $scope.usuarioElegido._id) angular.copy(tareas, usuario.acceso)
+				});
+				deferred.resolve({ status: 'OK' });
+			} else {
+				deferred.resolve({ status: 'ERROR', data: 'Se ha producido un error al intentar guardar las tareas del usuario.' });
+			}
+		});
+		return deferred.promise;
+	};
+
+	$scope.guardarNotificaciones = function(notificaciones){
+		var deferred = $q.defer();
+		var notifUsuario = { emailToApp: notificaciones };
+		ctrlUsersFactory.setNotifications($scope.usuarioElegido._id, notifUsuario, function(data){
+			if (data.status == 'OK'){
+				$scope.usuarios.forEach(function(usuario) {
+					if (usuario._id == $scope.usuarioElegido._id) angular.copy(notificaciones, usuario.emailToApp)
+				});
+				deferred.resolve({ status: 'OK' });
+			} else {
+				deferred.resolve({ status: 'ERROR', data: 'Se ha producido un error al intentar guardar las notificaciones del usuario.' });
+			}
+		});
+		return deferred.promise;
 	};
 
 	$scope.guardar = function(){
 		var deferred = $q.defer();
-		if (!$scope.rutasUsuario.equals($scope.rutasUsuarioOriginal)){
+		var tareasUsuario = [];
+		var notificacionesUsuario = [];
+		$scope.tareas.forEach(function(unaTarea){
+			if (unaTarea.acceso) tareasUsuario.push(unaTarea.route);
+		});
+		$scope.notificaciones.forEach(function(notif){
+			if (notif.habilitar) notificacionesUsuario.push(notif.valor);
+		});
+		if (!tareasUsuario.equals($scope.rutasUsuarioOriginal) || !notificacionesUsuario.equals($scope.notificacionesUsuarioOriginal)){
 			var dlg = dialogs.confirm("Control de acceso", "¿Desea guardar los cambios efectuados para el usuario " + $scope.usuarioElegido.full_name + "?");
 			dlg.result.then(function(){
-				var rutasUsuario = {acceso: $scope.rutasUsuario};
-				ctrlUsersFactory.setAccess($scope.usuarioElegido._id, rutasUsuario, function(data){
-					if (data.status == 'OK') {
-						dialogs.notify('Control de acceso', 'Las tareas para el usuario se han guardado correctamente');
-						if (loginService.getInfo()._id == $scope.usuarioElegido._id){
-							loginService.setAcceso($scope.rutasUsuario);
-							angular.copy($scope.rutasUsuario, $rootScope.rutas);
+				var guardar = [];
+				if (!tareasUsuario.equals($scope.rutasUsuarioOriginal)) guardar.push($scope.guardarTareas(tareasUsuario));
+				if (!notificacionesUsuario.equals($scope.notificacionesUsuarioOriginal)) guardar.push($scope.guardarNotificaciones(notificacionesUsuario));
+				$q.all(guardar)
+					.then(function(values){
+						var contar = 0;
+						var errorMsg = [];
+						values.forEach(function(result){
+							if (result.status == 'OK'){
+								contar++
+							} else {
+								errorMsg.push(result.data);
+							}
+						});
+						if (contar == values.length){
+							dialogs.notify('Control de acceso', 'La configuración para el usuario ' + $scope.usuarioElegido.full_name + ' se ha guardado correctamente');
+							$scope.usuarioElegido.elegido = '';
+							$scope.usuarioElegido = undefined;
+							$scope.tareas.forEach(function(tarea){
+								tarea.acceso = false;
+							});
+							$scope.notificaciones.forEach(function(notif){
+								notif.habilitar = false;
+							});
+							deferred.resolve();
+						} else {
+							errorMsg.forEach(function(error){
+								dialogs.error('Control de acceso', error + ' Inténtelo nuevamente más tarde');
+							});
+							deferred.reject();
 						}
-						$scope.usuarios.forEach(function(usuario){
-							if (usuario._id == $scope.usuarioElegido._id) angular.copy($scope.rutasUsuario, usuario.acceso)
-						});
-						$scope.usuarioElegido.elegido = '';
-						$scope.usuarioElegido = undefined;
-						$scope.tareas.forEach(function(tarea){
-							tarea.acceso = false;
-						});
-						deferred.resolve();
-					} else {
-						dialogs.error('Control de acceso', 'Se ha producido un error al intentar guardar los datos.');
-						deferred.reject();
-					}
-				});
+					})
 			},
 			function(){
 				deferred.reject();
@@ -208,6 +251,4 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		}
 		return deferred.promise;
 	};
-
-
 }]);

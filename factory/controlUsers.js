@@ -55,5 +55,15 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 			});
 	};
 
+	factory.setNotifications = function(id, notif, callback){
+		var inserturl = serverUrl + '/agp/account/' + id + '/emailToApp';
+		$http.put(inserturl, notif)
+			.success(function(data){
+				callback(data);
+			}).error(function(data){
+				callback(data);
+			});
+	};
+
 	return factory;
 }]);

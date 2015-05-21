@@ -49,7 +49,7 @@
 							<th style="text-align: center">Descripción</th>
 							<th style="text-align: center">Habilitar</th>
 						</tr>
-						<tr ng-repeat="notificacion in notificaciones">
+						<tr ng-repeat="notificacion in notificaciones" ng-show="notificacion.mostrar == '' || notificacion.mostrar == usuarioElegido.role">
 							<td>{{ notificacion.description }}</td>
 							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="notificacion.habilitar" ng-disabled="usuarioElegido == undefined"></td>
 						</tr>
