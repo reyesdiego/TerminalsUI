@@ -93,14 +93,14 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		if (partesRuta.length > 1){
 			var rutaPadre;
 			rutaPadre = partesRuta[0];
-			if (partesRuta.length > 2){
+			for (var i=1; i < partesRuta.length - 1; i++){
 				rutaPadre += '.' + partesRuta[1];
 			}
-			var contar = 0;
+			var hijosHabilitados = false;
 			$scope.tareas.forEach(function(unaTarea){
-				if (unaTarea.route.indexOf(rutaPadre + '.') >= 0 && unaTarea.acceso) contar++;
+				if (unaTarea.route.indexOf(rutaPadre + '.') >= 0 && unaTarea.acceso) hijosHabilitados = true;
 			});
-			if (contar == 0) {
+			if (!hijosHabilitados) {
 				$scope.tareas.forEach(function(unaTarea){
 					if (unaTarea.route == rutaPadre) unaTarea.acceso = false;
 				})
@@ -116,21 +116,21 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	};
 
 	$scope.agregarHijos = function(ruta){
-		var contar = 0;
+		var hijoHabilitado = false;
 		var rutaHija = '';
 		$scope.tareas.forEach(function(unaTarea){
-			if (unaTarea.route.indexOf(ruta + '.') >= 0 && unaTarea.acceso) contar++;
+			if (unaTarea.route.indexOf(ruta + '.') >= 0 && unaTarea.acceso) hijoHabilitado = true;
 		});
-		if (contar == 0){
+		if (!hijoHabilitado){
 			$scope.tareas.forEach(function(unaTarea){
-				if (unaTarea.route.indexOf(ruta + '.') >= 0 && contar == 0){
+				if (unaTarea.route.indexOf(ruta + '.') >= 0 && !hijoHabilitado){
 					rutaHija = unaTarea.route;
 					unaTarea.acceso = true;
-					contar++;
+					hijoHabilitado = true;
 				}
 			})
 		}
-		if (contar == 1) $scope.agregarHijos(rutaHija);
+		if (hijoHabilitado) $scope.agregarHijos(rutaHija);
 	};
 
 	$scope.userSelected = function(usuario){
