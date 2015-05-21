@@ -299,9 +299,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 	$scope.cargaPuntosDeVenta = function(){
 		invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
 			if (data.status == 'OK'){
-				$scope.todosLosPuntosDeVentas.forEach(function(todosPtos){
-					todosPtos.hide = data.data.indexOf(todosPtos.punto, 0) < 0;
-					if ($scope.model != undefined && todosPtos.punto == $scope.model.nroPtoVenta && todosPtos.hide){
+				$scope.todosLosPuntosDeVentas.forEach(function(puntosVenta){
+					puntosVenta.hide = data.data.indexOf(puntosVenta.punto, 0) < 0;
+					if ($scope.model != undefined && puntosVenta.punto == $scope.model.nroPtoVenta && puntosVenta.hide){
 						$scope.model.nroPtoVenta = '';
 						$scope.todosLosPuntosDeVentas[0].active = true;
 					}
@@ -454,7 +454,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 	};
 
 	function cargaDatosSinPtoVenta(){
-		var datos = $scope.model || { nroPtoVenta : '' };
+		var datos = {};
+		angular.copy($scope.model, datos); //|| { nroPtoVenta : '' };
 		datos.nroPtoVenta = '';
 		return datos;
 	}
