@@ -18,6 +18,10 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 
 	$scope.modo = 'tareas';
 
+	$scope.tabTareas = {
+		active: true
+	};
+
 	$scope.notificaciones = [
 		//{ description: 'Nuevo usuario', habilitar: false},
 		{ description: 'Nueva tarifa', habilitar: false, valor: 'price', mostrar: ''},
@@ -158,7 +162,9 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		});
 		$scope.notificaciones.forEach(function(notif){
 			notif.habilitar = in_array(notif.valor, usuario.emailToApp);
-		})
+		});
+		$scope.modo = 'tareas';
+		$scope.tabTareas.active = true;
 	};
 
 	$scope.guardarTareas = function(tareas){

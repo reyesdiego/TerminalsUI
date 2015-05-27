@@ -4,177 +4,236 @@
 		{
 			"_id": 1,
 			"description": "Tarifario",
-			"route": "tarifario"
+			"route": "tarifario",
+			"role": ""
 		},
 		{
 			"_id": 2,
 			"description": "Asociación de tarifario",
-			"route": "matches"
+			"route": "matches",
+			"role": ""
 		},
 		{
 			"_id": 3,
 			"description": "Ver comprobantes",
-			"route": "invoices"
+			"route": "invoices",
+			"role": ""
 		},
 		{
 			"_id": 4,
 			"description": "Control de comprobantes",
-			"route": "cfacturas"
+			"route": "cfacturas",
+			"role": ""
 		},
 		{
 			"_id": 5,
 			"description": "Ver gates",
-			"route": "gates"
+			"route": "gates",
+			"role": ""
 		},
 		{
 			"_id": 6,
 			"description": "Control de gates",
-			"route": "cgates"
+			"route": "cgates",
+			"role": ""
 		},
 		{
 			"_id": 7,
 			"description": "Ver turnos",
-			"route": "turnos"
+			"route": "turnos",
+			"role": ""
 		},
 		{
 			"_id": 8,
 			"description": "Agenda de turnos",
-			"route": "agenda"
+			"route": "agenda",
+			"role": ""
 		},
 		{
 			"_id": 9,
 			"description": "Control",
-			"route": "control"
+			"route": "control",
+			"role": "agp"
 		},
 		{
 			"_id": 10,
 			"description": "Reportes",
-			"route": "reports"
+			"route": "reports",
+			"role": "agp"
 		},
 		{
 			"_id": 11,
 			"description": "Contenedores",
-			"route": "container"
+			"route": "container",
+			"role": "agp"
 		},
 		{
 			"_id": 12,
 			"description": "Buque - viaje",
-			"route": "buque"
+			"route": "buque",
+			"role": "agp"
 		},
 		{
 			"_id": 13,
 			"description": "Módulos AFIP",
-			"route": "afip"
+			"route": "afip",
+			"role": "agp"
+		},
+		{
+			"_id": 36,
+			"description": "Módulos AFIP Afectación",
+			"route": "afip.afectacion",
+			"role": "agp"
 		},
 		{
 			"_id": 14,
 			"description": "AFIP Afectación - Módulo 1",
-			"route": "afip.afectacion.afectacion1"
+			"route": "afip.afectacion.afectacion1",
+			"role": "agp"
 		},
 		{
 			"_id": 15,
 			"description": "AFIP Afectación - Módulo 2",
-			"route": "afip.afectacion.afectacion2"
+			"route": "afip.afectacion.afectacion2",
+			"role": "agp"
+		},
+		{
+			"_id": 37,
+			"description": "Módulos AFIP Detalle",
+			"route": "afip.detalle",
+			"role": "agp"
 		},
 		{
 			"_id": 16,
 			"description": "AFIP Detalle de importaciones - Módulo 1",
-			"route": "afip.detalle.detimpo1"
+			"route": "afip.detalle.detimpo1",
+			"role": "agp"
 		},
 		{
 			"_id": 17,
 			"description": "AFIP Detalle de importaciones - Módulo 2",
-			"route": "afip.detalle.detimpo2"
+			"route": "afip.detalle.detimpo2",
+			"role": "agp"
 		},
 		{
 			"_id": 18,
 			"description": "AFIP Detalle de importaciones - Módulo 3",
-			"route": "afip.detalle.detimpo3"
+			"route": "afip.detalle.detimpo3",
+			"role": "agp"
 		},
 		{
 			"_id": 19,
 			"description": "AFIP Detalle de exportaciones - Módulo 1",
-			"route": "afip.detalle.detexpo1"
+			"route": "afip.detalle.detexpo1",
+			"role": "agp"
 		},
 		{
 			"_id": 20,
 			"description": "AFIP Detalle de exportaciones - Módulo 2",
-			"route": "afip.detalle.detexpo2"
+			"route": "afip.detalle.detexpo2",
+			"role": "agp"
 		},
 		{
 			"_id": 21,
 			"description": "AFIP Detalle de exportaciones - Módulo 3",
-			"route": "afip.detalle.detexpo3"
+			"route": "afip.detalle.detexpo3",
+			"role": "agp"
+		},
+		{
+			"_id": 38,
+			"description": "Módulos AFIP Solicitud",
+			"route": "afip.solicitud",
+			"role": "agp"
 		},
 		{
 			"_id": 22,
 			"description": "AFIP Solicitud  - Módulo 1",
-			"route": "afip.solicitud.solicitud1"
+			"route": "afip.solicitud.solicitud1",
+			"role": "agp"
 		},
 		{
 			"_id": 23,
 			"description": "AFIP Solicitud - Módulo 2",
-			"route": "afip.solicitud.solicitud2"
+			"route": "afip.solicitud.solicitud2",
+			"role": "agp"
 		},
 		{
 			"_id": 24,
 			"description": "AFIP Solicitud - Módulo 3",
-			"route": "afip.solicitud.solicitud3"
+			"route": "afip.solicitud.solicitud3",
+			"role": "agp"
+		},
+		{
+			"_id": 39,
+			"description": "Módulos AFIP Sumatorias",
+			"route": "afip.sumatorias",
+			"role": "agp"
 		},
 		{
 			"_id": 25,
 			"description": "AFIP Sumaria manifiesto de importaciones - Módulo 1",
-			"route": "afip.sumatorias.impo1"
+			"route": "afip.sumatorias.impo1",
+			"role": "agp"
 		},
 		{
 			"_id": 26,
 			"description": "AFIP Sumaria manifiesto de importaciones - Módulo 2",
-			"route": "afip.sumatorias.impo2"
+			"route": "afip.sumatorias.impo2",
+			"role": "agp"
 		},
 		{
 			"_id": 27,
 			"description": "AFIP Sumaria manifiesto de importaciones - Módulo 3",
-			"route": "afip.sumatorias.impo3"
+			"route": "afip.sumatorias.impo3",
+			"role": "agp"
 		},
 		{
 			"_id": 28,
 			"description": "AFIP Sumaria manifiesto de importaciones - Módulo 4",
-			"route": "afip.sumatorias.impo4"
+			"route": "afip.sumatorias.impo4",
+			"role": "agp"
 		},
 		{
 			"_id": 29,
 			"description": "AFIP Sumaria manifiesto de exportaciones - Módulo 1",
-			"route": "afip.sumatorias.expo1"
+			"route": "afip.sumatorias.expo1",
+			"role": "agp"
 		},
 		{
 			"_id": 30,
 			"description": "AFIP Sumaria manifiesto de exportaciones - Módulo 2",
-			"route": "afip.sumatorias.expo2"
+			"route": "afip.sumatorias.expo2",
+			"role": "agp"
 		},
 		{
 			"_id": 31,
 			"description": "AFIP Sumaria manifiesto de exportaciones - Módulo 3",
-			"route": "afip.sumatorias.expo3"
+			"route": "afip.sumatorias.expo3",
+			"role": "agp"
 		},
 		{
 			"_id": 32,
 			"description": "AFIP Sumaria manifiesto de exportaciones - Módulo 4",
-			"route": "afip.sumatorias.expo4"
+			"route": "afip.sumatorias.expo4",
+			"role": "agp"
 		},
 		{
 			"_id": 33,
 			"description": "AFIP Sumaria manifiesto de exportaciones - Módulo 5",
-			"route": "afip.sumatorias.expo5"
+			"route": "afip.sumatorias.expo5",
+			"role": "agp"
 		},
 		{
 			"_id": 34,
 			"description": "Habilitación de usuarios",
-			"route": "users"
+			"route": "users",
+			"role": "agp"
 		},
 		{
 			"_id": 35,
 			"description": "Control de accesos",
-			"route": "access"
+			"route": "access",
+			"role": "agp"
 		}
 	]
 }

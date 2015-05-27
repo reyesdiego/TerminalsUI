@@ -20,7 +20,8 @@
 		</div>
 		<div class="row col-lg-9">
 			<tabset justified="true" class="hidden-print" ng-show="!loadingState">
-				<tab heading="Tareas" ng-click="cambioModo('tareas')"></tab>
+				<tab heading="Tareas generales" ng-click="cambioModo('tareas')" active="tabTareas.active"></tab>
+				<tab heading="Tareas AGP" ng-show="usuarioElegido.role == 'agp'" ng-click="cambioModo('agp')"></tab>
 				<tab heading="Notificaciones" ng-click="cambioModo('notificaciones')"></tab>
 			</tabset>
 			<br>
@@ -30,20 +31,33 @@
 				</div-panel>
 			</div>
 			<div-cargando mostrar="cargaRutas">
-				<div ng-hide="tareas.length == 0 || modo == 'notificaciones'">
+				<div ng-show="tareas.length > 0 && modo == 'tareas'">
 					<table class="table table-bordered table-hover table-striped" style="text-align: center">
 						<tr>
 							<th style="text-align: center">Descripción</th>
 							<th style="text-align: center">Acceso</th>
 						</tr>
-						<tr ng-repeat="ruta in filteredTareas = (tareas | filter:search) | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+						<tr ng-repeat="ruta in filteredTareas = (tareas | filter: {role: ''} : true ) | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 							<td>{{ ruta.description }}</td>
 							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="ruta.acceso" ng-disabled="usuarioElegido == undefined" ng-click="chequearRuta(ruta)"></td>
 						</tr>
 					</table>
 					<div-pagination total-items="filteredTareas.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
 				</div>
-				<div ng-hide="modo == 'tareas'">
+				<div ng-show="tareas.length > 0 && modo == 'agp'">
+					<table class="table table-bordered table-hover table-striped" style="text-align: center">
+						<tr>
+							<th style="text-align: center">Descripción</th>
+							<th style="text-align: center">Acceso</th>
+						</tr>
+						<tr ng-repeat="ruta in filteredTareas = (tareas | filter: {role:'agp'} : true ) | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+							<td>{{ ruta.description }}</td>
+							<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="ruta.acceso" ng-disabled="usuarioElegido == undefined" ng-click="chequearRuta(ruta)"></td>
+						</tr>
+					</table>
+					<div-pagination total-items="filteredTareas.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+				</div>
+				<div ng-show="modo == 'notificaciones'">
 					<table class="table table-bordered table-hover table-striped" style="text-align: center">
 						<tr>
 							<th style="text-align: center">Descripción</th>
