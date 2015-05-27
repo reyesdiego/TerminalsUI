@@ -240,6 +240,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 							$scope.notificaciones.forEach(function(notif){
 								notif.habilitar = false;
 							});
+							$scope.modo = 'tareas';
+							$scope.tabTareas.active = true;
 							deferred.resolve();
 						} else {
 							errorMsg.forEach(function(error){
