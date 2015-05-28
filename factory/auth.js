@@ -13,8 +13,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 			$cookies.themeTerminal = loginService.getFiltro();
 			deferred.resolve();
 		},
-		function(){
-			deferred.reject();
+		function(reason){
+			deferred.reject(reason);
 		});
 		return deferred.promise;
 	};
@@ -25,8 +25,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 			.then(function(){
 				deferred.resolve();
 			},
-			function(){
-				deferred.reject();
+			function(reason){
+				deferred.reject(reason);
 			});
 		return deferred.promise;
 	};
@@ -46,55 +46,60 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 			if (!error && typeof data.data.token === 'object') {
 				$rootScope.$broadcast('progreso', {mensaje: 1});
 				data = data.data;
-				loginService.setInfo(data);
-				loginService.setStatus(true);
-				loginService.setType(data.role);
-				loginService.setGroup(data.group);
-				loginService.setToken(data.token.token);
 
-				// Le agrega el token a todas las consultas $http
-				$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-					if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
-					if (data) { return angular.toJson(data); }
-				};
+				if (data.acceso.length > 0){
+					loginService.setInfo(data);
+					loginService.setStatus(true);
+					loginService.setType(data.role);
+					loginService.setGroup(data.group);
+					loginService.setToken(data.token.token);
 
-				loginService.setAcceso(data.acceso);
+					// Le agrega el token a todas las consultas $http
+					$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+						if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
+						if (data) { return angular.toJson(data); }
+					};
 
-				$rootScope.rutas = data.acceso;
+					loginService.setAcceso(data.acceso);
 
-				$rootScope.esUsuario = loginService.getType();
-				$rootScope.terminal = loginService.getInfo();
-				$rootScope.grupo = loginService.getGroup();
+					$rootScope.rutas = data.acceso;
 
-				//Si el rol es terminal, queda como filtro de si misma para las consultas
-				//De lo contrario, dejo a BACTSSA como filtro por default
-				if (data.role == 'terminal') {
-					loginService.setFiltro(data.terminal);
+					$rootScope.esUsuario = loginService.getType();
+					$rootScope.terminal = loginService.getInfo();
+					$rootScope.grupo = loginService.getGroup();
+
+					//Si el rol es terminal, queda como filtro de si misma para las consultas
+					//De lo contrario, dejo a BACTSSA como filtro por default
+					if (data.role == 'terminal') {
+						loginService.setFiltro(data.terminal);
+					} else {
+						loginService.setFiltro('BACTSSA');
+						$rootScope.filtroTerminal = 'BACTSSA';
+					}
+
+					// Carga el tema de la terminal
+					if (typeof ($cookies.themeTerminal) != 'undefined') {
+						loginService.setFiltro($cookies.themeTerminal);
+						$rootScope.filtroTerminal = $cookies.themeTerminal;
+						generalFunctions.switchTheme($cookies.themeTerminal);
+					} else {
+						generalFunctions.switchTheme(loginService.getFiltro());
+					}
+
+					// Carga la cache
+					if (!factory.userEstaLogeado()){
+						cacheFactory.cargaCache()
+							.then(function(){
+								deferred.resolve();
+							},
+							function(){
+								deferred.reject();
+							});
+					} else {
+						deferred.resolve();
+					}
 				} else {
-					loginService.setFiltro('BACTSSA');
-					$rootScope.filtroTerminal = 'BACTSSA';
-				}
-
-				// Carga el tema de la terminal
-				if (typeof ($cookies.themeTerminal) != 'undefined') {
-					loginService.setFiltro($cookies.themeTerminal);
-					$rootScope.filtroTerminal = $cookies.themeTerminal;
-					generalFunctions.switchTheme($cookies.themeTerminal);
-				} else {
-					generalFunctions.switchTheme(loginService.getFiltro());
-				}
-
-				// Carga la cache
-				if (!factory.userEstaLogeado()){
-					cacheFactory.cargaCache()
-						.then(function(){
-							deferred.resolve();
-						},
-						function(){
-							deferred.reject();
-						});
-				} else {
-					deferred.resolve();
+					deferred.reject('sinAcceso');
 				}
 			} else {
 				deferred.reject(data);

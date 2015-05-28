@@ -174,7 +174,7 @@
 						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso=='agp'" dropdown>
+				<li ng-show="acceso=='agp' && (in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('control', rutas)"><a collap ui-sref="control">Control</a></li>

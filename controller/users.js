@@ -62,14 +62,20 @@ myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'g
 		return angular.isDefined(data) && data != '';
 	};
 
-	$scope.cambiaUsuario = function(usuario, check) {
-		if (check) {
-			usuario.claseFila = 'success';
+	$scope.cambiaUsuario = function(usuario) {
+		if (usuario.status && usuario.acceso.length == 0) {
+			var dlg = dialogs.confirm("Control de usuario", "El usuario " + usuario.full_name + " no tiene ningún acceso definido. ¿Desea habilitarlo de todas formas?");
+			dlg.result.then(function(){
+				usuario.claseFila = 'success';
+				usuario.guardar = !usuario.guardar;
+			},
+			function(){
+				usuario.status = false;
+			})
 		} else {
 			usuario.claseFila = 'danger';
+			usuario.guardar = !usuario.guardar;
 		}
-		usuario.status = check;
-		usuario.guardar = !usuario.guardar;
 	};
 
 	$scope.disableButton = function(){
