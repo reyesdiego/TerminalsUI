@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 
-myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'authFactory', 'cacheFactory', 'generalFunctions', function($scope, $rootScope, $state, loginService, authFactory, cacheFactory, generalFunctions) {
+myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'socket', 'authFactory', 'cacheFactory', 'generalFunctions', function($scope, $rootScope, $state, loginService, socket, authFactory, cacheFactory, generalFunctions) {
 
 	"use strict";
 	$rootScope.esUsuario = '';
@@ -10,6 +10,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	$scope.acceso = '';
 	$scope.grupo = '';
 	$rootScope.filtroTerminal = '';
+    $scope.appointmentTotal = 0;
 
 	$scope.salir = function(){
 		authFactory.logout();
@@ -77,5 +78,29 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	$scope.imprimirVista = function(){
 		window.print();
 	};
+
+    socket.on('appointment', function (data) {
+        if (data.status === 'OK') {
+
+            $scope.appointmentTotal++;
+            $scope.$apply();
+        }}
+    );
+
+    socket.on('gate', function (data) {
+            if (data.status === 'OK') {
+
+                $scope.gateTotal++;
+                $scope.$apply();
+            }}
+    );
+
+    socket.on('invoice', function (data) {
+            if (data.status === 'OK') {
+
+                $scope.invoiceTotal++;
+                $scope.$apply();
+            }}
+    );
 
 }]);

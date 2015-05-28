@@ -143,6 +143,7 @@
 				</li>
 				<li ng-show="acceso!='' && (in_array('invoices', rutas) || in_array('cfacturas', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b></a>
+					<div ng-hide="invoiceTotal===0" style="background-color: #ff0000; color: #ffffff">{{ appointmentTotal }}</div>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('invoices', rutas)"><a collap ui-sref="invoices">Ver</a></li>
 						<li ng-show="in_array('cfacturas', rutas)"><a collap ui-sref="cfacturas">Control</a></li>
@@ -150,6 +151,7 @@
 				</li>
 				<li class="hidden-sm" ng-show="acceso!='' && (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b></a>
+					<div ng-hide="gateTotal===0" style="background-color: #ff0000; color: #ffffff">{{ appointmentTotal }}</div>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
 						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
@@ -157,6 +159,7 @@
 				</li>
 				<li class="hidden-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b></a>
+					<div ng-hide="appointmentTotal===0" style="background-color: #ff0000; color: #ffffff">{{ appointmentTotal }}</div>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
 						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
