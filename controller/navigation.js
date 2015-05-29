@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 
-myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'socket', 'authFactory', 'cacheFactory', 'generalFunctions', '$timeout', 'Notification', '$filter', function($scope, $rootScope, $state, loginService, socket, authFactory, cacheFactory, generalFunctions, $timeout, Notification, $filter) {
+myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'socket', 'authFactory', 'cacheFactory', 'generalFunctions', '$timeout', 'Notification', '$filter', 'invoiceFactory', function($scope, $rootScope, $state, loginService, socket, authFactory, cacheFactory, generalFunctions, $timeout, Notification, $filter, invoiceFactory) {
 
 	"use strict";
 	$rootScope.esUsuario = '';
@@ -87,7 +87,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	};
 
 	socket.on('appointment', function (data) {
-		console.log(data);
 		if (loginService.getStatus()){
 			if (data.status === 'OK') {
 				var turno = data.data;
@@ -130,7 +129,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	socket.on('invoice', function (data) {
 		if (loginService.getStatus()){
 			var comprobante = data.data;
-			console.log(comprobante);
 			if (comprobante.terminal == loginService.getFiltro()){
 				if ($state.current.name != 'invoices'){
 					$scope.invoiceNotify++;
@@ -140,7 +138,10 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 					}, 1000);
 					$scope.$apply();
 				} else {
-					Notification.info({message: 'Para ver el comprobante haga click <a href ng-click="verComprobante(' + comprobante._id + ')">aquí</a>', title: "Nuevo comprobante", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
+					invoiceFactory.getInvoiceById(comprobante._id, function(data){
+						comprobante = data;
+						Notification.info({message: 'Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.fecha.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante)), title: "Nuevo comprobante", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
+					});
 				}
 			}
 		}

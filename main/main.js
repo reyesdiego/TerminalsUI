@@ -353,12 +353,6 @@ myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment){
 
-	$rootScope.verComprobante = function(comprobante){
-		console.log(comprobante);
-		console.log('hola');
-		$rootScope.$broadcast('mostrarComprobante', comprobante);
-	};
-
 	moment().format('YYYY-MM-DD');
 	moment.locale('es');
 
