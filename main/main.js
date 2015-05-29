@@ -63,7 +63,7 @@ function in_array(needle, haystack, argStrict){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker']);
+var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'ui-notification']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -352,6 +352,12 @@ myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 }]);
 
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment){
+
+	$rootScope.verComprobante = function(comprobante){
+		console.log(comprobante);
+		console.log('hola');
+		$rootScope.$broadcast('mostrarComprobante', comprobante);
+	};
 
 	moment().format('YYYY-MM-DD');
 	moment.locale('es');

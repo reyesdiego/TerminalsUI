@@ -13,6 +13,8 @@
 	<link rel="stylesheet" href="css/angucomplete-alt.css">
 	<link rel="stylesheet" href="css/dialogs.css">
 	<link rel="stylesheet" href="css/angular-multi-select.css">
+	<link rel="stylesheet" href="css/notificaciones.css">
+	<link rel="stylesheet" href="js/angular-ui-notification.min.css">
 	<!-- /build -->
 	<link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
 	<link rel="alternate stylesheet" href="css/bootstrap.united.css" title="TERMINAL4">
@@ -50,6 +52,9 @@
 	<!-- build:js bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js -->
 	<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
 	<!-- /build -->
+
+	<script src="js/angular-ui-notification.min.js"></script>
+
 	<script src="js/socket.io.min.js"></script>
 	<script src="js/angular-locale_es-ar.js"></script>
 	<!-- Google charts -->
@@ -142,24 +147,21 @@
 					</ul>
 				</li>
 				<li ng-show="acceso!='' && (in_array('invoices', rutas) || in_array('cfacturas', rutas))" dropdown>
-					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b></a>
-					<div ng-hide="invoiceTotal===0" style="background-color: #ff0000; color: #ffffff">{{ appointmentTotal }}</div>
+					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="invoiceNotify==0" class="burbuja {{ invoiceAnimar }}">{{ invoiceNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('invoices', rutas)"><a collap ui-sref="invoices">Ver</a></li>
 						<li ng-show="in_array('cfacturas', rutas)"><a collap ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
 				<li class="hidden-sm" ng-show="acceso!='' && (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
-					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b></a>
-					<div ng-hide="gateTotal===0" style="background-color: #ff0000; color: #ffffff">{{ appointmentTotal }}</div>
+					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
 						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
 				<li class="hidden-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas))" dropdown>
-					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b></a>
-					<div ng-hide="appointmentTotal===0" style="background-color: #ff0000; color: #ffffff">{{ appointmentTotal }}</div>
+					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
 						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>

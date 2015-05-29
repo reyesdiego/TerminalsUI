@@ -59,6 +59,10 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 		$scope.filtrado('estado', 'N');
 	});
 
+	$scope.$on('mostrarComprobante', function(event, comprobante){
+		$scope.mostrarDetalle(comprobante);
+	});
+
 	$rootScope.$watch('moneda', function(){
 		$scope.moneda = $rootScope.moneda;
 	});

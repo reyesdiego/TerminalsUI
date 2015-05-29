@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 
-myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'socket', 'authFactory', 'cacheFactory', 'generalFunctions', function($scope, $rootScope, $state, loginService, socket, authFactory, cacheFactory, generalFunctions) {
+myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'socket', 'authFactory', 'cacheFactory', 'generalFunctions', '$timeout', 'Notification', '$filter', function($scope, $rootScope, $state, loginService, socket, authFactory, cacheFactory, generalFunctions, $timeout, Notification, $filter) {
 
 	"use strict";
 	$rootScope.esUsuario = '';
@@ -10,7 +10,14 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	$scope.acceso = '';
 	$scope.grupo = '';
 	$rootScope.filtroTerminal = '';
-    $scope.appointmentTotal = 0;
+
+	$scope.appointmentNotify = 0;
+	$scope.invoiceNotify = 0;
+	$scope.gateNotify = 0;
+
+	$scope.appointmentAnimar = '';
+	$scope.invoiceAnimar = '';
+	$scope.gateAnimar = '';
 
 	$scope.salir = function(){
 		authFactory.logout();
@@ -79,28 +86,78 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		window.print();
 	};
 
-    socket.on('appointment', function (data) {
-        if (data.status === 'OK') {
+	socket.on('appointment', function (data) {
+		console.log(data);
+		if (loginService.getStatus()){
+			if (data.status === 'OK') {
+				var turno = data.data;
+				if (turno.terminal == loginService.getFiltro()){
+					if ($state.current.name != 'turnos'){
+						$scope.appointmentNotify++;
+						$scope.appointmentAnimar = 'agrandar';
+						$timeout(function(){
+							$scope.appointmentAnimar = '';
+						}, 1000);
+						$scope.$apply();
+					} else {
+						Notification.info({message: "<strong>Tipo:</strong> " + turno.mov + " Fecha: " + $filter('date')(turno.inicio,'dd/MM/yyyy','UTC' ) + "<br>De " + $filter('date')(turno.inicio, 'HH:mm', 'UTC') + " a " + $filter('date')(turno.fin, 'HH:mm', 'UTC') + "<br><strong>Buque:</strong> " + turno.buque + " - <strong>Viaje:</strong> " + turno.viaje + "<br><strong>Contenedor:</strong> " + turno.contenedor, title: "Nuevo turno", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
+					}
+				}
+			}
+		}
+	});
 
-            $scope.appointmentTotal++;
-            $scope.$apply();
-        }}
-    );
+	socket.on('gate', function (data) {
+		if (loginService.getStatus()){
+			if (data.status === 'OK') {
+				var gate = data.data;
+				if (gate.terminal == loginService.getFiltro()){
+					if ($state.current.name != 'gates'){
+						$scope.gateNotify++;
+						$scope.gateAnimar = 'agrandar';
+						$timeout(function(){
+							$scope.gateAnimar = '';
+						}, 1000);
+						$scope.$apply();
+					} else {
+						Notification.info({message: "Nuevo gate", title: "Nuevo gate", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
+					}
+				}
+			}
+		}
+	});
 
-    socket.on('gate', function (data) {
-            if (data.status === 'OK') {
+	socket.on('invoice', function (data) {
+		if (loginService.getStatus()){
+			var comprobante = data.data;
+			console.log(comprobante);
+			if (comprobante.terminal == loginService.getFiltro()){
+				if ($state.current.name != 'invoices'){
+					$scope.invoiceNotify++;
+					$scope.invoiceAnimar = 'agrandar';
+					$timeout(function(){
+						$scope.invoiceAnimar = '';
+					}, 1000);
+					$scope.$apply();
+				} else {
+					Notification.info({message: 'Para ver el comprobante haga click <a href ng-click="verComprobante(' + comprobante._id + ')">aquí</a>', title: "Nuevo comprobante", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
+				}
+			}
+		}
+	});
 
-                $scope.gateTotal++;
-                $scope.$apply();
-            }}
-    );
-
-    socket.on('invoice', function (data) {
-            if (data.status === 'OK') {
-
-                $scope.invoiceTotal++;
-                $scope.$apply();
-            }}
-    );
+	$scope.$on('$stateChangeStart', function(event, toState){
+		switch (toState.name){
+			case 'invoices':
+				$scope.invoiceNotify = 0;
+				break;
+			case 'gates':
+				$scope.gateNotify = 0;
+				break;
+			case 'turnos':
+				$scope.appointmentNotify = 0;
+				break;
+		}
+	});
 
 }]);
