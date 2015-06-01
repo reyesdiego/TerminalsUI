@@ -14,6 +14,10 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	$scope.listaViajes = [];
 	$scope.volverAPrincipal = true;
 
+	$scope.$on('notificacionDetalle', function(event, data){
+		$scope.filtrado(data.filtro, data.contenido);
+	});
+
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
 	};
