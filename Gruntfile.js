@@ -7,13 +7,15 @@ module.exports = function(grunt) {
 					'css/angucomplete-alt.css',
 					'css/angular-multi-select.css',
 					'css/animation.css',
-					'css/dialogs.css'
+					'css/dialogs.css',
+					'js/angular-notify.css'
 				],
 				dest: 'build/css/aditional.css'
 			},
 			js : {
 				src : [
 					'includes/js/utils/configProd.js',
+					'js/angular-notify/angular-notify.js',
 					'main/*',
 					'controller/*',
 					'directives/*',
@@ -121,7 +123,7 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['js/**'],
+						src: ['js/*'],
 						dest: 'build'
 					},
 					{

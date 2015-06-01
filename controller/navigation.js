@@ -2,9 +2,16 @@
  * Created by Artiom on 14/03/14.
  */
 
-myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'socket', 'authFactory', 'cacheFactory', 'generalFunctions', '$timeout', 'Notification', '$filter', 'invoiceFactory', function($scope, $rootScope, $state, loginService, socket, authFactory, cacheFactory, generalFunctions, $timeout, Notification, $filter, invoiceFactory) {
+myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'socket', 'authFactory', 'cacheFactory', 'generalFunctions', '$timeout', 'notify', '$filter', 'invoiceFactory', function($scope, $rootScope, $state, loginService, socket, authFactory, cacheFactory, generalFunctions, $timeout, notify, $filter, invoiceFactory) {
 
 	"use strict";
+
+	notify.config({
+		duration: 20000,
+		position: 'left',
+		maximumOpen: 4
+	});
+
 	$rootScope.esUsuario = '';
 	$rootScope.terminal = '';
 	$scope.acceso = '';
@@ -99,7 +106,11 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 						}, 1000);
 						$scope.$apply();
 					} else {
-						Notification.info({message: "<strong>Tipo:</strong> " + turno.mov + " Fecha: " + $filter('date')(turno.inicio,'dd/MM/yyyy','UTC' ) + "<br>De " + $filter('date')(turno.inicio, 'HH:mm', 'UTC') + " a " + $filter('date')(turno.fin, 'HH:mm', 'UTC') + "<br><strong>Buque:</strong> " + turno.buque + " - <strong>Viaje:</strong> " + turno.viaje + "<br><strong>Contenedor:</strong> " + turno.contenedor, title: "Nuevo turno", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
+						var nuevoTurnoTemplate = '<span><strong>Tipo:</strong> ' + turno.mov + " Fecha: " + $filter('date')(turno.inicio,'dd/MM/yyyy','UTC' ) + "<br>De " + $filter('date')(turno.inicio, 'HH:mm', 'UTC') + " a " + $filter('date')(turno.fin, 'HH:mm', 'UTC') + "<br><strong>Buque:</strong> " + turno.buque + " - <strong>Viaje:</strong> " + turno.viaje + "<br><strong>Contenedor:</strong> " + turno.contenedor + '</span>';
+						notify({
+							messageTemplate: nuevoTurnoTemplate,
+							title: 'Nuevo Turno',
+							scope: $scope});
 					}
 				}
 			}
@@ -107,6 +118,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	});
 
 	socket.on('gate', function (data) {
+		console.log(data);
 		if (loginService.getStatus()){
 			if (data.status === 'OK') {
 				var gate = data.data;
@@ -119,7 +131,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 						}, 1000);
 						$scope.$apply();
 					} else {
-						Notification.info({message: "Nuevo gate", title: "Nuevo gate", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
+						//Notification.info({message: "Nuevo gate", title: "Nuevo gate", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
 					}
 				}
 			}
@@ -138,10 +150,18 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 					}, 1000);
 					$scope.$apply();
 				} else {
-					invoiceFactory.getInvoiceById(comprobante._id, function(data){
+					var nuevoComprobanteTemplate = '<span>Para ver el comprobante ingresado, haga click <a href ng-click="mostrarComprobante(\'' + comprobante._id + '\')">aquí</a></span>';
+					notify({
+						messageTemplate: nuevoComprobanteTemplate,
+						title: 'Nuevo comprobante',
+						scope: $scope});
+					/*invoiceFactory.getInvoiceById(comprobante._id, function(data){
 						comprobante = data;
-						Notification.info({message: 'Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.fecha.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante)), title: "Nuevo comprobante", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
-					});
+						var nuevoComprobanteTemplate = '<span><strong>Nuevo Comprobante</strong><hr>'+
+							'Para ver el comprobante ingresado, haga click <a href ng-click="mostrarComprobante(' + comprobante._id + ')">aquí</a></span>';
+						//Notification.info({message: 'Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.fecha.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante)), title: "Nuevo comprobante", delay: 20000, _positionY: 'bottom', _positionX: 'left'});
+
+					});*/
 				}
 			}
 		}
@@ -160,5 +180,10 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 				break;
 		}
 	});
+
+	$scope.mostrarComprobante = function(comprobanteId){
+		var comprobante={_id: comprobanteId};
+		$rootScope.$broadcast('mostrarComprobante', comprobante);
+	}
 
 }]);
