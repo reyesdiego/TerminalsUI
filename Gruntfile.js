@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 					'css/angular-multi-select.css',
 					'css/animation.css',
 					'css/dialogs.css',
-					'js/angular-notify.css'
+					'js/angular-notify/angular-notify.css'
 				],
 				dest: 'build/css/aditional.css'
 			},
@@ -47,7 +47,8 @@ module.exports = function(grunt) {
 		uglify: {
 			js: {
 				files: {
-					'build/js/app-min.js' : ['build/js/app.js']
+					'build/js/app-min.js' : ['build/js/app.js'],
+					'js/angular-notify/angular-notify.min.js' : ['js/angular-notify/angular-notify.js']
 				}
 			}
 		},
@@ -123,7 +124,7 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['js/*'],
+						src: ['js/**'],
 						dest: 'build'
 					},
 					{
