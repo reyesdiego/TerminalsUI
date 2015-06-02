@@ -8,6 +8,7 @@ module.exports = function(grunt) {
 					'css/angular-multi-select.css',
 					'css/animation.css',
 					'css/dialogs.css',
+					'css/notificaciones',
 					'js/angular-notify/angular-notify.css'
 				],
 				dest: 'build/css/aditional.css'
