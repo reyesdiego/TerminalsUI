@@ -118,7 +118,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	});
 
 	socket.on('gate', function (data) {
-		console.log(data);
 		if (loginService.getStatus()){
 			if (data.status === 'OK') {
 				var gate = data.data;
