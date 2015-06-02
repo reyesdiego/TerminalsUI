@@ -2,7 +2,7 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory){
+myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', '$filter', function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, $filter){
 	$scope.status = {
 		open: true
 	};
@@ -15,7 +15,32 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	$scope.volverAPrincipal = true;
 
 	$scope.$on('notificacionDetalle', function(event, data){
-		$scope.filtrado(data.filtro, data.contenido);
+		var fechaAuxInicio, fechaAuxFin, fechaAux;
+		if (data.filtro == 'fechaTurno'){
+			fechaAuxInicio = new Date(data.contenido.inicio);
+			fechaAuxFin = new Date(data.contenido.fin);
+			$scope.model['fechaInicio'] = new Date(fechaAuxInicio.getUTCFullYear(), fechaAuxInicio.getUTCMonth(), fechaAuxInicio.getUTCDate(), fechaAuxInicio.getUTCHours(), fechaAuxInicio.getUTCMinutes());
+			$scope.model['fechaFin'] = new Date(fechaAuxFin.getUTCFullYear(), fechaAuxFin.getUTCMonth(), fechaAuxFin.getUTCDate(), fechaAuxFin.getUTCHours(), fechaAuxFin.getUTCMinutes());
+			$scope.$emit('cambioFiltro', $scope.model);
+		} else if(data.filtro == 'turno'){
+			fechaAuxInicio = new Date(data.contenido.inicio);
+			fechaAuxFin = new Date(data.contenido.fin);
+			$scope.model['fechaInicio'] = new Date(fechaAuxInicio.getUTCFullYear(), fechaAuxInicio.getUTCMonth(), fechaAuxInicio.getUTCDate(), fechaAuxInicio.getUTCHours(), fechaAuxInicio.getUTCMinutes());
+			$scope.model['fechaFin'] = new Date(fechaAuxFin.getUTCFullYear(), fechaAuxFin.getUTCMonth(), fechaAuxFin.getUTCDate(), fechaAuxFin.getUTCHours(), fechaAuxFin.getUTCMinutes());
+			$scope.model['mov'] = data.contenido.mov;
+			$scope.model['buqueNombre'] = data.contenido.buque;
+			$scope.model['contenedor'] = data.contenido.contenedor;
+			$scope.$emit('cambioFiltro', $scope.model);
+		} else if(data.filtro == 'gate'){
+			fechaAux = new Date(data.contenido.fecha);
+			$scope.model['fechaInicio'] = new Date(fechaAux.getUTCFullYear(), fechaAux.getUTCMonth(), fechaAux.getUTCDate(), fechaAux.getUTCHours(), fechaAux.getUTCMinutes());
+			$scope.model['fechaFin'] = new Date(fechaAux.getUTCFullYear(), fechaAux.getUTCMonth(), fechaAux.getUTCDate(), fechaAux.getUTCHours(), fechaAux.getUTCMinutes() + 1);
+			$scope.model['buqueNombre'] = data.contenido.buque;
+			$scope.model['contenedor'] = data.contenido.contenedor;
+			$scope.$emit('cambioFiltro', $scope.model);
+		} else {
+			$scope.filtrado(data.filtro, data.contenido);
+		}
 	});
 
 	$scope.openDate = function(event){

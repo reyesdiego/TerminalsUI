@@ -106,7 +106,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 						}, 1000);
 						$scope.$apply();
 					} else {
-						var nuevoTurnoTemplate = '<span><strong>Tipo:</strong> ' + turno.mov + " - <strong>Fecha:</strong> " + $filter('date')(turno.inicio,'dd/MM/yyyy','UTC' ) + "<br>De " + $filter('date')(turno.inicio, 'HH:mm', 'UTC') + " a " + $filter('date')(turno.fin, 'HH:mm', 'UTC') + "<br><strong>Buque:</strong> <a href ng-click=\"notificacionDetalle('buqueNombre', '" + turno.buque + "')\">" + turno.buque + "</a> - <strong>Viaje:</strong> " + turno.viaje + "<br><strong>Contenedor:</strong> <a href ng-click=\"notificacionDetalle('contenedor','" + turno.contenedor + "')\">" + turno.contenedor + '</a></span>';
+						var nuevoTurnoTemplate = '<span><strong>Tipo:</strong> <a href ng-click="notificacionDetalle(\'mov\', \'' + turno.mov + "')\">" + turno.mov + " - <strong>Fecha:</strong> <a href ng-click=\"notificacionDetalle('fechaTurno', {inicio:'" + turno.inicio + "', fin:'" + turno.fin + "'})\">" + $filter('date')(turno.inicio,'dd/MM/yyyy','UTC' ) + "</a><br>De " + $filter('date')(turno.inicio, 'HH:mm', 'UTC') + " a " + $filter('date')(turno.fin, 'HH:mm', 'UTC') + "<br><strong>Buque:</strong> <a href ng-click=\"notificacionDetalle('buqueNombre', '" + turno.buque + "')\">" + turno.buque + "</a> - <strong>Viaje:</strong> " + turno.viaje + "<br><strong>Contenedor:</strong> <a href ng-click=\"notificacionDetalle('contenedor','" + turno.contenedor + "')\">" + turno.contenedor + '</a><br><a href ng-click="notificacionDetalle(\'turno\', {inicio:\'' + turno.inicio + '\', fin: \'' + turno.fin + '\', mov: \'' + turno.mov + '\', buque: \'' + turno.buque + '\', contenedor: \'' + turno.contenedor + '\'})">Ver turno</a></span>';
 						notify({
 							messageTemplate: nuevoTurnoTemplate,
 							title: 'Nuevo Turno',
@@ -131,7 +131,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 						}, 1000);
 						$scope.$apply();
 					} else {
-						var nuevoGateTemplate = '<span><strong>Tipo: </strong>' + gate.tipo + ' - <strong>Fecha: </strong><a href ng-click="notificacionDetalle(\'fechaInicio\',\'' + gate.timestamp + '\')">' + $filter('date')(gate.timestamp, 'dd/MM/yyyy', 'UTC') + '</a><br><strong>Buque: </strong><a href ng-click="notificacionDetalle(\'buqueNombre\', \'' + gate.buque + '\')">' + gate.buque + '</a> - <strong>Viaje: </strong>' + gate.viaje + '<br><strong>Contenedor: </strong><a href ng-click="notificacionDetalle(\'contenedor\', \'' + gate.contenedor + '\')">' + gate.contenedor + '</a>';
+						var nuevoGateTemplate = '<span><strong>Tipo: </strong>' + gate.tipo + ' - <strong>Fecha: </strong>' + $filter('date')(gate.timestamp, 'dd/MM/yyyy HH:mm', 'UTC') + '<br><strong>Buque: </strong><a href ng-click="notificacionDetalle(\'buqueNombre\', \'' + gate.buque + '\')">' + gate.buque + '</a> - <strong>Viaje: </strong>' + gate.viaje + '<br><strong>Contenedor: </strong><a href ng-click="notificacionDetalle(\'contenedor\', \'' + gate.contenedor + '\')">' + gate.contenedor + '</a><br><a href ng-click="notificacionDetalle(\'gate\', {fecha: \'' + gate.gateTimeStamp + '\', buque: \'' + gate.buque + '\', contenedor: \'' + gate.contenedor + '\'})">Ver gate</a>';
 						notify({
 							messageTemplate: nuevoGateTemplate,
 							title: 'Nuevo Gate',

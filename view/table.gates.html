@@ -36,7 +36,7 @@
 						<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO'" ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
 						<td>{{ gate.patenteCamion }}</td>
 						<td><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
-						<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
+						<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm':'UTC' }}</td>
 						<td>{{ gate.turnoInicio | date: 'HH:mm':'UTC' }}</td>
 						<td>{{ gate.turnoFin | date: 'HH:mm':'UTC' }}</td>
 						<td>{{ gate.mov }}</td>
