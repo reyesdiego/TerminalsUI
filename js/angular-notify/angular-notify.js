@@ -14,6 +14,8 @@ angular.module('cgNotify', []).factory('notify', ['$timeout', '$http', '$compile
 
 		var notify = function (args) {
 
+			var alreadyClosed = false;
+
 			if (typeof args !== 'object') {
 				args = {message: args};
 			}
@@ -23,6 +25,7 @@ angular.module('cgNotify', []).factory('notify', ['$timeout', '$http', '$compile
 			args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
 			args.container = args.container ? args.container : container;
 			args.classes = args.classes ? args.classes : '';
+			args.onClose = angular.isFunction(args.onClose) ? args.onClose : undefined;
 
 			var scope = args.scope ? args.scope.$new() : $rootScope.$new();
 			scope.$position = args.position ? args.position : position;
@@ -79,6 +82,14 @@ angular.module('cgNotify', []).factory('notify', ['$timeout', '$http', '$compile
 				scope.$close = function () {
 					templateElement.css('opacity', 0).attr('data-closing', 'true');
 					layoutMessages();
+
+					if (!alreadyClosed){
+						alreadyClosed = true;
+						if(angular.isDefined(args.onClose)){
+							args.onClose(scope.$message);
+						}
+					}
+
 				};
 
 				var layoutMessages = function () {
