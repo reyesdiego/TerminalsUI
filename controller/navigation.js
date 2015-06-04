@@ -174,9 +174,9 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 				var gate = data.data;
 				var nuevoGateTemplate;
 				if (gate.terminal == loginService.getFiltro()){
-					nuevoGateTemplate = '<span><strong>Tipo: </strong>' + gate.tipo + ' - <strong>Fecha: </strong>' + $filter('date')(gate.timestamp, 'dd/MM/yyyy HH:mm', 'UTC') + '<br><strong>Buque: </strong><a href ng-click="notificacionDetalle(\'buqueNombre\', \'' + gate.buque + '\')">' + gate.buque + '</a> - <strong>Viaje: </strong>' + gate.viaje + '<br><strong>Contenedor: </strong><a href ng-click="notificacionDetalle(\'contenedor\', \'' + gate.contenedor + '\')">' + gate.contenedor + '</a><br><a href ng-click="notificacionDetalle(\'gate\', {fecha: \'' + gate.gateTimeStamp + '\', buque: \'' + gate.buque + '\', contenedor: \'' + gate.contenedor + '\'})">Ver gate</a>';
+					nuevoGateTemplate = '<span><strong>Tipo: </strong>' + gate.tipo + ' - <strong>Fecha: </strong>' + $filter('date')(gate.gateTimestamp, 'dd/MM/yyyy HH:mm', 'UTC') + '<br><strong>Buque: </strong><a href ng-click="notificacionDetalle(\'buqueNombre\', \'' + gate.buque + '\')">' + gate.buque + '</a> - <strong>Viaje: </strong>' + gate.viaje + '<br><strong>Contenedor: </strong><a href ng-click="notificacionDetalle(\'contenedor\', \'' + gate.contenedor + '\')">' + gate.contenedor + '</a><br><a href ng-click="notificacionDetalle(\'gate\', {fecha: \'' + gate.gateTimestamp + '\', buque: \'' + gate.buque + '\', contenedor: \'' + gate.contenedor + '\'})">Ver gate</a>';
 				} else {
-					nuevoGateTemplate = '<span><strong>Tipo: </strong>' + gate.tipo + ' - <strong>Fecha: </strong>' + $filter('date')(gate.timestamp, 'dd/MM/yyyy HH:mm', 'UTC') + '<br><strong>Buque: </strong>' + gate.buque + ' - <strong>Viaje: </strong>' + gate.viaje + '<br><strong>Contenedor: </strong>' + gate.contenedor;
+					nuevoGateTemplate = '<span><strong>Tipo: </strong>' + gate.tipo + ' - <strong>Fecha: </strong>' + $filter('date')(gate.gateTimestamp, 'dd/MM/yyyy HH:mm', 'UTC') + '<br><strong>Buque: </strong>' + gate.buque + ' - <strong>Viaje: </strong>' + gate.viaje + '<br><strong>Contenedor: </strong>' + gate.contenedor;
 				}
 				if (loginService.getType() == 'agp'){
 					$scope.procesarNotificacion('gates', nuevoGateTemplate, 'Nuevo Gate ' + gate.terminal, gate.terminal);
