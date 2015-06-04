@@ -196,7 +196,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 				comprobante = data;
 				var nuevoComprobanteTemplate;
 				if (comprobante.terminal == loginService.getFiltro()){
-					nuevoComprobanteTemplate = '<span>Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.fecha.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante)) + '<br>Para ver el detalle del comprobante ingresado, haga click <a href ng-click="mostrarComprobante(\'' + comprobante._id + '\')">aquí</a></span>';
+					nuevoComprobanteTemplate = '<span>Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.fecha.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante)) + '<br><a href ng-click="mostrarComprobante(\'' + comprobante._id + '\')">Ver comprobante</a></span>';
 				} else {
 					nuevoComprobanteTemplate = '<span><a href ng-click="setearTerminal(\'' + comprobante.terminal + '\')">Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.fecha.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante)) + '</a>';
 				}
@@ -212,6 +212,21 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	});
 
 	$scope.$on('$stateChangeStart', function(event, toState){
+		notify.closeAll();
+		if ($scope.colaNotificaciones.length > 0){
+			switch ($state.current.name){
+				case 'turnos':
+					$scope.appointmentNotify = $scope.colaNotificaciones.length;
+					break;
+				case 'gates':
+					$scope.gateNotify = $scope.colaNotificaciones.length;
+					break;
+				case 'invoices':
+					$scope.invoiceNotify = $scope.colaNotificaciones.length;
+					break;
+			}
+			$scope.colaNotificaciones = [];
+		}
 		switch (toState.name){
 			case 'invoices':
 				$scope.invoiceNotify = 0;
