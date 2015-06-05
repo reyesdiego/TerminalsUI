@@ -97,11 +97,13 @@
 					<th style="text-align: center">Código</th>
 					<th style="text-align: center">Valor tarifario</th>
 					<th style="text-align: center">Valor cobrado</th>
+					<th style="text-align: center">En contenedor</th>
 				</tr>
 				<tr ng-repeat="tarifaError in verDetalle.controlTarifas">
 					<td>{{ tarifaError.codigo }}</td>
 					<td>{{ tarifaError.currency | formatCurrency }} {{ tarifaError.topPrice }}</td>
 					<td>{{ tarifaError.currency | formatCurrency }} {{ tarifaError.current }}</td>
+					<td>{{ tarifaError.container }}</td>
 				</tr>
 			</table>
 		</div>

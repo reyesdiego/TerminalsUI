@@ -410,7 +410,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 								codigo: item.id,
 								currency: monedaALaFecha,
 								topPrice: precioALaFecha,
-								current: item.impUnit
+								current: item.impUnit,
+								container: detalle.contenedor
 							};
 							comprobante.controlTarifas.push(tarifaError);
 						}
@@ -420,7 +421,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 								codigo: item.id,
 								currency: monedaALaFecha,
 								topPrice: precioALaFecha,
-								current: item.impUnit
+								current: item.impUnit,
+								container: detalle.contenedor
 							};
 							comprobante.controlTarifas.push(tarifaError);
 						}
