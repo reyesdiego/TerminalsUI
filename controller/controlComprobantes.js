@@ -17,7 +17,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	$scope.tasas = [];
 	$scope.loadingTasas = false;
 	$scope.detalleGates = false;
-	$scope.volverAPrincipalComprobantes = false;
+	$scope.volverAPrincipal = false;
 
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
@@ -116,6 +116,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	};
 
 	$scope.verContenedor = function(contenedor) {
+		$scope.volverAPrincipal = !$scope.volverAPrincipal;
 		$scope.model.contenedor = contenedor;
 		$scope.contenedorElegido.contenedor = contenedor;
 		$scope.loadingInvoices = true;
@@ -127,7 +128,6 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.detalle = true;
 		$scope.currentPageContainers = 1;
 		$scope.currentPageComprobantes = 1;
-		$scope.volverAPrincipalComprobantes = !$scope.volverAPrincipalComprobantes;
 		$scope.cargaComprobantes();
 		$scope.cargaGates();
 		$scope.cargaTurnos();
