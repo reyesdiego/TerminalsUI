@@ -8,102 +8,102 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 
 	factory.getAfip = function(tipoRegitro, filtros, page, callback){
 		switch (tipoRegitro) {
-			case 'afectacion1':
+			case 'afip.afectacion.afectacion1':
 				this.getRegistro1Afectacion(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'afectacion2':
+			case 'afip.afectacion.afectacion2':
 				this.getRegistro2Afectacion(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'detexpo1':
+			case 'afip.detalle.detexpo1':
 				this.getRegistro1detExpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'detexpo2':
+			case 'afip.detalle.detexpo2':
 				this.getRegistro2detExpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'detexpo3':
+			case 'afip.detalle.detexpo3':
 				this.getRegistro3detExpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'detimpo1':
+			case 'afip.detalle.detimpo1':
 				this.getRegistro1detImpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'detimpo2':
+			case 'afip.detalle.detimpo2':
 				this.getRegistro2detImpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'detimpo3':
+			case 'afip.detalle.detimpo3':
 				this.getRegistro3detImpo(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'expo1':
+			case 'afip.sumatorias.expo1':
 				this.getRegistro1sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'expo2':
+			case 'afip.sumatorias.expo2':
 				this.getRegistro2sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'expo3':
+			case 'afip.sumatorias.expo3':
 				this.getRegistro3sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'expo4':
+			case 'afip.sumatorias.expo4':
 				this.getRegistro4sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'expo5':
+			case 'afip.sumatorias.expo5':
 				this.getRegistro5sumExpoMane(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'impo1':
+			case 'afip.sumatorias.impo1':
 				this.getRegistro1sumImpoMani(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'impo2':
+			case 'afip.sumatorias.impo2':
 				this.getRegistro2sumImpoMani(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'impo3':
+			case 'afip.sumatorias.impo3':
 				this.getRegistro3sumImpoMani(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'impo4':
+			case 'afip.sumatorias.impo4':
 				this.getRegistro4sumImpoMani(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'solicitud1':
+			case 'afip.solicitud.solicitud1':
 				this.getRegistro1Solicitud(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'solicitud2':
+			case 'afip.solicitud.solicitud2':
 				this.getRegistro2Solicitud(filtros, page, function(data) {
 					callback(data);
 				});
 				break;
-			case 'solicitud3':
+			case 'afip.solicitud.solicitud3':
 				this.getRegistro3Solicitud(filtros, page, function(data) {
 					callback(data);
 				});

@@ -13,8 +13,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 			$cookies.themeTerminal = loginService.getFiltro();
 			deferred.resolve();
 		},
-		function(){
-			deferred.reject();
+		function(reason){
+			deferred.reject(reason);
 		});
 		return deferred.promise;
 	};
@@ -25,8 +25,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 			.then(function(){
 				deferred.resolve();
 			},
-			function(){
-				deferred.reject();
+			function(reason){
+				deferred.reject(reason);
 			});
 		return deferred.promise;
 	};
@@ -46,105 +46,60 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 			if (!error && typeof data.data.token === 'object') {
 				$rootScope.$broadcast('progreso', {mensaje: 1});
 				data = data.data;
-				loginService.setInfo(data);
-				loginService.setStatus(true);
-				loginService.setType(data.role);
-				loginService.setGroup(data.group);
-				loginService.setToken(data.token.token);
 
-				// Le agrega el token a todas las consultas $http
-				$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-					if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
-					if (data) { return angular.toJson(data); }
-				};
+				if (data.acceso.length > 0){
+					loginService.setInfo(data);
+					loginService.setStatus(true);
+					loginService.setType(data.role);
+					loginService.setGroup(data.group);
+					loginService.setToken(data.token.token);
 
-				///Hardcodeo de nuevas rutas agregadas
-				///Cuando ya estén todas definidas, estos valores deben venir desde el servidor
-				data.acceso.push("reports");
-				data.acceso.push("container");
-				data.acceso.push("buque");
-				data.acceso.push("afip");
-				data.acceso.push("afip.afectacion.afectacion1");
-				data.acceso.push("afip.afectacion.afectacion2");
-				data.acceso.push("afip.detalle.detexpo1");
-				data.acceso.push("afip.detalle.detexpo2");
-				data.acceso.push("afip.detalle.detexpo3");
-				data.acceso.push("afip.detalle.detimpo1");
-				data.acceso.push("afip.detalle.detimpo2");
-				data.acceso.push("afip.detalle.detimpo3");
-				data.acceso.push("afip.sumatorias.expo1");
-				data.acceso.push("afip.sumatorias.expo2");
-				data.acceso.push("afip.sumatorias.expo3");
-				data.acceso.push("afip.sumatorias.expo4");
-				data.acceso.push("afip.sumatorias.expo5");
-				data.acceso.push("afip.sumatorias.impo1");
-				data.acceso.push("afip.sumatorias.impo2");
-				data.acceso.push("afip.sumatorias.impo3");
-				data.acceso.push("afip.sumatorias.impo4");
-				data.acceso.push("afip.solicitud.solicitud1");
-				data.acceso.push("afip.solicitud.solicitud2");
-				data.acceso.push("afip.solicitud.solicitud3");
-				data.acceso.push("afip.afectacion");
-				data.acceso.push("afip.detalle");
-				data.acceso.push("afip.solicitud");
-				data.acceso.push("afip.sumatorias");
-				data.acceso.push("cgates");
-				data.acceso.push("users");
-				data.acceso.push("agenda");
+					// Le agrega el token a todas las consultas $http
+					$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+						if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
+						if (data) { return angular.toJson(data); }
+					};
 
-				/*var indice = data.acceso.indexOf("matches.search");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("invoices.result");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("invoices.search");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("cfacturas.result");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("gates.invoices");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("gates.invoices.result");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("gates.result.container");
-				data.acceso.splice(indice, 1);
-				indice = data.acceso.indexOf("turnos.result");
-				data.acceso.splice(indice, 1);*/
-				///-------------------------------------------------------------------------
+					loginService.setAcceso(data.acceso);
 
-				loginService.setAcceso(data.acceso);
+					$rootScope.rutas = data.acceso;
 
-				$rootScope.esUsuario = loginService.getType();
-				$rootScope.terminal = loginService.getInfo();
-				$rootScope.grupo = loginService.getGroup();
+					$rootScope.esUsuario = loginService.getType();
+					$rootScope.terminal = loginService.getInfo();
+					$rootScope.grupo = loginService.getGroup();
 
-				//Si el rol es terminal, queda como filtro de si misma para las consultas
-				//De lo contrario, dejo a BACTSSA como filtro por default
-				if (data.role == 'terminal') {
-					loginService.setFiltro(data.terminal);
+					//Si el rol es terminal, queda como filtro de si misma para las consultas
+					//De lo contrario, dejo a BACTSSA como filtro por default
+					if (data.role == 'terminal') {
+						loginService.setFiltro(data.terminal);
+					} else {
+						loginService.setFiltro('BACTSSA');
+						$rootScope.filtroTerminal = 'BACTSSA';
+					}
+
+					// Carga el tema de la terminal
+					if (typeof ($cookies.themeTerminal) != 'undefined') {
+						loginService.setFiltro($cookies.themeTerminal);
+						$rootScope.filtroTerminal = $cookies.themeTerminal;
+						generalFunctions.switchTheme($cookies.themeTerminal);
+					} else {
+						generalFunctions.switchTheme(loginService.getFiltro());
+					}
+
+					// Carga la cache
+					if (!factory.userEstaLogeado()){
+						cacheFactory.cargaCache()
+							.then(function(){
+								deferred.resolve();
+							},
+							function(){
+								deferred.reject();
+							});
+					} else {
+						deferred.resolve();
+					}
 				} else {
-					loginService.setFiltro('BACTSSA');
-					$rootScope.filtroTerminal = 'BACTSSA';
-				}
-
-				// Carga el tema de la terminal
-				if (typeof ($cookies.themeTerminal) != 'undefined') {
-					loginService.setFiltro($cookies.themeTerminal);
-					$rootScope.filtroTerminal = $cookies.themeTerminal;
-					generalFunctions.switchTheme($cookies.themeTerminal);
-				} else {
-					generalFunctions.switchTheme(loginService.getFiltro());
-				}
-
-				// Carga la cache
-				if (!factory.userEstaLogeado()){
-					cacheFactory.cargaCache()
-						.then(function(){
-							deferred.resolve();
-						},
-						function(){
-							deferred.reject();
-						});
-				} else {
-					deferred.resolve();
+					deferred.reject('sinAcceso');
 				}
 			} else {
 				deferred.reject(data);

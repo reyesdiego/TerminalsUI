@@ -2,7 +2,7 @@
  * Created by artiom on 17/03/15.
  */
 
-myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', '$state', 'authFactory', 'loginService', '$timeout', 'generalFunctions', function($rootScope, $scope, cacheFactory, $state, authFactory, loginService, $timeout, generalFunctions){
+myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', '$state', 'authFactory', 'loginService', '$timeout', 'generalFunctions', 'dialogs', function($rootScope, $scope, cacheFactory, $state, authFactory, loginService, $timeout, generalFunctions, dialogs){
 
 	$scope.max = 80;
 	$scope.progreso = 0;
@@ -38,6 +38,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 		}, 1000);
 	};
 
+	$rootScope.rutas = loginService.getAcceso();
 	$rootScope.cargandoCache = true;
 
 	if ($rootScope.cambioTerminal){
@@ -50,7 +51,13 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 				}, 500)
 			},
 			function(){
-				$scope.cerrarSesion();
+				var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+				dlg.result.then(function(){
+						$state.transitionTo('tarifario');
+					},
+					function(){
+						$scope.cerrarSesion();
+					})
 			})
 	} else {
 		$scope.max = 30;
@@ -62,7 +69,13 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 				}, 500)
 			},
 			function(){
-				$scope.cerrarSesion();
+				var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+				dlg.result.then(function(){
+						$state.transitionTo('tarifario');
+					},
+					function(){
+						$scope.cerrarSesion();
+					})
 			})
 	}
 

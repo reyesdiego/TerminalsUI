@@ -47,7 +47,7 @@
 					<td>{{ turno.viaje }}</td>
 					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || ocultarBusqueda" ng-click="filtrado('contenedor', turno.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
 					<td>{{ turno.mov }}</td>
-					<td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm':'UTC'  }}</td>
+					<td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
 					<td>{{ turno.user }}</td>
 				</tr>
 			</table>

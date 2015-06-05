@@ -198,19 +198,19 @@ myapp.directive('divPagination', function(){
 						if ($scope.totalItems / $scope.itemsPerPage >= 10000){
 							$scope.maxSizeSM = 3;
 							$scope.maxSizeMD = 7;
-							$scope.maxSizeLG = 11;
+							$scope.maxSizeLG = 10;
 						} else if ($scope.totalItems / $scope.itemsPerPage >= 1000){
 							$scope.maxSizeSM = 5;
 							$scope.maxSizeMD = 9;
-							$scope.maxSizeLG = 13;
+							$scope.maxSizeLG = 12;
 						} else if ($scope.totalItems / $scope.itemsPerPage >= 100) {
 							$scope.maxSizeSM = 7;
 							$scope.maxSizeMD = 11;
 							$scope.maxSizeLG = 15;
 						} else {
-							$scope.maxSizeSM = 10;
-							$scope.maxSizeMD = 15;
-							$scope.maxSizeLG = 20;
+							$scope.maxSizeSM = 8;
+							$scope.maxSizeMD = 12;
+							$scope.maxSizeLG = 17;
 						}
 						break;
 				}

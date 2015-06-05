@@ -3,14 +3,14 @@
 		<div class="col-md-2">
 			<br>
 			<ul class="nav nav-pills nav-stacked">
-				<li><b>Detalle Impo</b></li>
-				<li ng-class="{selectedOption: 'detimpo1' == actualRegistro}"><a ui-sref="afip.detalle.detimpo1" ng-click="cargaDatos('detimpo1')">M&oacute;dulo 1</a></li>
-				<li ng-class="{selectedOption: 'detimpo2' == actualRegistro}"><a ui-sref="afip.detalle.detimpo2" ng-click="cargaDatos('detimpo2')">M&oacute;dulo 2</a></li>
-				<li ng-class="{selectedOption: 'detimpo3' == actualRegistro}"><a ui-sref="afip.detalle.detimpo3" ng-click="cargaDatos('detimpo3')">M&oacute;dulo 3</a></li>
 				<li><b>Detalle Expo</b></li>
-				<li ng-class="{selectedOption: 'detexpo1' == actualRegistro}"><a ui-sref="afip.detalle.detexpo1" ng-click="cargaDatos('detexpo1')">M&oacute;dulo 1</a></li>
-				<li ng-class="{selectedOption: 'detexpo2' == actualRegistro}"><a ui-sref="afip.detalle.detexpo2" ng-click="cargaDatos('detexpo2')">M&oacute;dulo 2</a></li>
-				<li ng-class="{selectedOption: 'detexpo3' == actualRegistro}"><a ui-sref="afip.detalle.detexpo3" ng-click="cargaDatos('detexpo3')">M&oacute;dulo 3</a></li>
+				<li ng-class="{selectedOption: 'afip.detalle.detexpo1' == actualRegistro}" ng-show="in_array('afip.detalle.detexpo1', rutas)"><a ui-sref="afip.detalle.detexpo1" ng-click="cargaDatos('afip.detalle.detexpo1')">M&oacute;dulo 1</a></li>
+				<li ng-class="{selectedOption: 'afip.detalle.detexpo2' == actualRegistro}" ng-show="in_array('afip.detalle.detexpo2', rutas)"><a ui-sref="afip.detalle.detexpo2" ng-click="cargaDatos('afip.detalle.detexpo2')">M&oacute;dulo 2</a></li>
+				<li ng-class="{selectedOption: 'afip.detalle.detexpo3' == actualRegistro}" ng-show="in_array('afip.detalle.detexpo3', rutas)"><a ui-sref="afip.detalle.detexpo3" ng-click="cargaDatos('afip.detalle.detexpo3')">M&oacute;dulo 3</a></li>
+				<li><b>Detalle Impo</b></li>
+				<li ng-class="{selectedOption: 'afip.detalle.detimpo1' == actualRegistro}" ng-show="in_array('afip.detalle.detimpo1', rutas)"><a ui-sref="afip.detalle.detimpo1" ng-click="cargaDatos('afip.detalle.detimpo1')">M&oacute;dulo 1</a></li>
+				<li ng-class="{selectedOption: 'afip.detalle.detimpo2' == actualRegistro}" ng-show="in_array('afip.detalle.detimpo2', rutas)"><a ui-sref="afip.detalle.detimpo2" ng-click="cargaDatos('afip.detalle.detimpo2')">M&oacute;dulo 2</a></li>
+				<li ng-class="{selectedOption: 'afip.detalle.detimpo3' == actualRegistro}" ng-show="in_array('afip.detalle.detimpo3', rutas)"><a ui-sref="afip.detalle.detimpo3" ng-click="cargaDatos('afip.detalle.detimpo3')">M&oacute;dulo 3</a></li>
 			</ul>
 		</div>
 		<div class="col-md-10">

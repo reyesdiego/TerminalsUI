@@ -7,13 +7,16 @@ module.exports = function(grunt) {
 					'css/angucomplete-alt.css',
 					'css/angular-multi-select.css',
 					'css/animation.css',
-					'css/dialogs.css'
+					'css/dialogs.css',
+					'css/notificaciones.css',
+					'js/angular-notify/angular-notify.css'
 				],
 				dest: 'build/css/aditional.css'
 			},
 			js : {
 				src : [
 					'includes/js/utils/configProd.js',
+					'js/angular-notify/angular-notify.js',
 					'main/*',
 					'controller/*',
 					'directives/*',
@@ -45,7 +48,8 @@ module.exports = function(grunt) {
 		uglify: {
 			js: {
 				files: {
-					'build/js/app-min.js' : ['build/js/app.js']
+					'build/js/app-min.js' : ['build/js/app.js'],
+					'js/angular-notify/angular-notify.min.js' : ['js/angular-notify/angular-notify.js']
 				}
 			}
 		},

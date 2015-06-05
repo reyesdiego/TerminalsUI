@@ -37,15 +37,23 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		}
 	});
 
-	$scope.cerrarSesion = function(){
+	$scope.cerrarSesion = function(tipo){
 		$rootScope.cargandoCache = false;
-		$scope.hayError = true;
-		$scope.barType = 'progress-bar-danger';
-		$scope.mostrarMensaje = $scope.msg[4];
-		authFactory.logout();
-		$rootScope.esUsuario = '';
-		$rootScope.filtroTerminal = '';
-		$scope.volver();
+		if (tipo == 'normal'){
+			$scope.mostrarMensaje = $scope.msg[5];
+			authFactory.logout();
+			$rootScope.esUsuario = '';
+			$rootScope.filtroTerminal = '';
+			$scope.volver();
+		} else {
+			$scope.hayError = true;
+			$scope.barType = 'progress-bar-danger';
+			$scope.mostrarMensaje = $scope.msg[4];
+			authFactory.logout();
+			$rootScope.esUsuario = '';
+			$rootScope.filtroTerminal = '';
+			$scope.volver();
+		}
 	};
 
 	$scope.volver = function(){
@@ -64,6 +72,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 
 	$scope.login = function(){
 		$scope.barType = "progress-bar-info";
+		$scope.mostrarMensaje = $scope.msg[0];
 		$scope.entrando = true;
 		$rootScope.cargandoCache = true;
 		if ($scope.sesion){
@@ -72,8 +81,25 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					$rootScope.cargandoCache = false;
 					$state.transitionTo('tarifario');
 				},
-				function(){
-					$scope.cerrarSesion();
+				function(error){
+					if (error == 'sinAcceso'){
+						var errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
+						errdlg.result.then(function(){
+							$scope.cerrarSesion('normal');
+						})
+					} else {
+						if ($scope.progreso > 10){
+							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+							dlg.result.then(function(){
+									$state.transitionTo('tarifario');
+								},
+								function(){
+									$scope.cerrarSesion();
+								})
+						} else {
+							$scope.cerrarSesion();
+						}
+					}
 				});
 		} else {
 			authFactory.loginWithoutCookies($scope.email, $scope.password)
@@ -81,8 +107,25 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					$rootScope.cargandoCache = false;
 					$state.transitionTo('tarifario');
 				},
-				function(){
-					$scope.cerrarSesion();
+				function(reason){
+					if (reason == 'sinAcceso'){
+						var errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
+						errdlg.result.then(function(){
+							$scope.cerrarSesion('normal');
+						})
+					} else {
+						if ($scope.progreso > 10){
+							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+							dlg.result.then(function(){
+									$state.transitionTo('tarifario');
+								},
+								function(){
+									$scope.cerrarSesion();
+								})
+						} else {
+							$scope.cerrarSesion();
+						}
+					}
 				});
 		}
 	};

@@ -14,6 +14,33 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
+Array.prototype.equals = function (array) {
+	// if the other array is a falsy value, return
+	if (!array)
+		return false;
+
+	// compare lengths - can save a lot of time
+	if (this.length != array.length)
+		return false;
+
+	this.sort();
+	array.sort();
+
+	for (var i = 0, l=this.length; i < l; i++) {
+		// Check if we have nested arrays
+		if (this[i] instanceof Array && array[i] instanceof Array) {
+			// recurse into the nested arrays
+			if (!this[i].equals(array[i]))
+				return false;
+		}
+		else if (this[i] != array[i]) {
+			// Warning - two different object instances will never be equal: {x:20} != {x:20}
+			return false;
+		}
+	}
+	return true;
+};
+
 function in_array(needle, haystack, argStrict){
 	var key = '',
 		strict = !! argStrict;
@@ -36,7 +63,7 @@ function in_array(needle, haystack, argStrict){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker']);
+var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -213,6 +240,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/agendaTurnos",
 			templateUrl: 'view/turnosAgenda.html'
 		})
+		.state('access', {
+			url: "/controlAcceso",
+			templateUrl: 'view/controlAcceso.html'
+		})
 
 }]);
 
@@ -352,15 +383,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		if (data) { return angular.toJson(data); }
 	};
 
-	// Carga la sesion por cookies
-	if (!loginService.getStatus() && authFactory.userEstaLogeado()){
-		authFactory.login().then(function(){
-			$rootScope.cargarCache = true;
-			$rootScope.primerRuteo = true;
-			$rootScope.estaLogeado = true;
-		});
-	}
-
 	if (loginService.getStatus()){
 		$rootScope.cargarCache = true;
 		$rootScope.primerRuteo = true;
@@ -388,7 +410,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.moneda = "DOL";
 
 	var rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
-	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda'];
+	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access'];
 	$rootScope.$state = $state;
 	// Variables Globales de Paginacion
 	$rootScope.itemsPerPage = 15;
@@ -409,7 +431,14 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		}
 		if (!loginService.getStatus() && authFactory.userEstaLogeado()){
 			authFactory.login().then(function(){
-				$rootScope.verificaRutas(event, toState);
+				$rootScope.cargarCache = true;
+				$rootScope.primerRuteo = true;
+				$rootScope.estaLogeado = true;
+				if (toState.name == 'login') {
+					$state.transitionTo('tarifario');
+				} else {
+					$rootScope.verificaRutas(event, toState);
+				}
 			});
 		} else {
 			$rootScope.verificaRutas(event, toState);

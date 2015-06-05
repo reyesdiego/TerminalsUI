@@ -34,8 +34,10 @@
 							<td>{{ dato.terminal }}</td>
 							<td>{{ dato.date_created | date: 'dd/MM/yy HH:mm' }}</td>
 							<td>{{ dato.token.date_created | date: 'dd/MM/yy HH:mm' }}</td>
-							<td>{{ dato.lastLogin | date: 'dd/MM/yy HH:mm' }}</td>
-							<td class="text-center disabled"><input type="checkbox" ng-model="checked" ng-init="checked=dato.status" ng-change="cambiaUsuario(dato, checked)" ng-disabled="!estaDefinido(dato.token.date_created)"></td>
+							<td class="{{ ultimaConexion(dato.lastLogin) }}">{{ dato.lastLogin | date: 'dd/MM/yy HH:mm'
+								}}
+							</td>
+							<td class="text-center disabled"><input type="checkbox" ng-model="dato.status" ng-change="cambiaUsuario(dato)" ng-disabled="!estaDefinido(dato.token.date_created)"></td>
 						</tr>
 						</tbody>
 					</table>

@@ -13,6 +13,8 @@
 	<link rel="stylesheet" href="css/angucomplete-alt.css">
 	<link rel="stylesheet" href="css/dialogs.css">
 	<link rel="stylesheet" href="css/angular-multi-select.css">
+	<link rel="stylesheet" href="css/notificaciones.css">
+	<link rel="stylesheet" href="js/angular-notify/angular-notify.css">
 	<!-- /build -->
 	<link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
 	<link rel="alternate stylesheet" href="css/bootstrap.united.css" title="TERMINAL4">
@@ -49,6 +51,9 @@
 	<script src="js/moment-with-locales.min.js"></script>
 	<!-- build:js bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js -->
 	<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+	<!-- /build -->
+	<!-- build:js js/angular-notify/angular-notify.min.js -->
+	<script src="js/angular-notify/angular-notify.js"></script>
 	<!-- /build -->
 	<script src="js/socket.io.min.js"></script>
 	<script src="js/angular-locale_es-ar.js"></script>
@@ -107,6 +112,7 @@
 	<script src="controller/vistaComprobantes.js"></script>
 	<script src="controller/buqueViaje.js"></script>
 	<script src="controller/turnosAgenda.js"></script>
+	<script src="controller/accessControl.js"></script>
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
@@ -133,48 +139,64 @@
 		<div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
 			<ul class="nav navbar-nav navbar-right" ng-hide="cargandoCache">
 				<li ng-show="acceso==''"><a collap ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
-				<li ng-show="acceso!=''" dropdown>
+				<li ng-show="acceso!='' && (in_array('tarifario', rutas) || in_array('matches', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Tarifas<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="tarifario">Tarifario</a></li>
-						<li><a collap ui-sref="matches">Asociar</a></li>
+						<li ng-show="in_array('tarifario', rutas)"><a collap ui-sref="tarifario">Tarifario</a></li>
+						<li ng-show="in_array('matches', rutas)"><a collap ui-sref="matches">Asociar</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!=''" dropdown>
-					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b></a>
+				<li ng-show="acceso!='' && (in_array('invoices', rutas) || in_array('cfacturas', rutas))" dropdown>
+					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="invoiceNotify==0" class="burbuja {{ invoiceAnimar }}">{{ invoiceNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="invoices">Ver</a></li>
-						<li><a collap ui-sref="cfacturas">Control</a></li>
+						<li ng-show="in_array('invoices', rutas)"><a collap ui-sref="invoices">Ver</a></li>
+						<li ng-show="in_array('cfacturas', rutas)"><a collap ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!=''" dropdown>
-					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b></a>
+				<li class="hidden-sm" ng-show="acceso!='' && (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
+					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="gates">Ver</a></li>
-						<li><a collap ui-sref="cgates">Control</a></li>
+						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
+						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!=''" dropdown>
-					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b></a>
+				<li class="hidden-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas))" dropdown>
+					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="turnos">Ver</a></li>
-						<li><a collap ui-sref="agenda">Agenda</a></li>
+						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
+						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso=='agp'" dropdown>
+				<li class="visible-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas)) || (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
+					<a data-ng-hide="dropdown" dropdown-toggle>Gates/Turnos<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li class="visible-sm dropdown-header">Gates</li>
+						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
+						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
+						<li class="visible-sm divider"></li>
+						<li class="visible-sm dropdown-header">Turnos</li>
+						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
+						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
+					</ul>
+				</li>
+				<li ng-show="acceso=='agp' && (in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a collap ui-sref="control">Control</a></li>
-						<li><a collap ui-sref="reports">Reportes</a></li>
-						<li><a collap ui-sref="container">Contenedor</a></li>
-						<li><a collap ui-sref="buque">Buque - Viaje</a></li>
-						<li><a collap ui-sref="afip">A.F.I.P</a></li>
-						<li><a collap ui-sref="users" ng-show="grupo=='ADMIN'">Usuarios</a></li>
+						<li ng-show="in_array('control', rutas)"><a collap ui-sref="control">Control</a></li>
+						<li ng-show="in_array('reports', rutas)"><a collap ui-sref="reports">Reportes</a></li>
+						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Contenedor</a></li>
+						<li ng-show="in_array('buque', rutas)"><a collap ui-sref="buque">Buque - Viaje</a></li>
+						<li ng-show="in_array('afip', rutas)"><a collap ui-sref="afip">A.F.I.P</a></li>
+						<li ng-show="in_array('users', rutas)"><a collap ui-sref="users">Usuarios</a></li>
+						<li ng-show="in_array('access', rutas)"><a collap ui-sref="access">Control de acceso</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li class="visible-sm divider"></li>
+						<li class="visible-sm dropdown-header">Cambiar moneda</li>
+						<li class="visible-sm"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso=='agp'" class="hidden-sm" dropdown>
@@ -185,7 +207,7 @@
 						<li><a collap ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
+				<li class="hidden-sm" ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 				<li ng-show="acceso!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
 				<li ng-show="acceso!=''" dropdown>
 					<a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ terminal.user }}<b class="caret"></b></a>
@@ -198,10 +220,15 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row wrapper">
 	<br/><br/>
 	<div ui-view></div>
 </div>
+
+<footer class="footer">
+	<hr>
+	<span>Administración General de Puertos S.E. - Departamento de desarrollo <img src="images/LogoPUERTO_30x30.png" width="30" height="30"></span>
+</footer>
 
 </body>
 

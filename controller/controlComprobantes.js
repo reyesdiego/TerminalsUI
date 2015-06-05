@@ -126,6 +126,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.turnos = [];
 		$scope.detalle = true;
 		$scope.currentPageContainers = 1;
+		$scope.currentPageComprobantes = 1;
 		$scope.volverAPrincipalComprobantes = !$scope.volverAPrincipalComprobantes;
 		$scope.cargaComprobantes();
 		$scope.cargaGates();
@@ -226,8 +227,6 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 			$scope.loadingTasaCargas = false;
 		});
 	};
-
-	$scope.controlTasaCargas();
 
 }]);
 
