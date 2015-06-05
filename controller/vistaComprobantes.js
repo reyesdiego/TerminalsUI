@@ -344,7 +344,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 
 			$scope.verDetalle = callback;
 			$scope.controlarTarifas($scope.verDetalle);
-
+			$scope.checkComprobantes($scope.verDetalle);
 			$scope.commentsInvoice = [];
 			$scope.mostrarResultado = true;
 			$scope.loadingState = false;
