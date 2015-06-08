@@ -3,13 +3,12 @@
  */
 myapp.service('generalFunctions', [function () {
 	this.filtrarOrden = function (model, filtro) {
-		var filtroReverse = (model.filtroOrdenReverse) ? -1 : 1;
 		model.currentPage = 1;
 		model.filtroOrden = filtro;
 		model.filtroOrdenReverse = (model.filtroOrden == model.filtroAnterior) ? !model.filtroOrdenReverse : false;
+		var filtroReverse = (model.filtroOrdenReverse) ? -1 : 1;
 		model.order = '"' + filtro + '":' + filtroReverse;
 		model.filtroAnterior = filtro;
-		console.log(model);
 		return model;
 	};
 

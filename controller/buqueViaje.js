@@ -156,6 +156,10 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		///////////////////////////////
 	});
 
+	$scope.$on('cambioOrden', function(event, data){
+		$scope.cargaComprobantes();
+	});
+
 	$scope.buqueSelected = function(selected){
 		$scope.buqueElegido.elegido = '';
 		selected.elegido = 'bg-info';
