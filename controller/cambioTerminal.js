@@ -53,6 +53,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 			function(){
 				var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
 				dlg.result.then(function(){
+						$rootScope.cargandoCache = false;
 						$state.transitionTo('tarifario');
 					},
 					function(){
@@ -71,6 +72,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 			function(){
 				var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
 				dlg.result.then(function(){
+						$rootScope.cargandoCache = false;
 						$state.transitionTo('tarifario');
 					},
 					function(){
