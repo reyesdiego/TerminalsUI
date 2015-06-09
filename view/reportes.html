@@ -215,7 +215,7 @@
 			</thead>
 			<tbody>
 			<tr ng-repeat="tarifa in tablaGrafico.data">
-				<td class="text-center">{{ tarifa.code }}</td>
+				<td class="text-center"><a href popover="{{ tarifa.description }}" popover-trigger="mouseenter">{{ tarifa.code }}</a></td>
 				<td ng-repeat="cantidad in tarifa.conteo track by $index" class="text-center"><span ng-show="!$last">U$S {{ cantidad | number:2 }} </span><span ng-show="!$last">({{ tarifa.porcentaje[$index] | number:2 }} %)</span><strong ng-show="$last">U$S {{ cantidad | number:2 }}</strong></td>
 			</tr>
 			<tr>
