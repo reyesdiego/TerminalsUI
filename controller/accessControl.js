@@ -27,7 +27,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		//{ description: 'Nuevo usuario', habilitar: false},
 		{ description: 'Nueva tarifa', habilitar: false, valor: 'price', mostrar: ''},
 		//{ description: 'Baja del servicio', habilitar: false}
-		{ description: 'Enviar mail a cliente por nuevo turno', habilitar: false, valor: 'emailAppointmentToApp', mostrar: 'terminal'}
+		{ description: 'Enviar mail a cliente por nuevo turno', habilitar: false, valor: 'emailAppointmentToApp', mostrar: 'terminal'},
+		{ description: 'Último comprobante', habilitar: false, valor: 'lastInvoice', mostrar: 'Diego Reyes'}
 	];
 
 	$scope.panelMensaje = {
