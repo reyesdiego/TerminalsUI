@@ -9,7 +9,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	$scope.cargaRutas = true;
 	$scope.usuarioElegido = undefined;
 
-	$scope.currentPage = 1;
+	$scope.currentPageGeneral = 1;
+	$scope.currentPageAGP = 1;
 	$scope.itemsPerPage = 10;
 
 	$scope.rutasUsuarioOriginal = [];
