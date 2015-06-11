@@ -126,7 +126,7 @@
 
 <body class="container" ng-controller="navigationCtrl">
 
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top hidden-print">
 	<div class="container">
 		<div class="navbar-header">
 			<a ng-click="irA()" class="nav navbar-brand"><img src="images/LogoPUERTO_30x30.png" width="30" height="30"> AGP S.E.</a>
@@ -221,7 +221,7 @@
 </div>
 
 <div class="row wrapper">
-	<br/><br/>
+	<br class="hidden-print"/><br class="hidden-print"/>
 	<div ui-view></div>
 </div>
 
