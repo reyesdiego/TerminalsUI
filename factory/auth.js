@@ -60,6 +60,10 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 						if (data) { return angular.toJson(data); }
 					};
 
+					//agregar en base de datos
+					data.acceso.push('cturnos');
+					//--------------------------
+
 					loginService.setAcceso(data.acceso);
 
 					$rootScope.rutas = data.acceso;

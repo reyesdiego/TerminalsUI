@@ -8,7 +8,7 @@
 	<img class="media-object imagenCargando" style="margin-left: 40%; margin-top: 50px">
 </div>
 <div class="col-lg-12" ng-hide="loadingState">
-	<tabset ng-hide="ocultarBusqueda">
+	<tabset ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('mov', 0) >= 0">
 		<tab heading="IMPO" select="cambiarTipoMov('IMPO')"></tab>
 		<tab heading="EXPO" select="cambiarTipoMov('EXPO')"></tab>
 	</tabset>
@@ -37,7 +37,10 @@
 					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="contenedor" filtro-orden="contenedorOrden"></encabezado-tabla-ordenado></th>
 					<th style="text-align: center">Tipo</th>
 					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Alta" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="alta" filtro-orden="altaOrden"></encabezado-tabla-ordenado></th>
-					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fechInicio" filtro-orden="fechaInicioOrden"></encabezado-tabla-ordenado></th>
+					<th ng-show="!control" style="text-align: center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fechInicio" filtro-orden="fechaInicioOrden"></encabezado-tabla-ordenado></th>
+					<th ng-show="control" style="text-align: center">Intentos</th>
+					<th ng-show="control" style="text-align: center">Fecha</th>
+					<th ng-show="control" style="text-align: center">E-Mail</th>
 				</tr>
 				<tr ng-repeat="turno in datosTurnos">
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy':'UTC' }}</td>
@@ -48,7 +51,10 @@
 					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || ocultarBusqueda" ng-click="filtrado('contenedor', turno.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
 					<td>{{ turno.mov }}</td>
 					<td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
-					<td>{{ turno.user }}</td>
+					<td ng-show="!control">{{ turno.user }}</td>
+					<td ng-show="control">{{ turno.status }}</td>
+					<td ng-show="control">{{ turno.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+					<td ng-show="control">{{ turno.email }}</td>
 				</tr>
 			</table>
 		</div>

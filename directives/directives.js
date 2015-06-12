@@ -77,7 +77,8 @@ myapp.directive('tableTurnos', function(){
 			configPanel:		'=',
 			currentPage:		'=',
 			ocultarFiltros:		'=',
-			loadingState:		'='
+			loadingState:		'=',
+			control:			'='
 		},
 		controller: 'searchController'
 	}

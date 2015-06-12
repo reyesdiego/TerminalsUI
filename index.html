@@ -113,6 +113,7 @@
 	<script src="controller/buqueViaje.js"></script>
 	<script src="controller/turnosAgenda.js"></script>
 	<script src="controller/accessControl.js"></script>
+	<script src="controller/turnosEncolados.js"></script>
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
@@ -160,14 +161,15 @@
 						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
-				<li class="hidden-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas))" dropdown>
+				<li class="hidden-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas) || in_array('cturnos', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
 						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
+						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Turnos sin notificar</a></li>
 					</ul>
 				</li>
-				<li class="visible-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas)) || (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
+				<li class="visible-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas)) || in_array('cturnos', rutas) || (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Gates/Turnos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="visible-sm dropdown-header">Gates</li>
@@ -177,6 +179,7 @@
 						<li class="visible-sm dropdown-header">Turnos</li>
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
 						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
+						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Turnos s/notificar</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso=='agp' && (in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>

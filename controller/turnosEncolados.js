@@ -1,9 +1,9 @@
 /**
- * Created by leo on 28/04/14.
+ * Created by artiom on 12/06/15.
  */
 
-myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', function($scope, turnosFactory, loginService){
-	$scope.control = false;
+myapp.controller('queuedMailsCtrl', ['$scope', 'turnosFactory', 'loginService', function($scope, turnosFactory, loginService){
+	$scope.control = true;
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 15;
 	$scope.totalItems = 0;
@@ -15,7 +15,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 	};
 
-	$scope.ocultarFiltros = ['email'];
+	$scope.ocultarFiltros = ['fechaInicio', 'buque', 'viaje', 'mov'];
 
 	// Fecha (dia y hora)
 	$scope.model = {
@@ -24,26 +24,20 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
-		'fechaInicio': $scope.fechaInicio,
-		'fechaFin': $scope.fechaFin,
+		'fechaInicio': '',
+		'fechaFin': '',
 		'fechaConGMT': true,
 		'contenedor': '',
 		'buqueNombre': '',
 		'viaje': '',
 		'estado': 'N',
 		'code': '',
-		'mov': 'IMPO',
+		'mov': '',
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
 		'order': ''
 	};
-
-	$scope.model.fechaInicio.setHours(0,0);
-	$scope.model.fechaFin.setMinutes(0);
-
-	$scope.fechaAuxDesde = new Date();
-	$scope.fechaAuxHasta = new Date();
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.turnos = [];
@@ -54,10 +48,6 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
-		$scope.fechaAuxHasta = new Date($scope.model.fechaFin);
-		$scope.fechaAuxDesde = new Date($scope.model.fechaInicio);
-		$scope.model.fechaFin = $scope.fechaAuxDesde;
-		$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
 		$scope.currentPage = 1;
 		$scope.cargaTurnos();
 	});
@@ -84,7 +74,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 			titulo: 'Turnos',
 			mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 		};
-		turnosFactory.getTurnos($scope.model, $scope.page, function(data){
+		turnosFactory.getQueuedMails($scope.model, $scope.page, function(data){
 			if (data.status === "OK"){
 				$scope.turnos = data.data;
 				$scope.totalItems = data.totalCount;
