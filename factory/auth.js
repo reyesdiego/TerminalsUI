@@ -61,7 +61,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 					};
 
 					//agregar en base de datos
-					data.acceso.push('cturnos');
+					if (data.role == 'agp') data.acceso.push('cturnos');
 					//--------------------------
 
 					loginService.setAcceso(data.acceso);
