@@ -450,7 +450,7 @@ myapp.directive('divCargando', function () {
 		},
 		template:
 			'<div class="col-lg-12 text-center" ng-show="mostrar">' +
-			'	<img class="media-object imagenCargando" style="margin-left: 40%; margin-top: 50px">' +
+			'	<img class="media-object imagenCargando center-block">' +
 			'</div>' +
 			'<div class="col-lg-12" ng-hide="mostrar">' +
 			'	<div ng-transclude></div>' +

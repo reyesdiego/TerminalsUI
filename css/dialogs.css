@@ -1,7 +1,10 @@
-.imagenCargando{
+.imagenCargando {
     content: url("../images/loading.gif");
-    width: 252px;
-    height: 252px;
+}
+
+.imagenCargando:after {
+	/*this for firefox browser*/
+	content: url("../images/loading.gif");
 }
 
 html, body {
