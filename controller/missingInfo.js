@@ -159,14 +159,14 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 								comprob.code = comprob.code +  ' - No se halló la descripción, verifique que el código esté asociado.';
 							}
 						});
-						$scope.cargando = false;
 					} else {
 						$scope.configPanel = {
-							tipo: 'panel-success',
+							tipo: 'panel-danger',
 							titulo: 'Control gates',
 							mensaje: 'Se ha producido un error al cargar los gates faltantes.'
 						};
 					}
+					$scope.cargando = false;
 				});
 				break;
 			case 'invoices':
@@ -181,11 +181,12 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 						})
 					} else {
 						$scope.configPanel = {
-							tipo: 'panel-success',
+							tipo: 'panel-danger',
 							titulo: 'Control gates',
 							mensaje: 'Se ha producido un error al cargar los comprobantes faltantes.'
 						};
 					}
+					$scope.cargando = false;
 				});
 				break;
 		}

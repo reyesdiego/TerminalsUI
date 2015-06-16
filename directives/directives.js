@@ -77,7 +77,8 @@ myapp.directive('tableTurnos', function(){
 			configPanel:		'=',
 			currentPage:		'=',
 			ocultarFiltros:		'=',
-			loadingState:		'='
+			loadingState:		'=',
+			control:			'='
 		},
 		controller: 'searchController'
 	}
@@ -439,24 +440,6 @@ myapp.directive('accordionMin', [function () {
 			'</div>'
 	}
 }]);
-
-myapp.directive('divCargando', function () {
-	return {
-		restrict:		'E',
-		transclude:		true,
-		scope: {
-			mostrar:	'='
-		},
-		template:
-			'<div class="col-lg-12 text-center" ng-show="mostrar">' +
-			'	<img class="media-object imagenCargando" style="margin-left: 40%; margin-top: 50px">' +
-			'</div>' +
-			'<div class="col-lg-12" ng-hide="mostrar">' +
-			'	<div ng-transclude></div>' +
-			'</div>'
-
-	}
-});
 
 myapp.directive('buttonActualizar', ['$state', function ($state) {
 	return {

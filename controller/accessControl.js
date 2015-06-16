@@ -9,7 +9,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	$scope.cargaRutas = true;
 	$scope.usuarioElegido = undefined;
 
-	$scope.currentPage = 1;
+	$scope.currentPageGeneral = 1;
+	$scope.currentPageAGP = 1;
 	$scope.itemsPerPage = 10;
 
 	$scope.rutasUsuarioOriginal = [];
@@ -26,7 +27,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		//{ description: 'Nuevo usuario', habilitar: false},
 		{ description: 'Nueva tarifa', habilitar: false, valor: 'price', mostrar: ''},
 		//{ description: 'Baja del servicio', habilitar: false}
-		{ description: 'Enviar mail a cliente por nuevo turno', habilitar: false, valor: 'emailAppointmentToApp', mostrar: 'terminal'}
+		{ description: 'Enviar mail a cliente por nuevo turno', habilitar: false, valor: 'emailAppointmentToApp', mostrar: 'terminal'},
+		{ description: 'Último comprobante', habilitar: false, valor: 'lastInvoice', mostrar: 'Diego Reyes'}
 	];
 
 	$scope.panelMensaje = {

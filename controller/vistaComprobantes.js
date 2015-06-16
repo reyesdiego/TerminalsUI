@@ -195,7 +195,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 	$scope.filtrarOrden = function(filtro){
 		$scope.currentPage = 1;
 		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
-		$scope.$emit('cambioFiltro', $scope.model);
+		$scope.$emit('cambioOrden', $scope.model);
 	};
 
 	$scope.trackInvoice = function(comprobante){

@@ -132,6 +132,11 @@ module.exports = function(grunt) {
 						expand: true,
 						src: ['view/*'],
 						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['mocks/rutas.json'],
+						dest: 'build'
 					}
 				]
 			}

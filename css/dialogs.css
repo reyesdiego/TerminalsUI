@@ -1,9 +1,3 @@
-.imagenCargando{
-    content: url("../images/loading.gif");
-    width: 252px;
-    height: 252px;
-}
-
 html, body {
 	height: 100%;
 }

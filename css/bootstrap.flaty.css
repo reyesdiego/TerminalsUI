@@ -179,6 +179,9 @@ th {
   padding: 0;
 }
 @media print {
+	html, body {
+		height: auto;
+	}
   * {
     text-shadow: none !important;
     color: #000 !important;
@@ -207,6 +210,9 @@ th {
   }
   thead {
     display: table-header-group;
+  }
+  tfoot {
+    display: table-row-group;
   }
   tr,
   img {

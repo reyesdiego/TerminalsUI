@@ -15,5 +15,15 @@ myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginServi
 			});
 	};
 
+	factory.getQueuedMails = function(datos, page, callback){
+		var inserturl = serverUrl + '/appointmentEmailQueues/' + page.skip + '/' + page.limit;
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			.success(function(data){
+				callback(data);
+			}).error(function(error){
+				callback(error);
+			});
+	};
+
 	return factory;
 }]);

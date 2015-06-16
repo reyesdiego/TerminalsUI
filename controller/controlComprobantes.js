@@ -17,7 +17,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	$scope.tasas = [];
 	$scope.loadingTasas = false;
 	$scope.detalleGates = false;
-	$scope.volverAPrincipalComprobantes = false;
+	$scope.volverAPrincipal = false;
 
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
@@ -89,6 +89,10 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.cargaComprobantes();
 	});
 
+	$scope.$on('cambioOrden', function(event, data){
+		$scope.cargaComprobantes();
+	});
+
 	$scope.$on('cambioFiltro', function(){
 		$scope.controlTasaCargas()
 	});
@@ -116,6 +120,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	};
 
 	$scope.verContenedor = function(contenedor) {
+		$scope.volverAPrincipal = !$scope.volverAPrincipal;
 		$scope.model.contenedor = contenedor;
 		$scope.contenedorElegido.contenedor = contenedor;
 		$scope.loadingInvoices = true;
@@ -127,7 +132,6 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.detalle = true;
 		$scope.currentPageContainers = 1;
 		$scope.currentPageComprobantes = 1;
-		$scope.volverAPrincipalComprobantes = !$scope.volverAPrincipalComprobantes;
 		$scope.cargaComprobantes();
 		$scope.cargaGates();
 		$scope.cargaTurnos();
@@ -135,9 +139,13 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	};
 
 	$scope.cargaComprobantes = function(){
+		var model = {};
+		angular.copy($scope.model, model);
+		model.fechaInicio = '';
+		model.fechaFin = '';
 		$scope.pageComprobantes.skip = (($scope.currentPageComprobantes - 1) * $scope.model.itemsPerPage);
 		$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoice({contenedor: $scope.model.contenedor}, $scope.pageComprobantes, function(data){
+		invoiceFactory.getInvoice(model, $scope.pageComprobantes, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.invoicesTotalItems = data.totalCount;
@@ -480,6 +488,14 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		}
 	});
 
+	$scope.$on('cambioOrden', function(event, data){
+		if ($scope.controlFiltros == 'codigos'){
+			$scope.controlDeCodigos();
+		} else {
+			$scope.controlCodigosFiltrados();
+		}
+	});
+
 	$scope.controlDeCodigos = function(){
 		var model = {
 			fechaInicio:	$scope.model.fechaInicio,
@@ -629,6 +645,10 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		if ($scope.model.estado == 'N'){
 			$scope.model.estado = $scope.estado;
 		}
+		$scope.traerComprobantes();
+	});
+
+	$scope.$on('cambioOrden', function(event, data){
 		$scope.traerComprobantes();
 	});
 

@@ -51,7 +51,7 @@
 		</div>
 
 		<div class="col-lg-5" ng-show="loadingFacturadoDia">
-			<img class="media-object imagenCargando" style="margin-left: 50px; margin-top: 50px">
+			<img class="media-object center-block" src="images/loading.gif">
 		</div>
 		<div class="col-lg-5" ng-hide="loadingFacturadoDia || errorFacturadoDia">
 			<h4 class="text-left">Facturado diario</h4>
@@ -83,7 +83,7 @@
 
 	<div class="row">
 		<div class="col-lg-4" ng-show="loadingFacturadoMes">
-			<img class="media-object imagenCargando" style="margin-left: 50px; margin-top: 50px">
+			<img class="media-object center-block" src="images/loading.gif">
 		</div>
 		<div class="col-lg-4" ng-hide="loadingFacturadoMes || errorFacturadoMes">
 			<h4 class="text-left">Facturado mensual</h4>
@@ -124,7 +124,7 @@
 		</div>
 
 		<div class="col-lg-4" ng-show="loadingGates">
-			<img class="media-object imagenCargando" style="margin-left: 50px; margin-top: 50px">
+			<img class="media-object center-block" src="images/loading.gif">
 		</div>
 		<div class="col-lg-4" ng-show="!loadingGates || errorGates">
 			<h4 class="text-left">Gates mensuales</h4>
@@ -164,7 +164,7 @@
 		</div>
 
 		<div class="col-lg-4" ng-show="loadingTurnos">
-			<img class="media-object imagenCargando" style="margin-left: 50px; margin-top: 50px">
+			<img class="media-object center-block" src="images/loading.gif">
 		</div>
 		<div class="col-lg-4" ng-hide="loadingTurnos || errorTurnos">
 			<h4 class="text-left">Turnos mensuales</h4>
@@ -204,10 +204,10 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-4" ng-show="loadingGatesTurnos">
-			<img class="media-object imagenCargando" style="margin-left: 480px; margin-top: 75px">
+		<div ng-show="loadingGatesTurnos">
+			<img class="media-object center-block" src="images/loading.gif">
 		</div>
-		<div class="col-lg-12" ng-hide="loadingGatesTurnos">
+		<div ng-hide="loadingGatesTurnos">
 			<h4 class="text-left">{{ labelPorHora }}</h4>
 			<div class="col-lg-4 col-lg-offset-2">
 				<div class="input-group text-left">
@@ -232,21 +232,21 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
-			<div class="table-responsive" style="max-height: 340px; max-width: 100%; overflow: auto">
-				<dynamic-chart
-						data="chartDataDiaGatesTurnos"
-						width="{{chartWidthDiaGatesTurnos}}"
-						height="{{chartsHeight}}"
-						select="selectRow(selectedRowIndexFacturado)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						currency="false"
-						stacked="false"
-						is3-d="false">
-				</dynamic-chart>
+			<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
+				<div class="table-responsive">
+					<dynamic-chart
+							data="chartDataDiaGatesTurnos"
+							width="{{chartWidthDiaGatesTurnos}}"
+							height="{{chartsHeight}}"
+							select="selectRow(selectedRowIndexFacturado)"
+							series="chartSeries"
+							colors="barColors"
+							type="{{columnChart}}"
+							currency="false"
+							stacked="false"
+							is3-d="false">
+					</dynamic-chart>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="errorGatesTurnos">

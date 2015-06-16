@@ -244,6 +244,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/controlAcceso",
 			templateUrl: 'view/controlAcceso.html'
 		})
+		.state('cturnos', {
+			url: "/colaTurnos",
+			templateUrl: 'view/turnosEncolados.html'
+		})
 
 }]);
 

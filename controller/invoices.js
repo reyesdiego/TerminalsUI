@@ -42,6 +42,10 @@ myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', fu
 		$scope.cargaDatos();
 	});
 
+	$scope.$on('cambioOrden', function(event, data){
+		$scope.cargaDatos();
+	});
+
 	$scope.$on('errorInesperado', function(e, mensaje){
 		$scope.cargando = false;
 		$scope.invoices = [];
