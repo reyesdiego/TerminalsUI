@@ -32,6 +32,9 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 
 	$scope.salir = function(){
 		authFactory.logout();
+		$scope.appointmentNotify = 0;
+		$scope.invoiceNotify = 0;
+		$scope.gateNotify = 0;
 		$rootScope.esUsuario = '';
 		$state.transitionTo('login');
 		$rootScope.filtroTerminal = '';
