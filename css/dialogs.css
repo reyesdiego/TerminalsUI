@@ -1,12 +1,3 @@
-.imagenCargando {
-    content: url("../images/loading.gif");
-}
-
-.imagenCargando:after {
-	/*this for firefox browser*/
-	content: url("../images/loading.gif");
-}
-
 html, body {
 	height: 100%;
 }
