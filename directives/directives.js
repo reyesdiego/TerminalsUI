@@ -441,6 +441,24 @@ myapp.directive('accordionMin', [function () {
 	}
 }]);
 
+myapp.directive('divCargando', function () {
+	return {
+		restrict:		'E',
+		transclude:		true,
+		scope: {
+			mostrar:	'='
+		},
+		template:
+			'<div class="col-lg-12 text-center" ng-show="mostrar">' +
+			'	<img class="media-object center-block" src="images/loading.gif">' +
+			'</div>' +
+			'<div class="col-lg-12" ng-hide="mostrar">' +
+			'	<div ng-transclude></div>' +
+			'</div>'
+
+	}
+});
+
 myapp.directive('buttonActualizar', ['$state', function ($state) {
 	return {
 		restrict:		'E',
