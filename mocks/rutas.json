@@ -234,6 +234,12 @@
 			"description": "Control de accesos",
 			"route": "access",
 			"role": "agp"
+		},
+		{
+			"_id": 36,
+			"description": "Turnos sin notificar",
+			"route": "cturnos",
+			"role": "agp"
 		}
 	]
 }
