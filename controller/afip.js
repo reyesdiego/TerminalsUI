@@ -2,7 +2,7 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', function($scope, $rootScope, afipFactory, $state, generalFunctions){
+myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache){
 
 	$rootScope.rutas.sort();
 	$scope.afectacion = 'afip';
@@ -89,14 +89,6 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 	$scope.afectacionActiva = true;
 
-	$scope.buques = {
-		afectacion: [],
-		impo: [],
-		expo: []
-	};
-	$scope.vistaConBuques = false;
-
-
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event)
 	};
@@ -108,41 +100,24 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 	};
 
 	$scope.$watch('$state.current', function(){
-		$scope.vistaConBuques = false;
-		if ($state.current.name == 'afip'){
-			$state.transitionTo($scope.actualRegistro);
-			$scope.cargaDatos($scope.actualRegistro);
-			$scope.tabs[0].active = true;
-		} else if ($state.current.name == 'afip.sumatorias.impo1') {
-			if ($scope.buques.impo.length == 0) {
-				afipFactory.getBuquesImpo(function (data) {
-					$scope.buques.impo = data.data;
-					$scope.listaBuques = $scope.buques.impo;
-				});
-			} else {
-				$scope.listaBuques = $scope.buques.impo;
-			}
-			$scope.vistaConBuques = true;
-		} else if ($state.current.name == 'afip.sumatorias.expo1') {
-			if ($scope.buques.expo.length == 0) {
-				afipFactory.getBuquesExpo(function (data) {
-					$scope.buques.expo = data.data;
-					$scope.listaBuques = $scope.buques.expo;
-				});
-			} else {
-				$scope.listaBuques = $scope.buques.expo;
-			}
-			$scope.vistaConBuques = true;
-		} else if ($state.current.name == 'afip.afectacion.afectacion1') {
-			if ($scope.buques.afectacion.length == 0) {
-				afipFactory.getBuquesExpo(function (data) {
-					$scope.buques.afectacion = data.data;
-					$scope.listaBuques = $scope.buques.afectacion;
-				});
-			} else {
-				$scope.listaBuques = $scope.buques.afectacion;
-			}
-			$scope.vistaConBuques = true;
+		switch ($state.current.name){
+			case 'afip':
+				$state.transitionTo($scope.actualRegistro);
+				$scope.cargaDatos($scope.actualRegistro);
+				$scope.tabs[0].active = true;
+				break;
+			case 'afip.afectacion.afectacion1':
+				$scope.listaBuques = afipCache.get('AfectacionBuques');
+				break;
+			case 'afip.solicitud.solicitud1':
+				$scope.listaBuques = afipCache.get('SolicitudBuques');
+				break;
+			case 'afip.sumatorias.impo1':
+				$scope.listaBuques = afipCache.get('SumImpoBuques');
+				break;
+			case 'afip.sumatorias.expo1':
+				$scope.listaBuques = afipCache.get('SumExpoBuques');
+				break;
 		}
 	});
 

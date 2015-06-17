@@ -21,6 +21,10 @@ myapp.service('contenedoresCache', ['CacheFactory', function (CacheFactory) {
 	return CacheFactory.createCache('contenedoresCache');
 }]);
 
+myapp.service('afipCache', ['CacheFactory', function(CacheFactory){
+	return CacheFactory.createCache('afipCache');
+}]);
+
 myapp.service('colorTerminalesCache', ['CacheFactory', function (CacheFactory) {
 	var serv = CacheFactory.createCache('colorTerminalesCache', { storageMode: 'localStorage' });
 

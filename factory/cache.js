@@ -1,7 +1,7 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', '$q', 'loginService', function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, $q, loginService) {
+myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService', function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
 	var factory = {};
 
 	factory.cargaBuques = function(){
@@ -232,6 +232,62 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		return deferred.promise;
 	};
 
+	factory.cargaSumariaImpoBuques = function(){
+		var deferred = $q.defer();
+		if (loginService.getType() == 'agp'){
+			afipFactory.getSumariaImpoBuques(function(data){
+				afipCache.put('SumImpoBuques', data.data);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			})
+		} else {
+			deferred.resolve();
+		}
+		return deferred.promise;
+	};
+
+	factory.cargaSumariaExpoBuques = function(){
+		var deferred = $q.defer();
+		if (loginService.getType() == 'agp'){
+			afipFactory.getSumariaExpoBuques(function(data){
+				afipCache.put('SumExpoBuques', data.data);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			})
+		} else {
+			deferred.resolve();
+		}
+		return deferred.promise;
+	};
+
+	factory.cargaAfectacionBuques = function(){
+		var deferred = $q.defer();
+		if (loginService.getType() == 'agp'){
+			afipFactory.getAfectacionBuques(function(data){
+				afipCache.put('AfectacionBuques', data.data);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			})
+		} else {
+			deferred.resolve();
+		}
+		return deferred.promise;
+	};
+
+	factory.cargaSolicitudBuques = function(){
+		var deferred = $q.defer();
+		if (loginService.getType() == 'agp'){
+			afipFactory.getSolicitudBuques(function(data){
+				afipCache.put('SolicitudBuques', data.data);
+				$rootScope.$broadcast('progreso', {mensaje: 2});
+				deferred.resolve();
+			})
+		} else {
+			deferred.resolve();
+		}
+		return deferred.promise;
+	};
+
 	factory.cargaCache = function () {
 		var deferred = $q.defer();
 		var llamadas = [];
@@ -259,6 +315,11 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		llamadas.push(factory.cargaMatchesRates());
 		// All rates cache
 		llamadas.push(factory.cargaAllRates());
+		//afip cache
+		llamadas.push(factory.cargaAfectacionBuques());
+		llamadas.push(factory.cargaSolicitudBuques());
+		llamadas.push(factory.cargaSumariaImpoBuques());
+		llamadas.push(factory.cargaSumariaExpoBuques());
 
 		$q.all(llamadas)
 			.then(function(){
