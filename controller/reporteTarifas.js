@@ -14,6 +14,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 	$scope.loadingReporteTarifas = false;
 
 	$scope.tarifasElegidas = 1;
+	$scope.tarifasEncontradas = 1;
 
 	$scope.maxDate = new Date();
 
@@ -174,11 +175,12 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				'fechaFin': $scope.hasta
 			};
 			reportsFactory.getReporteTarifas(fecha, $scope.tarifasGraficar, function(data){
-				contarTerminales = data.data.length;
+				console.log(data);
+				contarTerminales = data.data.length; //Determino cuantas terminales arrojaron resultados
 				if (contarTerminales != 0){
 					var totalesTerminal = [];
 					var nuevaLineaTerminal = ['terminal', 0];
-					data.data.forEach(function(resultado){
+					data.data.forEach(function(resultado){ //Coloco las terminales en el array del gráfico
 						nuevaLinea.push(resultado.terminal);
 						nuevaLineaTerminal[0] = resultado.terminal;
 						base.push(nuevaLinea.slice());
@@ -194,31 +196,46 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 					$scope.tablaGrafico.data.forEach(function(tarifa){
 						var total = 0;
 						var code = tarifa.code;
+						var tarifaEsta = false;
 						nuevaLineaTarifas.push(code);
 						tarifa.conteo = [];
 						tarifa.porcentaje = [];
-						base[0].push(code);
 						for (i=1; i<=contarTerminales; i++){
 							if (angular.isDefined(data.data[i-1].data[code])){
+								tarifaEsta = true;
 								base[i].push(data.data[i-1].data[code]);
 								tarifa.conteo.push(data.data[i-1].data[code]);
 								total+=data.data[i-1].data[code];
 								$scope.totales[i-1] += data.data[i-1].data[code];
 								totalesTerminal[i-1][1] += data.data[i-1].data[code];
-							} else {
+							} else if (tarifaEsta) {
+								//La tarifa ya fue encontrada
 								base[i].push(0);
 								tarifa.conteo.push(0);
+							} else if (angular.isDefined(data.data[i].data[code]) || angular.isDefined(data.data[i+1].data[code])){ //Hay que saber si la tarifa está en alguno de los otros
+								tarifaEsta = true;
+								base[i].push(0);
+								tarifa.conteo.push(0);
+							} else {
+								var j;
+								for (j = 0; j<contarTerminales; j++){
+									tarifa.conteo.push(0);
+								}
+								i = contarTerminales;
 							}
+						}
+						if (tarifaEsta){ //Solo se contabiliza si la tarifa fue encontrada
+							base[0].push(code);
 						}
 						tarifa.conteo.push(total);
 						$scope.totales[contarTerminales] += total;
-						nuevaLineaTarifas.push(total);
-						totalesTarifas.push(nuevaLineaTarifas.slice());
-						nuevaLineaTarifas = [];
 						for (i=0; i<=contarTerminales-1; i++){
 							var cuenta = (tarifa.conteo[i]*100)/tarifa.conteo[contarTerminales];
 							tarifa.porcentaje.push(cuenta);
 						}
+						nuevaLineaTarifas.push(total);
+						totalesTarifas.push(nuevaLineaTarifas.slice());
+						nuevaLineaTarifas = [];
 					});
 					totalesTerminal.sort(function(a, b){
 						var terminalA = a[0].toLowerCase(), terminalB = b[0].toLowerCase();
@@ -228,6 +245,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 							return 1;
 						return 0; //default return value (no sorting)
 					});
+					$scope.tarifasEncontradas = base[0].length - 1;
 					$scope.chartDataTotalesTerminal = totalesTerminal;
 					$scope.chartDataTotalesTarifas = totalesTarifas;
 					$scope.chartDataReporteTarifas = base;
