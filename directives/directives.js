@@ -387,11 +387,20 @@ myapp.directive('toupper', function() {
 	return {
 		require: 'ngModel',
 		link: function(scope, element, attrs, modelCtrl) {
-			modelCtrl.$parsers.push(function(input) {
+			var mayusculas = function(input) {
 				input ? element.css("text-transform","uppercase") : element.css("text-transform","initial");
 				return input ? input.toUpperCase() : "";
+			};
+
+			modelCtrl.$parsers.push(mayusculas);
+
+			element.bind("change",function(e){
+				scope.$apply(function(){
+					mayusculas(scope[attrs.ngModel]);
+				});
 			});
 
+			mayusculas(scope[attrs.ngModel]);
 		}
 	};
 });
