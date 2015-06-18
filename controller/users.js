@@ -36,7 +36,6 @@ myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'g
 	$scope.cargaUsuarios = function () {
 		$scope.cargando = true;
 		ctrlUsersFactory.getUsers(function(data) {
-			console.log(data);
 			if (data.status === 'OK'){
 				$scope.permiso = true;
 				$scope.datosUsers = data.data;

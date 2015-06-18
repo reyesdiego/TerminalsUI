@@ -175,7 +175,6 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				'fechaFin': $scope.hasta
 			};
 			reportsFactory.getReporteTarifas(fecha, $scope.tarifasGraficar, function(data){
-				console.log(data);
 				contarTerminales = data.data.length; //Determino cuantas terminales arrojaron resultados
 				if (contarTerminales != 0){
 					var totalesTerminal = [];
