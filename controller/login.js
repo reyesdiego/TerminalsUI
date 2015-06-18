@@ -23,7 +23,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	$scope.porcentaje = 0;
 
 	if (loginService.getStatus()){
-		$state.transitionTo('tarifario');
+		if (in_array('tarifario', $rootScope.rutas)){
+			$state.transitionTo('tarifario');
+		} else {
+			$state.transitionTo($rootScope.rutas[0])
+		}
 	}
 
 	$scope.$on('progreso', function(e, mensaje){
@@ -79,7 +83,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 			authFactory.loginWithCookies($scope.email, $scope.password)
 				.then(function(result){
 					$rootScope.cargandoCache = false;
-					$state.transitionTo('tarifario');
+					if (in_array('tarifario', $rootScope.rutas)){
+						$state.transitionTo('tarifario');
+					} else {
+						$state.transitionTo($rootScope.rutas[0])
+					}
 				},
 				function(error){
 					if (error == 'sinAcceso'){
@@ -92,7 +100,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
 							dlg.result.then(function(){
 									$rootScope.cargandoCache = false;
-									$state.transitionTo('tarifario');
+									if (in_array('tarifario', $rootScope.rutas)){
+										$state.transitionTo('tarifario');
+									} else {
+										$state.transitionTo($rootScope.rutas[0])
+									}
 								},
 								function(){
 									$scope.cerrarSesion();
@@ -106,7 +118,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 			authFactory.loginWithoutCookies($scope.email, $scope.password)
 				.then(function(result){
 					$rootScope.cargandoCache = false;
-					$state.transitionTo('tarifario');
+					if (in_array('tarifario', $rootScope.rutas)){
+						$state.transitionTo('tarifario');
+					} else {
+						$state.transitionTo($rootScope.rutas[0])
+					}
 				},
 				function(reason){
 					if (reason == 'sinAcceso'){
@@ -119,7 +135,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
 							dlg.result.then(function(){
 									$rootScope.cargandoCache = false;
-									$state.transitionTo('tarifario');
+									if (in_array('tarifario', $rootScope.rutas)){
+										$state.transitionTo('tarifario');
+									} else {
+										$state.transitionTo($rootScope.rutas[0])
+									}
 								},
 								function(){
 									$scope.cerrarSesion();
