@@ -2,7 +2,7 @@
  * Created by artiom on 13/05/15.
  */
 
-myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q, loginService){
+myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', '$filter', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q, loginService, $filter){
 
 	$scope.usuarios = [];
 	$scope.tareas = [];
@@ -42,7 +42,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 			$scope.usuarios = data.data;
 			ctrlUsersFactory.getRoutes(function(data){
 				if (data.status == 'OK'){
-					$scope.tareas = data.data;
+					$scope.tareas = $filter('orderBy')(data.data, 'route');
 				} else {
 					$scope.panelMensaje.mensaje = 'Se ha producido un error al cargar el listado de tareas.';
 					$scope.panelMensaje.tipo = 'panel-danger';
