@@ -128,7 +128,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	};
 
 	$scope.cambiarTipoMov = function(tipoMov){
-		if ($scope.ocultarFiltros.indexOf('mov', 0) < 0){
+		if ($scope.ocultarBusqueda || $scope.ocultarFiltros.indexOf('mov', 0) < 0){
 			$scope.model.mov = tipoMov;
 			$scope.$emit('cambioFiltro');
 		}
