@@ -394,10 +394,8 @@ myapp.directive('toupper', function() {
 
 			modelCtrl.$parsers.push(mayusculas);
 
-			element.bind("change",function(e){
-				scope.$apply(function(){
+			scope.$watch(attrs.ngModel, function(){
 					mayusculas(scope[attrs.ngModel]);
-				});
 			});
 
 			mayusculas(scope[attrs.ngModel]);

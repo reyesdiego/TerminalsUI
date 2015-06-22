@@ -101,7 +101,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 			$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 		}
-		$scope.$emit('cambioFiltro', $scope.model);
+		$scope.cargaPorFiltros();
 	};
 	//FUNCIONES DE TABLE GATES //////////////////////////////////////////////////////////////////////
 	$scope.colorHorario = function (gate) {
@@ -140,6 +140,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	};
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	$scope.cargaPorFiltros = function () {
-		$scope.$emit('cambioFiltro');
+		$scope.$broadcast('checkAutoComplete');
+		$scope.$emit('cambioFiltro', $scope.model);
 	};
 }]);

@@ -169,6 +169,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 			$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 			$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 		}
+		$scope.$broadcast('checkAutoComplete');
 		if (filtro == 'nroPtoVenta'){
 			$scope.$emit('cambioFiltro', $scope.model);
 		} else {
