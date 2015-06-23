@@ -127,6 +127,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 	};
 
 	$scope.cargaRates = function () {
+		if (!angular.isDefined($scope.model['fecha'])) $scope.model.fecha = $scope.fechaInicio;
 		$scope.mostrarGrafico = false;
 		$scope.cargando = true;
 		$scope.configPanel = {

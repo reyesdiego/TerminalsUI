@@ -23,6 +23,9 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	$scope.porcentaje = 0;
 
 	if (loginService.getStatus()){
+		if (!angular.isDefined($rootScope.rutas)){
+			$rootScope.rutas = loginService.getAcceso();
+		}
 		if (in_array('tarifario', $rootScope.rutas)){
 			$state.transitionTo('tarifario');
 		} else {

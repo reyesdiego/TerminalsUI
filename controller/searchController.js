@@ -140,6 +140,9 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	};
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	$scope.cargaPorFiltros = function () {
+		for (var elemento in $scope.model){
+			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
+		}
 		$scope.$broadcast('checkAutoComplete');
 		$scope.$emit('cambioFiltro', $scope.model);
 	};

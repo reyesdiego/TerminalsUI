@@ -243,6 +243,10 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
 		$scope.page.limit = $scope.itemsPerPage;
 		$scope.datosRegistro = [];
+		for (var elemento in $scope.model){
+			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
+		}
+		$scope.$broadcast('checkAutoComplete');
 		afipFactory.getAfip(registro, $scope.model, $scope.page, function(data){
 			if(data.status === 'OK'){
 				$scope.datosRegistro = data.data;
