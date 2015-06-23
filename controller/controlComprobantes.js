@@ -218,6 +218,10 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.detalle = false;
 		$scope.model.contenedor = '';
 		$scope.resultado = [];
+		for (var elemento in $scope.model){
+			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
+		}
+		$scope.$broadcast('checkAutoComplete');
 		invoiceFactory.getContainersSinTasaCargas($scope.model, function(data){
 			if (data.status == "OK"){
 				$scope.totalContenedores = data.totalCount;

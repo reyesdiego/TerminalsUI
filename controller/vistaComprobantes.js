@@ -169,6 +169,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 			$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 			$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 		}
+		for (var elemento in $scope.model){
+			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
+		}
 		$scope.$broadcast('checkAutoComplete');
 		if (filtro == 'nroPtoVenta'){
 			$scope.$emit('cambioFiltro', $scope.model);
