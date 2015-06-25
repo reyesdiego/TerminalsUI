@@ -12,8 +12,9 @@ myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
 				callback(data, false);
 			}).error(function(error, status) {
 				if (status === 403){
-					dialogs.error('Error de inicio de sesión', error.data);
-					callback(error.data, true);
+					error.status = status;
+					//dialogs.error('Error de inicio de sesión', error.data);
+					callback(error, true);
 				} else {
 					dialogs.error('Error de inicio de sesión', "El servidor no se encuentra disponible. Consulte con el Administrador del sistema.");
 					callback(error, true);
@@ -48,6 +49,16 @@ myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
 				callback(data);
 			}).error(function(err) {
 				callback(err);
+			});
+	};
+
+	factory.validateUser = function(salt, callback){
+		var inserturl = serverUrl + '/agp/token';
+		$http.post(inserturl, salt)
+			.success(function(data){
+				callback(data);
+			}).error(function(data){
+				callback(data);
 			});
 	};
 

@@ -248,6 +248,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/colaTurnos",
 			templateUrl: 'view/turnosEncolados.html'
 		})
+		.state('validar', {
+			url: "/validarUsuario",
+			templateUrl: "view/validarUsuario.html"
+		})
 
 }]);
 
@@ -413,7 +417,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 	$rootScope.moneda = "DOL";
 
-	var rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
+	var rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal', 'validar'];
 	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access'];
 	$rootScope.$state = $state;
 	// Variables Globales de Paginacion

@@ -92,12 +92,15 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 						$state.transitionTo($rootScope.rutas[0])
 					}
 				},
-				function(error){
-					if (error == 'sinAcceso'){
+				function(reason){
+					if (reason == 'NO-ACCESS'){
 						var errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
 						errdlg.result.then(function(){
 							$scope.cerrarSesion('normal');
 						})
+					} else if (reason == 'MUST-REVALIDATE') {
+						$rootScope.cargandoCache = false;
+						$state.transitionTo('validar');
 					} else {
 						if ($scope.progreso > 10){
 							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
@@ -128,11 +131,14 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					}
 				},
 				function(reason){
-					if (reason == 'sinAcceso'){
+					if (reason == 'NO-ACCESS'){
 						var errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
 						errdlg.result.then(function(){
 							$scope.cerrarSesion('normal');
 						})
+					} else if (reason == 'MUST-REVALIDATE') {
+						$rootScope.cargandoCache = false;
+						$state.transitionTo('validar');
 					} else {
 						if ($scope.progreso > 10){
 							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');

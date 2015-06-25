@@ -99,10 +99,15 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 						deferred.resolve();
 					}
 				} else {
-					deferred.reject('sinAcceso');
+					deferred.reject('NO-ACCESS');
 				}
 			} else {
-				deferred.reject(data);
+				if (data.status == 403){
+					$rootScope.salt = data.salt;
+					deferred.reject('MUST-REVALIDATE');
+				} else {
+					deferred.reject(data);
+				}
 			}
 		});
 
