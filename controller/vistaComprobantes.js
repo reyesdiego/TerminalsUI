@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 30/03/15.
  */
-myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'statesFactory', 'generalCache', 'generalFunctions', 'dialogs', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, statesFactory, generalCache, generalFunctions, dialogs){
+myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$filter', 'invoiceFactory', 'loginService', 'statesFactory', 'generalCache', 'generalFunctions', 'dialogs', 'downloadFactory', function($rootScope, $scope, $modal, $filter, invoiceFactory, loginService, statesFactory, generalCache, generalFunctions, dialogs, downloadFactory){
 	$scope.status = {
 		open: true
 	};
@@ -50,6 +50,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 	$scope.comprobantesControlados = [];
 
 	$scope.actualizarComprobante = null;
+
+	$scope.disablePdf = false;
 
 	$scope.$on('iniciarBusqueda', function(event, data){
 		$scope.filtrado(data.filtro, data.contenido);
@@ -471,5 +473,25 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 	}
 
 	if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) $scope.cargaTodosLosPuntosDeVentas();
+
+	$scope.verPdf = function(){
+		$scope.disablePdf = true;
+		var imprimirComprobante = {};
+		angular.copy($scope.verDetalle, imprimirComprobante);
+		imprimirComprobante.codTipoComprob = $filter('nombreComprobante')(imprimirComprobante.codTipoComprob);
+		imprimirComprobante.fecha.emision = $filter('date')(imprimirComprobante.fecha.emision, 'dd/MM/yyyy', 'UTC');
+		imprimirComprobante.fecha.vcto = $filter('date')(imprimirComprobante.fecha.vcto, 'dd/MM/yyyy', 'UTC');
+		imprimirComprobante.fecha.desde = $filter('date')(imprimirComprobante.fecha.desde, 'dd/MM/yyyy', 'UTC');
+		imprimirComprobante.fecha.hasta = $filter('date')(imprimirComprobante.fecha.hasta, 'dd/MM/yyyy', 'UTC');
+		imprimirComprobante.detalle.forEach(function(detalle){
+			detalle.buque.fecha = $filter('date')(detalle.buque.fecha, 'dd/MM/yyyy', 'UTC');
+		});
+		downloadFactory.invoicePDF(imprimirComprobante, function(data){
+			$scope.disablePdf = false;
+			var file = new Blob([data], {type: 'application/pdf'});
+			var fileURL = URL.createObjectURL(file);
+			window.open(fileURL);
+		})
+	}
 
 }]);
