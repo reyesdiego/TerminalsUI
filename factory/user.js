@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 3/19/14.
  */
 
-myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
+myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($http, dialogs, formatService){
 	var factory = {};
 
 	factory.login = function(datos, callback){
@@ -10,15 +10,12 @@ myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
 		$http.post(inserturl, datos)
 			.success(function(data) {
 				callback(data, false);
-			}).error(function(error, status) {
-				if (status === 403){
-					error.status = status;
-					//dialogs.error('Error de inicio de sesión', error.data);
-					callback(error, true);
-				} else {
-					dialogs.error('Error de inicio de sesión', "El servidor no se encuentra disponible. Consulte con el Administrador del sistema.");
-					callback(error, true);
-				}
+			}).error(function(error) {
+				// ACC-0001 usuario o contraseña incorrecto
+				// ACC-0001 usuario o contraseñas vacío
+				// ACC-0003 no entro al correo
+				// ACC-0004 no habilitado en el sistema
+				callback(error, true);
 			});
 	};
 
@@ -53,8 +50,8 @@ myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
 	};
 
 	factory.validateUser = function(salt, callback){
-		var inserturl = serverUrl + '/agp/token';
-		$http.post(inserturl, salt)
+		var inserturl = serverUrl + '/agp/account/token';
+		$http.get(inserturl, { params: formatService.formatearDatos(salt) })
 			.success(function(data){
 				callback(data);
 			}).error(function(data){

@@ -1,32 +1,38 @@
 /**
  * Created by artiom on 24/06/15.
  */
-myapp.controller('validarUsuarioCtrl', ['$rootScope', '$scope', 'ctrlUsersFactory', 'dialogs', '$state', function($rootScope, $scope, ctrlUsersFactory, dialogs, $state) {
+myapp.controller('validarUsuarioCtrl', ['$rootScope', '$scope', 'userFactory', 'dialogs', '$state', function($rootScope, $scope, userFactory, dialogs, $state) {
+
+	$scope.datos = {
+		salt: $rootScope.salt
+	};
+
+	$scope.cargando = false;
 
 	$scope.validar = function(){
-		ctrlUsersFactory.validateUser($rootScope.salt, function(data){
-			console.log(data);
+		$scope.cargando = true;
+		userFactory.validateUser($scope.datos, function(data){
+			$scope.cargando = false;
 			if (data.status == 'OK'){
 				var dl;
-				if (data.emailDeliver){
-					dl = dialogs.notify('Registro', 'En breve recibirá un mail en la cuenta ' + $scope.email + ' para poder habilitarlo.');
+				if (data.emailDelivered){
+					dl = dialogs.notify('Registro', 'En breve recibirá un mail en su cuenta de correo para poder habilitar su usuario.');
 					dl.result.then(function(){
-						$state.transitionTo('login');
+						$scope.volver();
 					})
 				} else {
-					dl = dialogs.notify('Registro', 'El usuario ' + $scope.usuario + ' ha sido registrado exitosamente. Inicie sesión en el sistema para solicitar la validación del mismo.')
-					dl.result.then(function(){
-						$state.transitionTo('login');
-					})
+					dialogs.error('Registro', 'Se ha producido un error al intentar enviar el mail de habilitación a su cuenta de correo. Vuelva a intentarlo más tarde.');
+					$scope.volver();
 				}
 			} else {
-				console.log(data);
 				dialogs.error('Registro', data.data);
 			}
 		})
 	};
 
 	$scope.volver = function(){
+		var n = $rootScope.rutasComunes.indexOf('validar');
+		$rootScope.rutasComunes.splice(n, 1);
 		$state.transitionTo('login');
 	};
 

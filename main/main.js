@@ -417,8 +417,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 	$rootScope.moneda = "DOL";
 
-	var rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal', 'validar'];
-	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access'];
+	$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
+	$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access'];
 	$rootScope.$state = $state;
 	// Variables Globales de Paginacion
 	$rootScope.itemsPerPage = 15;
@@ -454,8 +454,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	});
 
 	$rootScope.verificaRutas = function(event, toState){
-		$rootScope.cambioMoneda = !(in_array(toState.name, rutasSinMoneda) || toState.name.indexOf('afip') != -1);
-		if (!in_array(toState.name, rutasComunes)){
+		$rootScope.cambioMoneda = !(in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
+		if (!in_array(toState.name, $rootScope.rutasComunes)){
 			if (loginService.getStatus()){
 				if(!in_array(toState.name, loginService.getAcceso())){
 					$rootScope.usuarioNoAutorizado(event);

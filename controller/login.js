@@ -92,33 +92,8 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 						$state.transitionTo($rootScope.rutas[0])
 					}
 				},
-				function(reason){
-					if (reason == 'NO-ACCESS'){
-						var errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
-						errdlg.result.then(function(){
-							$scope.cerrarSesion('normal');
-						})
-					} else if (reason == 'MUST-REVALIDATE') {
-						$rootScope.cargandoCache = false;
-						$state.transitionTo('validar');
-					} else {
-						if ($scope.progreso > 10){
-							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
-							dlg.result.then(function(){
-									$rootScope.cargandoCache = false;
-									if (in_array('tarifario', $rootScope.rutas)){
-										$state.transitionTo('tarifario');
-									} else {
-										$state.transitionTo($rootScope.rutas[0])
-									}
-								},
-								function(){
-									$scope.cerrarSesion();
-								})
-						} else {
-							$scope.cerrarSesion();
-						}
-					}
+				function(error){
+					$scope.errorHandler(error);
 				});
 		} else {
 			authFactory.loginWithoutCookies($scope.email, $scope.password)
@@ -130,34 +105,44 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 						$state.transitionTo($rootScope.rutas[0])
 					}
 				},
-				function(reason){
-					if (reason == 'NO-ACCESS'){
-						var errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
-						errdlg.result.then(function(){
-							$scope.cerrarSesion('normal');
-						})
-					} else if (reason == 'MUST-REVALIDATE') {
-						$rootScope.cargandoCache = false;
-						$state.transitionTo('validar');
-					} else {
-						if ($scope.progreso > 10){
-							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
-							dlg.result.then(function(){
-									$rootScope.cargandoCache = false;
-									if (in_array('tarifario', $rootScope.rutas)){
-										$state.transitionTo('tarifario');
-									} else {
-										$state.transitionTo($rootScope.rutas[0])
-									}
-								},
-								function(){
-									$scope.cerrarSesion();
-								})
-						} else {
-							$scope.cerrarSesion();
-						}
-					}
+				function(error){
+					$scope.errorHandler(error);
 				});
+		}
+	};
+
+	$scope.errorHandler = function(error){
+		var errdlg;
+		if (error.code == 'ACC-0010'){
+			errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
+			errdlg.result.then(function(){
+				$scope.cerrarSesion('normal');
+			});
+		} else if (error.code == 'ACC-0003') {
+			$rootScope.cargandoCache = false;
+			$state.transitionTo('validar');
+		} else if (error.code == 'ACC-0001' || error.code == 'ACC-0002' || error.code == 'ACC-0004') {
+			errdlg = dialogs.error("Error de acceso", error.message);
+			errdlg.result.then(function(){
+				$scope.cerrarSesion('normal');
+			});
+		} else {
+			if ($scope.progreso > 10){
+				var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+				dlg.result.then(function(){
+						$rootScope.cargandoCache = false;
+						if (in_array('tarifario', $rootScope.rutas)){
+							$state.transitionTo('tarifario');
+						} else {
+							$state.transitionTo($rootScope.rutas[0])
+						}
+					},
+					function(){
+						$scope.cerrarSesion();
+					})
+			} else {
+				$scope.cerrarSesion();
+			}
 		}
 	};
 

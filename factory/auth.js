@@ -13,8 +13,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 			$cookies.themeTerminal = loginService.getFiltro();
 			deferred.resolve();
 		},
-		function(reason){
-			deferred.reject(reason);
+		function(error){
+			deferred.reject(error);
 		});
 		return deferred.promise;
 	};
@@ -25,8 +25,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 			.then(function(){
 				deferred.resolve();
 			},
-			function(reason){
-				deferred.reject(reason);
+			function(error){
+				deferred.reject(error);
 			});
 		return deferred.promise;
 	};
@@ -99,12 +99,16 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 						deferred.resolve();
 					}
 				} else {
-					deferred.reject('NO-ACCESS');
+					var myError = {
+						code: 'ACC-0010'
+					};
+					deferred.reject(myError);
 				}
 			} else {
-				if (data.status == 403){
-					$rootScope.salt = data.salt;
-					deferred.reject('MUST-REVALIDATE');
+				if (data.code == 'ACC-0003'){
+					$rootScope.salt = data.data.salt;
+					$rootScope.rutasComunes.push('validar');
+					deferred.reject(data);
 				} else {
 					deferred.reject(data);
 				}
