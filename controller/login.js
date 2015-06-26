@@ -82,33 +82,18 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$scope.mostrarMensaje = $scope.msg[0];
 		$scope.entrando = true;
 		$rootScope.cargandoCache = true;
-		if ($scope.sesion){
-			authFactory.loginWithCookies($scope.email, $scope.password)
-				.then(function(result){
-					$rootScope.cargandoCache = false;
-					if (in_array('tarifario', $rootScope.rutas)){
-						$state.transitionTo('tarifario');
-					} else {
-						$state.transitionTo($rootScope.rutas[0])
-					}
-				},
-				function(error){
-					$scope.errorHandler(error);
-				});
-		} else {
-			authFactory.loginWithoutCookies($scope.email, $scope.password)
-				.then(function(result){
-					$rootScope.cargandoCache = false;
-					if (in_array('tarifario', $rootScope.rutas)){
-						$state.transitionTo('tarifario');
-					} else {
-						$state.transitionTo($rootScope.rutas[0])
-					}
-				},
-				function(error){
-					$scope.errorHandler(error);
-				});
-		}
+		authFactory.userEnter($scope.email, $scope.password, $scope.sesion)
+			.then(function(result){
+				$rootScope.cargandoCache = false;
+				if (in_array('tarifario', $rootScope.rutas)){
+					$state.transitionTo('tarifario');
+				} else {
+					$state.transitionTo($rootScope.rutas[0])
+				}
+			},
+			function(error){
+				$scope.errorHandler(error);
+			});
 	};
 
 	$scope.errorHandler = function(error){

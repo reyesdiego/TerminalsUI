@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 21/02/14.
  */
-myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'socket', 'formatService', 'generalFunctions', 'colorTerminalesCache', function ($rootScope, $scope, controlPanelFactory, socket, formatService, generalFunctions, colorTerminalesCache){
+myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'socket', 'formatService', 'generalFunctions', 'colorTerminalesCache', 'loginService', function ($rootScope, $scope, controlPanelFactory, socket, formatService, generalFunctions, colorTerminalesCache, loginService){
 
 	var fecha = formatService.formatearFecha(new Date());
 
@@ -609,13 +609,15 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		}
 	});
 
-	$scope.traerTotales();
-	$scope.traerDatosFacturadoMes();
-	$scope.traerDatosFacturadoDiaTasas();
-	$scope.traerDatosFacturadoDia();
-	$scope.traerDatosGates();
-	$scope.traerDatosTurnos();
-	$scope.traerDatosGatesTurnosDia();
+	if (loginService.getStatus()){
+		$scope.traerTotales();
+		$scope.traerDatosFacturadoMes();
+		$scope.traerDatosFacturadoDiaTasas();
+		$scope.traerDatosFacturadoDia();
+		$scope.traerDatosGates();
+		$scope.traerDatosTurnos();
+		$scope.traerDatosGatesTurnosDia();
+	}
 
 }]);
 

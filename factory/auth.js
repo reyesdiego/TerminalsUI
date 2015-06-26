@@ -5,24 +5,15 @@
 myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory', 'loginService', '$rootScope', '$q', '$injector', 'cacheFactory', 'generalFunctions', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, $q, $injector, cacheFactory, generalFunctions){
 	var factory = {};
 
-	factory.loginWithCookies = function(user, pass){
-		var deferred = $q.defer();
-		this.login(user, pass).then(function(){
-			$cookies.username = user;
-			$cookies.password = pass;
-			$cookies.themeTerminal = loginService.getFiltro();
-			deferred.resolve();
-		},
-		function(error){
-			deferred.reject(error);
-		});
-		return deferred.promise;
-	};
-
-	factory.loginWithoutCookies = function(user, pass){
+	factory.userEnter = function(user, pass, useCookies){
 		var deferred = $q.defer();
 		this.login(user, pass)
 			.then(function(){
+				if (useCookies){
+					$cookies.username = user;
+					$cookies.password = pass;
+					$cookies.themeTerminal = loginService.getFiltro();
+				}
 				deferred.resolve();
 			},
 			function(error){
