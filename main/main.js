@@ -431,9 +431,9 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 	$rootScope.salir = function(){
 		authFactory.logout();
-		$scope.appointmentNotify = 0;
-		$scope.invoiceNotify = 0;
-		$scope.gateNotify = 0;
+		$rootScope.appointmentNotify = 0;
+		$rootScope.invoiceNotify = 0;
+		$rootScope.gateNotify = 0;
 		$rootScope.esUsuario = '';
 		$state.transitionTo('login');
 		$rootScope.filtroTerminal = '';
