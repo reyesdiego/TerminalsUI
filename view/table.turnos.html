@@ -28,10 +28,11 @@
 					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="contenedor" filtro-orden="contenedorOrden"></encabezado-tabla-ordenado></th>
 					<th style="text-align: center">Tipo</th>
 					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Alta" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="alta" filtro-orden="altaOrden"></encabezado-tabla-ordenado></th>
-					<th ng-show="!control" style="text-align: center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fechInicio" filtro-orden="fechaInicioOrden"></encabezado-tabla-ordenado></th>
+					<th ng-show="!control" style="text-align: center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="usuario" filtro-orden="usuarioOrden"></encabezado-tabla-ordenado></th>
 					<th ng-show="control" style="text-align: center">Intentos</th>
 					<th ng-show="control" style="text-align: center">Fecha</th>
-					<th ng-show="control" style="text-align: center">E-Mail</th>
+					<th style="text-align: center">E-Mail</th>
+					<th ng-show="!control" style="text-align: center">Enviado</th>
 				</tr>
 				<tr ng-repeat="turno in datosTurnos">
 					<td ng-show="control">{{ turno.terminal }}</td>
@@ -46,7 +47,8 @@
 					<td ng-show="!control">{{ turno.user }}</td>
 					<td ng-show="control">{{ turno.status }}</td>
 					<td ng-show="control">{{ turno.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-					<td ng-show="control">{{ turno.email }}</td>
+					<td>{{ turno.email }}</td>
+					<td ng-show="!control"><img src="images/ok.png" ng-show="turno.emailStatus"><img src="images/error.png" ng-show="!turno.emailStatus"></td>
 				</tr>
 			</table>
 		</div>

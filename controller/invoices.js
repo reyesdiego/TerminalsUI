@@ -28,6 +28,7 @@ myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', fu
 
 	$scope.invoices = [];
 
+	console.log(loginService.getFiltro());
 	$scope.nombre = loginService.getFiltro();
 
 	$scope.cargando = true;

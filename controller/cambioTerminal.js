@@ -41,8 +41,8 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 	$rootScope.rutas = loginService.getAcceso();
 	$rootScope.cargandoCache = true;
 
-	if ($rootScope.cambioTerminal){
-		$rootScope.cambioTerminal = false;
+	///if ($rootScope.cambioTerminal){
+		//$rootScope.cambioTerminal = false;
 		cacheFactory.cambioTerminal()
 			.then(function(){
 				$timeout(function(){
@@ -59,8 +59,8 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 					function(){
 						$scope.cerrarSesion();
 					})
-			})
-	} else {
+			});
+	/*} else {
 
 		$rootScope.cargandoCache = false;
 		$state.transitionTo($rootScope.previousState);
@@ -82,7 +82,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 					function(){
 						$scope.cerrarSesion();
 					})
-			})*/
-	}
+			})
+	}*/
 
 }]);

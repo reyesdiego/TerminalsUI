@@ -3,5 +3,6 @@
  */
 
 myapp.factory('socket', function(){
-	return io.connect(serverUrl, { query: 'loggeduser=user1' });
+	return io.connect(serverUrl);
+	//return io.connect(serverUrl, { query: 'loggeduser=user1' });
 });

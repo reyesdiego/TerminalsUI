@@ -359,7 +359,7 @@ myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 	});
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment){
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies){
 
 	moment().format('YYYY-MM-DD');
 	moment.locale('es');
@@ -439,23 +439,26 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.filtroTerminal = '';
 	};
 
-	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
+	/*$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
 		if (!$rootScope.primerRuteo){
 			$rootScope.previousState = from;
 		} else {
 			$rootScope.primerRuteo = false;
 		}
-	});
+	});*/
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 		}
-		if (!loginService.getStatus() && authFactory.userEstaLogeado()){
+		console.log($cookies.restoreSesion);
+		console.log(!loginService.getStatus());
+		if (!loginService.getStatus() && $cookies.restoreSesion==='true'){
+			console.log('va a loguear');
 			authFactory.login().then(function(){
-				$rootScope.cargarCache = true;
-				$rootScope.primerRuteo = true;
-				$rootScope.estaLogeado = true;
+				//$rootScope.cargarCache = true;
+				//$rootScope.primerRuteo = true;
+				//$rootScope.estaLogeado = true;
 				if (toState.name == 'login') {
 					$state.transitionTo('tarifario');
 				} else {
@@ -471,16 +474,22 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.cambioMoneda = !(in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
 		if (!in_array(toState.name, $rootScope.rutasComunes)){
 			if (loginService.getStatus()){
-				if(!in_array(toState.name, loginService.getAcceso())){
-					$rootScope.usuarioNoAutorizado(event);
+				if ($cookies.isLogged === 'true'){
+					if(!in_array(toState.name, loginService.getAcceso())){
+						$rootScope.usuarioNoAutorizado(event);
+					} /*else {
+					 /*if ($rootScope.cargarCache){
+					 $rootScope.cargarCache = false;
+					 $rootScope.previousState = toState.name;
+					 event.preventDefault();
+					 $state.transitionTo('cambioTerminal');
+					 }
+					 }*/
 				} else {
-					if ($rootScope.cargarCache){
-						$rootScope.cargarCache = false;
-						$rootScope.previousState = toState.name;
-						event.preventDefault();
-						$state.transitionTo('cambioTerminal');
-					}
+					event.preventDefault();
+					$rootScope.salir();
 				}
+
 			} else {
 				$rootScope.usuarioNoAutorizado(event);
 			}
