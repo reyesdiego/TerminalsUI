@@ -388,10 +388,8 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 
 	factory.getSumariaImpoBuques = function (callback) {
 		var inserturl = serverUrl + '/afip/registro1_sumimpomani/buques';
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function (data) {
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			})
 			.error(function (error) {
@@ -401,10 +399,8 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 
 	factory.getSumariaExpoBuques = function (callback) {
 		var inserturl = serverUrl + '/afip/registro1_sumexpomane/buques';
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function (data) {
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			})
 			.error(function (error) {
@@ -414,10 +410,8 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 
 	factory.getAfectacionBuques = function (callback) {
 		var inserturl = serverUrl + '/afip/registro1_afectacion/buques';
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function (data) {
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			})
 			.error(function (error) {
@@ -427,10 +421,8 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 
 	factory.getSolicitudBuques = function(callback){
 		var inserturl = serverUrl + '/afip/registro1_solicitud/buques';
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function(data){
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			})
 			.error(function(error){

@@ -6,10 +6,8 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 
 	factory.getAllRates = function(callback){
 		var inserturl = serverUrl + '/prices/rates/1/all';
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function (data){
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			}).error(function(error){
 				callback(error);
@@ -29,10 +27,8 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 
 	factory.getMatchPrices = function(datos, callback) {
 		var inserturl = serverUrl + '/matchPrices/' + loginService.getFiltro();
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			}).error(function(error){
 				callback(error);
@@ -41,10 +37,8 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 
 	factory.getArrayMatches = function(callback){
 		var inserturl = serverUrl + '/matchPrices/price/' + loginService.getFiltro();
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function (data){
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			}).error(function(error){
 				console.log(error);
@@ -106,10 +100,8 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 
 	factory.getUnitTypes = function(callback){
 		var inserturl = serverUrl + '/unitTypes';
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function(response) {
-				console.log('OK ruta: ' + inserturl);
 				callback(response);
 			}).error(function(errorText) {
 				callback(errorText);

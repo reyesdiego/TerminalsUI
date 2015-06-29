@@ -127,10 +127,8 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 	factory.getClients = function(callback){
 		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/clients';
-		console.log('cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function (data){
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			}).error(function(errorText){
 				if (errorText == null) errorText = {status: 'ERROR'};
@@ -140,10 +138,8 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 	factory.getContainers = function(callback){
 		var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/containers';
-		console.log('cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function (data){
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			}).error(function(errorText){
 				if (errorText == null) errorText = {status: 'ERROR'};
@@ -163,10 +159,8 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 	factory.getContainersGates = function(callback){
 		var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/containers';
-		console.log('Cargo ruta: ' + inserturl);
 		$http.get(inserturl)
 			.success(function (data){
-				console.log('OK ruta: ' + inserturl);
 				callback(data);
 			}).error(function(errorText){
 				if (errorText == null) errorText = {status: 'ERROR'};
