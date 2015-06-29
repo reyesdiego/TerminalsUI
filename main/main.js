@@ -370,6 +370,10 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		}
 	});
 
+	$rootScope.appointmentNotify = 0;
+	$rootScope.gateNotify = 0;
+	$rootScope.invoiceNotify = 0;
+
 	$rootScope.previousState = '';
 	$rootScope.cambioTerminal = false;
 	$rootScope.cargarCache = false;
@@ -424,6 +428,16 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.itemsPerPage = 15;
 	$rootScope.currentPage = 1;
 	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
+
+	$rootScope.salir = function(){
+		authFactory.logout();
+		$scope.appointmentNotify = 0;
+		$scope.invoiceNotify = 0;
+		$scope.gateNotify = 0;
+		$rootScope.esUsuario = '';
+		$state.transitionTo('login');
+		$rootScope.filtroTerminal = '';
+	};
 
 	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
 		if (!$rootScope.primerRuteo){

@@ -119,6 +119,10 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 		return deferred.promise;
 	};
 
+	factory.userEstaLogeado = function(){
+		return (angular.isDefined($cookies.username) && angular.isDefined($cookies.password) && $cookies.username != '' && $cookies.password != '');
+	};
+
 	factory.logout = function(){
 		$cookieStore.remove('isLogged');
 		$cookieStore.remove('restoreSesion');

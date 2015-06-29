@@ -60,8 +60,12 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 						$scope.cerrarSesion();
 					})
 			})
-	}/* else {
-		$scope.max = 30;
+	} else {
+
+		$rootScope.cargandoCache = false;
+		$state.transitionTo($rootScope.previousState);
+
+		/*$scope.max = 30;
 		cacheFactory.cargaMemoryCache()
 			.then(function(){
 				$timeout(function(){
@@ -78,7 +82,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 					function(){
 						$scope.cerrarSesion();
 					})
-			})
-	}*/
+			})*/
+	}
 
 }]);
