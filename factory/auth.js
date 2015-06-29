@@ -6,6 +6,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 	var factory = {};
 
 	factory.userEnter = function(user, pass, useCookies){
+		console.log(useCookies);
 		var deferred = $q.defer();
 		this.login(user, pass)
 			.then(function(){
@@ -14,6 +15,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 					$cookies.password = pass;
 					$cookies.themeTerminal = loginService.getFiltro();
 				}
+				$cookies.isLogged = true;
+				$cookies.restoreSesion = useCookies;
 				deferred.resolve();
 			},
 			function(error){
@@ -77,19 +80,26 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 						generalFunctions.switchTheme(loginService.getFiltro());
 					}
 
-					// Carga la cache
-					if (!factory.userEstaLogeado()){
+					// Carga la cache si el usuario no tenía el acceso por cookies
+					if (!$cookies.restoreSesion){
 						cacheFactory.cargaCache()
 							.then(function(){
 								deferred.resolve();
 							},
 							function(){
-								deferred.reject();
+								console.log('algo malo');
+								var cacheError = {
+									code: 'DAT-0010',
+									message: 'Se ha producido un error en la carga de la caché.'
+								};
+								deferred.reject(cacheError);
 							});
-					} else {
+					} else { //Ya están cargadas las cosas ?????
+						console.log('mirá que no cargó la cache');
 						deferred.resolve();
 					}
 				} else {
+					console.log('algo malo acá');
 					var myError = {
 						code: 'ACC-0010'
 					};
@@ -110,16 +120,14 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 	};
 
 	factory.logout = function(){
+		$cookieStore.remove('isLogged');
+		$cookieStore.remove('restoreSesion');
 		$cookieStore.remove('username');
 		$cookieStore.remove('password');
 		$cookieStore.remove('themeTerminal');
 		cacheFactory.limpiaCache();
 		loginService.unsetLogin();
 		generalFunctions.switchTheme('BACTSSA');
-	};
-
-	factory.userEstaLogeado = function(){
-		return (angular.isDefined($cookies.username) && angular.isDefined($cookies.password) && $cookies.username != '' && $cookies.password != '');
 	};
 
 	factory.setTheme = function(terminal){

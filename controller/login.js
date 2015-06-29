@@ -126,6 +126,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 						$scope.cerrarSesion();
 					})
 			} else {
+				dialogs.error("Error de acceso", error.message);
 				$scope.cerrarSesion();
 			}
 		}

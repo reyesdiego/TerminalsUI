@@ -296,11 +296,11 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		// Clientes cache
 		llamadas.push(factory.cargaClientes());
 		// Contenedores cache
-		llamadas.push(factory.cargaContenedores());
+		//llamadas.push(factory.cargaContenedores());
 		// Contenedores gates cache
-		llamadas.push(factory.cargaContenedoresGates());
+		//llamadas.push(factory.cargaContenedoresGates());
 		// Contenedores turnos cache
-		llamadas.push(factory.cargaContenedoresTurnos());
+		//llamadas.push(factory.cargaContenedoresTurnos());
 		// Descripciones cache
 		llamadas.push(factory.cargaDescripciones());
 		// Vouchers cache
@@ -334,9 +334,9 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 	factory.limpiarCacheTerminal = function(){
 		generalCache.remove('buques');
 		generalCache.remove('clientes');
-		generalCache.remove('contenedores');
-		generalCache.remove('contenedoresGates');
-		generalCache.remove('contenedoreTurnos');
+		//generalCache.remove('contenedores');
+		//generalCache.remove('contenedoresGates');
+		//generalCache.remove('contenedoreTurnos');
 		generalCache.remove('descripciones');
 		generalCache.remove('matches');
 		generalCache.remove('ratesMatches');
@@ -351,11 +351,11 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		// Clientes cache
 		llamadas.push(factory.cargaClientes());
 		// Contenedores cache
-		llamadas.push(factory.cargaContenedores());
+		//llamadas.push(factory.cargaContenedores());
 		// Contenedores gates cache
-		llamadas.push(factory.cargaContenedoresGates());
+		//llamadas.push(factory.cargaContenedoresGates());
 		// Contenedores turnos cache
-		llamadas.push(factory.cargaContenedoresTurnos());
+		//llamadas.push(factory.cargaContenedoresTurnos());
 		// Descripciones cache
 		llamadas.push(factory.cargaDescripciones());
 		// Matches cache
@@ -373,7 +373,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		return deferred.promise;
 	};
 
-	factory.cargaMemoryCache = function(){
+	/*factory.cargaMemoryCache = function(){
 		var deferred = $q.defer();
 		var llamadas = [];
 		// Contenedores cache
@@ -390,7 +390,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				deferred.reject();
 			});
 		return deferred.promise;
-	};
+	};*/
 
 	factory.limpiaCache = function () {
 		CacheFactory.clearAll();

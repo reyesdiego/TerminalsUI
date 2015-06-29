@@ -22,23 +22,9 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	$scope.grupo = '';
 	$rootScope.filtroTerminal = '';
 
-	$scope.appointmentNotify = 0;
-	$scope.invoiceNotify = 0;
-	$scope.gateNotify = 0;
-
 	$scope.appointmentAnimar = '';
 	$scope.invoiceAnimar = '';
 	$scope.gateAnimar = '';
-
-	$scope.salir = function(){
-		authFactory.logout();
-		$scope.appointmentNotify = 0;
-		$scope.invoiceNotify = 0;
-		$scope.gateNotify = 0;
-		$rootScope.esUsuario = '';
-		$state.transitionTo('login');
-		$rootScope.filtroTerminal = '';
-	};
 
 	$scope.irA = function(){
 		if (!$rootScope.cargandoCache) {
@@ -105,21 +91,21 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		if ($state.current.name != ruta){
 			switch (ruta){
 				case 'turnos':
-					$scope.appointmentNotify++;
+					$rootScope.appointmentNotify++;
 					$scope.appointmentAnimar = 'agrandar';
 					$timeout(function(){
 						$scope.appointmentAnimar = '';
 					}, 1000);
 					break;
 				case 'gates':
-					$scope.gateNotify++;
+					$rootScope.gateNotify++;
 					$scope.gateAnimar = 'agrandar';
 					$timeout(function(){
 						$scope.gateAnimar = '';
 					}, 1000);
 					break;
 				case 'invoices':
-					$scope.invoiceNotify++;
+					$rootScope.invoiceNotify++;
 					$scope.invoiceAnimar = 'agrandar';
 					$timeout(function(){
 						$scope.invoiceAnimar = '';
@@ -242,13 +228,13 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		}
 		switch (toState.name){
 			case 'invoices':
-				$scope.invoiceNotify = 0;
+				$rootScope.invoiceNotify = 0;
 				break;
 			case 'gates':
-				$scope.gateNotify = 0;
+				$rootScope.gateNotify = 0;
 				break;
 			case 'turnos':
-				$scope.appointmentNotify = 0;
+				$rootScope.appointmentNotify = 0;
 				break;
 		}
 	});

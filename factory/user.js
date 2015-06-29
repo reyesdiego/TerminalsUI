@@ -11,11 +11,20 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 			.success(function(data) {
 				callback(data, false);
 			}).error(function(error) {
-				// ACC-0001 usuario o contraseña incorrecto
-				// ACC-0001 usuario o contraseñas vacío
-				// ACC-0003 no entro al correo
-				// ACC-0004 no habilitado en el sistema
-				callback(error, true);
+				console.log(error);
+				if (angular.isDefined(error) && error != null){
+					// ACC-0001 usuario o contraseña incorrecto
+					// ACC-0001 usuario o contraseñas vacío
+					// ACC-0003 no entro al correo
+					// ACC-0004 no habilitado en el sistema
+					callback(error, true);
+				} else {
+					error = {
+						code: 'ACC-0020',
+						message: 'Se ha producido un error de comunicación con el servidor.'
+					};
+					callback(error, true);
+				}
 			});
 	};
 

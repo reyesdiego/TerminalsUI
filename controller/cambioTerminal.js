@@ -60,7 +60,7 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 						$scope.cerrarSesion();
 					})
 			})
-	} else {
+	}/* else {
 		$scope.max = 30;
 		cacheFactory.cargaMemoryCache()
 			.then(function(){
@@ -79,6 +79,6 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 						$scope.cerrarSesion();
 					})
 			})
-	}
+	}*/
 
 }]);
