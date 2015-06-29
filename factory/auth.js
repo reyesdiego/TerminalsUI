@@ -6,7 +6,6 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 	var factory = {};
 
 	factory.userEnter = function(user, pass, useCookies){
-		console.log(useCookies);
 		var deferred = $q.defer();
 		this.login(user, pass)
 			.then(function(){
@@ -73,7 +72,6 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 
 					// Carga el tema de la terminal
 					if (typeof ($cookies.themeTerminal) != 'undefined') {
-						console.log($cookies.themeTerminal);
 						loginService.setFiltro($cookies.themeTerminal);
 						$rootScope.filtroTerminal = $cookies.themeTerminal;
 						generalFunctions.switchTheme($cookies.themeTerminal);

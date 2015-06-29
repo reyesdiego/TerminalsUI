@@ -452,7 +452,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 		}
-		console.log($cookies.restoreSesion);
 		if (!loginService.getStatus() && $cookies.restoreSesion === 'true'){
 			authFactory.login().then(function(){
 				//$rootScope.cargarCache = true;
