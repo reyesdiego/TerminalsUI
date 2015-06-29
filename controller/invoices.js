@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', function($scope, invoiceFactory, loginService){
+myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', function($rootScope, $scope, invoiceFactory, loginService){
 
 	$scope.ocultarFiltros = ['nroPtoVenta'];
 
@@ -27,9 +27,6 @@ myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', fu
 	};
 
 	$scope.invoices = [];
-
-	console.log(loginService.getFiltro());
-	$scope.nombre = loginService.getFiltro();
 
 	$scope.cargando = true;
 

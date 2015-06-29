@@ -452,7 +452,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 		}
-		if (!loginService.getStatus() && $cookies.restoreSesion == 'true'){
+		console.log($cookies.restoreSesion);
+		if (!loginService.getStatus() && $cookies.restoreSesion === 'true'){
 			authFactory.login().then(function(){
 				//$rootScope.cargarCache = true;
 				//$rootScope.primerRuteo = true;
@@ -472,7 +473,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.cambioMoneda = !(in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
 		if (!in_array(toState.name, $rootScope.rutasComunes)){
 			if (loginService.getStatus()){
-				if ($cookies.isLogged || $cookies.isLogged == 'true'){
+				if ($cookies.isLogged === 'true'){
 					if(!in_array(toState.name, loginService.getAcceso())){
 						$rootScope.usuarioNoAutorizado(event);
 					} /*else {

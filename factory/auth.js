@@ -15,7 +15,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 					$cookies.password = pass;
 					$cookies.themeTerminal = loginService.getFiltro();
 				}
-				$cookies.isLogged = true;
+				$cookies.isLogged = 'true';
 				$cookies.restoreSesion = useCookies;
 				deferred.resolve();
 			},
@@ -73,6 +73,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 
 					// Carga el tema de la terminal
 					if (typeof ($cookies.themeTerminal) != 'undefined') {
+						console.log($cookies.themeTerminal);
 						loginService.setFiltro($cookies.themeTerminal);
 						$rootScope.filtroTerminal = $cookies.themeTerminal;
 						generalFunctions.switchTheme($cookies.themeTerminal);
@@ -81,15 +82,13 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 					}
 
 					// Carga la cache si el usuario no tenía el acceso por cookies
-					var restoreSesion = ($cookies.restoreSesion === 'true');
+					var restoreSesion = $cookies.restoreSesion === 'true';
 					if (!restoreSesion){
-						console.log('cache');
 						cacheFactory.cargaCache()
 							.then(function(){
 								deferred.resolve();
 							},
 							function(){
-								console.log('algo malo');
 								var cacheError = {
 									code: 'DAT-0010',
 									message: 'Se ha producido un error en la carga de la caché.'
@@ -97,11 +96,9 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 								deferred.reject(cacheError);
 							});
 					} else { //Ya están cargadas las cosas ?????
-						console.log('mirá que no cargó la cache');
 						deferred.resolve();
 					}
 				} else {
-					console.log('algo malo acá');
 					var myError = {
 						code: 'ACC-0010'
 					};
