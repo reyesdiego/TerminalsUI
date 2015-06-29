@@ -396,8 +396,9 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	};
 
 	if (loginService.getStatus()){
-		$rootScope.cargarCache = true;
-		$rootScope.primerRuteo = true;
+		$rootScope.rutas = loginService.getAcceso();
+		//$rootScope.cargarCache = true;
+		//$rootScope.primerRuteo = true;
 	}
 
 	$rootScope.fechaInicio = new Date();
