@@ -440,13 +440,9 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.filtroTerminal = '';
 	};
 
-	/*$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
-		if (!$rootScope.primerRuteo){
-			$rootScope.previousState = from;
-		} else {
-			$rootScope.primerRuteo = false;
-		}
-	});*/
+	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
+		$rootScope.previousState = from;
+	});
 
 	$rootScope.$on('$stateChangeStart', function(event, toState){
 		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
