@@ -83,6 +83,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 					// Carga la cache si el usuario no tenía el acceso por cookies
 					var restoreSesion = ($cookies.restoreSesion === 'true');
 					if (!restoreSesion){
+						console.log('cache');
 						cacheFactory.cargaCache()
 							.then(function(){
 								deferred.resolve();
