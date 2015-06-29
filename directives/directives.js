@@ -117,7 +117,7 @@ myapp.directive('accordionInvoicesSearch', ['generalCache', 'contenedoresCache',
 		templateUrl:	'view/accordion.invoices.search.html',
 		link: function ($scope) {
 			$scope.listaRazonSocial = generalCache.get('clientes');
-			$scope.listaContenedores = contenedoresCache.get('contenedores');
+			$scope.listaContenedores = []//contenedoresCache.get('contenedores');
 			$scope.listaBuques = generalCache.get('buques');
 		}
 	}

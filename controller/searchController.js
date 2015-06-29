@@ -7,8 +7,8 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		open: true
 	};
 	$scope.maxDate = new Date();
-	$scope.listaContenedoresGates = contenedoresCache.get('contenedoresGates');
-	$scope.listaContenedoresTurnos = contenedoresCache.get('contenedoresTurnos');
+	$scope.listaContenedoresGates = []//contenedoresCache.get('contenedoresGates');
+	$scope.listaContenedoresTurnos = []//contenedoresCache.get('contenedoresTurnos');
 	$scope.listaBuques = generalCache.get('buques');
 	$scope.vouchers = generalCache.get('vouchers');
 	$scope.listaViajes = [];
