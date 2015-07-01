@@ -76,6 +76,10 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.filtrado('contenedor', selected.title);
 		}
 	};
+	$scope.definidoStatus = function(turno){
+		return angular.isDefined(turno.email);
+	};
+
 	$scope.filtrado = function(filtro, contenido){
 		$scope.model[filtro] = contenido;
 		if (filtro == 'buqueNombre') {
