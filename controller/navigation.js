@@ -190,22 +190,19 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		if (loginService.getStatus()){
 			if (loginService.getType() == 'agp' || (loginService.getType == 'terminal' && loginService.getFiltro() == data.data.terminal)){
 				var comprobante = data.data;
-				invoiceFactory.getInvoiceById(comprobante._id, function(data){
-					comprobante = data;
-					var nuevoComprobanteTemplate;
+				var nuevoComprobanteTemplate;
+				if (comprobante.terminal == loginService.getFiltro()){
+					nuevoComprobanteTemplate = '<span>Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.total, comprobante)) + '<br><a href ng-click="mostrarComprobante(\'' + comprobante._id + '\')">Ver comprobante</a></span>';
+				} else {
+					nuevoComprobanteTemplate = '<span><a href ng-click="setearTerminal(\'' + comprobante.terminal + '\')">Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.total, comprobante)) + '</a>';
+				}
+				if (loginService.getType() == 'agp'){
+					$scope.procesarNotificacion('invoices', nuevoComprobanteTemplate, 'Nuevo Comprobante ' + comprobante.terminal, comprobante.terminal);
+				} else {
 					if (comprobante.terminal == loginService.getFiltro()){
-						nuevoComprobanteTemplate = '<span>Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.fecha.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante)) + '<br><a href ng-click="mostrarComprobante(\'' + comprobante._id + '\')">Ver comprobante</a></span>';
-					} else {
-						nuevoComprobanteTemplate = '<span><a href ng-click="setearTerminal(\'' + comprobante.terminal + '\')">Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.fecha.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('formatCurrency')($rootScope.moneda) + ' ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante)) + '</a>';
+						$scope.procesarNotificacion('invoices', nuevoComprobanteTemplate, 'Nuevo Comprobante', comprobante.terminal);
 					}
-					if (loginService.getType() == 'agp'){
-						$scope.procesarNotificacion('invoices', nuevoComprobanteTemplate, 'Nuevo Comprobante ' + comprobante.terminal, comprobante.terminal);
-					} else {
-						if (comprobante.terminal == loginService.getFiltro()){
-							$scope.procesarNotificacion('invoices', nuevoComprobanteTemplate, 'Nuevo Comprobante', comprobante.terminal);
-						}
-					}
-				});
+				}
 			}
 		}
 	});
