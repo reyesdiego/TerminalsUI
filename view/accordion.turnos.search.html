@@ -71,22 +71,9 @@
 						  auto-match="true"></angucomplete-alt>
 	</div>
 	<div class="col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
-		<div class="form-group">
-			<angucomplete-alt id="idContenedor"
-							  placeholder="Contenedor"
-							  pause="100"
-							  selected-object="containerSelected"
-							  local-data="listaContenedoresTurnos"
-							  search-fields="contenedor"
-							  title-field="contenedor"
-							  minlength="1"
-							  input-class="form-control"
-							  filtrar="filtrado(filtrar, contenido)"
-							  filter-field="contenedor"
-							  input-field="contenedor"
-							  match-class="highlight"
-							  limit-results="15"
-							  outside-model="model.contenedor"></angucomplete-alt>
+		<div class="input-group">
+			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.contenedor" class="form-control" placeholder="Contenedor" toupper/>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('contenedor', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('email', 0) >= 0">
