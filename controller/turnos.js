@@ -33,7 +33,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		'estado': 'N',
 		'code': '',
 		'mov': 'IMPO',
-		'filtroOrden': 'gateTimestamp',
+		'filtroOrden': 'inicio',
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
 		'order': ''
