@@ -34,9 +34,9 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		'code': '',
 		'mov': 'IMPO',
 		'filtroOrden': 'inicio',
-		'filtroOrdenAnterior': '',
+		'filtroOrdenAnterior': 'inicio',
 		'filtroOrdenReverse': false,
-		'order': ''
+		'order': '"inicio":1'
 	};
 
 	$scope.model.fechaInicio.setHours(0,0);
@@ -75,6 +75,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	};
 
 	$scope.cargaTurnos = function(){
+		console.log('hola');
 		$scope.cargando = true;
 		$scope.turnos = [];
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);

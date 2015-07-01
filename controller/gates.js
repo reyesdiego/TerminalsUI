@@ -41,7 +41,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		'code': '',
 		'mov': '',
 		'filtroOrden': 'gateTimestamp',
-		'filtroOrdenAnterior': '',
+		'filtroOrdenAnterior': 'gateTimestamp',
 		'filtroOrdenReverse': true,
 		'order': '"gateTimestamp": -1',
 		'fechaConGMT': true

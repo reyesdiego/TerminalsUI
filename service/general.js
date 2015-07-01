@@ -5,10 +5,11 @@ myapp.service('generalFunctions', [function () {
 	this.filtrarOrden = function (model, filtro) {
 		model.currentPage = 1;
 		model.filtroOrden = filtro;
-		model.filtroOrdenReverse = (model.filtroOrden == model.filtroAnterior) ? !model.filtroOrdenReverse : false;
+		model.filtroOrdenReverse = (model.filtroOrden == model.filtroOrdenAnterior) ? !model.filtroOrdenReverse : false;
 		var filtroReverse = (model.filtroOrdenReverse) ? -1 : 1;
 		model.order = '"' + filtro + '":' + filtroReverse;
-		model.filtroAnterior = filtro;
+		model.filtroOrdenAnterior = filtro;
+
 		return model;
 	};
 
