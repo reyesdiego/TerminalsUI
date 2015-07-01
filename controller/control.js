@@ -577,8 +577,10 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			});
 		}
 		else if ($scope.radioModel == 'Turnos'){
+			$scope.diaGatesTurnos.setHours(0, 0, 0);
+			$scope.diaGatesTurnosFin.setHours(0, 0, 0);
 			$scope.turnosByHour = true;
-			controlPanelFactory.getTurnosDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin }, function(graf){
+			controlPanelFactory.getTurnosDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
 				$scope.loadingGatesTurnos = false;
 				$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);
 				$scope.labelPorHora = 'Turnos por hora'
