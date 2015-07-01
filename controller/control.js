@@ -103,7 +103,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	$scope.isCollapsedDayTasas = true;
 	$scope.isCollapsedDayGatesTurnos = true;
 	$scope.isCollapsedDayGatesTurnosFin = true;
-	$scope.turnosByHour = false;
 
 	// Fecha (dia y hora)
 	$scope.desde = new Date();
@@ -569,18 +568,16 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.isCollapsedDayGatesTurnos = true;
 		$scope.isCollapsedDayGatesTurnosFin = true;
 		$scope.loadingGatesTurnos = true;
+		$scope.diaGatesTurnos.setHours(0, 0, 0);
+		$scope.diaGatesTurnosFin.setHours(0, 0, 0);
 		if ($scope.radioModel == 'Gates'){
-			$scope.turnosByHour = false;
-			controlPanelFactory.getGatesDia({ fecha: $scope.diaGatesTurnos }, function(graf){
+			controlPanelFactory.getGatesDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
 				$scope.loadingGatesTurnos = false;
 				$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);
 				$scope.labelPorHora = 'Gates por hora'
 			});
 		}
 		else if ($scope.radioModel == 'Turnos'){
-			$scope.diaGatesTurnos.setHours(0, 0, 0);
-			$scope.diaGatesTurnosFin.setHours(0, 0, 0);
-			$scope.turnosByHour = true;
 			controlPanelFactory.getTurnosDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
 				$scope.loadingGatesTurnos = false;
 				$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);
