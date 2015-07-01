@@ -567,6 +567,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 	$scope.traerDatosGatesTurnosDia = function(){
 		$scope.errorGatesTurnos = false;
 		$scope.isCollapsedDayGatesTurnos = true;
+		$scope.isCollapsedDayGatesTurnosFin = true;
 		$scope.loadingGatesTurnos = true;
 		if ($scope.radioModel == 'Gates'){
 			$scope.turnosByHour = false;
