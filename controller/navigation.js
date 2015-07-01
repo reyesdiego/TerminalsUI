@@ -111,7 +111,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 						$scope.invoiceAnimar = '';
 					}, 1000);
 			}
-		} else {
+		} else if($rootScope.verNotificaciones) {
 			if ($scope.notificacionesMáximasPantalla > 0){
 				notify({
 					messageTemplate: template,
@@ -280,6 +280,11 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 				$scope.iniciarChequeo = true;
 			}
 		}, 21000)
+	};
+
+	$scope.onOffNotificaciones = function(){
+		$rootScope.verNotificaciones = !$rootScope.verNotificaciones;
+		$scope.colaNotificaciones = [];
 	}
 
 }]);

@@ -210,6 +210,8 @@
 						<li><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
 						<li><a collap ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
 						<li><a collap ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li class="visible-lg divider"></li>
+						<li><a collap ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones">Deshabilitar</span><span ng-show="!verNotificaciones">Habilitar</span> Notificaciones</a></li>
 					</ul>
 				</li>
 				<li class="hidden-sm" ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>

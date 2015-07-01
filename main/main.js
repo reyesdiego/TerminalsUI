@@ -374,6 +374,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.gateNotify = 0;
 	$rootScope.invoiceNotify = 0;
 
+	$rootScope.verNotificaciones = true;
+
 	$rootScope.previousState = '';
 	$rootScope.cambioTerminal = false;
 	$rootScope.cargarCache = false;
