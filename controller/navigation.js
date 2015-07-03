@@ -282,6 +282,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	$scope.onOffNotificaciones = function(){
 		$rootScope.verNotificaciones = !$rootScope.verNotificaciones;
 		$scope.colaNotificaciones = [];
-	}
+		if (!$rootScope.verNotificaciones) notify.closeAll();
+	};
 
 }]);
