@@ -242,9 +242,14 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 
 }]);
 
-myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'socket', 'vouchersArrayCache', function($rootScope, $scope, invoiceFactory, socket, vouchersArrayCache) {
+myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'vouchersArrayCache', 'correlativeSocket', function($rootScope, $scope, invoiceFactory, vouchersArrayCache, correlativeSocket) {
 
-	var socketIoRegister;
+	var socketIoRegister = '';
+
+	correlativeSocket.emit('newUser', function (sess){
+		socketIoRegister = sess;
+		correlativeSocket.forward('correlative_' + sess, $scope);
+	});
 
 	$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje', 'itemsPerPage'];
 
@@ -346,6 +351,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		$scope.puntosDeVenta = [];
 		$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
 		$scope.mostrarBotonImprimir = false;
+
 		invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
 			if (dataComprob.status == 'OK'){
 				if ($scope.totalPuntos > 0){
@@ -372,7 +378,6 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 					mensajeCorrelativo : 'Se ha producido un error al cargar los datos.'
 				};
 			}
-
 			$scope.loadingCorrelatividad = false;
 		});
 	};
@@ -383,18 +388,18 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		}
 	});
 
-	socket.emit('newUser', function (sess){
-
-		socketIoRegister = sess;
-		socket.on('correlative_' + sess, function (data) {
-			if ($scope.leerData){
-				$scope.generarInterfaz(data);
-				$scope.$apply();
-			}
-		});
+	$scope.$on('socket:correlative_' + socketIoRegister, function(ev, data){
+		if ($scope.leerData){
+			$scope.generarInterfaz(data);
+			$scope.$apply();
+		}
 	});
 
 	$scope.traerPuntosDeVenta();
+
+	$scope.$on('$destroy', function(){
+		correlativeSocket.disconnect();
+	});
 
 }]);
 

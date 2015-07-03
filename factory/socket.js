@@ -1,15 +1,23 @@
 /**
- * Created by diego on 5/16/14.
+ * Created by artiom on 02/07/15.
  */
 
-myapp.factory('socket', function(){
+myapp.factory('appSocket', ['socketFactory', function(socketFactory){
 
-	return io.connect(serverUrl);
-	/*return io.connect(serverUrl, {
-		'reconnection': true,
-		'reconnectionDelay': 1000,
-		'reconnectionDelayMax' : 5000,
-		'reconnectionAttempts': 5
-	});*/
-	//return io.connect(serverUrl, { query: 'loggeduser=user1' });
-});
+	var ioSocket = io.connect(serverUrl);
+
+	var mySocket = socketFactory({ioSocket: ioSocket});
+
+	mySocket.forward('appointment');
+	mySocket.forward('gate');
+	mySocket.forward('invoice');
+
+	return mySocket;
+
+}]);
+
+myapp.factory('correlativeSocket', ['socketFactory', function(socketFactory){
+	var ioSocket = io.connect(serverUrl);
+
+	return socketFactory({ioSocket: ioSocket});
+}]);

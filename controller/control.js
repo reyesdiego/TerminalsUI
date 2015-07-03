@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 21/02/14.
  */
-myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'socket', 'formatService', 'generalFunctions', 'colorTerminalesCache', 'loginService', function ($rootScope, $scope, controlPanelFactory, socket, formatService, generalFunctions, colorTerminalesCache, loginService){
+myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'formatService', 'generalFunctions', 'colorTerminalesCache', 'loginService', function ($rootScope, $scope, controlPanelFactory, formatService, generalFunctions, colorTerminalesCache, loginService){
 
 	var fecha = formatService.formatearFecha(new Date());
 
@@ -325,7 +325,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		return matAux;
 	};
 
-	socket.on('invoice', function (data) {
+	$scope.$on('socket:invoice', function (ev, data) {
 		if (data.status === 'OK') {
 			var fecha1 = formatService.formatearFecha($scope.desde);
 			var fecha2 = data.data.emision.substring(0,10);

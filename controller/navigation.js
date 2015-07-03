@@ -2,7 +2,7 @@
  * Created by Artiom on 14/03/14.
  */
 
-myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'socket', 'authFactory', 'cacheFactory', 'generalFunctions', '$timeout', 'notify', '$filter', 'invoiceFactory', function($scope, $rootScope, $state, loginService, socket, authFactory, cacheFactory, generalFunctions, $timeout, notify, $filter, invoiceFactory) {
+myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'authFactory', 'cacheFactory', 'generalFunctions', '$timeout', 'notify', '$filter', function($scope, $rootScope, $state, loginService, authFactory, cacheFactory, generalFunctions, $timeout, notify, $filter) {
 
 	"use strict";
 
@@ -136,7 +136,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		}
 	};
 
-	socket.on('appointment', function (data) {
+	$scope.$on('socket:appointment', function (ev, data) {
 		if (loginService.getStatus()){
 			if (data.status === 'OK') {
 				var turno = data.data;
@@ -157,7 +157,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		}
 	});
 
-	socket.on('gate', function (data) {
+	$scope.$on('socket:gate', function (ev, data) {
 		if (loginService.getStatus()){
 			if (data.status === 'OK') {
 				var gate = data.data;
@@ -186,7 +186,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		}
 	});
 
-	socket.on('invoice', function (data) {
+	$scope.$on('socket:invoice', function (ev, data) {
 		if (loginService.getStatus()){
 			if (loginService.getType() == 'agp' || (loginService.getType == 'terminal' && loginService.getFiltro() == data.data.terminal)){
 				var comprobante = data.data;

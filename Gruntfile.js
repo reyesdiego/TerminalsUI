@@ -115,6 +115,11 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
+						src: ['bower_components/angular-socket-io/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
 						src: ['fonts/*'],
 						dest: 'build'
 					},

@@ -63,7 +63,7 @@ function in_array(needle, haystack, argStrict){
 
 var serverUrl = config.url();
 
-var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify']);
+var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io']);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -359,7 +359,7 @@ myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 	});
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies){
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket){
 
 	moment().format('YYYY-MM-DD');
 	moment.locale('es');
@@ -440,6 +440,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.esUsuario = '';
 		$state.transitionTo('login');
 		$rootScope.filtroTerminal = '';
+		if (angular.isDefined($rootScope.appSocket)) $rootScope.appSocket.disconnect();
 	};
 
 	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {

@@ -75,7 +75,6 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	};
 
 	$scope.cargaTurnos = function(){
-		console.log('hola');
 		$scope.cargando = true;
 		$scope.turnos = [];
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.itemsPerPage);

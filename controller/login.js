@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', 'generalFunctions', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout, generalFunctions) {
+myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', 'socketFactory', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout, socketFactory) {
 	'use strict';
 	$scope.barType = "progress-bar-info";
 	$scope.entrando = false;
@@ -48,19 +48,15 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$rootScope.cargandoCache = false;
 		if (tipo == 'normal'){
 			$scope.mostrarMensaje = $scope.msg[5];
-			authFactory.logout();
-			$rootScope.esUsuario = '';
-			$rootScope.filtroTerminal = '';
-			$scope.volver();
 		} else {
 			$scope.hayError = true;
 			$scope.barType = 'progress-bar-danger';
 			$scope.mostrarMensaje = $scope.msg[4];
-			authFactory.logout();
-			$rootScope.esUsuario = '';
-			$rootScope.filtroTerminal = '';
-			$scope.volver();
 		}
+		authFactory.logout();
+		$rootScope.esUsuario = '';
+		$rootScope.filtroTerminal = '';
+		$scope.volver();
 	};
 
 	$scope.volver = function(){
