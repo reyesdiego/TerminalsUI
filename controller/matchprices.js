@@ -73,7 +73,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				//Cargo todos los códigos ya asociados de la terminal para control
 				$scope.pricelist.forEach(function(price){
 					$scope.matchesTerminal.push(price.code);
-					if (price.matches != null && price.matches.length > 0){
+					if (angular.isDefined(price.matches) && price.matches != null && price.matches.length > 0 && price.matches[0].match.length > 0){
 						$scope.codigosConMatch.push(price);
 						price.matches[0].match.forEach(function(codigo){
 							$scope.matchesTerminal.push(codigo);
