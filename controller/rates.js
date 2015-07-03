@@ -51,7 +51,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 	$scope.chartHeightReporteTarifas = 500;
 	$scope.chartDataReporteTarifas = [
 		['Codigos', 'algo'],
-		['hola', 2526]
+		['hola', 0]
 	];
 
 	$scope.deleteRow = function (index) {
@@ -128,6 +128,12 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 	$scope.cargaRates = function () {
 		if (!angular.isDefined($scope.model['fecha'])) $scope.model.fecha = $scope.fechaInicio;
+		$scope.total = 0;
+		$scope.totalesPorTerminal = [
+			['BACTSSA', 0],
+			['TERMINAL 4', 0],
+			['TRP', 0]
+		];
 		$scope.mostrarGrafico = false;
 		$scope.cargando = true;
 		$scope.configPanel = {

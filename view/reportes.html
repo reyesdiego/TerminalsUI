@@ -73,6 +73,24 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+					<tr>
+						<th></th>
+						<th>BACTSSA</th>
+						<th>TERMINAL4</th>
+						<th>TRP</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td><strong>Total</strong></td>
+						<td ng-repeat="total in totalesPorTerminal">{{ monedaFija | formatCurrency }} {{ total[1] | currency }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
 			<div class="row" ng-show="mostrarGrafico">
 				<div class="col-lg-6 text-center">
 					<dynamic-chart
