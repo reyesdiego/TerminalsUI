@@ -64,18 +64,14 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			});
 		}
 	};
+
 	$scope.viajeSelected = function(selected){
 		if (angular.isDefined(selected)){
 			$scope.model.viaje = selected.title;
 			$scope.filtrado('viaje', selected.title);
 		}
 	};
-	$scope.containerSelected = function (selected) {
-		if (angular.isDefined(selected)) {
-			$scope.model.contenedor = selected.title;
-			$scope.filtrado('contenedor', selected.title);
-		}
-	};
+
 	$scope.definidoStatus = function(turno){
 		return angular.isDefined(turno.email);
 	};

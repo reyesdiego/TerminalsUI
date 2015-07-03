@@ -130,13 +130,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 		}
 	};
 
-	$scope.containerSelected = function(selected){
-		if (angular.isDefined(selected) && selected.title != $scope.model.contenedor){
-			$scope.model.contenedor = selected.title;
-			$scope.filtrado('contenedor', selected.title);
-		}
-	};
-
 	$scope.buqueSelected = function(selected){
 		if (angular.isDefined(selected) && selected.title != $scope.model.buqueNombre){
 			$scope.model.buqueNombre = selected.originalObject.buque;

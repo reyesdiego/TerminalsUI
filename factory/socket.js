@@ -4,7 +4,8 @@
 
 myapp.factory('appSocket', ['socketFactory', function(socketFactory){
 
-	var ioSocket = io.connect(serverUrl);
+	//La dirrección deberá ser pasado por config
+	var ioSocket = io.connect(socketUrl);
 
 	var mySocket = socketFactory({ioSocket: ioSocket});
 
@@ -17,7 +18,7 @@ myapp.factory('appSocket', ['socketFactory', function(socketFactory){
 }]);
 
 myapp.factory('correlativeSocket', ['socketFactory', function(socketFactory){
-	var ioSocket = io.connect(serverUrl);
+	var ioSocket = io.connect(socketUrl);
 
 	return socketFactory({ioSocket: ioSocket});
 }]);
