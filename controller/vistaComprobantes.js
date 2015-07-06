@@ -479,11 +479,15 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 		imprimirComprobante.detalle.forEach(function(detalle){
 			detalle.buque.fecha = $filter('date')(detalle.buque.fecha, 'dd/MM/yyyy', 'UTC');
 		});
-		downloadFactory.invoicePDF(imprimirComprobante, function(data){
+		downloadFactory.invoicePDF(imprimirComprobante, function(data, status){
+			if (status == 'OK'){
+				var file = new Blob([data], {type: 'application/pdf'});
+				var fileURL = URL.createObjectURL(file);
+				window.open(fileURL);
+			} else {
+				dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
+			}
 			$scope.disablePdf = false;
-			var file = new Blob([data], {type: 'application/pdf'});
-			var fileURL = URL.createObjectURL(file);
-			window.open(fileURL);
 		})
 	}
 

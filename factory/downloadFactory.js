@@ -8,12 +8,16 @@ myapp.factory('downloadFactory', ['$http', '$filter', function($http){
 	factory.invoicePDF = function(invoice, callback){
 		$http({
 			method: 'POST',
-			url: 'http://localhost/conversorPDF/invoiceToPdf.php',
+			url: 'conversorPDF/invoiceToPdf.php',
 			responseType : 'arraybuffer',
-			data: invoice,
-			contentType: 'application/json'
-		}).success(function(data) {
-			callback(data);
+			data: invoice
+		}).success(function(data, status, headers) {
+			var contentType = headers('Content-Type');
+			if (contentType.indexOf('text/html') >= 0){
+				callback(data, 'ERROR');
+			} else {
+				callback(data, 'OK');
+			}
 		});
 	};
 
