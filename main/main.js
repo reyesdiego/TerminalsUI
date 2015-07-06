@@ -375,6 +375,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	$rootScope.gateNotify = 0;
 	$rootScope.invoiceNotify = 0;
 
+	$rootScope.logoTerminal = 'images/logo_bactssa.png';
+
 	$rootScope.verNotificaciones = true;
 
 	$rootScope.previousState = '';
@@ -400,6 +402,17 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 	if (loginService.getStatus()){
 		$rootScope.rutas = loginService.getAcceso();
+		switch (loginService.getFiltro()){
+			case 'BACTSSA':
+				$rootScope.logoTerminal = 'images/logo_bactssa.png';
+				break;
+			case 'TERMINAL4':
+				$rootScope.logoTerminal = 'images/logo_terminal4.png';
+				break;
+			case 'TRP':
+				$rootScope.logoTerminal = 'images/logo_trp.png';
+				break;
+		}
 		//$rootScope.cargarCache = true;
 		//$rootScope.primerRuteo = true;
 	}

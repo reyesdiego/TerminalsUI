@@ -39,6 +39,17 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 	};
 
 	$rootScope.rutas = loginService.getAcceso();
+	switch (loginService.getFiltro()){
+		case 'BACTSSA':
+			$rootScope.logoTerminal = 'images/logo_bactssa.png';
+			break;
+		case 'TERMINAL4':
+			$rootScope.logoTerminal = 'images/logo_terminal4.png';
+			break;
+		case 'TRP':
+			$rootScope.logoTerminal = 'images/logo_trp.png';
+			break;
+	}
 	$rootScope.cargandoCache = true;
 
 	///if ($rootScope.cambioTerminal){

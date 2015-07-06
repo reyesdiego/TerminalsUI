@@ -24,6 +24,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 		{ value: 50, description: '50 items por página', ticked: false}
 	];
 	$scope.estadosComprobantes = $filter('filter')(generalCache.get('estados'), $scope.filtroEstados);
+	$scope.logoTerminal = $rootScope.logoTerminal;
 
 	$scope.estadosComprobantes.forEach(function(unEstado){
 		unEstado.ticked = false;
