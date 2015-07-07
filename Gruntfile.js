@@ -140,7 +140,7 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['conversorPDF/*'],
+						src: ['conversorPDF/**'],
 						dest: 'build'
 					}
 				]
