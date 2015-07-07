@@ -102,6 +102,18 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 15);
 
+switch ($data['terminal']){
+	case 'BACTSSA':
+		$pdf->Image('imagenes/logo_bactssa.jpg', $pdf->GetX(), $pdf->GetY() + 2, 40);
+		break;
+	case 'TERMINAL4':
+		$pdf->Image('imagenes/logo_terminal4.jpg', $pdf->GetX() + 4, $pdf->GetY() + 5, 40);
+		break;
+	case 'TRP':
+		$pdf->Image('imagenes/logo_trp.jpg', $pdf->GetX() + 4, $pdf->GetY() + 5, 40);
+		break;
+}
+
 $pdf->Cell(0, 8, $data['codTipoComprob'], "TLR", 0, "C");
 $pdf->Ln();
 
@@ -181,9 +193,11 @@ $pdf->Ln();
 $pdf->Cell(115, 8, "I.V.A.", "LRB", 0, "R");
 $pdf->Cell(75, 8, "US$ " . number_format($data['importe']['iva'], 2), "LRB", 0, "R");
 $pdf->Ln();
-$pdf->Cell(115, 8, "Otros Tributos", "LRB", 0, "R");
-$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['otrosTributos'], 2), "LRB", 0, "R");
-$pdf->Ln();
+if (isset($data['importe']['otrosTributos'])){
+	$pdf->Cell(115, 8, "Otros Tributos", "LRB", 0, "R");
+	$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['otrosTributos'], 2), "LRB", 0, "R");
+	$pdf->Ln();
+}
 $pdf->Cell(115, 8, "Total", "LRB", 0, "R");
 $pdf->Cell(75, 8, "US$ " . number_format($data['importe']['total'], 2), "LRB", 0, "R");
 $pdf->SetFont('Arial', '', 8);
