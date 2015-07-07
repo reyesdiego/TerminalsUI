@@ -42,32 +42,15 @@
 		this.formatearFechaHorasMinutosGMTLocal = function(fecha) {
 			if (fecha != '' && fecha != null){
 				fecha = new Date(fecha);
-				var fechaAux = this.formatearFecha(fecha) + ' ';
-				if(fecha.getHours() < 7){
+				var fechaAux = this.formatearFecha(fecha) + 'T';
+				if(fecha.getHours() < 10){
 					fechaAux = fechaAux + '0';
 				}
 				fechaAux = fechaAux + (fecha.getHours()) + ':';
 				if(fecha.getMinutes() < 10){
 					fechaAux = fechaAux + '0';
 				}
-				fechaAux = fechaAux + fecha.getMinutes() + ' -0300';
-				return fechaAux;
-			}else
-				return null;
-		};
-
-		this.formatearFechaHorasMinutos = function(fecha) {
-			if (fecha != '' && fecha != null){
-				fecha = new Date(fecha);
-				var fechaAux = this.formatearFecha(fecha) + ' ';
-				if(fecha.getHours() < 7){
-					fechaAux = fechaAux + '0';
-				}
-				fechaAux = fechaAux + (fecha.getHours() + 3) + ':';
-				if(fecha.getMinutes() < 10){
-					fechaAux = fechaAux + '0';
-				}
-				fechaAux = fechaAux + fecha.getMinutes() + ' -0000';
+				fechaAux = fechaAux + fecha.getMinutes() + '.000-03:00';
 				return fechaAux;
 			}else
 				return null;
@@ -76,15 +59,15 @@
 		this.formatearFechaHorasMinutosSinGMT = function(fecha) {
 			if (fecha != '' && fecha != null){
 				fecha = new Date(fecha);
-				var fechaAux = this.formatearFecha(fecha) + ' ';
-				if(fecha.getHours() < 7){
+				var fechaAux = this.formatearFecha(fecha) + 'T';
+				if(fecha.getHours() < 10){
 					fechaAux = fechaAux + '0';
 				}
 				fechaAux = fechaAux + (fecha.getHours() + 3) + ':';
 				if(fecha.getMinutes() < 10){
 					fechaAux = fechaAux + '0';
 				}
-				fechaAux = fechaAux + fecha.getMinutes();
+				fechaAux = fechaAux + fecha.getMinutes() + '.000';
 				return fechaAux;
 			}else
 				return null;
