@@ -125,7 +125,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		$http.get(inserturl)
 			.success(function (data){
 				data.data = setearInterfazComprobante(data.data);
-				data.data.transferencia = formatService.formatearFechaHorasMinutosSinGMT(generalFunctions.idToDate(data.data._id));
+				data.data.transferencia = formatService.formatearFechaISOString(generalFunctions.idToDate(data.data._id));
 				callback(ponerDescripcionComprobante(data.data));
 			}).error(function(error){
 				errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
