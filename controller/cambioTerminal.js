@@ -4,6 +4,7 @@
 
 myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', '$state', 'authFactory', 'loginService', '$timeout', 'generalFunctions', 'dialogs', function($rootScope, $scope, cacheFactory, $state, authFactory, loginService, $timeout, generalFunctions, dialogs){
 
+	//$scope.max = 70; //sin metodos oracle
 	$scope.max = 80;
 	$scope.progreso = 0;
 	$scope.mostrarMensaje = 'Actualizando datos de la aplicación...';

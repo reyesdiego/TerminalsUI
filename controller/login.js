@@ -8,6 +8,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	$scope.sesion = false;
 	$scope.hayError = false;
 
+	//$scope.max = 90; //Sin métodos afip
 	$scope.max = 140;
 
 	$scope.progreso = 0;
