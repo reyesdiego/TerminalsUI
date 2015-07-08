@@ -15,10 +15,10 @@ class PDF extends FPDF
 
 		//Título
 		$this->SetX(50);
-		$this->Cell(150,10,urldecode(em('Sistema de Control de Terminales')),0,0,'C');
+		$this->Cell(150,10,utf8_decode('Sistema de Control de Terminales'),0,0,'C');
 		$this->Ln();
 		$this->SetX(50);
-		$this->Cell(150,10,urldecode(em('Impresión de comprobantes')),0,0,'C');
+		$this->Cell(150,10,utf8_decode('Impresión de comprobantes'),0,0,'C');
 		//Salto de línea
 		$this->Ln(15);
 	}
@@ -33,7 +33,8 @@ class PDF extends FPDF
 		$this->SetFont('Arial','I',8);
 		//Número de página
 		$this->Cell(20,10,'Pagina '.$this->PageNo().'/{nb}',0,0,'L');
-		$this->Cell(170, 10, urldecode(em("Administración General de Puertos S.E. - Departamento de Desarrollo")), 0, 0, "R");
+		$this->Cell(165, 10, utf8_decode("Administración General de Puertos S.E. - Departamento de Desarrollo"), 0, 0, "R");
+		$this->Image("imagenes/logo_puertochico.jpg", $this->GetX(), $this->GetY() + 2, 5);
 	}
 
 	function CheckPageBreak($h)
@@ -118,7 +119,7 @@ $pdf->Cell(0, 8, $data['codTipoComprob'], "TLR", 0, "C");
 $pdf->Ln();
 
 $pdf->SetFont('Arial', 'B', 12);
-$pdf->Cell(0, 8, urldecode(em("Número: ")) . $data['nroComprob'], "LR", 0, "C");
+$pdf->Cell(0, 8, utf8_decode("Número: ") . $data['nroComprob'], "LR", 0, "C");
 $pdf->Ln();
 
 $pdf->SetFont('Arial', '', 10);
@@ -126,11 +127,11 @@ $pdf->Cell(0, 5, "Terminal: " . $data['terminal'], "LR", 0, "C");
 $pdf->Ln();
 $pdf->Cell(0, 5, "Punto de venta: " . $data['nroPtoVenta'], "LR", 0, "C");
 $pdf->Ln();
-$pdf->Cell(0, 5, urldecode(em("Emisión: ")) . $data['fecha']['emision'], "LRB", 0, "C");
+$pdf->Cell(0, 5, utf8_decode("Emisión: ") . $data['fecha']['emision'], "LRB", 0, "C");
 $pdf->Ln();
 
 $pdf->SetFont('Arial', 'B', 10);
-$pdf->Cell(0, 8, urldecode(em("Razón Social: ")) . $data['razon'], "LR", 0, "C");
+$pdf->Cell(0, 8, utf8_decode("Razón Social: ") . $data['razon'], "LR", 0, "C");
 $pdf->Ln();
 $pdf->SetFont('Arial', '', 10);
 $pdf->Cell(0, 5, "Documento cliente: " . $data['nroDoc'] . " - Vencimiento factura: " . $data['fecha']['vcto'], "LRB", 0, "C");
@@ -140,8 +141,8 @@ $pdf->Ln();
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(0, 8, "Detalle", "LRB", 0, "C");
 $pdf->Ln();
-$pdf->Cell(15, 8, urldecode(em("Ítem")), "LRB", 0, "R");
-$pdf->Cell(80, 8, urldecode(em("Descripcion")), "LRB", 0, "C");
+$pdf->Cell(15, 8, utf8_decode("Ítem"), "LRB", 0, "R");
+$pdf->Cell(80, 8, utf8_decode("Descripcion"), "LRB", 0, "C");
 $pdf->Cell(20, 8, "Cantidad", "LRB", 0, "C");
 $pdf->Cell(30, 8, "Precio Unitario", "LRB", 0, "C");
 $pdf->Cell(15, 8, "Unidad", "LRB", 0, "C");
@@ -170,8 +171,8 @@ foreach ($data['detalle'] as $detalle) {
 		$x=$pdf->GetX();
 		$y=$pdf->GetY();
 
-		$item['descripcion'] = em($item['descripcion']);
-		$pdf->MultiCell(80, 5, urldecode($item['descripcion']), "TLRB", "L");
+		//$item['descripcion'] = em($item['descripcion']);
+		$pdf->MultiCell(80, 5, utf8_decode($item['descripcion']), "TLRB", "L");
 
 		$h = $pdf->getY();
 
@@ -202,7 +203,7 @@ $pdf->Cell(115, 8, "Total", "LRB", 0, "R");
 $pdf->Cell(75, 8, "US$ " . number_format($data['importe']['total'], 2), "LRB", 0, "R");
 $pdf->SetFont('Arial', '', 8);
 $pdf->Ln();
-$pdf->Cell(0, 8, "Monto Gravado US$ " . number_format($data['importe']['gravado'], 2) . " | Monto No Gravado US$ " . number_format($data['importe']['noGravado'], 2) . " | Excento US$ " . number_format($data['importe']['exento'], 2) . " | " . urldecode(em("Cotización Moneda US$ 1 = $ ")) . $data['cotiMoneda'], "LRB", 0, "C");
+$pdf->Cell(0, 8, "Monto Gravado US$ " . number_format($data['importe']['gravado'], 2) . " | Monto No Gravado US$ " . number_format($data['importe']['noGravado'], 2) . " | Excento US$ " . number_format($data['importe']['exento'], 2) . " | " . utf8_decode("Cotización Moneda US$ 1 = $ ") . $data['cotiMoneda'], "LRB", 0, "C");
 $pdf->Ln();
 if (isset($data['observa'])){
 	$pdf->Cell(0, 8, "Observaciones: " . $data['observa'], "LRB", 0, "C");
