@@ -1,9 +1,10 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoiceFactory', '$modal', 'loginService', 'dialogs', 'generalFunctions', 'generalCache', function($rootScope, $scope, gatesFactory, invoiceFactory, $modal, loginService, dialogs, generalFunctions, generalCache){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoiceFactory', '$modal', 'loginService', 'dialogs', 'generalFunctions', 'generalCache', '$filter', 'downloadFactory', function($rootScope, $scope, gatesFactory, invoiceFactory, $modal, loginService, dialogs, generalFunctions, generalCache, $filter, downloadFactory){
 	$scope.currentPage = 1;
 
+	$scope.logoTerminal = $rootScope.logoTerminal;
 	$scope.itemsPerPage = [
 		{ value: 10, description: '10 items por página', ticked: false},
 		{ value: 15, description: '15 items por página', ticked: true},
@@ -221,6 +222,30 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 			});
 		}
 		$scope.mostrarResultado = false;
+	};
+
+	$scope.verPdf = function(){
+		$scope.disablePdf = true;
+		var imprimirComprobante = {};
+		angular.copy($scope.verDetalle, imprimirComprobante);
+		imprimirComprobante.codTipoComprob = $filter('nombreComprobante')(imprimirComprobante.codTipoComprob);
+		imprimirComprobante.fecha.emision = $filter('date')(imprimirComprobante.fecha.emision, 'dd/MM/yyyy', 'UTC');
+		imprimirComprobante.fecha.vcto = $filter('date')(imprimirComprobante.fecha.vcto, 'dd/MM/yyyy', 'UTC');
+		imprimirComprobante.fecha.desde = $filter('date')(imprimirComprobante.fecha.desde, 'dd/MM/yyyy', 'UTC');
+		imprimirComprobante.fecha.hasta = $filter('date')(imprimirComprobante.fecha.hasta, 'dd/MM/yyyy', 'UTC');
+		imprimirComprobante.detalle.forEach(function(detalle){
+			detalle.buque.fecha = $filter('date')(detalle.buque.fecha, 'dd/MM/yyyy', 'UTC');
+		});
+		downloadFactory.invoicePDF(imprimirComprobante, function(data, status){
+			if (status == 'OK'){
+				var file = new Blob([data], {type: 'application/pdf'});
+				var fileURL = URL.createObjectURL(file);
+				window.open(fileURL);
+			} else {
+				dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
+			}
+			$scope.disablePdf = false;
+		})
 	};
 
 	$scope.cargaDatos();

@@ -14,15 +14,15 @@
 			});
 			if (estaDefinido(array.contenedor)) array.contenedor = datos.contenedor.toUpperCase();
 			if (estaDefinido(array.razonSocial)) array.razonSocial = datos.razonSocial.toUpperCase();
-			if (estaDefinido(array.fechaInicio)) array.fechaInicio = (estaDefinido(datos.fechaConGMT) && datos.fechaConGMT) ? this.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio) : this.formatearFecha(datos.fechaInicio);
-			if (estaDefinido(array.fechaFin)) array.fechaFin = (estaDefinido(datos.fechaConGMT) && datos.fechaConGMT) ? this.formatearFechaHorasMinutosGMTLocal(datos.fechaFin) : this.formatearFecha(datos.fechaFin);
-			if (estaDefinido(array.fecha)) array.fecha = this.formatearFecha(datos.fecha);
+			if (estaDefinido(array.fechaInicio)) array.fechaInicio = this.formatearFechaISOString(datos.fechaInicio);
+			if (estaDefinido(array.fechaFin)) array.fechaFin = this.formatearFechaISOString(datos.fechaFin);
+			if (estaDefinido(array.fecha)) array.fecha = this.formatearFechaISOString(datos.fecha);
 			if (estaDefinido(array.order)) array.order = '[{' + datos.order + '}]';
 
 			return array;
 		};
 
-		this.formatearFecha = function(fecha) {
+		/*this.formatearFecha = function(fecha) {
 			if (fecha != '' && fecha != null){
 				fecha = new Date(fecha);
 				var fechaAux = fecha.getFullYear() + '-';
@@ -37,9 +37,9 @@
 				return fechaAux;
 			}else
 				return null;
-		};
+		};*/
 
-		this.formatearFechaHorasMinutosGMTLocal = function(fecha) {
+		this.formatearFechaISOString = function(fecha) {
 			if (fecha != '' && fecha != null){
 				fecha = new Date(fecha);
 				var fechaAux = this.formatearFecha(fecha) + 'T';
@@ -56,7 +56,7 @@
 				return null;
 		};
 
-		this.formatearFechaHorasMinutosSinGMT = function(fecha) {
+		/*this.formatearFechaHorasMinutosSinGMT = function(fecha) {
 			if (fecha != '' && fecha != null){
 				fecha = new Date(fecha);
 				var fechaAux = this.formatearFecha(fecha) + 'T';
@@ -71,6 +71,6 @@
 				return fechaAux;
 			}else
 				return null;
-		};
+		};*/
 
 	}]);
