@@ -6,7 +6,7 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', function($
 	var factory = {};
 
 	factory.getReporteTarifas = function(fecha, tarifas, callback){
-		var inserturl = serverUrl + '/invoices/byRates?fechaInicio=' + formatService.formatearFecha(fecha.fechaInicio) + '&fechaFin=' + formatService.formatearFecha(fecha.fechaFin);
+		var inserturl = serverUrl + '/invoices/byRates?fechaInicio=' + formatService.formatearFechaISOString(fecha.fechaInicio) + '&fechaFin=' + formatService.formatearFechaISOString(fecha.fechaFin);
 		$http.post(inserturl, tarifas)
 			.success(function (response) {
 				callback(response);

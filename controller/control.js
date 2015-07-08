@@ -3,7 +3,7 @@
  */
 myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'formatService', 'generalFunctions', 'colorTerminalesCache', 'loginService', function ($rootScope, $scope, controlPanelFactory, formatService, generalFunctions, colorTerminalesCache, loginService){
 
-	var fecha = formatService.formatearFecha(new Date());
+	var fecha = formatService.formatearFechaISOString(new Date());
 
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
@@ -327,7 +327,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 	$scope.$on('socket:invoice', function (ev, data) {
 		if (data.status === 'OK') {
-			var fecha1 = formatService.formatearFecha($scope.desde);
+			var fecha1 = formatService.formatearFechaISOString($scope.desde);
 			var fecha2 = data.data.emision.substring(0,10);
 			if (fecha1 == fecha2) {
 				var response = Enumerable.From($scope.comprobantesCantidad)

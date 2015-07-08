@@ -162,7 +162,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			.success(function (data){
 				data.data = filtrarComentarios(data.data);
 				data.data.forEach(function(comment){
-					comment.fecha = formatService.formatearFechaHorasMinutosSinGMT(generalFunctions.idToDate(comment._id));
+					comment.fecha = formatService.formatearFechaISOString(generalFunctions.idToDate(comment._id));
 				});
 				callback(data);
 			})
