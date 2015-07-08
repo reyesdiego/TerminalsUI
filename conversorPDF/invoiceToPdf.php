@@ -32,7 +32,7 @@ class PDF extends FPDF
 		//Arial italic 8
 		$this->SetFont('Arial','I',8);
 		//Número de página
-		$this->Cell(20,10,'Pagina '.$this->PageNo().'/{nb}',0,0,'L');
+		$this->Cell(20,10, utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'L');
 		$this->Cell(165, 10, utf8_decode("Administración General de Puertos S.E. - Departamento de Desarrollo"), 0, 0, "R");
 		$this->Image("imagenes/logo_puertochico.jpg", $this->GetX(), $this->GetY() + 2, 5);
 	}
