@@ -22,7 +22,7 @@
 			return array;
 		};
 
-		/*this.formatearFecha = function(fecha) {
+		this.formatearFecha = function(fecha) {
 			if (fecha != '' && fecha != null){
 				fecha = new Date(fecha);
 				var fechaAux = fecha.getFullYear() + '-';
@@ -37,7 +37,7 @@
 				return fechaAux;
 			}else
 				return null;
-		};*/
+		};
 
 		this.formatearFechaISOString = function(fecha) {
 			if (fecha != '' && fecha != null){
