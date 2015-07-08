@@ -32,7 +32,7 @@ class PDF extends FPDF
 		//Arial italic 8
 		$this->SetFont('Arial','I',8);
 		//Número de página
-		$this->Cell(20,10, utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'L');
+		$this->Cell(20,10,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'L');
 		$this->Cell(165, 10, utf8_decode("Administración General de Puertos S.E. - Departamento de Desarrollo"), 0, 0, "R");
 		$this->Image("imagenes/logo_puertochico.jpg", $this->GetX(), $this->GetY() + 2, 5);
 	}
@@ -151,7 +151,7 @@ $pdf->Ln();
 
 foreach ($data['detalle'] as $detalle) {
 	$pdf->SetFont('Arial', 'B', 10);
-	$pdf->Cell(0, 8, '', "LRB", 0, "L");
+	$pdf->Cell(0, 8, '', 1, 0, "L");
 	$pdf->SetX(10);
 	$pdf->Write(8, "Contenedor: " . $detalle['contenedor']);
 	$pdf->SetFont('Arial', '', 10);
@@ -172,7 +172,7 @@ foreach ($data['detalle'] as $detalle) {
 		$y=$pdf->GetY();
 
 		//$item['descripcion'] = em($item['descripcion']);
-		$pdf->MultiCell(80, 5, utf8_decode($item['descripcion']), "TLRB", "L");
+		$pdf->MultiCell(80, 5, utf8_decode($item['descripcion']), 1, "L");
 
 		$h = $pdf->getY();
 
@@ -188,25 +188,25 @@ foreach ($data['detalle'] as $detalle) {
 
 }
 
-$pdf->Cell(115, 8, "Subtotal", "LRB", 0, "R");
-$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['subtotal'], 2), "LRB", 0, "R");
+$pdf->Cell(115, 8, "Subtotal", 1, 0, "R");
+$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['subtotal'], 2), 1, 0, "R");
 $pdf->Ln();
 $pdf->Cell(115, 8, "I.V.A.", "LRB", 0, "R");
-$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['iva'], 2), "LRB", 0, "R");
+$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['iva'], 2), 1, 0, "R");
 $pdf->Ln();
 if (isset($data['importe']['otrosTributos'])){
 	$pdf->Cell(115, 8, "Otros Tributos", "LRB", 0, "R");
-	$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['otrosTributos'], 2), "LRB", 0, "R");
+	$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['otrosTributos'], 2), 1, 0, "R");
 	$pdf->Ln();
 }
 $pdf->Cell(115, 8, "Total", "LRB", 0, "R");
-$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['total'], 2), "LRB", 0, "R");
+$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['total'], 2), 1, 0, "R");
 $pdf->SetFont('Arial', '', 8);
 $pdf->Ln();
-$pdf->Cell(0, 8, "Monto Gravado US$ " . number_format($data['importe']['gravado'], 2) . " | Monto No Gravado US$ " . number_format($data['importe']['noGravado'], 2) . " | Excento US$ " . number_format($data['importe']['exento'], 2) . " | " . utf8_decode("Cotización Moneda US$ 1 = $ ") . $data['cotiMoneda'], "LRB", 0, "C");
+$pdf->Cell(0, 8, "Monto Gravado US$ " . number_format($data['importe']['gravado'], 2) . " | Monto No Gravado US$ " . number_format($data['importe']['noGravado'], 2) . " | Excento US$ " . number_format($data['importe']['exento'], 2) . " | " . utf8_decode("Cotización Moneda US$ 1 = $ ") . $data['cotiMoneda'], 1, 0, "C");
 $pdf->Ln();
 if (isset($data['observa'])){
-	$pdf->Cell(0, 8, "Observaciones: " . $data['observa'], "LRB", 0, "C");
+	$pdf->Cell(0, 8, "Observaciones: " . $data['observa'], 1, 0, "C");
 }
 
 $pdf->Output();
