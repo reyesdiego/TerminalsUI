@@ -199,7 +199,7 @@ if (isset($data['importe']['otrosTributos'])){
 	$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['otrosTributos'], 2), 1, 0, "R");
 	$pdf->Ln();
 }
-$pdf->Cell(115, 8, "Total", "LRB", 0, "R");
+$pdf->Cell(115, 8, "Total", 1, 0, "R");
 $pdf->Cell(75, 8, "US$ " . number_format($data['importe']['total'], 2), 1, 0, "R");
 $pdf->SetFont('Arial', '', 8);
 $pdf->Ln();
