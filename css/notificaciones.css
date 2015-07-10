@@ -24,3 +24,15 @@
 	height: 25px;
 	padding-top: 5px;
 }
+
+.usuarioActivo {
+	color: #468847;
+}
+
+.usuarioRegular {
+	color: #ebce3d;
+}
+
+.usuarioInactivo {
+	color: #ae2018;
+}

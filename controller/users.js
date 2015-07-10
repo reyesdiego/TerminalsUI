@@ -24,11 +24,11 @@ myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'g
 		fechaActual.setHours(0, 0, 0, 0);
 		var claseColor = '';
 		if (parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) <= 2) {
-			claseColor = 'success';
+			claseColor = 'usuarioActivo';
 		} else if (parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) > 2 && parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) <= 5) {
-			claseColor = 'warning';
+			claseColor = 'usuarioRegular';
 		} else {
-			claseColor = 'danger';
+			claseColor = 'usuarioInactivo';
 		}
 		return claseColor;
 	};
