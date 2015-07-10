@@ -19,6 +19,15 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 				deferred.resolve();
 			},
 			function(error){
+				if (loginService.getStatus()){
+					if (useCookies){
+						$cookies.username = user;
+						$cookies.password = pass;
+						$cookies.themeTerminal = loginService.getFiltro();
+					}
+					$cookies.isLogged = 'true';
+					$cookies.restoreSesion = useCookies;
+				}
 				deferred.reject(error);
 			});
 		return deferred.promise;

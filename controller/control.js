@@ -624,5 +624,15 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.traerDatosGatesTurnosDia();
 	}
 
+	$scope.$on('terminoLogin', function(){
+		$scope.traerTotales();
+		$scope.traerDatosFacturadoMes();
+		$scope.traerDatosFacturadoDiaTasas();
+		$scope.traerDatosFacturadoDia();
+		$scope.traerDatosGates();
+		$scope.traerDatosTurnos();
+		$scope.traerDatosGatesTurnosDia();
+	});
+
 }]);
 

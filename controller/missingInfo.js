@@ -248,5 +248,10 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'invoic
 		})
 	};
 
-	$scope.cargaDatos();
+	if (loginService.getStatus()) $scope.cargaDatos();
+
+	$scope.$on('terminoLogin', function(){
+		$scope.cargaDatos();
+	});
+
 }]);

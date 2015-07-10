@@ -8,9 +8,9 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 		var inserturl = serverUrl + '/prices/rates/1/all';
 		$http.get(inserturl)
 			.success(function (data){
-				callback(data);
+				callback(data, false);
 			}).error(function(error){
-				callback(error);
+				callback(error, true);
 			});
 	};
 

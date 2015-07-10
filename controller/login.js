@@ -5,7 +5,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	'use strict';
 	$scope.barType = "progress-bar-info";
 	$scope.entrando = false;
-	$scope.sesion = false;
+	$scope.sesion = true;
 	$scope.hayError = false;
 
 	//$scope.max = 90; //Sin métodos afip

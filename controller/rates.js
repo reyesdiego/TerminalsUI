@@ -3,7 +3,7 @@
  */
 
 
-myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache) {
+myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', 'loginService', function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache, loginService) {
 
 	$rootScope.predicate = 'terminal';
 	$scope.monedaFija = 'DOL';
@@ -158,5 +158,10 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		});
 	};
 
-	$scope.cargaRates();
+	if (loginService.getStatus()) $scope.cargaRates();
+
+	$scope.$on('terminoLogin', function(){
+		$scope.cargaRates();
+	});
+
 }]);

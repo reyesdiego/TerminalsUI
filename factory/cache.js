@@ -221,10 +221,14 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 	factory.cargaAllRates = function(){
 		var deferred = $q.defer();
 		if (loginService.getType() == 'agp'){
-			priceFactory.getAllRates(function(data){
-				generalCache.put('allRates', data);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
+			priceFactory.getAllRates(function(data, error){
+				if (!error){
+					generalCache.put('allRates', data);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+					deferred.resolve();
+				} else {
+					deferred.reject()
+				}
 			});
 		} else {
 			deferred.resolve();
@@ -235,10 +239,14 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 	factory.cargaSumariaImpoBuques = function(){
 		var deferred = $q.defer();
 		if (loginService.getType() == 'agp'){
-			afipFactory.getSumariaImpoBuques(function(data){
-				afipCache.put('SumImpoBuques', data.data);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
+			afipFactory.getSumariaImpoBuques(function(data, error){
+				if (!error){
+					afipCache.put('SumImpoBuques', data.data);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
 			})
 		} else {
 			deferred.resolve();
@@ -249,10 +257,14 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 	factory.cargaSumariaExpoBuques = function(){
 		var deferred = $q.defer();
 		if (loginService.getType() == 'agp'){
-			afipFactory.getSumariaExpoBuques(function(data){
-				afipCache.put('SumExpoBuques', data.data);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
+			afipFactory.getSumariaExpoBuques(function(data, error){
+				if (!error){
+					afipCache.put('SumExpoBuques', data.data);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
 			})
 		} else {
 			deferred.resolve();
@@ -263,10 +275,14 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 	factory.cargaAfectacionBuques = function(){
 		var deferred = $q.defer();
 		if (loginService.getType() == 'agp'){
-			afipFactory.getAfectacionBuques(function(data){
-				afipCache.put('AfectacionBuques', data.data);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
+			afipFactory.getAfectacionBuques(function(data, error){
+				if (!error){
+					afipCache.put('AfectacionBuques', data.data);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
 			})
 		} else {
 			deferred.resolve();
@@ -277,10 +293,14 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 	factory.cargaSolicitudBuques = function(){
 		var deferred = $q.defer();
 		if (loginService.getType() == 'agp'){
-			afipFactory.getSolicitudBuques(function(data){
-				afipCache.put('SolicitudBuques', data.data);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
+			afipFactory.getSolicitudBuques(function(data, error){
+				if (!error){
+					afipCache.put('SolicitudBuques', data.data);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
 			})
 		} else {
 			deferred.resolve();

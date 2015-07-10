@@ -468,6 +468,10 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$modal', '$f
 
 	if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) $scope.cargaTodosLosPuntosDeVentas();
 
+	$scope.$on('terminoLogin', function(){
+		if ($scope.mostrarPtosVenta || $scope.controlCodigos) $scope.cargaTodosLosPuntosDeVentas();
+	});
+
 	$scope.verPdf = function(){
 		$scope.disablePdf = true;
 		var imprimirComprobante = {};

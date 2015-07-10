@@ -47,7 +47,10 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		});
 	};
 
-	if (loginService.getStatus()){
+	if (loginService.getStatus()) $scope.cargaPricelist();
+
+	$scope.$on('terminoLogin', function(){
 		$scope.cargaPricelist();
-	}
+	});
+
 }]);

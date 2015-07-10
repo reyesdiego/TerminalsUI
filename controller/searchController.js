@@ -48,7 +48,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 	};
 	$scope.hitEnter = function(evt){
 		if(angular.equals(evt.keyCode,13))
-			$scope.$emit('cambioFiltro');
+			$scope.$emit('cambioFiltro', 'hitEnter');
 	};
 	$scope.buqueSelected = function(selected){
 		if (angular.isDefined(selected)){
@@ -136,7 +136,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 
 	$scope.filtrarOrden = function(filtro){
 		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
-		$scope.$emit('cambioFiltro');
+		$scope.$emit('cambioFiltro', 'lalalal');
 	};
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	$scope.cargaPorFiltros = function () {

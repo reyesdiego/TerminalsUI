@@ -2,7 +2,7 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache){
+myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache, loginService){
 
 	$rootScope.rutas.sort();
 	$scope.afectacion = 'afip';
@@ -269,6 +269,11 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		return in_array(aguja, pajar);
 	};
 
-	$scope.cargaDatos($scope.actualRegistro);
+	if (loginService.getStatus()) $scope.cargaDatos($scope.actualRegistro);
+
+	$scope.$on('terminoLogin', function(){
+		$scope.cargaDatos($scope.actualRegistro);
+	});
+
 }]);
 

@@ -63,6 +63,22 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		});
 	}
 
+	$scope.$on('terminoLogin', function(){
+		priceFactory.getPrice('agp', false, function (data) {
+			$scope.pricelist = data.data;
+			$scope.pricelist.forEach(function (price) {
+				price.graficar = false;
+			});
+			$scope.selectedList = $scope.pricelist;
+		});
+		priceFactory.getPrice('agp', true, function (data) {
+			$scope.pricelistTasas = data.data;
+			$scope.pricelistTasas.forEach(function (price) {
+				price.graficar = false;
+			});
+		});
+	});
+
 	$scope.recargarPricelist = function(){
 		var pos;
 		$scope.selectedList.forEach(function(price){

@@ -467,6 +467,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		}
 		if (!loginService.getStatus() && $cookies.restoreSesion === 'true'){
 			authFactory.login().then(function(){
+				$rootScope.$broadcast('terminoLogin');
 				//$rootScope.cargarCache = true;
 				//$rootScope.primerRuteo = true;
 				//$rootScope.estaLogeado = true;

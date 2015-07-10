@@ -263,6 +263,10 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		});
 	};
 
-	$scope.cargarTurnos();
+	if (loginService.getStatus()) $scope.cargarTurnos();
+
+	$scope.$on('terminoLogin', function(){
+		$scope.cargaTurnos();
+	});
 
 }]);

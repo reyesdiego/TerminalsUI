@@ -52,6 +52,19 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		generalFunctions.switchTheme('BACTSSA');
 	}
 
+	$scope.$on('terminoLogin', function(){
+		$rootScope.esUsuario = loginService.getType();
+		$rootScope.terminal = loginService.getInfo();
+		$rootScope.grupo = loginService.getGroup();
+		//Esta carga se realiza en el caso de haber actualizado la página
+		if (loginService.getType() == 'agp'){
+			$rootScope.filtroTerminal = loginService.getFiltro();
+		}
+
+		// Carga el tema de la terminal
+		generalFunctions.switchTheme(loginService.getFiltro());
+	});
+
 	$scope.$watch(function(){
 		$scope.acceso = $rootScope.esUsuario;
 		$scope.terminal = $rootScope.terminal;

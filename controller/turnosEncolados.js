@@ -90,8 +90,10 @@ myapp.controller('queuedMailsCtrl', ['$scope', 'turnosFactory', 'loginService', 
 	};
 
 	// Carga los turnos del día hasta la hora del usuario
-	if (loginService.getStatus()){
+	if (loginService.getStatus()) $scope.cargaTurnos();
+
+	$scope.$on('terminoLogin', function(){
 		$scope.cargaTurnos();
-	}
+	});
 
 }]);

@@ -103,9 +103,11 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		});
 	};
 
-	if (loginService.getStatus()){
+	if (loginService.getStatus()) $scope.prepararDatos();
+
+	$scope.$on('terminoLogin', function(){
 		$scope.prepararDatos();
-	}
+	});
 
 	$scope.pageChanged = function(){
 		$scope.guardar();

@@ -390,10 +390,10 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 		var inserturl = serverUrl + '/afip/registro1_sumimpomani/buques';
 		$http.get(inserturl)
 			.success(function (data) {
-				callback(data);
+				callback(data, false);
 			})
 			.error(function (error) {
-				callback(error);
+				callback(error, true);
 			})
 	};
 
@@ -401,10 +401,10 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 		var inserturl = serverUrl + '/afip/registro1_sumexpomane/buques';
 		$http.get(inserturl)
 			.success(function (data) {
-				callback(data);
+				callback(data, false);
 			})
 			.error(function (error) {
-				callback(error);
+				callback(error, true);
 			})
 	};
 
@@ -412,10 +412,10 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 		var inserturl = serverUrl + '/afip/registro1_afectacion/buques';
 		$http.get(inserturl)
 			.success(function (data) {
-				callback(data);
+				callback(data, false);
 			})
 			.error(function (error) {
-				callback(error);
+				callback(error, true);
 			})
 	};
 
@@ -423,10 +423,10 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', function
 		var inserturl = serverUrl + '/afip/registro1_solicitud/buques';
 		$http.get(inserturl)
 			.success(function(data){
-				callback(data);
+				callback(data, false);
 			})
 			.error(function(error){
-				callback(error)
+				callback(error, true)
 			})
 	};
 
