@@ -33,6 +33,7 @@
 					<th ng-show="control" style="text-align: center">Fecha</th>
 					<th style="text-align: center">E-Mail</th>
 					<th ng-show="!control" style="text-align: center">Enviado</th>
+					<th ng-show="!control" style="text-align: center">Disp. T1</th>
 				</tr>
 				<tr ng-repeat="turno in datosTurnos">
 					<td ng-show="control">{{ turno.terminal }}</td>
@@ -47,8 +48,9 @@
 					<td ng-show="!control">{{ turno.user }}</td>
 					<td ng-show="control">{{ turno.status }}</td>
 					<td ng-show="control">{{ turno.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-					<td>{{ turno.email }}</td>
+					<td>{{ turno.email | maxLength : 12 }}<a href ng-show="(turno.email.length > 12)" popover="{{ turno.email }}" popover-trigger="mouseenter"> (...)</a></td>
 					<td ng-show="!control"><span ng-show="definidoStatus(turno)"><img src="images/ok.png" ng-show="turno.emailStatus" height="24" width="24"><img src="images/error.png" ng-hide="turno.emailStatus" height="24" width="24"></span></td>
+					<td ng-show="!control">{{ turno.disponibles_t1 }}</td>
 				</tr>
 			</table>
 		</div>
