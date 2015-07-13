@@ -53,48 +53,22 @@ myapp.controller('cambioTerminalCtrl', ['$rootScope', '$scope', 'cacheFactory', 
 	}
 	$rootScope.cargandoCache = true;
 
-	///if ($rootScope.cambioTerminal){
-		//$rootScope.cambioTerminal = false;
-		cacheFactory.cambioTerminal()
-			.then(function(){
-				$timeout(function(){
+	cacheFactory.cambioTerminal()
+		.then(function(){
+			$timeout(function(){
+				$rootScope.cargandoCache = false;
+				$state.transitionTo($rootScope.previousState);
+			}, 500)
+		},
+		function(){
+			var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+			dlg.result.then(function(){
 					$rootScope.cargandoCache = false;
 					$state.transitionTo($rootScope.previousState);
-				}, 500)
-			},
-			function(){
-				var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
-				dlg.result.then(function(){
-						$rootScope.cargandoCache = false;
-						$state.transitionTo($rootScope.previousState);
-					},
-					function(){
-						$scope.cerrarSesion();
-					})
-			});
-	/*} else {
-
-		$rootScope.cargandoCache = false;
-		$state.transitionTo($rootScope.previousState);
-
-		/*$scope.max = 30;
-		cacheFactory.cargaMemoryCache()
-			.then(function(){
-				$timeout(function(){
-					$rootScope.cargandoCache = false;
-					$state.transitionTo($rootScope.previousState);
-				}, 500)
-			},
-			function(){
-				var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
-				dlg.result.then(function(){
-						$rootScope.cargandoCache = false;
-						$state.transitionTo($rootScope.previousState);
-					},
-					function(){
-						$scope.cerrarSesion();
-					})
-			})
-	}*/
+				},
+				function(){
+					$scope.cerrarSesion();
+				})
+		});
 
 }]);

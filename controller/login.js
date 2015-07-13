@@ -1,7 +1,7 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', 'socketFactory', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout, socketFactory) {
+myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout) {
 	'use strict';
 	$scope.barType = "progress-bar-info";
 	$scope.entrando = false;

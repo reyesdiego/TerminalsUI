@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', function($rootScope, $scope, invoiceFactory, loginService){
+myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
 
 	$scope.ocultarFiltros = ['nroPtoVenta'];
 

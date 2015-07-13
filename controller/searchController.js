@@ -2,13 +2,11 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', '$filter', function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, $filter){
+myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory){
 	$scope.status = {
 		open: true
 	};
 	$scope.maxDate = new Date();
-	$scope.listaContenedoresGates = [];//contenedoresCache.get('contenedoresGates');
-	$scope.listaContenedoresTurnos = [];//contenedoresCache.get('contenedoresTurnos');
 	$scope.listaBuques = generalCache.get('buques');
 	$scope.vouchers = generalCache.get('vouchers');
 	$scope.listaViajes = [];
