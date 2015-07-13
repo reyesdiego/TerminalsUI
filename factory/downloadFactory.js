@@ -13,10 +13,10 @@ myapp.factory('downloadFactory', ['$http', '$filter', function($http){
 			data: invoice
 		}).success(function(data, status, headers) {
 			var contentType = headers('Content-Type');
-			if (contentType.indexOf('text/html') >= 0){
-				callback(data, 'ERROR');
-			} else {
+			if (contentType.indexOf('application/pdf') >= 0){
 				callback(data, 'OK');
+			} else {
+				callback(data, 'ERROR');
 			}
 		});
 	};
