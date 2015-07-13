@@ -1,0 +1,27 @@
+<div class="table-responsive">
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+		<tr class="text-center">
+			<th>Tipo</th>
+			<th>Nro. comprob.</th>
+			<th>Toneladas</th>
+			<th>Tasas</th>
+			<th>Importe</th>
+			<th class="hidden-print"><span class="glyphicon glyphicon-zoom-in"></span></th>
+			<th ng-show="liquidadas">Fecha liquidación</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="invoice in datosInvoices">
+			<td>{{ invoice.codTipoComprob | nombreComprobante }}</td>
+			<td>{{ invoice.nroComprob }}</td>
+			<td>{{ invoice.toneladas }}</td>
+			<td>{{ invoice.tasas }}</td>
+			<td>{{ invoice.importe | currency }}</td>
+			<td><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td ng-show="liquidadas">{{ invoice.fechaLiquidacion }}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div-pagination total-items="totalItems" items-per-page="model.itemsPerPage" current-page="currentPage"></div-pagination>

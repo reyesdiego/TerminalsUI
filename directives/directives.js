@@ -471,3 +471,16 @@ myapp.directive('buttonActualizar', ['$state', function ($state) {
 		}
 	}
 }]);
+
+myapp.directive('tableLiquidaciones', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/table.liquidaciones.html',
+		scope: {
+			datosInvoice:	"=",
+			totalItems:		"=",
+			itemsPerPage:	"=",
+			liquidadas:		"@"
+		}
+	}
+});
