@@ -15,7 +15,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="invoice in datosInvoices" ng-init="invoice.liquidar = false">
+		<tr ng-repeat="invoice in datosInvoices" ng-init="invoice.liquidar = true">
 			<td class="text-center">{{ invoice._id.codTipoComprob | nombreComprobante }}</td>
 			<td class="text-right">{{ invoice._id.nroComprob }}</td>
 			<td class="text-right">{{ invoice.cnt }}</td>

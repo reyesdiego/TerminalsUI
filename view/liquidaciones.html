@@ -24,6 +24,7 @@
 			</div>
 			<div class="col-lg-12" ng-hide="cargando || mostrarResultado">
 				<table-liquidaciones></table-liquidaciones>
+				<button class="btn btn-primary" ng-click="liquidarTodo()">Liquidar todo</button>
 				<div-pagination total-items="totalSinLiquidar" items-per-page="itemsPerPage" current-page="currentPageSinLiquidar"></div-pagination>
 			</div>
 			<div ng-show="mostrarResultado">

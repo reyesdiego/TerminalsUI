@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'invoiceFactory', '$filter', 'dialogs', '$modal', 'generalCache', 'downloadFactory', function($rootScope, $scope, liquidacionesFactory, loginService, invoiceFactory, $filter, dialogs, $modal, generalCache, downloadFactory){
+myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'invoiceFactory', '$filter', 'dialogs', '$modal', 'generalCache', 'downloadFactory', 'formatService', function($rootScope, $scope, liquidacionesFactory, loginService, invoiceFactory, $filter, dialogs, $modal, generalCache, downloadFactory, formatService){
 
 	$scope.itemsDescription = generalCache.get('descripciones');
 	$scope.estadosComprobantes = generalCache.get('estados');
@@ -60,8 +60,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	});
 
 	$scope.$on('cambioFiltro', function(ev, data){
-		console.log(data);
-		console.log($scope.model);
 		$scope.cargarDatos();
 	});
 
@@ -99,14 +97,28 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		}
 	};
 
+	$scope.liquidarTodo = function(){
+		var datos = {
+			fecha: new Date()
+		};
+		$scope.cargando = true;
+		liquidacionesFactory.payAll(formatService.formatearDatos(datos), function(data){
+			if (data.status == 'OK'){
+				dialogs.notify('Liquidaciones', data.data);
+				$scope.cargarDatos();
+			} else {
+				dialogs.error('Liquidaciones', 'Se ha producido un error al tratar de generar la liquidación.');
+			}
+			$scope.cargando = false;
+		})
+	};
+
 	$scope.mostrarDetalle = function(comprobante){
 		$scope.cargando = true;
 		invoiceFactory.getInvoiceById(comprobante._id._id, function(dataComprob){
-			console.log(dataComprob);
 			$scope.verDetalle = dataComprob;
 			$scope.mostrarResultado = true;
 			$scope.cargando = false;
-
 		});
 	};
 
@@ -182,7 +194,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	};
 
 	$scope.ocultarResultado = function(comprobante){
-		console.log(comprobante);
 		var encontrado = false;
 		$scope.comprobantesVistos.forEach(function(unComprobante){
 			if (unComprobante._id == comprobante._id){

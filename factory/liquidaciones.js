@@ -21,6 +21,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 	};
 
 	factory.payAll = function(data, callback){
+		console.log(data);
 		var inserturl = serverUrl + '/paying/setPayment/' + loginService.getFiltro();
 		$http.post(inserturl, data)
 			.success(function(data){
