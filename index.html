@@ -88,6 +88,7 @@
 	<script src="factory/vouchersType.js"></script>
 	<script src="factory/downloadFactory.js"></script>
 	<script src="factory/socket.js"></script>
+	<script src="factory/liquidaciones.js"></script>
 	<!-- Filters -->
 	<script src="filter/filters.js"></script>
 	<!-- Controles Angular-->
@@ -119,6 +120,7 @@
 	<script src="controller/accessControl.js"></script>
 	<script src="controller/turnosEncolados.js"></script>
 	<script src="controller/validarUsuario.js"></script>
+	<script src="controller/liquidaciones.js"></script>
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
@@ -187,9 +189,10 @@
 						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso=='agp' && (in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>
+				<li ng-show="acceso=='agp' && (in_array('liquidaciones', rutas) || in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
+						<li ng-show="in_array('liquidaciones', rutas)"><a collap ui-sref="liquidaciones">Liquidaciones</a></li>
 						<li ng-show="in_array('control', rutas)"><a collap ui-sref="control">Control</a></li>
 						<li ng-show="in_array('reports', rutas)"><a collap ui-sref="reports">Reportes</a></li>
 						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Contenedor</a></li>

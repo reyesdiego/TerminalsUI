@@ -475,12 +475,18 @@ myapp.directive('buttonActualizar', ['$state', function ($state) {
 myapp.directive('tableLiquidaciones', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/table.liquidaciones.html',
+		templateUrl:	'view/table.liquidaciones.html'
+	}
+});
+
+myapp.directive('liquidacionesSearch', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/accordion.liquidacion.search.html',
 		scope: {
-			datosInvoice:	"=",
-			totalItems:		"=",
-			itemsPerPage:	"=",
-			liquidadas:		"@"
-		}
+			model:					"=",
+			ocultarLiquidacion:		"@"
+		},
+		controller: 'searchController'
 	}
 });

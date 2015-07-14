@@ -1,4 +1,4 @@
-<div class="container" ng-controller="">
+<div class="container" ng-controller="liquidacionesCtrl">
 
 	<div class="row">
 		<div class="col-lg-12">
@@ -10,20 +10,51 @@
 
 	<tabset justified="true">
 
-		<tab class="hidden-print" heading="Sin Liquidar">
+		<tab class="hidden-print" heading="Sin Liquidar" ng-click="cambiarModo('sinLiquidar')">
 			<div class="visible-print-block">
 				<h3>Sin liquidar</h3>
 			</div>
 			<br>
-			<table-liquidaciones datos-invoice="sinLiquidar" items-per-page="itemsPerPage" total-items="totalSinLiquidar" liquidadas="false"></table-liquidaciones>
+			<div ng-hide="mostrarResultado">
+				<liquidaciones-search model="model" ocultar-liquidacion="true"></liquidaciones-search>
+				<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
+			</div>
+			<div class="col-lg-12 text-center" ng-show="cargando">
+				<img class="media-object center-block" src="images/loading.gif">
+			</div>
+			<div class="col-lg-12" ng-hide="cargando || mostrarResultado">
+				<table-liquidaciones></table-liquidaciones>
+				<div-pagination total-items="totalSinLiquidar" items-per-page="itemsPerPage" current-page="currentPageSinLiquidar"></div-pagination>
+			</div>
+			<div ng-show="mostrarResultado">
+				<invoices-result></invoices-result>
+			</div>
 		</tab>
 
-		<tab class="hidden-print" heading="Liquidaciones">
+		<tab class="hidden-print" heading="Liquidaciones" ng-click="cambiarModo('liquidaciones')">
 			<div class="visible-print-block">
 				<h3>Liquidaciones</h3>
 			</div>
 			<br>
-			<table-liquidaciones datos-invoice="liquidaciones" items-per-page="itemsPerPage" total-items="totalLiquidadas" liquidadas="true"></table-liquidaciones>
+			<div ng-hide="mostrarResultado">
+				<liquidaciones-search model="model" ocultar-liquidacion="false"></liquidaciones-search>
+				<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
+			</div>
+			<div class="col-lg-12 text-center" ng-show="cargando">
+				<img class="media-object center-block" src="images/loading.gif">
+			</div>
+			<div class="col-lg-12" ng-hide="cargando || mostrarResultado">
+				<div class="row col-lg-12 center-block" ng-show="datosInvoices.length == 0">
+					<div-panel config-panel="panelMensaje">
+						<span>{{ panelMensaje.mensaje }}</span>
+					</div-panel>
+				</div>
+				<table-liquidaciones></table-liquidaciones>
+				<div-pagination total-items="totalLiquidadas" items-per-page="itemsPerPage" current-page="currentPageLiquidadas"></div-pagination>
+			</div>
+			<div ng-show="mostrarResultado">
+				<invoices-result></invoices-result>
+			</div>
 		</tab>
 
 	</tabset>

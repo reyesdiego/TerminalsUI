@@ -1,27 +1,31 @@
-<div class="table-responsive">
+
+<div class="table-responsive" ng-show="datosInvoices.length > 0">
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr class="text-center">
-			<th>Tipo</th>
-			<th>Nro. comprob.</th>
-			<th>Toneladas</th>
-			<th>Tasas</th>
-			<th>Importe</th>
-			<th class="hidden-print"><span class="glyphicon glyphicon-zoom-in"></span></th>
-			<th ng-show="liquidadas">Fecha liquidación</th>
+			<th class="text-center">Tipo</th>
+			<th class="text-right">Nro. comprob.</th>
+			<th class="text-right">Toneladas</th>
+			<th class="text-center">Tasa</th>
+			<th class="text-center">Fecha</th>
+			<th class="text-right">Importe</th>
+			<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
+			<th class="text-center" ng-show="liquidadas">Fecha liquidación</th>
+			<th class="text-center" ng-show="!liquidadas"><span class="glyphicon glyphicon-check"></span></th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="invoice in datosInvoices">
-			<td>{{ invoice.codTipoComprob | nombreComprobante }}</td>
-			<td>{{ invoice.nroComprob }}</td>
-			<td>{{ invoice.toneladas }}</td>
-			<td>{{ invoice.tasas }}</td>
-			<td>{{ invoice.importe | currency }}</td>
-			<td><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-			<td ng-show="liquidadas">{{ invoice.fechaLiquidacion }}</td>
+		<tr ng-repeat="invoice in datosInvoices" ng-init="invoice.liquidar = false">
+			<td class="text-center">{{ invoice._id.codTipoComprob | nombreComprobante }}</td>
+			<td class="text-right">{{ invoice._id.nroComprob }}</td>
+			<td class="text-right">{{ invoice.cnt }}</td>
+			<td class="text-center">{{ invoice._id.code }}</td>
+			<td class="text-center">{{ invoice._id.fecha | date: 'dd/MM/yyyy' }}</td>
+			<td class="text-right">U$S {{ invoice.importe | currency }}</td>
+			<td class="text-center"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td class="text-center" ng-show="liquidadas">{{ invoice.fechaLiquidacion }}</td>
+			<td class="text-center" ng-show="!liquidadas"><input style="width: 15px; height: 15px;" type="checkbox" ng-model="invoice.liquidar"></td>
 		</tr>
 		</tbody>
 	</table>
 </div>
-<div-pagination total-items="totalItems" items-per-page="model.itemsPerPage" current-page="currentPage"></div-pagination>

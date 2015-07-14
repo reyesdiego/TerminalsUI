@@ -62,6 +62,9 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 						if (data) { return angular.toJson(data); }
 					};
 
+					//harcodeado hasta que venga por servidor
+					data.acceso.push('liquidaciones');
+
 					loginService.setAcceso(data.acceso);
 
 					$rootScope.rutas = data.acceso;

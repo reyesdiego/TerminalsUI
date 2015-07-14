@@ -253,7 +253,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/validarUsuario",
 			templateUrl: "view/validarUsuario.html"
 		})
-
+		.state('liquidaciones', {
+			url: "/liquidaciones",
+			templateUrl: "view/liquidaciones.html"
+		})
 }]);
 
 myapp.config(['$provide', function ($provide) {
