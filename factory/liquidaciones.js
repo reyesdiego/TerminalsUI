@@ -12,6 +12,11 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				console.log(data);
 				callback(data);
 			}).error(function(error){
+				if (error == null){
+					error = {
+						status: 'ERROR'
+					}
+				}
 				callback(error);
 			})
 	};
@@ -27,6 +32,11 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			.success(function(data){
 				callback(data);
 			}).error(function(error){
+				if (error == null){
+					error = {
+						status: 'ERROR'
+					}
+				}
 				callback(error);
 			})
 	};
