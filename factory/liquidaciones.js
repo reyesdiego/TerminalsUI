@@ -30,9 +30,9 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			})
 	};
 
-	factory.getComprobantesLiquidados = function(page, liquidacion, callback){
+	factory.getComprobantesLiquidados = function(page, liquidacion, datos, callback){
 		var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
-		$http.get(inserturl)
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				data = invoiceFactory.setearInterfaz(data);
 				callback(data);

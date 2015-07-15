@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'invoiceFactory', '$filter', 'dialogs', '$modal', 'generalCache', 'downloadFactory', 'formatService', function($rootScope, $scope, liquidacionesFactory, loginService, invoiceFactory, $filter, dialogs, $modal, generalCache, downloadFactory, formatService){
+myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'invoiceFactory', '$filter', 'dialogs', '$modal', 'generalCache', 'downloadFactory', 'formatService', 'generalFunctions', function($rootScope, $scope, liquidacionesFactory, loginService, invoiceFactory, $filter, dialogs, $modal, generalCache, downloadFactory, formatService, generalFunctions){
 
 	$scope.itemsDescription = generalCache.get('descripciones');
 	$scope.estadosComprobantes = generalCache.get('estados');
@@ -27,7 +27,11 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		'fechaInicio': $scope.fechaInicio,
 		'fechaFin': $scope.fechaFin,
 		'liquidacion': '',
-		'itemsPerPage': 15
+		'itemsPerPage': 15,
+		'filtroOrden': 'fecha.emision',
+		'filtroOrdenAnterior': '',
+		'filtroOrdenReverse': false,
+		'order': ''
 	};
 
 	$scope.ocultarLiquidacion = true;
@@ -117,6 +121,13 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		})
 	};
 
+	$scope.filtrarOrden = function(filtro){
+		$scope.currentPage = 1;
+		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
+		//$scope.$emit('cambioOrden', $scope.model);
+		$scope.detalleLiquidacion();
+	};
+
 	$scope.detalleLiquidacion = function(liquidacion){
 		if (liquidacion) $scope.liquidacionSelected = liquidacion;
 		$scope.cargando = true;
@@ -124,7 +135,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			skip: ($scope.currentPage.Liquidadas - 1) * $scope.itemsPerPage,
 			limit: $scope.itemsPerPage
 		};
-		liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.liquidacionSelected.number, function(data){
+		liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.liquidacionSelected.number, $scope.model, function(data){
 			if (data.status == 'OK'){
 				$scope.totalLiquidadas = data.totalCount;
 				$scope.verDetalleLiquidacion = true;
