@@ -62,6 +62,11 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	$scope.verDetalleLiquidacion = false;
 
 	$scope.$on('cambioPagina', function(ev, data){
+		if ($scope.modo == 'sinLiquidar'){
+			$scope.currentPageSinLiquidar = data;
+		} else {
+			$scope.currentPageLiquidaciones = data;
+		}
 		$scope.page.skip = (data - 1) * $scope.itemsPerPage;
 		$scope.cargarDatos();
 	});
