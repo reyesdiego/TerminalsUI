@@ -9,7 +9,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function(data){
 				data = ponerDescripcionComprobantes(data);
-				callback(setearInterfaz(data));
+				callback(this.setearInterfaz(data));
 			}).error(function(error) {
 				callback(error);
 			});
@@ -31,7 +31,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				data = ponerDescripcionComprobantes(data);
-				callback(setearInterfaz(data));
+				callback(this.setearInterfaz(data));
 			}).error(function(errorText){
 				errorFactory.raiseError(errorText, inserturl, 'errorSinTasaCargas', 'Error al cargar la lista de comprobantes sin tasa a las cargas.');
 			});
@@ -61,7 +61,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				if (data.data == null) data.data = [];
 
 				data = ponerDescripcionComprobantes(data);
-				callback(setearInterfaz(data));
+				callback(this.setearInterfaz(data));
 
 			}).error(function(errorText) {
 				callback(errorText);
@@ -182,7 +182,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			});
 	};
 
-	function setearInterfaz (comprobantes) {
+	factory.setearInterfaz = function (comprobantes) {
 		comprobantes.data.forEach(function(comprobante) {
 			setearInterfazComprobante(comprobante);
 		});

@@ -1,4 +1,8 @@
-
+<div class="row col-lg-12 center-block" ng-show="datosInvoices.length == 0">
+	<div-panel config-panel="panelMensaje">
+		<span>{{ panelMensaje.mensaje }}</span>
+	</div-panel>
+</div>
 <div class="table-responsive" ng-show="datosInvoices.length > 0">
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
@@ -22,7 +26,7 @@
 			<td class="text-center">{{ invoice._id.code }}</td>
 			<td class="text-center">{{ invoice._id.fecha | date: 'dd/MM/yyyy' }}</td>
 			<td class="text-right">U$S {{ invoice.importe | currency }}</td>
-			<td class="text-center"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td class="text-center"><a href ng-click="mostrarDetalle(invoice._id)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			<td class="text-center" ng-show="liquidadas">{{ invoice.fechaLiquidacion }}</td>
 			<td class="text-center" ng-show="!liquidadas"><input style="width: 15px; height: 15px;" type="checkbox" ng-model="invoice.liquidar"></td>
 		</tr>

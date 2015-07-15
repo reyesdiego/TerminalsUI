@@ -479,6 +479,13 @@ myapp.directive('tableLiquidaciones', function(){
 	}
 });
 
+myapp.directive('tablePagos', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/table.pagos.html'
+	}
+});
+
 myapp.directive('liquidacionesSearch', function(){
 	return {
 		restrict:		'E',

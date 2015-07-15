@@ -7,7 +7,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	$scope.estadosComprobantes = generalCache.get('estados');
 	$scope.itemDescriptionInvoices = generalCache.get('descripciones');
 
-	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'fechaInicio'];
 
 	$scope.panelMensajeSinLiquidar = {
 		titulo: 'Liquidaciones',
@@ -31,17 +31,22 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	$scope.ocultarLiquidacion = true;
 
 	$scope.cargando = false;
+	$scope.cargandoLiquidaciones = false;
 
 	$scope.modo = 'sinLiquidar';
 
 	$scope.datosInvoices = [];
+	$scope.auxDatos = [];
 
 	$scope.itemsPerPage = 15;
 	$scope.totalSinLiquidar = 0;
 	$scope.totalLiquidadas = 0;
 
 	$scope.currentPageSinLiquidar = 1;
-	$scope.currentPageLiquidadas = 1;
+	$scope.currentPage = {
+		Liquidadas: 1
+	};
+	$scope.currentPageLiquidaciones = 1;
 
 	$scope.page = {
 		skip: 0,
@@ -53,6 +58,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 	$scope.comprobantesVistos = [];
 	$scope.mostrarResultado = false;
+	$scope.verDetalleLiquidacion = false;
 
 	$scope.$on('cambioPagina', function(ev, data){
 		$scope.page.skip = (data - 1) * $scope.itemsPerPage;
@@ -64,8 +70,23 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	});
 
 	$scope.cambiarModo = function(modo){
-		$scope.modo = modo;
-		$scope.cargarDatos();
+		if (modo != $scope.modo){
+			if ($scope.mostrarResultado) $scope.ocultarResultado($scope.verDetalle);
+			var temp = [];
+			$scope.verDetalleLiquidacion = false;
+			$scope.modo = modo;
+			//Ver si esto funciona
+			temp = $scope.datosInvoices.slice();
+			//console.log(temp);
+			$scope.datosInvoices = $scope.auxDatos.slice();
+			//console.log($scope.datosInvoices);
+			$scope.auxDatos = temp.slice();
+			//console.log($scope.auxDatos);
+			//*************************************************
+			$scope.page.skip = (modo == 'sinLiquidar') ? ($scope.currentPageSinLiquidar - 1) * $scope.itemsPerPage : ($scope.currentPageLiquidaciones - 1) * $scope.itemsPerPage;
+			$scope.cargarDatos();
+		}
+
 	};
 
 	$scope.cargarSinLiquidar = function(){
@@ -76,23 +97,53 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				$scope.totalSinLiquidar = data.totalCount;
 			} else {
 				$scope.sinLiquidar = [];
+				$scope.totalSinLiquidar = 0;
 			}
 			$scope.cargando = false;
 		})
 	};
 
 	$scope.cargarLiquidaciones = function(){
+		$scope.cargandoLiquidaciones = true;
+		liquidacionesFactory.getPayments($scope.page, function(data){
+			if (data.status == 'OK'){
+				$scope.datosLiquidaciones = data.data
+			} else {
+				//Falta manejo de errores
+			}
+			$scope.cargandoLiquidaciones = false;
+		})
+	};
 
+	$scope.detalleLiquidacion = function(liquidacion){
+		if (liquidacion) $scope.liquidacionSelected = liquidacion;
+		$scope.cargando = true;
+		var pagina = {
+			skip: ($scope.currentPage.Liquidadas - 1) * $scope.itemsPerPage,
+			limit: $scope.itemsPerPage
+		};
+		liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.liquidacionSelected.number, function(data){
+			if (data.status == 'OK'){
+				$scope.totalLiquidadas = data.totalCount;
+				$scope.verDetalleLiquidacion = true;
+				$scope.datosInvoices = data.data;
+			} else {
+				//Falta manejo de errores
+			}
+			$scope.cargando = false;
+		})
 	};
 
 	$scope.cargarDatos = function(){
 		if ($scope.modo == 'sinLiquidar'){
 			$scope.liquidadas = false;
 			$scope.datosInvoices = $scope.sinLiquidar;
+			$scope.panelMensaje = $scope.panelMensajeSinLiquidar;
 			$scope.cargarSinLiquidar();
 		} else {
 			$scope.liquidadas = true;
 			$scope.datosInvoices = $scope.liquidaciones;
+			$scope.panelMensaje = $scope.panelMensajeLiquidaciones;
 			$scope.cargarLiquidaciones();
 		}
 	};
@@ -107,7 +158,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				dialogs.notify('Liquidaciones', data.data);
 				$scope.cargarDatos();
 			} else {
-				dialogs.error('Liquidaciones', 'Se ha producido un error al tratar de generar la liquidación.');
+				dialogs.error('Liquidaciones', data.message);
 			}
 			$scope.cargando = false;
 		})
@@ -115,7 +166,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 	$scope.mostrarDetalle = function(comprobante){
 		$scope.cargando = true;
-		invoiceFactory.getInvoiceById(comprobante._id._id, function(dataComprob){
+		invoiceFactory.getInvoiceById(comprobante._id, function(dataComprob){
 			$scope.verDetalle = dataComprob;
 			$scope.mostrarResultado = true;
 			$scope.cargando = false;
