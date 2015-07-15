@@ -6,6 +6,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	$scope.itemsDescription = generalCache.get('descripciones');
 	$scope.estadosComprobantes = generalCache.get('estados');
 	$scope.itemDescriptionInvoices = generalCache.get('descripciones');
+	$scope.matchesTerminal = generalCache.get('matches');
+	$scope.tasaCargasTerminal = generalCache.get('ratesMatches');
 
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'fechaInicio'];
 
@@ -37,6 +39,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 	$scope.datosInvoices = [];
 	$scope.auxDatos = [];
+	$scope.comprobantesControlados = [];
 
 	$scope.itemsPerPage = 15;
 	$scope.totalSinLiquidar = 0;
@@ -166,10 +169,30 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		})
 	};
 
+	$scope.checkComprobantes = function(comprobante){
+		var encontrado = false;
+		$scope.comprobantesVistos.forEach(function(unComprobante){
+			if (unComprobante._id == comprobante._id){
+				encontrado = true;
+				unComprobante.interfazEstado = comprobante.interfazEstado;
+			}
+		});
+		$scope.datosInvoices.forEach(function(otroComprobante){
+			if (otroComprobante._id == comprobante._id){
+				otroComprobante.interfazEstado = comprobante.interfazEstado;
+			}
+		});
+		if (!encontrado){
+			$scope.comprobantesVistos.push(comprobante);
+		}
+	};
+
 	$scope.mostrarDetalle = function(comprobante){
 		$scope.cargando = true;
 		invoiceFactory.getInvoiceById(comprobante._id, function(dataComprob){
 			$scope.verDetalle = dataComprob;
+			$scope.controlarTarifas($scope.verDetalle);
+			$scope.checkComprobantes($scope.verDetalle);
 			$scope.mostrarResultado = true;
 			$scope.cargando = false;
 		});
@@ -265,6 +288,81 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			});
 		}
 		$scope.mostrarResultado = false;
+	};
+
+	$scope.controlarTarifas = function(comprobante){
+		var valorTomado;
+		var tarifaError;
+
+		var precioALaFecha;
+		var monedaALaFecha;
+
+		comprobante.controlTarifas = [];
+		var lookup = {};
+		for (var i = 0, len = $scope.matchesTerminal.length; i < len; i++) {
+			lookup[$scope.matchesTerminal[i].code] = $scope.matchesTerminal[i];
+		}
+
+		$scope.noMatch = false;
+		comprobante.noMatch = false;
+
+		comprobante.detalle.forEach(function(detalle){
+			detalle.items.forEach(function(item){
+				if (angular.isDefined(lookup[item.id])){
+					valorTomado = item.impUnit;
+					lookup[item.id].topPrices.forEach(function(precioMatch){
+						if (comprobante.fecha.emision > precioMatch.from){
+							precioALaFecha = precioMatch.price;
+							monedaALaFecha = precioMatch.currency
+						}
+					});
+					if (monedaALaFecha != 'DOL'){
+						valorTomado = item.impUnit * comprobante.cotiMoneda
+					}
+					if ($scope.tasaCargasTerminal.indexOf(item.id) >= 0){
+						if (valorTomado != precioALaFecha){
+							tarifaError = {
+								codigo: item.id,
+								currency: monedaALaFecha,
+								topPrice: precioALaFecha,
+								current: item.impUnit,
+								container: detalle.contenedor
+							};
+							comprobante.controlTarifas.push(tarifaError);
+						}
+					} else {
+						if (valorTomado > precioALaFecha){
+							tarifaError = {
+								codigo: item.id,
+								currency: monedaALaFecha,
+								topPrice: precioALaFecha,
+								current: item.impUnit,
+								container: detalle.contenedor
+							};
+							comprobante.controlTarifas.push(tarifaError);
+						}
+					}
+				} else {
+					$scope.noMatch = true;
+					comprobante.noMatch = true;
+				}
+			});
+		});
+		$rootScope.noMatch = $scope.noMatch;
+	};
+
+	$scope.chequearTarifas = function(comprobante){
+		if (angular.isDefined($scope.comprobantesControlados[comprobante._id])){
+			comprobante.noMatch = $scope.comprobantesControlados[comprobante._id].codigos;
+			return $scope.comprobantesControlados[comprobante._id].tarifas;
+		} else {
+			$scope.controlarTarifas(comprobante);
+			$scope.comprobantesControlados[comprobante._id] = {
+				tarifas: (comprobante.controlTarifas.length > 0),
+				codigos: comprobante.noMatch
+			};
+			return comprobante.controlTarifas.length > 0;
+		}
 	};
 
 	$scope.verPdf = function(){
