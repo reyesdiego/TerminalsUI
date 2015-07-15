@@ -41,6 +41,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	$scope.itemsPerPage = 15;
 	$scope.totalSinLiquidar = 0;
 	$scope.totalLiquidadas = 0;
+	$scope.totalLiquidaciones = 0;
 
 	$scope.currentPageSinLiquidar = 1;
 	$scope.currentPage = {
@@ -72,17 +73,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	$scope.cambiarModo = function(modo){
 		if (modo != $scope.modo){
 			if ($scope.mostrarResultado) $scope.ocultarResultado($scope.verDetalle);
-			var temp = [];
 			$scope.verDetalleLiquidacion = false;
 			$scope.modo = modo;
-			//Ver si esto funciona
-			temp = $scope.datosInvoices.slice();
-			//console.log(temp);
-			$scope.datosInvoices = $scope.auxDatos.slice();
-			//console.log($scope.datosInvoices);
-			$scope.auxDatos = temp.slice();
-			//console.log($scope.auxDatos);
-			//*************************************************
 			$scope.page.skip = (modo == 'sinLiquidar') ? ($scope.currentPageSinLiquidar - 1) * $scope.itemsPerPage : ($scope.currentPageLiquidaciones - 1) * $scope.itemsPerPage;
 			$scope.cargarDatos();
 		}
@@ -107,9 +99,12 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.cargandoLiquidaciones = true;
 		liquidacionesFactory.getPayments($scope.page, function(data){
 			if (data.status == 'OK'){
-				$scope.datosLiquidaciones = data.data
+				$scope.datosLiquidaciones = data.data;
+				$scope.totalLiquidaciones = data.totalCount;
 			} else {
-				//Falta manejo de errores
+				$scope.datosLiquidaciones = [];
+				$scope.totalLiquidaciones = 0;
+				dialogs.error('Liquidaciones', 'Se ha producido un error al cargar las liquidaciones');
 			}
 			$scope.cargandoLiquidaciones = false;
 		})
@@ -128,7 +123,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				$scope.verDetalleLiquidacion = true;
 				$scope.datosInvoices = data.data;
 			} else {
-				//Falta manejo de errores
+				$scope.datosInvoices = [];
+				$scope.totalLiquidadas = 0;
+				$scope.verDetalleLiquidacion = false;
+				dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los comprobantes liquidados de la liquidacion número ' + $scope.liquidacionSelected.number);
 			}
 			$scope.cargando = false;
 		})
