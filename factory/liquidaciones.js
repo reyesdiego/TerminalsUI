@@ -37,6 +37,12 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				data = invoiceFactory.setearInterfaz(data);
 				callback(data);
 			}).error(function(error){
+				if (error == null){
+					error = {
+						status: 'ERROR',
+						message: 'Se ha producido un error al procesar la liquidación.'
+					}
+				}
 				callback(error);
 			})
 	};
@@ -49,8 +55,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			}).error(function(error){
 				if (error == null){
 					error = {
-						status: 'ERROR',
-						message: 'Se ha producido un error al procesar la liquidación.'
+						status: 'ERROR'
 					}
 				}
 				callback(error);

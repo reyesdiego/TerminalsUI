@@ -3,6 +3,8 @@
  */
 myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'invoiceFactory', '$filter', 'dialogs', '$modal', 'generalCache', 'downloadFactory', 'formatService', 'generalFunctions', function($rootScope, $scope, liquidacionesFactory, loginService, invoiceFactory, $filter, dialogs, $modal, generalCache, downloadFactory, formatService, generalFunctions){
 
+	//Agregar resultados traidos y columna de punto de venta
+
 	$scope.itemsDescription = generalCache.get('descripciones');
 	$scope.estadosComprobantes = generalCache.get('estados');
 	$scope.itemDescriptionInvoices = generalCache.get('descripciones');
@@ -51,8 +53,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	$scope.totalLiquidaciones = 0;
 
 	$scope.currentPageSinLiquidar = 1;
-	$scope.currentPage = {
-		Liquidadas: 1
+	$scope.paginacion = {
+		liquidadas: 1
 	};
 	$scope.currentPageLiquidaciones = 1;
 
@@ -122,7 +124,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	};
 
 	$scope.filtrarOrden = function(filtro){
-		$scope.currentPage = 1;
+		$scope.paginacion.liquidadas = 1;
 		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
 		//$scope.$emit('cambioOrden', $scope.model);
 		$scope.detalleLiquidacion();
@@ -132,7 +134,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		if (liquidacion) $scope.liquidacionSelected = liquidacion;
 		$scope.cargando = true;
 		var pagina = {
-			skip: ($scope.currentPage.Liquidadas - 1) * $scope.itemsPerPage,
+			skip: ($scope.paginacion.liquidadas - 1) * $scope.itemsPerPage,
 			limit: $scope.itemsPerPage
 		};
 		liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.liquidacionSelected.number, $scope.model, function(data){
