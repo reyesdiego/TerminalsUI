@@ -43,6 +43,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 	$scope.modo = 'sinLiquidar';
 
+	$scope.comprobantesLiquidar = [];
 	$scope.datosInvoices = [];
 	$scope.auxDatos = [];
 	$scope.comprobantesControlados = [];
@@ -98,10 +99,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.cargando = true;
 		liquidacionesFactory.getComprobantesLiquidar($scope.page, $scope.model, function(data){
 			if (data.status == 'OK'){
-				$scope.datosInvoices = data.data;
+				$scope.comprobantesLiquidar = data.data;
 				$scope.totalSinLiquidar = data.totalCount;
 			} else {
-				$scope.sinLiquidar = [];
+				$scope.comprobantesLiquidar = [];
 				$scope.totalSinLiquidar = 0;
 			}
 			$scope.cargando = false;
@@ -130,6 +131,12 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.detalleLiquidacion();
 	};
 
+	$scope.filtrarSinLiquidar = function(filtro){
+		//$scope.currentPageSinLiquidar = 1;
+		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
+		$scope.cargarSinLiquidar();
+	};
+
 	$scope.detalleLiquidacion = function(liquidacion){
 		if (liquidacion) $scope.liquidacionSelected = liquidacion;
 		$scope.cargando = true;
@@ -154,13 +161,13 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 	$scope.cargarDatos = function(){
 		if ($scope.modo == 'sinLiquidar'){
-			$scope.liquidadas = false;
-			$scope.datosInvoices = $scope.sinLiquidar;
+			//$scope.liquidadas = false;
+			//$scope.datosComprobantes = $scope.sinLiquidar;
 			$scope.panelMensaje = $scope.panelMensajeSinLiquidar;
 			$scope.cargarSinLiquidar();
 		} else {
-			$scope.liquidadas = true;
-			$scope.datosInvoices = $scope.liquidaciones;
+			//$scope.liquidadas = true;
+			//$scope.datosComprobantes = $scope.liquidaciones;
 			$scope.panelMensaje = $scope.panelMensajeLiquidaciones;
 			$scope.cargarLiquidaciones();
 		}
