@@ -416,6 +416,9 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 				$rootScope.logoTerminal = 'images/logo_trp.png';
 				break;
 		}
+		$rootScope.esUsuario = loginService.getType();
+		$rootScope.terminal = loginService.getInfo();
+		$rootScope.grupo = loginService.getGroup();
 		//$rootScope.cargarCache = true;
 		//$rootScope.primerRuteo = true;
 	}

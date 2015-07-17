@@ -203,6 +203,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				}
 			});
 			if (!encontrado){
+				console.log(comprobante);
 				comprobante.estado.push(estadoDefault);
 				comprobante.interfazEstado = {
 					'name': 'Sin ver',
@@ -213,6 +214,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				};
 			}
 		} else {
+			console.log(comprobante);
 			comprobante.estado.push(estadoDefault);
 			comprobante.interfazEstado = {
 				'name': 'Sin ver',
