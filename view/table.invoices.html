@@ -1,5 +1,5 @@
 <div class="table-responsive">
-	<table class="table table-striped table-bordered table-hover">
+	<table class="table table-bordered table-hover">
 		<thead>
 		<tr>
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Pto. Venta" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="nroPtoVenta" filtro-orden="nroPtoVentaOrden"></encabezado-tabla-ordenado></th>
@@ -13,7 +13,7 @@
 		</tr>
 		</thead>
 		<tbody ng-show="acceso == 'agp'">
-		<tr ng-repeat="invoice in datosInvoices">
+		<tr ng-repeat="invoice in datosInvoices" class="{{ invoice.interfazLiquidada }}">
 			<td class="text-right">{{ invoice.nroPtoVenta }}</td>
 			<td style="width: 17%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.codTipoComprob | nombreComprobante | maxLength : 14}}<a href ng-show="((invoice.codTipoComprob | nombreComprobante).length > 14)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-right" style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
@@ -39,4 +39,5 @@
 		</tbody>
 	</table>
 </div>
+<!--<span class="glyphicon glyphicon-asterisk text-success"> - Liquidado </span><span></span> - <span class="glyphicon glyphicon-asterisk text-danger"> - Sin Liquidar</span>-->
 <div-pagination total-items="totalItems" items-per-page="model.itemsPerPage" current-page="currentPage"></div-pagination>

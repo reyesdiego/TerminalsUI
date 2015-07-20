@@ -64,6 +64,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 		var monedaALaFecha;
 
 		comprobante.controlTarifas = [];
+		comprobante.interfazLiquidada = '';
 		var lookup = {};
 		for (var i = 0, len = matchesTerminal.length; i < len; i++) {
 			lookup[matchesTerminal[i].code] = matchesTerminal[i];
@@ -86,6 +87,11 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 						valorTomado = item.impUnit * comprobante.cotiMoneda
 					}
 					if (tasaCargasTerminal.indexOf(item.id) >= 0){
+						if (angular.isDefined(comprobante.payment)){
+							comprobante.interfazLiquidada = 'success';
+						} else {
+							comprobante.interfazLiquidada = 'danger';
+						}
 						if (valorTomado != precioALaFecha){
 							tarifaError = {
 								codigo: item.id,
@@ -114,7 +120,6 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 				}
 			});
 		});
-		//$rootScope.noMatch = $scope.noMatch;
 		return response;
 	};
 
@@ -126,12 +131,14 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 		};
 		if (angular.isDefined(comprobantesControlados[comprobante._id])){
 			comprobante.noMatch = comprobantesControlados[comprobante._id].codigos;
+			comprobante.interfazLiquidada = comprobantesControlados[comprobante._id].liquidada;
 			response.retValue = comprobantesControlados[comprobante._id].tarifas;
 		} else {
 			response.noMatch = controlarTarifas(comprobante);
 			comprobantesControlados[comprobante._id] = {
 				tarifas: (comprobante.controlTarifas.length > 0),
-				codigos: comprobante.noMatch
+				codigos: comprobante.noMatch,
+				liquidada: comprobante.interfazLiquidada
 			};
 			response.retValue = comprobante.controlTarifas.length > 0;
 		}
