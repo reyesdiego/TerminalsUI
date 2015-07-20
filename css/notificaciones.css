@@ -36,3 +36,11 @@
 .usuarioInactivo {
 	color: #ae2018;
 }
+
+.comprobanteLiquidado {
+	background-color: #dff0d8;
+}
+
+.comprobanteSinLiquidar {
+	background-color: #f2dede;
+}

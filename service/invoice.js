@@ -4,10 +4,9 @@
 
 myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$filter', 'generalCache', '$modal', 'loginService', function (invoiceFactory, downloadFactory, $q, $filter, generalCache, $modal, loginService) {
 
-	var itemsDescription = generalCache.get('descripciones');
-	var matchesTerminal = generalCache.get('matches');
+
 	var estadosComprobantes = generalCache.get('estados');
-	var tasaCargasTerminal = generalCache.get('ratesMatches');
+
 
 	var internalCheckComprobantes = function(comprobante, comprobantesVistos, datosInvoices){
 		var encontrado = false;
@@ -37,6 +36,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 	};
 
 	this.existeDescripcion = function(itemId){
+		var itemsDescription = generalCache.get('descripciones');
 		return angular.isDefined(itemsDescription[itemId]);
 	};
 
@@ -57,6 +57,10 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 	};
 
 	var controlarTarifas = function(comprobante){
+
+		var matchesTerminal = generalCache.get('matches');
+		var tasaCargasTerminal = generalCache.get('ratesMatches');
+
 		var valorTomado;
 		var tarifaError;
 
@@ -88,9 +92,9 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 					}
 					if (tasaCargasTerminal.indexOf(item.id) >= 0){
 						if (angular.isDefined(comprobante.payment)){
-							comprobante.interfazLiquidada = 'success';
+							comprobante.interfazLiquidada = 'comprobanteLiquidado';
 						} else {
-							comprobante.interfazLiquidada = 'danger';
+							comprobante.interfazLiquidada = 'comprobanteSinLiquidar';
 						}
 						if (valorTomado != precioALaFecha){
 							tarifaError = {

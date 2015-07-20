@@ -4,8 +4,8 @@
 
 myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'generalFunctions', 'loginService', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, generalFunctions, loginService) {
 
-	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
-	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes', 'tasa'];
+	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque', 'tasa'];
 
 	$scope.ocultaTasas = true;
 	$scope.loadingState = false;
@@ -258,7 +258,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		correlativeSocket.forward('correlative_' + sess, $scope);
 	});
 
-	$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje', 'itemsPerPage'];
+	$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje', 'itemsPerPage', 'tasa'];
 
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
@@ -415,7 +415,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 }]);
 
 myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', function($scope, invoiceFactory, priceFactory) {
-	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'tasa'];
 
 	$scope.model = {
 		'nroPtoVenta': '',
@@ -498,7 +498,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 			}
 		} else {
 			if ($scope.model.code == ''){
-				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'tasa'];
 				$scope.controlFiltros = 'codigos';
 				$scope.mostrarPtosVentas = false;
 				$scope.controlDeCodigos();
