@@ -23,7 +23,10 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', func
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
 		'order': '',
-		'itemsPerPage': 15
+		'itemsPerPage': 15,
+		'tasa': '',
+		'liquidacion': '',
+		'payment': ''
 	};
 
 	$scope.invoices = [];

@@ -112,15 +112,34 @@
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
 		<multi-select input-model="estadosComprobantes" button-label="icon description" item-label="icon description" tick-property="ticked" helper-elements="none" default-label="Seleccionar estado" max-labels="1" on-item-click="estadoSeleccionado(data)"></multi-select>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0">
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('tasa', '') >= 0">
 		<div class="input-group">
-			<label class="sr-only" for="liquidadas">Estado de pago</label>
-			<select id="liquidadas" class="form-control" ng-model="model.pago" ng-init="model.pago='todas'">
-				<option value="todas">Todas</option>
-				<option value="sin liquidar">Sin Liquidar</option>
-				<option value="liquidadas">Liquidadas</option>
+			<select class="form-control" ng-model="model.tasa" ng-init="model.tasa=''">
+				<option value="" disabled>Según Tasa a las cargas</option>
+				<option value="0">Sin Tasa a las cargas</option>
+				<option value="1">Con Tasa a las cargas</option>
 			</select>
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('pago', 'todas');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('tasa', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('liquidacion', 0) >= 0 || model.tasa == 0 || model.tasa == ''">
+		<div class="input-group">
+			<select class="form-control" ng-model="model.liquidacion" ng-init="model.liquidacion=''">
+				<option value="" disabled>Según liquidación</option>
+				<option value="0">Sin Liquidar</option>
+				<option value="1">Liquidadas</option>
+			</select>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('liquidacion', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('payment', 0) >= 0 || model.liquidacion == 0 || model.liquidacion == ''">
+		<div class="input-group">
+			<select class="form-control" ng-model="model.payment" ng-init="model.payment=''">
+				<option value="">Según pago</option>
+				<option value="0">Pagas</option>
+				<option value="1">Impagas</option>
+			</select>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('payment', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('itemsPerPage', 0) >= 0">
