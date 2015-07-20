@@ -23,19 +23,19 @@
 		</thead>
 		<tbody>
 		<tr ng-repeat="invoice in comprobantesLiquidar" ng-init="invoice.liquidar = true">
-			<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-			<td class="text-center">{{ invoice.codTipoComprob | nombreComprobante }}</td>
-			<td class="text-right">{{ invoice.nroComprob }}</td>
-			<td class="text-right">{{ invoice.cnt }}</td>
-			<td class="text-center">{{ invoice.code }}</td>
-			<td class="text-center">{{ invoice.emision | date: 'dd/MM/yyyy' }}</td>
-			<td class="text-right">U$S {{ invoice.importe | currency }}</td>
-			<td class="text-center"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-			<td class="text-center" ng-show="liquidadas">{{ invoice.fechaLiquidacion }}</td>
-			<td class="hidden-print text-left">
+			<td class="text-right" style="width: 8%">{{ invoice.nroPtoVenta }}</td>
+			<td class="text-center" style="width: 13%">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
+			<td class="text-right" style="width: 10%">{{ invoice.nroComprob }}</td>
+			<td class="text-right" style="width: 7%">{{ invoice.cnt }}</td>
+			<td class="text-center" style="width: 8%">{{ invoice.code }}</td>
+			<td class="text-center" style="width: 13%">{{ invoice.emision | date: 'dd/MM/yyyy' }}</td>
+			<td class="text-right" style="width: 14%">U$S {{ invoice.importe | currency }}</td>
+			<td class="text-center" style="width: 4%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td class="text-center" style="width: 5%" ng-show="liquidadas">{{ invoice.fechaLiquidacion }}</td>
+			<td class="hidden-print text-left" style="width: 14%">
 				<a href ng-click="trackInvoice(invoice)" popover="{{ invoice.lastComment }}" popover-trigger="mouseenter"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
 			</td>
-			<td class="text-center" ng-show="!liquidadas"><input style="width: 15px; height: 15px;" type="checkbox" ng-model="invoice.liquidar"></td>
+			<td class="text-center" style="width: 4%" ng-show="!liquidadas"><input style="width: 15px; height: 15px;" type="checkbox" ng-model="invoice.liquidar"></td>
 		</tr>
 		</tbody>
 	</table>
