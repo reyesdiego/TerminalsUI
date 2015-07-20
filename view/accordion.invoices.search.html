@@ -112,6 +112,17 @@
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
 		<multi-select input-model="estadosComprobantes" button-label="icon description" item-label="icon description" tick-property="ticked" helper-elements="none" default-label="Seleccionar estado" max-labels="1" on-item-click="estadoSeleccionado(data)"></multi-select>
 	</div>
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0">
+		<div class="input-group">
+			<label class="sr-only" for="liquidadas">Estado de pago</label>
+			<select id="liquidadas" class="form-control" ng-model="model.pago" ng-init="model.pago='todas'">
+				<option value="todas">Todas</option>
+				<option value="sin liquidar">Sin Liquidar</option>
+				<option value="liquidadas">Liquidadas</option>
+			</select>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('pago', 'todas');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('itemsPerPage', 0) >= 0">
 		<multi-select input-model="itemsPerPage" button-label="description" item-label="description" tick-property="ticked" helper-elements="" selection-mode="single" on-item-click="cambioItemsPorPagina(data)"></multi-select>
 	</div>
