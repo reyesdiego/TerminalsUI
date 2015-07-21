@@ -69,6 +69,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 
 		comprobante.controlTarifas = [];
 		comprobante.interfazLiquidada = '';
+		comprobante.tieneTasa = false;
 		var lookup = {};
 		for (var i = 0, len = matchesTerminal.length; i < len; i++) {
 			lookup[matchesTerminal[i].code] = matchesTerminal[i];
@@ -91,6 +92,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 						valorTomado = item.impUnit * comprobante.cotiMoneda
 					}
 					if (tasaCargasTerminal.indexOf(item.id) >= 0){
+						comprobante.tieneTasa = true;
 						if (angular.isDefined(comprobante.payment)){
 							comprobante.interfazLiquidada = 'comprobanteLiquidado';
 						} else {
@@ -136,13 +138,15 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 		if (angular.isDefined(comprobantesControlados[comprobante._id])){
 			comprobante.noMatch = comprobantesControlados[comprobante._id].codigos;
 			comprobante.interfazLiquidada = comprobantesControlados[comprobante._id].liquidada;
+			comprobante.tieneTasa = comprobantesControlados[comprobante._id].tieneTasa;
 			response.retValue = comprobantesControlados[comprobante._id].tarifas;
 		} else {
 			response.noMatch = controlarTarifas(comprobante);
 			comprobantesControlados[comprobante._id] = {
 				tarifas: (comprobante.controlTarifas.length > 0),
 				codigos: comprobante.noMatch,
-				liquidada: comprobante.interfazLiquidada
+				liquidada: comprobante.interfazLiquidada,
+				tieneTasa: comprobante.tieneTasa
 			};
 			response.retValue = comprobante.controlTarifas.length > 0;
 		}

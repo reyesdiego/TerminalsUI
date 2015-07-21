@@ -4,7 +4,7 @@
 
 myapp.filter('formatCurrency', [function(){
 	return function(text){
-		if (text == 'DOL' || text == 'DOLARES'){ return 'US$'; }
+		if (text == 'DOL' || text == 'DOLARES'){ return 'U$S'; }
 		else if (text == 'PES' || text == 'PESOS') { return 'AR$'; }
 		else return null;
 	}

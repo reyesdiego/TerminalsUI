@@ -193,12 +193,19 @@
 				<li ng-show="acceso=='agp' && (in_array('liquidaciones', rutas) || in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-show="in_array('liquidaciones', rutas)"><a collap ui-sref="liquidaciones">Liquidaciones</a></li>
+						<li class="dropdown-header">Gráficos</li>
 						<li ng-show="in_array('control', rutas)"><a collap ui-sref="control">Control</a></li>
 						<li ng-show="in_array('reports', rutas)"><a collap ui-sref="reports">Reportes</a></li>
-						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Contenedor</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Contenedores</li>
+						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Ver</a></li>
 						<li ng-show="in_array('buque', rutas)"><a collap ui-sref="buque">Buque - Viaje</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Contabilidad</li>
+						<li ng-show="in_array('liquidaciones', rutas)"><a collap ui-sref="liquidaciones">Liquidaciones</a></li>
 						<li ng-show="in_array('afip', rutas)"><a collap ui-sref="afip">A.F.I.P</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Seguridad</li>
 						<li ng-show="in_array('users', rutas)"><a collap ui-sref="users">Usuarios</a></li>
 						<li ng-show="in_array('access', rutas)"><a collap ui-sref="access">Control de acceso</a></li>
 						<li class="visible-sm divider"></li>
