@@ -79,8 +79,9 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 						$rootScope.filtroTerminal = 'BACTSSA';
 					}
 
-					// Carga el tema de la terminal
+					// Carga el tema de la terminalce en el
 					if (typeof ($cookies.themeTerminal) != 'undefined') {
+						console.log('lo hace en el login');
 						loginService.setFiltro($cookies.themeTerminal);
 						$rootScope.filtroTerminal = $cookies.themeTerminal;
 						generalFunctions.switchTheme($cookies.themeTerminal);

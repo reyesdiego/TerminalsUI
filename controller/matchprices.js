@@ -95,6 +95,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 						break;
 				}
 				$scope.totalItems = $scope.pricelist.length;
+				console.log($scope.listaSeleccionada);
 			} else {
 				dialogs.error('Asociar', 'Se ha producido un error al cargar los datos de códigos asociados. ' + data.data);
 				$scope.pricelist = [];
@@ -102,12 +103,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		});
 	};
-
-	if (loginService.getStatus()) $scope.prepararDatos();
-
-	$scope.$on('terminoLogin', function(){
-		$scope.prepararDatos();
-	});
 
 	$scope.pageChanged = function(){
 		$scope.guardar();
@@ -388,5 +383,14 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				}
 			})
 		})
-	}
+	};
+
+	if (loginService.getStatus()) $scope.prepararDatos();
+
+	$scope.$on('terminoLogin', function(){
+		$scope.acceso = $rootScope.esUsuario;
+		$scope.nombre = loginService.getFiltro();
+		$scope.prepararDatos();
+	});
+
 }]);
