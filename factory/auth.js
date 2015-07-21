@@ -80,7 +80,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 					}
 
 					// Carga el tema de la terminalce en el
-					if (typeof ($cookies.themeTerminal) != 'undefined') {
+					if (typeof ($cookies.themeTerminal) != 'undefined' && $rootScope.esUsuario == 'agp') {
 						loginService.setFiltro($cookies.themeTerminal);
 						$rootScope.filtroTerminal = $cookies.themeTerminal;
 						generalFunctions.switchTheme($cookies.themeTerminal);
