@@ -89,11 +89,11 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		};
 
 		$scope.$watch('model.rate', function(){
-			if ($scope.model.tasa != 1) $scope.model.liquidacion = '';
+			if ($scope.model.rate != 1) $scope.model.payment = '';
 		});
 
 		$scope.$watch('model.payment', function(){
-			if ($scope.model.liquidacion != 1) $scope.model.payment = '';
+			if ($scope.model.payment != 1) $scope.model.payed = '';
 		});
 
 		$scope.estadoSeleccionado = function(data){

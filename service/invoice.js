@@ -4,9 +4,7 @@
 
 myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$filter', 'generalCache', '$modal', 'loginService', function (invoiceFactory, downloadFactory, $q, $filter, generalCache, $modal, loginService) {
 
-
 	var estadosComprobantes = generalCache.get('estados');
-
 
 	var internalCheckComprobantes = function(comprobante, comprobantesVistos, datosInvoices){
 		var encontrado = false;
