@@ -118,7 +118,7 @@
 				<option value="" disabled>Según Tasa a las cargas</option>
 				<option value="1">Con Tasa a las cargas</option>
 			</select>
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('tasa', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('rate', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('payment', 0) >= 0 || model.rate == ''">
@@ -131,7 +131,7 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('payment', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('payed', 0) >= 0 || model.payment == 0 || model.payment == ''">
+	<!--<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('payed', 0) >= 0 || model.payment == 0 || model.payment == ''">
 		<div class="input-group">
 			<select class="form-control" ng-model="model.payed" ng-init="model.payed=''">
 				<option value="">Según pago</option>
@@ -140,7 +140,7 @@
 			</select>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('payed', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
-	</div>
+	</div>-->
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('itemsPerPage', 0) >= 0">
 		<multi-select input-model="itemsPerPage" button-label="description" item-label="description" tick-property="ticked" helper-elements="" selection-mode="single" on-item-click="cambioItemsPorPagina(data)"></multi-select>
 	</div>
