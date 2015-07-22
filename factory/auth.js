@@ -79,14 +79,14 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 						$rootScope.filtroTerminal = 'BACTSSA';
 					}
 
-					// Carga el tema de la terminalce en el
+					/*// Carga el tema de la terminalce en el
 					if (typeof ($cookies.themeTerminal) != 'undefined' && $rootScope.esUsuario == 'agp') {
 						loginService.setFiltro($cookies.themeTerminal);
 						$rootScope.filtroTerminal = $cookies.themeTerminal;
-						generalFunctions.switchTheme($cookies.themeTerminal);
+						//generalFunctions.switchTheme($cookies.themeTerminal);
 					} else {
-						generalFunctions.switchTheme(loginService.getFiltro());
-					}
+						//generalFunctions.switchTheme(loginService.getFiltro());
+					}*/
 
 					// Carga la cache si el usuario no tenía el acceso por cookies
 					var restoreSesion = $cookies.restoreSesion === 'true';
@@ -134,16 +134,9 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 		$cookieStore.remove('restoreSesion');
 		$cookieStore.remove('username');
 		$cookieStore.remove('password');
-		$cookieStore.remove('themeTerminal');
+		//$cookieStore.remove('themeTerminal');
 		cacheFactory.limpiaCache();
 		loginService.unsetLogin();
-		generalFunctions.switchTheme('BACTSSA');
-	};
-
-	factory.setTheme = function(terminal){
-		if (angular.isDefined($cookies.themeTerminal) && $cookies.themeTerminal != ''){
-			$cookies.themeTerminal = terminal;
-		}
 	};
 
 	return factory;

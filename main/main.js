@@ -366,6 +366,8 @@ myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket',
 	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
+		$rootScope.terminalEstilo = 'bootstrap.cerulean';
+
 		moment().format('YYYY-MM-DD');
 		moment.locale('es');
 
@@ -406,17 +408,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		if (loginService.getStatus()){
 			$rootScope.rutas = loginService.getAcceso();
-			switch (loginService.getFiltro()){
-				case 'BACTSSA':
-					$rootScope.logoTerminal = 'images/logo_bactssa.png';
-					break;
-				case 'TERMINAL4':
-					$rootScope.logoTerminal = 'images/logo_terminal4.png';
-					break;
-				case 'TRP':
-					$rootScope.logoTerminal = 'images/logo_trp.png';
-					break;
-			}
+			$rootScope.setEstiloTerminal(loginService.getFiltro());
 			$rootScope.esUsuario = loginService.getType();
 			$rootScope.terminal = loginService.getInfo();
 			$rootScope.grupo = loginService.getGroup();
@@ -460,11 +452,13 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.gateNotify = 0;
 			$rootScope.esUsuario = '';
 			$state.transitionTo('login');
+			$rootScope.setEstiloTerminal('BACTSSA');
 			$rootScope.filtroTerminal = '';
 			if (angular.isDefined($rootScope.appSocket)) $rootScope.appSocket.disconnect();
 		};
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
+			$rootScope.setEstiloTerminal($cookies.themeTerminal);
 			$rootScope.previousState = from;
 		});
 
@@ -474,7 +468,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			}
 			if (!loginService.getStatus() && $cookies.restoreSesion === 'true'){
 				authFactory.login().then(function(){
-
 					$rootScope.$broadcast('terminoLogin');
 					//$rootScope.cargarCache = true;
 					//$rootScope.primerRuteo = true;
@@ -520,4 +513,23 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			event.preventDefault();
 			$state.transitionTo('forbidden');
 		};
+
+		$rootScope.setEstiloTerminal = function(terminal){
+			if ($rootScope.filtroTerminal != terminal){
+				$rootScope.filtroTerminal = terminal;
+				$cookies.themeTerminal = terminal;
+				loginService.setFiltro(terminal);
+				switch (terminal){
+					case 'BACTSSA':
+						$rootScope.terminalEstilo = 'bootstrap.cerulean';
+						break;
+					case 'TERMINAL4':
+						$rootScope.terminalEstilo = 'bootstrap.united';
+						break;
+					case 'TRP':
+						$rootScope.terminalEstilo = 'bootstrap.flaty';
+						break;
+				}
+			}
+		}
 	}]);
