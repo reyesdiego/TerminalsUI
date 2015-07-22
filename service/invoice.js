@@ -81,7 +81,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 				if (angular.isDefined(lookup[item.id])){
 					valorTomado = item.impUnit;
 					lookup[item.id].topPrices.forEach(function(precioMatch){
-						if (comprobante.fecha.emision > precioMatch.from){
+						if (comprobante.fecha.emision >= precioMatch.from){
 							precioALaFecha = precioMatch.price;
 							monedaALaFecha = precioMatch.currency
 						}
