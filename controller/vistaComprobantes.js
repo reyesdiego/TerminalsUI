@@ -88,8 +88,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 			$scope.filtrado('itemsPerPage', data.value);
 		};
 
-		$scope.$watch('model.rate', function(){
-			if ($scope.model.rate != 1) $scope.model.payment = '';
+		$scope.$watch('model.rates', function(){
+			if ($scope.model.rates != 1) $scope.model.payment = '';
 		});
 
 		$scope.$watch('model.payment', function(){

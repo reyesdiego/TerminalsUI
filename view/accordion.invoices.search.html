@@ -112,16 +112,16 @@
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
 		<multi-select input-model="estadosComprobantes" button-label="icon description" item-label="icon description" tick-property="ticked" helper-elements="none" default-label="Seleccionar estado" max-labels="1" on-item-click="estadoSeleccionado(data)"></multi-select>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('rate', '') >= 0">
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('rates', '') >= 0">
 		<div class="input-group">
-			<select class="form-control" ng-model="model.rate" ng-init="model.rate=''">
+			<select class="form-control" ng-model="model.rates" ng-init="model.rates=''">
 				<option value="" disabled>Según Tasa a las cargas</option>
 				<option value="1">Con Tasa a las cargas</option>
 			</select>
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('rate', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('rates', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('payment', 0) >= 0 || model.rate == ''">
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('payment', 0) >= 0 || model.rates == ''">
 		<div class="input-group">
 			<select class="form-control" ng-model="model.payment" ng-init="model.payment=''">
 				<option value="" disabled>Según liquidación</option>

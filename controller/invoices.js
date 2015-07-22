@@ -24,7 +24,7 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', func
 		'filtroOrdenReverse': false,
 		'order': '',
 		'itemsPerPage': 15,
-		'rate': '',
+		'rates': '',
 		'payment': '',
 		'payed': ''
 	};
