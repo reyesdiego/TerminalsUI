@@ -394,11 +394,11 @@ myapp.directive('toupper', function() {
 
 			modelCtrl.$parsers.push(mayusculas);
 
-			scope.$watch(attrs.ngModel, function(){
-					mayusculas(scope[attrs.ngModel]);
+			scope.$watch(attrs.ngModel, function(valor){
+				mayusculas(valor);
 			});
 
-			mayusculas(scope[attrs.ngModel]);
+			//mayusculas();
 		}
 	};
 });

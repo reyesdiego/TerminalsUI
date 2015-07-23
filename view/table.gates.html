@@ -22,11 +22,10 @@
 						<th style="text-align: center">Viaje</th>
 						<th style="text-align: center">Contenedor</th>
 						<th style="text-align: center">Patente cami&oacute;n</th>
-						<th style="text-align: center">Tipo</th>
+						<th style="text-align: center" colspan="2">Tipo</th>
 						<th style="text-align: center"><encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
 						<th style="text-align: center">Inicio turno</th>
 						<th style="text-align: center">Fin turno</th>
-						<th style="text-align: center"><span class="visible-sm">Movim.</span><span class="hidden-sm">Movimiento</span></th>
 						<th class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center">Facturas</th>
 					</tr>
 					<tr ng-repeat="gate in datosGates">
@@ -35,11 +34,11 @@
 						<td>{{ gate.viaje }}</td>
 						<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO'" ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
 						<td>{{ gate.patenteCamion }}</td>
-						<td><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
+						<td class="text-center"><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
+						<td class="text-center">{{ gate.mov }}</td>
 						<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
 						<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
 						<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
-						<td>{{ gate.mov }}</td>
 						<td class="hidden-print" ng-hide="ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)" ng-hide="gate.carga == 'NO'"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 				</table>
 			</div>

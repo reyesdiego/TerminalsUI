@@ -21,7 +21,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
 		'order': '',
-		'itemsPerPage': 15
+		'itemsPerPage': 15,
+		'carga': '',
+		'ontime': ''
 	};
 	//////////////////////////////////////
 
@@ -41,7 +43,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 	$scope.loadingTasas = false;
 	$scope.detalleGates = false;
 	$scope.volverAPrincipal = false;
-	$scope.ocultarFiltros = ['nroPtoVenta', 'codTipoComprob', 'nroComprobante', 'razonSocial', 'documentoCliente', 'codigo', 'estado', 'itemsPerPage', 'fechaInicio', 'fechaFin', 'buque'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'codTipoComprob', 'nroComprobante', 'razonSocial', 'documentoCliente', 'codigo', 'estado', 'itemsPerPage', 'fechaInicio', 'fechaFin', 'buque', 'carga', 'ontime'];
 	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
 	$scope.mensajeResultado = $rootScope.mensajeResultado;
 	$scope.configPanelTasas = {

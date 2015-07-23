@@ -8,8 +8,8 @@
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0">
 		<div class="input-group">
 			<label class="sr-only" for="model.codTipoComprob">Seleccionar Comprobante</label>
-			<select id="model.codTipoComprob" class="form-control" ng-model="model.codTipoComprob" ng-init="model.codTipoComprob=0">
-				<option value="0" disabled>Seleccionar Comprobante</option>
+			<select id="model.codTipoComprob" class="form-control" ng-model="model.codTipoComprob" ng-init="model.codTipoComprob=''">
+				<option value="" disabled>Seleccionar Comprobante</option>
 				<option ng-repeat="comprobantes in vouchers" value="{{ comprobantes._id }}">{{ comprobantes.description }}</option>
 			</select>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codTipoComprob', 0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>

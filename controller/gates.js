@@ -44,7 +44,9 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		'filtroOrdenAnterior': 'gateTimestamp',
 		'filtroOrdenReverse': true,
 		'order': '"gateTimestamp": -1',
-		'fechaConGMT': true
+		'fechaConGMT': true,
+		'carga': '',
+		'ontime': ''
 	};
 
 	$scope.page = {
