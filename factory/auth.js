@@ -2,7 +2,7 @@
  * Created by leo on 18/07/14.
  */
 
-myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory', 'loginService', '$rootScope', '$q', '$injector', 'cacheFactory', 'generalFunctions', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, $q, $injector, cacheFactory, generalFunctions){
+myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService', '$rootScope', '$q', '$injector', 'cacheFactory', '$http', function($state, $cookies, userFactory, loginService, $rootScope, $q, $injector, cacheFactory, $http){
 	var factory = {};
 
 	factory.userEnter = function(user, pass, useCookies){
@@ -10,23 +10,23 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 		this.login(user, pass)
 			.then(function(){
 				if (useCookies){
-					$cookies.username = user;
-					$cookies.password = pass;
-					$cookies.themeTerminal = loginService.getFiltro();
+					$cookies.put('username', user);
+					$cookies.put('password', pass);
+					$cookies.put('themeTerminal', loginService.getFiltro());
 				}
-				$cookies.isLogged = 'true';
-				$cookies.restoreSesion = useCookies;
+				$cookies.put('isLogged', 'true');
+				$cookies.put('restoreSesion', useCookies);
 				deferred.resolve();
 			},
 			function(error){
 				if (loginService.getStatus()){
 					if (useCookies){
-						$cookies.username = user;
-						$cookies.password = pass;
-						$cookies.themeTerminal = loginService.getFiltro();
+						$cookies.put('username', user);
+						$cookies.put('password', pass);
+						$cookies.put('themeTerminal', loginService.getFiltro());
 					}
-					$cookies.isLogged = 'true';
-					$cookies.restoreSesion = useCookies;
+					$cookies.put('isLogged', 'true');
+					$cookies.put('restoreSesion', useCookies);
 				}
 				deferred.reject(error);
 			});
@@ -36,8 +36,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 	factory.login = function(user, pass){
 		var deferred = $q.defer();
 
-		user = user || $cookies.username;
-		pass = pass || $cookies.password;
+		user = user || $cookies.get('username');
+		pass = pass || $cookies.get('password');
 
 		var usuario = {
 			email:		user,
@@ -56,11 +56,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 					loginService.setGroup(data.group);
 					loginService.setToken(data.token.token);
 
-					// Le agrega el token a todas las consultas $http
-					$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-						if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
-						if (data) { return angular.toJson(data); }
-					};
+					$http.defaults.headers.common.token = loginService.getToken();
 
 					loginService.setAcceso(data.acceso);
 
@@ -79,17 +75,8 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 						$rootScope.filtroTerminal = 'BACTSSA';
 					}
 
-					/*// Carga el tema de la terminalce en el
-					if (typeof ($cookies.themeTerminal) != 'undefined' && $rootScope.esUsuario == 'agp') {
-						loginService.setFiltro($cookies.themeTerminal);
-						$rootScope.filtroTerminal = $cookies.themeTerminal;
-						//generalFunctions.switchTheme($cookies.themeTerminal);
-					} else {
-						//generalFunctions.switchTheme(loginService.getFiltro());
-					}*/
-
 					// Carga la cache si el usuario no tenía el acceso por cookies
-					var restoreSesion = $cookies.restoreSesion === 'true';
+					var restoreSesion = $cookies.get('restoreSesion') === 'true';
 					if (!restoreSesion){
 						cacheFactory.cargaCache()
 							.then(function(){
@@ -102,7 +89,7 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 								};
 								deferred.reject(cacheError);
 							});
-					} else { //Ya están cargadas las cosas ?????
+					} else {
 						deferred.resolve();
 					}
 				} else {
@@ -125,15 +112,11 @@ myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory
 		return deferred.promise;
 	};
 
-	factory.userEstaLogeado = function(){
-		return (angular.isDefined($cookies.username) && angular.isDefined($cookies.password) && $cookies.username != '' && $cookies.password != '');
-	};
-
 	factory.logout = function(){
-		$cookieStore.remove('isLogged');
-		$cookieStore.remove('restoreSesion');
-		$cookieStore.remove('username');
-		$cookieStore.remove('password');
+		$cookies.remove('isLogged');
+		$cookies.remove('restoreSesion');
+		$cookies.remove('username');
+		$cookies.remove('password');
 		//$cookieStore.remove('themeTerminal');
 		cacheFactory.limpiaCache();
 		loginService.unsetLogin();

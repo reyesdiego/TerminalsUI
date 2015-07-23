@@ -363,8 +363,14 @@ myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 	});
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket',
-	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
+myapp.config(['$cookiesProvider', function($cookiesProvider){
+	var hoy = new Date();
+
+	$cookiesProvider.defaults.expires = new Date(hoy.getFullYear(), hoy.getMonth()+1, hoy.getDate());
+}]);
+
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket', '$http',
+	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
 		$rootScope.terminalEstilo = 'bootstrap.cerulean';
 
@@ -400,13 +406,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.cambioMoneda = true;
 
-		// Le agrega el token a todas las consultas $http
-		$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-			if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
-			if (data) { return angular.toJson(data); }
-		};
-
 		if (loginService.getStatus()){
+			$http.defaults.headers.common.token = loginService.getToken();
 			$rootScope.rutas = loginService.getAcceso();
 			$rootScope.setEstiloTerminal(loginService.getFiltro());
 			$rootScope.esUsuario = loginService.getType();
@@ -458,7 +459,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		};
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
-			$rootScope.setEstiloTerminal($cookies.themeTerminal);
+			$rootScope.setEstiloTerminal($cookies.get('themeTerminal'));
 			$rootScope.previousState = from;
 		});
 
@@ -466,12 +467,9 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 				dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 			}
-			if (!loginService.getStatus() && $cookies.restoreSesion === 'true'){
+			if (!loginService.getStatus() && $cookies.get('restoreSesion') === 'true'){
 				authFactory.login().then(function(){
 					$rootScope.$broadcast('terminoLogin');
-					//$rootScope.cargarCache = true;
-					//$rootScope.primerRuteo = true;
-					//$rootScope.estaLogeado = true;
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');
 					} else {
@@ -487,17 +485,10 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.cambioMoneda = !(in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
 			if (!in_array(toState.name, $rootScope.rutasComunes)){
 				if (loginService.getStatus()){
-					if ($cookies.isLogged === 'true'){
+					if ($cookies.get('isLogged') === 'true'){
 						if(!in_array(toState.name, loginService.getAcceso())){
 							$rootScope.usuarioNoAutorizado(event);
-						} /*else {
-						 /*if ($rootScope.cargarCache){
-						 $rootScope.cargarCache = false;
-						 $rootScope.previousState = toState.name;
-						 event.preventDefault();
-						 $state.transitionTo('cambioTerminal');
-						 }
-						 }*/
+						}
 					} else {
 						event.preventDefault();
 						$rootScope.salir();
@@ -517,7 +508,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.setEstiloTerminal = function(terminal){
 			if ($rootScope.filtroTerminal != terminal){
 				$rootScope.filtroTerminal = terminal;
-				$cookies.themeTerminal = terminal;
+				$cookies.put('themeTerminal', terminal);
 				loginService.setFiltro(terminal);
 				switch (terminal){
 					case 'BACTSSA':
