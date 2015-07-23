@@ -45,9 +45,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		if (loginService.getType() == 'agp'){
 			$rootScope.filtroTerminal = loginService.getFiltro();
 		}
-
-		// Carga el tema de la terminal
-		generalFunctions.switchTheme(loginService.getFiltro());
 	}
 
 	$scope.$on('terminoLogin', function(){

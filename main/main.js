@@ -406,6 +406,25 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.cambioMoneda = true;
 
+		$rootScope.setEstiloTerminal = function(terminal){
+			if ($rootScope.filtroTerminal != terminal){
+				$rootScope.filtroTerminal = terminal;
+				$cookies.put('themeTerminal', terminal);
+				loginService.setFiltro(terminal);
+				switch (terminal){
+					case 'BACTSSA':
+						$rootScope.terminalEstilo = 'bootstrap.cerulean';
+						break;
+					case 'TERMINAL4':
+						$rootScope.terminalEstilo = 'bootstrap.united';
+						break;
+					case 'TRP':
+						$rootScope.terminalEstilo = 'bootstrap.flaty';
+						break;
+				}
+			}
+		}
+
 		if (loginService.getStatus()){
 			$http.defaults.headers.common.token = loginService.getToken();
 			$rootScope.rutas = loginService.getAcceso();
@@ -505,22 +524,4 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$state.transitionTo('forbidden');
 		};
 
-		$rootScope.setEstiloTerminal = function(terminal){
-			if ($rootScope.filtroTerminal != terminal){
-				$rootScope.filtroTerminal = terminal;
-				$cookies.put('themeTerminal', terminal);
-				loginService.setFiltro(terminal);
-				switch (terminal){
-					case 'BACTSSA':
-						$rootScope.terminalEstilo = 'bootstrap.cerulean';
-						break;
-					case 'TERMINAL4':
-						$rootScope.terminalEstilo = 'bootstrap.united';
-						break;
-					case 'TRP':
-						$rootScope.terminalEstilo = 'bootstrap.flaty';
-						break;
-				}
-			}
-		}
 	}]);
