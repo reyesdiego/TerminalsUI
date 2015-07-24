@@ -51,9 +51,10 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			});
 	};
 
-	factory.getTasasContenedor = function(datos, callback){
+	factory.getTasasContenedor = function(datos, ruta, callback){
 		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + datos.contenedor + '/' + datos.currency;
-		var queryString = {
+		var queryString = {};
+		if (ruta == 'buque') queryString = {
 			buqueNombre: datos.buqueNombre,
 			viaje: datos.viaje
 		};

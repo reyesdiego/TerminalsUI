@@ -2,7 +2,8 @@
  * Created by artiom on 08/04/15.
  */
 
-myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache){
+myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', '$state',
+	function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache, $state){
 	////// Para containers /////////////
 	$scope.model = {
 		'nroPtoVenta': '',
@@ -43,8 +44,8 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 	$scope.loadingTasas = false;
 	$scope.detalleGates = false;
 	$scope.volverAPrincipal = false;
-	$scope.ocultarFiltros = ['nroPtoVenta', 'codTipoComprob', 'nroComprobante', 'razonSocial', 'documentoCliente', 'codigo', 'estado', 'itemsPerPage', 'fechaInicio', 'fechaFin', 'buque', 'carga', 'ontime'];
-	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'codTipoComprob', 'nroComprobante', 'razonSocial', 'documentoCliente', 'codigo', 'estado', 'itemsPerPage', 'fechaInicio', 'fechaFin', 'buque', 'carga', 'ontime', 'rates'];
+	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque', 'rates'];
 	$scope.mensajeResultado = $rootScope.mensajeResultado;
 	$scope.configPanelTasas = {
 		tipo: 'panel-info',
@@ -274,7 +275,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 				mensaje: 'No se encontraron tasas para los filtros seleccionados.'
 			};
 			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda, buqueNombre: $scope.model.buqueNombre, viaje: $scope.model.viaje};
-			controlPanelFactory.getTasasContenedor(datos, function(data){
+			controlPanelFactory.getTasasContenedor(datos, $state.current.name, function(data){
 				if (data.status === 'OK'){
 					$scope.tasas = data.data;
 					$scope.totalTasas = data.totalTasas;
