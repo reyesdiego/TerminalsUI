@@ -273,7 +273,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 				titulo: 'Tasas',
 				mensaje: 'No se encontraron tasas para los filtros seleccionados.'
 			};
-			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda};
+			var datos = { contenedor: $scope.model.contenedor, currency: $scope.moneda, buqueNombre: $scope.model.buqueNombre, viaje: $scope.model.viaje};
 			controlPanelFactory.getTasasContenedor(datos, function(data){
 				if (data.status === 'OK'){
 					$scope.tasas = data.data;

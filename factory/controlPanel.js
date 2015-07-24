@@ -53,8 +53,12 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 	factory.getTasasContenedor = function(datos, callback){
 		var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + datos.contenedor + '/' + datos.currency;
+		var queryString = {
+			buqueNombre: datos.buqueNombre,
+			viaje: datos.viaje
+		};
 		if (datos.contenedor != undefined && datos.contenedor != ''){
-			$http.get(inserturl)
+			$http.get(inserturl, { params: formatService.formatearDatos(queryString)})
 				.success(function (data){
 					data = ponerDescripcionYTasas(data);
 					callback(data);
