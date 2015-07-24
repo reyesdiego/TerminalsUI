@@ -420,7 +420,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 						break;
 				}
 			}
-		}
+		};
 
 		if (loginService.getStatus()){
 			$http.defaults.headers.common.token = loginService.getToken();

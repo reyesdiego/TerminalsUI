@@ -71,8 +71,9 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 					if (data.role == 'terminal') {
 						loginService.setFiltro(data.terminal);
 					} else {
-						loginService.setFiltro('BACTSSA');
-						$rootScope.filtroTerminal = 'BACTSSA';
+						var filtro = angular.isDefined($cookies.get('themeTerminal')) ? $cookies.get('themeTerminal') : 'BACTSSA';
+						loginService.setFiltro(filtro);
+						$rootScope.filtroTerminal = filtro;
 					}
 
 					// Carga la cache si el usuario no tenía el acceso por cookies
