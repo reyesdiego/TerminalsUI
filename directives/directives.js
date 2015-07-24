@@ -185,7 +185,11 @@ myapp.directive('divPagination', function(){
 				switch ($scope.panelSize){
 					case 12:
 					case undefined:
-						if ($scope.totalItems / $scope.itemsPerPage >= 1000){
+						if ($scope.totalItems / $scope.itemsPerPage >= 10000){
+							$scope.maxSizeSM = 6;
+							$scope.maxSizeMD = 10;
+							$scope.maxSizeLG = 14;
+						} else if ($scope.totalItems / $scope.itemsPerPage >= 1000) {
 							$scope.maxSizeSM = 9;
 							$scope.maxSizeMD = 13;
 							$scope.maxSizeLG = 17;
