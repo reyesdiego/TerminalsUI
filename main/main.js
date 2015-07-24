@@ -66,6 +66,21 @@ var socketUrl = config.socket();
 
 var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io']);
 
+myapp.constant('uiDatetimePickerConfig', {
+	dateFormat: 'yyyy-MM-dd HH:mm',
+	enableDate: true,
+	enableTime: true,
+	todayText: 'Hoy',
+	nowText: 'Ahora',
+	clearText: 'Borrar',
+	closeText: 'Listo',
+	dateText: 'Fecha',
+	timeText: 'Hora',
+	closeOnDateSelection: true,
+	appendToBody: false,
+	showButtonBar: true
+});
+
 myapp.config(['$httpProvider', function ($httpProvider) {
 
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
@@ -284,24 +299,6 @@ myapp.config(['$provide', function ($provide) {
 		};
 		return $delegate;
 	}]);
-	$provide.decorator('datetimePickerDirective', ['$delegate', function ($delegate) {
-		var directive = $delegate[0];
-		var compile = directive.compile;
-		directive.compile = function(tElement, tAttrs) {
-			var link = compile.apply(this, arguments);
-			return function(scope, elem, attrs) {
-				link.apply(this, arguments);
-				scope.todayText = "Hoy";
-				scope.nowText = "Ahora";
-				scope.dateText = "Fecha";
-				scope.timeText = "Hora";
-				scope.clearText = "Limpiar";
-				scope.closeText = "Cerrar";
-			};
-		};
-		return $delegate;
-	}]);
-
 	$provide.decorator('calendarConfig', ['$delegate', function ($delegate) {
 		$delegate.titleFormats.week = 'Semana {week} del {year}';
 		return $delegate;
