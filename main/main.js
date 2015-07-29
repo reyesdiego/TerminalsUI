@@ -232,6 +232,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		.state('afip.solicitud.solicitud3', {
 			templateUrl: "view/afip.solicitud3.html"
 		})
+		.state('afip.removido.removido1', {
+			templateUrl: "view/afip.removido1.html"
+		})
+		.state('afip.removido.removido2', {
+			templateUrl: "view/afip.removido2.html"
+		})
+		.state('afip.removido.removido3', {
+			templateUrl: "view/afip.removido3.html"
+		})
 		.state('afip.afectacion', {
 			templateUrl: "view/afip.afectacion.html"
 		})
@@ -243,6 +252,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('afip.sumatorias', {
 			templateUrl: "view/afip.sumatorias.html"
+		})
+		.state('afip.removido', {
+			templateUrl: "view/afip.removido.html"
 		})
 		.state('users', {
 			url: "/users",
