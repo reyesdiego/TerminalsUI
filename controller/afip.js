@@ -269,7 +269,6 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		}
 		$scope.$broadcast('checkAutoComplete');
 		afipFactory.getAfip(registro, $scope.model, $scope.page, function(data){
-			console.log(data);
 			if(data.status === 'OK'){
 				$scope.datosRegistro = data.data;
 				$scope.totalItems = data.totalCount;
