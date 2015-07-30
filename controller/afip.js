@@ -257,6 +257,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			case 'afip.removido.removido2':
 			case 'afip.removido.removido3':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 		}
 		$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
