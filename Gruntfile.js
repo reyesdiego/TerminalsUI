@@ -43,6 +43,10 @@ module.exports = function(grunt) {
 			trp: {
 				src: 'css/bootstrap.flaty.css',
 				dest: 'build/css/bootstrap.flaty.css'
+			},
+			terminales: {
+				src: 'css/terminalColor.css',
+				dest: 'build/css/terminalColor.css'
 			}
 		},
 		uglify: {
