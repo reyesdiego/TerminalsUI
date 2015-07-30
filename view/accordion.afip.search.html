@@ -31,6 +31,12 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('conocimiento', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('documento', 0) >= 0">
+		<div class="input-group">
+			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.documento" class="form-control" placeholder="Documento"/>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('documento', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
 		<div class="input-group">
 			<angucomplete-alt id="idBuque"

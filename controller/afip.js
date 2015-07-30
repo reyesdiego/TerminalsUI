@@ -253,8 +253,11 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 				break;
 			case 'afip.removido.removido1':
 				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
-				$scope.model.fechaInicio = '';
-				$scope.model.fechaFin = '';
+				break;
+			case 'afip.removido.removido2':
+			case 'afip.removido.removido3':
+				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				break;
 		}
 		$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
 		$scope.page.limit = $scope.itemsPerPage;
@@ -264,6 +267,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		}
 		$scope.$broadcast('checkAutoComplete');
 		afipFactory.getAfip(registro, $scope.model, $scope.page, function(data){
+			console.log(data);
 			if(data.status === 'OK'){
 				$scope.datosRegistro = data.data;
 				$scope.totalItems = data.totalCount;
