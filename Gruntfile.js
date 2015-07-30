@@ -167,6 +167,7 @@ module.exports = function(grunt) {
 		'cssmin:bactssa',
 		'cssmin:terminal4',
 		'cssmin:trp',
+		'cssmin:terminales',
 		'uglify:js',
 		'processhtml:dist',
 		'copy:main'
