@@ -129,7 +129,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		};
 
 		$scope.cargaRates = function () {
-			if (!angular.isDefined($scope.model['fecha'])) $scope.model.fecha = $scope.fechaInicio;
+			if (!angular.isDefined($scope.model['fechaInicio'])) $scope.model.fechaInicio = $scope.fechaInicio;
 			$scope.total = 0;
 			$scope.totalesPorTerminal = [
 				['BACTSSA', 0],
