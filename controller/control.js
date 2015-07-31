@@ -360,8 +360,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					}
 					$scope.comprobantesCantidad.invoicesCount++;
 					$scope.$apply();
-				} else {
-					console.log('La fecha no coincide')
 				}
 			}
 		});
