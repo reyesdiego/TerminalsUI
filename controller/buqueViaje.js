@@ -385,4 +385,8 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			}
 		});
 
+		$scope.$on('$destroy', function(){
+			//Acá cancelacion de llamadas http
+		});
+
 	}]);

@@ -138,7 +138,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 
 		factory.getSumariaExpoBuques = function (callback) {
 			var inserturl = serverUrl + '/afip/registro1_sumexpomane/buques';
-			$http.get(inserturl, {timeout: canceler.promise})
+			$http.get(inserturl)
 				.success(function (data) {
 					callback(data, false);
 				})
