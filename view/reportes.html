@@ -9,300 +9,304 @@
 <div class="row">
 <tabset>
 
-<tab class="hidden-print" heading="Tasas a las cargas" ng-controller="ratesCtrl">
-	<br>
-	<accordion-min heading="Filtrar por">
-		<div class="col-lg-4 col-sm-6">
-			<div class="form-group">
-				<div class="input-group">
-					<span class="input-group-addon">Día</span>
-					<label class="sr-only" for="fechaIni">Día</label>
-					<input id="fechaIni" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fecha" is-open="openfechaInicio" max-date="maxDate" />
+<tab class="hidden-print" heading="Tasas a las cargas">
+	<div ng-controller="ratesCtrl">
+		<br>
+		<accordion-min heading="Filtrar por">
+			<div class="col-lg-4 col-sm-6">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Día</span>
+						<label class="sr-only" for="fechaIni">Día</label>
+						<input id="fechaIni" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fecha" is-open="openfechaInicio" max-date="maxDate" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 								</span>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-4 col-sm-6">
-			<div class="form-group">
-				<button class="btn btn-primary" ng-click="cargaRates()">Buscar</button>
-			</div>
-		</div>
-	</accordion-min>
-	<div-cargando mostrar="cargando">
-		<div ng-hide="rates.length != undefined && rates.length > 0">
-			<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
-		</div>
-		<div ng-show="rates.length != undefined && rates.length > 0">
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-hover">
-					<thead>
-					<tr>
-						<th><a href="" ng-click="ordenarPor('terminal')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'terminal' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'terminal' && reverse"></span>
-							Terminal
-						</a></th>
-						<th>C&oacute;digo</th>
-						<th>Descripci&oacute;n</th>
-						<th><a href="" ng-click="ordenarPor('ton')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'ton' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'ton' && reverse"></span>
-							Toneladas
-						</a></th>
-						<th class="text-right"><a href="" ng-click="ordenarPor('total')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'total' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'total' && reverse"></span>
-							Subtotal
-						</a></th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr ng-repeat="tasa in rates | orderBy : predicate : reverse">
-						<td>{{ tasa.terminal }}</td>
-						<td>{{ tasa.code }}</td>
-						<td>{{ ponerDescripcion(tasa.code) }}</td>
-						<td class="text-right">{{ tasa.ton }}</td>
-						<td class="text-right">{{ monedaFija | formatCurrency }} {{ tasa.total | currency }}</td>
-					</tr>
-					<tr>
-						<td colspan="4" class="text-right"><strong>Total</strong></td>
-						<td class="text-right">{{ monedaFija | formatCurrency }} {{ total | currency }}</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-hover">
-					<thead>
-					<tr>
-						<th></th>
-						<th>BACTSSA</th>
-						<th>TERMINAL4</th>
-						<th>TRP</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td><strong>Total</strong></td>
-						<td ng-repeat="total in totalesPorTerminal">{{ monedaFija | formatCurrency }} {{ total[1] | currency }}</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="row" ng-show="mostrarGrafico">
-				<div class="col-lg-6 text-center">
-					<dynamic-chart
-							data="chartDataReporteTarifas"
-							title="{{chartTitleReporteTarifas}}"
-							width="{{chartWidthReporteTarifas}}"
-							height="{{chartHeightReporteTarifas}}"
-							select="selectRow(selectedRowIndexReporteTarifas)"
-							type="{{columnChart}}"
-							currency="true"
-							stacked="false"
-							is3-d="false"
-							money="monedaFija"
-							columns="{{ tarifasElegidas }}">
-					</dynamic-chart>
-				</div>
-				<div class="col-lg-6 text-center center-block">
-					<dynamic-chart
-							data="totalesPorTerminal"
-							title="Totales por terminal"
-							width="500"
-							height="500"
-							select="selectRow(selectedRowIndexTotalesTerminal)"
-							colors="barColors"
-							type="{{pieChart}}"
-							currency="true"
-							stacked="false"
-							is3-d="true"
-							money="monedaFija">
-					</dynamic-chart>
+			<div class="col-lg-4 col-sm-6">
+				<div class="form-group">
+					<button class="btn btn-primary" ng-click="cargaRates()">Buscar</button>
 				</div>
 			</div>
-		</div>
-	</div-cargando>
+		</accordion-min>
+		<div-cargando mostrar="cargando">
+			<div ng-hide="rates.length != undefined && rates.length > 0">
+				<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
+			</div>
+			<div ng-show="rates.length != undefined && rates.length > 0">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+						<tr>
+							<th><a href="" ng-click="ordenarPor('terminal')">
+								<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'terminal' && !reverse"></span>
+								<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'terminal' && reverse"></span>
+								Terminal
+							</a></th>
+							<th>C&oacute;digo</th>
+							<th>Descripci&oacute;n</th>
+							<th><a href="" ng-click="ordenarPor('ton')">
+								<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'ton' && !reverse"></span>
+								<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'ton' && reverse"></span>
+								Toneladas
+							</a></th>
+							<th class="text-right"><a href="" ng-click="ordenarPor('total')">
+								<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'total' && !reverse"></span>
+								<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'total' && reverse"></span>
+								Subtotal
+							</a></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="tasa in rates | orderBy : predicate : reverse">
+							<td>{{ tasa.terminal }}</td>
+							<td>{{ tasa.code }}</td>
+							<td>{{ ponerDescripcion(tasa.code) }}</td>
+							<td class="text-right">{{ tasa.ton }}</td>
+							<td class="text-right">{{ monedaFija | formatCurrency }} {{ tasa.total | currency }}</td>
+						</tr>
+						<tr>
+							<td colspan="4" class="text-right"><strong>Total</strong></td>
+							<td class="text-right">{{ monedaFija | formatCurrency }} {{ total | currency }}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+						<tr>
+							<th></th>
+							<th>BACTSSA</th>
+							<th>TERMINAL4</th>
+							<th>TRP</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td><strong>Total</strong></td>
+							<td ng-repeat="total in totalesPorTerminal">{{ monedaFija | formatCurrency }} {{ total[1] | currency }}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="row" ng-show="mostrarGrafico">
+					<div class="col-lg-6 text-center">
+						<dynamic-chart
+								data="chartDataReporteTarifas"
+								title="{{chartTitleReporteTarifas}}"
+								width="{{chartWidthReporteTarifas}}"
+								height="{{chartHeightReporteTarifas}}"
+								select="selectRow(selectedRowIndexReporteTarifas)"
+								type="{{columnChart}}"
+								currency="true"
+								stacked="false"
+								is3-d="false"
+								money="monedaFija"
+								columns="{{ tarifasElegidas }}">
+						</dynamic-chart>
+					</div>
+					<div class="col-lg-6 text-center center-block">
+						<dynamic-chart
+								data="totalesPorTerminal"
+								title="Totales por terminal"
+								width="500"
+								height="500"
+								select="selectRow(selectedRowIndexTotalesTerminal)"
+								colors="barColors"
+								type="{{pieChart}}"
+								currency="true"
+								stacked="false"
+								is3-d="true"
+								money="monedaFija">
+						</dynamic-chart>
+					</div>
+				</div>
+			</div>
+		</div-cargando>
+	</div>
 </tab>
 
-<tab class="hidden-print" heading="Totales por tarifa" ng-controller="reporteTarifasCtrl">
-	<div class="visible-print-block">
-		<h3>Totales por tarifa</h3>
-	</div>
-	<br>
-	<div class="col-lg-12" ng-show="loadingReporteTarifas">
-		<img class="media-object center-block" src="images/loading.gif">
-	</div>
+<tab class="hidden-print" heading="Totales por tarifa">
+	<div ng-controller="reporteTarifasCtrl">
+		<div class="visible-print-block">
+			<h3>Totales por tarifa</h3>
+		</div>
+		<br>
+		<div class="col-lg-12" ng-show="loadingReporteTarifas">
+			<img class="media-object center-block" src="images/loading.gif">
+		</div>
 
-	<div ng-show="errorTarifario">
-		<div-panel config-panel="configPanel">
-			<span>{{ configPanel.mensaje }}</span>
-		</div-panel>
-	</div>
+		<div ng-show="errorTarifario">
+			<div-panel config-panel="configPanel">
+				<span>{{ configPanel.mensaje }}</span>
+			</div-panel>
+		</div>
 
-	<div class="col-lg-12 well hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
-		<div class="row">
-			<div class="col-lg-6">
-				<label for="fechaInicio">Desde</label>
-				<p class="input-group">
-					<input type="text" id="fechaInicio" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="desde" />
+		<div class="col-lg-12 well hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
+			<div class="row">
+				<div class="col-lg-6">
+					<label for="fechaInicio">Desde</label>
+					<p class="input-group">
+						<input type="text" id="fechaInicio" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="desde" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="isCollapsedDesde = !isCollapsedDesde"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>
-				</p>
-				<div collapse="isCollapsedDesde">
-					<div>
-						<datepicker ng-model="desde" show-weeks="false" ng-change="isCollapsedDesde = !isCollapsedDesde" max-date="maxDate"></datepicker>
+					</p>
+					<div collapse="isCollapsedDesde">
+						<div>
+							<datepicker ng-model="desde" show-weeks="false" ng-change="isCollapsedDesde = !isCollapsedDesde" max-date="maxDate"></datepicker>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-lg-6">
-				<label for="fechaFin">Hasta</label>
-				<p class="input-group">
-					<input type="text" id="fechaFin" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="hasta" />
+				<div class="col-lg-6">
+					<label for="fechaFin">Hasta</label>
+					<p class="input-group">
+						<input type="text" id="fechaFin" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="hasta" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="isCollapsedHasta = !isCollapsedHasta"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>
-				</p>
-				<div collapse="isCollapsedHasta">
-					<div>
-						<datepicker ng-model="hasta" show-weeks="false" ng-change="isCollapsedHasta = !isCollapsedHasta" max-date="maxDate"></datepicker>
+					</p>
+					<div collapse="isCollapsedHasta">
+						<div>
+							<datepicker ng-model="hasta" show-weeks="false" ng-change="isCollapsedHasta = !isCollapsedHasta" max-date="maxDate"></datepicker>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
-		<div class="col-lg-12">
-			<div class="input-group">
-				<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
-				<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" ng-model="tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas
-				</label>
+		<div class="row hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
+			<div class="col-lg-12">
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas
+					</label>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row col-lg-12" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
-		<div class="bs-example table-responsive">
+		<div class="row col-lg-12" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
+			<div class="bs-example table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+					<tr>
+						<th><span class="glyphicon glyphicon-bookmark"></span> Código</th>
+						<th><span class="glyphicon glyphicon-credit-card"></span> Tarifa</th>
+						<th class="text-center"><span class="glyphicon glyphicon-check"></span> Seleccionar</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr style="height:60px" ng-repeat="price in filteredPrices = (selectedList | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+						<td class="col-lg-1">{{ price.code }}</td>
+						<td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+						<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="price.graficar"></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
+			<div class="col-lg-10 hidden-xs"><pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+			<div class="col-lg-10 visible-xs"><pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+			<div class="col-lg-2 text-right" style="margin-top: 20px">
+				<button class="btn btn-primary" ng-click="armarGraficoTarifas()"><span class="glyphicon glyphicon-asterisk"></span> Cargar gráfico</button>
+			</div>
+		</div>
+
+		<div class="row col-lg-12" ng-show="mostrarGrafico && !loadingReporteTarifas && !errorTarifario">
+			<h3>Del {{ desde | date: 'dd/MM/yyyy' }} al {{ hasta | date: 'dd/MM/yyyy' }}</h3>
+		</div>
+
+		<div class="row col-lg-12" ng-show="mostrarGrafico && !loadingReporteTarifas && !errorTarifario">
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
 				<tr>
-					<th><span class="glyphicon glyphicon-bookmark"></span> Código</th>
-					<th><span class="glyphicon glyphicon-credit-card"></span> Tarifa</th>
-					<th class="text-center"><span class="glyphicon glyphicon-check"></span> Seleccionar</th>
+					<th class="col-lg-1"></th>
+					<th class="col-lg-3 text-center" ng-repeat="terminal in tablaGrafico.terminales"><span class="glyphicon glyphicon-credit-card"></span> {{ terminal }}</th>
+					<th class="col-lg-2 text-center"><span class="glyphicon glyphicon-plus-sign"></span> Total</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr style="height:60px" ng-repeat="price in filteredPrices = (selectedList | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
-					<td class="col-lg-1">{{ price.code }}</td>
-					<td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
-					<td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="price.graficar"></td>
+				<tr ng-repeat="tarifa in tablaGrafico.data">
+					<td class="text-center"><a href popover="{{ tarifa.description }}" popover-trigger="mouseenter">{{ tarifa.code }}</a></td>
+					<td ng-repeat="cantidad in tarifa.conteo track by $index" class="text-center">
+						<span ng-show="cantidad==0">-</span>
+						<span ng-show="!$last && cantidad>0">U$S {{ cantidad | number:2 }} ({{ tarifa.porcentaje[$index] | number:2 }} %)</span>
+						<strong ng-show="$last && cantidad>0">U$S {{ cantidad | number:2 }}</strong></td>
+				</tr>
+				<tr>
+					<td class="text-center"><strong>Totales</strong></td>
+					<td ng-repeat="total in totales track by $index" class="text-center"><strong>U$S {{ total | number:2 }}</strong></td>
 				</tr>
 				</tbody>
 			</table>
 		</div>
-	</div>
 
-	<div class="row hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
-		<div class="col-lg-10 hidden-xs"><pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="col-lg-10 visible-xs"><pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="col-lg-2 text-right" style="margin-top: 20px">
-			<button class="btn btn-primary" ng-click="armarGraficoTarifas()"><span class="glyphicon glyphicon-asterisk"></span> Cargar gráfico</button>
+		<div class="row" ng-show="mostrarGrafico && !errorTarifario">
+			<div class="col-lg-12 text-center">
+				<dynamic-chart
+						data="chartDataReporteTarifas"
+						title="{{chartTitleReporteTarifas}}"
+						width="{{chartWidthReporteTarifas}}"
+						height="{{chartHeightReporteTarifas}}"
+						select="selectRow(selectedRowIndexReporteTarifas)"
+						type="{{columnChart}}"
+						currency="true"
+						stacked="false"
+						is3-d="false"
+						money="monedaFija"
+						columns="{{ tarifasEncontradas }}">
+				</dynamic-chart>
+			</div>
 		</div>
-	</div>
 
-	<div class="row col-lg-12" ng-show="mostrarGrafico && !loadingReporteTarifas && !errorTarifario">
-		<h3>Del {{ desde | date: 'dd/MM/yyyy' }} al {{ hasta | date: 'dd/MM/yyyy' }}</h3>
-	</div>
-
-	<div class="row col-lg-12" ng-show="mostrarGrafico && !loadingReporteTarifas && !errorTarifario">
-		<table class="table table-striped table-bordered table-hover">
-			<thead>
-			<tr>
-				<th class="col-lg-1"></th>
-				<th class="col-lg-3 text-center" ng-repeat="terminal in tablaGrafico.terminales"><span class="glyphicon glyphicon-credit-card"></span> {{ terminal }}</th>
-				<th class="col-lg-2 text-center"><span class="glyphicon glyphicon-plus-sign"></span> Total</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr ng-repeat="tarifa in tablaGrafico.data">
-				<td class="text-center"><a href popover="{{ tarifa.description }}" popover-trigger="mouseenter">{{ tarifa.code }}</a></td>
-				<td ng-repeat="cantidad in tarifa.conteo track by $index" class="text-center">
-					<span ng-show="cantidad==0">-</span>
-					<span ng-show="!$last && cantidad>0">U$S {{ cantidad | number:2 }} ({{ tarifa.porcentaje[$index] | number:2 }} %)</span>
-					<strong ng-show="$last && cantidad>0">U$S {{ cantidad | number:2 }}</strong></td>
-			</tr>
-			<tr>
-				<td class="text-center"><strong>Totales</strong></td>
-				<td ng-repeat="total in totales track by $index" class="text-center"><strong>U$S {{ total | number:2 }}</strong></td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
-
-	<div class="row" ng-show="mostrarGrafico && !errorTarifario">
-		<div class="col-lg-12 text-center">
-			<dynamic-chart
-					data="chartDataReporteTarifas"
-					title="{{chartTitleReporteTarifas}}"
-					width="{{chartWidthReporteTarifas}}"
-					height="{{chartHeightReporteTarifas}}"
-					select="selectRow(selectedRowIndexReporteTarifas)"
-					type="{{columnChart}}"
-					currency="true"
-					stacked="false"
-					is3-d="false"
-					money="monedaFija"
-					columns="{{ tarifasEncontradas }}">
-			</dynamic-chart>
+		<div class="row" ng-show="mostrarGrafico && !errorTarifario">
+			<div class="col-lg-6 text-center">
+				<dynamic-chart
+						data="chartDataTotalesTarifas"
+						title="{{chartTitleTotalesTarifas}}"
+						width="{{chartWidthTotales}}"
+						height="{{chartHeightTotales}}"
+						select="selectRow(selectedRowIndexTotalesTarifas)"
+						type="{{pieChart}}"
+						currency="true"
+						stacked="false"
+						is3-d="true"
+						money="monedaFija">
+				</dynamic-chart>
+			</div>
+			<div class="col-lg-6 text-center">
+				<dynamic-chart
+						data="chartDataTotalesTerminal"
+						title="{{chartTitleTotalesTerminal}}"
+						width="{{chartWidthTotales}}"
+						height="{{chartHeightTotales}}"
+						select="selectRow(selectedRowIndexTotalesTerminal)"
+						colors="barColors"
+						type="{{pieChart}}"
+						currency="true"
+						stacked="false"
+						is3-d="true"
+						money="monedaFija">
+				</dynamic-chart>
+			</div>
 		</div>
-	</div>
 
-	<div class="row" ng-show="mostrarGrafico && !errorTarifario">
-		<div class="col-lg-6 text-center">
-			<dynamic-chart
-					data="chartDataTotalesTarifas"
-					title="{{chartTitleTotalesTarifas}}"
-					width="{{chartWidthTotales}}"
-					height="{{chartHeightTotales}}"
-					select="selectRow(selectedRowIndexTotalesTarifas)"
-					type="{{pieChart}}"
-					currency="true"
-					stacked="false"
-					is3-d="true"
-					money="monedaFija">
-			</dynamic-chart>
+		<div class="row hidden-print" ng-show="mostrarGrafico && !errorTarifario">
+			<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
+				<button class="btn btn-primary" ng-click="mostrarGrafico = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+			</div>
 		</div>
-		<div class="col-lg-6 text-center">
-			<dynamic-chart
-					data="chartDataTotalesTerminal"
-					title="{{chartTitleTotalesTerminal}}"
-					width="{{chartWidthTotales}}"
-					height="{{chartHeightTotales}}"
-					select="selectRow(selectedRowIndexTotalesTerminal)"
-					colors="barColors"
-					type="{{pieChart}}"
-					currency="true"
-					stacked="false"
-					is3-d="true"
-					money="monedaFija">
-			</dynamic-chart>
-		</div>
+		<br>
 	</div>
-
-	<div class="row hidden-print" ng-show="mostrarGrafico && !errorTarifario">
-		<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
-			<button class="btn btn-primary" ng-click="mostrarGrafico = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
-		</div>
-	</div>
-	<br>
 </tab>
 
 </tabset>
