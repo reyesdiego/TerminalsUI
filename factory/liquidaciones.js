@@ -7,6 +7,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		var factory = {};
 
 		factory.getComprobantesLiquidar = function(page, datos, callback){
+			factory.cancelRequest();
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'comprobantesLiquidar');
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
@@ -36,6 +37,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getPayments = function(page, callback){
+			factory.cancelRequest();
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'liquidaciones');
 			var inserturl = serverUrl + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
@@ -48,6 +50,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getComprobantesLiquidados = function(page, liquidacion, datos, callback){
+			factory.cancelRequest();
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'comprobantesLiquidados');
 			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
@@ -83,8 +86,8 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				})
 		};
 
-		factory.cancelRequest = function(request){
-			HTTPCanceler.cancel(request);
+		factory.cancelRequest = function(){
+			HTTPCanceler.cancel();
 		};
 
 		return factory;
