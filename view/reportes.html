@@ -16,11 +16,21 @@
 			<div class="col-lg-4 col-sm-6">
 				<div class="form-group">
 					<div class="input-group">
-						<span class="input-group-addon">Día</span>
-						<label class="sr-only" for="fechaIni">Día</label>
-						<input id="fechaIni" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fecha" is-open="openfechaInicio" max-date="maxDate" />
+						<span class="input-group-addon">Desde</span>
+						<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" />
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Hasta</span>
+						<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaFin" is-open="openfechaFin" max-date="maxDate" />
+								<span class="input-group-btn">
+									<button class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin;"><span class="glyphicon glyphicon-calendar"></span></button>
 								</span>
 					</div>
 				</div>
