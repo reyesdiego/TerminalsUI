@@ -96,9 +96,21 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				if (data.status == 'OK'){
 					$scope.comprobantesLiquidar = data.data;
 					$scope.totalSinLiquidar = data.totalCount;
+					if ($scope.totalSinLiquidar == 0) {
+						$scope.panelMensajeSinLiquidar = {
+							titulo: 'Liquidaciones',
+							mensaje: 'No se encontraron comprobantes pendientes a liquidar para los filtros seleccionados.',
+							tipo: 'panel-info'
+						};
+					}
 				} else {
 					$scope.comprobantesLiquidar = [];
 					$scope.totalSinLiquidar = 0;
+					$scope.panelMensajeSinLiquidar = {
+						titulo: 'Liquidaciones',
+						mensaje: 'Se ha producido un error al cargar los comprobantes sin liquidar.',
+						tipo: 'panel-error'
+					};
 				}
 				$scope.cargando = false;
 			})
@@ -110,10 +122,21 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				if (data.status == 'OK'){
 					$scope.datosLiquidaciones = data.data;
 					$scope.totalLiquidaciones = data.totalCount;
+					if ($scope.totalLiquidaciones == 0){
+						$scope.panelMensajeLiquidaciones = {
+							titulo: 'Liquidaciones',
+							mensaje: 'No se encontraron liquidaciones realizadas para los filtros seleccionados.',
+							tipo: 'panel-info'
+						};
+					}
 				} else {
 					$scope.datosLiquidaciones = [];
 					$scope.totalLiquidaciones = 0;
-					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar las liquidaciones');
+					$scope.panelMensajeLiquidaciones = {
+						titulo: 'Liquidaciones',
+						mensaje: 'Se ha producido un error al cargar las liquidaciones realizadas.',
+						tipo: 'panel-error'
+					};
 				}
 				$scope.cargandoLiquidaciones = false;
 			})
