@@ -36,12 +36,12 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			return comprobantes;
 		};
 
-		factory.getPayments = function(page, callback){
+		factory.getPayments = function(page, datos, callback){
 			factory.cancelRequest();
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'liquidaciones');
 			var inserturl = serverUrl + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
-			$http.get(inserturl, { timeout: canceler.promise })
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
 					callback(data);
 				}).error(function(error, status){

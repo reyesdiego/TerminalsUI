@@ -118,7 +118,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.cargarLiquidaciones = function(){
 			$scope.cargandoLiquidaciones = true;
-			liquidacionesFactory.getPayments($scope.page, function(data){
+			liquidacionesFactory.getPayments($scope.page, $scope.model, function(data){
 				if (data.status == 'OK'){
 					$scope.datosLiquidaciones = data.data;
 					$scope.totalLiquidaciones = data.totalCount;
