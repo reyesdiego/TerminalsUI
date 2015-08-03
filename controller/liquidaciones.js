@@ -97,7 +97,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					$scope.comprobantesLiquidar = data.data;
 					$scope.totalSinLiquidar = data.totalCount;
 					if ($scope.totalSinLiquidar == 0) {
-						$scope.panelMensajeSinLiquidar = {
+						$scope.panelMensaje = {
 							titulo: 'Liquidaciones',
 							mensaje: 'No se encontraron comprobantes pendientes a liquidar para los filtros seleccionados.',
 							tipo: 'panel-info'
@@ -106,10 +106,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				} else {
 					$scope.comprobantesLiquidar = [];
 					$scope.totalSinLiquidar = 0;
-					$scope.panelMensajeSinLiquidar = {
+					$scope.panelMensaje = {
 						titulo: 'Liquidaciones',
 						mensaje: 'Se ha producido un error al cargar los comprobantes sin liquidar.',
-						tipo: 'panel-error'
+						tipo: 'panel-danger'
 					};
 				}
 				$scope.cargando = false;
@@ -123,7 +123,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					$scope.datosLiquidaciones = data.data;
 					$scope.totalLiquidaciones = data.totalCount;
 					if ($scope.totalLiquidaciones == 0){
-						$scope.panelMensajeLiquidaciones = {
+						$scope.panelMensaje = {
 							titulo: 'Liquidaciones',
 							mensaje: 'No se encontraron liquidaciones realizadas para los filtros seleccionados.',
 							tipo: 'panel-info'
@@ -132,10 +132,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				} else {
 					$scope.datosLiquidaciones = [];
 					$scope.totalLiquidaciones = 0;
-					$scope.panelMensajeLiquidaciones = {
+					$scope.panelMensaje = {
 						titulo: 'Liquidaciones',
 						mensaje: 'Se ha producido un error al cargar las liquidaciones realizadas.',
-						tipo: 'panel-error'
+						tipo: 'panel-danger'
 					};
 				}
 				$scope.cargandoLiquidaciones = false;
@@ -181,12 +181,12 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			if ($scope.modo == 'sinLiquidar'){
 				//$scope.liquidadas = false;
 				//$scope.datosComprobantes = $scope.sinLiquidar;
-				$scope.panelMensaje = $scope.panelMensajeSinLiquidar;
+				//$scope.panelMensaje = $scope.panelMensajeSinLiquidar;
 				$scope.cargarSinLiquidar();
 			} else {
 				//$scope.liquidadas = true;
 				//$scope.datosComprobantes = $scope.liquidaciones;
-				$scope.panelMensaje = $scope.panelMensajeLiquidaciones;
+				//$scope.panelMensaje = $scope.panelMensajeLiquidaciones;
 				$scope.cargarLiquidaciones();
 			}
 		};
