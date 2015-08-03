@@ -5,10 +5,10 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 	function($http, loginService, formatService, errorFactory, estadosArrayCache, generalCache, generalFunctions, $q, HTTPCanceler){
 		var factory = {};
 
-		factory.getInvoice = function(datos, page, callback) {
-			factory.cancelRequest('getInvoice');
+		factory.getInvoice = function(idLlamada, datos, page, callback) {
+			factory.cancelRequest(idLlamada);
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getInvoice');
+			var canceler = HTTPCanceler.get(defer, idLlamada);
 			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -30,7 +30,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
-		factory.getSinTasaCargas = function(datos, terminal, page, callback){
+		/*factory.getSinTasaCargas = function(datos, terminal, page, callback){
 			var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 				.success(function (data){
@@ -39,22 +39,29 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				}).error(function(errorText){
 					errorFactory.raiseError(errorText, inserturl, 'errorSinTasaCargas', 'Error al cargar la lista de comprobantes sin tasa a las cargas.');
 				});
-		};
+		};*/ //No se está usando
 
 		factory.getContainersSinTasaCargas = function(datos, callback) {
+			factory.cancelRequest('containersSinTasaCargas');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'containersSinTasaCargas');
 			var inserturl = serverUrl + '/invoices/containersNoRates/' + loginService.getFiltro();
-			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data) {
 					callback(data);
 				})
-				.error(function(error) {
-					callback(error)
+				.error(function(error, status) {
+					if (status != 0) callback(error)
 				});
 		};
 
+		//Comprobantes con códigos faltantes
 		factory.getInvoicesNoMatches = function(datos, page, callback){
+			factory.cancelRequest('invoicesNoMatches');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'invoicesNoMatches');
 			var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
-			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data) {
 					if (data == null) {
 						data = {
@@ -67,26 +74,32 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 					data = ponerDescripcionComprobantes(data);
 					callback(factory.setearInterfaz(data));
 
-				}).error(function(errorText) {
-					callback(errorText);
+				}).error(function(errorText, status) {
+					if (status != 0) callback(errorText);
 				});
 		};
 
 		factory.getCorrelative = function(datos, socketIoRegister, callback){
+			factory.cancelRequest('correlative');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'correlative');
 			var inserturl = serverUrl + '/invoices/correlative/' + loginService.getFiltro();
 			var param = formatService.formatearDatos(datos);
 			param.x = socketIoRegister;
-			$http.get(inserturl, { params: param })
+			$http.get(inserturl, { params: param, timeout: canceler.promise })
 				.success(function (data) {
 					callback(data);
-				}).error(function(error) {
-					callback(error);
+				}).error(function(error, status) {
+					if (status != 0) callback(error);
 				});
 		};
 
-		factory.getCashbox = function(datos, callback){
+		factory.getCashbox = function(idLlamada, datos, callback){
+			factory.cancelRequest(idLlamada);
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, idLlamada);
 			var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro();
-			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
 					if (data == null){
 						data = {
@@ -98,8 +111,8 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 						return a - b;
 					});
 					callback(data);
-				}).error(function(error){
-					callback(error);
+				}).error(function(error, status){
+					if (status != 0) callback(error);
 				});
 		};
 
@@ -115,12 +128,16 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		};
 
 		factory.getShipContainers = function(datos, callback){
+			factory.cancelRequest('shipContainers');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'shipContainers');
 			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers';
-			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
 					callback(data);
-				}).error(function(errorText){
-					errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al traer los contenedores para el buque y el viaje seleccionado.');
+				}).error(function(errorText, status){
+					//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al traer los contenedores para el buque y el viaje seleccionado.');
+					if (status != 0) callback(errorText);
 				});
 		};
 
@@ -176,13 +193,16 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		};
 
 		factory.getRatesInvoices = function(datos, callback){
+			factory.cancelRequest('ratesInvoices');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'ratesInvoices');
 			var inserturl = serverUrl + '/invoices/rates';
-			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
 					callback(data);
 				})
-				.error(function(error){
-					callback(error)
+				.error(function(error, status){
+					if (status != 0) callback(error)
 				});
 		};
 

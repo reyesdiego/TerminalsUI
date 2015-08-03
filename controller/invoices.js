@@ -58,7 +58,7 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', func
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.invoices = [];
-		invoiceFactory.getInvoice($scope.model, $scope.page, function(data){
+		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.totalItems = data.totalCount;
@@ -74,4 +74,9 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', func
 			}
 		});
 	};
+
+	$scope.$on('$destroy', function(){
+		invoiceFactory.cancelRequest();
+	});
+
 }]);

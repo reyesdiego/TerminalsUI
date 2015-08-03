@@ -232,7 +232,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 
 		// Funciones de Puntos de Venta
 		$scope.cargaPuntosDeVenta = function(){
-			invoiceFactory.getCashbox(cargaDatosSinPtoVenta(), function(data){
+			invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 				if (data.status == 'OK'){
 					$scope.todosLosPuntosDeVentas.forEach(function(puntosVenta){
 						puntosVenta.hide = data.data.indexOf(puntosVenta.punto, 0) < 0;
@@ -251,7 +251,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		};
 
 		$scope.cargaTodosLosPuntosDeVentas = function(){
-			invoiceFactory.getCashbox('', function(data){
+			invoiceFactory.getCashbox($scope.$id, '', function(data){
 				if (data.status == 'OK'){
 					var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
 					$scope.todosLosPuntosDeVentas.push(dato);

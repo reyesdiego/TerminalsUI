@@ -149,7 +149,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		model.fechaFin = '';
 		$scope.pageComprobantes.skip = (($scope.currentPageComprobantes - 1) * $scope.model.itemsPerPage);
 		$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoice(model, $scope.pageComprobantes, function(data){
+		invoiceFactory.getInvoice($scope.$id, model, $scope.pageComprobantes, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.invoicesTotalItems = data.totalCount;
@@ -250,6 +250,11 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.controlTasaCargas();
 	});
 
+	$scope.$on('destroy', function(){
+		invoiceFactory.cancelRequest();
+		//Agregar las que falten
+	});
+
 }]);
 
 myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'vouchersArrayCache', 'correlativeSocket', 'loginService', function($rootScope, $scope, invoiceFactory, vouchersArrayCache, correlativeSocket, loginService) {
@@ -281,7 +286,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 	};
 
 	$scope.traerPuntosDeVenta = function(){
-		invoiceFactory.getCashbox({}, function(data){
+		invoiceFactory.getCashbox($scope.$id, {}, function(data){
 			if (data.status == 'OK'){
 				var i;
 				$scope.terminalSellPoints = data.data;
@@ -567,7 +572,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		$scope.loadingControlCodigos = true;
 		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.model.itemsPerPage);
 		$scope.pageFiltros.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoice($scope.model, $scope.pageFiltros, function(data){
+		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.pageFiltros, function(data){
 			if (data.status == 'OK'){
 				$scope.totalItems = data.totalCount;
 				$scope.comprobantesRotos = data.data;
@@ -601,6 +606,10 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 			$scope.loadingControlCodigos = false;
 		});
 	};
+
+	$scope.$on('destroy', function(){
+		invoiceFactory.cancelRequest();
+	});
 
 }]);
 
@@ -691,7 +700,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.loadingState = true;
-		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceError){
+		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.page, function(invoiceError){
 			if (invoiceError.status == 'OK'){
 				$scope.comprobantes = invoiceError.data;
 				$scope.totalItems = invoiceError.totalCount;
@@ -711,4 +720,9 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			$scope.loadingState = false;
 		})
 	};
+
+	$scope.$on('destroy', function(){
+		invoiceFactory.cancelRequest();
+	});
+
 }]);

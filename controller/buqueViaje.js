@@ -270,7 +270,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			};
 			$scope.pageComprobantes.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-			invoiceFactory.getInvoice($scope.model, $scope.pageComprobantes, function(data){
+			invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.pageComprobantes, function(data){
 				if(data.status === 'OK'){
 					$scope.invoices = data.data;
 					$scope.invoicesTotalItems = data.totalCount;
@@ -385,8 +385,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			}
 		});
 
-		$scope.$on('$destroy', function(){
-			//Acá cancelacion de llamadas http
+		$scope.$on('destroy', function(){
+			invoiceFactory.cancelRequest();
+			//Agregar las que falten
 		});
 
 	}]);

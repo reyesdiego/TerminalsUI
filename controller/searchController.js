@@ -114,7 +114,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.detallesGates = true;
 		$scope.contenedor = contenedor.contenedor;
 		var datos = { 'contenedor': contenedor.contenedor };
-		invoiceFactory.getInvoice(datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
+		invoiceFactory.getInvoice($scope.$id, datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
 			if (data.status === 'OK') {
 				$scope.invoices = data.data;
 				$scope.totalItems = data.totalCount;
@@ -147,4 +147,9 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.$broadcast('checkAutoComplete');
 		$scope.$emit('cambioFiltro', $scope.model);
 	};
+
+	$scope.$on('$destroy', function(){
+		invoiceFactory.cancelRequest();
+	});
+
 }]);
