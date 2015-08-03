@@ -32,6 +32,15 @@ myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginServi
 				});
 		};
 
+		factory.comprobanteTurno = function(contenedor, id, callback){
+			var insertUrl = serverUrl + "/appointments/container/" + contenedor;
+			$http.get(insertUrl, {params:{ _id: id }}).success(function(data){
+				callback(data, 'OK');
+			}).error(function(data){
+				callback(data, 'ERROR');
+			})
+		};
+
 		factory.cancelRequest = function(request){
 			HTTPCanceler.cancel(request);
 		};
