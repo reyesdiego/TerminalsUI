@@ -387,6 +387,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 
 		$scope.$on('destroy', function(){
 			invoiceFactory.cancelRequest();
+			turnosFactory.cancelRequest();
 			//Agregar las que falten
 		});
 

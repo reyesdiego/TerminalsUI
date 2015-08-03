@@ -252,6 +252,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 
 	$scope.$on('destroy', function(){
 		invoiceFactory.cancelRequest();
+		turnosFactory.cancelRequest();
 		//Agregar las que falten
 	});
 
