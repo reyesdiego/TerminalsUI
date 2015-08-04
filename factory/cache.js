@@ -51,63 +51,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		return deferred.promise;
 	};
 
-	/*factory.cargaContenedores = function(){
-		var deferred = $q.defer();
-		controlPanelFactory.getContainers(function (data) {
-			if (data.status == 'OK') {
-				var contenedores = [];
-				var i = 0;
-				data.data.forEach(function (dato) {
-					contenedores.push({id: i++, contenedor: dato})
-				});
-				contenedoresCache.put('contenedores', contenedores);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
-			} else {
-				deferred.reject();
-			}
-		});
-		return deferred.promise;
-	};*/
-
-	/*factory.cargaContenedoresGates = function(){
-		var deferred = $q.defer();
-		controlPanelFactory.getContainersGates(function (data) {
-			if (data.status == 'OK') {
-				var contenedores = [];
-				var i = 0;
-				data.data.forEach(function (dato) {
-					contenedores.push({id: i++, contenedor: dato})
-				});
-				contenedoresCache.put('contenedoresGates', contenedores);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
-			} else {
-				deferred.reject();
-			}
-		});
-		return deferred.promise;
-	};*/
-
-	/*factory.cargaContenedoresTurnos = function(){
-		var deferred = $q.defer();
-		controlPanelFactory.getContainersTurnos(function (data) {
-			if (data.status == 'OK') {
-				var contenedores = [];
-				var i = 0;
-				data.data.forEach(function (dato) {
-					contenedores.push({id: i++, contenedor: dato})
-				});
-				contenedoresCache.put('contenedoresTurnos', contenedores);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
-			} else {
-				deferred.reject();
-			}
-		});
-		return deferred.promise;
-	};*/
-
 	factory.cargaDescripciones = function(){
 		var deferred = $q.defer();
 		var llamadas = [];
@@ -350,12 +293,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		llamadas.push(factory.cargaBuques()); //prueba sacando los métodos que usan oracle
 		// Clientes cache
 		llamadas.push(factory.cargaClientes());
-		// Contenedores cache
-		//llamadas.push(factory.cargaContenedores());
-		// Contenedores gates cache
-		//llamadas.push(factory.cargaContenedoresGates());
-		// Contenedores turnos cache
-		//llamadas.push(factory.cargaContenedoresTurnos());
 		// Descripciones cache
 		llamadas.push(factory.cargaDescripciones());
 		// Vouchers cache
@@ -385,67 +322,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 			});
 		return deferred.promise;
 	};
-
-	factory.limpiarCacheTerminal = function(){
-		generalCache.remove('buques');
-		generalCache.remove('clientes');
-		//generalCache.remove('contenedores');
-		//generalCache.remove('contenedoresGates');
-		//generalCache.remove('contenedoreTurnos');
-		generalCache.remove('descripciones');
-		generalCache.remove('matches');
-		generalCache.remove('ratesMatches');
-	};
-
-	factory.cambioTerminal = function(){
-		factory.limpiarCacheTerminal();
-		var deferred = $q.defer();
-		var llamadas = [];
-		// Buque viaje cache
-		llamadas.push(factory.cargaBuques()); //prueba sacando metodos que usan oracle
-		// Clientes cache
-		llamadas.push(factory.cargaClientes());
-		// Contenedores cache
-		//llamadas.push(factory.cargaContenedores());
-		// Contenedores gates cache
-		//llamadas.push(factory.cargaContenedoresGates());
-		// Contenedores turnos cache
-		//llamadas.push(factory.cargaContenedoresTurnos());
-		// Descripciones cache
-		llamadas.push(factory.cargaDescripciones());
-		// Matches cache
-		llamadas.push(factory.cargaMatchesArray());
-		// Rates matches cache
-		llamadas.push(factory.cargaMatchesRates());
-
-		$q.all(llamadas)
-			.then(function(){
-				deferred.resolve();
-			},
-			function(){
-				deferred.reject();
-			});
-		return deferred.promise;
-	};
-
-	/*factory.cargaMemoryCache = function(){
-		var deferred = $q.defer();
-		var llamadas = [];
-		// Contenedores cache
-		llamadas.push(factory.cargaContenedores());
-		// Contenedores gates cache
-		llamadas.push(factory.cargaContenedoresGates());
-		// Contenedores turnos cache
-		llamadas.push(factory.cargaContenedoresTurnos());
-		$q.all(llamadas)
-			.then(function(){
-				deferred.resolve();
-			},
-			function(){
-				deferred.reject();
-			});
-		return deferred.promise;
-	};*/
 
 	factory.limpiaCache = function () {
 		CacheFactory.clearAll();

@@ -211,6 +211,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			$scope.loadingState = true;
 			$scope.loadingTasaCargas = true;
 			$scope.datosContainers = [];
+			$scope.containersSinRates = [];
 			invoiceFactory.getShipContainers($scope.model, function(data){
 				if (data.status == 'OK'){
 					$scope.datosContainers = data.data;
@@ -386,7 +387,20 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		});
 
 		$scope.$on('cambioTerminal', function(){
+			$scope.volverAPrincipal = !$scope.volverAPrincipal;
+			$scope.invoices = [];
+			$scope.gates = [];
+			$scope.turnos = [];
+			$scope.tasas = [];
+			$scope.detalle = false;
+			$scope.totalItems = 0;
+			$scope.datosContainers = [];
+			$scope.totalSinRates = 0;
+			$scope.containersSinRates = [];
 			$scope.buques = generalCache.get('buques' + loginService.getFiltro());
+			$scope.buqueElegido = {
+				viajes:[]
+			};
 		});
 
 		$scope.$on('destroy', function(){

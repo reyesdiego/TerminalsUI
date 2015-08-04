@@ -167,68 +167,8 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 		};
 
 		//Método de caché - No hace falta cancelarlo
-		factory.getContainers = function(callback){
-			var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/containers';
-			$http.get(inserturl)
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText){
-					if (errorText == null) errorText = {status: 'ERROR'};
-					callback(errorText);
-				});
-		};
-
-		//Método de caché - No hace falta cancelarlo
 		factory.getShips = function(callback){
 			var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/ships';
-			$http.get(inserturl)
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText){
-					errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
-				});
-		};
-
-		//Método de caché - No hace falta cancelarlo (actualmente no se está usando)
-		factory.getContainersGates = function(callback){
-			var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/containers';
-			$http.get(inserturl)
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText){
-					if (errorText == null) errorText = {status: 'ERROR'};
-					callback(errorText);
-				});
-		};
-
-		//Método de caché - No hace falta cancelarlo
-		factory.getShipsGates = function(callback){
-			var inserturl = serverUrl + '/gates/'+loginService.getFiltro()+'/ships';
-			$http.get(inserturl)
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText){
-					errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
-				});
-		};
-
-		//Método de caché - No hace falta cancelarlo (actualmente no se usa)
-		factory.getContainersTurnos = function(callback){
-			var inserturl = serverUrl + '/appointments/'+loginService.getFiltro()+'/containers';
-			console.log('Cargo ruta: ' + inserturl);
-			$http.get(inserturl)
-				.success(function (data){
-					console.log('OK ruta: ' + inserturl);
-					callback(data);
-				}).error(function(errorText){
-					if (errorText == null) errorText = {status: 'ERROR'};
-					callback(errorText);
-				});
-		};
-
-		//Método de caché - No hace falta cancelarlo
-		factory.getShipsTurnos = function(callback){
-			var inserturl = serverUrl + '/appointments/'+loginService.getFiltro()+'/ships';
 			$http.get(inserturl)
 				.success(function (data){
 					callback(data);

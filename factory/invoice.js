@@ -31,17 +31,6 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
-		/*factory.getSinTasaCargas = function(datos, terminal, page, callback){
-			var inserturl = serverUrl + '/invoices/noRates/' + terminal + '/' + page.skip + '/' + page.limit;
-			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
-				.success(function (data){
-					data = ponerDescripcionComprobantes(data);
-					callback(factory.setearInterfaz(data));
-				}).error(function(errorText){
-					errorFactory.raiseError(errorText, inserturl, 'errorSinTasaCargas', 'Error al cargar la lista de comprobantes sin tasa a las cargas.');
-				});
-		};*/ //No se está usando
-
 		factory.getContainersSinTasaCargas = function(datos, callback) {
 			factory.cancelRequest('containersSinTasaCargas');
 			var defer = $q.defer();

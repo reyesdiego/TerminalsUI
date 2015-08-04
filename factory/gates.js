@@ -19,17 +19,6 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 				});
 		};
 
-		//No se usa
-		factory.getReporteHorarios = function(datos, callback){
-			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/report';
-			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText){
-					//dialogs.error('Error', 'Error al añadir comentario sobre el comprobante');
-				});
-		};
-
 		factory.getMissingGates = function(callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'getMissingGates');
