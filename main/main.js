@@ -397,7 +397,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.verNotificaciones = true;
 
-		$rootScope.previousState = '';
 		$rootScope.cambioTerminal = false;
 		$rootScope.cargarCache = false;
 		$rootScope.primerRuteo = false;
@@ -488,7 +487,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
 			$rootScope.setEstiloTerminal($cookies.get('themeTerminal'));
-			$rootScope.previousState = from;
 		});
 
 		$rootScope.$on('$stateChangeStart', function(event, toState){
