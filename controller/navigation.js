@@ -74,8 +74,9 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	$scope.setearTerminal = function(terminal){
 		if ($rootScope.filtroTerminal != terminal){
 			$rootScope.setEstiloTerminal(terminal);
-			cacheFactory.limpiarCacheTerminal();
-			$state.transitionTo('cambioTerminal');
+			$rootScope.$broadcast('cambioTerminal');
+			//cacheFactory.limpiarCacheTerminal();
+			//$state.transitionTo('cambioTerminal');
 		}
 	};
 

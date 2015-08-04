@@ -111,14 +111,18 @@ myapp.directive('accordionComprobantesVistos', function(){
 	}
 });
 
-myapp.directive('accordionInvoicesSearch', ['generalCache', 'contenedoresCache', function(generalCache, contenedoresCache){
+myapp.directive('accordionInvoicesSearch', ['generalCache', 'loginService', function(generalCache, loginService){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.invoices.search.html',
 		link: function ($scope) {
-			$scope.listaRazonSocial = generalCache.get('clientes');
-			$scope.listaContenedores = [];//contenedoresCache.get('contenedores');
-			$scope.listaBuques = generalCache.get('buques');
+			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
+
+			$scope.$on('cambioTerminal', function(){
+				$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+				$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
+			});
 		}
 	}
 }]);

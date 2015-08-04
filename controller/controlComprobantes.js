@@ -250,6 +250,10 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.controlTasaCargas();
 	});
 
+	$scope.$on('cambioTerminal', function(){
+		$scope.controlTasaCargas();
+	});
+
 	$scope.$on('destroy', function(){
 		invoiceFactory.cancelRequest();
 		turnosFactory.cancelRequest();
@@ -414,6 +418,10 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 	if (loginService.getStatus()) $scope.traerPuntosDeVenta();
 
 	$scope.$on('terminoLogin', function(){
+		$scope.traerPuntosDeVenta();
+	});
+
+	$scope.$on('cambioTerminal', function(){
 		$scope.traerPuntosDeVenta();
 	});
 

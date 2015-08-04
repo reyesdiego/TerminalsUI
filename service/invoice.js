@@ -34,7 +34,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 	};
 
 	this.existeDescripcion = function(itemId){
-		var itemsDescription = generalCache.get('descripciones');
+		var itemsDescription = generalCache.get('descripciones' + loginService.getFiltro());
 		return angular.isDefined(itemsDescription[itemId]);
 	};
 
@@ -56,8 +56,8 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 
 	var controlarTarifas = function(comprobante){
 
-		var matchesTerminal = generalCache.get('matches');
-		var tasaCargasTerminal = generalCache.get('ratesMatches');
+		var matchesTerminal = generalCache.get('matches' + loginService.getFiltro());
+		var tasaCargasTerminal = generalCache.get('ratesMatches' + loginService.getFiltro());
 
 		var valorTomado;
 		var tarifaError;

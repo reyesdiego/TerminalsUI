@@ -25,8 +25,8 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 			});
 	};
 
-	factory.getMatchPrices = function(datos, callback) {
-		var inserturl = serverUrl + '/matchPrices/' + loginService.getFiltro();
+	factory.getMatchPrices = function(datos, terminal, callback) {
+		var inserturl = serverUrl + '/matchPrices/' + terminal;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 			.success(function (data){
 				callback(data);
@@ -35,8 +35,9 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 			});
 	};
 
-	factory.getArrayMatches = function(callback){
-		var inserturl = serverUrl + '/matchPrices/price/' + loginService.getFiltro();
+	//Se pasa la terminal al ser un método de caché
+	factory.getArrayMatches = function(terminal, callback){
+		var inserturl = serverUrl + '/matchPrices/price/' + terminal;
 		$http.get(inserturl)
 			.success(function (data){
 				callback(data);

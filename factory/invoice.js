@@ -19,8 +19,9 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
-		factory.getDescriptionItem = function(callback){
-			var inserturl = serverUrl + '/matchPrices/matches/' + loginService.getFiltro();
+		//Se pasa la terminal al ser de caché
+		factory.getDescriptionItem = function(terminal, callback){
+			var inserturl = serverUrl + '/matchPrices/matches/' + terminal;
 			$http.get(inserturl)
 				.success(function(data) {
 					callback(data);
@@ -116,8 +117,9 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
-		factory.getShipTrips = function(callback){
-			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipTrips';
+		//Al ser un método de caché se le pasa la terminal
+		factory.getShipTrips = function(terminal, callback){
+			var inserturl = serverUrl + '/invoices/' + terminal + '/shipTrips';
 			$http.get(inserturl)
 				.success(function(data){
 					callback(data);
@@ -250,9 +252,10 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		}
 
 		function ponerDescripcionComprobante (comprobante) {
+			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
 			comprobante.detalle.forEach(function(detalles){
 				detalles.items.forEach(function(item){
-					item.descripcion = (generalCache.get('descripciones')[item.id]) ? generalCache.get('descripciones')[item.id] : 'No se halló la descripción, verifique que el código esté asociadoo';
+					item.descripcion = (descripciones[item.id]) ? descripciones[item.id] : 'No se halló la descripción, verifique que el código esté asociadoo';
 				});
 			});
 			return comprobante;

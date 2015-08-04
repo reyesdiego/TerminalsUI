@@ -106,6 +106,10 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		$scope.cargaTurnos();
 	});
 
+	$scope.$on('cambioTerminal', function(){
+		$scope.cargaTurnos();
+	});
+
 	$scope.$on('$destroy', function(){
 		turnosFactory.cancelRequest();
 	});

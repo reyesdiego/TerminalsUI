@@ -53,4 +53,8 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		$scope.cargaPricelist();
 	});
 
+	$scope.$on('cambioTerminal', function(){
+		$scope.cargaPricelist();
+	});
+
 }]);

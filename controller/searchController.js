@@ -2,14 +2,14 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', 'turnosFactory', '$sce', 'dialogs',
-	function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, turnosFactory, $sce, dialogs){
+myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', 'turnosFactory', '$sce', 'dialogs', 'loginService',
+	function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, turnosFactory, $sce, dialogs, loginService){
 		$scope.status = {
 			open: true
 		};
 		$scope.maxDate = new Date();
-		$scope.listaBuques = generalCache.get('buques');
-		$scope.vouchers = generalCache.get('vouchers');
+		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
+		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		$scope.listaViajes = [];
 		$scope.volverAPrincipal = true;
 
@@ -174,6 +174,11 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.$broadcast('checkAutoComplete');
 			$scope.$emit('cambioFiltro', $scope.model);
 		};
+
+		$scope.$on('cambioTerminal', function(){
+			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
+			$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
+		});
 
 		$scope.$on('$destroy', function(){
 			invoiceFactory.cancelRequest();

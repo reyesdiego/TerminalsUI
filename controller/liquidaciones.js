@@ -283,6 +283,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.cargarDatos();
 		});
 
+		$scope.$on('cambioTerminal', function(){
+			$scope.cargarDatos();
+		});
+
 		$scope.$on('$destroy', function(){
 			liquidacionesFactory.cancelRequest();
 		});

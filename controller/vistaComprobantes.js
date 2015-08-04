@@ -326,6 +326,11 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos) $scope.cargaTodosLosPuntosDeVentas();
 		});
 
+		$scope.$on('cambioTerminal', function(){
+			$scope.logoTerminal = $rootScope.logoTerminal;
+			if ($scope.mostrarPtosVenta || $scope.controlCodigos) $scope.cargaTodosLosPuntosDeVentas();
+		});
+
 		$scope.verPdf = function(){
 			$scope.disablePdf = true;
 			invoiceService.verPdf($scope.verDetalle)

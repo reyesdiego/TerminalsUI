@@ -6,38 +6,52 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 
 	factory.cargaBuques = function(){
 		var deferred = $q.defer();
-		invoiceFactory.getShipTrips(function (data) {
-			if (data.status == 'OK') {
-				generalCache.put('buques', data.data);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
-			} else {
-				deferred.reject();
-			}
+		var llamadas = [];
+		$rootScope.listaTerminales.forEach(function(terminal){
+			llamadas.push(invoiceFactory.getShipTrips(terminal, function (data) {
+				if (data.status == 'OK') {
+					generalCache.put('buques' + terminal, data.data);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+				}
+			}));
 		});
+		$q.all(llamadas)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
 		return deferred.promise;
 	};
 
 	factory.cargaClientes = function(){
 		var deferred = $q.defer();
-		controlPanelFactory.getClients(function (data) {
-			if (data.status == 'OK') {
-				var clientes = [];
-				var i = 0;
-				data.data.forEach(function (dato) {
-					clientes.push({id: i++, nombre: dato})
-				});
-				generalCache.put('clientes', clientes);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
-			} else {
-				deferred.reject();
-			}
+		var llamadas = [];
+		$rootScope.listaTerminales.forEach(function(terminal){
+			llamadas.push(controlPanelFactory.getClients(terminal, function (data) {
+				if (data.status == 'OK') {
+					var clientes = [];
+					var i = 0;
+					data.data.forEach(function (dato) {
+						clientes.push({id: i++, nombre: dato})
+					});
+					generalCache.put('clientes' + terminal, clientes);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+				}
+			}));
 		});
+		$q.all(llamadas)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
 		return deferred.promise;
 	};
 
-	factory.cargaContenedores = function(){
+	/*factory.cargaContenedores = function(){
 		var deferred = $q.defer();
 		controlPanelFactory.getContainers(function (data) {
 			if (data.status == 'OK') {
@@ -54,9 +68,9 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 			}
 		});
 		return deferred.promise;
-	};
+	};*/
 
-	factory.cargaContenedoresGates = function(){
+	/*factory.cargaContenedoresGates = function(){
 		var deferred = $q.defer();
 		controlPanelFactory.getContainersGates(function (data) {
 			if (data.status == 'OK') {
@@ -73,9 +87,9 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 			}
 		});
 		return deferred.promise;
-	};
+	};*/
 
-	factory.cargaContenedoresTurnos = function(){
+	/*factory.cargaContenedoresTurnos = function(){
 		var deferred = $q.defer();
 		controlPanelFactory.getContainersTurnos(function (data) {
 			if (data.status == 'OK') {
@@ -92,19 +106,26 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 			}
 		});
 		return deferred.promise;
-	};
+	};*/
 
 	factory.cargaDescripciones = function(){
 		var deferred = $q.defer();
-		invoiceFactory.getDescriptionItem(function (data) {
-			if (data.status == 'OK') {
-				generalCache.put('descripciones', data.data);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
-			} else {
-				deferred.reject();
-			}
+		var llamadas = [];
+		$rootScope.listaTerminales.forEach(function(terminal){
+			llamadas.push(invoiceFactory.getDescriptionItem(terminal, function (data) {
+				if (data.status == 'OK') {
+					generalCache.put('descripciones' + terminal, data.data);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+				}
+			}));
 		});
+		$q.all(llamadas)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
 		return deferred.promise;
 	};
 
@@ -186,35 +207,49 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 
 	factory.cargaMatchesArray = function(){
 		var deferred = $q.defer();
-		priceFactory.getArrayMatches(function(data){
-			if (data.status == 'OK'){
-				generalCache.put('matches', data.data);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
-			} else {
-				deferred.reject()
-			}
+		var llamadas = [];
+		$rootScope.listaTerminales.forEach(function(terminal){
+			llamadas.push(priceFactory.getArrayMatches(terminal, function(data){
+				if (data.status == 'OK'){
+					generalCache.put('matches' + terminal, data.data);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+				}
+			}));
 		});
+		$q.all(llamadas)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
 		return deferred.promise;
 	};
 
 	factory.cargaMatchesRates = function(){
 		var deferred = $q.defer();
-		priceFactory.getMatchPrices({onlyRates: true}, function (data){
-			if (data.status == 'OK'){
-				var tasasCargasTerminal = [];
-				data.data.forEach(function(tasaCargas){
-					if (tasaCargas.matches != null && tasaCargas.matches.length > 0){
-						tasasCargasTerminal.push(tasaCargas.matches[0].match[0])
-					}
-				});
-				generalCache.put('ratesMatches', tasasCargasTerminal);
-				$rootScope.$broadcast('progreso', {mensaje: 2});
-				deferred.resolve();
-			} else {
-				deferred.reject();
-			}
+		var llamadas = [];
+		$rootScope.listaTerminales.forEach(function(terminal) {
+			llamadas.push(priceFactory.getMatchPrices({onlyRates: true}, terminal, function (data) {
+				if (data.status == 'OK') {
+					var tasasCargasTerminal = [];
+					data.data.forEach(function (tasaCargas) {
+						if (tasaCargas.matches != null && tasaCargas.matches.length > 0) {
+							tasasCargasTerminal.push(tasaCargas.matches[0].match[0])
+						}
+					});
+					generalCache.put('ratesMatches' + terminal, tasasCargasTerminal);
+					$rootScope.$broadcast('progreso', {mensaje: 2});
+				}
+			}));
 		});
+		$q.all(llamadas)
+			.then(function(){
+				deferred.resolve();
+			},
+			function(){
+				deferred.reject();
+			});
 		return deferred.promise;
 	};
 

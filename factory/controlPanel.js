@@ -154,9 +154,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			HTTPCanceler.cancel();
 		};
 
-		//Método de caché - No hace falta cancelarlo
-		factory.getClients = function(callback){
-			var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/clients';
+		//Método de caché - No hace falta cancelarlo - Se pasa la terminal
+		factory.getClients = function(terminal, callback){
+			var inserturl = serverUrl + '/invoices/' + terminal + '/clients';
 			$http.get(inserturl)
 				.success(function (data){
 					callback(data);
@@ -239,9 +239,10 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		function ponerDescripcionYTasas(data) {
 			var datos = data;
+			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
 			datos.totalTasas = 0;
 			data.data.forEach(function(detalle){
-				detalle._id.descripcion = (generalCache.get('descripciones')[detalle._id.id]) ? generalCache.get('descripciones')[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';
+				detalle._id.descripcion = (descripciones[detalle._id.id]) ? descripciones[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';
 				datos.totalTasas += detalle.total;
 			});
 			return datos;

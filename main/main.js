@@ -260,10 +260,6 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/users",
 			templateUrl: "view/users.html"
 		})
-		.state('cambioTerminal', {
-			url: "/cambioTerminal",
-			templateUrl: 'view/cambioTerminal.html'
-		})
 		.state('agenda', {
 			url: "/agendaTurnos",
 			templateUrl: 'view/turnosAgenda.html'
@@ -381,6 +377,7 @@ myapp.config(['$cookiesProvider', function($cookiesProvider){
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket', '$http',
 	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
+		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
 		$rootScope.terminalEstilo = 'bootstrap.cerulean';
 
 		moment().format('YYYY-MM-DD');

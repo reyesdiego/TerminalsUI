@@ -2,8 +2,8 @@
  * Created by artiom on 08/04/15.
  */
 
-myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', '$state',
-	function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache, $state){
+myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', '$state', 'loginService',
+	function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache, $state, loginService){
 		////// Para containers /////////////
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -80,7 +80,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			mensaje: 'No se encontraron datos de sumarias de A.F.I.P relacionados.'
 		};
 
-		$scope.buques = generalCache.get('buques');
+		$scope.buques = generalCache.get('buques' + loginService.getFiltro());
 		$scope.buqueElegido = {
 			viajes:[]
 		};
@@ -383,6 +383,10 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			if ($scope.detalle){
 				$scope.cargaTasasCargas();
 			}
+		});
+
+		$scope.$on('cambioTerminal', function(){
+			$scope.buques = generalCache.get('buques' + loginService.getFiltro());
 		});
 
 		$scope.$on('destroy', function(){

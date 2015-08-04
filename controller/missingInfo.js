@@ -23,7 +23,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 		$scope.comprobantesVistos = [];
 		$scope.comprobantesControlados = [];
-		$scope.itemDescriptionInvoices = generalCache.get('descripciones');
+		$scope.itemDescriptionInvoices = generalCache.get('descripciones' + loginService.getFiltro());
 		$scope.acceso = $rootScope.esUsuario;
 
 		$scope.$on('errorInesperado', function(e, mensaje){
@@ -216,6 +216,11 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 
 		$scope.$on('terminoLogin', function(){
 			$scope.acceso = $rootScope.esUsuario;
+			$scope.cargaDatos();
+		});
+
+		$scope.$on('cambioTerminal', function(){
+			$scope.itemDescriptionInvoices = generalCache.get('descripciones' + loginService.getFiltro());
 			$scope.cargaDatos();
 		});
 

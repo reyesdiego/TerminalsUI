@@ -65,7 +65,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 	});
 
 	$scope.prepararDatos = function(){
-		priceFactory.getMatchPrices({onlyRates: $scope.tasas}, function (data) {
+		priceFactory.getMatchPrices({onlyRates: $scope.tasas}, loginService.getFiltro(), function (data) {
 			if (data.status == 'OK'){
 				$scope.pricelist = data.data;
 				$scope.codigosConMatch = [];
@@ -95,7 +95,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 						break;
 				}
 				$scope.totalItems = $scope.pricelist.length;
-				console.log($scope.listaSeleccionada);
 			} else {
 				dialogs.error('Asociar', 'Se ha producido un error al cargar los datos de códigos asociados. ' + data.data);
 				$scope.pricelist = [];
@@ -392,5 +391,10 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.nombre = loginService.getFiltro();
 		$scope.prepararDatos();
 	});
+
+	$scope.$on('cambioTerminal', function(){
+		$scope.nombre = loginService.getFiltro();
+		$scope.prepararDatos();
+	})
 
 }]);
