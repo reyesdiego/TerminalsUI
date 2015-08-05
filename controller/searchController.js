@@ -166,7 +166,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 
 		$scope.filtrarOrden = function(filtro){
 			$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
-			$scope.$emit('cambioFiltro', 'lalalal');
+			$scope.$emit('cambioFiltro');
 		};
 		///////////////////////////////////////////////////////////////////////////////////////////////////
 		$scope.cargaPorFiltros = function () {
