@@ -179,7 +179,6 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 
 		$scope.$on('cambioTerminal', function(){
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
-			$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		});
 
 		$scope.$on('$destroy', function(){
