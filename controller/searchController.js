@@ -7,7 +7,9 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.status = {
 			open: true
 		};
+		$scope.minDate = new Date(2015,0,1);
 		$scope.maxDate = new Date();
+		$scope.maxDateH = $scope.maxDate + 1;
 		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		$scope.listaViajes = [];
