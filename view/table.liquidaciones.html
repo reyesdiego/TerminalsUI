@@ -12,9 +12,10 @@
 			<th class="text-center"><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Nro. Comprob." filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="nroComprob" filtro-orden="nroComprobOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Toneladas" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="cnt" filtro-orden="cntOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-center"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="code" filtro-orden="codeOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-center"><encabezado-tabla-ordenado titulo="Tarifa" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="code" filtro-orden="codeOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="importe" filtro-orden="importeOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-right"><encabezado-tabla-ordenado titulo="Tasa carga" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="tasa" filtro-orden="tasaOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-right"><encabezado-tabla-ordenado titulo="Importe factura" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="total" filtro-orden="totalOrden"></encabezado-tabla-ordenado></th>
 			<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 			<th class="text-center" ng-show="liquidadas">Fecha liquidación</th>
 			<th ng-show="acceso=='agp'" class="col-lg-1 hidden-print text-center">Estado</th>
@@ -23,12 +24,13 @@
 		<tbody>
 		<tr ng-repeat="invoice in comprobantesLiquidar">
 			<td class="text-right" style="width: 8%">{{ invoice.nroPtoVenta }}</td>
-			<td class="text-center" style="width: 13%">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
+			<td class="text-center" style="width: 10%">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-right" style="width: 10%">{{ invoice.nroComprob }}</td>
 			<td class="text-right" style="width: 7%">{{ invoice.cnt }}</td>
 			<td class="text-center" style="width: 8%">{{ invoice.code }}</td>
-			<td class="text-center" style="width: 13%">{{ invoice.emision | date: 'dd/MM/yyyy' }}</td>
-			<td class="text-right" style="width: 14%">U$S {{ invoice.importe | currency }}</td>
+			<td class="text-center" style="width: 9%">{{ invoice.emision | date: 'dd/MM/yyyy' }}</td>
+			<td class="text-right" style="width: 11%">U$S {{ invoice.tasa | currency }}</td>
+			<td class="text-right" style="width: 14%">U$S {{ invoice.total | currency }}</td>
 			<td class="text-center" style="width: 4%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			<td class="text-center" style="width: 5%" ng-show="liquidadas">{{ invoice.fechaLiquidacion }}</td>
 			<td class="hidden-print text-left" style="width: 14%">

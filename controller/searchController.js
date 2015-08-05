@@ -78,6 +78,8 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		};
 
 		$scope.filtrado = function(filtro, contenido){
+			if (filtro == 'fechaInicio' && contenido == 'liquidacion') contenido = $scope.minDate;
+			if (filtro == 'fechaFin' && contenido == 'liquidacion') contenido = $scope.model.fechaInicio;
 			$scope.model[filtro] = contenido;
 			if (filtro == 'buqueNombre') {
 				if (contenido != ''){
