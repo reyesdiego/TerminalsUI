@@ -193,10 +193,11 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.liquidarTodo = function(){
 			var datos = {
-				fecha: new Date()
+				fechaInicio: $scope.model.fechaInicio,
+				fechaFin: $scope.model.fechaFin
 			};
 			$scope.cargando = true;
-			liquidacionesFactory.payAll(formatService.formatearDatos(datos), function(data){
+			liquidacionesFactory.payAll(datos, function(data){
 				if (data.status == 'OK'){
 					dialogs.notify('Liquidaciones', data.data);
 					$scope.cargarDatos();
