@@ -73,7 +73,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		//No se debería poder cancelar
 		factory.payAll = function(datos, callback){
 			var inserturl = serverUrl + '/paying/setPayment/' + loginService.getFiltro();
-			$http.post(inserturl, { params: formatService.formatearDatos(datos) })
+			$http.post(inserturl, '',{ params: formatService.formatearDatos(datos) })
 				.success(function(data){
 					callback(data);
 				}).error(function(error){
