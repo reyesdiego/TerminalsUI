@@ -54,10 +54,13 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
-		$scope.fechaAuxHasta = new Date($scope.model.fechaFin);
-		$scope.fechaAuxDesde = new Date($scope.model.fechaInicio);
-		$scope.model.fechaFin = $scope.fechaAuxDesde;
-		$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
+		if (angular.isDefined($scope.model.fechaInicio) && $scope.model.fechaInicio != null && $scope.model.fechaInicio != ''){
+			if ($scope.model.fechaFin == '') $scope.model.fechaFin = $scope.model.fechaInicio;
+			$scope.fechaAuxHasta = new Date($scope.model.fechaFin);
+			$scope.fechaAuxDesde = new Date($scope.model.fechaInicio);
+			$scope.model.fechaFin = $scope.fechaAuxDesde;
+			$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
+		}
 		$scope.currentPage = 1;
 		$scope.cargaTurnos();
 	});

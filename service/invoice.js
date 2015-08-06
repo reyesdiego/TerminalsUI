@@ -127,7 +127,6 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 		return response;
 	};
 
-
 	this.chequearTarifas = function(comprobante, comprobantesControlados){
 		var response = {
 			noMatch: false,
