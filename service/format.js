@@ -1,7 +1,7 @@
 /**
  * Created by leo on 05/03/15.
  */
-	myapp.service('formatService', ['generalCache', function(generalCache) {
+	myapp.service('formatService', ['generalCache', 'loginService', function(generalCache, loginService) {
 
 		function estaDefinido(o) {
 			return angular.isDefined(o) && o != null && o != '';
@@ -17,7 +17,7 @@
 			if (estaDefinido(array.fechaInicio)) array.fechaInicio = this.formatearFechaISOString(datos.fechaInicio);
 			if (estaDefinido(array.fechaFin)) array.fechaFin = this.formatearFechaISOString(datos.fechaFin);
 			if (estaDefinido(array.fecha)) array.fecha = this.formatearFechaISOString(datos.fecha);
-			if (estaDefinido(array.rates) && array.rates == '1') array.rates = generalCache.get('ratesMatches').filter(Boolean);
+			if (estaDefinido(array.rates) && array.rates == '1') array.rates = generalCache.get('ratesMatches' + loginService.getFiltro()).filter(Boolean);
 			if (estaDefinido(array.order)) array.order = '[{' + datos.order + '}]';
 			return array;
 		};
