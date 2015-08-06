@@ -1,32 +1,27 @@
-<accordion-min heading="Liquidaciones">
-
-	<div class="col-lg-12 text-center" ng-show="cargandoLiquidaciones">
-		<img class="media-object center-block" src="images/loading.gif">
-	</div>
-	<div class="row col-lg-12 center-block" ng-show="datosLiquidaciones.length == 0 && !cargandoLiquidaciones">
-		<div-panel config-panel="panelMensajeLiquidaciones">
-			<span>{{ panelMensajeLiquidaciones.mensaje }}</span>
-		</div-panel>
-	</div>
-	<div class="table-responsive col-lg-12" ng-show="datosLiquidaciones.length > 0 && !cargandoLiquidaciones">
-		<table class="table table-striped table-bordered table-hover">
-			<thead>
-			<tr class="text-center">
-				<th class="text-right">Número</th>
-				<th class="text-center">Fecha</th>
-				<th class="text-right">Total</th>
-				<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr ng-repeat="liquidacion in datosLiquidaciones">
-				<td class="text-right">{{ liquidacion.number }}</td>
-				<td class="text-center">{{ liquidacion.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-				<td class="text-right">U$S {{ liquidacion.total | currency }}</td>
-				<th class="text-center"><a href ng-click="detalleLiquidacion(liquidacion)"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
-			</tr>
-			</tbody>
-		</table>
-	</div>
-	<div-pagination total-items="totalLiquidaciones" items-per-page="itemsPerPage" current-page="currentPageLiquidaciones"></div-pagination>
-</accordion-min>
+<div class="col-lg-12 text-center" ng-show="cargandoLiquidaciones">
+	<img class="media-object center-block" src="images/loading.gif">
+</div>
+<div class="row col-lg-12 center-block" ng-show="datosLiquidaciones.length == 0 && !cargandoLiquidaciones">
+	<div-panel config-panel="panelMensajeLiquidaciones">
+		<span>{{ panelMensajeLiquidaciones.mensaje }}</span>
+	</div-panel>
+</div>
+<div class="table-responsive col-lg-12" ng-show="datosLiquidaciones.length > 0 && !cargandoLiquidaciones">
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+		<tr class="text-center">
+			<th class="text-right">Número</th>
+			<th class="text-center">Fecha</th>
+			<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="liquidacion in datosLiquidaciones">
+			<td class="text-right">{{ liquidacion.number }}</td>
+			<td class="text-center">{{ liquidacion.date | date: 'dd/MM/yyyy' }}</td>
+			<th class="text-center"><a href ng-click="detalleLiquidacion(liquidacion)"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div-pagination total-items="totalLiquidaciones" items-per-page="itemsPerPage" current-page="currentPageLiquidaciones"></div-pagination>

@@ -7,7 +7,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		var factory = {};
 
 		factory.getComprobantesLiquidar = function(page, datos, callback){
-			factory.cancelRequest();
+			factory.cancelRequest('comprobantesLiquidar');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'comprobantesLiquidar');
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
@@ -37,7 +37,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getPayments = function(page, datos, callback){
-			factory.cancelRequest();
+			factory.cancelRequest('liquidaciones');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'liquidaciones');
 			var inserturl = serverUrl + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
@@ -71,9 +71,9 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		//No se debería poder cancelar
-		factory.payAll = function(datos, callback){
-			var inserturl = serverUrl + '/paying/setPayment/' + loginService.getFiltro();
-			$http.post(inserturl, '',{ params: formatService.formatearDatos(datos) })
+		factory.setPrePayment = function(callback){
+			var inserturl = serverUrl + '/paying/setPrePayment/' + loginService.getFiltro();
+			$http.post(inserturl, '')
 				.success(function(data){
 					callback(data);
 				}).error(function(error){
@@ -86,8 +86,38 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				})
 		};
 
-		factory.cancelRequest = function(){
-			HTTPCanceler.cancel();
+		factory.addToPrePayment = function(preLiquidacion, datos, callback){
+			var inserturl = serverUrl + '/paying/addToPrePayment/' + loginService.getFiltro() + '/' + preLiquidacion;
+			$http.put(inserturl, '',{ params: formatService.formatearDatos(datos) })
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					if (error == null){
+						error = {
+							status: 'ERROR'
+						}
+					}
+					callback(error);
+				})
+		};
+
+		factory.getPrePayment = function(preLiquidacion, callback){
+			var inserturl = serverUrl + '/paying/getPrePayment/' + loginService.getFiltro() + '/' + preLiquidacion;
+			$http.get(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					if (error == null){
+						error = {
+							status: 'ERROR'
+						}
+					}
+					callback(error);
+				})
+		};
+
+		factory.cancelRequest = function(request){
+			HTTPCanceler.cancel(request);
 		};
 
 		return factory;

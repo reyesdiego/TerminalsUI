@@ -500,7 +500,7 @@ myapp.directive('liquidacionesSearch', function(){
 		templateUrl:	'view/accordion.liquidacion.search.html',
 		scope: {
 			model:					"=",
-			ocultarLiquidacion:		"@"
+			ocultarFiltros:			"="
 		},
 		controller: 'searchController'
 	}

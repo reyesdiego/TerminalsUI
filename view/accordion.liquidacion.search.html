@@ -49,7 +49,7 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaFin', 'liquidacion');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="col-lg-4 col-sm-6" ng-hide="ocultarLiquidacion">
+	<div class="form-group col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('liquidacion', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-model="model.liquidacion" class="form-control" placeholder="Liquidación" toupper/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('liquidacion', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
