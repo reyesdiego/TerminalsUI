@@ -66,6 +66,9 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.mostrarResultado = false;
 		$scope.verDetalleLiquidacion = false;
 
+		$scope.preliquidacionCreada = false;
+		$scope.preLiquidacion = '';
+
 		$scope.$on('cambioPagina', function(ev, data){
 			if ($scope.modo == 'sinLiquidar'){
 				$scope.currentPageSinLiquidar = data;
@@ -191,13 +194,14 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			}
 		};
 
-		$scope.liquidarTodo = function(){
+		$scope.preLiquidar = function(){
 			var datos = {
 				fechaInicio: $scope.model.fechaInicio,
 				fechaFin: $scope.model.fechaFin
 			};
 			$scope.cargando = true;
 			liquidacionesFactory.payAll(datos, function(data){
+				console.log(data);
 				if (data.status == 'OK'){
 					dialogs.notify('Liquidaciones', data.data);
 					$scope.cargarDatos();
@@ -206,6 +210,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				}
 				$scope.cargando = false;
 			})
+		};
+
+		$scope.anexar = function(){
+
 		};
 
 		$scope.checkComprobantes = function(comprobante){

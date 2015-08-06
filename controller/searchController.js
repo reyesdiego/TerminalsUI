@@ -11,7 +11,9 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.maxDate = new Date();
 		$scope.maxDateH = $scope.maxDate + 1;
 		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
-		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
+		$scope.vouchers = generalCache.get('vouchers');
+		$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+
 		$scope.listaViajes = [];
 		$scope.volverAPrincipal = true;
 
@@ -186,6 +188,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 
 		$scope.$on('cambioTerminal', function(){
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
+			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 		});
 
 		$scope.$on('$destroy', function(){
