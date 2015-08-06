@@ -1,5 +1,5 @@
 <accordion-min heading="Filtrar por">
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0">
 		<div class="input-group">
 			<label class="sr-only" for="model.codTipoComprob">Seleccionar Comprobante</label>
 			<select id="model.codTipoComprob" class="form-control" ng-model="model.codTipoComprob" ng-init="model.codTipoComprob=''">
@@ -9,13 +9,13 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codTipoComprob', 0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.nroComprobante" class="form-control" placeholder="N° Comprobante"/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('nroComprobante', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
 		<angucomplete-alt id="idRazonSocial"
 		                  placeholder="Razón Social"
 		                  pause="100"
