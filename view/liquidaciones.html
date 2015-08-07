@@ -10,20 +10,20 @@
 
 	<tabset justified="true">
 
-		<tab class="hidden-print" heading="Pre-Liquidar" ng-click="cambiarModo('sinLiquidar')">
-			<div class="visible-print-block">
-				<h3>Sin liquidar</h3>
-			</div>
-			<br>
-			<accordion-min heading="Comprobantes sin liquidar">
+		<tab class="hidden-print" heading="Pre-Liquidar">
+			<div class="col-xlg-6 col-lg-12">
+				<div>
+					<h3>Comprobantes sin liquidar</h3>
+				</div>
+				<hr>
 				<div ng-hide="mostrarResultado">
 					<liquidaciones-search model="model" ocultar-filtros="ocultarFiltrosSinLiquidar"></liquidaciones-search>
 					<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
 				</div>
-				<div class="col-lg-12 text-center" ng-show="cargando">
+				<div class="col-lg-12 text-center" ng-show="cargandoSinLiquidar">
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
-				<div class="col-lg-12" ng-hide="cargando || mostrarResultado">
+				<div class="col-lg-12" ng-hide="cargandoSinLiquidar || mostrarResultado">
 					<table-liquidaciones></table-liquidaciones>
 					<div-pagination total-items="totalSinLiquidar" items-per-page="itemsPerPage" current-page="currentPageSinLiquidar"></div-pagination>
 					<br>
@@ -31,24 +31,34 @@
 				<div class="col-lg-12" ng-show="mostrarResultado">
 					<invoices-result></invoices-result>
 				</div>
-			</accordion-min>
-			<div class="row">
-				<div class="col-lg-6 text-left">
-					<button class="btn btn-primary" ng-click="anexarComprobantes()" ng-disabled="!preLiquidacionSelected">Anexar a pre-liquidación {{ liquidacionSelected.number }}</button>
-				</div>
-				<div class="col-lg-6 text-right">
-					<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
+				<div class="row">
+					<div class="col-lg-6 text-left">
+						<button class="btn btn-primary" ng-click="anexarComprobantes()" ng-disabled="!preLiquidacionSelected">Anexar a pre-liquidación {{ liquidacionSelected.number }}</button>
+					</div>
 				</div>
 			</div>
-			<br>
-			<accordion-min heading="Pre-Liquidaciones">
+
+			<div class="col-xlg-6 col-lg-12">
+				<div>
+					<h3>Pre-Liquidaciones</h3>
+				</div>
+				<hr>
 				<liquidaciones-search model="modelLiquidaciones" ocultar-filtros="ocultarFiltrosLiquidaciones"></liquidaciones-search>
 				<table-pagos></table-pagos>
-				<accordion-min heading="Comprobantes - Pre-Liquidación número: {{ liquidacionSelected.number }}">
-					<div class="col-lg-12 text-center" ng-show="cargando">
+				<div ng-show="preLiquidacionSelected">
+					<div class="col-lg-6">
+						<h5>Toneladas: {{ detallePreLiquidacion.tons }}</h5>
+					</div>
+					<div class="col-lg-6">
+						<h5>Total: U$S {{ detallePreLiquidacion.total | currency }}</h5>
+					</div>
+				</div>
+				<hr>
+				<accordion-min heading="Comprobantes - Pre-Liquidación número: {{ liquidacionSelected.number }}" ng-show="preLiquidacionSelected">
+					<div class="col-lg-12 text-center" ng-show="cargandoLiquidados">
 						<img class="media-object center-block" src="images/loading.gif">
 					</div>
-					<div class="col-lg-12" ng-hide="cargando || mostrarResultado">
+					<div class="col-lg-12" ng-hide="cargandoLiquidados || mostrarResultado">
 						<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
 						<div class="row col-lg-12 center-block" ng-show="datosInvoices.length == 0">
 							<div-panel config-panel="panelMensaje">
@@ -56,10 +66,10 @@
 							</div-panel>
 						</div>
 						<div class="col-lg-12 center-block" ng-show="datosInvoices.length > 0">
-							<h5><strong>Resultados: {{ totalLiquidadas }}</strong><span class="visible-print-block"><strong> Mostrando del {{ paginacion.liquidadas * itemsPerPage - (itemsPerPage - 1) }} al {{ mostrarTope(paginacion.liquidadas, totalLiquidadas) }} (página {{ paginacion.liquidadas }})</strong></span></h5>
+							<h5><strong>Resultados: {{ totalPreLiquidadas }}</strong><span class="visible-print-block"><strong> Mostrando del {{ paginacion.liquidadas * itemsPerPage - (itemsPerPage - 1) }} al {{ mostrarTope(paginacion.liquidadas, totalPreLiquidadas) }} (página {{ paginacion.liquidadas }})</strong></span></h5>
 							<table-invoices></table-invoices>
 						</div>
-						<div class="col-lg-12 hidden-print" ng-show="totalLiquidadas > itemsPerPage">
+						<div class="col-lg-12 hidden-print" ng-show="totalPreLiquidadas > itemsPerPage">
 							<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalPreLiquidadas" items-per-page="itemsPerPage" ng-model="paginacion.liquidadas" max-size="5" ng-click="detalleLiquidacion()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 							<div class="text-center visible-sm"><pagination boundary-links="true" total-items="totalPreLiquidadas" items-per-page="itemsPerPage" ng-model="paginacion.liquidadas" max-size="7" ng-click="detalleLiquidacion()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 							<div class="text-center visible-md"><pagination boundary-links="true" total-items="totalPreLiquidadas" items-per-page="itemsPerPage" ng-model="paginacion.liquidadas" max-size="11" ng-click="detalleLiquidacion()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
@@ -70,43 +80,28 @@
 						<invoices-result></invoices-result>
 					</div>
 				</accordion-min>
-			</accordion-min>
+				<div class="col-lg-6 text-left">
+					<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
+				</div>
+				<div class="col-lg-6 text-right">
+					<button class="btn btn-primary" ng-click="liquidar()">Liquidar</button>
+				</div>
+			</div>
 
 		</tab>
 
-		<tab class="hidden-print" heading="Pre-Liquidaciones" ng-click="cambiarModo('liquidaciones')">
+		<tab class="hidden-print" heading="Pre-Liquidaciones">
 			<div class="visible-print-block">
 				<h3>Liquidaciones</h3>
 			</div>
 			<br>
 			<liquidaciones-search model="model" ocultar-liquidacion="false"></liquidaciones-search>
 			<table-pagos></table-pagos>
-			<accordion-min heading="Comprobantes liquidados - Liquidación número: {{ liquidacionSelected.number }}" ng-show="verDetalleLiquidacion">
-				<div class="col-lg-12 text-center" ng-show="cargando">
-					<img class="media-object center-block" src="images/loading.gif">
-				</div>
-				<div class="col-lg-12" ng-hide="cargando || mostrarResultado">
-					<accordion-comprobantes-vistos></accordion-comprobantes-vistos>
-					<div class="row col-lg-12 center-block" ng-show="datosInvoices.length == 0">
-						<div-panel config-panel="panelMensaje">
-							<span>{{ panelMensaje.mensaje }}</span>
-						</div-panel>
-					</div>
-					<div class="col-lg-12 center-block" ng-show="datosInvoices.length > 0">
-						<h5><strong>Resultados: {{ totalLiquidadas }}</strong><span class="visible-print-block"><strong> Mostrando del {{ paginacion.liquidadas * itemsPerPage - (itemsPerPage - 1) }} al {{ mostrarTope(paginacion.liquidadas, totalLiquidadas) }} (página {{ paginacion.liquidadas }})</strong></span></h5>
-						<table-invoices></table-invoices>
-					</div>
-					<div class="col-lg-12 hidden-print" ng-show="totalLiquidadas > itemsPerPage">
-						<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalLiquidadas" items-per-page="itemsPerPage" ng-model="paginacion.liquidadas" max-size="5" ng-click="detalleLiquidacion()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-						<div class="text-center visible-sm"><pagination boundary-links="true" total-items="totalLiquidadas" items-per-page="itemsPerPage" ng-model="paginacion.liquidadas" max-size="7" ng-click="detalleLiquidacion()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-						<div class="text-center visible-md"><pagination boundary-links="true" total-items="totalLiquidadas" items-per-page="itemsPerPage" ng-model="paginacion.liquidadas" max-size="11" ng-click="detalleLiquidacion()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-						<div class="text-center visible-lg"><pagination boundary-links="true" total-items="totalLiquidadas" items-per-page="itemsPerPage" ng-model="paginacion.liquidadas" max-size="15" ng-click="detalleLiquidacion()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					</div>
-				</div>
-				<div class="col-lg-12" ng-show="mostrarResultado">
-					<invoices-result></invoices-result>
-				</div>
-			</accordion-min>
+			<div ng-show="preLiquidacionSelected">
+				<h3>Detalle de pre-liquidación número: {{ liquidacionSelected.number }}</h3>
+				<hr>
+				<div class="col-lg-6"></div>
+			</div>
 
 		</tab>
 
