@@ -86,7 +86,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.detallePreLiquidacion = {
 			tons: 0,
 			total: 0
-		}
+		};
+		$scope.detalleComprobante = '';
 
 		$scope.$on('cambioPagina', function(ev, data){
 			if ($scope.modo == 'sinLiquidar'){
@@ -202,7 +203,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				}
 				$scope.cargandoLiquidados = false;
 			});
-			liquidacionesFactory.getPrePayment($scope.liquidacionSelected.preNumber, function(data){
+			liquidacionesFactory.getPrePayment($scope.liquidacionSelected._id, function(data){
 				if (data.status == 'OK'){
 					if (data.data.length > 0){
 						$scope.detallePreLiquidacion = data.data[0]
@@ -219,14 +220,13 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.anexarComprobantes = function(){
-			console.log('anexar');
 			liquidacionesFactory.addToPrePayment($scope.liquidacionSelected.preNumber, $scope.model, function(data){
-				console.log(data);
 				if (data.status == 'OK'){
 					dialogs.notify('Liquidaciones', data.message);
 					$scope.cargarSinLiquidar();
 					$scope.detalleLiquidacion($scope.liquidacionSelected);
 				} else {
+					dialogs.error('Liquidaciones', 'Se produjo un error al intentar anexar los comprobantes a la pre-liquidación');
 					//acá hay que ver que pasa
 				}
 			})
@@ -261,7 +261,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.checkComprobantes = function(comprobante){
 			var response;
-			if ($scope.modo == 'sinLiquidar'){
+			if ($scope.detalleComprobante == 'sinLiquidar'){
 				response = invoiceService.checkComprobantes(comprobante, $scope.comprobantesVistos, $scope.comprobantesLiquidar);
 				$scope.comprobantesLiquidar = response.datosInvoices;
 			} else {
@@ -271,8 +271,31 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.comprobantesVistos = response.comprobantesVistos;
 		};
 
+		$scope.mostrarDetalleSinLiquidar = function(comprobante){
+			if ($scope.detalleComprobante != ''){
+				$scope.ocultarResultado($scope.verDetalle);
+			}
+			$scope.detalleComprobante = 'sinLiquidar';
+			$scope.cargandoSinLiquidar = true;
+			invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.comprobantesLiquidar)
+				.then(function(response){
+					$scope.verDetalle = response.detalle;
+					$scope.comprobantesLiquidar = response.datosInvoices;
+					$scope.comprobantesVistos = response.comprobantesVistos;
+					$scope.noMatch = response.noMatch;
+					//$scope.commentsInvoice = [];
+					$rootScope.noMatch = $scope.noMatch;
+					$scope.mostrarResultadoSinLiquidar = true;
+					$scope.cargandoSinLiquidar = false;
+				});
+		};
+
 		$scope.mostrarDetalle = function(comprobante){
-			$scope.cargando = true;
+			if ($scope.detalleComprobante != ''){
+				$scope.ocultarResultado($scope.verDetalle);
+			}
+			$scope.detalleComprobante = 'Liquidado';
+			$scope.cargandoLiquidados = true;
 			invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.datosInvoices)
 				.then(function(response){
 					$scope.verDetalle = response.detalle;
@@ -282,7 +305,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					//$scope.commentsInvoice = [];
 					$rootScope.noMatch = $scope.noMatch;
 					$scope.mostrarResultado = true;
-					$scope.cargando = false;
+					$scope.cargandoLiquidados = false;
 				});
 		};
 
@@ -306,7 +329,12 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.ocultarResultado = function(comprobante){
 			$scope.checkComprobantes(comprobante);
-			$scope.mostrarResultado = false;
+			if ($scope.detalleComprobante == 'sinLiquidar'){
+				$scope.mostrarResultadoSinLiquidar = false;
+			} else {
+				$scope.mostrarResultado = false;
+			}
+			$scope.detalleComprobante = '';
 		};
 
 		$scope.chequearTarifas = function(comprobante){

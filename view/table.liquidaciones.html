@@ -30,7 +30,7 @@
 			<td class="text-center" style="width: 8%">{{ invoice.emision | date: 'dd/MM/yyyy' }}</td>
 			<td class="text-right" style="width: 10%">U$S {{ invoice.tasa | currency }}</td>
 			<td class="text-right" style="width: 12%">U$S {{ invoice.total | currency }}</td>
-			<td class="text-center" style="width: 4%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td class="text-center" style="width: 4%"><a href ng-click="mostrarDetalleSinLiquidar(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			<td class="hidden-print text-left" style="width: 14%">
 				<a href ng-click="trackInvoice(invoice)" popover="{{ invoice.lastComment }}" popover-trigger="mouseenter"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
 			</td>
