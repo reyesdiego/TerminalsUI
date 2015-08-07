@@ -2,8 +2,8 @@
 	<img class="media-object center-block" src="images/loading.gif">
 </div>
 <div class="row col-lg-12 center-block" ng-show="datosLiquidaciones.length == 0 && !cargandoLiquidaciones">
-	<div-panel config-panel="panelMensajeLiquidaciones">
-		<span>{{ panelMensajeLiquidaciones.mensaje }}</span>
+	<div-panel config-panel="panelMensajePreLiquidaciones">
+		<span>{{ panelMensajePreLiquidaciones.mensaje }}</span>
 	</div-panel>
 </div>
 <div class="table-responsive col-lg-12" ng-show="datosLiquidaciones.length > 0 && !cargandoLiquidaciones">
@@ -17,7 +17,7 @@
 		</thead>
 		<tbody>
 		<tr ng-repeat="liquidacion in datosLiquidaciones">
-			<td class="text-right">{{ liquidacion.number }}</td>
+			<td class="text-right">{{ liquidacion.preNumber }}</td>
 			<td class="text-center">{{ liquidacion.date | date: 'dd/MM/yyyy' }}</td>
 			<th class="text-center"><a href ng-click="detalleLiquidacion(liquidacion)"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
 		</tr>

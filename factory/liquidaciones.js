@@ -50,7 +50,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getComprobantesLiquidados = function(page, liquidacion, datos, callback){
-			factory.cancelRequest();
+			factory.cancelRequest('comprobantesLiquidados');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'comprobantesLiquidados');
 			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
@@ -72,8 +72,8 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		//No se debería poder cancelar
 		factory.setPrePayment = function(callback){
-			var inserturl = serverUrl + '/paying/setPrePayment/' + loginService.getFiltro();
-			$http.post(inserturl, '')
+			var inserturl = serverUrl + '/paying/prePayment';
+			$http.post(inserturl, { terminal: loginService.getFiltro() })
 				.success(function(data){
 					callback(data);
 				}).error(function(error){
@@ -87,8 +87,8 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.addToPrePayment = function(preLiquidacion, datos, callback){
-			var inserturl = serverUrl + '/paying/addToPrePayment/' + loginService.getFiltro() + '/' + preLiquidacion;
-			$http.put(inserturl, '',{ params: formatService.formatearDatos(datos) })
+			var inserturl = serverUrl + '/paying/addToPrePayment/' + loginService.getFiltro();
+			$http.put(inserturl, { preNumber: preLiquidacion },{ params: formatService.formatearDatos(datos) })
 				.success(function(data){
 					callback(data);
 				}).error(function(error){

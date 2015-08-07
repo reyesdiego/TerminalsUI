@@ -33,7 +33,7 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-6 text-left">
-						<button class="btn btn-primary" ng-click="anexarComprobantes()" ng-disabled="!preLiquidacionSelected">Anexar a pre-liquidación {{ liquidacionSelected.number }}</button>
+						<button class="btn btn-primary" ng-click="anexarComprobantes()" ng-disabled="!preLiquidacionSelected">Anexar a pre-liquidación {{ liquidacionSelected.preNumber }}</button>
 					</div>
 				</div>
 			</div>
@@ -54,7 +54,7 @@
 					</div>
 				</div>
 				<hr>
-				<accordion-min heading="Comprobantes - Pre-Liquidación número: {{ liquidacionSelected.number }}" ng-show="preLiquidacionSelected">
+				<accordion-min heading="Comprobantes - Pre-Liquidación número: {{ liquidacionSelected.preNumber }}" ng-show="preLiquidacionSelected">
 					<div class="col-lg-12 text-center" ng-show="cargandoLiquidados">
 						<img class="media-object center-block" src="images/loading.gif">
 					</div>
@@ -98,7 +98,7 @@
 			<liquidaciones-search model="model" ocultar-liquidacion="false"></liquidaciones-search>
 			<table-pagos></table-pagos>
 			<div ng-show="preLiquidacionSelected">
-				<h3>Detalle de pre-liquidación número: {{ liquidacionSelected.number }}</h3>
+				<h3>Detalle de pre-liquidación número: {{ liquidacionSelected.preNumber }}</h3>
 				<hr>
 				<div class="col-lg-6"></div>
 			</div>
