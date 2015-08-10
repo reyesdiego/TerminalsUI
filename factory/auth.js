@@ -59,13 +59,6 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 
 						$http.defaults.headers.common.token = loginService.getToken();
 
-						//************************
-						data.acceso.push('afip.removido');
-						data.acceso.push('afip.removido.removido1');
-						data.acceso.push('afip.removido.removido2');
-						data.acceso.push('afip.removido.removido3');
-						//********************************************
-
 						loginService.setAcceso(data.acceso);
 
 						$rootScope.rutas = data.acceso;

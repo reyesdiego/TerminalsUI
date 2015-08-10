@@ -60,25 +60,33 @@
 					<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
 				</div>
 				<div class="col-lg-6 text-right">
-					<button class="btn btn-primary" ng-click="liquidar()">Liquidar</button>
+					<button class="btn btn-primary" ng-click="liquidar()" ng-disabled="!preLiquidacionSelected">Liquidar</button>
 				</div>
 			</div>
 
 		</tab>
 
 		<tab class="hidden-print" heading="Pre-Liquidaciones">
-			<div class="visible-print-block">
-				<h3>Liquidaciones</h3>
-			</div>
-			<br>
-			<liquidaciones-search model="model" ocultar-liquidacion="false"></liquidaciones-search>
-			<table-pagos></table-pagos>
-			<div ng-show="preLiquidacionSelected">
-				<h3>Detalle de pre-liquidación número: {{ liquidacionSelected.preNumber }}</h3>
+			<div class="col-xlg-offset-2 col-xlg-8">
+				<div>
+					<h3>Pre-Liquidaciones</h3>
+				</div>
 				<hr>
-				<div class="col-lg-6"></div>
+				<liquidaciones-search model="modelLiquidaciones" ocultar-filtros="ocultarFiltrosLiquidaciones"></liquidaciones-search>
+				<table-pagos></table-pagos>
+				<div ng-show="preLiquidacionSelected">
+					<div class="col-lg-4">
+						<h3>Toneladas: {{ detallePreLiquidacion.tons }}</h3>
+					</div>
+					<div class="col-lg-4">
+						<h3>Total: U$S {{ detallePreLiquidacion.total | currency }}</h3>
+					</div>
+					<div class="col-lg-4 text-right">
+						<br>
+						<button class="btn btn-primary" ng-click="liquidar()" ng-disabled="!preLiquidacionSelected">Liquidar</button>
+					</div>
+				</div>
 			</div>
-
 		</tab>
 
 	</tabset>
