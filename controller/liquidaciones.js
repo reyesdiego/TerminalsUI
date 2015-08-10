@@ -64,11 +64,11 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.totalLiquidadas = 0;
 		$scope.totalLiquidaciones = 0;
 
-		$scope.currentPageSinLiquidar = 1;
+		$scope.currentPage = 1;
 		$scope.paginacion = {
-			liquidadas: 1
+			sinLiquidar: 1,
+			liquidaciones: 1
 		};
-		$scope.currentPageLiquidaciones = 1;
 
 		$scope.page = {
 			skip: 0,
@@ -90,13 +90,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.detalleComprobante = '';
 
 		$scope.$on('cambioPagina', function(ev, data){
-			if ($scope.modo == 'sinLiquidar'){
-				$scope.currentPageSinLiquidar = data;
-			} else {
-				$scope.currentPageLiquidaciones = data;
-			}
-			$scope.page.skip = (data - 1) * $scope.itemsPerPage;
-			$scope.cargarDatos();
+			$scope.currentPage = data;
+			$scope.detalleLiquidacion();
 		});
 
 		$scope.$on('cambioFiltro', function(ev, data){
@@ -107,17 +102,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			}
 		});
 
-		$scope.cambiarModo = function(modo){
-			if (modo != $scope.modo){
-				if ($scope.mostrarResultado) $scope.ocultarResultado($scope.verDetalle);
-				$scope.verDetalleLiquidacion = false;
-				$scope.modo = modo;
-				$scope.page.skip = (modo == 'sinLiquidar') ? ($scope.currentPageSinLiquidar - 1) * $scope.itemsPerPage : ($scope.currentPageLiquidaciones - 1) * $scope.itemsPerPage;
-				$scope.cargarDatos();
-			}
-		};
-
 		$scope.cargarSinLiquidar = function(){
+			$scope.page.skip = ($scope.paginacion.sinLiquidar - 1) * $scope.itemsPerPage;
 			$scope.cargandoSinLiquidar = true;
 			liquidacionesFactory.getComprobantesLiquidar($scope.page, $scope.model, function(data){
 				if (data.status == 'OK'){
@@ -144,6 +130,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.cargarLiquidaciones = function(){
+			$scope.page.skip = ($scope.paginacion.liquidaciones - 1) * $scope.itemsPerPage;
 			$scope.cargandoLiquidaciones = true;
 			liquidacionesFactory.getPayments($scope.page, $scope.modelLiquidaciones, function(data){
 				if (data.status == 'OK'){
@@ -187,7 +174,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.preLiquidacionSelected = true;
 			$scope.cargandoLiquidados = true;
 			var pagina = {
-				skip: ($scope.paginacion.liquidadas - 1) * $scope.itemsPerPage,
+				skip: ($scope.currentPage - 1) * $scope.itemsPerPage,
 				limit: $scope.itemsPerPage
 			};
 			liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.liquidacionSelected._id, $scope.model, function(data){
