@@ -183,10 +183,12 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					$scope.verDetalleLiquidacion = true;
 					$scope.datosInvoices = data.data;
 				} else {
+					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los comprobantes liquidados de la pre-liquidación número ' + $scope.liquidacionSelected.preNumber);
+					$scope.liquidacionSelected = {};
+					$scope.preLiquidacionSelected = false;
 					$scope.datosInvoices = [];
 					$scope.totalPreLiquidadas = 0;
 					$scope.verDetalleLiquidacion = false;
-					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los comprobantes liquidados de la liquidacion número ' + $scope.liquidacionSelected.preNumber);
 				}
 				$scope.cargandoLiquidados = false;
 			});
@@ -198,10 +200,15 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 						$scope.detallePreLiquidacion = {
 							tons: 0,
 							total: 0
-						}
+						};
 					}
 				} else {
 					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los detalles de la pre-liquidación');
+					$scope.liquidacionSelected = {};
+					$scope.preLiquidacionSelected = false;
+					$scope.datosInvoices = [];
+					$scope.totalPreLiquidadas = 0;
+					$scope.verDetalleLiquidacion = false;
 				}
 			});
 		};
@@ -250,6 +257,14 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					$scope.mostrarResultadoSinLiquidar = true;
 					$scope.cargandoSinLiquidar = false;
 				});
+		};
+
+		$scope.eliminarPreLiquidacion = function(){
+
+		};
+
+		$scope.liquidar = function(){
+
 		};
 
 		$scope.mostrarTope = function(pagina, totalItems){

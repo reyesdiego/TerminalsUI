@@ -73,6 +73,7 @@
 					<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
 				</div>
 				<div class="col-lg-6 text-right">
+					<button class="btn btn-danger" ng-click="eliminarPreLiquidacion()" ng-disabled="!preLiquidacionSelected">Eliminar</button>
 					<button class="btn btn-primary" ng-click="liquidar()" ng-disabled="!preLiquidacionSelected">Liquidar</button>
 				</div>
 			</div>
@@ -102,6 +103,7 @@
 					</div>
 					<div class="col-lg-4 text-right">
 						<br>
+						<button class="btn btn-danger" ng-click="eliminarPreLiquidacion()" ng-disabled="!preLiquidacionSelected">Eliminar</button>
 						<button class="btn btn-primary" ng-click="liquidar()" ng-disabled="!preLiquidacionSelected">Liquidar</button>
 					</div>
 				</div>
