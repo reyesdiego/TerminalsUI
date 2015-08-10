@@ -88,7 +88,10 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		factory.addToPrePayment = function(preLiquidacion, datos, callback){
 			var inserturl = serverUrl + '/paying/addToPrePayment/' + loginService.getFiltro();
-			$http.put(inserturl, { preNumber: preLiquidacion },{ params: formatService.formatearDatos(datos) })
+			var liquidacion = {
+				paymentId: preLiquidacion
+			};
+			$http.put(inserturl, liquidacion,{ params: formatService.formatearDatos(datos) })
 				.success(function(data){
 					callback(data);
 				}).error(function(error){

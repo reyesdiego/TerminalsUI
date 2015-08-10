@@ -207,7 +207,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.anexarComprobantes = function(){
-			liquidacionesFactory.addToPrePayment($scope.liquidacionSelected.preNumber, $scope.model, function(data){
+			liquidacionesFactory.addToPrePayment($scope.liquidacionSelected._id, $scope.model, function(data){
 				if (data.status == 'OK'){
 					dialogs.notify('Liquidaciones', data.message);
 					$scope.cargarSinLiquidar();
