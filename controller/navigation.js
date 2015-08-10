@@ -22,10 +22,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 	$scope.grupo = '';
 	$rootScope.filtroTerminal = '';
 
-	$scope.appointmentAnimar = '';
-	$scope.invoiceAnimar = '';
-	$scope.gateAnimar = '';
-
 	$scope.irA = function(){
 		if (!$rootScope.cargandoCache) {
 			if (loginService.getStatus()){
@@ -94,24 +90,12 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 			switch (ruta){
 				case 'turnos':
 					$rootScope.appointmentNotify++;
-					$scope.appointmentAnimar = 'agrandar';
-					$timeout(function(){
-						$scope.appointmentAnimar = '';
-					}, 1000);
 					break;
 				case 'gates':
 					$rootScope.gateNotify++;
-					$scope.gateAnimar = 'agrandar';
-					$timeout(function(){
-						$scope.gateAnimar = '';
-					}, 1000);
 					break;
 				case 'invoices':
 					$rootScope.invoiceNotify++;
-					$scope.invoiceAnimar = 'agrandar';
-					$timeout(function(){
-						$scope.invoiceAnimar = '';
-					}, 1000);
 			}
 		} else if($rootScope.verNotificaciones) {
 			if ($scope.notificacionesMáximasPantalla > 0){

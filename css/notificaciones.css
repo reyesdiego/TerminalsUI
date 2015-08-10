@@ -10,19 +10,6 @@
 	position: absolute;
 	right: 2px;
 	top: 2px;
-
-	/* estas propiedades harán la animación */
-	-webkit-transition: all 0.5s ease-out;
-	-moz-transition: all 0.5s ease-out;
-	-ms-transition: all 0.5s ease-out;
-	-o-transition: all 0.5s ease-out;
-	transition: all 0.5s ease-out;
-}
-
-.burbuja.agrandar {
-	width: 25px;
-	height: 25px;
-	padding-top: 5px;
 }
 
 .usuarioActivo {

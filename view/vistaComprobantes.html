@@ -1,4 +1,4 @@
-<div class="row" ng-hide="mostrarResultado">
+<div class="row col-lg-12" ng-hide="mostrarResultado">
 	<div class="hidden-print" ng-hide="ocultarAccordionInvoicesSearch">
 		<accordion-invoices-search></accordion-invoices-search>
 	</div>
@@ -43,6 +43,6 @@
 	</div>
 </div>
 
-<div ng-if="mostrarResultado">
+<div class="col-lg-12" ng-if="mostrarResultado">
 	<invoices-result></invoices-result>
 </div>
