@@ -333,11 +333,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		$scope.$on('cambioTerminal', function(){
 			$scope.mostrarResultado = false;
 			$scope.logoTerminal = $rootScope.logoTerminal;
-			$scope.loadingState = true;
-			$scope.comprobantesVistos = [];
-			$scope.datosInvoices = [];
-			$scope.totalItems = 0;
-			$scope.currentPage = 1;
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos) $scope.cargaTodosLosPuntosDeVentas();
 		});
 

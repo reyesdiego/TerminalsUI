@@ -75,6 +75,10 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', func
 		});
 	};
 
+	$scope.$on('cambioTerminal', function(){
+		$scope.cargando = true;
+	});
+
 	$scope.$on('$destroy', function(){
 		invoiceFactory.cancelRequest();
 	});

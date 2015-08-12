@@ -52,7 +52,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.cargandoLiquidaciones = false;
 		$scope.cargandoLiquidados = false;
 
-		$scope.modo = 'sinLiquidar';
+		//$scope.modo = 'sinLiquidar';
 
 		$scope.comprobantesLiquidar = [];
 		$scope.datosInvoices = [];
@@ -321,6 +321,14 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		});
 
 		$scope.$on('cambioTerminal', function(){
+			$scope.preLiquidacionSelected = false;
+			$scope.liquidacionSelected = {};
+			$scope.currentPage = 1;
+			$scope.paginacion = {
+				sinLiquidar: 1,
+				liquidaciones: 1
+			};
+			$scope.cargandoLiquidados = false;
 			$scope.cargarSinLiquidar();
 			$scope.cargarLiquidaciones();
 		});
