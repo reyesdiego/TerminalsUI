@@ -98,7 +98,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			if (data.modo == 'sinLiquidar'){
 				$scope.cargarSinLiquidar();
 			} else {
-				$scope.cargarLiquidaciones();
+				$scope.cargarPreLiquidaciones();
 			}
 		});
 
@@ -129,10 +129,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			})
 		};
 
-		$scope.cargarLiquidaciones = function(){
+		$scope.cargarPreLiquidaciones = function(){
 			$scope.page.skip = ($scope.paginacion.liquidaciones - 1) * $scope.itemsPerPage;
 			$scope.cargandoLiquidaciones = true;
-			liquidacionesFactory.getPayments($scope.page, $scope.modelLiquidaciones, function(data){
+			liquidacionesFactory.getPrePayments($scope.page, $scope.modelLiquidaciones, function(data){
 				if (data.status == 'OK'){
 					$scope.datosLiquidaciones = data.data;
 					$scope.totalLiquidaciones = data.totalCount;
@@ -231,7 +231,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			liquidacionesFactory.setPrePayment(function(data){
 				if (data.status == 'OK'){
 					dialogs.notify('Liquidaciones',  'Se ha generado la pre-liquidación número: ' + data.data.preNumber);
-					$scope.cargarLiquidaciones();
+					$scope.cargarPreLiquidaciones();
 				} else {
 					dialogs.error('Liquidaciones', data.message);
 				}
@@ -275,7 +275,20 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.liquidar = function(){
-
+			var dlg = dialogs.confirm('Liquidaciones', 'Se procesará la pre-liquidación número ' + $scope.liquidacionSelected.preNumber +' de modo que pueda ser cobrada. ¿Confirma la operación?');
+			dlg.result.then(function(){
+				$scope.cargandoLiquidaciones = true;
+				liquidacionesFactory.setPayment($scope.liquidacionSelected.preNumber, function(data){
+					console.log(data);
+					if (data.status == 'OK'){
+						dialogs.notify('Liquidaciones', data.message);
+						$scope.recargar();
+					} else {
+						dialogs.error('Liquidaciones', data.message);
+						$scope.cargandoLiquidaciones = false;
+					}
+				})
+			});
 		};
 
 		$scope.mostrarTope = function(pagina, totalItems){
@@ -322,13 +335,13 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		if (loginService.getStatus()) {
 			$scope.cargarSinLiquidar();
-			$scope.cargarLiquidaciones();
+			$scope.cargarPreLiquidaciones();
 		}
 
 		$scope.$on('terminoLogin', function(){
 			$scope.acceso = $rootScope.esUsuario;
 			$scope.cargarSinLiquidar();
-			$scope.cargarLiquidaciones();
+			$scope.cargarPreLiquidaciones();
 		});
 
 		$scope.$on('cambioTerminal', function(){
@@ -344,7 +357,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				liquidaciones: 1
 			};
 			$scope.cargarSinLiquidar();
-			$scope.cargarLiquidaciones();
+			$scope.cargarPreLiquidaciones();
 		};
 
 		$scope.$on('$destroy', function(){

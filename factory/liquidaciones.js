@@ -36,6 +36,19 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			return comprobantes;
 		};
 
+		factory.getPrePayments = function(page, datos, callback){
+			factory.cancelRequest('preliquidaciones');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'preliquidaciones');
+			var inserturl = serverUrl + '/paying/prePayments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
+				.success(function(data){
+					callback(data);
+				}).error(function(error, status){
+					if (status != 0) callback(error);
+				})
+		};
+
 		factory.getPayments = function(page, datos, callback){
 			factory.cancelRequest('liquidaciones');
 			var defer = $q.defer();
@@ -82,6 +95,16 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 							status: 'ERROR'
 						}
 					}
+					callback(error);
+				})
+		};
+
+		factory.setPayment = function(preNumber, callback){
+			var inserturl = serverUrl + '/paying/payment';
+			$http.put(inserturl, {terminal: loginService.getFiltro(), preNumber: preNumber})
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
 					callback(error);
 				})
 		};
