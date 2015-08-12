@@ -86,6 +86,16 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				})
 		};
 
+		factory.deletePrePayment = function(paymentId, callback){
+			var inserturl = serverUrl + '/paying/prePayment/' + paymentId;
+			$http.delete(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		factory.addToPrePayment = function(preLiquidacion, datos, callback){
 			var inserturl = serverUrl + '/paying/addToPrePayment/' + loginService.getFiltro();
 			var liquidacion = {

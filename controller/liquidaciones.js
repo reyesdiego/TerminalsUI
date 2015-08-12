@@ -260,7 +260,18 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.eliminarPreLiquidacion = function(){
-
+			var dlg = dialogs.confirm('Liquidaciones', 'Se eliminará la pre-liquidación número ' + $scope.liquidacionSelected.preNumber +'. ¿Confirma la operación?');
+			dlg.result.then(function(){
+					$scope.cargandoLiquidaciones = true;
+					liquidacionesFactory.deletePrePayment($scope.liquidacionSelected._id, function(data){
+						if (data.status == 'OK'){
+							dialogs.notify('Liquidaciones', data.message);
+							$scope.recargar();
+						} else {
+							dialogs.error('Liquidaciones', 'Se ha producido un error al intentar borrar la pre-liquidación.');
+						}
+					})
+				});
 		};
 
 		$scope.liquidar = function(){
@@ -321,6 +332,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		});
 
 		$scope.$on('cambioTerminal', function(){
+			$scope.recargar();
+		});
+
+		$scope.recargar = function(){
 			$scope.preLiquidacionSelected = false;
 			$scope.liquidacionSelected = {};
 			$scope.currentPage = 1;
@@ -328,10 +343,9 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				sinLiquidar: 1,
 				liquidaciones: 1
 			};
-			$scope.cargandoLiquidados = false;
 			$scope.cargarSinLiquidar();
 			$scope.cargarLiquidaciones();
-		});
+		};
 
 		$scope.$on('$destroy', function(){
 			liquidacionesFactory.cancelRequest();
