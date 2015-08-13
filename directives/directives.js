@@ -493,7 +493,9 @@ myapp.directive('tablePagos', function(){
 		scope: {
 			cargando:			'=',
 			datosPagos:			'=',
-			panelMensaje:		'='
+			panelMensaje:		'=',
+			detalle:			'&',
+			final:				'@'
 		},
 		templateUrl:	'view/table.pagos.html'
 	}

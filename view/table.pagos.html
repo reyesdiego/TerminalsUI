@@ -12,14 +12,21 @@
 		<tr class="text-center">
 			<th class="text-right">Número</th>
 			<th class="text-center">Fecha</th>
+			<th class="text-right" ng-show="final == 'true'">Comprobantes</th>
+			<th class="text-right" ng-show="final == 'true'">Toneladas</th>
+			<th class="text-right" ng-show="final == 'true'">Total</th>
 			<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 		</tr>
 		</thead>
 		<tbody>
 		<tr ng-repeat="pago in datosPagos">
-			<td class="text-right">{{ pago.preNumber }}</td>
+			<td class="text-right" ng-hide="final == 'true'">{{ pago.preNumber }}</td>
+			<td class="text-right" ng-hide="final != 'true'">{{ pago.number }}</td>
 			<td class="text-center">{{ pago.date | date: 'dd/MM/yyyy' }}</td>
-			<th class="text-center"><a href ng-click="detalleLiquidacion(pago)"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
+			<td class="text-right" ng-show="final == 'true'">{{ pago.vouchers }}</td>
+			<td class="text-right" ng-show="final == 'true'">{{ pago.tons }}</td>
+			<td class="text-right" ng-show="final == 'true'">U$S {{ pago.total | currency }}</td>
+			<th class="text-center"><a href ng-click="detalle({pago: pago})"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
 		</tr>
 		</tbody>
 	</table>
