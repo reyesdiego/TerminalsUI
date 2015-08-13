@@ -71,7 +71,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.cargandoPreLiquidaciones = false;
 		$scope.cargandoLiquidados = false;
 
-		//$scope.modo = 'sinLiquidar';
+		$scope.modo = 'sinLiquidar';
 
 		$scope.comprobantesLiquidar = [];
 		$scope.datosInvoices = [];
@@ -110,9 +110,20 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 		$scope.detalleComprobante = '';
 
+		$scope.mostrarDetalleLiquidacion = false;
+		$scope.liquidacion = {};
+
+		$scope.currentPageSinLiquidar = 1;
+		$scope.currentPageLiquidados = 1;
+
 		$scope.$on('cambioPagina', function(ev, data){
-			$scope.currentPage = data;
-			$scope.cargarDetallePreLiquidacion();
+			if ($scope.modo == 'sinLiquidar'){
+				$scope.currentPageSinLiquidar = data;
+				$scope.cargarDetallePreLiquidacion();
+			} else {
+				$scope.currentPageLiquidados = data;
+				$scope.detalleLiquidacion();
+			}
 		});
 
 		$scope.$on('cambioFiltro', function(ev, data){
@@ -225,7 +236,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.preLiquidacionSelected = true;
 			$scope.cargandoLiquidados = true;
 			var pagina = {
-				skip: ($scope.currentPage - 1) * $scope.itemsPerPage,
+				skip: ($scope.currentPageSinLiquidar - 1) * $scope.itemsPerPage,
 				limit: $scope.itemsPerPage
 			};
 			liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.liquidacionSelected._id, $scope.model, function(data){
@@ -245,7 +256,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			});
 			liquidacionesFactory.getPrePayment($scope.liquidacionSelected._id, function(data){
 				if (data.status == 'OK'){
-					if (angular.isDefined(data.data) > 0){
+					if (angular.isDefined(data.data)){
 						$scope.detallePreLiquidacion = data.data;
 					} else {
 						$scope.detallePreLiquidacion = {
@@ -265,7 +276,26 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.detalleLiquidacion = function(liquidacion){
-
+			if (liquidacion) $scope.liquidacion = liquidacion;
+			$scope.mostrarDetalleLiquidacion = true;
+			$scope.cargandoDetalleLiquidacion = true;
+			var pagina = {
+				skip: ($scope.currentPageLiquidados - 1) * $scope.itemsPerPage,
+				limit: $scope.itemsPerPage
+			};
+			liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.liquidacion._id, $scope.model, function(data){
+				if (data.status == 'OK'){
+					$scope.totalLiquidadas = data.totalCount;
+					$scope.datosLiquidados = data.data;
+				} else {
+					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los comprobantes liquidados de la pre-liquidación número ' + $scope.liquidacionSelected.preNumber);
+					$scope.liquidacion = {};
+					$scope.mostrarDetalleLiquidacion = false;
+					$scope.datosLiquidados = [];
+					$scope.totalLiquidadas = 0;
+				}
+				$scope.cargandoDetalleLiquidacion = false;
+			});
 		};
 
 		$scope.anexarComprobantes = function(){
@@ -364,6 +394,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				}, function(message){
 					dialogs.error('Liquidaciones', message);
 				})
+		};
+
+		$scope.cambiarModo = function(modo){
+			$scope.modo = modo;
 		};
 
 		$scope.ocultarResultado = function(comprobante){

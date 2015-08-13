@@ -10,7 +10,7 @@
 
 	<tabset justified="true">
 
-		<tab class="hidden-print" heading="Pre-Liquidar">
+		<tab class="hidden-print" heading="Pre-Liquidar" select="cambiarModo('sinLiquidar')">
 			<div class="col-xlg-6 col-lg-12">
 				<div>
 					<h3>Comprobantes sin liquidar</h3>
@@ -80,14 +80,14 @@
 
 		</tab>
 
-		<tab class="hidden-print" heading="Pre-Liquidaciones">
+		<tab class="hidden-print" heading="Pre-Liquidaciones" select="cambiarModo('sinLiquidar')">
 			<div class="col-xlg-offset-2 col-xlg-8">
 				<div>
 					<h3>Pre-Liquidaciones</h3>
 				</div>
 				<hr>
 				<liquidaciones-search model="modelPreLiquidaciones" ocultar-filtros="ocultarFiltrosPreLiquidaciones"></liquidaciones-search>
-				<table-pagos cargando="cargandoPreLiquidaciones" datos-pagos="datosPreLiquidaciones" panel-mensaje="panelMensajePreLiquidaciones" detalle="detallePreLiquidacion(pago)" final="false"></table-pagos>
+				<table-pagos cargando="cargandoPreLiquidaciones" datos-pagos="datosPreLiquidaciones" panel-mensaje="panelMensajePreLiquidaciones" detalle="cargarDetallePreLiquidacion(pago)" final="false"></table-pagos>
 				<div class="col-lg-12 hidden-print" ng-show="totalPreLiquidaciones > itemsPerPage">
 					<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalPreLiquidaciones" items-per-page="itemsPerPage" ng-model="paginacion.preLiquidaciones" max-size="5" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class="text-center visible-sm"><pagination boundary-links="true" total-items="totalPreLiquidaciones" items-per-page="itemsPerPage" ng-model="paginacion.preLiquidaciones" max-size="7" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
@@ -110,7 +110,7 @@
 			</div>
 		</tab>
 
-		<tab class="hidden-print" heading="Liquidaciones">
+		<tab class="hidden-print" heading="Liquidaciones" select="cambiarModo('liquidacion')">
 			<div class="col-xlg-offset-2 col-xlg-8">
 				<div>
 					<h3>Liquidaciones</h3>
@@ -124,6 +124,9 @@
 					<div class="text-center visible-md"><pagination boundary-links="true" total-items="totalLiquidaciones" items-per-page="itemsPerPage" ng-model="paginacion.liquidaciones" max-size="11" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class="text-center visible-lg"><pagination boundary-links="true" total-items="totalLiquidaciones" items-per-page="itemsPerPage" ng-model="paginacion.liquidaciones" max-size="15" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
+				<accordion-min heading="Comprobantes - Liquidación número: {{ liquidacion.number }}" ng-show="mostrarDetalleLiquidacion">
+					<vista-comprobantes model="model" datos-invoices="datosLiquidados" ocultar-filtros="ocultarFiltros" total-items="totalLiquidadas" control-codigos="false" loading-state="cargandoDetalleLiquidacion" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
+				</accordion-min>
 			</div>
 		</tab>
 
