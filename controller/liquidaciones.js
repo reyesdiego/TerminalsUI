@@ -333,6 +333,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			var dlg = dialogs.confirm('Liquidaciones', 'Se procesará la pre-liquidación número ' + $scope.liquidacionSelected.preNumber +' de modo que pueda ser cobrada. ¿Confirma la operación?');
 			dlg.result.then(function(){
 				$scope.cargandoPreLiquidaciones = true;
+				$scope.preLiquidacionSelected = false;
 				liquidacionesFactory.setPayment($scope.liquidacionSelected.preNumber, function(data){
 					console.log(data);
 					if (data.status == 'OK'){
@@ -341,6 +342,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					} else {
 						dialogs.error('Liquidaciones', data.message);
 						$scope.cargandoPreLiquidaciones = false;
+						$scope.preLiquidacionSelected = true;
 					}
 				})
 			});
