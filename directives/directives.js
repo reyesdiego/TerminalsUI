@@ -490,6 +490,11 @@ myapp.directive('tableLiquidaciones', function(){
 myapp.directive('tablePagos', function(){
 	return {
 		restrict:		'E',
+		scope: {
+			cargando:			'=',
+			datosPagos:			'=',
+			panelMensaje:		'='
+		},
 		templateUrl:	'view/table.pagos.html'
 	}
 });

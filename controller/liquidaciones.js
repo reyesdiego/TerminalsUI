@@ -6,7 +6,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'fechaInicio'];
 		$scope.ocultarFiltrosSinLiquidar = ['liquidacion'];
-		$scope.ocultarFiltrosLiquidaciones = ['nroComprobante', 'codTipoComprob', 'razonSocial'];
+		$scope.ocultarFiltrosPreLiquidaciones = ['nroComprobante', 'codTipoComprob', 'razonSocial'];
 
 		$scope.panelMensajeSinLiquidar = {
 			titulo: 'Liquidaciones',
@@ -15,6 +15,12 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.panelMensajePreLiquidaciones = {
+			titulo: 'Liquidaciones',
+			mensaje: 'No se encontraron pre-liquidaciones realizadas para los filtros seleccionados.',
+			tipo: 'panel-info'
+		};
+
+		$scope.panelMensajeLiquidaciones = {
 			titulo: 'Liquidaciones',
 			mensaje: 'No se encontraron liquidaciones realizadas para los filtros seleccionados.',
 			tipo: 'panel-info'
@@ -32,7 +38,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			'modo': 'sinLiquidar'
 		};
 
-		$scope.modelLiquidaciones = {
+		$scope.modelPreLiquidaciones = {
 			'fechaInicio': $scope.fechaInicio,
 			'fechaFin': $scope.fechaFin,
 			'liquidacion': '',
@@ -50,6 +56,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.cargandoSinLiquidar = false;
 		$scope.cargandoLiquidaciones = false;
+		$scope.cargandoPreLiquidaciones = false;
 		$scope.cargandoLiquidados = false;
 
 		//$scope.modo = 'sinLiquidar';
@@ -62,11 +69,13 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.itemsPerPage = 15;
 		$scope.totalSinLiquidar = 0;
 		$scope.totalLiquidadas = 0;
+		$scope.totalPreLiquidaciones = 0;
 		$scope.totalLiquidaciones = 0;
 
 		$scope.currentPage = 1;
 		$scope.paginacion = {
 			sinLiquidar: 1,
+			preLiquidaciones: 1,
 			liquidaciones: 1
 		};
 
@@ -130,14 +139,41 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.cargarPreLiquidaciones = function(){
+			$scope.page.skip = ($scope.paginacion.preLiquidaciones - 1) * $scope.itemsPerPage;
+			$scope.cargandoPreLiquidaciones = true;
+			liquidacionesFactory.getPrePayments($scope.page, $scope.modelPreLiquidaciones, function(data){
+				if (data.status == 'OK'){
+					$scope.datosPreLiquidaciones = data.data;
+					$scope.totalPreLiquidaciones = data.totalCount;
+					if ($scope.totalPreLiquidaciones == 0){
+						$scope.panelMensajePreLiquidaciones = {
+							titulo: 'Liquidaciones',
+							mensaje: 'No se encontraron pre-liquidaciones realizadas para los filtros seleccionados.',
+							tipo: 'panel-info'
+						};
+					}
+				} else {
+					$scope.datosPreLiquidaciones = [];
+					$scope.totalPreLiquidaciones = 0;
+					$scope.panelMensajePreLiquidaciones = {
+						titulo: 'Liquidaciones',
+						mensaje: 'Se ha producido un error al cargar las liquidaciones realizadas.',
+						tipo: 'panel-danger'
+					};
+				}
+				$scope.cargandoPreLiquidaciones = false;
+			})
+		};
+
+		$scope.cargarLiquidaciones = function(){
 			$scope.page.skip = ($scope.paginacion.liquidaciones - 1) * $scope.itemsPerPage;
 			$scope.cargandoLiquidaciones = true;
-			liquidacionesFactory.getPrePayments($scope.page, $scope.modelLiquidaciones, function(data){
+			liquidacionesFactory.getPayments($scope.page, $scope.modelLiquidaciones, function(data){
 				if (data.status == 'OK'){
 					$scope.datosLiquidaciones = data.data;
 					$scope.totalLiquidaciones = data.totalCount;
 					if ($scope.totalLiquidaciones == 0){
-						$scope.panelMensajePreLiquidaciones = {
+						$scope.panelMensajeLiquidaciones = {
 							titulo: 'Liquidaciones',
 							mensaje: 'No se encontraron liquidaciones realizadas para los filtros seleccionados.',
 							tipo: 'panel-info'
@@ -146,7 +182,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				} else {
 					$scope.datosLiquidaciones = [];
 					$scope.totalLiquidaciones = 0;
-					$scope.panelMensajePreLiquidaciones = {
+					$scope.panelMensajeLiquidaciones = {
 						titulo: 'Liquidaciones',
 						mensaje: 'Se ha producido un error al cargar las liquidaciones realizadas.',
 						tipo: 'panel-danger'
@@ -227,7 +263,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.preLiquidar = function(){
-			$scope.cargandoLiquidaciones = true;
+			$scope.cargandoPreLiquidaciones = true;
 			liquidacionesFactory.setPrePayment(function(data){
 				if (data.status == 'OK'){
 					dialogs.notify('Liquidaciones',  'Se ha generado la pre-liquidación número: ' + data.data.preNumber);
@@ -235,7 +271,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				} else {
 					dialogs.error('Liquidaciones', data.message);
 				}
-				$scope.cargandoLiquidaciones = false;
+				$scope.cargandoPreLiquidaciones = false;
 			})
 		};
 
@@ -262,7 +298,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.eliminarPreLiquidacion = function(){
 			var dlg = dialogs.confirm('Liquidaciones', 'Se eliminará la pre-liquidación número ' + $scope.liquidacionSelected.preNumber +'. ¿Confirma la operación?');
 			dlg.result.then(function(){
-					$scope.cargandoLiquidaciones = true;
+					$scope.cargandoPreLiquidaciones = true;
 					liquidacionesFactory.deletePrePayment($scope.liquidacionSelected._id, function(data){
 						if (data.status == 'OK'){
 							dialogs.notify('Liquidaciones', data.message);
@@ -277,7 +313,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.liquidar = function(){
 			var dlg = dialogs.confirm('Liquidaciones', 'Se procesará la pre-liquidación número ' + $scope.liquidacionSelected.preNumber +' de modo que pueda ser cobrada. ¿Confirma la operación?');
 			dlg.result.then(function(){
-				$scope.cargandoLiquidaciones = true;
+				$scope.cargandoPreLiquidaciones = true;
 				liquidacionesFactory.setPayment($scope.liquidacionSelected.preNumber, function(data){
 					console.log(data);
 					if (data.status == 'OK'){
@@ -285,7 +321,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 						$scope.recargar();
 					} else {
 						dialogs.error('Liquidaciones', data.message);
-						$scope.cargandoLiquidaciones = false;
+						$scope.cargandoPreLiquidaciones = false;
 					}
 				})
 			});
@@ -336,12 +372,14 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		if (loginService.getStatus()) {
 			$scope.cargarSinLiquidar();
 			$scope.cargarPreLiquidaciones();
+			$scope.cargarLiquidaciones();
 		}
 
 		$scope.$on('terminoLogin', function(){
 			$scope.acceso = $rootScope.esUsuario;
 			$scope.cargarSinLiquidar();
 			$scope.cargarPreLiquidaciones();
+			$scope.cargarLiquidaciones();
 		});
 
 		$scope.$on('cambioTerminal', function(){
@@ -358,6 +396,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			};
 			$scope.cargarSinLiquidar();
 			$scope.cargarPreLiquidaciones();
+			$scope.cargarLiquidaciones();
 		};
 
 		$scope.$on('$destroy', function(){
