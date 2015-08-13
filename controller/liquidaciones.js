@@ -245,8 +245,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			});
 			liquidacionesFactory.getPrePayment($scope.liquidacionSelected._id, function(data){
 				if (data.status == 'OK'){
-					if (data.data.length > 0){
-						$scope.detallePreLiquidacion = data.data[0]
+					if (angular.isDefined(data.data) > 0){
+						$scope.detallePreLiquidacion = data.data;
 					} else {
 						$scope.detallePreLiquidacion = {
 							tons: 0,
