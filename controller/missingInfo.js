@@ -149,55 +149,20 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 					$scope.verDetalle = response.detalle;
 					$scope.datosFaltantes = response.datosInvoices;
 					$scope.comprobantesVistos = response.comprobantesVistos;
-					$scope.noMatch = response.noMatch;
-					//$scope.commentsInvoice = [];
-					$rootScope.noMatch = $scope.noMatch;
+					$scope.commentsInvoice = response.commentsInvoice;
 					$scope.mostrarResultado = true;
 					$scope.cargando = false;
 				});
 		};
-
-		/*$scope.mostrarDetalle = function(comprobante){
-		 $scope.cargando = true;
-		 invoiceFactory.getInvoiceById(comprobante._id, function(dataComprob){
-		 $scope.verDetalle = dataComprob;
-		 $scope.mostrarResultado = true;
-		 $scope.cargando = false;
-
-		 });
-		 };*/
 
 		$scope.ocultarResultado = function(comprobante){
 			$scope.checkComprobantes(comprobante);
 			$scope.mostrarResultado = false;
 		};
 
-		/*$scope.ocultarResultado = function(comprobante){
-		 var encontrado = false;
-		 $scope.comprobantesVistos.forEach(function(unComprobante){
-		 if (unComprobante._id == comprobante._id){
-		 encontrado = true;
-		 }
-		 });
-		 if (!encontrado){
-		 $scope.comprobantesVistos.push(comprobante);
-		 }
-		 if ($scope.recargarResultado){
-		 $scope.comprobantesVistos.forEach(function(visto){
-		 if (visto._id == comprobante._id){
-		 visto.interfazEstado = comprobante.interfazEstado;
-		 visto.estado = comprobante.estado;
-		 }
-		 });
-		 }
-		 $scope.mostrarResultado = false;
-		 };*/
-
 		$scope.chequearTarifas = function(comprobante){
 			var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
 			$scope.comprobantesControlados = resultado.data;
-			$scope.noMatch = resultado.noMatch;
-			$rootScope.noMatch = $scope.noMatch;
 			return resultado.retValue;
 		};
 

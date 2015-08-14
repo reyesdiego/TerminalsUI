@@ -16,7 +16,7 @@
 		<tbody ng-show="acceso == 'agp'">
 		<tr ng-repeat="invoice in datosInvoices" class="{{  }}">
 			<td class="text-right">{{ invoice.nroPtoVenta }}</td>
-			<td style="width: 14%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.codTipoComprob | nombreComprobante | maxLength : 11}}<a href ng-show="((invoice.codTipoComprob | nombreComprobante).length > 11)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
+			<td style="width: 14%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-right" style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
 			<td style="width: 23%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon | maxLength : 21}}<a href="" ng-show="(invoice.razon.length > 21)" popover="{{ invoice.razon }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-center" style="width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
@@ -41,5 +41,4 @@
 		</tbody>
 	</table>
 </div>
-<!--<span class="glyphicon glyphicon-asterisk text-success"> - Liquidado </span><span></span> - <span class="glyphicon glyphicon-asterisk text-danger"> - Sin Liquidar</span>-->
 <div-pagination total-items="totalItems" items-per-page="model.itemsPerPage" current-page="currentPage"></div-pagination>

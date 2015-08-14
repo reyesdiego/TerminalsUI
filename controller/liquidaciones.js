@@ -116,6 +116,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.currentPageSinLiquidar = 1;
 		$scope.currentPageLiquidados = 1;
 
+		$scope.commentsInvoice = [];
+
 		$scope.$on('cambioPagina', function(ev, data){
 			if ($scope.modo == 'sinLiquidar'){
 				$scope.currentPageSinLiquidar = data;
@@ -337,8 +339,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				.then(function(response){
 					$scope.verDetalle = response.detalle;
 					$scope.comprobantesLiquidar = response.datosInvoices;
-					$scope.noMatch = response.noMatch;
-					$rootScope.noMatch = $scope.noMatch;
+					$scope.commentsInvoice = response.commentsInvoice;
 					$scope.mostrarResultadoSinLiquidar = true;
 					$scope.cargandoSinLiquidar = false;
 				});
@@ -408,8 +409,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.chequearTarifas = function(comprobante){
 			var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
 			$scope.comprobantesControlados = resultado.data;
-			$scope.noMatch = resultado.noMatch;
-			$rootScope.noMatch = $scope.noMatch;
 			return resultado.retValue;
 		};
 

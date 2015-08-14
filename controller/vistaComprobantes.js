@@ -40,7 +40,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 
 		//Control de tarifas
 		$scope.controlTarifas = [];
-		$scope.noMatch = false;
 
 		$scope.commentsInvoice = [];
 
@@ -277,9 +276,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 					$scope.verDetalle = response.detalle;
 					$scope.datosInvoices = response.datosInvoices;
 					$scope.comprobantesVistos = response.comprobantesVistos;
-					$scope.noMatch = response.noMatch;
-					//$scope.commentsInvoice = [];
-					$rootScope.noMatch = $scope.noMatch;
+					$scope.commentsInvoice = response.commentsInvoice;
 					$scope.mostrarResultado = true;
 					$scope.loadingState = false;
 				});
@@ -302,8 +299,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		$scope.chequearTarifas = function(comprobante){
 			var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
 			$scope.comprobantesControlados = resultado.data;
-			$scope.noMatch = resultado.noMatch;
-			$rootScope.noMatch = $scope.noMatch;
 			return resultado.retValue;
 		};
 

@@ -134,33 +134,6 @@ myapp.directive('invoicesResult', function(){
 	}
 });
 
-myapp.directive('invoiceTrack', function(){
-	return {
-		restrict:		'E',
-		template:
-			'<div class="table-responsive col-lg-12 center-block visible-print-block">' +
-			'	<table class="table table-striped table-bordered table-hover" ng-show="commentsInvoice.length > 0">' +
-			'		<thead>' +
-			'			<tr>' +
-			'				<th>Fecha</th>' +
-			'				<th>Usuario</th>' +
-			'				<th>Comentario</th>' +
-			'				<th>Estado</th>' +
-			'			</tr>' +
-			'		</thead>' +
-			'		<tbody>' +
-			'			<tr ng-repeat="comment in commentsInvoice">' +
-			'				<td>{{ comment.fecha }}</td>' +
-			'				<td>{{ comment.user }}</td>' +
-			'				<td>{{ comment.comment }}</td>' +
-			'				<td>{{ devolverEstado(comment.state) }}</td>' +
-			'			</tr>' +
-			'		</tbody>' +
-			'	</table>' +
-			'</div>'
-	}
-});
-
 myapp.directive('containersGatesSearch', function(){
 	return {
 		restrict:		'E',

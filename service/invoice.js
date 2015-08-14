@@ -42,14 +42,24 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 		var deferred = $q.defer();
 		invoiceFactory.getInvoiceById(comprobanteId, function (comprobDetalle) {
 			var response = {
-				detalle: comprobDetalle
+				detalle: comprobDetalle,
+				commentsInvoice: []
 			};
 			response.noMatch = controlarTarifas(comprobDetalle);
 			var checkResult = internalCheckComprobantes(comprobDetalle, comprobantesVistos, datosInvoices);
 			response.datosInvoices = checkResult.datosInvoices;
 			response.comprobantesVistos = checkResult.comprobantesVistos;
-			deferred.resolve(response);
 
+			invoiceFactory.getTrackInvoice(comprobanteId, function(dataTrack){
+				if (dataTrack.status == 'OK'){
+					dataTrack.data.forEach(function(comment){
+						if (comment.group == loginService.getGroup()){
+							response.commentsInvoice.push(comment);
+						}
+					});
+				}
+				deferred.resolve(response);
+			});
 		});
 		return deferred.promise;
 	};
@@ -74,14 +84,17 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 		}
 
 		var response = false;
+		var precioEncontrado = false;
 		comprobante.noMatch = false;
 
 		comprobante.detalle.forEach(function(detalle){
 			detalle.items.forEach(function(item){
+				precioEncontrado = false;
 				if (angular.isDefined(lookup[item.id])){
 					valorTomado = item.impUnit;
 					lookup[item.id].topPrices.forEach(function(precioMatch){
 						if (comprobante.fecha.emision >= precioMatch.from){
+							precioEncontrado = true;
 							precioALaFecha = precioMatch.price;
 							monedaALaFecha = precioMatch.currency
 						}
@@ -100,26 +113,36 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 						} else {
 							comprobante.interfazLiquidada = 'text-danger';
 						}
-						if (valorTomado != precioALaFecha){
-							tarifaError = {
-								codigo: item.id,
-								currency: monedaALaFecha,
-								topPrice: precioALaFecha,
-								current: item.impUnit,
-								container: detalle.contenedor
-							};
-							comprobante.controlTarifas.push(tarifaError);
+						if (precioEncontrado){
+							if (valorTomado != precioALaFecha){
+								tarifaError = {
+									codigo: item.id,
+									currency: monedaALaFecha,
+									topPrice: precioALaFecha,
+									current: item.impUnit,
+									container: detalle.contenedor
+								};
+								comprobante.controlTarifas.push(tarifaError);
+							}
+						} else {
+							response = true;
+							comprobante.noMatch = true;
 						}
 					} else {
-						if (valorTomado > precioALaFecha){
-							tarifaError = {
-								codigo: item.id,
-								currency: monedaALaFecha,
-								topPrice: precioALaFecha,
-								current: item.impUnit,
-								container: detalle.contenedor
-							};
-							comprobante.controlTarifas.push(tarifaError);
+						if (precioEncontrado){
+							if (valorTomado > precioALaFecha){
+								tarifaError = {
+									codigo: item.id,
+									currency: monedaALaFecha,
+									topPrice: precioALaFecha,
+									current: item.impUnit,
+									container: detalle.contenedor
+								};
+								comprobante.controlTarifas.push(tarifaError);
+							}
+						} else {
+							response = true;
+							comprobante.noMatch = true;
 						}
 					}
 				} else {
