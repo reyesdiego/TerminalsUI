@@ -57,22 +57,22 @@
 					<div class="text-center visible-md"><pagination boundary-links="true" total-items="totalPreLiquidaciones" items-per-page="itemsPerPage" ng-model="paginacion.preLiquidaciones" max-size="11" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class="text-center visible-lg"><pagination boundary-links="true" total-items="totalPreLiquidaciones" items-per-page="itemsPerPage" ng-model="paginacion.preLiquidaciones" max-size="15" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
-				<div ng-show="preLiquidacionSelected">
-					<div class="col-lg-6">
-						<h5>Toneladas: {{ detallePreLiquidacion.tons }}</h5>
+				<div class="row">
+					<div class="col-lg-4">
+						<h5  ng-show="preLiquidacionSelected">Toneladas: {{ detallePreLiquidacion.tons | number: 2 }}</h5>
 					</div>
-					<div class="col-lg-6">
-						<h5>Total: U$S {{ detallePreLiquidacion.total | currency }}</h5>
+					<div class="col-lg-4">
+						<h5  ng-show="preLiquidacionSelected">Total: U$S {{ detallePreLiquidacion.total | currency }}</h5>
+					</div>
+					<div class="col-lg-4 text-right">
+						<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
 					</div>
 				</div>
 				<hr>
 				<accordion-min heading="Comprobantes - Pre-Liquidación número: {{ liquidacionSelected.preNumber }}" ng-show="preLiquidacionSelected">
 					<vista-comprobantes model="model" datos-invoices="datosInvoices" ocultar-filtros="ocultarFiltros" total-items="totalPreLiquidadas" control-codigos="false" loading-state="cargandoLiquidados" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
 				</accordion-min>
-				<div class="col-lg-6 text-left">
-					<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
-				</div>
-				<div class="col-lg-6 text-right">
+				<div class="col-lg-12 text-right">
 					<button class="btn btn-danger" ng-click="eliminarPreLiquidacion()" ng-disabled="!preLiquidacionSelected">Eliminar</button>
 					<button class="btn btn-primary" ng-click="liquidar()" ng-disabled="!preLiquidacionSelected">Liquidar</button>
 				</div>
@@ -96,7 +96,7 @@
 				</div>
 				<div ng-show="preLiquidacionSelected">
 					<div class="col-lg-4">
-						<h3>Toneladas: {{ detallePreLiquidacion.tons }}</h3>
+						<h3>Toneladas: {{ detallePreLiquidacion.tons | number: 2 }}</h3>
 					</div>
 					<div class="col-lg-4">
 						<h3>Total: U$S {{ detallePreLiquidacion.total | currency }}</h3>
@@ -125,7 +125,7 @@
 					<div class="text-center visible-lg"><pagination boundary-links="true" total-items="totalLiquidaciones" items-per-page="itemsPerPage" ng-model="paginacion.liquidaciones" max-size="15" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
 				<accordion-min heading="Comprobantes - Liquidación número: {{ liquidacion.number }}" ng-show="mostrarDetalleLiquidacion">
-					<vista-comprobantes model="model" datos-invoices="datosLiquidados" ocultar-filtros="ocultarFiltros" total-items="totalLiquidadas" control-codigos="false" loading-state="cargandoDetalleLiquidacion" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
+					<vista-comprobantes class="col-lg-12 center-block" model="model" datos-invoices="datosLiquidados" ocultar-filtros="ocultarFiltros" total-items="totalLiquidadas" control-codigos="false" loading-state="cargandoDetalleLiquidacion" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
 				</accordion-min>
 			</div>
 		</tab>

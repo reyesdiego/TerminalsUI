@@ -444,6 +444,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.recargar = function(){
 			$scope.preLiquidacionSelected = false;
 			$scope.liquidacionSelected = {};
+			$scope.mostrarDetalleLiquidacion = false;
+			$scope.liquidacion = {};
 			$scope.currentPage = 1;
 			$scope.paginacion = {
 				sinLiquidar: 1,
