@@ -293,6 +293,12 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 				case 'R':
 					return 'Error';
 					break;
+				case 'E':
+					return 'Reenviar';
+					break;
+				case 'T':
+					return 'Error en resultado';
+					break;
 			}
 		};
 
