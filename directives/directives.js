@@ -453,10 +453,10 @@ myapp.directive('buttonActualizar', ['$state', function ($state) {
 	}
 }]);
 
-myapp.directive('tableLiquidaciones', function(){
+myapp.directive('tableSinLiquidar', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/table.liquidaciones.html'
+		templateUrl:	'view/table.sinLiquidar.html'
 	}
 });
 

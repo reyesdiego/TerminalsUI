@@ -1,10 +1,10 @@
-<div class="row col-lg-12 center-block" ng-show="comprobantesLiquidar.length == 0">
-	<div-panel config-panel="panelMensajeSinLiquidar">
-		<span>{{ panelMensajeSinLiquidar.mensaje }}</span>
+<div class="row col-lg-12 center-block" ng-show="sinLiquidar.comprobantes.length == 0">
+	<div-panel config-panel="sinLiquidar.panelMensaje">
+		<span>{{ sinLiquidar.panelMensaje.mensaje }}</span>
 	</div-panel>
 </div>
-<div class="table-responsive" ng-show="comprobantesLiquidar.length > 0">
-	<h5><strong>Resultados: {{ totalSinLiquidar }}</strong><span class="visible-print-block"><strong> Mostrando del {{ currentPageSinLiquidar * itemsPerPage - (itemsPerPage - 1) }} al {{ mostrarTope(currentPageSinLiquidar, totalSinLiquidar) }} (página {{ currentPageSinLiquidar }})</strong></span></h5>
+<div class="table-responsive" ng-show="sinLiquidar.comprobantes.length > 0">
+	<h5><strong>Resultados: {{ sinLiquidar.total }}</strong><span class="visible-print-block"><strong> Mostrando del {{ sinLiquidar.currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ mostrarTope(sinLiquidar.currentPage, sinLiquidar.total) }} (página {{ sinLiquidar.currentPage }})</strong></span></h5>
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr class="text-center">
@@ -21,7 +21,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="invoice in comprobantesLiquidar">
+		<tr ng-repeat="invoice in sinLiquidar.comprobantes">
 			<td class="text-right" style="width: 10%">{{ invoice.nroPtoVenta }}</td>
 			<td class="text-center" style="width: 12%">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-right" style="width: 12%">{{ invoice.nroComprob }}</td>
