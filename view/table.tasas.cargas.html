@@ -17,7 +17,7 @@
 				<tr ng-repeat="tasa in tasas">
 					<td>{{ tasa._id.id }}</td>
 					<td>{{ tasa._id.descripcion }}</td>
-					<td class="text-right">{{ tasa.cnt }}</td>
+					<td class="text-right">{{ tasa.cnt | number:2 }}</td>
 					<td class="text-right">{{ moneda | formatCurrency }} {{ tasa.total | currency }}</td>
 				</tr>
 				</tbody>

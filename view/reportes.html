@@ -74,7 +74,7 @@
 							<td>{{ tasa.terminal }}</td>
 							<td>{{ tasa.code }}</td>
 							<td>{{ ponerDescripcion(tasa.code) }}</td>
-							<td class="text-right">{{ tasa.ton }}</td>
+							<td class="text-right">{{ tasa.ton | number: 2 }}</td>
 							<td class="text-right">{{ monedaFija | formatCurrency }} {{ tasa.total | currency }}</td>
 						</tr>
 						<tr>
