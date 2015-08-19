@@ -141,8 +141,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.comprobantesVistos = [];
 
-		//$scope.detalleComprobante = '';
-
 		$scope.commentsInvoice = [];
 
 		$scope.$on('cambioPagina', function(ev, data){
@@ -366,7 +364,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.mostrarDetalleSinLiquidar = function(comprobante){
-			//$scope.detalleComprobante = 'sinLiquidar';
 			$scope.sinLiquidar.cargando = true;
 			invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.sinLiquidar.comprobantes)
 				.then(function(response){
@@ -479,8 +476,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.liquidacion.verDetalle = false;
 			$scope.liquidacion.selected = {};
 			$scope.sinLiquidar.currentPage = 1;
+			$scope.comprobantesPreLiquidados.currentPage = 1;
 			$scope.preLiquidacion.currentPage = 1;
 			$scope.liquidacion.currentPage = 1;
+			$scope.comprobantesLiquidados.currentPage = 1;
 			$scope.cargarSinLiquidar();
 			$scope.cargarPreLiquidaciones();
 			$scope.cargarLiquidaciones();
