@@ -148,6 +148,15 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		return deferred.promise;
 	};
 
+	factory.actualizarMatchesArray = function(terminal){
+		CacheFactory('matches' + terminal).destroy();
+		priceFactory.getArrayMatches(terminal, function(data){
+			if (data.status == 'OK'){
+				generalCache.put('matches' + terminal, data.data);
+			}
+		})
+	};
+
 	factory.cargaMatchesArray = function(){
 		var deferred = $q.defer();
 		var llamadas = [];
@@ -287,6 +296,12 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 	};
 
 	factory.cargaCache = function () {
+		//afip cache
+		factory.cargaAfectacionBuques();
+		factory.cargaSolicitudBuques();
+		factory.cargaSumariaImpoBuques();
+		factory.cargaSumariaExpoBuques();
+
 		var deferred = $q.defer();
 		var llamadas = [];
 		// Buque viaje cache
@@ -307,11 +322,6 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 		llamadas.push(factory.cargaMatchesRates());
 		// All rates cache
 		llamadas.push(factory.cargaAllRates());
-		//afip cache
-		llamadas.push(factory.cargaAfectacionBuques());
-		llamadas.push(factory.cargaSolicitudBuques());
-		llamadas.push(factory.cargaSumariaImpoBuques());
-		llamadas.push(factory.cargaSumariaExpoBuques());
 
 		$q.all(llamadas)
 			.then(function(){
