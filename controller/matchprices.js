@@ -2,7 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'cacheFactory',
+	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, cacheFactory) {
 	'use strict';
 	$scope.nombre = loginService.getFiltro();
 
@@ -37,7 +38,11 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 	$scope.preciosHistoricos = [];
 
-	$scope.puedeEditar = (loginService.getType() == 'terminal');
+	$scope.puedeEditar = function(){
+		if ($scope.acceso == 'agp'){
+			return in_array('modificarTarifario', $rootScope.rutas);
+		}
+	};
 
 	$scope.itemsPerPage = 10;
 
@@ -238,6 +243,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 							formData.topPrices.push(nuevoTopPrice);
 							priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
 								if (data.status == 'OK'){
+									cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 									$scope.newPrice = '';
 									$scope.newFrom = new Date();
 									dialogs.notify("Asociar","Se ha asignado el nuevo valor a la tarifa y se han guardado los cambios.");
@@ -255,6 +261,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					} else {
 						priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
 							if (data.status == 'OK'){
+								cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 								$scope.newPrice = '';
 								$scope.newFrom = new Date();
 								dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
@@ -285,6 +292,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 							priceFactory.addMatchPrice($scope.match, function(data){
 								if (data.status == 'OK'){
+									cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 									dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente.");
 									$scope.salir();
 									$scope.prepararDatos();

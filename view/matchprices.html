@@ -76,7 +76,7 @@
 							<td class="col-lg-5">
 								<span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
 							</td>
-							<td class="col-lg-2 text-right">
+							<td class="col-lg-1 text-right">
 								<span>{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</span>
 							</td>
 							<td class="col-lg-2" style="text-align: right">
@@ -97,7 +97,10 @@
 									</span>
 								</div>
 							</td>
-							<td ng-show="price.terminal != 'AGP' && puedeEditar">
+							<td class="col-lg-1 text-center" ng-show="acceso=='terminal' && price.terminal != 'AGP'">
+								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
+							</td>
+							<td class="col-lg-1 text-center" ng-show="acceso=='agp' && price.terminal == 'AGP' && puedeEditar()">
 								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
 							</td>
 						</tr>
