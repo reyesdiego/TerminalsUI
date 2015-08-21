@@ -38,24 +38,22 @@
 		</div>
 	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
-		<div class="input-group">
-			<angucomplete-alt id="idBuque"
-							  placeholder="Buque"
-							  pause="100"
-							  selected-object="buqueSelected"
-							  local-data="listaBuques"
-							  search-fields="D"
-							  title-field="D"
-							  minlength="1"
-							  input-class="form-control"
-							  filtrar="filtrado(filtrar, contenido)"
-							  filter-field="buqueNombre"
-							  input-field="D"
-							  match-class="highlight"
-							  limit-results="15"
-							  outside-model="model.buqueNombre"
-							  auto-match="true"></angucomplete-alt>
-		</div>
+		<angucomplete-alt id="idBuque"
+						  placeholder="Buque"
+						  pause="100"
+						  selected-object="buqueSelected"
+						  local-data="listaBuques"
+						  search-fields="D"
+						  title-field="D"
+						  minlength="1"
+						  input-class="form-control col-lg-12"
+						  filtrar="filtrado(filtrar, contenido)"
+						  filter-field="buqueNombre"
+						  input-field="D"
+						  match-class="highlight"
+						  limit-results="15"
+						  outside-model="model.buqueNombre"
+						  auto-match="true"></angucomplete-alt>
 	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
 		<div class="input-group">
