@@ -68,7 +68,10 @@
 					</tbody>
 				</table>
 			</div>
-			<div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+			<div class="row col-lg-12">
+				<button style="margin-top: 20px" class="btn btn-primary col-lg-2" ng-click="exportarAPdf()">Exportar a PDF</button>
+				<div-pagination class="col-lg-10" total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+			</div>
 		</div>
 	</div>
 
