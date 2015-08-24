@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory',
-	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory) {
+myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs',
+	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs) {
 
 		'use strict';
 		// Variable para almacenar la info principal que trae del factory
@@ -50,13 +50,17 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		};
 
 		$scope.exportarAPdf = function(){
-			downloadFactory.convertToPdf($scope.filteredPrices, 'pricelistToPdf', function(data){
+			var data = {
+				terminal: loginService.getFiltro(),
+				pricelist: $scope.filteredPrices
+			};
+			downloadFactory.convertToPdf(data, 'pricelistToPdf', function(data, status){
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
 					var fileURL = URL.createObjectURL(file);
 					window.open(fileURL);
 				} else {
-					//deferred.reject();
+					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 				}
 			})
 		};

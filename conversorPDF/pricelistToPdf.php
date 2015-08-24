@@ -5,6 +5,12 @@ include_once 'util.php';
 
 class PDF extends FPDF
 {
+	var $terminal;
+
+	function setTerminal($unaTerminal){
+		$this->terminal = $unaTerminal;
+	}
+
 	function Header()
 	{
 		//Logo
@@ -15,10 +21,22 @@ class PDF extends FPDF
 
 		//Título
 		$this->SetX(50);
-		$this->Cell(150,10,utf8_decode('Sistema de Control de Terminales'),0,0,'C');
+		$this->Cell(110,10,utf8_decode('Sistema de Control de Terminales'),0,0,'C');
 		$this->Ln();
 		$this->SetX(50);
-		$this->Cell(150,10,utf8_decode('Impresión de comprobantes'),0,0,'C');
+		$this->Cell(110,10,utf8_decode('Impresión de tarifario'),0,0,'C');
+
+		switch ($this->terminal){
+			case 'BACTSSA':
+				$this->Image('imagenes/logo_bactssa.jpg', 160, 8, 40);
+				break;
+			case 'TERMINAL4':
+				$this->Image('imagenes/logo_terminal4.jpg', 160, 8, 40);
+				break;
+			case 'TRP':
+				$this->Image('imagenes/logo_trp.jpg', 160, 8, 40);
+				break;
+		}
 		//Salto de línea
 		$this->Ln(15);
 	}
@@ -99,86 +117,52 @@ class PDF extends FPDF
 $data = get_post();
 
 $pdf = new PDF();
+$pdf->setTerminal($data['terminal']);
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 15);
 
-switch ($data['terminal']){
-	case 'BACTSSA':
-		$pdf->Image('imagenes/logo_bactssa.jpg', $pdf->GetX(), $pdf->GetY() + 2, 40);
-		break;
-	case 'TERMINAL4':
-		$pdf->Image('imagenes/logo_terminal4.jpg', $pdf->GetX() + 4, $pdf->GetY() + 5, 40);
-		break;
-	case 'TRP':
-		$pdf->Image('imagenes/logo_trp.jpg', $pdf->GetX() + 4, $pdf->GetY() + 5, 40);
-		break;
-}
-
-$pdf->Cell(30, 8, utf8_decode("Código"), 1, 0, "R");
-$pdf->Cell(100, 8, utf8_decode("Tarifa"), 1, 0, "C");
-$pdf->Cell(30, 8, "Unidad", 1, 0, "C");
-$pdf->Cell(30, 8, "Tope", 1, 0, "C");
+$pdf->Cell(20, 8, utf8_decode("Código"), 1, 0, "R");
+$pdf->Cell(110, 8, utf8_decode("Tarifa"), 1, 0, "C");
+$pdf->Cell(25, 8, "Unidad", 1, 0, "C");
+$pdf->Cell(35, 8, "Tope", 1, 0, "C");
 $pdf->Ln();
 
-foreach ($data['detalle'] as $detalle) {
-	$pdf->SetFont('Arial', 'B', 10);
-	$pdf->Cell(0, 8, '', 1, 0, "L");
-	$pdf->SetX(10);
-	$pdf->Write(8, "Contenedor: " . $detalle['contenedor']);
+foreach ($data['pricelist'] as $price) {
 	$pdf->SetFont('Arial', '', 10);
-	$pdf->Write(8, " - Buque: (" . $detalle['buque']['codigo'] . ") " . $detalle['buque']['nombre'] . " - Viaje: " . $detalle['buque']['viaje'] . " - Fecha: " . $detalle['buque']['fecha']);
-	$pdf->Ln();
-	foreach ($detalle['items'] as $item){
 
-		//Calculate the height of the row
-		$nb=0;
-		$nb=$pdf->NbLines(80, $item['descripcion']);
-		$h=5*$nb;
-		//Issue a page break first if needed
-		$pdf->CheckPageBreak($h);
+	//Calculate the height of the row
+	$nb=0;
+	$nb=$pdf->NbLines(110, $price['description']);
+	$h=5*$nb;
+	//Issue a page break first if needed
+	$pdf->CheckPageBreak($h);
 
-		$pdf->setX(25);
+	$pdf->setX(30);
 
-		$x=$pdf->GetX();
-		$y=$pdf->GetY();
+	$x=$pdf->GetX();
+	$y=$pdf->GetY();
 
-		//$item['descripcion'] = em($item['descripcion']);
-		$pdf->MultiCell(80, 5, utf8_decode($item['descripcion']), 1, "L");
+	$pdf->MultiCell(110, 5, utf8_decode($price['description']), 1, "L");
 
-		$h = $pdf->getY();
+	$h = $pdf->getY();
 
-		$pdf->setXY(10, $y);
-		$pdf->Cell(15, $h - $y, $item['id'], 1, 0, "R");
-		$pdf->setX(105);
-		$pdf->Cell(20, $h - $y, $item['cnt'], 1, 0, "R");
-		$pdf->Cell(30, $h - $y, "US$ " . number_format($item['impUnit'], 2), 1, 0, "R");
-		$pdf->Cell(15, $h - $y, $item['uniMed'], 1, 0, "R");
-		$pdf->Cell(30, $h - $y, "US$ " . number_format($item['impTot'], 2), 1, 0, "R");
-		$pdf->Ln();
+	$pdf->setXY(10, $y);
+	$pdf->Cell(20, $h - $y, $price['code'], 1, 0, "L");
+	$pdf->setX(140);
+	if (isset($price['unit'])){
+		$pdf->Cell(25, $h - $y, $price['unit'], 1, 0, "L");
+	} else {
+		$pdf->Cell(25, $h - $y, "SIN DEFINIR", 1, 0, "L");
+	}
+	if (isset($price['orderPrice'])){
+		$pdf->Cell(35, $h - $y, "US$ " . number_format($price['orderPrice'], 2), 1, 0, "R");
+	} else {
+		$pdf->Cell(35, $h - $y, "SIN DEFINIR", 1, 0, "R");
 	}
 
-}
-
-$pdf->Cell(115, 8, "Subtotal", 1, 0, "R");
-$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['subtotal'], 2), 1, 0, "R");
-$pdf->Ln();
-$pdf->Cell(115, 8, "I.V.A.", "LRB", 0, "R");
-$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['iva'], 2), 1, 0, "R");
-$pdf->Ln();
-if (isset($data['importe']['otrosTributos'])){
-	$pdf->Cell(115, 8, "Otros Tributos", "LRB", 0, "R");
-	$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['otrosTributos'], 2), 1, 0, "R");
 	$pdf->Ln();
-}
-$pdf->Cell(115, 8, "Total", 1, 0, "R");
-$pdf->Cell(75, 8, "US$ " . number_format($data['importe']['total'], 2), 1, 0, "R");
-$pdf->SetFont('Arial', '', 8);
-$pdf->Ln();
-$pdf->Cell(0, 8, "Monto Gravado US$ " . number_format($data['importe']['gravado'], 2) . " | Monto No Gravado US$ " . number_format($data['importe']['noGravado'], 2) . " | Excento US$ " . number_format($data['importe']['exento'], 2) . " | " . utf8_decode("Cotización Moneda US$ 1 = $ ") . $data['cotiMoneda'], 1, 0, "C");
-$pdf->Ln();
-if (isset($data['observa'])){
-	$pdf->Cell(0, 8, "Observaciones: " . $data['observa'], 1, 0, "C");
+
 }
 
 $pdf->Output();
