@@ -5,12 +5,12 @@
 myapp.factory('downloadFactory', ['$http', '$filter', function($http){
 	var factory = {};
 
-	factory.invoicePDF = function(invoice, callback){
+	factory.convertToPdf = function(data, route, callback){
 		$http({
 			method: 'POST',
-			url: 'conversorPDF/invoiceToPdf.php',
+			url: 'conversorPDF/' + route + '.php',
 			responseType : 'arraybuffer',
-			data: invoice
+			data: data
 		}).success(function(data, status, headers) {
 			var contentType = headers('Content-Type');
 			if (contentType.indexOf('application/pdf') >= 0){

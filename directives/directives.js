@@ -485,3 +485,14 @@ myapp.directive('liquidacionesSearch', function(){
 		controller: 'searchController'
 	}
 });
+
+myapp.directive('reporteEmpresasSearch', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/accordion.reporte.empresas.html',
+		scope: {
+			model:					"="
+		},
+		controller: 'searchController'
+	}
+});

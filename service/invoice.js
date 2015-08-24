@@ -267,7 +267,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 		imprimirComprobante.detalle.forEach(function(detalle){
 			detalle.buque.fecha = $filter('date')(detalle.buque.fecha, 'dd/MM/yyyy', 'UTC');
 		});
-		downloadFactory.invoicePDF(imprimirComprobante, function(data, status){
+		downloadFactory.convertToPdf(imprimirComprobante, 'invoiceToPdf', function(data, status){
 			if (status == 'OK'){
 				var file = new Blob([data], {type: 'application/pdf'});
 				var fileURL = URL.createObjectURL(file);
@@ -275,7 +275,6 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 				deferred.resolve();
 			} else {
 				deferred.reject();
-				//dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
 			}
 		});
 		return deferred.promise;
