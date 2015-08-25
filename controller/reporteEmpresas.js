@@ -5,7 +5,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory',
 	function($scope, controlPanelFactory){
 
 		$scope.model = {
-			mes: '',
+			mes: new Date(),
 			razonSocial: ''
 		};
 

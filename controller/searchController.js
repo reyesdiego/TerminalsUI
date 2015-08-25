@@ -17,6 +17,8 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.listaViajes = [];
 		$scope.volverAPrincipal = true;
 
+		$scope.datepickerMode = 'month';
+
 		$scope.$on('notificacionDetalle', function(event, data){
 			var fechaAuxInicio, fechaAuxFin, fechaAux;
 			if (data.filtro == 'fechaTurno'){
