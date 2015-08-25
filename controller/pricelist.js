@@ -65,6 +65,54 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			})
 		};
 
+		$scope.exportarAExcel = function(){
+			var tabla = "<table>" +
+				"			<tr>" +
+				"				<td>Código</td>" +
+				"				<td>Descripción</td>" +
+				"				<td>Unidad</td>" +
+				"				<td>Tope</td>" +
+				"		</tr>";
+
+			$scope.filteredPrices.forEach(function(price){
+				tabla += "<tr>" +
+					"		<td>" + price.code + "</td>" +
+					"		<td>" + price.description + "</td>" +
+					"		<td>" + price.unit + "</td>" +
+					"		<td>" + price.topPrices[0].price + "</td>" +
+					"	</tr>"
+			});
+
+			tabla += "</table>";
+
+			var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
+			excelFile += "<head>";
+			excelFile += "<!--[if gte mso 9]>";
+			excelFile += "<xml>";
+			excelFile += "<x:ExcelWorkbook>";
+			excelFile += "<x:ExcelWorksheets>";
+			excelFile += "<x:ExcelWorksheet>";
+			excelFile += "<x:Name>";
+			excelFile += "{worksheet}";
+			excelFile += "</x:Name>";
+			excelFile += "<x:WorksheetOptions>";
+			excelFile += "<x:DisplayGridlines/>";
+			excelFile += "</x:WorksheetOptions>";
+			excelFile += "</x:ExcelWorksheet>";
+			excelFile += "</x:ExcelWorksheets>";
+			excelFile += "</x:ExcelWorkbook>";
+			excelFile += "</xml>";
+			excelFile += "<![endif]-->";
+			excelFile += "</head>";
+			excelFile += "<body>";
+			excelFile += tabla;
+			excelFile += "</body>";
+			excelFile += "</html>";
+
+			var base64data = "base64," + btoa(unescape(encodeURIComponent(excelFile)));
+			window.open('data:application/vnd.ms-excel;filename=exportData.doc;' + base64data);
+		};
+
 		if (loginService.getStatus()) $scope.cargaPricelist();
 
 		$scope.$on('terminoLogin', function(){
