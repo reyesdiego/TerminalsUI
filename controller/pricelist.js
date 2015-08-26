@@ -2,11 +2,12 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs',
-	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs) {
+myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache',
+	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache) {
 
 		'use strict';
 		// Variable para almacenar la info principal que trae del factory
+		$scope.unidadesTarifas = generalCache.get('unitTypes');
 		$scope.pricelist = [];
 		$scope.filteredPrices = [];
 		$scope.tasas = false;
@@ -29,6 +30,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 					$scope.pricelist = data.data;
 					$scope.pricelist.forEach(function(tarifa){
 						if (angular.isDefined(tarifa.unit) && tarifa.unit != null && angular.isDefined(unitTypesArrayCache.get(tarifa.unit))){
+							tarifa.idUnit = tarifa.unit;
 							tarifa.unit = unitTypesArrayCache.get(tarifa.unit);
 						}
 						if (!angular.isDefined(tarifa.topPrices[0].price || tarifa.topPrices[0].price == null)){
@@ -111,6 +113,10 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 
 			var base64data = "base64," + btoa(unescape(encodeURIComponent(excelFile)));
 			window.open('data:application/vnd.ms-excel;filename=exportData.doc;' + base64data);
+		};
+
+		$scope.guardarCambios = function(){
+			console.log($scope.filteredPrices);
 		};
 
 		if (loginService.getStatus()) $scope.cargaPricelist();

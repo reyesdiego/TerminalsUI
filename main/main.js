@@ -280,6 +280,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/liquidaciones",
 			templateUrl: "view/liquidaciones.html"
 		})
+		.state('modificarTarifario', {
+			url: "/editarTarifario",
+			templateUrl: "view/editPricelist.html"
+		})
 }]);
 
 myapp.config(['$provide', function ($provide) {
