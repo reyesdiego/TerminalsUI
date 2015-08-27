@@ -78,7 +78,7 @@
 							</select>
 						</td>
 						<td style="text-align: right">
-							<input class="text-right textarea-td" type="text" ng-model="price.nuevoTopPrice.price">
+							<input class="text-right textarea-td" type="number" min="0" step="any" ng-model="price.nuevoTopPrice.price">
 						</td>
 					</tr>
 					<tr style="height:60px" class="visible-print" ng-repeat="price in pricelist | filter:search | orderBy: predicate : reverse">

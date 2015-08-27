@@ -132,9 +132,10 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			var i;
 			var changesList = [];
 			for (i=0; i <= $scope.pricelist.length - 1; i++){
-				if (!angular.equals($scope.userPricelist[i], $scope.pricelist[i])){
+				if (!angular.equals($scope.userPricelist[i].nuevoTopPrice.price, $scope.pricelist[i].nuevoTopPrice.price)){
 					$scope.userPricelist[i].nuevoTopPrice.from = $scope.fechaVigencia;
 					$scope.userPricelist[i].topPrices.push($scope.userPricelist[i].nuevoTopPrice);
+					$scope.userPricelist[i].unit = $scope.userPricelist[i].idUnit;
 					changesList.push($scope.userPricelist[i]);
 				}
 			}
