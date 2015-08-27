@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', function($scope, invoiceFactory, loginService){
+myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
 
 	$scope.ocultarFiltros = ['nroPtoVenta'];
 
@@ -23,12 +23,13 @@ myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', fu
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
 		'order': '',
-		'itemsPerPage': 15
+		'itemsPerPage': 15,
+		'rates': '',
+		'payment': '',
+		'payed': ''
 	};
 
 	$scope.invoices = [];
-
-	$scope.nombre = loginService.getFiltro();
 
 	$scope.cargando = true;
 
@@ -57,7 +58,7 @@ myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', fu
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.invoices = [];
-		invoiceFactory.getInvoice($scope.model, $scope.page, function(data){
+		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.totalItems = data.totalCount;
@@ -73,4 +74,13 @@ myapp.controller('invoicesCtrl', ['$scope', 'invoiceFactory', 'loginService', fu
 			}
 		});
 	};
+
+	$scope.$on('cambioTerminal', function(){
+		$scope.cargando = true;
+	});
+
+	$scope.$on('$destroy', function(){
+		invoiceFactory.cancelRequest();
+	});
+
 }]);

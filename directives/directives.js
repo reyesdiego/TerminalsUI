@@ -111,14 +111,18 @@ myapp.directive('accordionComprobantesVistos', function(){
 	}
 });
 
-myapp.directive('accordionInvoicesSearch', ['generalCache', 'contenedoresCache', function(generalCache, contenedoresCache){
+myapp.directive('accordionInvoicesSearch', ['generalCache', 'loginService', function(generalCache, loginService){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.invoices.search.html',
 		link: function ($scope) {
-			$scope.listaRazonSocial = generalCache.get('clientes');
-			$scope.listaContenedores = contenedoresCache.get('contenedores');
-			$scope.listaBuques = generalCache.get('buques');
+			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
+
+			$scope.$on('cambioTerminal', function(){
+				$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+				$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
+			});
 		}
 	}
 }]);
@@ -127,33 +131,6 @@ myapp.directive('invoicesResult', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/invoices.result.html'
-	}
-});
-
-myapp.directive('invoiceTrack', function(){
-	return {
-		restrict:		'E',
-		template:
-			'<div class="table-responsive col-lg-12 center-block visible-print-block">' +
-			'	<table class="table table-striped table-bordered table-hover" ng-show="commentsInvoice.length > 0">' +
-			'		<thead>' +
-			'			<tr>' +
-			'				<th>Fecha</th>' +
-			'				<th>Usuario</th>' +
-			'				<th>Comentario</th>' +
-			'				<th>Estado</th>' +
-			'			</tr>' +
-			'		</thead>' +
-			'		<tbody>' +
-			'			<tr ng-repeat="comment in commentsInvoice">' +
-			'				<td>{{ comment.fecha }}</td>' +
-			'				<td>{{ comment.user }}</td>' +
-			'				<td>{{ comment.comment }}</td>' +
-			'				<td>{{ devolverEstado(comment.state) }}</td>' +
-			'			</tr>' +
-			'		</tbody>' +
-			'	</table>' +
-			'</div>'
 	}
 });
 
@@ -185,7 +162,11 @@ myapp.directive('divPagination', function(){
 				switch ($scope.panelSize){
 					case 12:
 					case undefined:
-						if ($scope.totalItems / $scope.itemsPerPage >= 1000){
+						if ($scope.totalItems / $scope.itemsPerPage >= 10000){
+							$scope.maxSizeSM = 6;
+							$scope.maxSizeMD = 10;
+							$scope.maxSizeLG = 14;
+						} else if ($scope.totalItems / $scope.itemsPerPage >= 1000) {
 							$scope.maxSizeSM = 9;
 							$scope.maxSizeMD = 13;
 							$scope.maxSizeLG = 17;
@@ -387,18 +368,18 @@ myapp.directive('toupper', function() {
 	return {
 		require: 'ngModel',
 		link: function(scope, element, attrs, modelCtrl) {
-			var mayusculas = function(inputValue) {
-				if (inputValue != undefined && inputValue != ''){
-					var capitalized = inputValue.toUpperCase();
-					if(capitalized !== inputValue) {
-						modelCtrl.$setViewValue(capitalized);
-						modelCtrl.$render();
-					}
-					return capitalized;
-				}
+			var mayusculas = function(input) {
+				input ? element.css("text-transform","uppercase") : element.css("text-transform","initial");
+				return input ? input.toUpperCase() : "";
 			};
+
 			modelCtrl.$parsers.push(mayusculas);
-			mayusculas(scope[attrs.ngModel]);  // capitalize initial value
+
+			scope.$watch(attrs.ngModel, function(valor){
+				mayusculas(valor);
+			});
+
+			//mayusculas();
 		}
 	};
 });
@@ -441,6 +422,24 @@ myapp.directive('accordionMin', [function () {
 	}
 }]);
 
+myapp.directive('divCargando', function () {
+	return {
+		restrict:		'E',
+		transclude:		true,
+		scope: {
+			mostrar:	'='
+		},
+		template:
+			'<div class="col-lg-12 text-center" ng-show="mostrar">' +
+			'	<img class="media-object center-block" src="images/loading.gif">' +
+			'</div>' +
+			'<div class="col-lg-12" ng-hide="mostrar">' +
+			'	<div ng-transclude></div>' +
+			'</div>'
+
+	}
+});
+
 myapp.directive('buttonActualizar', ['$state', function ($state) {
 	return {
 		restrict:		'E',
@@ -453,3 +452,47 @@ myapp.directive('buttonActualizar', ['$state', function ($state) {
 		}
 	}
 }]);
+
+myapp.directive('tableSinLiquidar', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/table.sinLiquidar.html'
+	}
+});
+
+myapp.directive('tablePagos', function(){
+	return {
+		restrict:		'E',
+		scope: {
+			cargando:			'=',
+			datosPagos:			'=',
+			panelMensaje:		'=',
+			detalle:			'&',
+			final:				'@'
+		},
+		templateUrl:	'view/table.pagos.html'
+	}
+});
+
+myapp.directive('liquidacionesSearch', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/accordion.liquidacion.search.html',
+		scope: {
+			model:					"=",
+			ocultarFiltros:			"="
+		},
+		controller: 'searchController'
+	}
+});
+
+myapp.directive('reporteEmpresasSearch', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/accordion.reporte.empresas.html',
+		scope: {
+			model:					"="
+		},
+		controller: 'searchController'
+	}
+});

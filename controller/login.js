@@ -1,14 +1,14 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', 'generalFunctions', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout, generalFunctions) {
+myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$modal', '$timeout', function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $modal, $timeout) {
 	'use strict';
 	$scope.barType = "progress-bar-info";
 	$scope.entrando = false;
-	$scope.sesion = false;
+	$scope.sesion = true;
 	$scope.hayError = false;
 
-	$scope.max = 130;
+	$scope.max = 90;
 
 	$scope.progreso = 0;
 	$scope.msg = [
@@ -23,7 +23,14 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	$scope.porcentaje = 0;
 
 	if (loginService.getStatus()){
-		$state.transitionTo('tarifario');
+		if (!angular.isDefined($rootScope.rutas)){
+			$rootScope.rutas = loginService.getAcceso();
+		}
+		if (in_array('tarifario', $rootScope.rutas)){
+			$state.transitionTo('tarifario');
+		} else {
+			$state.transitionTo($rootScope.rutas[0])
+		}
 	}
 
 	$scope.$on('progreso', function(e, mensaje){
@@ -41,19 +48,15 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$rootScope.cargandoCache = false;
 		if (tipo == 'normal'){
 			$scope.mostrarMensaje = $scope.msg[5];
-			authFactory.logout();
-			$rootScope.esUsuario = '';
-			$rootScope.filtroTerminal = '';
-			$scope.volver();
 		} else {
 			$scope.hayError = true;
 			$scope.barType = 'progress-bar-danger';
 			$scope.mostrarMensaje = $scope.msg[4];
-			authFactory.logout();
-			$rootScope.esUsuario = '';
-			$rootScope.filtroTerminal = '';
-			$scope.volver();
 		}
+		authFactory.logout();
+		$rootScope.esUsuario = '';
+		$rootScope.filtroTerminal = '';
+		$scope.volver();
 	};
 
 	$scope.volver = function(){
@@ -75,60 +78,53 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$scope.mostrarMensaje = $scope.msg[0];
 		$scope.entrando = true;
 		$rootScope.cargandoCache = true;
-		if ($scope.sesion){
-			authFactory.loginWithCookies($scope.email, $scope.password)
-				.then(function(result){
-					$rootScope.cargandoCache = false;
+		authFactory.userEnter($scope.email, $scope.password, $scope.sesion)
+			.then(function(result){
+				$rootScope.cargandoCache = false;
+				if (in_array('tarifario', $rootScope.rutas)){
 					$state.transitionTo('tarifario');
-				},
-				function(error){
-					if (error == 'sinAcceso'){
-						var errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
-						errdlg.result.then(function(){
-							$scope.cerrarSesion('normal');
-						})
-					} else {
-						if ($scope.progreso > 10){
-							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
-							dlg.result.then(function(){
-									$rootScope.cargandoCache = false;
-									$state.transitionTo('tarifario');
-								},
-								function(){
-									$scope.cerrarSesion();
-								})
-						} else {
-							$scope.cerrarSesion();
-						}
-					}
-				});
+				} else {
+					$state.transitionTo($rootScope.rutas[0])
+				}
+			},
+			function(error){
+				$scope.errorHandler(error);
+			});
+	};
+
+	$scope.errorHandler = function(error){
+		var errdlg;
+		if (error.code == 'ACC-0010'){
+			errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
+			errdlg.result.then(function(){
+				$scope.cerrarSesion('normal');
+			});
+		} else if (error.code == 'ACC-0003') {
+			$rootScope.cargandoCache = false;
+			$state.transitionTo('validar');
+		} else if (error.code == 'ACC-0001' || error.code == 'ACC-0002' || error.code == 'ACC-0004') {
+			errdlg = dialogs.error("Error de acceso", error.message);
+			errdlg.result.then(function(){
+				$scope.cerrarSesion('normal');
+			});
 		} else {
-			authFactory.loginWithoutCookies($scope.email, $scope.password)
-				.then(function(result){
-					$rootScope.cargandoCache = false;
-					$state.transitionTo('tarifario');
-				},
-				function(reason){
-					if (reason == 'sinAcceso'){
-						var errdlg = dialogs.error("Error de acceso", "Su usuario ha sido aprobado, pero aún no se le han asignado permisos a las diferentes partes de la aplicación. Por favor, vuelva a intentarlo más tarde.");
-						errdlg.result.then(function(){
-							$scope.cerrarSesion('normal');
-						})
-					} else {
-						if ($scope.progreso > 10){
-							var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
-							dlg.result.then(function(){
-									$rootScope.cargandoCache = false;
-									$state.transitionTo('tarifario');
-								},
-								function(){
-									$scope.cerrarSesion();
-								})
+			if ($scope.progreso > 10){
+				var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
+				dlg.result.then(function(){
+						$rootScope.cargandoCache = false;
+						if (in_array('tarifario', $rootScope.rutas)){
+							$state.transitionTo('tarifario');
 						} else {
-							$scope.cerrarSesion();
+							$state.transitionTo($rootScope.rutas[0])
 						}
-					}
-				});
+					},
+					function(){
+						$scope.cerrarSesion();
+					})
+			} else {
+				dialogs.error("Error de acceso", error.message);
+				$scope.cerrarSesion();
+			}
 		}
 	};
 

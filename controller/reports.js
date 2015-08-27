@@ -141,13 +141,6 @@ myapp.controller('reportsCtrl', ['$scope', 'gatesFactory', '$state', 'colorTermi
 		}
 	};
 
-	$scope.containerSelected = function (selected) {
-		if (angular.isDefined(selected)) {
-			$scope.model.contenedor = selected.title;
-			$scope.filtrar('contenedor', selected.title);
-		}
-	};
-
 	$scope.filtrado = function (filtro, contenido) {
 		$scope.filtrar(filtro, contenido);
 	};

@@ -33,10 +33,10 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		'estado': 'N',
 		'code': '',
 		'mov': 'IMPO',
-		'filtroOrden': 'gateTimestamp',
-		'filtroOrdenAnterior': '',
+		'filtroOrden': 'inicio',
+		'filtroOrdenAnterior': 'inicio',
 		'filtroOrdenReverse': false,
-		'order': ''
+		'order': '"inicio":1'
 	};
 
 	$scope.model.fechaInicio.setHours(0,0);
@@ -54,10 +54,13 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	});
 
 	$scope.$on('cambioFiltro', function(event, data){
-		$scope.fechaAuxHasta = new Date($scope.model.fechaFin);
-		$scope.fechaAuxDesde = new Date($scope.model.fechaInicio);
-		$scope.model.fechaFin = $scope.fechaAuxDesde;
-		$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
+		if (angular.isDefined($scope.model.fechaInicio) && $scope.model.fechaInicio != null && $scope.model.fechaInicio != ''){
+			if ($scope.model.fechaFin == '') $scope.model.fechaFin = $scope.model.fechaInicio;
+			$scope.fechaAuxHasta = new Date($scope.model.fechaFin);
+			$scope.fechaAuxDesde = new Date($scope.model.fechaInicio);
+			$scope.model.fechaFin = $scope.fechaAuxDesde;
+			$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
+		}
 		$scope.currentPage = 1;
 		$scope.cargaTurnos();
 	});
@@ -100,8 +103,18 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	};
 
 	// Carga los turnos del día hasta la hora del usuario
-	if (loginService.getStatus()){
+	if (loginService.getStatus()) $scope.cargaTurnos();
+
+	$scope.$on('terminoLogin', function(){
 		$scope.cargaTurnos();
-	}
+	});
+
+	$scope.$on('cambioTerminal', function(){
+		$scope.cargaTurnos();
+	});
+
+	$scope.$on('$destroy', function(){
+		turnosFactory.cancelRequest();
+	});
 
 }]);

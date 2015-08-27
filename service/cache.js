@@ -21,6 +21,10 @@ myapp.service('contenedoresCache', ['CacheFactory', function (CacheFactory) {
 	return CacheFactory.createCache('contenedoresCache');
 }]);
 
+myapp.service('afipCache', ['CacheFactory', function(CacheFactory){
+	return CacheFactory.createCache('afipCache', { storageMode: 'localStorage' });
+}]);
+
 myapp.service('colorTerminalesCache', ['CacheFactory', function (CacheFactory) {
 	var serv = CacheFactory.createCache('colorTerminalesCache', { storageMode: 'localStorage' });
 
@@ -28,30 +32,18 @@ myapp.service('colorTerminalesCache', ['CacheFactory', function (CacheFactory) {
 	for(var i=0,l=styles.length; i<l; ++i){
 		var sheet=styles[i];
 		var rules, rule, j, l2;
-		if(sheet.title === "BACTSSA"){
+		if(sheet.title === "TERMINALES"){
 			rules=sheet.cssRules;
 			for(j=0, l2=rules.length; j<l2; j++){
 				rule=rules[j];
-				if('.navbar-default' === rule.selectorText){
-					serv.put('Bactssa', rule.style['backgroundColor']);
+				if('.BACTSSA' === rule.selectorText){
+					serv.put('Bactssa', rule.style['color']);
 				}
-			}
-		}
-		if(sheet.title === "TRP"){
-			rules=sheet.cssRules;
-			for(j=0, l2=rules.length; j<l2; j++){
-				rule=rules[j];
-				if('.navbar-default' === rule.selectorText){
-					serv.put('Trp', rule.style['backgroundColor']);
+				if('.TERMINAL4' === rule.selectorText){
+					serv.put('Terminal4', rule.style['color']);
 				}
-			}
-		}
-		if(sheet.title === "TERMINAL4"){
-			rules=sheet.cssRules;
-			for(j=0, l2=rules.length; j<l2; j++){
-				rule=rules[j];
-				if('.navbar-default' === rule.selectorText){
-					serv.put('Terminal4', rule.style['backgroundColor']);
+				if('.TRP' === rule.selectorText){
+					serv.put('Trp', rule.style['color']);
 				}
 			}
 		}

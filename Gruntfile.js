@@ -43,6 +43,10 @@ module.exports = function(grunt) {
 			trp: {
 				src: 'css/bootstrap.flaty.css',
 				dest: 'build/css/bootstrap.flaty.css'
+			},
+			terminales: {
+				src: 'css/terminalColor.css',
+				dest: 'build/css/terminalColor.css'
 			}
 		},
 		uglify: {
@@ -115,6 +119,11 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
+						src: ['bower_components/angular-socket-io/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
 						src: ['fonts/*'],
 						dest: 'build'
 					},
@@ -135,7 +144,7 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['mocks/rutas.json'],
+						src: ['conversorPDF/**'],
 						dest: 'build'
 					}
 				]
@@ -158,6 +167,7 @@ module.exports = function(grunt) {
 		'cssmin:bactssa',
 		'cssmin:terminal4',
 		'cssmin:trp',
+		'cssmin:terminales',
 		'uglify:js',
 		'processhtml:dist',
 		'copy:main'

@@ -1,4 +1,4 @@
-<div class="container" ng-controller="accessControlCtrl">
+<div class="container col-xlg-offset-2 col-xlg-8" ng-controller="accessControlCtrl">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="hidden-xs"><img src="images/controlUsers.png" height="64" width="64"> Control de acceso</h1>
@@ -7,7 +7,12 @@
 	</div>
 
 	<div class="row col-lg-12">
-		<div class="col-lg-3" ng-show="usuarios.length > 0">
+		<div class="col-lg-12" ng-show="!permiso">
+			<div-panel config-panel="panelMensaje">
+				<span>{{ panelMensaje.mensaje }}</span>
+			</div-panel>
+		</div>
+		<div class="col-lg-3" ng-show="usuarios.length > 0 && permiso">
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<h3 class="panel-title">Usuarios</h3>
@@ -18,7 +23,7 @@
 			</div>
 			<button type="button" class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-save"></span> Guardar</button>
 		</div>
-		<div class="row col-lg-9">
+		<div class="row col-lg-9" ng-show="permiso">
 			<tabset justified="true" class="hidden-print" ng-show="!loadingState">
 				<tab heading="Tareas generales" ng-click="cambioModo('tareas')" active="tabTareas.active"></tab>
 				<tab heading="Tareas AGP" ng-show="usuarioElegido.role == 'agp'" ng-click="cambioModo('agp')"></tab>

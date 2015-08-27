@@ -49,6 +49,24 @@
 				<table-buque-viaje></table-buque-viaje>
 			</div>
 		</div-cargando>
+		<div-cargando mostrar="loadingTasaCargas">
+			<br>
+			<div ng-hide="hayError">
+				<div-panel config-panel="{tipo: 'panel-info', titulo: 'Contenedores sin Tasa a las Cargas ' + totalSinRates}">
+					<div ng-show="totalSinRates == 0">No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados</div>
+					<div style="max-height: 200px; max-width: 100%; overflow: auto" ng-hide="totalSinRates == 0">
+						<div class="input-group col-lg-12 hidden-print">
+							<input type="text" class="form-control" ng-model="search" placeholder="Filtrar resultados" toupper>
+							<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+						</div>
+						<br>
+					<span ng-repeat="tasa in containersSinRates | filter: search">
+						<div style="width: auto; float:left; text-align:center" ng-show="tasa.contenedor.contenedor != ''" ><a href ng-class="{mark: (model.contenedor == tasa.contenedor)}" ng-click="verDetalles(tasa.contenedor)"> {{ tasa.contenedor.contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
+					</span>
+					</div>
+				</div-panel>
+			</div>
+		</div-cargando>
 	</div>
 </div>
 

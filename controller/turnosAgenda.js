@@ -2,7 +2,7 @@
  * Created by artiom on 27/04/15.
  */
 
-myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory', 'loginService', '$filter', 'turnosFactory', 'socket', 'generalFunctions', function($scope, moment, controlPanelFactory, loginService, $filter, turnosFactory, socket, generalFunctions){
+myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory', 'loginService', '$filter', 'turnosFactory', 'generalFunctions', function($scope, moment, controlPanelFactory, loginService, $filter, turnosFactory, generalFunctions){
 
 	var currentYear = moment().year();
 	var currentMonth = moment().month();
@@ -47,7 +47,7 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 	};
 
-	socket.on('appointment', function (data) {
+	$scope.$on('appointment', function (ev, data) {
 		var fecha = new Date(data.data.inicio);
 		var fechaCalendario;
 		if (moment.isMoment($scope.calendarDay)){
@@ -263,6 +263,10 @@ myapp.controller('turnosAgendaCtrl', ['$scope', 'moment', 'controlPanelFactory',
 		});
 	};
 
-	$scope.cargarTurnos();
+	if (loginService.getStatus()) $scope.cargarTurnos();
+
+	$scope.$on('terminoLogin', function(){
+		$scope.cargaTurnos();
+	});
 
 }]);

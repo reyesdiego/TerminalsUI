@@ -1,7 +1,7 @@
 /**
  * Created by leo on 05/03/15.
  */
-	myapp.service('formatService', [function() {
+	myapp.service('formatService', ['generalCache', 'loginService', function(generalCache, loginService) {
 
 		function estaDefinido(o) {
 			return angular.isDefined(o) && o != null && o != '';
@@ -14,11 +14,11 @@
 			});
 			if (estaDefinido(array.contenedor)) array.contenedor = datos.contenedor.toUpperCase();
 			if (estaDefinido(array.razonSocial)) array.razonSocial = datos.razonSocial.toUpperCase();
-			if (estaDefinido(array.fechaInicio)) array.fechaInicio = (estaDefinido(datos.fechaConGMT) && datos.fechaConGMT) ? this.formatearFechaHorasMinutosGMTLocal(datos.fechaInicio) : this.formatearFecha(datos.fechaInicio);
-			if (estaDefinido(array.fechaFin)) array.fechaFin = (estaDefinido(datos.fechaConGMT) && datos.fechaConGMT) ? this.formatearFechaHorasMinutosGMTLocal(datos.fechaFin) : this.formatearFecha(datos.fechaFin);
-			if (estaDefinido(array.fecha)) array.fecha = this.formatearFecha(datos.fecha);
+			if (estaDefinido(array.fechaInicio)) array.fechaInicio = this.formatearFechaISOString(datos.fechaInicio);
+			if (estaDefinido(array.fechaFin)) array.fechaFin = this.formatearFechaISOString(datos.fechaFin);
+			if (estaDefinido(array.fecha)) array.fecha = this.formatearFechaISOString(datos.fecha);
+			if (estaDefinido(array.rates) && array.rates == '1') array.rates = generalCache.get('ratesMatches' + loginService.getFiltro()).filter(Boolean);
 			if (estaDefinido(array.order)) array.order = '[{' + datos.order + '}]';
-
 			return array;
 		};
 
@@ -39,52 +39,18 @@
 				return null;
 		};
 
-		this.formatearFechaHorasMinutosGMTLocal = function(fecha) {
+		this.formatearFechaISOString = function(fecha) {
 			if (fecha != '' && fecha != null){
 				fecha = new Date(fecha);
-				var fechaAux = this.formatearFecha(fecha) + ' ';
-				if(fecha.getHours() < 7){
+				var fechaAux = this.formatearFecha(fecha) + 'T';
+				if(fecha.getHours() < 10){
 					fechaAux = fechaAux + '0';
 				}
 				fechaAux = fechaAux + (fecha.getHours()) + ':';
 				if(fecha.getMinutes() < 10){
 					fechaAux = fechaAux + '0';
 				}
-				fechaAux = fechaAux + fecha.getMinutes() + ' -0000';
-				return fechaAux;
-			}else
-				return null;
-		};
-
-		this.formatearFechaHorasMinutos = function(fecha) {
-			if (fecha != '' && fecha != null){
-				fecha = new Date(fecha);
-				var fechaAux = this.formatearFecha(fecha) + ' ';
-				if(fecha.getHours() < 7){
-					fechaAux = fechaAux + '0';
-				}
-				fechaAux = fechaAux + (fecha.getHours() + 3) + ':';
-				if(fecha.getMinutes() < 10){
-					fechaAux = fechaAux + '0';
-				}
-				fechaAux = fechaAux + fecha.getMinutes() + ' -0000';
-				return fechaAux;
-			}else
-				return null;
-		};
-
-		this.formatearFechaHorasMinutosSinGMT = function(fecha) {
-			if (fecha != '' && fecha != null){
-				fecha = new Date(fecha);
-				var fechaAux = this.formatearFecha(fecha) + ' ';
-				if(fecha.getHours() < 7){
-					fechaAux = fechaAux + '0';
-				}
-				fechaAux = fechaAux + (fecha.getHours() + 3) + ':';
-				if(fecha.getMinutes() < 10){
-					fechaAux = fechaAux + '0';
-				}
-				fechaAux = fechaAux + fecha.getMinutes();
+				fechaAux = fechaAux + fecha.getMinutes() + ':00.000-03:00';
 				return fechaAux;
 			}else
 				return null;

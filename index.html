@@ -3,12 +3,12 @@
 
 <head>
 	<title>Administraci&oacute;n General de Puertos S.E.</title>
-	<link rel="shortcut icon" href="/images/favicon.ico">
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Default-Style" content="BACTSSA">
 	<meta charset="utf-8">
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="css/bootstrap.cerulean.css" title="BACTSSA">
+	<link rel="stylesheet" ng-href="css/{{ terminalEstilo }}.css">
+	<link rel="stylesheet" href="css/terminalColor.css" title="TERMINALES">
 	<!-- build:css css/aditional-min.css -->
 	<link rel="stylesheet" href="css/angucomplete-alt.css">
 	<link rel="stylesheet" href="css/dialogs.css">
@@ -17,8 +17,6 @@
 	<link rel="stylesheet" href="js/angular-notify/angular-notify.css">
 	<!-- /build -->
 	<link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
-	<link rel="alternate stylesheet" href="css/bootstrap.united.css" title="TERMINAL4">
-	<link rel="alternate stylesheet" href="css/bootstrap.flaty.css" title="TRP">
 	<!-- Less test -->
 	<!--<link rel="stylesheet/less" type="text/css" href="less/bootstrap.cerulean.less"/>
 	<script src="angular/less-1.7.3.min.js" type="text/javascript"></script>-->
@@ -52,6 +50,9 @@
 	<!-- build:js bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js -->
 	<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
 	<!-- /build -->
+	<!-- build:js bower_components/angular-socket-io/socket.min.js -->
+	<script src="bower_components/angular-socket-io/socket.js"></script>
+	<!-- /build -->
 	<!-- build:js js/angular-notify/angular-notify.min.js -->
 	<script src="js/angular-notify/angular-notify.js"></script>
 	<!-- /build -->
@@ -68,6 +69,8 @@
 	<script src="service/format.js"></script>
 	<script src="service/general.js"></script>
 	<script src="service/login.js"></script>
+	<script src="service/invoice.js"></script>
+	<script src="service/httpCanceler.js"></script>
 	<!-- Factories -->
 	<script src="factory/afip.js"></script>
 	<script src="factory/auth.js"></script>
@@ -79,11 +82,13 @@
 	<script src="factory/invoice.js"></script>
 	<script src="factory/price.js"></script>
 	<script src="factory/reports.js"></script>
-	<script src="factory/socket.js"></script>
 	<script src="factory/states.js"></script>
 	<script src="factory/turnos.js"></script>
 	<script src="factory/user.js"></script>
 	<script src="factory/vouchersType.js"></script>
+	<script src="factory/downloadFactory.js"></script>
+	<script src="factory/socket.js"></script>
+	<script src="factory/liquidaciones.js"></script>
 	<!-- Filters -->
 	<script src="filter/filters.js"></script>
 	<!-- Controles Angular-->
@@ -108,12 +113,14 @@
 	<script src="controller/rates.js"></script>
 	<script src="controller/missingInfo.js"></script>
 	<script src="controller/searchController.js"></script>
-	<script src="controller/cambioTerminal.js"></script>
 	<script src="controller/vistaComprobantes.js"></script>
 	<script src="controller/buqueViaje.js"></script>
 	<script src="controller/turnosAgenda.js"></script>
 	<script src="controller/accessControl.js"></script>
 	<script src="controller/turnosEncolados.js"></script>
+	<script src="controller/validarUsuario.js"></script>
+	<script src="controller/liquidaciones.js"></script>
+	<script src="controller/reporteEmpresas.js"></script>
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
@@ -121,7 +128,6 @@
 	<script src="directives/chartDirectives.js"></script>
 	<!-- /build -->
 	<!-- Style Switcher-->
-	<script src="js/styleswitcher.js"></script>
 	<script src="js/linq.min.js"></script>
 </head>
 
@@ -145,6 +151,8 @@
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('tarifario', rutas)"><a collap ui-sref="tarifario">Tarifario</a></li>
 						<li ng-show="in_array('matches', rutas)"><a collap ui-sref="matches">Asociar</a></li>
+						<li class="divider"></li>
+						<li ng-show="in_array('modificarTarifario', rutas)"><a collap ui-sref="modificarTarifario">Editar</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso!='' && (in_array('invoices', rutas) || in_array('cfacturas', rutas))" dropdown>
@@ -165,7 +173,7 @@
 					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
-						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
+						<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>
 						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>
@@ -178,18 +186,26 @@
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Turnos</li>
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
-						<li ng-show="in_array('agenda', rutas)"><a collap ui-sref="agenda">Agenda</a></li>
+						<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>
 						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso=='agp' && (in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>
+				<li ng-show="acceso=='agp' && (in_array('liquidaciones', rutas) || in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
+						<li class="dropdown-header">Gráficos</li>
 						<li ng-show="in_array('control', rutas)"><a collap ui-sref="control">Control</a></li>
 						<li ng-show="in_array('reports', rutas)"><a collap ui-sref="reports">Reportes</a></li>
-						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Contenedor</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Contenedores</li>
+						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Ver</a></li>
 						<li ng-show="in_array('buque', rutas)"><a collap ui-sref="buque">Buque - Viaje</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Contabilidad</li>
+						<li ng-show="in_array('liquidaciones', rutas)"><a collap ui-sref="liquidaciones">Liquidaciones</a></li>
 						<li ng-show="in_array('afip', rutas)"><a collap ui-sref="afip">A.F.I.P</a></li>
+						<li class="divider"></li>
+						<li class="dropdown-header">Seguridad</li>
 						<li ng-show="in_array('users', rutas)"><a collap ui-sref="users">Usuarios</a></li>
 						<li ng-show="in_array('access', rutas)"><a collap ui-sref="access">Control de acceso</a></li>
 						<li class="visible-sm divider"></li>
@@ -208,6 +224,8 @@
 						<li><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
 						<li><a collap ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
 						<li><a collap ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li class="visible-lg divider"></li>
+						<li><a collap ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"> Deshabilitar</span><span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"> Habilitar</span> Notificaciones</a></li>
 					</ul>
 				</li>
 				<li class="hidden-sm" ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>

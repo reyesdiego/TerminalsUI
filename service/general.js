@@ -5,10 +5,11 @@ myapp.service('generalFunctions', [function () {
 	this.filtrarOrden = function (model, filtro) {
 		model.currentPage = 1;
 		model.filtroOrden = filtro;
-		model.filtroOrdenReverse = (model.filtroOrden == model.filtroAnterior) ? !model.filtroOrdenReverse : false;
+		model.filtroOrdenReverse = (model.filtroOrden == model.filtroOrdenAnterior) ? !model.filtroOrdenReverse : false;
 		var filtroReverse = (model.filtroOrdenReverse) ? -1 : 1;
 		model.order = '"' + filtro + '":' + filtroReverse;
-		model.filtroAnterior = filtro;
+		model.filtroOrdenAnterior = filtro;
+
 		return model;
 	};
 
@@ -26,15 +27,6 @@ myapp.service('generalFunctions', [function () {
 	this.openDate = function (event) {
 		event.preventDefault();
 		event.stopPropagation();
-	};
-
-	this.switchTheme = function (title) {
-		var i, a;
-		for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-			if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
-				a.disabled = a.getAttribute("title") != title;
-			}
-		}
 	};
 
 	this.idToDate = function (id) {

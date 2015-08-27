@@ -1,43 +1,46 @@
-<div class="row hidden-print" ng-hide="ocultarBusqueda">
+<div class="row hidden-print" ng-hide="ocultarBusqueda || mostrarHTML">
 	<accordion-turnos-search></accordion-turnos-search>
 </div>
-<div class="row visible-print-block" ng-hide="ocultarBusqueda">
+<div class="row visible-print-block" ng-hide="ocultarBusqueda || mostrarHTML">
 	<impresion-filtros></impresion-filtros>
 </div>
 <div class="col-lg-12 text-center" ng-show="loadingState">
 	<img class="media-object center-block" src="images/loading.gif">
 </div>
 <div class="col-lg-12" ng-hide="loadingState">
-	<tabset ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('mov', 0) >= 0">
-		<tab heading="IMPO" select="cambiarTipoMov('IMPO')"></tab>
-		<tab heading="EXPO" select="cambiarTipoMov('EXPO')"></tab>
+	<tabset ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('mov', 0) >= 0 || mostrarHTML">
+		<tab heading="IMPO" ng-click="cambiarTipoMov('IMPO')"></tab>
+		<tab heading="EXPO" ng-click="cambiarTipoMov('EXPO')"></tab>
 	</tabset>
 	<br>
 	<div ng-hide="datosTurnos.length != undefined && datosTurnos.length > 0">
 		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
-	<div ng-show="datosTurnos.length != undefined && datosTurnos.length > 0">
+	<div ng-show="datosTurnos.length != undefined && datosTurnos.length > 0 && !mostrarHTML">
 		<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover" style="text-align: center">
 				<tr>
 					<th ng-show="control" style="text-align: center">Terminal</th>
-					<th style="text-align: center" colspan="3"><encabezado-tabla-ordenado titulo="Turno" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fechaInicio" filtro-orden="fechaInicioOrden"></encabezado-tabla-ordenado></th>
+					<th style="text-align: center" colspan="3"><encabezado-tabla-ordenado titulo="Turno" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="inicio" filtro-orden="inicioOrden"></encabezado-tabla-ordenado></th>
 					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
 					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Viaje" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="viaje" filtro-orden="viajeOrden"></encabezado-tabla-ordenado></th>
 					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="contenedor" filtro-orden="contenedorOrden"></encabezado-tabla-ordenado></th>
 					<th style="text-align: center">Tipo</th>
 					<th style="text-align: center"><encabezado-tabla-ordenado titulo="Alta" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="alta" filtro-orden="altaOrden"></encabezado-tabla-ordenado></th>
-					<th ng-show="!control" style="text-align: center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fechInicio" filtro-orden="fechaInicioOrden"></encabezado-tabla-ordenado></th>
+					<th ng-show="!control" style="text-align: center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="usuario" filtro-orden="usuarioOrden"></encabezado-tabla-ordenado></th>
 					<th ng-show="control" style="text-align: center">Intentos</th>
 					<th ng-show="control" style="text-align: center">Fecha</th>
-					<th ng-show="control" style="text-align: center">E-Mail</th>
+					<th style="text-align: center">E-Mail</th>
+					<th ng-show="!control" style="text-align: center">Enviado</th>
+					<th ng-show="!control" style="text-align: center">Disp. T1</th>
+					<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 				</tr>
 				<tr ng-repeat="turno in datosTurnos">
 					<td ng-show="control">{{ turno.terminal }}</td>
-					<td>{{ turno.inicio | date: 'dd/MM/yyyy':'UTC' }}</td>
-					<td>{{ turno.inicio | date: 'HH:mm':'UTC' }}</td>
-					<td>{{ turno.fin | date: 'HH:mm':'UTC' }}</td>
+					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
+					<td>{{ turno.fin | date: 'HH:mm' }}</td>
 					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || ocultarBusqueda" ng-click="filtrado('buqueNombre', turno.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
 					<td>{{ turno.viaje }}</td>
 					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || ocultarBusqueda" ng-click="filtrado('contenedor', turno.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
@@ -46,10 +49,16 @@
 					<td ng-show="!control">{{ turno.user }}</td>
 					<td ng-show="control">{{ turno.status }}</td>
 					<td ng-show="control">{{ turno.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-					<td ng-show="control">{{ turno.email }}</td>
+					<td>{{ turno.email | maxLength : 12 }}<a href ng-show="(turno.email.length > 12)" popover="{{ turno.email }}" popover-trigger="mouseenter"> (...)</a></td>
+					<td ng-show="!control"><span ng-show="definidoStatus(turno)"><img src="images/ok.png" ng-show="turno.emailStatus" height="24" width="24"><img src="images/error.png" ng-hide="turno.emailStatus" height="24" width="24"></span></td>
+					<td ng-show="!control">{{ turno.disponibles_t1 }}</td>
+					<td class="text-center"><a href ng-click="comprobanteTurno(turno.contenedor, turno._id)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 				</tr>
 			</table>
 		</div>
 		<div-pagination total-items="totalItems" current-page="currentPage" items-per-page="itemsPerPage"></div-pagination>
 	</div>
+
+	<div style="font-family: normal 70% 'Open Sans',sans-serif; font-size:12px; background-color:white!important; padding: 10px" ng-show="!loadingState && mostrarHTML" ng-bind-html="to_trusted(respuesta)"></div>
+	<button ng-show="!loadingState && mostrarHTML" class="btn btn-default hidden-print" ng-click="ocultarTurno()"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 </div>

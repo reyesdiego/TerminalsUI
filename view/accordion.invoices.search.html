@@ -8,8 +8,8 @@
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0">
 		<div class="input-group">
 			<label class="sr-only" for="model.codTipoComprob">Seleccionar Comprobante</label>
-			<select id="model.codTipoComprob" class="form-control" ng-model="model.codTipoComprob" ng-init="model.codTipoComprob=0">
-				<option value="0" disabled>Seleccionar Comprobante</option>
+			<select id="model.codTipoComprob" class="form-control" ng-model="model.codTipoComprob" ng-init="model.codTipoComprob=''">
+				<option value="" disabled>Seleccionar Comprobante</option>
 				<option ng-repeat="comprobantes in vouchers" value="{{ comprobantes._id }}">{{ comprobantes.description }}</option>
 			</select>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codTipoComprob', 0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
@@ -46,22 +46,10 @@
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
-		<angucomplete-alt id="idContenedor"
-						  placeholder="Contenedor"
-						  pause="100"
-						  selected-object="containerSelected"
-						  local-data="listaContenedores"
-						  search-fields="contenedor"
-						  title-field="contenedor"
-						  minlength="1"
-						  input-class="form-control"
-						  filtrar="filtrado(filtrar, contenido)"
-						  filter-field="contenedor"
-						  input-field="contenedor"
-						  match-class="highlight"
-						  limit-results="15"
-						  outside-model="model.contenedor"
-						  auto-match="true"></angucomplete-alt>
+		<div class="input-group">
+			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.contenedor" class="form-control" placeholder="Contenedor" toupper/>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('contenedor', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
 	</div>
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codigo', 0) >= 0">
 		<div class="input-group">
@@ -109,7 +97,7 @@
 		<div class="input-group">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
 			<label for="model.fechaInicio" class="sr-only">Fecha Desde</label>
-			<input id="model.fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDateD" />
+			<input id="model.fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDateD" readonly style="background-color: #ffffff">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
@@ -117,13 +105,42 @@
 		<div class="input-group">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
 			<label for="model.fechaFin" class="sr-only">Fecha Hasta</label>
-			<input id="model.fechaFin" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaFin" is-open="openfechaFin" max-date="maxDateH"/>
+			<input id="model.fechaFin" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaFin" is-open="openfechaFin" max-date="maxDateH" readonly style="background-color: #ffffff">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
 		<multi-select input-model="estadosComprobantes" button-label="icon description" item-label="icon description" tick-property="ticked" helper-elements="none" default-label="Seleccionar estado" max-labels="1" on-item-click="estadoSeleccionado(data)"></multi-select>
 	</div>
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('rates', '') >= 0">
+		<div class="input-group">
+			<select class="form-control" ng-model="model.rates" ng-init="model.rates=''">
+				<option value="" disabled>Según Tasa a las cargas</option>
+				<option value="1">Con Tasa a las cargas</option>
+			</select>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('rates', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
+	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('payment', 0) >= 0 || model.rates == ''">
+		<div class="input-group">
+			<select class="form-control" ng-model="model.payment" ng-init="model.payment=''">
+				<option value="" disabled>Según liquidación</option>
+				<option value="0">Sin Liquidar</option>
+				<option value="1">Liquidadas</option>
+			</select>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('payment', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
+	<!--<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('payed', 0) >= 0 || model.payment == 0 || model.payment == ''">
+		<div class="input-group">
+			<select class="form-control" ng-model="model.payed" ng-init="model.payed=''">
+				<option value="">Según pago</option>
+				<option value="0">Pagas</option>
+				<option value="1">Impagas</option>
+			</select>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('payed', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>-->
 	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('itemsPerPage', 0) >= 0">
 		<multi-select input-model="itemsPerPage" button-label="description" item-label="description" tick-property="ticked" helper-elements="" selection-mode="single" on-item-click="cambioItemsPorPagina(data)"></multi-select>
 	</div>

@@ -62,8 +62,24 @@ function in_array(needle, haystack, argStrict){
 }
 
 var serverUrl = config.url();
+var socketUrl = config.socket();
 
-var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify']);
+var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io']);
+
+myapp.constant('uiDatetimePickerConfig', {
+	dateFormat: 'yyyy-MM-dd HH:mm',
+	enableDate: true,
+	enableTime: true,
+	todayText: 'Hoy',
+	nowText: 'Ahora',
+	clearText: 'Borrar',
+	closeText: 'Listo',
+	dateText: 'Fecha',
+	timeText: 'Hora',
+	closeOnDateSelection: true,
+	appendToBody: false,
+	showButtonBar: true
+});
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
@@ -216,6 +232,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		.state('afip.solicitud.solicitud3', {
 			templateUrl: "view/afip.solicitud3.html"
 		})
+		.state('afip.removido.removido1', {
+			templateUrl: "view/afip.removido1.html"
+		})
+		.state('afip.removido.removido2', {
+			templateUrl: "view/afip.removido2.html"
+		})
+		.state('afip.removido.removido3', {
+			templateUrl: "view/afip.removido3.html"
+		})
 		.state('afip.afectacion', {
 			templateUrl: "view/afip.afectacion.html"
 		})
@@ -228,13 +253,12 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		.state('afip.sumatorias', {
 			templateUrl: "view/afip.sumatorias.html"
 		})
+		.state('afip.removido', {
+			templateUrl: "view/afip.removido.html"
+		})
 		.state('users', {
 			url: "/users",
 			templateUrl: "view/users.html"
-		})
-		.state('cambioTerminal', {
-			url: "/cambioTerminal",
-			templateUrl: 'view/cambioTerminal.html'
 		})
 		.state('agenda', {
 			url: "/agendaTurnos",
@@ -248,7 +272,18 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/colaTurnos",
 			templateUrl: 'view/turnosEncolados.html'
 		})
-
+		.state('validar', {
+			url: "/validarUsuario",
+			templateUrl: "view/validarUsuario.html"
+		})
+		.state('liquidaciones', {
+			url: "/liquidaciones",
+			templateUrl: "view/liquidaciones.html"
+		})
+		.state('modificarTarifario', {
+			url: "/editarTarifario",
+			templateUrl: "view/editPricelist.html"
+		})
 }]);
 
 myapp.config(['$provide', function ($provide) {
@@ -276,24 +311,6 @@ myapp.config(['$provide', function ($provide) {
 		};
 		return $delegate;
 	}]);
-	$provide.decorator('datetimePickerDirective', ['$delegate', function ($delegate) {
-		var directive = $delegate[0];
-		var compile = directive.compile;
-		directive.compile = function(tElement, tAttrs) {
-			var link = compile.apply(this, arguments);
-			return function(scope, elem, attrs) {
-				link.apply(this, arguments);
-				scope.todayText = "Hoy";
-				scope.nowText = "Ahora";
-				scope.dateText = "Fecha";
-				scope.timeText = "Hora";
-				scope.clearText = "Limpiar";
-				scope.closeText = "Cerrar";
-			};
-		};
-		return $delegate;
-	}]);
-
 	$provide.decorator('calendarConfig', ['$delegate', function ($delegate) {
 		$delegate.titleFormats.week = 'Semana {week} del {year}';
 		return $delegate;
@@ -355,122 +372,167 @@ myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 	});
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment){
+myapp.config(['$cookiesProvider', function($cookiesProvider){
+	var hoy = new Date();
 
-	moment().format('YYYY-MM-DD');
-	moment.locale('es');
-
-	moment.locale('es', {
-		week : {
-			dow : 7 // Domingo primer día de la semana
-		}
-	});
-
-	$rootScope.previousState = '';
-	$rootScope.cambioTerminal = false;
-	$rootScope.cargarCache = false;
-	$rootScope.primerRuteo = false;
-	$rootScope.cargandoCache = false;
-
-	$rootScope.ordenarPor = function(filtro){
-		if ($rootScope.predicate == filtro){
-			$rootScope.reverse = !$rootScope.reverse;
-		}
-		$rootScope.predicate = filtro;
-	};
-
-	$rootScope.cambioMoneda = true;
-
-	// Le agrega el token a todas las consultas $http
-	$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-		if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
-		if (data) { return angular.toJson(data); }
-	};
-
-	if (loginService.getStatus()){
-		$rootScope.cargarCache = true;
-		$rootScope.primerRuteo = true;
-	}
-
-	$rootScope.fechaInicio = new Date();
-	$rootScope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-
-	$rootScope.mensajeResultado = {
-		titulo: 'Comprobantes',
-		mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
-		tipo: 'panel-info'
-	};
-
-	$rootScope.addError = function(error){
-		$rootScope.mensajeResultado = {
-			titulo: 'Error',
-			mensaje: 'Se ha producido un error inesperado. Intente recargar la página. Si el error persiste, comuníquese con A.G.P. S.E. ',
-			tipo: 'panel-danger',
-			error: error
-		};
-		$rootScope.$broadcast('errorInesperado', $rootScope.mensajeResultado);
-	};
-
-	$rootScope.moneda = "DOL";
-
-	var rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
-	var rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access'];
-	$rootScope.$state = $state;
-	// Variables Globales de Paginacion
-	$rootScope.itemsPerPage = 15;
-	$rootScope.currentPage = 1;
-	$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
-
-	$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
-		if (!$rootScope.primerRuteo){
-			$rootScope.previousState = from;
-		} else {
-			$rootScope.primerRuteo = false;
-		}
-	});
-
-	$rootScope.$on('$stateChangeStart', function(event, toState){
-		if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
-			dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
-		}
-		if (!loginService.getStatus() && authFactory.userEstaLogeado()){
-			authFactory.login().then(function(){
-				$rootScope.cargarCache = true;
-				$rootScope.primerRuteo = true;
-				$rootScope.estaLogeado = true;
-				if (toState.name == 'login') {
-					$state.transitionTo('tarifario');
-				} else {
-					$rootScope.verificaRutas(event, toState);
-				}
-			});
-		} else {
-			$rootScope.verificaRutas(event, toState);
-		}
-	});
-
-	$rootScope.verificaRutas = function(event, toState){
-		$rootScope.cambioMoneda = !(in_array(toState.name, rutasSinMoneda) || toState.name.indexOf('afip') != -1);
-		if (!in_array(toState.name, rutasComunes)){
-			if (loginService.getStatus()){
-				if(!in_array(toState.name, loginService.getAcceso())){
-					$rootScope.usuarioNoAutorizado(event);
-				} else {
-					if ($rootScope.cargarCache){
-						$rootScope.cargarCache = false;
-						$rootScope.previousState = toState.name;
-						event.preventDefault();
-						$state.transitionTo('cambioTerminal');
-					}
-				}
-			} else {
-				$rootScope.usuarioNoAutorizado(event);
-			}
-		}
-	};
-
-	$rootScope.usuarioNoAutorizado = function(event){
-		event.preventDefault();
-		$state.transitionTo('forbidden');
-	};
+	$cookiesProvider.defaults.expires = new Date(hoy.getFullYear(), hoy.getMonth()+1, hoy.getDate());
 }]);
+
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket', '$http',
+	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
+
+		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
+		$rootScope.terminalEstilo = 'bootstrap.cerulean';
+
+		moment().format('YYYY-MM-DD');
+		moment.locale('es');
+
+		moment.locale('es', {
+			week : {
+				dow : 7 // Domingo primer día de la semana
+			}
+		});
+
+		$rootScope.appointmentNotify = 0;
+		$rootScope.gateNotify = 0;
+		$rootScope.invoiceNotify = 0;
+
+		$rootScope.logoTerminal = 'images/logo_bactssa.png';
+
+		$rootScope.verNotificaciones = true;
+
+		$rootScope.cambioTerminal = false;
+		$rootScope.cargarCache = false;
+		$rootScope.primerRuteo = false;
+		$rootScope.cargandoCache = false;
+
+		$rootScope.ordenarPor = function(filtro){
+			if ($rootScope.predicate == filtro){
+				$rootScope.reverse = !$rootScope.reverse;
+			}
+			$rootScope.predicate = filtro;
+		};
+
+		$rootScope.cambioMoneda = true;
+
+		$rootScope.setEstiloTerminal = function(terminal){
+			if ($rootScope.filtroTerminal != terminal){
+				$rootScope.filtroTerminal = terminal;
+				$cookies.put('themeTerminal', terminal);
+				loginService.setFiltro(terminal);
+				switch (terminal){
+					case 'BACTSSA':
+						$rootScope.terminalEstilo = 'bootstrap.cerulean';
+						$rootScope.logoTerminal = 'images/logo_bactssa.png';
+						break;
+					case 'TERMINAL4':
+						$rootScope.terminalEstilo = 'bootstrap.united';
+						$rootScope.logoTerminal = 'images/logo_terminal4.png';
+						break;
+					case 'TRP':
+						$rootScope.terminalEstilo = 'bootstrap.flaty';
+						$rootScope.logoTerminal = 'images/logo_trp.png';
+						break;
+				}
+			}
+		};
+
+		if (loginService.getStatus()){
+			$http.defaults.headers.common.token = loginService.getToken();
+			$rootScope.rutas = loginService.getAcceso();
+			$rootScope.setEstiloTerminal(loginService.getFiltro());
+			$rootScope.esUsuario = loginService.getType();
+			$rootScope.terminal = loginService.getInfo();
+			$rootScope.grupo = loginService.getGroup();
+			//$rootScope.cargarCache = true;
+			//$rootScope.primerRuteo = true;
+		}
+
+		$rootScope.fechaInicio = new Date();
+		$rootScope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
+		$rootScope.mensajeResultado = {
+			titulo: 'Comprobantes',
+			mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
+			tipo: 'panel-info'
+		};
+
+		$rootScope.addError = function(error){
+			$rootScope.mensajeResultado = {
+				titulo: 'Error',
+				mensaje: 'Se ha producido un error inesperado. Intente recargar la página. Si el error persiste, comuníquese con A.G.P. S.E. ',
+				tipo: 'panel-danger',
+				error: error
+			};
+			$rootScope.$broadcast('errorInesperado', $rootScope.mensajeResultado);
+		};
+
+		$rootScope.moneda = "DOL";
+
+		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
+		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access'];
+		$rootScope.$state = $state;
+		// Variables Globales de Paginacion
+		$rootScope.itemsPerPage = 15;
+		$rootScope.currentPage = 1;
+		$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
+
+		$rootScope.salir = function(){
+			authFactory.logout();
+			$rootScope.appointmentNotify = 0;
+			$rootScope.invoiceNotify = 0;
+			$rootScope.gateNotify = 0;
+			$rootScope.esUsuario = '';
+			$state.transitionTo('login');
+			$rootScope.setEstiloTerminal('BACTSSA');
+			$rootScope.filtroTerminal = '';
+			if (angular.isDefined($rootScope.appSocket)) $rootScope.appSocket.disconnect();
+		};
+
+		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
+			$rootScope.setEstiloTerminal($cookies.get('themeTerminal'));
+		});
+
+		$rootScope.$on('$stateChangeStart', function(event, toState){
+			if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
+				dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
+			}
+			if (!loginService.getStatus() && $cookies.get('restoreSesion') === 'true'){
+				authFactory.login().then(function(){
+					$rootScope.$broadcast('terminoLogin');
+					if (toState.name == 'login') {
+						$state.transitionTo('tarifario');
+					} else {
+						$rootScope.verificaRutas(event, toState);
+					}
+				});
+			} else {
+				$rootScope.verificaRutas(event, toState);
+			}
+		});
+
+		$rootScope.verificaRutas = function(event, toState){
+			$rootScope.cambioMoneda = !(in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
+			if (!in_array(toState.name, $rootScope.rutasComunes)){
+				if (loginService.getStatus()){
+					if ($cookies.get('isLogged') === 'true'){
+						if(!in_array(toState.name, loginService.getAcceso())){
+							$rootScope.usuarioNoAutorizado(event);
+						}
+					} else {
+						event.preventDefault();
+						$rootScope.salir();
+					}
+
+				} else {
+					$rootScope.usuarioNoAutorizado(event);
+				}
+			}
+		};
+
+		$rootScope.usuarioNoAutorizado = function(event){
+			event.preventDefault();
+			$state.transitionTo('forbidden');
+		};
+
+	}]);

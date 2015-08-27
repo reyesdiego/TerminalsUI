@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 3/19/14.
  */
 
-myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
+myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($http, dialogs, formatService){
 	var factory = {};
 
 	factory.login = function(datos, callback){
@@ -10,12 +10,19 @@ myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
 		$http.post(inserturl, datos)
 			.success(function(data) {
 				callback(data, false);
-			}).error(function(error, status) {
-				if (status === 403){
-					dialogs.error('Error de inicio de sesión', error.data);
-					callback(error.data, true);
+			}).error(function(error) {
+				console.log(error);
+				if (angular.isDefined(error) && error != null){
+					// ACC-0001 usuario o contraseña incorrecto
+					// ACC-0001 usuario o contraseñas vacío
+					// ACC-0003 no entro al correo
+					// ACC-0004 no habilitado en el sistema
+					callback(error, true);
 				} else {
-					dialogs.error('Error de inicio de sesión', "El servidor no se encuentra disponible. Consulte con el Administrador del sistema.");
+					error = {
+						code: 'ACC-0020',
+						message: 'Se ha producido un error de comunicación con el servidor.'
+					};
 					callback(error, true);
 				}
 			});
@@ -48,6 +55,16 @@ myapp.factory('userFactory', ['$http', 'dialogs', function($http, dialogs){
 				callback(data);
 			}).error(function(err) {
 				callback(err);
+			});
+	};
+
+	factory.validateUser = function(salt, callback){
+		var inserturl = serverUrl + '/agp/account/token';
+		$http.get(inserturl, { params: formatService.formatearDatos(salt) })
+			.success(function(data){
+				callback(data);
+			}).error(function(data){
+				callback(data);
 			});
 	};
 

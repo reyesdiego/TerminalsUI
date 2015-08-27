@@ -2,7 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'cacheFactory',
+	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, cacheFactory) {
 	'use strict';
 	$scope.nombre = loginService.getFiltro();
 
@@ -37,7 +38,11 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 	$scope.preciosHistoricos = [];
 
-	$scope.puedeEditar = (loginService.getType() == 'terminal');
+	$scope.puedeEditar = function(){
+		if ($scope.acceso == 'agp'){
+			return in_array('modificarTarifario', $rootScope.rutas);
+		}
+	};
 
 	$scope.itemsPerPage = 10;
 
@@ -65,7 +70,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 	});
 
 	$scope.prepararDatos = function(){
-		priceFactory.getMatchPrices({onlyRates: $scope.tasas}, function (data) {
+		priceFactory.getMatchPrices({onlyRates: $scope.tasas}, loginService.getFiltro(), function (data) {
 			if (data.status == 'OK'){
 				$scope.pricelist = data.data;
 				$scope.codigosConMatch = [];
@@ -73,7 +78,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				//Cargo todos los códigos ya asociados de la terminal para control
 				$scope.pricelist.forEach(function(price){
 					$scope.matchesTerminal.push(price.code);
-					if (price.matches != null && price.matches.length > 0){
+					if (angular.isDefined(price.matches) && price.matches != null && price.matches.length > 0 && price.matches[0].match.length > 0){
 						$scope.codigosConMatch.push(price);
 						price.matches[0].match.forEach(function(codigo){
 							$scope.matchesTerminal.push(codigo);
@@ -102,10 +107,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		});
 	};
-
-	if (loginService.getStatus()){
-		$scope.prepararDatos();
-	}
 
 	$scope.pageChanged = function(){
 		$scope.guardar();
@@ -242,6 +243,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 							formData.topPrices.push(nuevoTopPrice);
 							priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
 								if (data.status == 'OK'){
+									cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 									$scope.newPrice = '';
 									$scope.newFrom = new Date();
 									dialogs.notify("Asociar","Se ha asignado el nuevo valor a la tarifa y se han guardado los cambios.");
@@ -259,6 +261,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					} else {
 						priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
 							if (data.status == 'OK'){
+								cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 								$scope.newPrice = '';
 								$scope.newFrom = new Date();
 								dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
@@ -289,6 +292,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 							priceFactory.addMatchPrice($scope.match, function(data){
 								if (data.status == 'OK'){
+									cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 									dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente.");
 									$scope.salir();
 									$scope.prepararDatos();
@@ -386,5 +390,19 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				}
 			})
 		})
-	}
+	};
+
+	if (loginService.getStatus()) $scope.prepararDatos();
+
+	$scope.$on('terminoLogin', function(){
+		$scope.acceso = $rootScope.esUsuario;
+		$scope.nombre = loginService.getFiltro();
+		$scope.prepararDatos();
+	});
+
+	$scope.$on('cambioTerminal', function(){
+		$scope.nombre = loginService.getFiltro();
+		$scope.prepararDatos();
+	})
+
 }]);

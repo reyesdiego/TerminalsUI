@@ -36,8 +36,7 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	};
 
 	factory.getRoutes = function(callback){
-		//var inserturl = serverUrl + '/tasks';
-		var inserturl = 'mocks/rutas.json';
+		var inserturl = serverUrl + '/tasks';
 		$http.get(inserturl)
 			.success(function(data){
 				callback(data);

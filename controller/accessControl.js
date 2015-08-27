@@ -2,7 +2,20 @@
  * Created by artiom on 13/05/15.
  */
 
-myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q, loginService){
+myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', '$filter', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q, loginService, $filter){
+
+	$scope.permiso = false;
+	$scope.panelMensaje = {
+		tipo: 'panel-info',
+		titulo: 'Control de usuarios',
+		mensaje: 'No posee permisos para requerir estos datos.'
+	};
+
+	$scope.$on('errorInesperado', function(e, mensaje){
+		$scope.cargaRutas = false;
+		$scope.panelMensaje = mensaje;
+		$scope.permiso = false;
+	});
 
 	$scope.usuarios = [];
 	$scope.tareas = [];
@@ -31,18 +44,13 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		{ description: 'Último comprobante', habilitar: false, valor: 'lastInvoice', mostrar: 'Diego Reyes'}
 	];
 
-	$scope.panelMensaje = {
-		titulo: 'Control de acceso',
-		mensaje: 'No se han encontrado tareas.',
-		tipo: 'panel-info'
-	};
-
 	ctrlUsersFactory.getUsers(function(data){
 		if (data.status == 'OK'){
+			$scope.permiso = true;
 			$scope.usuarios = data.data;
 			ctrlUsersFactory.getRoutes(function(data){
 				if (data.status == 'OK'){
-					$scope.tareas = data.data;
+					$scope.tareas = $filter('orderBy')(data.data, 'route');
 				} else {
 					$scope.panelMensaje.mensaje = 'Se ha producido un error al cargar el listado de tareas.';
 					$scope.panelMensaje.tipo = 'panel-danger';
@@ -51,11 +59,6 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 				}
 				$scope.cargaRutas = false;
 			})
-		} else {
-			$scope.panelMensaje.mensaje = 'Se ha producido un error al cargar el listado de usuarios.';
-			$scope.panelMensaje.tipo = 'panel-danger';
-			$scope.usuarios = [];
-			$scope.tareas = [];
 		}
 	});
 

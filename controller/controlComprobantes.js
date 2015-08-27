@@ -2,9 +2,10 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'generalFunctions', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, generalFunctions) {
-	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes'];
-	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque'];
+myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'generalFunctions', 'loginService', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, generalFunctions, loginService) {
+
+	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes', 'rates'];
+	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque', 'rates'];
 
 	$scope.ocultaTasas = true;
 	$scope.loadingState = false;
@@ -67,7 +68,10 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		'filtroOrdenReverse': false,
 		'mov': '',
 		'order': '',
-		'itemsPerPage': 15
+		'itemsPerPage': 15,
+		'rates': '',
+		'payment': '',
+		'payed': ''
 	};
 
 	$scope.resultado = [];
@@ -93,7 +97,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.cargaComprobantes();
 	});
 
-	$scope.$on('cambioFiltro', function(){
+	$scope.$on('cambioFiltro', function(event, data){
 		$scope.controlTasaCargas()
 	});
 
@@ -145,7 +149,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		model.fechaFin = '';
 		$scope.pageComprobantes.skip = (($scope.currentPageComprobantes - 1) * $scope.model.itemsPerPage);
 		$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoice(model, $scope.pageComprobantes, function(data){
+		invoiceFactory.getInvoice($scope.$id, model, $scope.pageComprobantes, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.invoicesTotalItems = data.totalCount;
@@ -218,6 +222,10 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.detalle = false;
 		$scope.model.contenedor = '';
 		$scope.resultado = [];
+		for (var elemento in $scope.model){
+			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
+		}
+		$scope.$broadcast('checkAutoComplete');
 		invoiceFactory.getContainersSinTasaCargas($scope.model, function(data){
 			if (data.status == "OK"){
 				$scope.totalContenedores = data.totalCount;
@@ -236,13 +244,34 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		});
 	};
 
+	if (loginService.getStatus()) $scope.controlTasaCargas();
+
+	$scope.$on('terminoLogin', function(){
+		$scope.controlTasaCargas();
+	});
+
+	$scope.$on('cambioTerminal', function(){
+		$scope.controlTasaCargas();
+	});
+
+	$scope.$on('destroy', function(){
+		invoiceFactory.cancelRequest();
+		turnosFactory.cancelRequest();
+		//Agregar las que falten
+	});
+
 }]);
 
-myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'socket', 'vouchersArrayCache', function($rootScope, $scope, invoiceFactory, socket, vouchersArrayCache) {
+myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'vouchersArrayCache', 'correlativeSocket', 'loginService', function($rootScope, $scope, invoiceFactory, vouchersArrayCache, correlativeSocket, loginService) {
 
-	var socketIoRegister;
+	var socketIoRegister = '';
 
-	$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje', 'itemsPerPage'];
+	correlativeSocket.emit('newUser', function (sess){
+		socketIoRegister = sess;
+		correlativeSocket.forward('correlative_' + sess, $scope);
+	});
+
+	$scope.ocultarFiltros = ['razonSocial', 'nroPtoVenta', 'nroComprobante', 'documentoCliente', 'codigo', 'estado', 'buque', 'contenedor', 'viaje', 'itemsPerPage', 'rates'];
 
 	$scope.hasta = new Date();
 	$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
@@ -262,7 +291,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 	};
 
 	$scope.traerPuntosDeVenta = function(){
-		invoiceFactory.getCashbox({}, function(data){
+		invoiceFactory.getCashbox($scope.$id, {}, function(data){
 			if (data.status == 'OK'){
 				var i;
 				$scope.terminalSellPoints = data.data;
@@ -342,6 +371,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		$scope.puntosDeVenta = [];
 		$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
 		$scope.mostrarBotonImprimir = false;
+
 		invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
 			if (dataComprob.status == 'OK'){
 				if ($scope.totalPuntos > 0){
@@ -368,7 +398,6 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 					mensajeCorrelativo : 'Se ha producido un error al cargar los datos.'
 				};
 			}
-
 			$scope.loadingCorrelatividad = false;
 		});
 	};
@@ -379,23 +408,31 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		}
 	});
 
-	socket.emit('newUser', function (sess){
-
-		socketIoRegister = sess;
-		socket.on('correlative_' + sess, function (data) {
-			if ($scope.leerData){
-				$scope.generarInterfaz(data);
-				$scope.$apply();
-			}
-		});
+	$scope.$on('socket:correlative_' + socketIoRegister, function(ev, data){
+		if ($scope.leerData){
+			$scope.generarInterfaz(data);
+			$scope.$apply();
+		}
 	});
 
-	$scope.traerPuntosDeVenta();
+	if (loginService.getStatus()) $scope.traerPuntosDeVenta();
+
+	$scope.$on('terminoLogin', function(){
+		$scope.traerPuntosDeVenta();
+	});
+
+	$scope.$on('cambioTerminal', function(){
+		$scope.traerPuntosDeVenta();
+	});
+
+	$scope.$on('$destroy', function(){
+		correlativeSocket.disconnect();
+	});
 
 }]);
 
 myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', function($scope, invoiceFactory, priceFactory) {
-	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'rates'];
 
 	$scope.model = {
 		'nroPtoVenta': '',
@@ -414,7 +451,10 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
 		'order': '',
-		'itemsPerPage': 15
+		'itemsPerPage': 15,
+		'rates': '',
+		'payment': '',
+		'payed': ''
 	};
 
 	$scope.controlFiltros = 'codigos';
@@ -478,7 +518,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 			}
 		} else {
 			if ($scope.model.code == ''){
-				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque'];
+				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'rates'];
 				$scope.controlFiltros = 'codigos';
 				$scope.mostrarPtosVentas = false;
 				$scope.controlDeCodigos();
@@ -541,7 +581,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		$scope.loadingControlCodigos = true;
 		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.model.itemsPerPage);
 		$scope.pageFiltros.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoice($scope.model, $scope.pageFiltros, function(data){
+		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.pageFiltros, function(data){
 			if (data.status == 'OK'){
 				$scope.totalItems = data.totalCount;
 				$scope.comprobantesRotos = data.data;
@@ -576,6 +616,10 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		});
 	};
 
+	$scope.$on('destroy', function(){
+		invoiceFactory.cancelRequest();
+	});
+
 }]);
 
 myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory) {
@@ -607,7 +651,10 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		'filtroOrdenAnterior': '',
 		'filtroOrdenReverse': false,
 		'order': '',
-		'itemsPerPage': 15
+		'itemsPerPage': 15,
+		'rates': '',
+		'payment': '',
+		'payed': ''
 	};
 
 	$scope.page = {
@@ -662,7 +709,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.loadingState = true;
-		invoiceFactory.getInvoice($scope.model, $scope.page, function(invoiceError){
+		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.page, function(invoiceError){
 			if (invoiceError.status == 'OK'){
 				$scope.comprobantes = invoiceError.data;
 				$scope.totalItems = invoiceError.totalCount;
@@ -682,4 +729,9 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			$scope.loadingState = false;
 		})
 	};
+
+	$scope.$on('destroy', function(){
+		invoiceFactory.cancelRequest();
+	});
+
 }]);

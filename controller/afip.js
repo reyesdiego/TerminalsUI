@@ -2,13 +2,14 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', function($scope, $rootScope, afipFactory, $state, generalFunctions){
+myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache, loginService){
 
 	$rootScope.rutas.sort();
 	$scope.afectacion = 'afip';
 	$scope.detalle = 'afip';
 	$scope.solicitud = 'afip';
 	$scope.sumatoria = 'afip';
+	$scope.removido = 'afip';
 	$scope.actualRegistro = '';
 
 	if (in_array('afip.afectacion', $rootScope.rutas)){
@@ -47,11 +48,21 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		})
 	}
 
+	if (in_array('afip.removido', $rootScope.rutas)){
+		$rootScope.rutas.forEach(function(ruta){
+			if (ruta.indexOf('afip.removido.') >= 0 && $scope.removido == 'afip') {
+				$scope.removido = ruta;
+				if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
+			}
+		})
+	}
+
 	$scope.tabs = [
 		{ heading: 'Afectación',	uisref: $scope.afectacion,	mostrar: in_array('afip.afectacion', $rootScope.rutas) },
 		{ heading: 'Detallada',		uisref: $scope.detalle,		mostrar: in_array('afip.detalle', $rootScope.rutas) },
 		{ heading: 'Solicitud',		uisref: $scope.solicitud,	mostrar: in_array('afip.solicitud', $rootScope.rutas) },
-		{ heading: 'Sumarias',		uisref: $scope.sumatoria,	mostrar: in_array('afip.sumatorias', $rootScope.rutas) }
+		{ heading: 'Sumarias',		uisref: $scope.sumatoria,	mostrar: in_array('afip.sumatorias', $rootScope.rutas) },
+		{ heading: 'Removido',		uisref: $scope.removido,	mostrar: in_array('afip.removido', $rootScope.rutas) }
 	];
 
 	$scope.model = {
@@ -59,6 +70,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		detallada: '',
 		solicitud: '',
 		sumaria: '',
+		documento: '',
 		conocimiento: '',
 		buqueNombre: '',
 		contenedor: '',
@@ -89,14 +101,6 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 	$scope.afectacionActiva = true;
 
-	$scope.buques = {
-		afectacion: [],
-		impo: [],
-		expo: []
-	};
-	$scope.vistaConBuques = false;
-
-
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event)
 	};
@@ -108,41 +112,24 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 	};
 
 	$scope.$watch('$state.current', function(){
-		$scope.vistaConBuques = false;
-		if ($state.current.name == 'afip'){
-			$state.transitionTo($scope.actualRegistro);
-			$scope.cargaDatos($scope.actualRegistro);
-			$scope.tabs[0].active = true;
-		} else if ($state.current.name == 'afip.sumatorias.impo1') {
-			if ($scope.buques.impo.length == 0) {
-				afipFactory.getBuquesImpo(function (data) {
-					$scope.buques.impo = data.data;
-					$scope.listaBuques = $scope.buques.impo;
-				});
-			} else {
-				$scope.listaBuques = $scope.buques.impo;
-			}
-			$scope.vistaConBuques = true;
-		} else if ($state.current.name == 'afip.sumatorias.expo1') {
-			if ($scope.buques.expo.length == 0) {
-				afipFactory.getBuquesExpo(function (data) {
-					$scope.buques.expo = data.data;
-					$scope.listaBuques = $scope.buques.expo;
-				});
-			} else {
-				$scope.listaBuques = $scope.buques.expo;
-			}
-			$scope.vistaConBuques = true;
-		} else if ($state.current.name == 'afip.afectacion.afectacion1') {
-			if ($scope.buques.afectacion.length == 0) {
-				afipFactory.getBuquesExpo(function (data) {
-					$scope.buques.afectacion = data.data;
-					$scope.listaBuques = $scope.buques.afectacion;
-				});
-			} else {
-				$scope.listaBuques = $scope.buques.afectacion;
-			}
-			$scope.vistaConBuques = true;
+		switch ($state.current.name){
+			case 'afip':
+				$state.transitionTo($scope.actualRegistro);
+				$scope.cargaDatos($scope.actualRegistro);
+				$scope.tabs[0].active = true;
+				break;
+			case 'afip.afectacion.afectacion1':
+				$scope.listaBuques = afipCache.get('AfectacionBuques');
+				break;
+			case 'afip.solicitud.solicitud1':
+				$scope.listaBuques = afipCache.get('SolicitudBuques');
+				break;
+			case 'afip.sumatorias.impo1':
+				$scope.listaBuques = afipCache.get('SumImpoBuques');
+				break;
+			case 'afip.sumatorias.expo1':
+				$scope.listaBuques = afipCache.get('SumExpoBuques');
+				break;
 		}
 	});
 
@@ -205,69 +192,82 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		$scope.actualRegistro = registro;
 		switch ($scope.actualRegistro){
 			case 'afip.afectacion.afectacion1':
-				$scope.ocultarFiltros = ['solicitud', 'detallada', 'conocimiento', 'contenedor'];
+				$scope.ocultarFiltros = ['documento', 'solicitud', 'detallada', 'conocimiento', 'contenedor'];
 				break;
 			case 'afip.afectacion.afectacion2':
-				$scope.ocultarFiltros = ['solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.ocultarFiltros = ['documento', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
 				$scope.model.fechaInicio = '';
 				$scope.model.fechaFin = '';
 				break;
 			case 'afip.detalle.detimpo1':
-				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'buque', 'contenedor'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'buque', 'contenedor'];
 				break;
 			case 'afip.detalle.detimpo2':
-				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
 				$scope.model.fechaInicio = '';
 				$scope.model.fechaFin = '';
 				break;
 			case 'afip.detalle.detimpo3':
-				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
 				$scope.model.fechaInicio = '';
 				$scope.model.fechaFin = '';
 				break;
 			case 'afip.detalle.detexpo1':
-				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
 				break;
 			case 'afip.detalle.detexpo2':
 			case 'afip.detalle.detexpo3':
-				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
 				$scope.model.fechaInicio = '';
 				$scope.model.fechaFin = '';
 				break;
 			case 'afip.solicitud.solicitud1':
-				$scope.ocultarFiltros = ['afectacion', 'detallada', 'conocimiento', 'contenedor'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'conocimiento', 'contenedor'];
 				break;
 			case 'afip.solicitud.solicitud2':
-				$scope.ocultarFiltros = ['afectacion', 'detallada', 'sumaria', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'sumaria', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
 				$scope.model.fechaInicio = '';
 				$scope.model.fechaFin = '';
 				break;
 			case 'afip.solicitud.solicitud3':
-				$scope.ocultarFiltros = ['afectacion', 'detallada', 'sumaria', 'conocimiento', 'buque', 'fechaInicio', 'fechaFin'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'sumaria', 'conocimiento', 'buque', 'fechaInicio', 'fechaFin'];
 				$scope.model.fechaInicio = '';
 				$scope.model.fechaFin = '';
 				break;
 			case 'afip.sumatorias.impo1':
 			case 'afip.sumatorias.expo1':
-				$scope.ocultarFiltros = ['afectacion', 'detallada', 'solicitud', 'conocimiento', 'contenedor'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'conocimiento', 'contenedor'];
 				break;
 			case 'afip.sumatorias.impo2':
 			case 'afip.sumatorias.impo3':
 			case 'afip.sumatorias.expo2':
 			case 'afip.sumatorias.expo3':
 			case 'afip.sumatorias.expo5':
-				$scope.ocultarFiltros = ['afectacion', 'detallada', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
 				$scope.model.fechaInicio = '';
 				$scope.model.fechaFin = '';
 				break;
 			case 'afip.sumatorias.impo4':
 			case 'afip.sumatorias.expo4':
-				$scope.ocultarFiltros = ['afectacion', 'detallada', 'solicitud', 'buque', 'fechaInicio', 'fechaFin'];
+				$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'buque', 'fechaInicio', 'fechaFin'];
+				break;
+			case 'afip.removido.removido1':
+				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
+				break;
+			case 'afip.removido.removido2':
+			case 'afip.removido.removido3':
+				$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+				$scope.model.fechaInicio = '';
+				$scope.model.fechaFin = '';
 				break;
 		}
 		$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
 		$scope.page.limit = $scope.itemsPerPage;
 		$scope.datosRegistro = [];
+		for (var elemento in $scope.model){
+			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
+		}
+		$scope.$broadcast('checkAutoComplete');
 		afipFactory.getAfip(registro, $scope.model, $scope.page, function(data){
 			if(data.status === 'OK'){
 				$scope.datosRegistro = data.data;
@@ -290,6 +290,11 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		return in_array(aguja, pajar);
 	};
 
-	$scope.cargaDatos($scope.actualRegistro);
+	if (loginService.getStatus()) $scope.cargaDatos($scope.actualRegistro);
+
+	$scope.$on('terminoLogin', function(){
+		$scope.cargaDatos($scope.actualRegistro);
+	});
+
 }]);
 

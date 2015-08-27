@@ -2,131 +2,130 @@
  * Created by leo on 18/07/14.
  */
 
-myapp.factory('authFactory', ['$state', '$cookies', '$cookieStore', 'userFactory', 'loginService', '$rootScope', '$q', '$injector', 'cacheFactory', 'generalFunctions', function($state, $cookies, $cookieStore, userFactory, loginService, $rootScope, $q, $injector, cacheFactory, generalFunctions){
-	var factory = {};
+myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService', '$rootScope', '$q', '$injector', 'cacheFactory', '$http',
+	function($state, $cookies, userFactory, loginService, $rootScope, $q, $injector, cacheFactory, $http){
+		var factory = {};
 
-	factory.loginWithCookies = function(user, pass){
-		var deferred = $q.defer();
-		this.login(user, pass).then(function(){
-			$cookies.username = user;
-			$cookies.password = pass;
-			$cookies.themeTerminal = loginService.getFiltro();
-			deferred.resolve();
-		},
-		function(reason){
-			deferred.reject(reason);
-		});
-		return deferred.promise;
-	};
-
-	factory.loginWithoutCookies = function(user, pass){
-		var deferred = $q.defer();
-		this.login(user, pass)
-			.then(function(){
-				deferred.resolve();
-			},
-			function(reason){
-				deferred.reject(reason);
-			});
-		return deferred.promise;
-	};
-
-	factory.login = function(user, pass){
-		var deferred = $q.defer();
-
-		user = user || $cookies.username;
-		pass = pass || $cookies.password;
-
-		var usuario = {
-			email:		user,
-			password:	pass
+		factory.userEnter = function(user, pass, useCookies){
+			var deferred = $q.defer();
+			this.login(user, pass)
+				.then(function(){
+					if (useCookies){
+						$cookies.put('username', user);
+						$cookies.put('password', pass);
+						$cookies.put('themeTerminal', loginService.getFiltro());
+					}
+					$cookies.put('isLogged', 'true');
+					$cookies.put('restoreSesion', useCookies);
+					deferred.resolve();
+				},
+				function(error){
+					if (loginService.getStatus()){
+						if (useCookies){
+							$cookies.put('username', user);
+							$cookies.put('password', pass);
+							$cookies.put('themeTerminal', loginService.getFiltro());
+						}
+						$cookies.put('isLogged', 'true');
+						$cookies.put('restoreSesion', useCookies);
+					}
+					deferred.reject(error);
+				});
+			return deferred.promise;
 		};
 
-		userFactory.login(usuario, function(data, error){
-			if (!error && typeof data.data.token === 'object') {
-				$rootScope.$broadcast('progreso', {mensaje: 1});
-				data = data.data;
+		factory.login = function(user, pass){
+			var deferred = $q.defer();
 
-				if (data.acceso.length > 0){
-					loginService.setInfo(data);
-					loginService.setStatus(true);
-					loginService.setType(data.role);
-					loginService.setGroup(data.group);
-					loginService.setToken(data.token.token);
+			user = user || $cookies.get('username');
+			pass = pass || $cookies.get('password');
 
-					// Le agrega el token a todas las consultas $http
-					$injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-						if (loginService.getToken() != null) headersGetter()['token'] = loginService.getToken();
-						if (data) { return angular.toJson(data); }
-					};
+			var usuario = {
+				email:		user,
+				password:	pass
+			};
 
-					loginService.setAcceso(data.acceso);
+			userFactory.login(usuario, function(data, error){
+				if (!error && typeof data.data.token === 'object') {
+					$rootScope.$broadcast('progreso', {mensaje: 1});
+					data = data.data;
 
-					$rootScope.rutas = data.acceso;
+					if (data.acceso.length > 0){
+						loginService.setInfo(data);
+						loginService.setStatus(true);
+						loginService.setType(data.role);
+						loginService.setGroup(data.group);
+						loginService.setToken(data.token.token);
 
-					$rootScope.esUsuario = loginService.getType();
-					$rootScope.terminal = loginService.getInfo();
-					$rootScope.grupo = loginService.getGroup();
+						$http.defaults.headers.common.token = loginService.getToken();
 
-					//Si el rol es terminal, queda como filtro de si misma para las consultas
-					//De lo contrario, dejo a BACTSSA como filtro por default
-					if (data.role == 'terminal') {
-						loginService.setFiltro(data.terminal);
+						//---------------------------------------------
+						data.acceso.push('modificarTarifario');
+						//---------------------------------------------
+
+						loginService.setAcceso(data.acceso);
+
+						$rootScope.rutas = data.acceso;
+
+						$rootScope.esUsuario = loginService.getType();
+						$rootScope.terminal = loginService.getInfo();
+						$rootScope.grupo = loginService.getGroup();
+
+						//Si el rol es terminal, queda como filtro de si misma para las consultas
+						//De lo contrario, dejo a BACTSSA como filtro por default
+						if (data.role == 'terminal') {
+							loginService.setFiltro(data.terminal);
+						} else {
+							var filtro = angular.isDefined($cookies.get('themeTerminal')) ? $cookies.get('themeTerminal') : 'BACTSSA';
+							loginService.setFiltro(filtro);
+							$rootScope.filtroTerminal = filtro;
+						}
+
+						// Carga la cache si el usuario no tenía el acceso por cookies
+						var restoreSesion = $cookies.get('restoreSesion') === 'true';
+						if (!restoreSesion){
+							cacheFactory.cargaCache()
+								.then(function(){
+									deferred.resolve();
+								},
+								function(){
+									var cacheError = {
+										code: 'DAT-0010',
+										message: 'Se ha producido un error en la carga de la caché.'
+									};
+									deferred.reject(cacheError);
+								});
+						} else {
+							deferred.resolve();
+						}
 					} else {
-						loginService.setFiltro('BACTSSA');
-						$rootScope.filtroTerminal = 'BACTSSA';
-					}
-
-					// Carga el tema de la terminal
-					if (typeof ($cookies.themeTerminal) != 'undefined') {
-						loginService.setFiltro($cookies.themeTerminal);
-						$rootScope.filtroTerminal = $cookies.themeTerminal;
-						generalFunctions.switchTheme($cookies.themeTerminal);
-					} else {
-						generalFunctions.switchTheme(loginService.getFiltro());
-					}
-
-					// Carga la cache
-					if (!factory.userEstaLogeado()){
-						cacheFactory.cargaCache()
-							.then(function(){
-								deferred.resolve();
-							},
-							function(){
-								deferred.reject();
-							});
-					} else {
-						deferred.resolve();
+						var myError = {
+							code: 'ACC-0010'
+						};
+						deferred.reject(myError);
 					}
 				} else {
-					deferred.reject('sinAcceso');
+					if (data.code == 'ACC-0003'){
+						$rootScope.salt = data.data.salt;
+						$rootScope.rutasComunes.push('validar');
+						deferred.reject(data);
+					} else {
+						deferred.reject(data);
+					}
 				}
-			} else {
-				deferred.reject(data);
-			}
-		});
+			});
 
-		return deferred.promise;
-	};
+			return deferred.promise;
+		};
 
-	factory.logout = function(){
-		$cookieStore.remove('username');
-		$cookieStore.remove('password');
-		$cookieStore.remove('themeTerminal');
-		cacheFactory.limpiaCache();
-		loginService.unsetLogin();
-		generalFunctions.switchTheme('BACTSSA');
-	};
+		factory.logout = function(){
+			$cookies.remove('isLogged');
+			$cookies.remove('restoreSesion');
+			$cookies.remove('username');
+			$cookies.remove('password');
+			cacheFactory.limpiaCache();
+			loginService.unsetLogin();
+		};
 
-	factory.userEstaLogeado = function(){
-		return (angular.isDefined($cookies.username) && angular.isDefined($cookies.password) && $cookies.username != '' && $cookies.password != '');
-	};
-
-	factory.setTheme = function(terminal){
-		if (angular.isDefined($cookies.themeTerminal) && $cookies.themeTerminal != ''){
-			$cookies.themeTerminal = terminal;
-		}
-	};
-
-	return factory;
-}]);
+		return factory;
+	}]);
