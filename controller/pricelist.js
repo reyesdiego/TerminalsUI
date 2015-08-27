@@ -2,17 +2,24 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache',
-	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache) {
+myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache', 'generalFunctions',
+	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions) {
 
 		'use strict';
 		// Variable para almacenar la info principal que trae del factory
 		$scope.unidadesTarifas = generalCache.get('unitTypes');
 		$scope.pricelist = [];
 		$scope.filteredPrices = [];
+		$scope.userPricelist = [];
 		$scope.tasas = false;
 		$scope.itemsPerPage = 10;
 		$scope.hayError = false;
+
+		$scope.fechaVigencia = new Date();
+
+		$scope.openDate = function(e){
+			generalFunctions.openDate(e);
+		};
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
@@ -38,8 +45,14 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 						} else {
 							tarifa.orderPrice = tarifa.topPrices[0].price;
 						}
+						tarifa.nuevoTopPrice = {
+							currency: tarifa.topPrices[0].currency,
+							price: tarifa.orderPrice,
+							from: $scope.fechaVigencia
+						};
 					});
 					$scope.totalItems = $scope.pricelist.length;
+					$scope.userPricelist = angular.copy($scope.pricelist);
 				} else {
 					$scope.hayError = true;
 					$scope.mensajeResultado = {
@@ -116,7 +129,16 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		};
 
 		$scope.guardarCambios = function(){
-			console.log($scope.filteredPrices);
+			var i;
+			var changesList = [];
+			for (i=0; i <= $scope.pricelist.length - 1; i++){
+				if (!angular.equals($scope.userPricelist[i], $scope.pricelist[i])){
+					$scope.userPricelist[i].nuevoTopPrice.from = $scope.fechaVigencia;
+					$scope.userPricelist[i].topPrices.push($scope.userPricelist[i].nuevoTopPrice);
+					changesList.push($scope.userPricelist[i]);
+				}
+			}
+			console.log(changesList);
 		};
 
 		if (loginService.getStatus()) $scope.cargaPricelist();

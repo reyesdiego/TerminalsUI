@@ -12,11 +12,22 @@
 				<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
 				<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" ng-model="tasas" ng-change="cargaPricelist()">Sólo tasa a las cargas
-				</label>
+			<br>
+			<div class="row">
+				<div class="col-lg-8 checkbox">
+					<label>
+						<input type="checkbox" ng-model="tasas" ng-change="cargaPricelist()">Sólo tasa a las cargas
+					</label>
+				</div>
+				<div class="col-lg-4">
+					<div class="input-group">
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaVigencia = !openfechaVigencia;">Fecha de vigencia <span class="glyphicon glyphicon-calendar"></span></button></span>
+						<label for="fechaVigencia" class="sr-only">Fecha de vigencia</label>
+						<input id="fechaVigencia" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="fechaVigencia" is-open="openfechaVigencia" readonly style="background-color: #ffffff">
+					</div>
+				</div>
 			</div>
+
 		</div>
 	</div>
 
@@ -52,8 +63,8 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" class="hidden-print" ng-repeat="price in filteredPrices = (pricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
-						<td>{{ price.code }}</td>
+					<tr style="height:60px" class="hidden-print" ng-repeat="price in filteredPrices = (userPricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+						<td><input class="textarea-td" type="text" ng-model="price.code"></td>
 						<td><textarea class="textarea-td" ng-model="price.description"></textarea></td>
 						<td>
 							<select class="form-control" ng-model="price.idUnit">
@@ -61,13 +72,13 @@
 							</select>
 						</td>
 						<td>
-							<select class="form-control" ng-model="price.topPrices[0].currency">
+							<select class="form-control" ng-model="price.nuevoTopPrice.currency">
 								<option value="DOL">U$S</option>
 								<option value="PES">$ARG</option>
 							</select>
 						</td>
 						<td style="text-align: right">
-							<input class="text-right textarea-td" type="text" ng-model="price.topPrices[0].price">
+							<input class="text-right textarea-td" type="text" ng-model="price.nuevoTopPrice.price">
 						</td>
 					</tr>
 					<tr style="height:60px" class="visible-print" ng-repeat="price in pricelist | filter:search | orderBy: predicate : reverse">
