@@ -114,6 +114,12 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		});
 
 		////// Para containers ////////////////////////////////////////////////////////////////////////////////
+		$scope.$on('detalleContenedor', function(event, container){
+			$scope.model.contenedor = container;
+			$scope.volverAPrincipal = !$scope.volverAPrincipal;
+			$scope.filtrar();
+		});
+
 		$scope.$on('cambioFiltro', function(){
 			$scope.volverAPrincipal = !$scope.volverAPrincipal;
 			if ($scope.model.contenedor != ''){
