@@ -76,7 +76,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		$scope.model.fechaInicio.setHours(0, 0, 0, 0);
 		$scope.model.fechaFin.setHours(0, 0, 0, 0);
 
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar'];
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'rates'];
 
 		$scope.filtrado = function(filtro, contenido){
 			$scope.model[filtro] = contenido;
@@ -102,6 +102,11 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 									comprob.code = comprob.code +  ' - No se halló la descripción, verifique que el código esté asociado.';
 								}
 							});
+							$scope.configPanel = {
+								tipo: 'panel-success',
+								titulo: 'Control gates',
+								mensaje: 'No se encontraron comprobantes con gates faltantes para los filtros seleccionados.'
+							};
 						} else {
 							$scope.configPanel = {
 								tipo: 'panel-danger',
@@ -121,7 +126,12 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 							$scope.cargando = false;
 							$scope.datosFaltantes.forEach(function(registro){
 								registro.fecha = registro.gateTimestamp;
-							})
+							});
+							$scope.configPanel = {
+								tipo: 'panel-success',
+								titulo: 'Control gates',
+								mensaje: 'No se encontraron gates con comprobantes faltantes.'
+							};
 						} else {
 							$scope.configPanel = {
 								tipo: 'panel-danger',
