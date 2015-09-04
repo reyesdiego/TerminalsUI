@@ -5,73 +5,32 @@
 myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'generalFunctions', 'loginService', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, generalFunctions, loginService) {
 
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes', 'rates'];
-	$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque', 'rates'];
+	//$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque', 'rates'];
 
 	$scope.ocultaTasas = true;
 	$scope.loadingState = false;
-	$scope.invoices = [];
-	$scope.loadingInvoices = false;
-	$scope.gates = [];
-	$scope.loadingGates = false;
-	$scope.turnos = [];
-	$scope.loadingTurnos = false;
-	$scope.tasas = [];
-	$scope.loadingTasas = false;
+
 	$scope.detalleGates = false;
-	$scope.volverAPrincipal = false;
 
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
 	};
 
-	$scope.configPanelGates = {
-		tipo: 'panel-info',
-		titulo: 'Gates',
-		mensaje: 'No se encontraron gates para los filtros seleccionados.'
-	};
-	$scope.configPanelTurnos = {
-		tipo: 'panel-info',
-		titulo: 'Turnos',
-		mensaje: 'No se encontraron turnos para los filtros seleccionados.'
-	};
-	$scope.detalle = false;
-	$scope.contenedorElegido = {};
+	$scope.mostrarDetalle = false;
 
-	$scope.itemsPerPage = 10;
-	$scope.totalItems = 0;
+	//$scope.totalItems = 0;
 	$scope.panelMensaje = {
 		titulo: 'Buque - Viaje',
 		mensaje: 'No se encontraron contenedores para los filtros seleccionados.',
 		tipo: 'panel-info'
 	};
-	$scope.sumariaConfigPanel = {
-		tipo: 'panel-info',
-		titulo: 'A.F.I.P. sumaria',
-		mensaje: 'No se encontraron datos de sumarias de A.F.I.P relacionados.'
-	};
 
 	$scope.model = {
-		'nroPtoVenta': '',
-		'codTipoComprob': 0,
-		'nroComprobante': '',
 		'razonSocial': '',
-		'documentoCliente': '',
 		'fechaInicio': $scope.fechaInicio,
 		'fechaFin': $scope.fechaFin,
 		'contenedor': '',
-		'buqueNombre': '',
-		'viaje': '',
-		'estado': 'N',
-		'code': '',
-		'filtroOrden': 'gateTimestamp',
-		'filtroOrdenAnterior': '',
-		'filtroOrdenReverse': false,
-		'mov': '',
-		'order': '',
-		'itemsPerPage': 15,
-		'rates': '',
-		'payment': '',
-		'payed': ''
+		'buqueNombre': ''
 	};
 
 	$scope.resultado = [];
@@ -80,22 +39,6 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 
 	$scope.loadingTasaCargas = true;
 	$scope.hayError = false;
-
-	$scope.currentPageComprobantes = 1;
-	$scope.pageComprobantes = {
-		skip: 0,
-		limit: $scope.model.itemsPerPage
-	};
-
-	$scope.$on('cambioPagina', function(event, data){
-		$scope.currentPageComprobantes = data;
-		$scope.loadingInvoices = true;
-		$scope.cargaComprobantes();
-	});
-
-	$scope.$on('cambioOrden', function(event, data){
-		$scope.cargaComprobantes();
-	});
 
 	$scope.$on('cambioFiltro', function(event, data){
 		$scope.controlTasaCargas()
@@ -124,102 +67,15 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	};
 
 	$scope.verContenedor = function(contenedor) {
-		$scope.volverAPrincipal = !$scope.volverAPrincipal;
-		$scope.model.contenedor = contenedor;
-		$scope.contenedorElegido.contenedor = contenedor;
-		$scope.loadingInvoices = true;
-		$scope.invoices = [];
-		$scope.loadingGates = true;
-		$scope.gates = [];
-		$scope.loadingTurnos = true;
-		$scope.turnos = [];
-		$scope.detalle = true;
-		$scope.currentPageContainers = 1;
-		$scope.currentPageComprobantes = 1;
-		$scope.cargaComprobantes();
-		$scope.cargaGates();
-		$scope.cargaTurnos();
-		$scope.cargaSumaria();
-	};
-
-	$scope.cargaComprobantes = function(){
-		var model = {};
-		angular.copy($scope.model, model);
-		model.fechaInicio = '';
-		model.fechaFin = '';
-		$scope.pageComprobantes.skip = (($scope.currentPageComprobantes - 1) * $scope.model.itemsPerPage);
-		$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoice($scope.$id, model, $scope.pageComprobantes, function(data){
-			if(data.status === 'OK'){
-				$scope.invoices = data.data;
-				$scope.invoicesTotalItems = data.totalCount;
-			} else {
-				$scope.mensajeResultado = {
-					titulo: 'Comprobantes',
-					mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
-					tipo: 'panel-danger'
-				}
-			}
-			$scope.loadingInvoices = false;
-		});
-	};
-
-	$scope.cargaGates = function(page){
-		page = page || { skip: 0, limit: $scope.itemsPerPage };
-		if (page.skip == 0){ $scope.currentPage = 1}
-		gatesFactory.getGate({contenedor: $scope.model.contenedor}, page, function (data) {
-			if (data.status === "OK") {
-				$scope.gates = data.data;
-				$scope.gatesTotalItems = data.totalCount;
-			} else {
-				$scope.configPanelGates = {
-					tipo: 'panel-danger',
-					titulo: 'Gates',
-					mensaje: 'Se ha producido un error al cargar los datos de los gates.'
-				}
-			}
-			$scope.loadingGates = false;
-		});
-	};
-
-	$scope.cargaTurnos = function(page){
-		page = page || { skip:0, limit: $scope.itemsPerPage };
-		turnosFactory.getTurnos({contenedor: $scope.model.contenedor}, page, function(data){
-			if (data.status === "OK"){
-				$scope.turnos = data.data;
-				$scope.turnosTotalItems = data.totalCount;
-			} else {
-				$scope.configPanelTurnos = {
-					tipo: 'panel-danger',
-					titulo: 'Turnos',
-					mensaje: 'Se ha producido un error al cargar los datos de los turnos.'
-				}
-			}
-			$scope.loadingTurnos = false;
-		});
-	};
-
-	$scope.cargaSumaria = function(){
-		$scope.cargandoSumaria = true;
-		afipFactory.getContainerSumaria($scope.model.contenedor, function(data){
-			if (data.status == 'OK'){
-				$scope.sumariaAfip = data.data;
-			} else {
-				$scope.sumariaConfigPanel = {
-					tipo: 'panel-danger',
-					titulo: 'A.F.I.P. sumaria',
-					mensaje: 'Se ha producido un error al cargar los datos de la sumaria de A.F.I.P.'
-				}
-			}
-			$scope.cargandoSumaria = false;
-		})
+		$scope.mostrarDetalle = true;
+		$scope.$broadcast('detalleContenedor', contenedor);
 	};
 
 	$scope.controlTasaCargas = function(){
 		/*Acá control de tasa a las cargas*/
 		$scope.hayError = false;
 		$scope.loadingTasaCargas = true;
-		$scope.detalle = false;
+		$scope.mostrarDetalle = false;
 		$scope.model.contenedor = '';
 		$scope.resultado = [];
 		for (var elemento in $scope.model){
