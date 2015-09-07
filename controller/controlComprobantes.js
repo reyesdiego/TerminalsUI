@@ -141,7 +141,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 
 	$scope.model = {
 		'nroPtoVenta': '',
-		'codTipoComprob': 1,
+		'codTipoComprob': '1',
 		'fechaInicio': $scope.desde,
 		'fechaFin': $scope.hasta
 	};
@@ -151,11 +151,12 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			if (data.status == 'OK'){
 				var i;
 				$scope.terminalSellPoints = data.data;
-				$scope.model.codTipoComprob = '';
+				//$scope.model.codTipoComprob = '1';
 				$scope.model.nroPtoVenta = $scope.terminalSellPoints[0];
 				for (i = 1; i<$scope.terminalSellPoints.length; i++){
 					$scope.model.nroPtoVenta = $scope.model.nroPtoVenta + ',' + $scope.terminalSellPoints[i];
 				}
+				$scope.controlCorrelatividad();
 			}
 		})
 	};
@@ -300,7 +301,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 
 	$scope.model = {
 		'nroPtoVenta': '',
-		'codTipoComprob': 0,
+		'codTipoComprob': '',
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',
@@ -500,7 +501,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 	$scope.model = {
 		'nroPtoVenta': '',
-		'codTipoComprob': 0,
+		'codTipoComprob': '',
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',

@@ -8,7 +8,7 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', func
 
 	$scope.model = {
 		'nroPtoVenta': '',
-		'codTipoComprob': 0,
+		'codTipoComprob': '',
 		'nroComprobante': '',
 		'razonSocial': '',
 		'documentoCliente': '',

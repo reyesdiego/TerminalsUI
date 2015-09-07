@@ -4,6 +4,7 @@
 
 myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', 'turnosFactory', '$sce', 'dialogs', 'loginService',
 	function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, turnosFactory, $sce, dialogs, loginService){
+
 		$scope.status = {
 			open: true
 		};
