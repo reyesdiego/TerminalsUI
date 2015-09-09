@@ -191,7 +191,7 @@ foreach ($data['detalle'] as $detalle) {
 $pdf->Cell(115, 8, "Subtotal", 1, 0, "R");
 $pdf->Cell(75, 8, "US$ " . number_format($data['importe']['subtotal'], 2), 1, 0, "R");
 $pdf->Ln();
-$pdf->Cell(115, 8, "I.V.A.", "LRB", 0, "R");
+$pdf->Cell(115, 8, "I.V.A.", 1, 0, "R");
 $pdf->Cell(75, 8, "US$ " . number_format($data['importe']['iva'], 2), 1, 0, "R");
 $pdf->Ln();
 if (isset($data['importe']['otrosTributos'])){
