@@ -148,28 +148,28 @@ foreach ($data['resultado'] as $puntoDeVenta) {
 
 	$inicio = '';
 	if ($puntoDeVenta['totalCnt'] > 1){
-		$inicio = "Se hallaron " . $puntoDeVenta['totalCnt'] . " comprobantes faltantes:\n";
+		$inicio = "Se hallaron " . $puntoDeVenta['totalCnt'] . " comprobantes faltantes:\n\n";
 	} else {
-		$inicio = "Se halló 1 comprobante faltante:\n";
+		$inicio = "Se halló 1 comprobante faltante:\n\n";
 	}
 
-	$textoResultado = $inicio . $textoResultado;
+	$textoResultado = "\n" . $inicio . $textoResultado . "\n ";
 
 	//Calculate the height of the row
 	$nb=0;
 	$nb=$pdf->NbLines(190, $textoResultado);
-	$h=5*$nb;
+	$h=4*$nb;
 	//Issue a page break first if needed
 	$pdf->CheckPageBreak($h);
 
 	$pdf->SetTextColor(255, 255, 255);
 	$pdf->SetFont('Arial', 'B', 12);
-	$pdf->Cell(190, 10, utf8_decode($puntoDeVenta['titulo']), 1, 0, "L", true);
+	$pdf->Cell(190, 8, utf8_decode($puntoDeVenta['titulo']), 1, 0, "L", true);
 	$pdf->Ln();
 
 	$pdf->SetTextColor(0, 0, 0);
 	$pdf->SetFont('Arial', '', 10);
-	$pdf->MultiCell(190, 10, utf8_decode($textoResultado), 1, "L", false);
+	$pdf->MultiCell(190, 4, utf8_decode($textoResultado), 1, "L", false);
 
 	$pdf->Ln(5);
 
