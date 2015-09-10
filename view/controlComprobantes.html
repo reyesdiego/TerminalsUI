@@ -12,7 +12,7 @@
 
 <tab class="hidden-print" heading="Sin Tasa a las cargas">
 	<div ng-controller="tasaCargasCtrl">
-		<div class="visible-print-block">
+		<div class="col-lg-12 visible-print-block">
 			<h3>Sin Tasa a las cargas</h3>
 		</div>
 		<br>
@@ -48,8 +48,8 @@
 
 <tab class="hidden-print" heading="Control de Correlatividad">
 	<div ng-controller="correlatividadCtrl">
-		<div class="visible-print-block">
-			<h3>Control de correlatividad</h3>
+		<div class="col-lg-12 visible-print-block">
+			<h3>Control de correlatividad<span> - {{ filtroTerminal }}</span></h3>
 		</div>
 		<br>
 		<accordion-busqueda-correlatividad model="model" ocultar-filtros="ocultarFiltros"></accordion-busqueda-correlatividad>
