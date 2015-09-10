@@ -190,6 +190,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		};
 
 		$scope.$on('cambioTerminal', function(){
+			$scope.detallesGates = false;
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 		});
