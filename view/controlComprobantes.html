@@ -65,6 +65,9 @@
 			<div-panel config-panel="pantalla" ng-show="puntosDeVenta.length == 0">
 				{{ pantalla.mensajeCorrelativo }}
 			</div-panel>
+			<div class="text-right" ng-show="totalFaltantes > 0 && totalPuntos == 0">
+				<button class="btn btn-primary" ng-click="imprimirPdf()"><span class="glyphicon glyphicon-download"></span> Imprimir en PDF</button>
+			</div>
 		</div-cargando>
 	</div>
 </tab>

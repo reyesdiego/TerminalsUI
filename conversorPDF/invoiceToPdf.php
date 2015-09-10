@@ -10,7 +10,7 @@ class PDF extends FPDF
 		//Logo
 		$this->Image('imagenes/logo.jpg',10,8,40);
 		//Arial bold 15
-		$this->SetFont('Arial','B',15);
+		$this->SetFont('Arial','B',16);
 		//Movernos a la derecha
 
 		//Título
