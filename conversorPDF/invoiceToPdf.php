@@ -171,7 +171,7 @@ foreach ($data['detalle'] as $detalle) {
 		$x=$pdf->GetX();
 		$y=$pdf->GetY();
 
-		//$item['descripcion'] = em($item['descripcion']);
+		$item['descripcion'] = str_replace('–', '-', $item['descripcion']);
 		$pdf->MultiCell(80, 5, utf8_decode($item['descripcion']), 1, "L");
 
 		$h = $pdf->getY();
