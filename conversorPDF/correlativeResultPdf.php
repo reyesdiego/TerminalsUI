@@ -155,13 +155,6 @@ foreach ($data['resultado'] as $puntoDeVenta) {
 
 	$textoResultado = "\n" . $inicio . $textoResultado . "\n ";
 
-	//Calculate the height of the row
-	$nb=0;
-	$nb=$pdf->NbLines(190, $textoResultado);
-	$h=4*$nb;
-	//Issue a page break first if needed
-	$pdf->CheckPageBreak($h);
-
 	$pdf->SetTextColor(255, 255, 255);
 	$pdf->SetFont('Arial', 'B', 12);
 	$pdf->Cell(190, 8, utf8_decode($puntoDeVenta['titulo']), 1, 0, "L", true);
