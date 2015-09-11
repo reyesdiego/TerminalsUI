@@ -220,12 +220,20 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		};
 
 		$scope.imprimirPdf = function(){
+			var fechaInicio = $scope.model.fechaInicio;
+			var fechaFin = $scope.model.fechaFin;
+			if ($scope.model.fechaInicio == ''){
+				fechaInicio = new Date(2013, 0, 1);
+			}
+			if ($scope.model.fechaFin == ''){
+				fechaFin = new Date();
+			}
 			var data = {
 				terminal: loginService.getFiltro(),
 				resultado: $scope.puntosDeVenta,
 				titulo: $scope.tipoComprob + " faltantes " + $scope.totalFaltantes,
-				desde: $scope.model.fechaInicio,
-				hasta: $scope.model.fechaFin
+				desde: fechaInicio,
+				hasta: fechaFin
 			};
 			downloadFactory.convertToPdf(data, 'correlativeResultPdf', function(data, status){
 				if (status == 'OK'){
