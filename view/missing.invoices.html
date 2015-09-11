@@ -1,9 +1,9 @@
 <accordion-invoices-search></accordion-invoices-search>
 
-<div class="col-lg-12 text-center" ng-show="mostrar">
+<div class="col-lg-12 text-center" ng-show="cargando">
 	<img class="media-object center-block" src="images/loading.gif">
 </div>
-<div class="col-lg-12" ng-hide="mostrar">
+<div class="col-lg-12" ng-hide="cargando">
 	<div ng-hide="datosFaltantes.length != undefined && filteredDatos.length > 0">
 		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
@@ -61,6 +61,9 @@
 						<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="$parent.predicate == 'mov' && $parent.reverse"></span>
 						Movimiento
 					</a></th>
+					<th style="text-align: center">
+						<span class="glyphicon glyphicon-zoom-in"></span>
+					</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -75,9 +78,14 @@
 					<td>{{ registro.turnoInicio | date: 'HH:mm' }}</td>
 					<td>{{ registro.turnoFin | date: 'HH:mm' }}</td>
 					<td>{{ registro.mov }}</td>
+					<td><a href="" ng-click="detalleContenedor(registro.contenedor)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 				</tr>
 			</table>
 		</div>
 		<div-pagination total-items="filteredDatos.length" current-page="currentPage" items-per-page="model.itemsPerPage"></div-pagination>
 	</div>
+</div>
+
+<div ng-show="mostrarDetalle" ng-controller="buqueViajeCtrl">
+	<buque-viaje-detail></buque-viaje-detail>
 </div>

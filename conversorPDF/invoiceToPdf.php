@@ -10,7 +10,7 @@ class PDF extends FPDF
 		//Logo
 		$this->Image('imagenes/logo.jpg',10,8,40);
 		//Arial bold 15
-		$this->SetFont('Arial','B',15);
+		$this->SetFont('Arial','B',16);
 		//Movernos a la derecha
 
 		//Título
@@ -191,7 +191,7 @@ foreach ($data['detalle'] as $detalle) {
 $pdf->Cell(115, 8, "Subtotal", 1, 0, "R");
 $pdf->Cell(75, 8, "US$ " . number_format($data['importe']['subtotal'], 2), 1, 0, "R");
 $pdf->Ln();
-$pdf->Cell(115, 8, "I.V.A.", "LRB", 0, "R");
+$pdf->Cell(115, 8, "I.V.A.", 1, 0, "R");
 $pdf->Cell(75, 8, "US$ " . number_format($data['importe']['iva'], 2), 1, 0, "R");
 $pdf->Ln();
 if (isset($data['importe']['otrosTributos'])){

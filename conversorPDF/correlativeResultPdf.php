@@ -24,7 +24,7 @@ class PDF extends FPDF
 		$this->Cell(110,10,utf8_decode('Sistema de Control de Terminales'),0,0,'C');
 		$this->Ln();
 		$this->SetX(50);
-		$this->Cell(110,10,utf8_decode('Impresión de tarifario'),0,0,'C');
+		$this->Cell(110,10,utf8_decode('Control de correlatividad'),0,0,'C');
 
 		switch ($this->terminal){
 			case 'BACTSSA':
@@ -116,52 +116,55 @@ class PDF extends FPDF
 
 $data = get_post();
 
+$desde = date('d/m/Y', strtotime($data['desde']));
+$hasta = date('d/m/Y', strtotime($data['hasta']));
+
 $pdf = new PDF();
 $pdf->setTerminal($data['terminal']);
 $pdf->AliasNbPages();
 $pdf->AddPage();
-$pdf->SetFont('Arial', 'B', 12);
 
-$pdf->Cell(20, 8, utf8_decode("Código"), 1, 0, "R");
-$pdf->Cell(110, 8, utf8_decode("Tarifa"), 1, 0, "C");
-$pdf->Cell(25, 8, "Unidad", 1, 0, "C");
-$pdf->Cell(35, 8, "Tope", 1, 0, "C");
+$pdf->SetFont('Arial', 'B', 14);
+$pdf->Cell(190, 8, utf8_decode($data['titulo']), 0, "L");
 $pdf->Ln();
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->Cell(190, 8, utf8_decode('Control realizado del ' . $desde . ' hasta el ' . $hasta), 0, "L");
+$pdf->Ln(10);
 
-foreach ($data['pricelist'] as $price) {
-	$pdf->SetFont('Arial', '', 8);
+$pdf->SetFillColor(178, 34, 34);
 
-	//Calculate the height of the row
-	$nb=0;
-	$nb=$pdf->NbLines(110, $price['description']);
-	$h=5*$nb;
-	//Issue a page break first if needed
-	$pdf->CheckPageBreak($h);
+foreach ($data['resultado'] as $puntoDeVenta) {
 
-	$pdf->setX(30);
+	$textoResultado = '';
+	$last = end($puntoDeVenta['resultadoCorrelativo']);
 
-	$x=$pdf->GetX();
-	$y=$pdf->GetY();
-
-	$pdf->MultiCell(110, 5, utf8_decode($price['description']), 1, "L");
-
-	$h = $pdf->getY();
-
-	$pdf->setXY(10, $y);
-	$pdf->Cell(20, $h - $y, $price['code'], 1, 0, "L");
-	$pdf->setX(140);
-	if (isset($price['unit'])){
-		$pdf->Cell(25, $h - $y, $price['unit'], 1, 0, "L");
-	} else {
-		$pdf->Cell(25, $h - $y, "SIN DEFINIR", 1, 0, "L");
-	}
-	if (isset($price['orderPrice'])){
-		$pdf->Cell(35, $h - $y, "US$ " . number_format($price['orderPrice'], 2), 1, 0, "R");
-	} else {
-		$pdf->Cell(35, $h - $y, "SIN DEFINIR", 1, 0, "R");
+	foreach ($puntoDeVenta['resultadoCorrelativo'] as $resultado){
+		if ($last == $resultado){
+			$textoResultado .= $resultado;
+		} else {
+			$textoResultado .= $resultado . " - ";
+		}
 	}
 
+	$inicio = '';
+	if ($puntoDeVenta['totalCnt'] > 1){
+		$inicio = "Se hallaron " . $puntoDeVenta['totalCnt'] . " comprobantes faltantes:\n\n";
+	} else {
+		$inicio = "Se halló 1 comprobante faltante:\n\n";
+	}
+
+	$textoResultado = "\n" . $inicio . $textoResultado . "\n ";
+
+	$pdf->SetTextColor(255, 255, 255);
+	$pdf->SetFont('Arial', 'B', 12);
+	$pdf->Cell(190, 8, utf8_decode($puntoDeVenta['titulo']), 1, 0, "L", true);
 	$pdf->Ln();
+
+	$pdf->SetTextColor(0, 0, 0);
+	$pdf->SetFont('Arial', '', 10);
+	$pdf->MultiCell(190, 4, utf8_decode($textoResultado), 1, "L", false);
+
+	$pdf->Ln(5);
 
 }
 

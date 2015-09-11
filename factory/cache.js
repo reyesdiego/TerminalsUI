@@ -186,7 +186,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 					priceFactory.getArrayMatches(terminal, function(data){
 						if (data.status == 'OK'){
 							generalCache.put('matches' + terminal, data.data);
-							$rootScope.$broadcast('progreso', {mensaje: 2});
+							//$rootScope.$broadcast('progreso', {mensaje: 2});
 						}
 					});
 				} else {

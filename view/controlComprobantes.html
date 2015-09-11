@@ -12,7 +12,7 @@
 
 <tab class="hidden-print" heading="Sin Tasa a las cargas">
 	<div ng-controller="tasaCargasCtrl">
-		<div class="visible-print-block">
+		<div class="col-lg-12 visible-print-block">
 			<h3>Sin Tasa a las cargas</h3>
 		</div>
 		<br>
@@ -39,7 +39,7 @@
 				<span>{{ mensajeResultado.mensaje }}</span>
 			</div-panel>
 		</div>
-		<div ng-show="detalle">
+		<div ng-show="mostrarDetalle" ng-controller="buqueViajeCtrl">
 			<buque-viaje-detail></buque-viaje-detail>
 		</div>
 	</div>
@@ -48,8 +48,8 @@
 
 <tab class="hidden-print" heading="Control de Correlatividad">
 	<div ng-controller="correlatividadCtrl">
-		<div class="visible-print-block">
-			<h3>Control de correlatividad</h3>
+		<div class="col-lg-12 visible-print-block">
+			<h3>Control de correlatividad<span> - {{ filtroTerminal }}</span></h3>
 		</div>
 		<br>
 		<accordion-busqueda-correlatividad model="model" ocultar-filtros="ocultarFiltros"></accordion-busqueda-correlatividad>
@@ -65,6 +65,9 @@
 			<div-panel config-panel="pantalla" ng-show="puntosDeVenta.length == 0">
 				{{ pantalla.mensajeCorrelativo }}
 			</div-panel>
+			<div class="text-right" ng-show="totalFaltantes > 0 && totalPuntos == 0">
+				<button class="btn btn-primary" ng-click="imprimirPdf()"><span class="glyphicon glyphicon-download"></span> Imprimir en PDF</button>
+			</div>
 		</div-cargando>
 	</div>
 </tab>

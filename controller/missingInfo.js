@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'generalCache', 'invoiceService',
-	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, generalCache, invoiceService){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'generalCache',
+	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, generalCache){
 		$scope.currentPage = 1;
 
 		$scope.logoTerminal = $rootScope.logoTerminal;
@@ -40,25 +40,12 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			return generalFunctions.colorHorario(gate);
 		};
 
-		$scope.existeDescripcion = function(itemId){
-			return invoiceService.existeDescripcion(itemId);
-		};
-
 		$scope.openDate = function(event){
 			generalFunctions.openDate(event);
 		};
 
 		$scope.cambioItemsPorPagina = function(data){
 			$scope.filtrado('itemsPerPage', data.value);
-		};
-
-		$scope.trackInvoice = function(comprobante){
-			invoiceService.trackInvoice(comprobante)
-				.then(function(response){
-					if (angular.isDefined(response)) comprobante = response;
-				}, function(message){
-					dialogs.error('Liquidaciones', message);
-				})
 		};
 
 		$scope.configPanel = {
@@ -76,7 +63,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		$scope.model.fechaInicio.setHours(0, 0, 0, 0);
 		$scope.model.fechaFin.setHours(0, 0, 0, 0);
 
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar'];
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'rates'];
 
 		$scope.filtrado = function(filtro, contenido){
 			$scope.model[filtro] = contenido;
@@ -96,12 +83,18 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 							$scope.datosFaltantes = data.data;
 							$scope.totalItems = $scope.datosFaltantes.length;
 							$scope.datosFaltantes.forEach(function(comprob){
+								comprob.fecha = comprob.f;
 								if (angular.isDefined($scope.itemDescriptionInvoices[comprob.code])) {
 									comprob.code = comprob.code + ' - ' + $scope.itemDescriptionInvoices[comprob.code];
 								} else {
 									comprob.code = comprob.code +  ' - No se halló la descripción, verifique que el código esté asociado.';
 								}
 							});
+							$scope.configPanel = {
+								tipo: 'panel-success',
+								titulo: 'Control gates',
+								mensaje: 'No se encontraron comprobantes con gates faltantes para los filtros seleccionados.'
+							};
 						} else {
 							$scope.configPanel = {
 								tipo: 'panel-danger',
@@ -121,7 +114,12 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 							$scope.cargando = false;
 							$scope.datosFaltantes.forEach(function(registro){
 								registro.fecha = registro.gateTimestamp;
-							})
+							});
+							$scope.configPanel = {
+								tipo: 'panel-success',
+								titulo: 'Control gates',
+								mensaje: 'No se encontraron gates con comprobantes faltantes.'
+							};
 						} else {
 							$scope.configPanel = {
 								tipo: 'panel-danger',
@@ -135,46 +133,9 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			}
 		};
 
-		$scope.checkComprobantes = function(comprobante){
-			var response;
-			response = invoiceService.checkComprobantes(comprobante, $scope.comprobantesVistos, $scope.datosFaltantes);
-			$scope.datosFaltantes = response.datosInvoices;
-			$scope.comprobantesVistos = response.comprobantesVistos;
-		};
-
-		$scope.mostrarDetalle = function(comprobante){
-			$scope.cargando = true;
-			invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.datosFaltantes)
-				.then(function(response){
-					$scope.verDetalle = response.detalle;
-					$scope.datosFaltantes = response.datosInvoices;
-					$scope.comprobantesVistos = response.comprobantesVistos;
-					$scope.commentsInvoice = response.commentsInvoice;
-					$scope.mostrarResultado = true;
-					$scope.cargando = false;
-				});
-		};
-
-		$scope.ocultarResultado = function(comprobante){
-			$scope.checkComprobantes(comprobante);
-			$scope.mostrarResultado = false;
-		};
-
-		$scope.chequearTarifas = function(comprobante){
-			var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
-			$scope.comprobantesControlados = resultado.data;
-			return resultado.retValue;
-		};
-
-		$scope.verPdf = function(){
-			$scope.disablePdf = true;
-			invoiceService.verPdf($scope.verDetalle)
-				.then(function(){
-					$scope.disablePdf = false;
-				}, function(){
-					dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
-					$scope.disablePdf = false;
-				});
+		$scope.detalleContenedor = function(contenedor){
+			$scope.mostrarDetalle = true;
+			$scope.$broadcast('detalleContenedor', contenedor);
 		};
 
 		if (loginService.getStatus()) $scope.cargaDatos();

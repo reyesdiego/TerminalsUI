@@ -8,7 +8,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	$scope.sesion = true;
 	$scope.hayError = false;
 
-	$scope.max = 90;
+	$scope.max = 100;
 
 	$scope.progreso = 0;
 	$scope.msg = [

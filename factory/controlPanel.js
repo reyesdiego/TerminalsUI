@@ -79,7 +79,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 		factory.getFacturasMeses = function(datos, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'getFacturasMeses');
-			var inserturl = serverUrl + '/invoices/countsByMonth/' + datos.moneda;
+			var inserturl = serverUrl + '/invoices/countsByMonth' ;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data){
 					callback(data);
@@ -116,7 +116,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 		factory.getFacturadoPorDia = function(datos, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'getFacturadoPorDia');
-			var inserturl = serverUrl + '/invoices/countsByDate/' + datos.moneda +'/';
+			var inserturl = serverUrl + '/invoices/countsByDate';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data){
 					callback(data);
