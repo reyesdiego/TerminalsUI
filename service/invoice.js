@@ -76,6 +76,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 		var monedaALaFecha;
 
 		comprobante.controlTarifas = [];
+		comprobante.tarifasSinMatch = [];
 		comprobante.interfazLiquidada = '';
 		comprobante.tieneTasa = false;
 		var lookup = {};
@@ -125,6 +126,13 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 								comprobante.controlTarifas.push(tarifaError);
 							}
 						} else {
+							tarifaError = {
+								codigo: item.id,
+								tieneMatch: true,
+								topPrices: lookup[item.id].topPrices,
+								emision: comprobante.fecha.emision
+							};
+							comprobante.tarifasSinMatch.push(tarifaError);
 							response = true;
 							comprobante.noMatch = true;
 						}
@@ -141,11 +149,25 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 								comprobante.controlTarifas.push(tarifaError);
 							}
 						} else {
+							tarifaError = {
+								codigo: item.id,
+								tieneMatch: true,
+								topPrices: lookup[item.id].topPrices,
+								emision: comprobante.fecha.emision
+							};
+							comprobante.tarifasSinMatch.push(tarifaError);
 							response = true;
 							comprobante.noMatch = true;
 						}
 					}
 				} else {
+					tarifaError = {
+						codigo: item.id,
+						tieneMatch: false,
+						topPrices: [],
+						emision: comprobante.fecha.emision
+					};
+					comprobante.tarifasSinMatch.push(tarifaError);
 					response = true;
 					comprobante.noMatch = true;
 				}

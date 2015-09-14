@@ -131,6 +131,26 @@
 		</ul>
 	</div-panel>
 </div>
+<div class="row col-lg-12 center-block hidden-print" ng-show="verDetalle.noMatch">
+	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Tarifas sin controlar' }">
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover table-striped" style="text-align: center">
+				<tr>
+					<th style="text-align: center">Código</th>
+					<th style="text-align: center">¿Está asociada?</th>
+					<th style="text-align: center">Emisión comprobante</th>
+					<th style="text-align: center">Fechas de tarifas asociadas</th>
+				</tr>
+				<tr ng-repeat="tarifaError in verDetalle.tarifasSinMatch">
+					<td>{{ tarifaError.codigo }}</td>
+					<td><span class="glyphicon glyphicon-check" ng-show="tarifaError.tieneMatch"></span><span class="glyphicon glyphicon-remove" ng-hide="tarifaError.tieneMatch"></span></td>
+					<td>{{ tarifaError.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
+					<td><span ng-repeat="fecha in tarifaError.topPrices">{{ fecha.from | date: 'dd/MM/yyyy':'UTC' }}</span><span ng-show="!$last">, </span></td>
+				</tr>
+			</table>
+		</div>
+	</div-panel>
+</div>
 <accordion-min heading="Comentarios del comprobante" ng-show="commentsInvoice.length > 0">
 	<div class="table-responsive col-lg-12 center-block hidden-print-block">
 		<table class="table table-striped table-bordered table-hover">
