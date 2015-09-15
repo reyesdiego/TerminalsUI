@@ -143,9 +143,9 @@ $pdf->Cell(0, 8, "Detalle", "LRB", 0, "C");
 $pdf->Ln();
 $pdf->Cell(15, 8, utf8_decode("Ítem"), "LRB", 0, "R");
 $pdf->Cell(80, 8, utf8_decode("Descripcion"), "LRB", 0, "C");
-$pdf->Cell(20, 8, "Cantidad", "LRB", 0, "C");
+$pdf->Cell(13, 8, "Cant.", "LRB", 0, "C");
 $pdf->Cell(30, 8, "Precio Unitario", "LRB", 0, "C");
-$pdf->Cell(15, 8, "Unidad", "LRB", 0, "C");
+$pdf->Cell(22, 8, "Unidad", "LRB", 0, "C");
 $pdf->Cell(30, 8, "Total", "LRB", 0, "R");
 $pdf->Ln();
 
@@ -171,7 +171,7 @@ foreach ($data['detalle'] as $detalle) {
 		$x=$pdf->GetX();
 		$y=$pdf->GetY();
 
-		//$item['descripcion'] = em($item['descripcion']);
+		$item['descripcion'] = str_replace('–', '-', $item['descripcion']);
 		$pdf->MultiCell(80, 5, utf8_decode($item['descripcion']), 1, "L");
 
 		$h = $pdf->getY();
@@ -179,9 +179,9 @@ foreach ($data['detalle'] as $detalle) {
 		$pdf->setXY(10, $y);
 		$pdf->Cell(15, $h - $y, $item['id'], 1, 0, "R");
 		$pdf->setX(105);
-		$pdf->Cell(20, $h - $y, $item['cnt'], 1, 0, "R");
+		$pdf->Cell(13, $h - $y, $item['cnt'], 1, 0, "R");
 		$pdf->Cell(30, $h - $y, "US$ " . number_format($item['impUnit'], 2), 1, 0, "R");
-		$pdf->Cell(15, $h - $y, $item['uniMed'], 1, 0, "R");
+		$pdf->Cell(22, $h - $y, $item['uniMed'], 1, 0, "R");
 		$pdf->Cell(30, $h - $y, "US$ " . number_format($item['impTot'], 2), 1, 0, "R");
 		$pdf->Ln();
 	}

@@ -464,9 +464,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.isCollapsedDayTasas = true;
 			$scope.recargarTasas = false;
 			controlPanelFactory.getTasas(datos, function(graf){
-				$scope.chartDataFacturadoTasas = result.dataGraf;
-				$scope.control.ratesCount = result.ratesCount;
-				$scope.control.ratesTotal = result.ratesTotal;
+				$scope.chartDataFacturadoTasas = graf.dataGraf;
+				$scope.control.ratesCount = graf.ratesCount;
+				$scope.control.ratesTotal = graf.ratesTotal;
 				$scope.loadingTasas = false;
 			});
 		};

@@ -41,7 +41,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th style="text-align: right; width: 80px">Item</th>
+				<th style="text-align: right; width: 100px">Item</th>
 				<th style="text-align: left">Descripci&oacute;n</th>
 				<th style="text-align: right">Cantidad</th>
 				<th style="text-align: right; width: 120px">Precio Unitario</th>
@@ -60,7 +60,7 @@
 			</tr>
 			<tr style="text-align: right" ng-repeat="item in contenedor.items">
 				<td><a href class="hidden-print" ng-click="filtrado('code', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
-				<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="existeDescripcion(item.id)"></span> <text-pop text="{{ item.descripcion }}" max="200"></text-pop></td>
+				<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="existeDescripcion(item.id)"></span> <text-pop text="{{ item.descripcion }}" max="190"></text-pop></td>
 				<td>{{ item.cnt }}</td>
 				<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle | currency }}</td>
 				<td>{{ item.uniMed }}</td>
@@ -129,6 +129,26 @@
 			<li>Se hayaron tarifas sin asociar</li>
 			<li>No se tienen datos actualizados del tarifario, a la fecha de emisión del comprobante</li>
 		</ul>
+	</div-panel>
+</div>
+<div class="row col-lg-12 center-block hidden-print" ng-show="verDetalle.noMatch">
+	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Tarifas sin controlar' }">
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover table-striped" style="text-align: center">
+				<tr>
+					<th style="text-align: center">Código</th>
+					<th style="text-align: center">¿Está asociada?</th>
+					<th style="text-align: center">Emisión comprobante</th>
+					<th style="text-align: center">Fechas de tarifas asociadas</th>
+				</tr>
+				<tr ng-repeat="tarifaError in verDetalle.tarifasSinMatch">
+					<td>{{ tarifaError.codigo }}</td>
+					<td><span class="glyphicon glyphicon-check" ng-show="tarifaError.tieneMatch"></span><span class="glyphicon glyphicon-remove" ng-hide="tarifaError.tieneMatch"></span></td>
+					<td>{{ tarifaError.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
+					<td><span ng-repeat="fecha in tarifaError.topPrices">{{ fecha.from | date: 'dd/MM/yyyy':'UTC' }}</span><span ng-show="!$last">, </span></td>
+				</tr>
+			</table>
+		</div>
 	</div-panel>
 </div>
 <accordion-min heading="Comentarios del comprobante" ng-show="commentsInvoice.length > 0">

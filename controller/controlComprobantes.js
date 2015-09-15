@@ -61,6 +61,13 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.mensajeResultado = mensaje;
 	});
 
+	$scope.clientSelected = function(selected){
+		if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
+			$scope.model.razonSocial = selected.title;
+			$scope.filtrado('razonSocial', selected.title);
+		}
+	};
+
 	$scope.filtrado = function(filtro, contenido){
 		$scope.model[filtro] = contenido;
 		$scope.controlTasaCargas();

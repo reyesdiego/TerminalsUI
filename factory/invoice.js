@@ -138,7 +138,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				.success(function (data){
 					data.data = setearInterfazComprobante(data.data);
 					data.data.transferencia = formatService.formatearFechaISOString(generalFunctions.idToDate(data.data._id));
-					callback(ponerDescripcionComprobante(data.data));
+					callback(ponerUnidadDeMedida(ponerDescripcionComprobante(data.data)));
 				}).error(function(error){
 					errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
 				});
@@ -270,6 +270,20 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		factory.cancelRequest = function(request){
 			HTTPCanceler.cancel(request);
 		};
+
+		function ponerUnidadDeMedida (comprobante) {
+			var cacheUnidades = generalCache.get('unitTypes');
+			var unidadesTarifas = [];
+			for (var i = 0, len = cacheUnidades.length; i < len; i++) {
+				unidadesTarifas[cacheUnidades[i]._id] = cacheUnidades[i].description;
+			}
+			comprobante.detalle.forEach(function(contenedor){
+				contenedor.items.forEach(function(item){
+					item.uniMed = unidadesTarifas[item.uniMed];
+				})
+			});
+			return comprobante;
+		}
 
 		return factory;
 

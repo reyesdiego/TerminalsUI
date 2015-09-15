@@ -151,8 +151,8 @@
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('tarifario', rutas)"><a collap ui-sref="tarifario">Tarifario</a></li>
 						<li ng-show="in_array('matches', rutas)"><a collap ui-sref="matches">Asociar</a></li>
-						<li class="divider"></li>
-						<li ng-show="in_array('modificarTarifario', rutas)"><a collap ui-sref="modificarTarifario">Editar</a></li>
+						<!--<li class="divider"></li>-->
+						<!--<li ng-show="in_array('modificarTarifario', rutas)"><a collap ui-sref="modificarTarifario">Editar</a></li>-->
 					</ul>
 				</li>
 				<li ng-show="acceso!='' && (in_array('invoices', rutas) || in_array('cfacturas', rutas))" dropdown>
@@ -173,7 +173,7 @@
 					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
-						<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>
+						<!--<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>-->
 						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>
