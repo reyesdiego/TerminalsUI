@@ -99,6 +99,16 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 			});
 	};
 
+	factory.savePriceList = function(pricelistData, callback){
+		var inserturl = serverUrl + '/algunaRuta';
+		$http.post(inserturl, pricelistData)
+			.success(function(data){
+				callback(data);
+			}).error(function (error) {
+				callback(error);
+			})
+	};
+
 	factory.getUnitTypes = function(callback){
 		var inserturl = serverUrl + '/unitTypes';
 		$http.get(inserturl)

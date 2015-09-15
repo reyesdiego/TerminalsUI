@@ -142,8 +142,19 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			if (changesList.length > 0){
 				var res = dialogs.confirm('Tarifario', 'Se guardarán los cambios para las ' + changesList.length + ' tarifas modificadas, con fecha de vigencia a partir del ' + $filter('date')($scope.fechaVigencia, 'dd/MM/yyyy'))
 				res.result.then(function(){
-					//acá guardar los datos
-					console.log('hola');
+					var pricelistData = {
+						fechaVigencia: $scope.fechaVigencia,
+						prices: changesList
+					};
+					/*priceFactory.savePriceList(pricelistData, function(data){
+						if (data.status == 'OK'){
+
+						} else {
+
+						}
+					});
+					//acá guardar los datos*/
+					console.log(pricelistData);
 				})
 			} else {
 				dialogs.notify('Tarifario', 'No se han producido cambios en el tarifario.');
