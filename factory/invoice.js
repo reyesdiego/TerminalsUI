@@ -279,7 +279,9 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			}
 			comprobante.detalle.forEach(function(contenedor){
 				contenedor.items.forEach(function(item){
-					item.uniMed = unidadesTarifas[item.uniMed];
+					if (angular.isDefined(unidadesTarifas[item.uniMed])){
+						item.uniMed = unidadesTarifas[item.uniMed];
+					}
 				})
 			});
 			return comprobante;
