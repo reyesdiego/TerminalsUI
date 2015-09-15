@@ -41,7 +41,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th style="text-align: right; width: 80px">Item</th>
+				<th style="text-align: right; width: 100px">Item</th>
 				<th style="text-align: left">Descripci&oacute;n</th>
 				<th style="text-align: right">Cantidad</th>
 				<th style="text-align: right; width: 120px">Precio Unitario</th>
@@ -60,7 +60,7 @@
 			</tr>
 			<tr style="text-align: right" ng-repeat="item in contenedor.items">
 				<td><a href class="hidden-print" ng-click="filtrado('code', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
-				<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="existeDescripcion(item.id)"></span> <text-pop text="{{ item.descripcion }}" max="200"></text-pop></td>
+				<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="existeDescripcion(item.id)"></span> <text-pop text="{{ item.descripcion }}" max="190"></text-pop></td>
 				<td>{{ item.cnt }}</td>
 				<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle | currency }}</td>
 				<td>{{ item.uniMed }}</td>
