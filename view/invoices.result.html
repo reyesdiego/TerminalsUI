@@ -145,7 +145,7 @@
 					<td>{{ tarifaError.codigo }}</td>
 					<td><span class="glyphicon glyphicon-check" ng-show="tarifaError.tieneMatch"></span><span class="glyphicon glyphicon-remove" ng-hide="tarifaError.tieneMatch"></span></td>
 					<td>{{ tarifaError.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
-					<td><span ng-repeat="fecha in tarifaError.topPrices">{{ fecha.from | date: 'dd/MM/yyyy':'UTC' }}</span><span ng-show="!$last">, </span></td>
+					<td><span ng-repeat="fecha in tarifaError.topPrices track by $index">{{ fecha.from | date: 'dd/MM/yyyy':'UTC' }}<span ng-show="!$last">, </span></span></td>
 				</tr>
 			</table>
 		</div>
