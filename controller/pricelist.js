@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache', 'generalFunctions', '$filter',
-	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions, $filter) {
+myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache', 'generalFunctions', '$filter', 'cacheFactory', '$q',
+	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions, $filter, cacheFactory, $q) {
 
 		'use strict';
 		// Variable para almacenar la info principal que trae del factory
@@ -128,6 +128,20 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			window.open('data:application/vnd.ms-excel;filename=exportData.doc;' + base64data);
 		};
 
+		$scope.guardarTarifa = function(tarifa){
+			var deferred = $q.defer();
+
+			priceFactory.savePriceChanges(tarifa, tarifa._id, function(data){
+				if (data.status == 'OK'){
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
+			});
+
+			return deferred.promise;
+		};
+
 		$scope.guardarCambios = function(){
 			var i;
 			var changesList = [];
@@ -139,22 +153,25 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 					changesList.push($scope.userPricelist[i]);
 				}
 			}
+			var llamadas = [];
 			if (changesList.length > 0){
 				var res = dialogs.confirm('Tarifario', 'Se guardarán los cambios para las ' + changesList.length + ' tarifas modificadas, con fecha de vigencia a partir del ' + $filter('date')($scope.fechaVigencia, 'dd/MM/yyyy'))
 				res.result.then(function(){
-					var pricelistData = {
-						fechaVigencia: $scope.fechaVigencia,
-						prices: changesList
-					};
-					/*priceFactory.savePriceList(pricelistData, function(data){
-						if (data.status == 'OK'){
+					changesList.forEach(function(price){
+						delete price.nuevoTopPrice;
+						delete price.idUnit;
 
-						} else {
-
-						}
+						llamadas.push($scope.guardarTarifa(price))
 					});
-					//acá guardar los datos*/
-					console.log(pricelistData);
+					$q.all(llamadas)
+						.then(function(){
+							dialogs.notify('Tarifario', 'El tarifario se ha actualizado correctamente');
+							cacheFactory.actualizarMatchesArray(loginService.getFiltro());
+							$scope.cargaPricelist();
+						}, function(){
+							dialogs.error('Tarifario', 'Se ha producido un erro al actualizar el tarifario');
+							$scope.cargaPricelist();
+						});
 				})
 			} else {
 				dialogs.notify('Tarifario', 'No se han producido cambios en el tarifario.');

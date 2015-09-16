@@ -68,13 +68,13 @@
 						<td><textarea class="textarea-td" ng-model="price.description"></textarea></td>
 						<td>
 							<select class="form-control" ng-model="price.idUnit">
-								<option ng-repeat="unidad in unidadesTarifas" value="{{ unidad._id }}">{{ unidad.description }}</option>
+								<option ng-repeat="unidad in unidadesTarifas" value="{{ unidad._id }}" ng-selected="price.idUnit == unidad._id">{{ unidad.description }}</option>
 							</select>
 						</td>
 						<td>
 							<select class="form-control" ng-model="price.nuevoTopPrice.currency">
-								<option value="DOL">U$S</option>
-								<option value="PES">$ARG</option>
+								<option value="DOL" ng-selected="price.nuevoTopPrice.currency == 'DOL'">U$S</option>
+								<option value="PES" ng-selected="price.nuevoTopPrice.currency == 'PES'">$ARG</option>
 							</select>
 						</td>
 						<td style="text-align: right">
