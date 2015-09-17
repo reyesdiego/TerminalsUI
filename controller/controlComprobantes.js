@@ -522,124 +522,140 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 
 }]);
 
-myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory) {
+myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'dialogs',
+	function($rootScope, $scope, invoiceFactory, dialogs ) {
 
-	var misEstados = $scope.estado.split(',');
+		var misEstados = $scope.estado.split(',');
 
-	if (misEstados.length == 1){
-		$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
-	} else {
-		$scope.ocultarFiltros = ['nroPtoVenta'];
-	}
+		if (misEstados.length == 1){
+			$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
+		} else {
+			$scope.ocultarFiltros = ['nroPtoVenta'];
+		}
 
-	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
-	$scope.model = {
-		'nroPtoVenta': '',
-		'codTipoComprob': '',
-		'nroComprobante': '',
-		'razonSocial': '',
-		'documentoCliente': '',
-		'fechaInicio': '',
-		'fechaFin': $scope.fechaFin,
-		'contenedor': '',
-		'buqueNombre': '',
-		'viaje': '',
-		'estado': $scope.estado,
-		'code': '',
-		'filtroOrden': 'gateTimestamp',
-		'filtroOrdenAnterior': '',
-		'filtroOrdenReverse': false,
-		'order': '',
-		'itemsPerPage': 15,
-		'rates': '',
-		'payment': '',
-		'payed': ''
-	};
+		$scope.model = {
+			'nroPtoVenta': '',
+			'codTipoComprob': '',
+			'nroComprobante': '',
+			'razonSocial': '',
+			'documentoCliente': '',
+			'fechaInicio': '',
+			'fechaFin': $scope.fechaFin,
+			'contenedor': '',
+			'buqueNombre': '',
+			'viaje': '',
+			'estado': $scope.estado,
+			'code': '',
+			'filtroOrden': 'gateTimestamp',
+			'filtroOrdenAnterior': '',
+			'filtroOrdenReverse': false,
+			'order': '',
+			'itemsPerPage': 15,
+			'rates': '',
+			'payment': '',
+			'payed': ''
+		};
 
-	$scope.page = {
-		skip:0,
-		limit: $scope.model.itemsPerPage
-	};
+		$scope.page = {
+			skip:0,
+			limit: $scope.model.itemsPerPage
+		};
 
-	$scope.comprobantes = [];
+		$scope.comprobantes = [];
 
-	$scope.loadingState = false;
+		$scope.loadingState = false;
 
-	$scope.recargar = true;
+		$scope.recargar = true;
 
-	$scope.reportCSV = '';
+		$scope.$on('actualizarListado', function(event, data){
+			if ($scope.estado != data){
+				$scope.currentPage = 1;
+				if ($scope.model.estado == 'N'){
+					$scope.model.estado = $scope.estado;
+				}
+				$scope.traerComprobantes();
+			}
+		});
 
-	$scope.$on('actualizarListado', function(event, data){
-		if ($scope.estado != data){
+		$scope.$on('cambioPagina', function(event, data){
+			$scope.currentPage = data;
+			if ($scope.model.estado == 'N'){
+				$scope.model.estado = $scope.estado;
+			}
+			$scope.traerComprobantes();
+		});
+
+		$scope.$on('cambioFiltro', function(){
+			$scope.recargar = false;
 			$scope.currentPage = 1;
 			if ($scope.model.estado == 'N'){
 				$scope.model.estado = $scope.estado;
 			}
 			$scope.traerComprobantes();
-		}
-	});
+		});
 
-	$scope.$on('cambioPagina', function(event, data){
-		$scope.currentPage = data;
-		if ($scope.model.estado == 'N'){
-			$scope.model.estado = $scope.estado;
-		}
-		$scope.traerComprobantes();
-	});
+		$scope.$on('cambioOrden', function(event, data){
+			$scope.traerComprobantes();
+		});
 
-	$scope.$on('cambioFiltro', function(){
-		$scope.recargar = false;
-		$scope.currentPage = 1;
-		if ($scope.model.estado == 'N'){
-			$scope.model.estado = $scope.estado;
-		}
-		$scope.traerComprobantes();
-	});
-
-	$scope.$on('cambioOrden', function(event, data){
-		$scope.traerComprobantes();
-	});
-
-	$scope.$on('errorInesperado', function(e, mensaje){
-		$scope.loadingState = false;
-		$scope.comprobantes = [];
-		$scope.mensajeResultado = mensaje;
-	});
-
-	$scope.traerComprobantes = function(){
-		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
-		$scope.page.limit = $scope.model.itemsPerPage;
-		$scope.loadingState = true;
-		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.page, function(invoiceError){
-			if (invoiceError.status == 'OK'){
-				$scope.comprobantes = invoiceError.data;
-				$scope.totalItems = invoiceError.totalCount;
-				/*$scope.comprobantes.forEach(function(comprobante){
-					invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
-						comprobante.lastComment = dataTrack.data[0].comment + ' - ' + dataTrack.data[0].user;
-					})
-				})*/
-			} else {
-				$scope.mensajeResultado = {
-					titulo: 'Error',
-					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-					tipo: 'panel-danger'
-				};
-				$scope.comprobantes = [];
-			}
+		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.loadingState = false;
-		})
-	};
+			$scope.comprobantes = [];
+			$scope.mensajeResultado = mensaje;
+		});
 
-	$scope.descargarCSV = function(){
-		//Acá prepara la ruta del servidor que descarga el archivo csv
-		$scope.reportCSV = serverUrl + '/down';
-	};
+		$scope.traerComprobantes = function(){
+			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
+			$scope.page.limit = $scope.model.itemsPerPage;
+			$scope.loadingState = true;
+			invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.page, function(invoiceError){
+				if (invoiceError.status == 'OK'){
+					$scope.comprobantes = invoiceError.data;
+					$scope.totalItems = invoiceError.totalCount;
+					/*$scope.comprobantes.forEach(function(comprobante){
+					 invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
+					 comprobante.lastComment = dataTrack.data[0].comment + ' - ' + dataTrack.data[0].user;
+					 })
+					 })*/
+				} else {
+					$scope.mensajeResultado = {
+						titulo: 'Error',
+						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+						tipo: 'panel-danger'
+					};
+					$scope.comprobantes = [];
+				}
+				$scope.loadingState = false;
+			})
+		};
+
+		$scope.descargarCSV = function(){
+			invoiceFactory.getCSV(function(data, status){
+				if (status == 'OK'){
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+						target: '_blank',
+						download: 'report.csv'
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+				} else {
+					dialogs.error('Comprobantes', 'Se ha producio un error al exportar los datos a CSV.');
+				}
+			});
 
 
-	$scope.$on('destroy', function(){
-		invoiceFactory.cancelRequest();
-	});
+		};
 
-}]);
+
+		$scope.$on('destroy', function(){
+			invoiceFactory.cancelRequest();
+		});
+
+	}]);

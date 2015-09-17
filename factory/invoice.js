@@ -197,6 +197,21 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
+		factory.getCSV = function(callback){
+			var inserturl = serverUrl + '/down';
+			$http.get(inserturl)
+				.success(function(data, status, headers) {
+					var contentType = headers('Content-Type');
+					if (contentType.indexOf('text/csv') >= 0){
+						callback(data, 'OK');
+					} else {
+						callback(data, 'ERROR');
+					}
+				}).error(function(data){
+					callback(data, 'ERROR');
+				});
+		};
+
 		factory.setearInterfaz = function (comprobantes) {
 			comprobantes.data.forEach(function(comprobante) {
 				setearInterfazComprobante(comprobante);
