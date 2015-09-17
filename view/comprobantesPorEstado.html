@@ -10,5 +10,5 @@
 		filtro-estados="filtroEstados">
 </vista-comprobantes>
 
-<button class="btn btn-success" ng-show="estado=='R,T,E' && !loadingState" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Descargar CSV</button>
+<button class="btn btn-success" ng-show="estado=='R,T,E' && !loadingState && comprobantes.length > 0" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Descargar CSV</button>
 
