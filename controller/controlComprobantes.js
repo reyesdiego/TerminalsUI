@@ -568,6 +568,8 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 	$scope.recargar = true;
 
+	$scope.reportCSV = '';
+
 	$scope.$on('actualizarListado', function(event, data){
 		if ($scope.estado != data){
 			$scope.currentPage = 1;
@@ -629,6 +631,12 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			$scope.loadingState = false;
 		})
 	};
+
+	$scope.descargarCSV = function(){
+		//Acá prepara la ruta del servidor que descarga el archivo csv
+		$scope.reportCSV = serverUrl + '/down';
+	};
+
 
 	$scope.$on('destroy', function(){
 		invoiceFactory.cancelRequest();
