@@ -197,9 +197,9 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
-		factory.getCSV = function(callback){
-			var inserturl = serverUrl + '/down';
-			$http.get(inserturl)
+		factory.getCSV = function(datos, callback){
+			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/down';
+			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
 				.success(function(data, status, headers) {
 					var contentType = headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){

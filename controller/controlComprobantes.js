@@ -632,7 +632,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		};
 
 		$scope.descargarCSV = function(){
-			invoiceFactory.getCSV(function(data, status){
+			invoiceFactory.getCSV($scope.model, function(data, status){
 				if (status == 'OK'){
 					var anchor = angular.element('<a/>');
 					anchor.css({display: 'none'}); // Make sure it's not visible
