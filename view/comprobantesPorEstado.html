@@ -9,6 +9,6 @@
 		panel-mensaje="mensajeResultado"
 		filtro-estados="filtroEstados">
 </vista-comprobantes>
-<!--<a target="_self" ng-click="descargarCSV()" ng-href="{{ reportCSV }}" ng-show="estado=='R,T,E'">-->
-	<button class="btn btn-success" ng-click="descargarCSV()">Descargar CSV</button>
-<!--</a>-->
+
+<button class="btn btn-success" ng-show="estado=='R,T,E' && !loadingState" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Descargar CSV</button>
+
