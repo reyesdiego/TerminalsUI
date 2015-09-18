@@ -170,11 +170,11 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 							dialogs.notify('Tarifario', 'El tarifario se ha actualizado correctamente');
 							cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 							$scope.cargaPricelist();
-							//$scope.disableSave = false;
+							$scope.disableSave = false;
 						}, function(){
 							dialogs.error('Tarifario', 'Se ha producido un erro al actualizar el tarifario');
 							$scope.cargaPricelist();
-							//$scope.disableSave = false;
+							$scope.disableSave = false;
 						});
 				})
 			} else {
