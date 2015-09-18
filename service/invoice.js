@@ -122,6 +122,8 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 										currency: monedaALaFecha,
 										topPrice: precioALaFecha,
 										current: item.impUnit,
+										topPrices: lookup[item.id].topPrices,
+										emision: comprobante.fecha.emision,
 										container: detalle.contenedor
 									};
 									comprobante.controlTarifas.push(tarifaError);
@@ -131,7 +133,8 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 									codigo: item.id,
 									tieneMatch: true,
 									topPrices: lookup[item.id].topPrices,
-									emision: comprobante.fecha.emision
+									emision: comprobante.fecha.emision,
+									container: detalle.contenedor
 								};
 								comprobante.tarifasSinMatch.push(tarifaError);
 								response = true;
@@ -145,6 +148,8 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 										currency: monedaALaFecha,
 										topPrice: precioALaFecha,
 										current: item.impUnit,
+										topPrices: lookup[item.id].topPrices,
+										emision: comprobante.fecha.emision,
 										container: detalle.contenedor
 									};
 									comprobante.controlTarifas.push(tarifaError);
@@ -154,7 +159,8 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 									codigo: item.id,
 									tieneMatch: true,
 									topPrices: lookup[item.id].topPrices,
-									emision: comprobante.fecha.emision
+									emision: comprobante.fecha.emision,
+									container: detalle.contenedor
 								};
 								comprobante.tarifasSinMatch.push(tarifaError);
 								response = true;
@@ -166,7 +172,8 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 							codigo: item.id,
 							tieneMatch: false,
 							topPrices: [],
-							emision: comprobante.fecha.emision
+							emision: comprobante.fecha.emision,
+							container: detalle.contenedor
 						};
 						comprobante.tarifasSinMatch.push(tarifaError);
 						response = true;

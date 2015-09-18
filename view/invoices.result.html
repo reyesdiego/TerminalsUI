@@ -110,13 +110,20 @@
 					<th style="text-align: center">Código</th>
 					<th style="text-align: center">Valor tarifario</th>
 					<th style="text-align: center">Valor cobrado</th>
+					<th style="text-align: center">Última actualización tarifa</th>
+					<th style="text-align: center">Emisión comprobante</th>
 					<th style="text-align: center">En contenedor</th>
 				</tr>
 				<tr ng-repeat="tarifaError in verDetalle.controlTarifas">
 					<td>{{ tarifaError.codigo }}</td>
 					<td>{{ tarifaError.currency | formatCurrency }} {{ tarifaError.topPrice }}</td>
 					<td>{{ tarifaError.currency | formatCurrency }} {{ tarifaError.current }}</td>
+					<td>
+						<span ng-repeat="fecha in tarifaError.topPrices | orderBy: from : true">{{ fecha.from | date: 'dd/MM/yyyy':'UTC' }}</span>
+					</td>
+					<td>{{ tarifaError.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
 					<td>{{ tarifaError.container }}</td>
+
 				</tr>
 			</table>
 		</div>
@@ -138,14 +145,16 @@
 				<tr>
 					<th style="text-align: center">Código</th>
 					<th style="text-align: center">¿Está asociada?</th>
-					<th style="text-align: center">Emisión comprobante</th>
 					<th style="text-align: center">Fechas de tarifas asociadas</th>
+					<th style="text-align: center">Emisión comprobante</th>
+					<th style="text-align: center">En contenedor</th>
 				</tr>
 				<tr ng-repeat="tarifaError in verDetalle.tarifasSinMatch">
 					<td>{{ tarifaError.codigo }}</td>
 					<td><span class="glyphicon glyphicon-check" ng-show="tarifaError.tieneMatch"></span><span class="glyphicon glyphicon-remove" ng-hide="tarifaError.tieneMatch"></span></td>
-					<td>{{ tarifaError.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
 					<td><span ng-repeat="fecha in tarifaError.topPrices track by $index">{{ fecha.from | date: 'dd/MM/yyyy':'UTC' }}<span ng-show="!$last">, </span></span></td>
+					<td>{{ tarifaError.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
+					<td>{{ tarifaError.container }}</td>
 				</tr>
 			</table>
 		</div>
