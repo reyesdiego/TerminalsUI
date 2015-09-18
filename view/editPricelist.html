@@ -92,7 +92,10 @@
 					</tbody>
 				</table>
 			</div>
-			<button style="margin-top: 20px" class="col-lg-2 text-center btn btn-primary hidden-print" ng-click="guardarCambios()"><span class="glyphicon glyphicon-save"></span>Guardar</button>
+			<button style="margin-top: 20px" class="col-lg-2 text-center btn btn-primary hidden-print" ng-click="guardarCambios()" ng-disabled="disableSave">
+				<span ng-show="!disableSave"><span class="glyphicon glyphicon-save"></span> Guardar</span>
+				<span ng-show="disableSave"><img src="images/loadingChico.gif" width="20" height="20"> Procesando</span>
+			</button>
 			<div-pagination class="col-lg-10" total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
 		</div>
 	</div>

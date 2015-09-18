@@ -525,6 +525,8 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'dialogs',
 	function($rootScope, $scope, invoiceFactory, dialogs ) {
 
+		$scope.disableDown = false;
+
 		var misEstados = $scope.estado.split(',');
 
 		if (misEstados.length == 1){
@@ -632,6 +634,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		};
 
 		$scope.descargarCSV = function(){
+			$scope.disableDown = true;
 			invoiceFactory.getCSV($scope.model, function(data, status){
 				if (status == 'OK'){
 					var anchor = angular.element('<a/>');
@@ -648,6 +651,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 				} else {
 					dialogs.error('Comprobantes', 'Se ha producio un error al exportar los datos a CSV.');
 				}
+				$scope.disableDown = false;
 			});
 
 

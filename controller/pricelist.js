@@ -14,6 +14,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		$scope.tasas = false;
 		$scope.itemsPerPage = 10;
 		$scope.hayError = false;
+		$scope.disableSave = false;
 
 		$scope.fechaVigencia = new Date();
 
@@ -157,6 +158,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			if (changesList.length > 0){
 				var res = dialogs.confirm('Tarifario', 'Se guardarán los cambios para las ' + changesList.length + ' tarifas modificadas, con fecha de vigencia a partir del ' + $filter('date')($scope.fechaVigencia, 'dd/MM/yyyy'))
 				res.result.then(function(){
+					$scope.disableSave = true;
 					changesList.forEach(function(price){
 						delete price.nuevoTopPrice;
 						delete price.idUnit;
@@ -168,9 +170,11 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 							dialogs.notify('Tarifario', 'El tarifario se ha actualizado correctamente');
 							cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 							$scope.cargaPricelist();
+							//$scope.disableSave = false;
 						}, function(){
 							dialogs.error('Tarifario', 'Se ha producido un erro al actualizar el tarifario');
 							$scope.cargaPricelist();
+							//$scope.disableSave = false;
 						});
 				})
 			} else {
