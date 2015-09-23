@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'generalCache', 'turnosFactory',
-	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, generalCache, turnosFactory){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'turnosFactory',
+	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, turnosFactory){
 		$scope.currentPage = 1;
 
 		$scope.logoTerminal = $rootScope.logoTerminal;
@@ -23,7 +23,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 		$scope.comprobantesVistos = [];
 		$scope.comprobantesControlados = [];
-		$scope.itemDescriptionInvoices = generalCache.get('descripciones' + loginService.getFiltro());
 		$scope.acceso = $rootScope.esUsuario;
 
 		$scope.$on('errorInesperado', function(e, mensaje){
@@ -71,10 +70,12 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
+			if ($scope.datoFaltante == 'gatesAppointments'){
+				$scope.cargaDatos();
+			}
 		};
 
 		$scope.cargaDatos = function(){
-
 			switch ($scope.datoFaltante){
 				case 'gates':
 					$scope.cargando = true;
@@ -149,6 +150,26 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 						$scope.cargando = false;
 					});
 					break;
+				case 'gatesAppointments':
+					$scope.cargando = true;
+					gatesFactory.gatesSinTurnos($scope.model, function(data){
+						if (data.status == 'OK'){
+							$scope.datosFaltantes = data.data;
+							$scope.totalItems = $scope.datosFaltantes.length;
+							$scope.filteredDatos = data.data;
+						} else {
+							$scope.configPanel = {
+								tipo: 'panel-danger',
+								titulo: 'Control gates',
+								mensaje: 'Se ha producido un error al cargar los turnos faltantes.'
+							};
+							$scope.datosFaltantes = [];
+							$scope.totalItems = 0;
+							$scope.filteredDatos = [];
+						}
+						$scope.cargando = false;
+					});
+					break;
 			}
 		};
 
@@ -165,7 +186,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		});
 
 		$scope.$on('cambioTerminal', function(){
-			$scope.itemDescriptionInvoices = generalCache.get('descripciones' + loginService.getFiltro());
 			$scope.cargaDatos();
 		});
 

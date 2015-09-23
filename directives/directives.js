@@ -331,6 +331,17 @@ myapp.directive('tableMissingInvoices', function(){
 	}
 });
 
+myapp.directive('tableMissingAppointments', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/missing.appointments.html',
+		scope: {
+			datoFaltante: '='
+		},
+		controller:		'missingInfo'
+	}
+});
+
 myapp.directive('textPop', function() {
 	return {
 		restrict:		'E',
