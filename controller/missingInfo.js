@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'generalCache',
-	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, generalCache){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'generalCache', 'turnosFactory',
+	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, generalCache, turnosFactory){
 		$scope.currentPage = 1;
 
 		$scope.logoTerminal = $rootScope.logoTerminal;
@@ -84,11 +84,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 							$scope.totalItems = $scope.datosFaltantes.length;
 							$scope.datosFaltantes.forEach(function(comprob){
 								comprob.fecha = comprob.f;
-								if (angular.isDefined($scope.itemDescriptionInvoices[comprob.code])) {
-									comprob.code = comprob.code + ' - ' + $scope.itemDescriptionInvoices[comprob.code];
-								} else {
-									comprob.code = comprob.code +  ' - No se halló la descripción, verifique que el código esté asociado.';
-								}
 							});
 							$scope.configPanel = {
 								tipo: 'panel-success',
@@ -125,6 +120,30 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 								tipo: 'panel-danger',
 								titulo: 'Control gates',
 								mensaje: 'Se ha producido un error al cargar los comprobantes faltantes.'
+							};
+						}
+						$scope.cargando = false;
+					});
+					break;
+				case 'appointments':
+					$scope.cargando = true;
+					turnosFactory.getMissingAppointments(function(data){
+						if (data.status == 'OK'){
+							$scope.datosFaltantes = data.data;
+							$scope.totalItems = $scope.datosFaltantes.length;
+							$scope.datosFaltantes.forEach(function(comprob){
+								comprob.fecha = comprob.f;
+							});
+							$scope.configPanel = {
+								tipo: 'panel-success',
+								titulo: 'Control gates',
+								mensaje: 'No se encontraron comprobantes con turnos faltantes para los filtros seleccionados.'
+							};
+						} else {
+							$scope.configPanel = {
+								tipo: 'panel-danger',
+								titulo: 'Control gates',
+								mensaje: 'Se ha producido un error al cargar los turnos faltantes.'
 							};
 						}
 						$scope.cargando = false;

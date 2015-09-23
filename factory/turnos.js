@@ -32,6 +32,19 @@ myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginServi
 				});
 		};
 
+		factory.getMissingAppointments = function(callback){
+			factory.cancelRequest('missingAppointments');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'missingAppointments');
+			var inserturl = serverUrl + '/appointments/' + loginService.getFiltro() + '/missingAppointments';
+			$http.get(inserturl, { timeout: canceler.promise })
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		factory.comprobanteTurno = function(contenedor, id, callback){
 			var insertUrl = serverUrl + "/appointments/container/" + contenedor;
 			$http.get(insertUrl, {params:{ _id: id }}).success(function(data){

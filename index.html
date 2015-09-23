@@ -174,6 +174,7 @@
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
 						<!--<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>-->
 						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Sin notificar</a></li>
+						<li ng-show="in_array('mturnos', rutas)"><a collap ui-sref="mturnos">Control</a></li>
 					</ul>
 				</li>
 				<li class="visible-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas)) || in_array('cturnos', rutas) || (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
@@ -185,7 +186,7 @@
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Turnos</li>
 						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
-						<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>
+						<!--<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>-->
 						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>

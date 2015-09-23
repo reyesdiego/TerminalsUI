@@ -284,6 +284,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/editarTarifario",
 			templateUrl: "view/editPricelist.html"
 		})
+		.state('mturnos', {
+			url: "/controlTurnos",
+			templateUrl: "view/appointments.control.html"
+		})
 }]);
 
 myapp.config(['$provide', function ($provide) {
