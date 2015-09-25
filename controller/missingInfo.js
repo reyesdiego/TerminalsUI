@@ -1,11 +1,11 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'turnosFactory',
-	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, turnosFactory){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'turnosFactory', '$filter',
+	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, turnosFactory, $filter){
 		$scope.currentPage = 1;
 
-		$scope.logoTerminal = $rootScope.logoTerminal;
+		//$scope.logoTerminal = $rootScope.logoTerminal;
 		$scope.itemsPerPage = [
 			{ value: 10, description: '10 items por página', ticked: false},
 			{ value: 15, description: '15 items por página', ticked: true},
@@ -13,7 +13,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			{ value: 50, description: '50 items por página', ticked: false}
 		];
 		$scope.filteredDatos = [];
-		$scope.search = '';
 
 		$scope.datosFaltantes = [];
 		$scope.cargando = false;
@@ -21,18 +20,11 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		//Variables para control de fechas
 		$scope.maxDateD = new Date();
 		$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-		$scope.comprobantesVistos = [];
-		$scope.comprobantesControlados = [];
-		$scope.acceso = $rootScope.esUsuario;
 
 		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.cargando = false;
 			$scope.datosFaltantes = [];
 			$scope.configPanel = mensaje;
-		});
-
-		$rootScope.$watch('moneda', function(){
-			$scope.moneda = $rootScope.moneda;
 		});
 
 		$scope.colorHorario = function (gate) {
@@ -56,7 +48,8 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		$scope.model = {
 			fechaInicio: new Date(),
 			fechaFin: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-			itemsPerPage: 15
+			itemsPerPage: 15,
+			search: ''
 		};
 
 		$scope.model.fechaInicio.setHours(0, 0, 0, 0);
@@ -71,11 +64,11 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
 			if ($scope.datoFaltante == 'gatesAppointments'){
-				$scope.cargaDatos();
+				cargaDatos();
 			}
 		};
 
-		$scope.cargaDatos = function(){
+		var cargaDatos = function(){
 			switch ($scope.datoFaltante){
 				case 'gates':
 					$scope.cargando = true;
@@ -91,6 +84,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 								titulo: 'Control gates',
 								mensaje: 'No se encontraron comprobantes con gates faltantes para los filtros seleccionados.'
 							};
+							filtrarPorFecha();
 						} else {
 							$scope.configPanel = {
 								tipo: 'panel-danger',
@@ -116,6 +110,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 								titulo: 'Control gates',
 								mensaje: 'No se encontraron gates con comprobantes faltantes.'
 							};
+							filtrarPorFecha();
 						} else {
 							$scope.configPanel = {
 								tipo: 'panel-danger',
@@ -173,20 +168,32 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			}
 		};
 
+		$scope.$watch('[model.fechaInicio, model.fechaFin]', function(){
+			filtrarPorFecha();
+		});
+
+		var filtrarPorFecha = function(){
+			$scope.filteredDatos = $filter('dateRange')($scope.datosFaltantes, $scope.model.fechaInicio, $scope.model.fechaFin)
+		};
+
+		$scope.filtrarContenedores = function(){
+			$scope.filteredDatos = $filter('filter')($scope.datosFaltantes, $scope.model.search);
+		};
+
 		$scope.detalleContenedor = function(contenedor){
 			$scope.mostrarDetalle = true;
 			$scope.$broadcast('detalleContenedor', contenedor);
 		};
 
-		if (loginService.getStatus()) $scope.cargaDatos();
+		if (loginService.getStatus()) cargaDatos();
 
 		$scope.$on('terminoLogin', function(){
 			$scope.acceso = $rootScope.esUsuario;
-			$scope.cargaDatos();
+			cargaDatos();
 		});
 
 		$scope.$on('cambioTerminal', function(){
-			$scope.cargaDatos();
+			cargaDatos();
 		});
 
 	}]);

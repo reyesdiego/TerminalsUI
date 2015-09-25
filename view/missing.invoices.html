@@ -67,7 +67,7 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr ng-repeat="registro in filteredDatos = (datosFaltantes | dateRange : model.fechaInicio : model.fechaFin) | orderBy: $parent.predicate : $parent.reverse | startFrom:(currentPage-1) * model.itemsPerPage | limitTo:model.itemsPerPage">
+				<tr ng-repeat="registro in filteredDatos | orderBy: $parent.predicate : $parent.reverse | startFrom:(currentPage-1) * model.itemsPerPage | limitTo:model.itemsPerPage">
 					<td>{{ registro.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ registro.buque }}</td>
 					<td>{{ registro.viaje }}</td>
