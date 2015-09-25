@@ -78,6 +78,13 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			}
 		};
 
+		$scope.clientSelected = function(selected){
+			if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
+				$scope.model.razonSocial = selected.title;
+				$scope.filtrado('razonSocial', selected.title);
+			}
+		};
+
 		$scope.definidoStatus = function(turno){
 			return angular.isDefined(turno.email);
 		};
