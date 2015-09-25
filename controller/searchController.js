@@ -68,6 +68,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 					$scope.listaViajes.push(objetoViaje);
 					i++;
 				});
+				$scope.filtrado('buque', selected.title);
 			}
 		};
 

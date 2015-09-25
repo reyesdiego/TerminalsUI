@@ -9,11 +9,23 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codTipoComprob', 0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0">
-		<div class="input-group">
-			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.nroComprobante" class="form-control" placeholder="N° Comprobante"/>
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('nroComprobante', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-		</div>
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
+		<angucomplete-alt id="idBuque"
+		                  placeholder="Buque"
+		                  pause="100"
+		                  selected-object="buqueSelected"
+		                  local-data="listaBuques"
+		                  search-fields="buque"
+		                  title-field="buque"
+		                  minlength="1"
+		                  input-class="form-control"
+		                  filtrar="filtrado(filtrar, contenido)"
+		                  filter-field="buqueNombre"
+		                  input-field="buque"
+		                  match-class="highlight"
+		                  limit-results="15"
+		                  outside-model="model.buqueNombre"
+		                  auto-match="true"></angucomplete-alt>
 	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
 		<angucomplete-alt id="idRazonSocial"
