@@ -616,11 +616,6 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 				if (invoiceError.status == 'OK'){
 					$scope.comprobantes = invoiceError.data;
 					$scope.totalItems = invoiceError.totalCount;
-					/*$scope.comprobantes.forEach(function(comprobante){
-					 invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
-					 comprobante.lastComment = dataTrack.data[0].comment + ' - ' + dataTrack.data[0].user;
-					 })
-					 })*/
 				} else {
 					$scope.mensajeResultado = {
 						titulo: 'Error',
@@ -653,8 +648,6 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 				}
 				$scope.disableDown = false;
 			});
-
-
 		};
 
 
