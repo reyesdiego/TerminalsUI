@@ -41,7 +41,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	$scope.hayError = false;
 
 	$scope.$on('iniciarBusqueda', function(event, data){
-		$scope.controlTasaCargas()
+		controlTasaCargas()
 	});
 
 	$scope.$on('errorSinTasaCargas', function(event, error){
@@ -70,7 +70,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 
 	$scope.filtrado = function(filtro, contenido){
 		$scope.model[filtro] = contenido;
-		$scope.controlTasaCargas();
+		controlTasaCargas();
 	};
 
 	$scope.verContenedor = function(contenedor) {
@@ -78,7 +78,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.$broadcast('detalleContenedor', contenedor);
 	};
 
-	$scope.controlTasaCargas = function(){
+	var controlTasaCargas = function(){
 		/*Acá control de tasa a las cargas*/
 		$scope.hayError = false;
 		$scope.loadingTasaCargas = true;
@@ -107,14 +107,14 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		});
 	};
 
-	if (loginService.getStatus()) $scope.controlTasaCargas();
+	if (loginService.getStatus()) controlTasaCargas();
 
 	$scope.$on('terminoLogin', function(){
-		$scope.controlTasaCargas();
+		controlTasaCargas();
 	});
 
 	$scope.$on('cambioTerminal', function(){
-		$scope.controlTasaCargas();
+		controlTasaCargas();
 	});
 
 	$scope.$on('destroy', function(){
@@ -154,7 +154,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			'fechaFin': $scope.hasta
 		};
 
-		$scope.traerPuntosDeVenta = function(){
+		var traerPuntosDeVenta = function(){
 			invoiceFactory.getCashbox($scope.$id, {}, function(data){
 				if (data.status == 'OK'){
 					var i;
@@ -164,7 +164,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 					for (i = 1; i<$scope.terminalSellPoints.length; i++){
 						$scope.model.nroPtoVenta = $scope.model.nroPtoVenta + ',' + $scope.terminalSellPoints[i];
 					}
-					$scope.controlCorrelatividad();
+					controlCorrelatividad();
 				}
 			})
 		};
@@ -193,7 +193,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 					mensajeCorrelativo : 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.'
 				};
 			} else {
-				$scope.controlCorrelatividad();
+				controlCorrelatividad();
 			}
 		});
 
@@ -205,7 +205,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			$scope.pantalla.puntosDeVenta = [];
 		});
 
-		$scope.generarInterfaz = function(punto){
+		var generarInterfaz = function(punto){
 			$scope.loadingCorrelatividad = false;
 			var pantalla = {
 				mensajeCorrelativo: '',
@@ -253,7 +253,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			})
 		};
 
-		$scope.controlCorrelatividad = function(){
+		var controlCorrelatividad = function(){
 			$scope.arrayCargados = [];
 			$scope.leerData = true;
 			$scope.totalFaltantes = 0;
@@ -270,7 +270,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 						$scope.leerData = false;
 						dataComprob.data.forEach(function(punto){
 							if (!in_array(punto.nroPtoVenta, $scope.arrayCargados)){
-								$scope.generarInterfaz(punto);
+								generarInterfaz(punto);
 							}
 						});
 						$scope.totalPuntos = 0;
@@ -302,15 +302,15 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 
 		$scope.$on('socket:correlative_' + socketIoRegister, function(ev, data){
 			if ($scope.leerData){
-				$scope.generarInterfaz(data);
+				generarInterfaz(data);
 				$scope.$apply();
 			}
 		});
 
-		if (loginService.getStatus()) $scope.traerPuntosDeVenta();
+		if (loginService.getStatus()) traerPuntosDeVenta();
 
 		$scope.$on('terminoLogin', function(){
-			$scope.traerPuntosDeVenta();
+			traerPuntosDeVenta();
 		});
 
 		$scope.$on('cambioTerminal', function(){
@@ -322,7 +322,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 				mensajeCorrelativo : 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.'
 			};
 			$scope.puntosDeVenta = [];
-			$scope.traerPuntosDeVenta();
+			traerPuntosDeVenta();
 		});
 
 		$scope.$on('$destroy', function(){
@@ -394,10 +394,10 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 	$scope.$on('cambioPagina', function(event, data){
 		if ($scope.controlFiltros == 'codigos'){
 			$scope.currentPageCodigos = data;
-			$scope.pageChangedCodigos();
+			pageChangedCodigos();
 		} else {
 			$scope.currentPageFiltros = data;
-			$scope.controlCodigosFiltrados();
+			controlCodigosFiltrados();
 		}
 	});
 
@@ -412,31 +412,31 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 				$scope.anteriorCargaCodigos = $scope.comprobantesRotos;
 				$scope.totalItemsSinFiltrar = $scope.totalItems;
 				$scope.mostrarPtosVentas = true;
-				$scope.controlCodigosFiltrados();
+				controlCodigosFiltrados();
 			} else {
-				$scope.controlDeCodigos();
+				controlDeCodigos();
 			}
 		} else {
 			if ($scope.model.code == ''){
 				$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'rates'];
 				$scope.controlFiltros = 'codigos';
 				$scope.mostrarPtosVentas = false;
-				$scope.controlDeCodigos();
+				controlDeCodigos();
 			} else {
-				$scope.controlCodigosFiltrados();
+				controlCodigosFiltrados();
 			}
 		}
 	});
 
 	$scope.$on('cambioOrden', function(event, data){
 		if ($scope.controlFiltros == 'codigos'){
-			$scope.controlDeCodigos();
+			controlDeCodigos();
 		} else {
-			$scope.controlCodigosFiltrados();
+			controlCodigosFiltrados();
 		}
 	});
 
-	$scope.controlDeCodigos = function(){
+	var controlDeCodigos = function(){
 		var model = {
 			fechaInicio:	$scope.model.fechaInicio,
 			fechaFin:		$scope.model.fechaFin
@@ -477,7 +477,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		});
 	};
 
-	$scope.controlCodigosFiltrados = function(){
+	var controlCodigosFiltrados = function(){
 		$scope.loadingControlCodigos = true;
 		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.model.itemsPerPage);
 		$scope.pageFiltros.limit = $scope.model.itemsPerPage;
@@ -496,7 +496,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		});
 	};
 
-	$scope.pageChangedCodigos = function(){
+	var pageChangedCodigos = function(){
 		$scope.loadingControlCodigos = true;
 		$scope.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
@@ -577,7 +577,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 				if ($scope.model.estado == 'N'){
 					$scope.model.estado = $scope.estado;
 				}
-				$scope.traerComprobantes();
+				traerComprobantes();
 			}
 		});
 
@@ -586,7 +586,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			if ($scope.model.estado == 'N'){
 				$scope.model.estado = $scope.estado;
 			}
-			$scope.traerComprobantes();
+			traerComprobantes();
 		});
 
 		$scope.$on('cambioFiltro', function(){
@@ -595,11 +595,11 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			if ($scope.model.estado == 'N'){
 				$scope.model.estado = $scope.estado;
 			}
-			$scope.traerComprobantes();
+			traerComprobantes();
 		});
 
 		$scope.$on('cambioOrden', function(event, data){
-			$scope.traerComprobantes();
+			traerComprobantes();
 		});
 
 		$scope.$on('errorInesperado', function(e, mensaje){
@@ -608,7 +608,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			$scope.mensajeResultado = mensaje;
 		});
 
-		$scope.traerComprobantes = function(){
+		var traerComprobantes = function(){
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.page.limit = $scope.model.itemsPerPage;
 			$scope.loadingState = true;
