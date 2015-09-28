@@ -47,7 +47,7 @@ myapp.controller('queuedMailsCtrl', ['$scope', 'turnosFactory', 'loginService', 
 		$scope.cargaTurnos();
 	});
 
-	$scope.$on('cambioFiltro', function(event, data){
+	$scope.$on('iniciarBusqueda', function(event, data){
 		$scope.currentPage = 1;
 		$scope.cargaTurnos();
 	});

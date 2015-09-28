@@ -12,21 +12,21 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		$scope.maxDateD = new Date();
 		$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 		//Tipos de comprobantes
-		$scope.vouchers = generalCache.get('vouchers');
+		//$scope.vouchers = generalCache.get('vouchers');
 		//Listas para autocompletado
-		$scope.listaViajes = [];
-		$scope.itemsPerPage = [
+		//$scope.listaViajes = [];
+		/*$scope.itemsPerPage = [
 			{ value: 10, description: '10 items por página', ticked: false},
 			{ value: 15, description: '15 items por página', ticked: true},
 			{ value: 20, description: '20 items por página', ticked: false},
 			{ value: 50, description: '50 items por página', ticked: false}
-		];
-		$scope.estadosComprobantes = $filter('filter')(generalCache.get('estados'), $scope.filtroEstados);
+		];*/
+		//$scope.estadosComprobantes = $filter('filter')(generalCache.get('estados'), $scope.filtroEstados);
 		$scope.logoTerminal = $rootScope.logoTerminal;
 
-		$scope.estadosComprobantes.forEach(function(unEstado){
+		/*$scope.estadosComprobantes.forEach(function(unEstado){
 			unEstado.ticked = false;
-		});
+		});*/
 
 		$scope.comprobantesVistos = [];
 
@@ -49,16 +49,16 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 
 		$scope.disablePdf = false;
 
-		$scope.$on('iniciarBusqueda', function(event, data){
-			$scope.filtrado(data.filtro, data.contenido);
-		});
-
 		$scope.$on('borrarEstado', function(){
 			$scope.filtrado('estado', 'N');
 		});
 
 		$scope.$on('mostrarComprobante', function(event, comprobante){
 			$scope.mostrarDetalle(comprobante);
+		});
+
+		$scope.$on('iniciarBusqueda', function(event, model){
+			$scope.filtrado();
 		});
 
 		$rootScope.$watch('moneda', function(){
@@ -78,14 +78,13 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 				};
 			}
 		});
-
 		$scope.$watch('volverAPrincipal', function() {
 			$scope.mostrarResultado = false;
 		});
 
-		$scope.cambioItemsPorPagina = function(data){
+		/*$scope.cambioItemsPorPagina = function(data){
 			$scope.filtrado('itemsPerPage', data.value);
-		};
+		};*/
 
 		$scope.$watch('model.rates', function(){
 			if ($scope.model.rates != 1) $scope.model.payment = '';
@@ -95,7 +94,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 			if ($scope.model.payment != 1) $scope.model.payed = '';
 		});
 
-		$scope.estadoSeleccionado = function(data){
+		/*$scope.estadoSeleccionado = function(data){
 			var contenido = '';
 			if (data.ticked){
 				$scope.estadosComprobantes.forEach(function(unEstado){
@@ -116,25 +115,25 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 				}
 			}
 			$scope.filtrado('estado', contenido);
-		};
+		};*/
 
-		$scope.hitEnter = function(evt){
+		/*$scope.hitEnter = function(evt){
 			if(angular.equals(evt.keyCode,13))
 				$scope.cargaPuntosDeVenta();
-		};
+		};*/
 
-		$scope.openDate = function(event){
+		/*$scope.openDate = function(event){
 			generalFunctions.openDate(event);
-		};
+		};*/
 
-		$scope.clientSelected = function(selected){
+		/*$scope.clientSelected = function(selected){
 			if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
 				$scope.model.razonSocial = selected.title;
 				$scope.filtrado('razonSocial', selected.title);
 			}
-		};
+		};*/
 
-		$scope.buqueSelected = function(selected){
+		/*$scope.buqueSelected = function(selected){
 			if (angular.isDefined(selected) && selected.title != $scope.model.buqueNombre){
 				$scope.model.buqueNombre = selected.originalObject.buque;
 				var i = 0;
@@ -147,14 +146,24 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 					i++;
 				});
 			}
-		};
+		};*/
 
-		$scope.viajeSelected = function(selected){
+		/*$scope.viajeSelected = function(selected){
 			if (angular.isDefined(selected) && selected.title != $scope.model.viaje){
 				$scope.model.viaje = selected.title;
 				$scope.filtrado('viaje', selected.title);
 			}
-		};
+		};*/
+
+		/*$scope.aBuscar = function(){
+			$scope.loadingState = true;
+			$scope.mostrarResultado = false;
+			$scope.currentPage = 1;
+			for (var elemento in $scope.model){
+				if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
+			}
+			$scope.cargaPuntosDeVenta();
+		};*/
 
 		$scope.filtrado = function(filtro, contenido){
 			$scope.loadingState = true;
@@ -171,7 +180,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 			for (var elemento in $scope.model){
 				if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 			}
-			$scope.$broadcast('checkAutoComplete');
 			if (filtro == 'nroPtoVenta'){
 				$scope.$emit('cambioFiltro', $scope.model);
 			} else {
@@ -179,7 +187,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 			}
 		};
 
-		$scope.filtrarCaracteresInvalidos = function(palabra){
+		/*$scope.filtrarCaracteresInvalidos = function(palabra){
 			if (angular.isDefined(palabra) && palabra.length > 0){
 				var palabraFiltrada;
 				var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
@@ -193,7 +201,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 			} else {
 				return palabra;
 			}
-		};
+		};*/
 
 		$scope.filtrarOrden = function(filtro){
 			$scope.currentPage = 1;
@@ -226,7 +234,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		$scope.cambiaPtoVenta = function (pto) {
 			$scope.todosLosPuntosDeVentas.forEach(function (ptos) { ptos.active = false; });
 			pto.active = true;
-			$scope.filtrado('nroPtoVenta', pto.punto);
+			$scope.model['nroPtoVenta'] = pto.punto;
+			$scope.$emit('cambioFiltro', $scope.model);
+			//$scope.filtrado('nroPtoVenta', pto.punto);
 		};
 
 		// Funciones de Puntos de Venta

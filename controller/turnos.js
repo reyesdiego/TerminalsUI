@@ -53,7 +53,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		$scope.cargaTurnos();
 	});
 
-	$scope.$on('cambioFiltro', function(event, data){
+	$scope.$on('iniciarBusqueda', function(event, data){
 		if (angular.isDefined($scope.model.fechaInicio) && $scope.model.fechaInicio != null && $scope.model.fechaInicio != ''){
 			if ($scope.model.fechaFin == '') $scope.model.fechaFin = $scope.model.fechaInicio;
 			$scope.fechaAuxHasta = new Date($scope.model.fechaFin);

@@ -40,7 +40,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	$scope.loadingTasaCargas = true;
 	$scope.hayError = false;
 
-	$scope.$on('cambioFiltro', function(event, data){
+	$scope.$on('iniciarBusqueda', function(event, data){
 		$scope.controlTasaCargas()
 	});
 
@@ -182,7 +182,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		$scope.mostrarBotonImprimir = false;
 		$scope.puntosDeVenta = [];
 
-		$scope.$on('cambioFiltro', function(event, data){
+		$scope.$on('iniciarBusqueda', function(event, data){
 			if ($scope.model.codTipoComprob == 0){
 				$scope.mostrarBotonImprimir = false;
 				$scope.totalFaltantes = 0;

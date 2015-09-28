@@ -111,11 +111,16 @@ myapp.directive('accordionComprobantesVistos', function(){
 	}
 });
 
-myapp.directive('accordionInvoicesSearch', ['generalCache', 'loginService', function(generalCache, loginService){
+myapp.directive('accordionInvoicesSearch', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.invoices.search.html',
-		link: function ($scope) {
+		scope: {
+			model:				'=',
+			ocultarFiltros:		'='
+		},
+		controller: 'searchController'
+		/*link: function ($scope) {
 			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 
@@ -123,9 +128,9 @@ myapp.directive('accordionInvoicesSearch', ['generalCache', 'loginService', func
 				$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 				$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 			});
-		}
+		}*/
 	}
-}]);
+});
 
 myapp.directive('invoicesResult', function(){
 	return {
@@ -228,21 +233,6 @@ myapp.directive('divPanel', function(){
 			'	<div class="panel-body">' +
 			'		<span ng-transclude></span>' +
 			'	</div>' +
-			'</div>'
-	}
-});
-
-myapp.directive('accordionBusquedaCorrelatividad', function(){
-	return {
-		restrict:		'E',
-		scope: {
-			model:			'=',
-			ocultarFiltros:	'='
-		},
-		controller: 'searchController',
-		template:
-			'<div class="row">' +
-			'	<accordion-invoices-search></accordion-invoices-search>' +
 			'</div>'
 	}
 });

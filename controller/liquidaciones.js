@@ -154,7 +154,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			}
 		});
 
-		$scope.$on('cambioFiltro', function(ev, data){
+		$scope.$on('iniciarBusqueda', function(ev, data){
 			if (data.modo == 'sinLiquidar'){
 				$scope.cargarSinLiquidar();
 			} else if(data.modo == 'preLiquidaciones'){
