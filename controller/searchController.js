@@ -136,7 +136,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			}
 			$scope.model[filtro] = contenido;
 			if (filtro == 'razonSocial') {
-				$scope.model[filtro] = $scope.filtrarCaracteresInvalidos(contenido);
+				$scope.model[filtro] = filtrarCaracteresInvalidos(contenido);
 			}
 			if (filtro == 'buqueNombre') {
 				if (contenido != ''){
@@ -161,10 +161,10 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			$scope.cargaPorFiltros();
+			cargaPorFiltros();
 		};
 
-		$scope.filtrarCaracteresInvalidos = function(palabra){
+		var filtrarCaracteresInvalidos = function(palabra){
 			if (angular.isDefined(palabra) && palabra.length > 0){
 				var palabraFiltrada;
 				var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
@@ -244,7 +244,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.$emit('iniciarBusqueda');
 		};
 		///////////////////////////////////////////////////////////////////////////////////////////////////
-		$scope.cargaPorFiltros = function () {
+		var cargaPorFiltros = function () {
 			for (var elemento in $scope.model){
 				if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 			}
