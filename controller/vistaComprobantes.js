@@ -93,7 +93,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			if (filtro == 'nroPtoVenta'){
 				$scope.$emit('cambioFiltro', $scope.model);
 			} else {
-				$scope.cargaPuntosDeVenta();
+				cargaPuntosDeVenta();
 			}
 		};
 
@@ -134,7 +134,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		};
 
 		// Funciones de Puntos de Venta
-		$scope.cargaPuntosDeVenta = function(){
+		var cargaPuntosDeVenta = function(){
 			if ($scope.todosLosPuntosDeVentas.length > 0){
 				invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 					if (data.status == 'OK'){
@@ -153,11 +153,11 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 					}
 				});
 			} else {
-				$scope.cargaTodosLosPuntosDeVentas();
+				cargaTodosLosPuntosDeVentas();
 			}
 		};
 
-		$scope.cargaTodosLosPuntosDeVentas = function(){
+		var cargaTodosLosPuntosDeVentas = function(){
 			invoiceFactory.getCashbox($scope.$id, '', function(data){
 				if (data.status == 'OK'){
 					var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
@@ -166,7 +166,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 						dato = {'heading': punto, 'punto': punto, 'active': false, 'hide': true};
 						$scope.todosLosPuntosDeVentas.push(dato);
 					});
-					$scope.cargaPuntosDeVenta();
+					cargaPuntosDeVenta();
 				} else {
 					dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta');
 				}
@@ -228,18 +228,18 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			return datos;
 		}
 
-		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) $scope.cargaTodosLosPuntosDeVentas();
+		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
 
 		$scope.$on('terminoLogin', function(){
 			$scope.acceso = $rootScope.esUsuario;
-			if ($scope.mostrarPtosVenta || $scope.controlCodigos) $scope.cargaTodosLosPuntosDeVentas();
+			if ($scope.mostrarPtosVenta || $scope.controlCodigos) cargaTodosLosPuntosDeVentas();
 		});
 
 		$scope.$on('cambioTerminal', function(){
 			$scope.mostrarResultado = false;
 			$scope.logoTerminal = $rootScope.logoTerminal;
 			$scope.comprobantesVistos = [];
-			if ($scope.mostrarPtosVenta || $scope.controlCodigos) $scope.cargaTodosLosPuntosDeVentas();
+			if ($scope.mostrarPtosVenta || $scope.controlCodigos) cargaTodosLosPuntosDeVentas();
 		});
 
 		$scope.verPdf = function(){
