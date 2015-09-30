@@ -24,7 +24,7 @@
 		<tr ng-repeat="invoice in sinLiquidar.comprobantes">
 			<td class="text-right" style="width: 8%">{{ invoice.nroPtoVenta }}</td>
 			<td class="text-center" style="width: 14%; font-size: 9pt">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
-			<td class="text-right" style="width: 18%">{{ invoice.buque }}</td>
+			<td class="text-left" style="width: 18%">{{ invoice.buque }}</td>
 			<td class="text-right" style="width: 6%">{{ invoice.cnt }}</td>
 			<td class="text-center" style="width: 7%">{{ invoice.code }}</td>
 			<td class="text-center" style="width: 8%">{{ invoice.emision | date: 'dd/MM/yyyy' }}</td>
