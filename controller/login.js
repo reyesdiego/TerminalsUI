@@ -10,6 +10,9 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 
 	$scope.max = 100;
 
+	$scope.email = '';
+	$scope.password = '';
+
 	$scope.progreso = 0;
 	$scope.msg = [
 		'Autenticando...',

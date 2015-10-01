@@ -96,16 +96,29 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 
 		factory.cargaVouchers = function(){
 			var deferred = $q.defer();
-			vouchersFactory.getVouchersType(function (data) {
-				if (data.status == 'OK') {
-					generalCache.put('vouchers', data.data);
-					data.data.forEach(function (dato) {
-						vouchersArrayCache.put(dato._id, dato.description);
+			$rootScope.listaTerminales.forEach(function(terminal){
+				if (terminal != loginService.getFiltro()){
+					vouchersFactory.getVouchersType(terminal, function (data) {
+						if (data.status == 'OK') {
+							generalCache.put('vouchers' + terminal, data.data);
+							data.data.forEach(function (dato) {
+								vouchersArrayCache.put(dato._id, dato.description);
+							});
+						}
 					});
-					$rootScope.$broadcast('progreso', {mensaje: 2});
-					deferred.resolve();
 				} else {
-					deferred.reject();
+					vouchersFactory.getVouchersType(terminal, function (data) {
+						if (data.status == 'OK') {
+							generalCache.put('vouchers' + terminal, data.data);
+							data.data.forEach(function (dato) {
+								vouchersArrayCache.put(dato._id, dato.description);
+							});
+							$rootScope.$broadcast('progreso', {mensaje: 2});
+							deferred.resolve();
+						} else {
+							deferred.reject();
+						}
+					});
 				}
 			});
 			return deferred.promise;

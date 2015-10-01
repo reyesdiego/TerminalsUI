@@ -5,10 +5,11 @@
 myapp.factory('vouchersFactory', ['$http', function($http){
 	var factory = {};
 
-	factory.getVouchersType = function(callback){
-		var inserturl = serverUrl + '/voucherTypes';
+	factory.getVouchersType = function(terminal, callback){
+		var inserturl = serverUrl + '/voucherTypes/' + terminal;
 		$http.get(inserturl)
 			.success(function (data){
+				console.log(data);
 				callback(data);
 			}).error(function(error){
 				callback(error);

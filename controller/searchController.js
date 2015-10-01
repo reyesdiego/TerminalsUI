@@ -13,7 +13,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.maxDateD = new Date();
 		$scope.maxDateH = $scope.maxDate + 1;
 		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
-		$scope.vouchers = generalCache.get('vouchers');
+		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 		$scope.itemsPerPage = [
 			{ value: 10, description: '10 items por página', ticked: false},
@@ -256,6 +256,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.detallesGates = false;
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+			$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		});
 
 		$scope.$on('$destroy', function(){
