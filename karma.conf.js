@@ -39,7 +39,8 @@ module.exports = function(config) {
 		'controller/*.js',
 		'directives/*.js',
 		'js/linq.min.js',
-		'tests/*js'
+		'tests/*js',
+		'view/*.html'
     ],
 
 
@@ -51,6 +52,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+		'view/*.html': ['ng-html2js']
     },
 
 
@@ -84,6 +86,18 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: false,
+
+	  ngHtml2JsPreprocessor: {
+		  // strip this from the file path
+		  //stripPrefix: 'public/',
+		  // - setting this option will create only a single module that contains templates
+		  //   from all the files, so you can load them all with module('foo')
+		  // - you may provide a function(htmlPath, originalPath) instead of a string
+		  //   if you'd like to generate modules dynamically
+		  //   htmlPath is a originalPath stripped and/or prepended
+		  //   with all provided suffixes and prefixes
+		  moduleName: 'foo'
+	  }
   })
 }

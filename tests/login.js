@@ -6,14 +6,15 @@ describe('login del usuario', function(){
 
 	var $httpBackend, $rootScope;
 	var scope, loginCtrl, authFactory;
+	beforeEach(module('foo'));
 	beforeEach(module('myapp'));
 	beforeEach(inject(function($injector, _authFactory_) {
 		authFactory = _authFactory_;
 		// Set up the mock http service responses
 		$httpBackend = $injector.get('$httpBackend');
 		// backend definition common for all tests
-		$httpBackend.whenGET('view/login.html')
-			.respond(200);
+		/*$httpBackend.whenGET('view/login.html')
+			.respond(200);*/
 		// Get hold of a scope (i.e. the root scope)
 		$rootScope = $injector.get('$rootScope');
 		var $controller = $injector.get('$controller');

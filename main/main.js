@@ -527,7 +527,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 						event.preventDefault();
 						$rootScope.salir();
 					}
-
 				} else {
 					$rootScope.usuarioNoAutorizado(event);
 				}
