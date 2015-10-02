@@ -457,7 +457,16 @@ myapp.directive('buttonActualizar', ['$state', function ($state) {
 myapp.directive('tableSinLiquidar', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/table.sinLiquidar.html'
+		templateUrl:	'view/table.sinLiquidar.html',
+		scope: {
+			comprobantes:			"=",
+			total:					"=",
+			panelMensaje:			"=",
+			currentPage:			"=",
+			itemsPerPage:			"=",
+			mostrarDetalle:			"&",
+			cargar:					"&"
+		}
 	}
 });
 

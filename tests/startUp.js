@@ -31,9 +31,8 @@ describe('inicio de la aplicación', function(){
 	it('prueba el ruteo de la aplicación', inject(['$state', '$rootScope', '$location', function($state, $rootScope, $location){
 
 
-		$rootScope.$apply(function(){
-			$state.transitionTo('login');
-		});
+		$state.transitionTo('login');
+		$rootScope.$digest();
 
 		console.log($state.current);
 		//expect($state.current.templateUrl).toBe("view/login.html");
