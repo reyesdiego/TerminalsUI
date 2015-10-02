@@ -23,10 +23,25 @@
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
 				<div class="col-lg-12" ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle">
-					<table-sin-liquidar comprobantes="sinLiquidar.comprobantes" total="sinLiquidar.total" panel-mensaje="sinLiquidar.panelMensaje" current-page="sinLiquidar.currentPage" items-per-page="itemsPerPage" mostrar-detalle="mostrarDetalleSinLiquidar(invoice)" cargar="cargarSinLiquidar()"></table-sin-liquidar>
+					<table-sin-liquidar
+							comprobantes="sinLiquidar.comprobantes"
+							total="sinLiquidar.total"
+							panel-mensaje="sinLiquidar.panelMensaje"
+							current-page="sinLiquidar.currentPage"
+							items-per-page="itemsPerPage"
+							mostrar-detalle="mostrarDetalleSinLiquidar(invoice)"
+							cargar="cargarSinLiquidar()">
+					</table-sin-liquidar>
 				</div>
 				<div class="col-lg-12" ng-show="sinLiquidar.verDetalle">
-					<invoices-result></invoices-result>
+					<detalle-comprobante
+							ver-detalle="sinLiquidar.invoiceSelected"
+							mostrar="sinLiquidar.verDetalle"
+							comprobantes="sinLiquidar.comprobantes"
+							comprobantes-vistos="comprobantesVistos"
+							ocultar-filtros="comprobantesPreLiquidados.ocultarFiltros"
+							logo-terminal="logoTerminal">
+					</detalle-comprobante>
 				</div>
 				<div class="row">
 					<div class="col-lg-6 text-left">
@@ -62,7 +77,30 @@
 				</div>
 				<hr>
 				<accordion-min heading="Comprobantes - Pre-Liquidación número: {{ preLiquidacion.selected.preNumber }}" ng-show="preLiquidacion.verDetalle">
-					<vista-comprobantes model="comprobantesPreLiquidados.model" datos-invoices="comprobantesPreLiquidados.comprobantes" ocultar-filtros="comprobantesPreLiquidados.ocultarFiltros" total-items="comprobantesPreLiquidados.total" control-codigos="false" loading-state="comprobantesPreLiquidados.cargando" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
+					<div class="col-lg-12 text-center" ng-show="comprobantesPreLiquidados.cargando">
+						<img class="media-object center-block" src="images/loading.gif">
+					</div>
+					<div class="col-lg-12" ng-hide="comprobantesPreLiquidados.cargando || comprobantesPreLiquidados.verDetalle">
+						<table-sin-liquidar
+								comprobantes="comprobantesPreLiquidados.comprobantes"
+								total="comprobantesPreLiquidados.total"
+								panel-mensaje="mensajeResultado"
+								current-page="comprobantesPreLiquidados.currentPage"
+								items-per-page="itemsPerPage"
+								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
+								cargar="cambioPagina()">
+						</table-sin-liquidar>
+					</div>
+					<div class="col-lg-12" ng-show="comprobantesPreLiquidados.verDetalle">
+						<detalle-comprobante
+								ver-detalle="comprobantesPreLiquidados.invoiceSelected"
+								mostrar="comprobantesPreLiquidados.verDetalle"
+								comprobantes="comprobantesPreLiquidados.comprobantes"
+								comprobantes-vistos="comprobantesVistos"
+								ocultar-filtros="comprobantesPreLiquidados.ocultarFiltros"
+								logo-terminal="logoTerminal">
+						</detalle-comprobante>
+					</div>
 				</accordion-min>
 				<div class="col-lg-12 text-right">
 					<button class="btn btn-danger" ng-click="eliminarPreLiquidacion()" ng-disabled="!preLiquidacion.verDetalle">Eliminar</button>

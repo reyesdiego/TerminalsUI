@@ -139,6 +139,66 @@ myapp.directive('invoicesResult', function(){
 	}
 });
 
+myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', function(invoiceService, dialogs){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/invoices.result.html',
+		scope:{
+			verDetalle:			"=",
+			mostrar:			"=",
+			comprobantes:		"=",
+			comprobantesVistos:	"=",
+			ocultarFiltros:		"=",
+			logoTerminal:		"="
+		},
+		link: function($scope){
+
+			$scope.comprobantesControlados = [];
+
+			$scope.checkComprobantes = function(comprobante){
+				var response;
+				response = invoiceService.checkComprobantes(comprobante, $scope.comprobantesVistos, $scope.comprobantes);
+				$scope.comprobantes = response.datosInvoices;
+			};
+
+			$scope.ocultarResultado = function(comprobante){
+				$scope.checkComprobantes(comprobante);
+				$scope.mostrar = false;
+			};
+
+			$scope.trackInvoice = function(comprobante){
+				invoiceService.trackInvoice(comprobante)
+					.then(function(response){
+						if (angular.isDefined(response)) comprobante = response;
+					}, function(message){
+						dialogs.error('Liquidaciones', message);
+					})
+			};
+
+			$scope.existeDescripcion = function(itemId){
+				return invoiceService.existeDescripcion(itemId);
+			};
+
+			$scope.chequearTarifas = function(comprobante){
+				var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
+				$scope.comprobantesControlados = resultado.data;
+				return resultado.retValue;
+			};
+
+			$scope.verPdf = function(){
+				$scope.disablePdf = true;
+				invoiceService.verPdf($scope.verDetalle)
+					.then(function(){
+						$scope.disablePdf = false;
+					}, function(){
+						dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
+						$scope.disablePdf = false;
+					});
+			};
+		}
+	}
+}]);
+
 myapp.directive('containersGatesSearch', function(){
 	return {
 		restrict:		'E',

@@ -69,7 +69,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
-					callback(invoiceFactory.setearInterfaz(data));
+					callback(data);
 				}).error(function(error, status){
 					if (status != 0){
 						if (error == null){
