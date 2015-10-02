@@ -519,13 +519,10 @@ myapp.directive('tableSinLiquidar', function(){
 		restrict:		'E',
 		templateUrl:	'view/table.sinLiquidar.html',
 		scope: {
-			comprobantes:			"=",
-			total:					"=",
-			panelMensaje:			"=",
-			currentPage:			"=",
-			itemsPerPage:			"=",
+			model:					"=",
 			mostrarDetalle:			"&",
-			cargar:					"&"
+			cargar:					"&",
+			ordenar:				"&"
 		}
 	}
 });

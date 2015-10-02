@@ -24,13 +24,10 @@
 				</div>
 				<div class="col-lg-12" ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle">
 					<table-sin-liquidar
-							comprobantes="sinLiquidar.comprobantes"
-							total="sinLiquidar.total"
-							panel-mensaje="sinLiquidar.panelMensaje"
-							current-page="sinLiquidar.currentPage"
-							items-per-page="itemsPerPage"
+							model="sinLiquidar"
 							mostrar-detalle="mostrarDetalleSinLiquidar(invoice)"
-							cargar="cargarSinLiquidar()">
+							cargar="cargarSinLiquidar()"
+							ordenar="filtrarSinLiquidar(filtro)">
 					</table-sin-liquidar>
 				</div>
 				<div class="col-lg-12" ng-show="sinLiquidar.verDetalle">
@@ -66,29 +63,27 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-4">
-						<h5  ng-show="preLiquidacion.verDetalle">Toneladas: {{ preLiquidacion.detalle.tons | number: 2 }}</h5>
+						<h5  ng-show="preLiquidacion.verDetalle"></h5>
 					</div>
 					<div class="col-lg-4">
-						<h5  ng-show="preLiquidacion.verDetalle">Total: U$S {{ preLiquidacion.detalle.total | currency }}</h5>
+						<h5  ng-show="preLiquidacion.verDetalle"></h5>
 					</div>
 					<div class="col-lg-4 text-right">
 						<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
 					</div>
 				</div>
 				<hr>
-				<accordion-min heading="Comprobantes - Pre-Liquidación número: {{ preLiquidacion.selected.preNumber }}" ng-show="preLiquidacion.verDetalle">
+				<accordion-min heading="Detalle Pre-Liquidación nº {{ preLiquidacion.selected.preNumber }}" ng-show="preLiquidacion.verDetalle">
+					<h5 class="col-lg-12"></span><strong> Toneladas: {{ preLiquidacion.detalle.tons | number: 2 }} - Tasa: U$S {{ preLiquidacion.detalle.total | currency }} - Importe: $ {{ preLiquidacion.detalle.totalPeso | currency }} - IVA: $ {{ preLiquidacion.detalle.totalPeso * 0.21 | currency }} - Total: $ {{ preLiquidacion.detalle.totalPeso * 1.21 | currency }}</strong></h5>
 					<div class="col-lg-12 text-center" ng-show="comprobantesPreLiquidados.cargando">
 						<img class="media-object center-block" src="images/loading.gif">
 					</div>
 					<div class="col-lg-12" ng-hide="comprobantesPreLiquidados.cargando || comprobantesPreLiquidados.verDetalle">
 						<table-sin-liquidar
-								comprobantes="comprobantesPreLiquidados.comprobantes"
-								total="comprobantesPreLiquidados.total"
-								panel-mensaje="mensajeResultado"
-								current-page="comprobantesPreLiquidados.currentPage"
-								items-per-page="itemsPerPage"
+								model="comprobantesPreLiquidados"
 								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
-								cargar="cambioPagina()">
+								cargar="cambioPagina()"
+								ordenar="filtrarPreLiquidados(filtro)">
 						</table-sin-liquidar>
 					</div>
 					<div class="col-lg-12" ng-show="comprobantesPreLiquidados.verDetalle">
