@@ -15,7 +15,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
-		$scope.itemsPerPage = [
+		$scope.itemsPerPageData = [
 			{ value: 10, description: '10 items por página', ticked: false},
 			{ value: 15, description: '15 items por página', ticked: true},
 			{ value: 20, description: '20 items por página', ticked: false},
