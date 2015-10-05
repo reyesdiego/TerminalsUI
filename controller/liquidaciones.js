@@ -135,7 +135,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			comprobantes: [],
 			total: 0,
 			currentPage: 1,
-			cargando: false
+			cargando: false,
+			invoiceSelected: {},
+			verDetalle: false,
+			itemsPerPage: 15
 		};
 
 		$scope.acceso = $rootScope.esUsuario;
@@ -276,12 +279,17 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.filtrarPreLiquidados = function(filtro){
-			$scope.comprobantesPreLiquidados.model = generalFunctions.filtrarOrden($scope.comprobantesPreLiquidados.model, filtro);
-			var pagina = {
-				skip: ($scope.comprobantesPreLiquidados.currentPage - 1) * $scope.itemsPerPage,
-				limit: $scope.itemsPerPage
-			};
-			traerComprobantesPreLiquidacion(pagina);
+			if ($scope.modo == 'sinLiquidar'){
+				$scope.comprobantesPreLiquidados.model = generalFunctions.filtrarOrden($scope.comprobantesPreLiquidados.model, filtro);
+				var pagina = {
+					skip: ($scope.comprobantesPreLiquidados.currentPage - 1) * $scope.itemsPerPage,
+					limit: $scope.itemsPerPage
+				};
+				traerComprobantesPreLiquidacion(pagina);
+			} else {
+				$scope.comprobantesLiquidados.model = generalFunctions.filtrarOrden($scope.comprobantesPreLiquidados.model, filtro);
+				$scope.detalleLiquidacion();
+			}
 		};
 
 		var traerComprobantesPreLiquidacion = function(pagina){
@@ -392,15 +400,28 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.mostrarDetallePreLiquidado = function(comprobante){
-			$scope.comprobantesPreLiquidados.cargando = true;
-			invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.comprobantesPreLiquidados.comprobantes)
-				.then(function(response){
-					$scope.comprobantesPreLiquidados.invoiceSelected = response.detalle;
-					$scope.comprobantesPreLiquidados.comprobantes = response.datosInvoices;
-					$scope.commentsInvoice = response.commentsInvoice;
-					$scope.comprobantesPreLiquidados.verDetalle = true;
-					$scope.comprobantesPreLiquidados.cargando = false;
-				})
+			if ($scope.modo == 'sinLiquidar'){
+				$scope.comprobantesPreLiquidados.cargando = true;
+				invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.comprobantesPreLiquidados.comprobantes)
+					.then(function(response){
+						$scope.comprobantesPreLiquidados.invoiceSelected = response.detalle;
+						$scope.comprobantesPreLiquidados.comprobantes = response.datosInvoices;
+						$scope.commentsInvoice = response.commentsInvoice;
+						$scope.comprobantesPreLiquidados.verDetalle = true;
+						$scope.comprobantesPreLiquidados.cargando = false;
+					})
+			} else {
+				$scope.comprobantesLiquidados.cargando = true;
+				invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.comprobantesLiquidados.comprobantes)
+					.then(function(response){
+						$scope.comprobantesLiquidados.invoiceSelected = response.detalle;
+						$scope.comprobantesLiquidados.comprobantes = response.datosInvoices;
+						$scope.commentsInvoice = response.commentsInvoice;
+						$scope.comprobantesLiquidados.verDetalle = true;
+						$scope.comprobantesLiquidados.cargando = false;
+					})
+			}
+
 		};
 
 		$scope.eliminarPreLiquidacion = function(){
