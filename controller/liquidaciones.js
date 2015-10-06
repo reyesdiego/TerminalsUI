@@ -171,6 +171,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			if (data.modo == 'sinLiquidar'){
 				$scope.cargarSinLiquidar();
 			} else if(data.modo == 'preLiquidaciones'){
+				$scope.preLiquidacion.verDetalle = false;
 				$scope.cargarPreLiquidaciones();
 			} else {
 				$scope.cargarLiquidaciones();

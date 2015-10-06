@@ -64,6 +64,16 @@ myapp.directive('tableGates', function(){
 	}
 });
 
+myapp.directive('detalleLiquidacion', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/detalle.liquidacion.html',
+		scope: {
+			datosLiquidacion:		'='
+		}
+	}
+});
+
 myapp.directive('tableTurnos', function(){
 	return {
 		restrict:		'E',
@@ -527,6 +537,19 @@ myapp.directive('tableSinLiquidar', function(){
 	}
 });
 
+myapp.directive('tablePreLiquidacion', function(){
+	return {
+		restrict:		'E',
+		scope: {
+			cargando:			'=',
+			datosPagos:			'=',
+			panelMensaje:		'=',
+			detalle:			'&'
+		},
+		templateUrl:	'view/table.preLiquidacion.html'
+	}
+});
+
 myapp.directive('tablePagos', function(){
 	return {
 		restrict:		'E',
@@ -534,8 +557,7 @@ myapp.directive('tablePagos', function(){
 			cargando:			'=',
 			datosPagos:			'=',
 			panelMensaje:		'=',
-			detalle:			'&',
-			final:				'@'
+			detalle:			'&'
 		},
 		templateUrl:	'view/table.pagos.html'
 	}

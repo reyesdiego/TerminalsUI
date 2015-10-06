@@ -10,21 +10,44 @@
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr class="text-center">
-			<th class="text-right">Número</th>
-			<th class="text-center">Fecha</th>
-			<th class="text-right" ng-show="final == 'true'">Toneladas</th>
-			<th class="text-right" ng-show="final == 'true'">Total</th>
+			<th class="text-right" rowspan="{{ datosPagos.detail.length }}">Número</th>
+			<th class="text-center" rowspan="{{ datosPagos.detail.length }}">Fecha</th>
+			<td class="text-center">Detalles</td>
 			<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 		</tr>
 		</thead>
 		<tbody>
 		<tr ng-repeat="pago in datosPagos">
-			<td class="text-right" ng-hide="final == 'true'">{{ pago.preNumber }}</td>
-			<td class="text-right" ng-hide="final != 'true'">{{ pago.number }}</td>
+			<!--<td class="text-right" ng-hide="final == 'true'">{{ pago.preNumber }}</td>-->
+			<td class="text-right">{{ pago.number }}</td>
 			<td class="text-center">{{ pago.date | date: 'dd/MM/yyyy' }}</td>
-			<td class="text-right" ng-show="final == 'true'">{{ pago.tons | number: 2 }}</td>
-			<td class="text-right" ng-show="final == 'true'">U$S {{ pago.total | currency }}</td>
-			<th class="text-center"><a href ng-click="detalle({pago: pago})"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
+			<td>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+					<tr>
+						<th class="text-center">Código</th>
+						<th>Descripción</th>
+						<th class="text-right">Toneladas</th>
+						<th class="text-right">Tasa</th>
+						<th class="text-right">Importe</th>
+						<th class="text-right">I.V.A.</th>
+						<th class="text-right">Total</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="detalle in pago.detail">
+						<td class="text-center">{{ detalle._id }}</td>
+						<td>{{ detalle.desc }}</td>
+						<td class="text-right">{{ detalle.cant }}</td>
+						<td class="text-right">U$S {{ detalle.totalDol | currency }}</td>
+						<td class="text-right">$ {{ detalle.totalPes | currency }}</td>
+						<td class="text-right">$ {{ detalle.iva | currency }}</td>
+						<td class="text-right">$ {{ detalle.total | currency }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</td>
+			<td class="text-center"><a href ng-click="detalle({pago: pago})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		</tbody>
 	</table>

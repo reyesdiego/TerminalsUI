@@ -1,0 +1,26 @@
+<div class="table-responsive col-lg-12">
+	<table class="table table-bordered table-hover">
+		<thead>
+		<tr>
+			<th class="text-center">Código</th>
+			<th>Descripción</th>
+			<th class="text-right">Toneladas</th>
+			<th class="text-right">Tasa</th>
+			<th class="text-right">Total</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="detalle in datosLiquidacion">
+			<td class="text-center">{{ detalle._id.code }}</td>
+			<td>{{ detalle.descripcion }}</td>
+			<td class="text-right">{{ detalle.tons }}</td>
+			<td class="text-right">U$S {{ detalle.total | currency }}</td>
+			<td class="text-right">$ {{ detalle.totalPeso | currency }}</td>
+		</tr>
+		<tr>
+			<td colspan="4" class="text-right">Total</td>
+			<td class="text-right">$ {{ datosLiquidacion.totalFinal | currency }}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
