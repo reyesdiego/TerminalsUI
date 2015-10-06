@@ -311,7 +311,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.cargarDetallePreLiquidacion = function(liquidacion){
 			if (liquidacion) $scope.preLiquidacion.selected = liquidacion;
-			//$scope.preLiquidacion.verDetalle = true;
+			$scope.preLiquidacion.verDetalle = true;
 			$scope.comprobantesPreLiquidados.cargando = true;
 			var pagina = {
 				skip: ($scope.comprobantesPreLiquidados.currentPage - 1) * $scope.itemsPerPage,

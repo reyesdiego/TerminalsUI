@@ -62,13 +62,7 @@
 					<div class="text-center visible-lg"><pagination boundary-links="true" total-items="preLiquidacion.total" items-per-page="itemsPerPage" ng-model="preLiquidacion.currentPage" max-size="15" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
 				<div class="row">
-					<div class="col-lg-4">
-						<h5  ng-show="preLiquidacion.verDetalle"></h5>
-					</div>
-					<div class="col-lg-4">
-						<h5  ng-show="preLiquidacion.verDetalle"></h5>
-					</div>
-					<div class="col-lg-4 text-right">
+					<div class="col-lg-offset-8 col-lg-4 text-right">
 						<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
 					</div>
 				</div>
@@ -152,7 +146,7 @@
 					<div class="col-lg-12 center-block" ng-hide="comprobantesLiquidados.cargando || comprobantesLiquidados.verDetalle">
 						<table-sin-liquidar
 								model="comprobantesLiquidados"
-								mostrar-detalle="mostrarDetalleLiquidados(invoice)"
+								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
 								cargar="cambioPagina()"
 								ordenar="filtrarLiquidados(filtro)">
 						</table-sin-liquidar>
