@@ -106,7 +106,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 						}
 						if (tasaCargasTerminal.indexOf(item.id) >= 0){
 							comprobante.tieneTasa = true;
-							if (angular.isDefined(comprobante.payment)){
+							if (angular.isDefined(comprobante.payment) && comprobante.payment != null){
 								if (angular.isDefined(comprobante.payment.number)){
 									comprobante.interfazLiquidada = 'text-success';
 								} else {
