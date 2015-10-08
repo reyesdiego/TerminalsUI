@@ -177,6 +177,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				$scope.preLiquidacion.verDetalle = false;
 				$scope.cargarPreLiquidaciones();
 			} else {
+				$scope.liquidacion.verDetalle = false;
 				$scope.cargarLiquidaciones();
 			}
 		});
