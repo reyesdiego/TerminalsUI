@@ -159,10 +159,10 @@ myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', function(inv
 			comprobantes:		"=",
 			comprobantesVistos:	"=",
 			ocultarFiltros:		"=",
-			logoTerminal:		"="
+			logoTerminal:		"=",
+			moneda:				'='
 		},
 		link: function($scope){
-
 			$scope.comprobantesControlados = [];
 
 			$scope.checkComprobantes = function(comprobante){
