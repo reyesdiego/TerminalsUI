@@ -452,9 +452,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			//$rootScope.primerRuteo = true;
 		}
 
-		$rootScope.fechaInicio = new Date();
-		$rootScope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-
 		$rootScope.mensajeResultado = {
 			titulo: 'Comprobantes',
 			mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',

@@ -3,6 +3,9 @@
  */
 
 myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', function($scope, turnosFactory, loginService){
+	$scope.fechaInicio = new Date();
+	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
 	$scope.control = false;
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = 15;

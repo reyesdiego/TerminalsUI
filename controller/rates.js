@@ -33,6 +33,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 		// Fecha (dia y hora)
 		$scope.fechaInicio = new Date();
+		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 		// Variable para almacenar la info principal que trae del factory
 		$scope.rates = {};

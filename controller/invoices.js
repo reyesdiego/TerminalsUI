@@ -4,6 +4,9 @@
 
 myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
 
+	$scope.fechaInicio = new Date();
+	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
 	$scope.ocultarFiltros = ['nroPtoVenta'];
 
 	$scope.model = {

@@ -4,6 +4,9 @@
 myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', 'invoiceService',
 	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, invoiceService){
 
+		$scope.fechaInicio = new Date();
+		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
 		$scope.sinLiquidar = {
 			ocultarFiltros: ['liquidacion'],
 			panelMensaje: {

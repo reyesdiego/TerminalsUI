@@ -26,7 +26,7 @@
 			<td class="text-right" style="width: 7%">{{ invoice.nroPtoVenta }}</td>
 			<td class="text-center" style="width: 13%; font-size: 9pt">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-left" style="width: 17%; font-size: 9pt">{{ invoice.buque }}</td>
-			<td class="text-right" style="width: 6%">{{ invoice.cnt }}</td>
+			<td class="text-right" style="width: 6%">{{ invoice.cnt | numberEx:2 }}</td>
 			<td class="text-center" style="width: 11%">U$S {{ invoice.code | currency }}</td>
 			<td class="text-right" style="width: 12%">U$S {{ invoice.tasa | currency }}</td>
 			<td class="text-right" style="width: 9%">$ {{ invoice.cotiMoneda | currency }}</td>

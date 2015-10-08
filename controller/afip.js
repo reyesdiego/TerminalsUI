@@ -4,6 +4,9 @@
 
 myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache, loginService){
 
+	$scope.fechaInicio = new Date();
+	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
 	$rootScope.rutas.sort();
 	$scope.afectacion = 'afip';
 	$scope.detalle = 'afip';

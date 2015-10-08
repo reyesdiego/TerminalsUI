@@ -7,6 +7,9 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes', 'rates'];
 	//$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque', 'rates'];
 
+	$scope.fechaInicio = new Date();
+	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
 	$scope.ocultaTasas = true;
 	$scope.loadingState = false;
 
@@ -334,6 +337,9 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', function($scope, invoiceFactory, priceFactory) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'rates'];
 
+	$scope.fechaInicio = new Date();
+	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
 	$scope.model = {
 		'nroPtoVenta': '',
 		'codTipoComprob': '',
@@ -524,6 +530,8 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 
 myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'dialogs',
 	function($rootScope, $scope, invoiceFactory, dialogs ) {
+
+		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 		$scope.disableDown = false;
 

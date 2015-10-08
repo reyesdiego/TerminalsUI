@@ -10,6 +10,19 @@ myapp.filter('formatCurrency', [function(){
 	}
 }]);
 
+myapp.filter('numberEx', ['numberFilter', '$locale',
+	function(number, $locale) {
+
+		var formats = $locale.NUMBER_FORMATS;
+		return function(input, fractionSize) {
+			//Get formatted value
+			var formattedValue = number(input, fractionSize);
+
+			return Number(formattedValue.replace(',', '.'));
+		};
+	}
+]);
+
 myapp.filter("maxLength", [function(){
 	return function(text,max){
 		if(text != null){
