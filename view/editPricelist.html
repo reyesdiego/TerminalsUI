@@ -68,13 +68,13 @@
 						<td><textarea class="textarea-td" ng-model="price.description"></textarea></td>
 						<td>
 							<select class="form-control" ng-model="price.idUnit">
-								<option ng-repeat="unidad in unidadesTarifas" value="{{ unidad._id }}">{{ unidad.description }}</option>
+								<option ng-repeat="unidad in unidadesTarifas" value="{{ unidad._id }}" ng-selected="price.idUnit == unidad._id">{{ unidad.description }}</option>
 							</select>
 						</td>
 						<td>
 							<select class="form-control" ng-model="price.nuevoTopPrice.currency">
-								<option value="DOL">U$S</option>
-								<option value="PES">$ARG</option>
+								<option value="DOL" ng-selected="price.nuevoTopPrice.currency == 'DOL'">U$S</option>
+								<option value="PES" ng-selected="price.nuevoTopPrice.currency == 'PES'">$ARG</option>
 							</select>
 						</td>
 						<td style="text-align: right">
@@ -92,7 +92,10 @@
 					</tbody>
 				</table>
 			</div>
-			<button style="margin-top: 20px" class="col-lg-2 text-center btn btn-primary hidden-print" ng-click="guardarCambios()"><span class="glyphicon glyphicon-save"></span>Guardar</button>
+			<button style="margin-top: 20px" class="col-lg-2 text-center btn btn-primary hidden-print" ng-click="guardarCambios()" ng-disabled="disableSave">
+				<span ng-show="!disableSave"><span class="glyphicon glyphicon-save"></span> Guardar</span>
+				<span ng-show="disableSave"><img src="images/loadingChico.gif" width="20" height="20"> Procesando</span>
+			</button>
 			<div-pagination class="col-lg-10" total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
 		</div>
 	</div>

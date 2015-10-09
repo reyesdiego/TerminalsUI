@@ -16,7 +16,7 @@
 			<h3>Sin Tasa a las cargas</h3>
 		</div>
 		<br>
-		<accordion-invoices-search></accordion-invoices-search>
+		<accordion-invoices-search model="model" ocultar-filtros="ocultarFiltros"></accordion-invoices-search>
 		<div-cargando mostrar="loadingTasaCargas">
 			<div ng-hide="hayError">
 				<div-panel config-panel="{tipo: 'panel-info', titulo: 'Contenedores sin Tasa a las Cargas ' + totalContenedores}">
@@ -52,7 +52,7 @@
 			<h3>Control de correlatividad<span> - {{ filtroTerminal }}</span></h3>
 		</div>
 		<br>
-		<accordion-busqueda-correlatividad model="model" ocultar-filtros="ocultarFiltros"></accordion-busqueda-correlatividad>
+		<accordion-invoices-search model="model" ocultar-filtros="ocultarFiltros"></accordion-invoices-search>
 		<div class="visible-print-block"><span ng-hide="model.fechaInicio == ''">Desde: {{ model.fechaInicio | date: 'dd/MM/yyyy' }}</span></div>
 		<div class="visible-print-block"><span ng-hide="model.fechaFin == ''">Hasta: {{ model.fechaFin | date: 'dd/MM/yyyy' }}</span></div>
 		<br class="visible-print-block">

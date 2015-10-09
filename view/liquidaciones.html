@@ -23,17 +23,23 @@
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
 				<div class="col-lg-12" ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle">
-					<table-sin-liquidar></table-sin-liquidar>
-					<div class="col-lg-12 hidden-print" ng-show="sinLiquidar.total > itemsPerPage">
-						<div class="text-center visible-xs"><pagination boundary-links="true" total-items="sinLiquidar.total" items-per-page="itemsPerPage" ng-model="sinLiquidar.currentPage" max-size="5" ng-click="cargarSinLiquidar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-						<div class="text-center visible-sm"><pagination boundary-links="true" total-items="sinLiquidar.total" items-per-page="itemsPerPage" ng-model="sinLiquidar.currentPage" max-size="7" ng-click="cargarSinLiquidar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-						<div class="text-center visible-md"><pagination boundary-links="true" total-items="sinLiquidar.total" items-per-page="itemsPerPage" ng-model="sinLiquidar.currentPage" max-size="11" ng-click="cargarSinLiquidar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-						<div class="text-center visible-lg"><pagination boundary-links="true" total-items="sinLiquidar.total" items-per-page="itemsPerPage" ng-model="sinLiquidar.currentPage" max-size="15" ng-click="cargarSinLiquidar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-					</div>
-					<br>
+					<table-sin-liquidar
+							model="sinLiquidar"
+							mostrar-detalle="mostrarDetalleSinLiquidar(invoice)"
+							cargar="cargarSinLiquidar()"
+							ordenar="filtrarSinLiquidar(filtro)">
+					</table-sin-liquidar>
 				</div>
 				<div class="col-lg-12" ng-show="sinLiquidar.verDetalle">
-					<invoices-result></invoices-result>
+					<detalle-comprobante
+							ver-detalle="sinLiquidar.invoiceSelected"
+							mostrar="sinLiquidar.verDetalle"
+							comprobantes="sinLiquidar.comprobantes"
+							comprobantes-vistos="comprobantesVistos"
+							ocultar-filtros="comprobantesPreLiquidados.ocultarFiltros"
+							logo-terminal="logoTerminal"
+							moneda="moneda">
+					</detalle-comprobante>
 				</div>
 				<div class="row">
 					<div class="col-lg-6 text-left">
@@ -48,7 +54,7 @@
 				</div>
 				<hr>
 				<liquidaciones-search model="preLiquidacion.model" ocultar-filtros="preLiquidacion.ocultarFiltros"></liquidaciones-search>
-				<table-pagos cargando="preLiquidacion.cargando" datos-pagos="preLiquidacion.datos" panel-mensaje="preLiquidacion.panelMensaje" detalle="cargarDetallePreLiquidacion(pago)" final="false"></table-pagos>
+				<table-pre-liquidacion cargando="preLiquidacion.cargando" datos-pagos="preLiquidacion.datos" panel-mensaje="preLiquidacion.panelMensaje" detalle="cargarDetallePreLiquidacion(pago)"></table-pre-liquidacion>
 				<!--<div-pagination total-items="totalLiquidaciones" items-per-page="itemsPerPage" current-page="currentPageLiquidaciones"></div-pagination>-->
 				<div class="col-lg-12 hidden-print" ng-show="preLiquidacion.total > itemsPerPage">
 					<div class="text-center visible-xs"><pagination boundary-links="true" total-items="preLiquidacion.total" items-per-page="itemsPerPage" ng-model="preLiquidacion.currentPage" max-size="5" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
@@ -57,19 +63,36 @@
 					<div class="text-center visible-lg"><pagination boundary-links="true" total-items="preLiquidacion.total" items-per-page="itemsPerPage" ng-model="preLiquidacion.currentPage" max-size="15" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
 				<div class="row">
-					<div class="col-lg-4">
-						<h5  ng-show="preLiquidacion.verDetalle">Toneladas: {{ preLiquidacion.detalle.tons | number: 2 }}</h5>
-					</div>
-					<div class="col-lg-4">
-						<h5  ng-show="preLiquidacion.verDetalle">Total: U$S {{ preLiquidacion.detalle.total | currency }}</h5>
-					</div>
-					<div class="col-lg-4 text-right">
+					<div class="col-lg-offset-8 col-lg-4 text-right">
 						<button class="btn btn-primary" ng-click="preLiquidar()">Generar pre-liquidación</button>
 					</div>
 				</div>
 				<hr>
-				<accordion-min heading="Comprobantes - Pre-Liquidación número: {{ preLiquidacion.selected.preNumber }}" ng-show="preLiquidacion.verDetalle">
-					<vista-comprobantes model="comprobantesPreLiquidados.model" datos-invoices="comprobantesPreLiquidados.comprobantes" ocultar-filtros="comprobantesPreLiquidados.ocultarFiltros" total-items="comprobantesPreLiquidados.total" control-codigos="false" loading-state="comprobantesPreLiquidados.cargando" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
+				<accordion-min heading="Detalle Pre-Liquidación nº {{ preLiquidacion.selected.preNumber }}" ng-show="preLiquidacion.verDetalle">
+					<!--<h5 class="col-lg-12"><strong> Toneladas: {{ preLiquidacion.detalle.tons | number: 2 }} - Tasa: U$S {{ preLiquidacion.detalle.total | currency }} - Importe: $ {{ preLiquidacion.detalle.totalPeso | currency }} - IVA: $ {{ preLiquidacion.detalle.totalPeso * 0.21 | currency }} - Total: $ {{ preLiquidacion.detalle.totalPeso * 1.21 | currency }}</strong></h5>-->
+					<detalle-liquidacion datos-liquidacion="preLiquidacion.detalle"></detalle-liquidacion>
+					<div class="col-lg-12 text-center" ng-show="comprobantesPreLiquidados.cargando">
+						<img class="media-object center-block" src="images/loading.gif">
+					</div>
+					<div class="col-lg-12" ng-hide="comprobantesPreLiquidados.cargando || comprobantesPreLiquidados.verDetalle">
+						<table-sin-liquidar
+								model="comprobantesPreLiquidados"
+								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
+								cargar="cambioPagina()"
+								ordenar="filtrarPreLiquidados(filtro)">
+						</table-sin-liquidar>
+					</div>
+					<div class="col-lg-12" ng-show="comprobantesPreLiquidados.verDetalle">
+						<detalle-comprobante
+								ver-detalle="comprobantesPreLiquidados.invoiceSelected"
+								mostrar="comprobantesPreLiquidados.verDetalle"
+								comprobantes="comprobantesPreLiquidados.comprobantes"
+								comprobantes-vistos="comprobantesVistos"
+								ocultar-filtros="comprobantesPreLiquidados.ocultarFiltros"
+								logo-terminal="logoTerminal"
+								moneda="moneda">
+						</detalle-comprobante>
+					</div>
 				</accordion-min>
 				<div class="col-lg-12 text-right">
 					<button class="btn btn-danger" ng-click="eliminarPreLiquidacion()" ng-disabled="!preLiquidacion.verDetalle">Eliminar</button>
@@ -86,7 +109,7 @@
 				</div>
 				<hr>
 				<liquidaciones-search model="preLiquidacion.model" ocultar-filtros="preLiquidacion.ocultarFiltros"></liquidaciones-search>
-				<table-pagos cargando="preLiquidacion.cargando" datos-pagos="preLiquidacion.datos" panel-mensaje="preLiquidacion.panelMensaje" detalle="cargarDetallePreLiquidacion(pago)" final="false"></table-pagos>
+				<table-pre-liquidacion cargando="preLiquidacion.cargando" datos-pagos="preLiquidacion.datos" panel-mensaje="preLiquidacion.panelMensaje" detalle="cargarDetallePreLiquidacion(pago)"></table-pre-liquidacion>
 				<!--<div-pagination total-items="totalLiquidaciones" items-per-page="itemsPerPage" current-page="currentPageLiquidaciones"></div-pagination>-->
 				<div class="col-lg-12 hidden-print" ng-show="preLiquidacion.total > itemsPerPage">
 					<div class="text-center visible-xs"><pagination boundary-links="true" total-items="preLiquidacion.total" items-per-page="itemsPerPage" ng-model="preLiquidacion.currentPage" max-size="5" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
@@ -95,13 +118,8 @@
 					<div class="text-center visible-lg"><pagination boundary-links="true" total-items="preLiquidacion.total" items-per-page="itemsPerPage" ng-model="preLiquidacion.currentPage" max-size="15" ng-click="cargarPreLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
 				<div class="row">
-					<div class="col-lg-4">
-						<h5  ng-show="preLiquidacion.verDetalle">Toneladas: {{ preLiquidacion.detalle.tons | number: 2 }}</h5>
-					</div>
-					<div class="col-lg-4">
-						<h5  ng-show="preLiquidacion.verDetalle">Total: U$S {{ preLiquidacion.detalle.total | currency }}</h5>
-					</div>
-					<div class="col-lg-4 text-right">
+					<detalle-liquidacion ng-show="preLiquidacion.verDetalle" datos-liquidacion="preLiquidacion.detalle"></detalle-liquidacion>
+					<div class="col-lg-offset-8 col-lg-4 text-right">
 						<br>
 						<button class="btn btn-danger" ng-click="eliminarPreLiquidacion()" ng-disabled="!preLiquidacion.verDetalle">Eliminar</button>
 						<button class="btn btn-primary" ng-click="liquidar()" ng-disabled="!preLiquidacion.verDetalle">Liquidar</button>
@@ -117,7 +135,7 @@
 				</div>
 				<hr>
 				<liquidaciones-search model="liquidacion.model" ocultar-filtros="liquidacion.ocultarFiltros"></liquidaciones-search>
-				<table-pagos cargando="liquidacion.cargando" datos-pagos="liquidacion.datos" panel-mensaje="liquidacion.panelMensaje" detalle="detalleLiquidacion(pago)" final="true"></table-pagos>
+				<table-pagos cargando="liquidacion.cargando" datos-pagos="liquidacion.datos" panel-mensaje="liquidacion.panelMensaje" detalle="detalleLiquidacion(pago)"></table-pagos>
 				<div class="col-lg-12 hidden-print" ng-show="liquidacion.total > itemsPerPage">
 					<div class="text-center visible-xs"><pagination boundary-links="true" total-items="liquidacion.total" items-per-page="itemsPerPage" ng-model="liquidacion.currentPage" max-size="5" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class="text-center visible-sm"><pagination boundary-links="true" total-items="liquidacion.total" items-per-page="itemsPerPage" ng-model="liquidacion.currentPage" max-size="7" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
@@ -125,7 +143,28 @@
 					<div class="text-center visible-lg"><pagination boundary-links="true" total-items="liquidacion.total" items-per-page="itemsPerPage" ng-model="liquidacion.currentPage" max-size="15" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 				</div>
 				<accordion-min heading="Comprobantes - Liquidación número: {{ liquidacion.selected.number }}" ng-show="liquidacion.verDetalle">
-					<vista-comprobantes class="col-lg-12 center-block" model="comprobantesLiquidados.model" datos-invoices="comprobantesLiquidados.comprobantes" ocultar-filtros="comprobantesLiquidados.ocultarFiltros" total-items="comprobantesLiquidados.total" control-codigos="false" loading-state="comprobantesLiquidados.cargando" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
+					<div class="col-lg-12 text-center" ng-show="comprobantesLiquidados.cargando">
+						<img class="media-object center-block" src="images/loading.gif">
+					</div>
+					<div class="col-lg-12 center-block" ng-hide="comprobantesLiquidados.cargando || comprobantesLiquidados.verDetalle">
+						<table-sin-liquidar
+								model="comprobantesLiquidados"
+								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
+								cargar="cambioPagina()"
+								ordenar="filtrarLiquidados(filtro)">
+						</table-sin-liquidar>
+					</div>
+					<div class="col-lg-12" ng-show="comprobantesLiquidados.verDetalle">
+						<detalle-comprobante
+								ver-detalle="comprobantesLiquidados.invoiceSelected"
+								mostrar="comprobantesLiquidados.verDetalle"
+								comprobantes="comprobantesLiquidados.comprobantes"
+								comprobantes-vistos="comprobantesVistos"
+								ocultar-filtros="comprobantesLiquidados.ocultarFiltros"
+								logo-terminal="logoTerminal"
+								moneda="moneda">
+						</detalle-comprobante>
+					</div>
 				</accordion-min>
 			</div>
 		</tab>

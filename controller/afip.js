@@ -4,6 +4,9 @@
 
 myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache, loginService){
 
+	$scope.fechaInicio = new Date();
+	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
 	$rootScope.rutas.sort();
 	$scope.afectacion = 'afip';
 	$scope.detalle = 'afip';
@@ -115,7 +118,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		switch ($state.current.name){
 			case 'afip':
 				$state.transitionTo($scope.actualRegistro);
-				$scope.cargaDatos($scope.actualRegistro);
+				cargaDatos($scope.actualRegistro);
 				$scope.tabs[0].active = true;
 				break;
 			case 'afip.afectacion.afectacion1':
@@ -135,7 +138,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 	$scope.$on('cambioPagina', function(event, data){
 		$scope.model.currentPage = data;
-		$scope.cargaDatos($scope.actualRegistro);
+		cargaDatos($scope.actualRegistro);
 	});
 
 	$scope.$on('errorInesperado', function(){
@@ -145,7 +148,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 	$scope.hitEnter = function(evt){
 		if(angular.equals(evt.keyCode,13))
-			$scope.cargaDatos($scope.actualRegistro);
+			cargaDatos($scope.actualRegistro);
 	};
 
 	$scope.filtrado = function(filtro, contenido){
@@ -156,15 +159,15 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 			$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 		}
-		$scope.cargaDatos($scope.actualRegistro);
+		cargaDatos($scope.actualRegistro);
 	};
 
 	$scope.filtrarOrden = function(filtro){
 		$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
-		$scope.cargaDatos($scope.actualRegistro);
+		cargaDatos($scope.actualRegistro);
 	};
 
-	$scope.cargaDatos = function(registro){
+	var cargaDatos = function(registro){
 		$scope.cargando = true;
 		$scope.panelMensaje = {
 			titulo: 'AFIP',
@@ -290,10 +293,10 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		return in_array(aguja, pajar);
 	};
 
-	if (loginService.getStatus()) $scope.cargaDatos($scope.actualRegistro);
+	if (loginService.getStatus()) cargaDatos($scope.actualRegistro);
 
 	$scope.$on('terminoLogin', function(){
-		$scope.cargaDatos($scope.actualRegistro);
+		cargaDatos($scope.actualRegistro);
 	});
 
 }]);

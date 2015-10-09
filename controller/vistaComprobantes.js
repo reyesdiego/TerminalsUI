@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 30/03/15.
  */
-myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'invoiceFactory', 'loginService', 'statesFactory', 'generalCache', 'generalFunctions', 'dialogs', 'invoiceService',
-	function($rootScope, $scope, $filter, invoiceFactory, loginService, statesFactory, generalCache, generalFunctions, dialogs, invoiceService){
+myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', 'generalFunctions', 'dialogs', 'invoiceService',
+	function($rootScope, $scope, invoiceFactory, loginService, generalFunctions, dialogs, invoiceService){
 		$scope.status = {
 			open: true
 		};
@@ -11,22 +11,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		//Variables para control de fechas
 		$scope.maxDateD = new Date();
 		$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-		//Tipos de comprobantes
-		$scope.vouchers = generalCache.get('vouchers');
-		//Listas para autocompletado
-		$scope.listaViajes = [];
-		$scope.itemsPerPage = [
-			{ value: 10, description: '10 items por página', ticked: false},
-			{ value: 15, description: '15 items por página', ticked: true},
-			{ value: 20, description: '20 items por página', ticked: false},
-			{ value: 50, description: '50 items por página', ticked: false}
-		];
-		$scope.estadosComprobantes = $filter('filter')(generalCache.get('estados'), $scope.filtroEstados);
 		$scope.logoTerminal = $rootScope.logoTerminal;
-
-		$scope.estadosComprobantes.forEach(function(unEstado){
-			unEstado.ticked = false;
-		});
 
 		$scope.comprobantesVistos = [];
 
@@ -49,16 +34,16 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 
 		$scope.disablePdf = false;
 
-		$scope.$on('iniciarBusqueda', function(event, data){
-			$scope.filtrado(data.filtro, data.contenido);
-		});
-
 		$scope.$on('borrarEstado', function(){
 			$scope.filtrado('estado', 'N');
 		});
 
 		$scope.$on('mostrarComprobante', function(event, comprobante){
 			$scope.mostrarDetalle(comprobante);
+		});
+
+		$scope.$on('iniciarBusqueda', function(event, model){
+			$scope.filtrado();
 		});
 
 		$rootScope.$watch('moneda', function(){
@@ -78,14 +63,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 				};
 			}
 		});
-
 		$scope.$watch('volverAPrincipal', function() {
 			$scope.mostrarResultado = false;
 		});
-
-		$scope.cambioItemsPorPagina = function(data){
-			$scope.filtrado('itemsPerPage', data.value);
-		};
 
 		$scope.$watch('model.rates', function(){
 			if ($scope.model.rates != 1) $scope.model.payment = '';
@@ -94,67 +74,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		$scope.$watch('model.payment', function(){
 			if ($scope.model.payment != 1) $scope.model.payed = '';
 		});
-
-		$scope.estadoSeleccionado = function(data){
-			var contenido = '';
-			if (data.ticked){
-				$scope.estadosComprobantes.forEach(function(unEstado){
-					if (unEstado.ticked){
-						if (contenido == ''){
-							contenido += unEstado._id;
-						} else {
-							contenido += ',' + unEstado._id;
-						}
-					}
-				});
-			} else {
-				contenido = $scope.model.estado.replace(',' + data._id, '');
-				contenido = contenido.replace(data._id + ',', '');
-				contenido = contenido.replace(data._id, '');
-				if (contenido == ''){
-					contenido = 'N';
-				}
-			}
-			$scope.filtrado('estado', contenido);
-		};
-
-		$scope.hitEnter = function(evt){
-			if(angular.equals(evt.keyCode,13))
-				$scope.cargaPuntosDeVenta();
-		};
-
-		$scope.openDate = function(event){
-			generalFunctions.openDate(event);
-		};
-
-		$scope.clientSelected = function(selected){
-			if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
-				$scope.model.razonSocial = selected.title;
-				$scope.filtrado('razonSocial', selected.title);
-			}
-		};
-
-		$scope.buqueSelected = function(selected){
-			if (angular.isDefined(selected) && selected.title != $scope.model.buqueNombre){
-				$scope.model.buqueNombre = selected.originalObject.buque;
-				var i = 0;
-				selected.originalObject.viajes.forEach(function(viaje){
-					var objetoViaje = {
-						'id': i,
-						'viaje': viaje.viaje
-					};
-					$scope.listaViajes.push(objetoViaje);
-					i++;
-				});
-			}
-		};
-
-		$scope.viajeSelected = function(selected){
-			if (angular.isDefined(selected) && selected.title != $scope.model.viaje){
-				$scope.model.viaje = selected.title;
-				$scope.filtrado('viaje', selected.title);
-			}
-		};
 
 		$scope.filtrado = function(filtro, contenido){
 			$scope.loadingState = true;
@@ -171,27 +90,10 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 			for (var elemento in $scope.model){
 				if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 			}
-			$scope.$broadcast('checkAutoComplete');
 			if (filtro == 'nroPtoVenta'){
 				$scope.$emit('cambioFiltro', $scope.model);
 			} else {
-				$scope.cargaPuntosDeVenta();
-			}
-		};
-
-		$scope.filtrarCaracteresInvalidos = function(palabra){
-			if (angular.isDefined(palabra) && palabra.length > 0){
-				var palabraFiltrada;
-				var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
-				palabraFiltrada = palabra;
-				for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
-					if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
-						palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
-					}
-				}
-				return palabraFiltrada.toUpperCase();
-			} else {
-				return palabra;
+				cargaPuntosDeVenta();
 			}
 		};
 
@@ -226,11 +128,13 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 		$scope.cambiaPtoVenta = function (pto) {
 			$scope.todosLosPuntosDeVentas.forEach(function (ptos) { ptos.active = false; });
 			pto.active = true;
-			$scope.filtrado('nroPtoVenta', pto.punto);
+			$scope.model['nroPtoVenta'] = pto.punto;
+			$scope.$emit('cambioFiltro', $scope.model);
+			//$scope.filtrado('nroPtoVenta', pto.punto);
 		};
 
 		// Funciones de Puntos de Venta
-		$scope.cargaPuntosDeVenta = function(){
+		var cargaPuntosDeVenta = function(){
 			if ($scope.todosLosPuntosDeVentas.length > 0){
 				invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 					if (data.status == 'OK'){
@@ -249,11 +153,11 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 					}
 				});
 			} else {
-				$scope.cargaTodosLosPuntosDeVentas();
+				cargaTodosLosPuntosDeVentas();
 			}
 		};
 
-		$scope.cargaTodosLosPuntosDeVentas = function(){
+		var cargaTodosLosPuntosDeVentas = function(){
 			invoiceFactory.getCashbox($scope.$id, '', function(data){
 				if (data.status == 'OK'){
 					var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
@@ -262,7 +166,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 						dato = {'heading': punto, 'punto': punto, 'active': false, 'hide': true};
 						$scope.todosLosPuntosDeVentas.push(dato);
 					});
-					$scope.cargaPuntosDeVenta();
+					cargaPuntosDeVenta();
 				} else {
 					dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta');
 				}
@@ -324,18 +228,18 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', '$filter', 'i
 			return datos;
 		}
 
-		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) $scope.cargaTodosLosPuntosDeVentas();
+		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
 
 		$scope.$on('terminoLogin', function(){
 			$scope.acceso = $rootScope.esUsuario;
-			if ($scope.mostrarPtosVenta || $scope.controlCodigos) $scope.cargaTodosLosPuntosDeVentas();
+			if ($scope.mostrarPtosVenta || $scope.controlCodigos) cargaTodosLosPuntosDeVentas();
 		});
 
 		$scope.$on('cambioTerminal', function(){
 			$scope.mostrarResultado = false;
 			$scope.logoTerminal = $rootScope.logoTerminal;
 			$scope.comprobantesVistos = [];
-			if ($scope.mostrarPtosVenta || $scope.controlCodigos) $scope.cargaTodosLosPuntosDeVentas();
+			if ($scope.mostrarPtosVenta || $scope.controlCodigos) cargaTodosLosPuntosDeVentas();
 		});
 
 		$scope.verPdf = function(){

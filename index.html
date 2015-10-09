@@ -115,7 +115,6 @@
 	<script src="controller/searchController.js"></script>
 	<script src="controller/vistaComprobantes.js"></script>
 	<script src="controller/buqueViaje.js"></script>
-	<script src="controller/turnosAgenda.js"></script>
 	<script src="controller/accessControl.js"></script>
 	<script src="controller/turnosEncolados.js"></script>
 	<script src="controller/validarUsuario.js"></script>
@@ -146,68 +145,69 @@
 		<div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
 			<ul class="nav navbar-nav navbar-right" ng-hide="cargandoCache">
 				<li ng-show="acceso==''"><a collap ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
-				<li ng-show="acceso!='' && (in_array('tarifario', rutas) || in_array('matches', rutas))" dropdown>
+				<li ng-show="acceso!='' && (tieneAcceso('tarifario') || tieneAcceso('matches'))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Tarifas<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-show="in_array('tarifario', rutas)"><a collap ui-sref="tarifario">Tarifario</a></li>
-						<li ng-show="in_array('matches', rutas)"><a collap ui-sref="matches">Asociar</a></li>
-						<!--<li class="divider"></li>-->
-						<!--<li ng-show="in_array('modificarTarifario', rutas)"><a collap ui-sref="modificarTarifario">Editar</a></li>-->
+						<li ng-show="tieneAcceso('tarifario')"><a collap ui-sref="tarifario">Tarifario</a></li>
+						<li ng-show="tieneAcceso('matches')"><a collap ui-sref="matches">Asociar</a></li>
+						<li class="divider"></li>
+						<li ng-show="tieneAcceso('modificarTarifario')"><a collap ui-sref="modificarTarifario">Editar</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso!='' && (in_array('invoices', rutas) || in_array('cfacturas', rutas))" dropdown>
+				<li ng-show="acceso!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="invoiceNotify==0" class="burbuja {{ invoiceAnimar }}">{{ invoiceNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li ng-show="in_array('invoices', rutas)"><a collap ui-sref="invoices">Ver</a></li>
-						<li ng-show="in_array('cfacturas', rutas)"><a collap ui-sref="cfacturas">Control</a></li>
+						<li ng-show="tieneAcceso('invoices')"><a collap ui-sref="invoices">Ver</a></li>
+						<li ng-show="tieneAcceso('cfacturas')"><a collap ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
-				<li class="hidden-sm" ng-show="acceso!='' && (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
+				<li class="hidden-sm" ng-show="acceso!='' && (tieneAcceso('gates') || tieneAcceso('cgates'))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
-						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
+						<li ng-show="tieneAcceso('gates')"><a collap ui-sref="gates">Ver</a></li>
+						<li ng-show="tieneAcceso('cgates')"><a collap ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
-				<li class="hidden-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas) || in_array('cturnos', rutas))" dropdown>
+				<li class="hidden-sm" ng-show="acceso!='' && (tieneAcceso('turnos') || tieneAcceso('agenda') || tieneAcceso('cturnos'))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
+						<li ng-show="tieneAcceso('turnos')"><a collap ui-sref="turnos">Ver</a></li>
 						<!--<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>-->
-						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Sin notificar</a></li>
+						<li ng-show="tieneAcceso('cturnos')"><a collap ui-sref="cturnos">Sin notificar</a></li>
+						<li ng-show="tieneAcceso('mturnos')"><a collap ui-sref="mturnos">Control</a></li>
 					</ul>
 				</li>
-				<li class="visible-sm" ng-show="acceso!='' && (in_array('turnos', rutas) || in_array('agenda', rutas)) || in_array('cturnos', rutas) || (in_array('gates', rutas) || in_array('cgates', rutas))" dropdown>
+				<li class="visible-sm" ng-show="acceso!='' && (tieneAcceso('turnos') || tieneAcceso('agenda')) || tieneAcceso('cturnos') || (tieneAcceso('gates') || tieneAcceso('cgates'))" dropdown>
 					<a data-ng-hide="dropdown" dropdown-toggle>Gates/Turnos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="visible-sm dropdown-header">Gates</li>
-						<li ng-show="in_array('gates', rutas)"><a collap ui-sref="gates">Ver</a></li>
-						<li ng-show="in_array('cgates', rutas)"><a collap ui-sref="cgates">Control</a></li>
+						<li ng-show="tieneAcceso('gates')"><a collap ui-sref="gates">Ver</a></li>
+						<li ng-show="tieneAcceso('cgates')"><a collap ui-sref="cgates">Control</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Turnos</li>
-						<li ng-show="in_array('turnos', rutas)"><a collap ui-sref="turnos">Ver</a></li>
-						<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>
-						<li ng-show="in_array('cturnos', rutas)"><a collap ui-sref="cturnos">Sin notificar</a></li>
+						<li ng-show="tieneAcceso('turnos')"><a collap ui-sref="turnos">Ver</a></li>
+						<!--<li ng-show="false"><a collap ui-sref="agenda">Agenda</a></li>-->
+						<li ng-show="tieneAcceso('cturnos')"><a collap ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso=='agp' && (in_array('liquidaciones', rutas) || in_array('control', rutas) || in_array('reports', rutas) || in_array('container', rutas) || in_array('buque', rutas) || in_array('afip', rutas) || in_array('users', rutas) || in_array('access', rutas))" dropdown>
+				<li ng-show="acceso=='agp' && (tieneAcceso('liquidaciones') || tieneAcceso('control') || tieneAcceso('reports') || tieneAcceso('container') || tieneAcceso('buque') || tieneAcceso('afip') || tieneAcceso('users') || tieneAcceso('access'))" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-header">Gráficos</li>
-						<li ng-show="in_array('control', rutas)"><a collap ui-sref="control">Control</a></li>
-						<li ng-show="in_array('reports', rutas)"><a collap ui-sref="reports">Reportes</a></li>
+						<li ng-show="tieneAcceso('control')"><a collap ui-sref="control">Control</a></li>
+						<li ng-show="tieneAcceso('reports')"><a collap ui-sref="reports">Reportes</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Contenedores</li>
-						<li ng-show="in_array('container', rutas)"><a collap ui-sref="container">Ver</a></li>
-						<li ng-show="in_array('buque', rutas)"><a collap ui-sref="buque">Buque - Viaje</a></li>
+						<li ng-show="tieneAcceso('container')"><a collap ui-sref="container">Ver</a></li>
+						<li ng-show="tieneAcceso('buque')"><a collap ui-sref="buque">Buque - Viaje</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Contabilidad</li>
-						<li ng-show="in_array('liquidaciones', rutas)"><a collap ui-sref="liquidaciones">Liquidaciones</a></li>
-						<li ng-show="in_array('afip', rutas)"><a collap ui-sref="afip">A.F.I.P</a></li>
+						<li ng-show="tieneAcceso('liquidaciones')"><a collap ui-sref="liquidaciones">Liquidaciones</a></li>
+						<li ng-show="tieneAcceso('afip')"><a collap ui-sref="afip">A.F.I.P</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Seguridad</li>
-						<li ng-show="in_array('users', rutas)"><a collap ui-sref="users">Usuarios</a></li>
-						<li ng-show="in_array('access', rutas)"><a collap ui-sref="access">Control de acceso</a></li>
+						<li ng-show="tieneAcceso('users')"><a collap ui-sref="users">Usuarios</a></li>
+						<li ng-show="tieneAcceso('access')"><a collap ui-sref="access">Control de acceso</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
 						<li class="visible-sm"><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>

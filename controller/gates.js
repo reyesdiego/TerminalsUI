@@ -62,7 +62,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		$scope.cargaGates();
 	});
 
-	$scope.$on('cambioFiltro', function(event, data){
+	$scope.$on('iniciarBusqueda', function(event, data){
 		$scope.currentPage = 1;
 		$scope.cargaGates();
 	});

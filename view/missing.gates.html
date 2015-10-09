@@ -1,6 +1,6 @@
 <div ng-hide="mostrarResultado">
 	<div class="row hidden-print">
-		<accordion-invoices-search></accordion-invoices-search>
+		<accordion-invoices-search model="model" ocultar-filtros="ocultarFiltros"></accordion-invoices-search>
 	</div>
 
 	<div class="col-lg-12 text-center" ng-show="cargando">
@@ -30,10 +30,10 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr ng-repeat="invoice in filteredDatos = (datosFaltantes | dateRange : model.fechaInicio : model.fechaFin) | orderBy: $parent.predicate : $parent.reverse | startFrom:(currentPage-1) * model.itemsPerPage | limitTo:model.itemsPerPage">
+					<tr ng-repeat="invoice in filteredDatos | orderBy: $parent.predicate : $parent.reverse | startFrom:(currentPage-1) * model.itemsPerPage | limitTo:model.itemsPerPage track by $index" >
 						<td>{{ invoice.c }}</td>
 						<td>{{ invoice.f | date: 'dd/MM/yyyy' }}</td>
-						<td class="hidden-print" style="text-align: center"><a href ng-click="detalleContenedor(invoice.c)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+						<td class="hidden-print" style="text-align: center"><a href ng-click="::detalleContenedor(invoice.c)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 					</tr>
 				</table>
 			</div>

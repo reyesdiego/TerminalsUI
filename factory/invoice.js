@@ -197,6 +197,21 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
+		factory.getCSV = function(datos, callback){
+			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/down';
+			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
+				.success(function(data, status, headers) {
+					var contentType = headers('Content-Type');
+					if (contentType.indexOf('text/csv') >= 0){
+						callback(data, 'OK');
+					} else {
+						callback(data, 'ERROR');
+					}
+				}).error(function(data){
+					callback(data, 'ERROR');
+				});
+		};
+
 		factory.setearInterfaz = function (comprobantes) {
 			comprobantes.data.forEach(function(comprobante) {
 				setearInterfazComprobante(comprobante);
@@ -279,7 +294,9 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			}
 			comprobante.detalle.forEach(function(contenedor){
 				contenedor.items.forEach(function(item){
-					item.uniMed = unidadesTarifas[item.uniMed];
+					if (angular.isDefined(unidadesTarifas[item.uniMed])){
+						item.uniMed = unidadesTarifas[item.uniMed];
+					}
 				})
 			});
 			return comprobante;

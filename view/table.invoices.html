@@ -20,7 +20,12 @@
 			<td class="text-right" style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
 			<td style="width: 23%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon | maxLength : 21}}<a href="" ng-show="(invoice.razon.length > 21)" popover="{{ invoice.razon }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-center" style="width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
-			<td class="text-right" style="width: 12%"><a class="hidden-print" ng-show="chequearTarifas(invoice)" href="" popover="Error en tarifas" popover-trigger="mouseenter"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a><a class="hidden-print" ng-show="invoice.noMatch && !chequearTarifas(invoice)" href="" popover="Códigos sin asociar" popover-trigger="mouseenter"><span class="text-warning glyphicon glyphicon-question-sign"></span></a> {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice | currency }}</td>
+			<td class="text-right" style="width: 12%">
+				<span class="text-danger glyphicon glyphicon-exclamation-sign" ng-show="chequearTarifas(invoice)" popover="Error en tarifas" popover-trigger="mouseenter"></span>
+				<span class="text-warning glyphicon glyphicon-question-sign" ng-show="invoice.noMatch && !chequearTarifas(invoice)" popover="Códigos sin asociar" popover-trigger="mouseenter"></span>
+				<span ng-hide="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8">{{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice | currency }}</span>
+				<span ng-show="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8" style="color: #ff0000">- {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice | currency }}</span>
+			</td>
 			<td class="hidden-print text-center" style="width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			<td style="width: 14%" class="hidden-print text-left">
 				<a href ng-click="trackInvoice(invoice)" popover="{{ invoice.lastComment }}" popover-trigger="mouseenter"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
@@ -35,7 +40,11 @@
 			<td class="text-right" style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
 			<td style="width: 36%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon | maxLength : 45 }}<a href="" ng-show="(invoice.razon.length > 45)" popover="{{ invoice.razon }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-center" style="width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
-			<td class="text-right" style="width: 13%"><a class="hidden-print" ng-show="chequearTarifas(invoice)" href="" popover="Error en tarifas" popover-trigger="mouseenter"><span class="text-danger glyphicon glyphicon-exclamation-sign"></span></a><a class="hidden-print" ng-show="invoice.noMatch && !chequearTarifas(invoice)" href="" popover="Códigos sin asociar" popover-trigger="mouseenter"><span class="text-warning glyphicon glyphicon-question-sign"></span></a> {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice | currency }}</td>
+			<td class="text-right" style="width: 13%">
+				<span class="text-danger glyphicon glyphicon-exclamation-sign" ng-show="chequearTarifas(invoice)" popover="Error en tarifas" popover-trigger="mouseenter"></span>
+				<span class="text-warning glyphicon glyphicon-question-sign" ng-show="invoice.noMatch && !chequearTarifas(invoice)" popover="Códigos sin asociar" popover-trigger="mouseenter"></span>
+				<span ng-hide="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8">{{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice | currency }}</span>
+				<span ng-show="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8" style="color: #ff0000">- {{ moneda | formatCurrency }} {{ invoice.importe.total | conversionMoneda: invoice | currency }}</span>
 			<td class="hidden-print text-center" style="width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		</tbody>

@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler',
-	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler){
+myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'generalCache',
+	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache){
 
 		var factory = {};
 
@@ -56,10 +56,21 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var inserturl = serverUrl + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
+					data.data = factory.setTotalesLiquidacion(data.data);
 					callback(data);
 				}).error(function(error, status){
 					if (status != 0) callback(error);
 				})
+		};
+
+		factory.setTotalesLiquidacion = function(detallesLiquidaciones){
+			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
+			detallesLiquidaciones.forEach(function(liquidacion){
+				liquidacion.detail.forEach(function(detalle){
+					detalle.desc = descripciones[detalle._id];
+				});
+			});
+			return detallesLiquidaciones;
 		};
 
 		factory.getComprobantesLiquidados = function(page, liquidacion, datos, callback){
@@ -69,7 +80,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
-					callback(invoiceFactory.setearInterfaz(data));
+					callback(data);
 				}).error(function(error, status){
 					if (status != 0){
 						if (error == null){
@@ -141,6 +152,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var inserturl = serverUrl + '/paying/getPrePayment/' + loginService.getFiltro() + '/' + preLiquidacion;
 			$http.get(inserturl)
 				.success(function(data){
+					data.data = factory.setDescriptionTasas(data.data);
 					callback(data);
 				}).error(function(error){
 					if (error == null){
@@ -150,6 +162,17 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 					}
 					callback(error);
 				})
+		};
+
+		factory.setDescriptionTasas = function(detallesLiquidacion){
+			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
+			var totalFinal = 0;
+			detallesLiquidacion.forEach(function(detalle){
+				detalle.descripcion = descripciones[detalle._id.code];
+				totalFinal += detalle.totalPeso;
+			});
+			detallesLiquidacion.totalFinal = totalFinal;
+			return detallesLiquidacion;
 		};
 
 		factory.cancelRequest = function(request){

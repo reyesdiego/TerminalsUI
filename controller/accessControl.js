@@ -69,8 +69,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 	$scope.chequearRuta = function(ruta){
 		var partesRuta = ruta.route.split('.');
 		if (!ruta.acceso){
-			$scope.quitarHijos(ruta);
-			$scope.quitarPadres(ruta.route);
+			quitarHijos(ruta);
+			quitarPadres(ruta.route);
 		} else {
 			if (partesRuta.length > 1){
 				var rutaPadre;
@@ -78,13 +78,13 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 				if (partesRuta.length > 2){
 					rutaPadre += '.' + partesRuta[1];
 				}
-				$scope.agregarPadres(rutaPadre);
+				agregarPadres(rutaPadre);
 			}
-			$scope.agregarHijos(ruta.route);
+			agregarHijos(ruta.route);
 		}
 	};
 
-	$scope.agregarPadres = function(ruta){
+	var agregarPadres = function(ruta){
 		$scope.tareas.forEach(function(unaTarea){
 			if (unaTarea.route == ruta) unaTarea.acceso = true
 		});
@@ -92,12 +92,12 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		var partesRuta = ruta.split('.');
 		if (partesRuta.length > 1){
 			var rutaPadre = partesRuta[0];
-			$scope.agregarPadres(rutaPadre);
+			agregarPadres(rutaPadre);
 		}
 
 	};
 
-	$scope.quitarPadres = function(ruta){
+	var quitarPadres = function(ruta){
 		var partesRuta = ruta.split('.');
 		if (partesRuta.length > 1){
 			var rutaPadre;
@@ -114,17 +114,17 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 					if (unaTarea.route == rutaPadre) unaTarea.acceso = false;
 				})
 			}
-			$scope.quitarPadres(rutaPadre);
+			quitarPadres(rutaPadre);
 		}
 	};
 
-	$scope.quitarHijos = function(ruta){
+	var quitarHijos = function(ruta){
 		$scope.tareas.forEach(function(unaTarea){
 			if (unaTarea.route.indexOf(ruta.route + '.') >= 0) unaTarea.acceso = false;
 		});
 	};
 
-	$scope.agregarHijos = function(ruta){
+	var agregarHijos = function(ruta){
 		var hijoHabilitado = false;
 		var rutaHija = '';
 		$scope.tareas.forEach(function(unaTarea){
@@ -139,24 +139,24 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 				}
 			})
 		}
-		if (hijoHabilitado) $scope.agregarHijos(rutaHija);
+		if (hijoHabilitado) agregarHijos(rutaHija);
 	};
 
 	$scope.userSelected = function(usuario){
 		if (angular.isDefined($scope.usuarioElegido) && $scope.usuarioElegido.full_name != usuario.full_name){
 			$scope.guardar().then(function(){
-				$scope.setearUsuario(usuario);
+				setearUsuario(usuario);
 			},
 			function(){
 				$scope.usuarioElegido.elegido = '';
-				$scope.setearUsuario(usuario);
+				setearUsuario(usuario);
 			});
 		} else {
-			$scope.setearUsuario(usuario);
+			setearUsuario(usuario);
 		}
 	};
 
-	$scope.setearUsuario = function(usuario){
+	var setearUsuario = function(usuario){
 		if (angular.isDefined($scope.usuarioElegido)) $scope.usuarioElegido.elegido = '';
 		$scope.usuarioElegido = usuario;
 		usuario.elegido = 'bg-info';
@@ -172,7 +172,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		$scope.tabTareas.active = true;
 	};
 
-	$scope.guardarTareas = function(tareas){
+	var guardarTareas = function(tareas){
 		var deferred = $q.defer();
 		var rutasUsuario = {acceso: tareas};
 		ctrlUsersFactory.setAccess($scope.usuarioElegido._id, rutasUsuario, function(data){
@@ -192,7 +192,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		return deferred.promise;
 	};
 
-	$scope.guardarNotificaciones = function(notificaciones){
+	var guardarNotificaciones = function(notificaciones){
 		var deferred = $q.defer();
 		var notifUsuario = { emailToApp: notificaciones };
 		ctrlUsersFactory.setNotifications($scope.usuarioElegido._id, notifUsuario, function(data){
@@ -222,8 +222,8 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 			var dlg = dialogs.confirm("Control de acceso", "¿Desea guardar los cambios efectuados para el usuario " + $scope.usuarioElegido.full_name + "?");
 			dlg.result.then(function(){
 				var guardar = [];
-				if (!tareasUsuario.equals($scope.rutasUsuarioOriginal)) guardar.push($scope.guardarTareas(tareasUsuario));
-				if (!notificacionesUsuario.equals($scope.notificacionesUsuarioOriginal)) guardar.push($scope.guardarNotificaciones(notificacionesUsuario));
+				if (!tareasUsuario.equals($scope.rutasUsuarioOriginal)) guardar.push(guardarTareas(tareasUsuario));
+				if (!notificacionesUsuario.equals($scope.notificacionesUsuarioOriginal)) guardar.push(guardarNotificaciones(notificacionesUsuario));
 				$q.all(guardar)
 					.then(function(values){
 						var contar = 0;

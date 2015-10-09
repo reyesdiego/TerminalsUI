@@ -284,6 +284,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/editarTarifario",
 			templateUrl: "view/editPricelist.html"
 		})
+		.state('mturnos', {
+			url: "/controlTurnos",
+			templateUrl: "view/appointments.control.html"
+		})
 }]);
 
 myapp.config(['$provide', function ($provide) {
@@ -448,9 +452,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			//$rootScope.primerRuteo = true;
 		}
 
-		$rootScope.fechaInicio = new Date();
-		$rootScope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-
 		$rootScope.mensajeResultado = {
 			titulo: 'Comprobantes',
 			mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
@@ -523,7 +524,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 						event.preventDefault();
 						$rootScope.salir();
 					}
-
 				} else {
 					$rootScope.usuarioNoAutorizado(event);
 				}

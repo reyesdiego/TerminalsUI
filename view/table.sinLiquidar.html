@@ -1,40 +1,48 @@
-<div class="row col-lg-12 center-block" ng-show="sinLiquidar.comprobantes.length == 0">
-	<div-panel config-panel="sinLiquidar.panelMensaje">
-		<span>{{ sinLiquidar.panelMensaje.mensaje }}</span>
+<div class="row col-lg-12 center-block" ng-show="model.comprobantes.length == 0">
+	<div-panel config-panel="model.panelMensaje">
+		<span>{{ model.panelMensaje.mensaje }}</span>
 	</div-panel>
 </div>
-<div class="table-responsive" ng-show="sinLiquidar.comprobantes.length > 0">
-	<h5><strong>Resultados: {{ sinLiquidar.total }}</strong><span class="visible-print-block"><strong> Mostrando del {{ sinLiquidar.currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ mostrarTope(sinLiquidar.currentPage, sinLiquidar.total) }} (página {{ sinLiquidar.currentPage }})</strong></span></h5>
+<div class="table-responsive" ng-show="model.comprobantes.length > 0">
+	<h5><strong>Resultados: {{ model.total }}</strong><span class="visible-print-block"><strong> Mostrando del {{ model.currentPage * model.itemsPerPage - (model.itemsPerPage - 1) }} al {{ mostrarTope(model.currentPage, model.total) }} (página {{ model.currentPage }})</strong></span></h5>
 	<table class="table table-striped table-bordered table-hover">
 		<thead>
 		<tr class="text-center">
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Pto. Venta" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="nroPtoVenta" filtro-orden="nroPtoVentaOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-center"><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Nro. Comprob." filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="nroComprob" filtro-orden="nroComprobOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Toneladas" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="cnt" filtro-orden="cntOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-center"><encabezado-tabla-ordenado titulo="Tarifa" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="code" filtro-orden="codeOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Tasa carga" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="tasa" filtro-orden="tasaOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Total factura" filtrar-orden="filtrarSinLiquidar(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="total" filtro-orden="totalOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-right"><encabezado-tabla-ordenado titulo="Pto.Vta" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="nroPtoVenta" filtro-orden="nroPtoVentaOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-center"><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-left"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-right"><encabezado-tabla-ordenado titulo="Ton." filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="cnt" filtro-orden="cntOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-center"><encabezado-tabla-ordenado titulo="Tarifa" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="code" filtro-orden="codeOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="tasa" filtro-orden="tasaOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-right"><encabezado-tabla-ordenado titulo="Cotizac." filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="cotiMoneda" filtro-orden="cotiMonedaOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="totalTasa" filtro-orden="totalTasaOrden"></encabezado-tabla-ordenado></th>
 			<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
-			<th ng-show="acceso=='agp'" class="col-lg-1 hidden-print text-center">Estado</th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="invoice in sinLiquidar.comprobantes">
-			<td class="text-right" style="width: 10%">{{ invoice.nroPtoVenta }}</td>
-			<td class="text-center" style="width: 12%">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
-			<td class="text-right" style="width: 12%">{{ invoice.nroComprob }}</td>
-			<td class="text-right" style="width: 10%">{{ invoice.cnt }}</td>
-			<td class="text-center" style="width: 8%">{{ invoice.code }}</td>
-			<td class="text-center" style="width: 8%">{{ invoice.emision | date: 'dd/MM/yyyy' }}</td>
-			<td class="text-right" style="width: 10%">U$S {{ invoice.tasa | currency }}</td>
-			<td class="text-right" style="width: 12%">U$S {{ invoice.total | currency }}</td>
-			<td class="text-center" style="width: 4%"><a href ng-click="mostrarDetalleSinLiquidar(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-			<td class="hidden-print text-left" style="width: 14%">
-				<a href ng-click="trackInvoice(invoice)" popover="{{ invoice.lastComment }}" popover-trigger="mouseenter"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
+		<tr ng-repeat="invoice in model.comprobantes">
+			<td class="text-center" style="width: 7%">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
+			<td class="text-right" style="width: 7%">{{ invoice.nroPtoVenta }}</td>
+			<td class="text-center" style="width: 13%; font-size: 9pt">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
+			<td class="text-left" style="width: 17%; font-size: 9pt">{{ invoice.buque }}</td>
+			<td class="text-right" style="width: 6%">{{ invoice.cnt | numberEx:2 }}</td>
+			<td class="text-center" style="width: 11%">U$S {{ invoice.code | currency }}</td>
+			<td class="text-right" style="width: 12%">U$S {{ invoice.tasa | currency }}</td>
+			<td class="text-right" style="width: 9%">$ {{ invoice.cotiMoneda | currency }}</td>
+			<td class="text-right" style="width: 12%">
+				<span ng-hide="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8">$ {{ invoice.totalTasa | currency }}</span>
+				<span ng-show="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8" style="color: #ff0000">- $ {{ invoice.totalTasa | currency }}</span>
 			</td>
+			<td class="text-center" style="width: 4%"><a href ng-click="mostrarDetalle({invoice: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		</tbody>
 	</table>
+	<div class="col-lg-12 hidden-print" ng-show="model.total > model.itemsPerPage">
+		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="5" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-sm"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="7" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-md"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="11" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-lg"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="15" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+	</div>
+	<br>
 </div>

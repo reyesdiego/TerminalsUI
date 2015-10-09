@@ -64,6 +64,16 @@ myapp.directive('tableGates', function(){
 	}
 });
 
+myapp.directive('detalleLiquidacion', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/detalle.liquidacion.html',
+		scope: {
+			datosLiquidacion:		'='
+		}
+	}
+});
+
 myapp.directive('tableTurnos', function(){
 	return {
 		restrict:		'E',
@@ -111,11 +121,16 @@ myapp.directive('accordionComprobantesVistos', function(){
 	}
 });
 
-myapp.directive('accordionInvoicesSearch', ['generalCache', 'loginService', function(generalCache, loginService){
+myapp.directive('accordionInvoicesSearch', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/accordion.invoices.search.html',
-		link: function ($scope) {
+		scope: {
+			model:				'=',
+			ocultarFiltros:		'='
+		},
+		controller: 'searchController'
+		/*link: function ($scope) {
 			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 
@@ -123,9 +138,9 @@ myapp.directive('accordionInvoicesSearch', ['generalCache', 'loginService', func
 				$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 				$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 			});
-		}
+		}*/
 	}
-}]);
+});
 
 myapp.directive('invoicesResult', function(){
 	return {
@@ -133,6 +148,66 @@ myapp.directive('invoicesResult', function(){
 		templateUrl:	'view/invoices.result.html'
 	}
 });
+
+myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', function(invoiceService, dialogs){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/invoices.result.html',
+		scope:{
+			verDetalle:			"=",
+			mostrar:			"=",
+			comprobantes:		"=",
+			comprobantesVistos:	"=",
+			ocultarFiltros:		"=",
+			logoTerminal:		"=",
+			moneda:				'='
+		},
+		link: function($scope){
+			$scope.comprobantesControlados = [];
+
+			$scope.checkComprobantes = function(comprobante){
+				var response;
+				response = invoiceService.checkComprobantes(comprobante, $scope.comprobantesVistos, $scope.comprobantes);
+				$scope.comprobantes = response.datosInvoices;
+			};
+
+			$scope.ocultarResultado = function(comprobante){
+				$scope.checkComprobantes(comprobante);
+				$scope.mostrar = false;
+			};
+
+			$scope.trackInvoice = function(comprobante){
+				invoiceService.trackInvoice(comprobante)
+					.then(function(response){
+						if (angular.isDefined(response)) comprobante = response;
+					}, function(message){
+						dialogs.error('Liquidaciones', message);
+					})
+			};
+
+			$scope.existeDescripcion = function(itemId){
+				return invoiceService.existeDescripcion(itemId);
+			};
+
+			$scope.chequearTarifas = function(comprobante){
+				var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
+				$scope.comprobantesControlados = resultado.data;
+				return resultado.retValue;
+			};
+
+			$scope.verPdf = function(){
+				$scope.disablePdf = true;
+				invoiceService.verPdf($scope.verDetalle)
+					.then(function(){
+						$scope.disablePdf = false;
+					}, function(){
+						dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
+						$scope.disablePdf = false;
+					});
+			};
+		}
+	}
+}]);
 
 myapp.directive('containersGatesSearch', function(){
 	return {
@@ -232,21 +307,6 @@ myapp.directive('divPanel', function(){
 	}
 });
 
-myapp.directive('accordionBusquedaCorrelatividad', function(){
-	return {
-		restrict:		'E',
-		scope: {
-			model:			'=',
-			ocultarFiltros:	'='
-		},
-		controller: 'searchController',
-		template:
-			'<div class="row">' +
-			'	<accordion-invoices-search></accordion-invoices-search>' +
-			'</div>'
-	}
-});
-
 myapp.directive('impresionFiltros', function(){
 	return {
 		restrict:		'E',
@@ -324,6 +384,17 @@ myapp.directive('tableMissingInvoices', function(){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/missing.invoices.html',
+		scope: {
+			datoFaltante: '='
+		},
+		controller:		'missingInfo'
+	}
+});
+
+myapp.directive('tableMissingAppointments', function(){
+	return {
+		restrict:		'E',
+		templateUrl:	'view/missing.appointments.html',
 		scope: {
 			datoFaltante: '='
 		},
@@ -456,7 +527,26 @@ myapp.directive('buttonActualizar', ['$state', function ($state) {
 myapp.directive('tableSinLiquidar', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/table.sinLiquidar.html'
+		templateUrl:	'view/table.sinLiquidar.html',
+		scope: {
+			model:					"=",
+			mostrarDetalle:			"&",
+			cargar:					"&",
+			ordenar:				"&"
+		}
+	}
+});
+
+myapp.directive('tablePreLiquidacion', function(){
+	return {
+		restrict:		'E',
+		scope: {
+			cargando:			'=',
+			datosPagos:			'=',
+			panelMensaje:		'=',
+			detalle:			'&'
+		},
+		templateUrl:	'view/table.preLiquidacion.html'
 	}
 });
 
@@ -467,8 +557,7 @@ myapp.directive('tablePagos', function(){
 			cargando:			'=',
 			datosPagos:			'=',
 			panelMensaje:		'=',
-			detalle:			'&',
-			final:				'@'
+			detalle:			'&'
 		},
 		templateUrl:	'view/table.pagos.html'
 	}

@@ -2,18 +2,29 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', 'turnosFactory', '$sce', 'dialogs', 'loginService',
-	function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, turnosFactory, $sce, dialogs, loginService){
+myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', 'turnosFactory', '$sce', 'dialogs', 'loginService', '$filter',
+	function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, turnosFactory, $sce, dialogs, loginService, $filter){
 
 		$scope.status = {
 			open: true
 		};
 		$scope.minDate = new Date(2015,0,1);
 		$scope.maxDate = new Date();
+		$scope.maxDateD = new Date();
 		$scope.maxDateH = $scope.maxDate + 1;
 		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
-		$scope.vouchers = generalCache.get('vouchers');
+		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+		$scope.itemsPerPageData = [
+			{ value: 10, description: '10 items por página', ticked: false},
+			{ value: 15, description: '15 items por página', ticked: true},
+			{ value: 20, description: '20 items por página', ticked: false},
+			{ value: 50, description: '50 items por página', ticked: false}
+		];
+		$scope.estadosComprobantes = $filter('filter')(generalCache.get('estados'), $scope.filtroEstados);
+		$scope.estadosComprobantes.forEach(function(unEstado){
+			unEstado.ticked = false;
+		});
 
 		$scope.listaViajes = [];
 		$scope.volverAPrincipal = true;
@@ -27,7 +38,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 				fechaAuxFin = new Date(data.contenido.fin);
 				$scope.model['fechaInicio'] = new Date(fechaAuxInicio.getUTCFullYear(), fechaAuxInicio.getUTCMonth(), fechaAuxInicio.getUTCDate(), fechaAuxInicio.getUTCHours(), fechaAuxInicio.getUTCMinutes());
 				$scope.model['fechaFin'] = new Date(fechaAuxFin.getUTCFullYear(), fechaAuxFin.getUTCMonth(), fechaAuxFin.getUTCDate(), fechaAuxFin.getUTCHours(), fechaAuxFin.getUTCMinutes());
-				$scope.$emit('cambioFiltro', $scope.model);
+				$scope.$emit('iniciarBusqueda', $scope.model);
 			} else if(data.filtro == 'turno'){
 				fechaAuxInicio = new Date(data.contenido.inicio);
 				fechaAuxFin = new Date(data.contenido.fin);
@@ -36,14 +47,14 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 				$scope.model['mov'] = data.contenido.mov;
 				$scope.model['buqueNombre'] = data.contenido.buque;
 				$scope.model['contenedor'] = data.contenido.contenedor;
-				$scope.$emit('cambioFiltro', $scope.model);
+				$scope.$emit('iniciarBusqueda', $scope.model);
 			} else if(data.filtro == 'gate'){
 				fechaAux = new Date(data.contenido.fecha);
 				$scope.model['fechaInicio'] = new Date(fechaAux.getUTCFullYear(), fechaAux.getUTCMonth(), fechaAux.getUTCDate(), fechaAux.getUTCHours(), fechaAux.getUTCMinutes());
 				$scope.model['fechaFin'] = new Date(fechaAux.getUTCFullYear(), fechaAux.getUTCMonth(), fechaAux.getUTCDate(), fechaAux.getUTCHours(), fechaAux.getUTCMinutes() + 1);
 				$scope.model['buqueNombre'] = data.contenido.buque;
 				$scope.model['contenedor'] = data.contenido.contenedor;
-				$scope.$emit('cambioFiltro', $scope.model);
+				$scope.$emit('iniciarBusqueda', $scope.model);
 			} else {
 				$scope.filtrado(data.filtro, data.contenido);
 			}
@@ -54,7 +65,32 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		};
 		$scope.hitEnter = function(evt){
 			if(angular.equals(evt.keyCode,13))
-				$scope.$emit('cambioFiltro', 'hitEnter');
+				$scope.$emit('iniciarBusqueda', 'hitEnter');
+		};
+		$scope.cambioItemsPorPagina = function(data){
+			$scope.filtrado('itemsPerPage', data.value);
+		};
+		$scope.estadoSeleccionado = function(data){
+			var contenido = '';
+			if (data.ticked){
+				$scope.estadosComprobantes.forEach(function(unEstado){
+					if (unEstado.ticked){
+						if (contenido == ''){
+							contenido += unEstado._id;
+						} else {
+							contenido += ',' + unEstado._id;
+						}
+					}
+				});
+			} else {
+				contenido = $scope.model.estado.replace(',' + data._id, '');
+				contenido = contenido.replace(data._id + ',', '');
+				contenido = contenido.replace(data._id, '');
+				if (contenido == ''){
+					contenido = 'N';
+				}
+			}
+			$scope.filtrado('estado', contenido);
 		};
 		$scope.buqueSelected = function(selected){
 			if (angular.isDefined(selected)){
@@ -68,6 +104,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 					$scope.listaViajes.push(objetoViaje);
 					i++;
 				});
+				$scope.filtrado('buque', selected.title);
 			}
 		};
 
@@ -75,6 +112,13 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			if (angular.isDefined(selected)){
 				$scope.model.viaje = selected.title;
 				$scope.filtrado('viaje', selected.title);
+			}
+		};
+
+		$scope.clientSelected = function(selected){
+			if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
+				$scope.model.razonSocial = selected.title;
+				$scope.filtrado('razonSocial', selected.title);
 			}
 		};
 
@@ -91,6 +135,9 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 				$scope.model.fechaFin = '';
 			}
 			$scope.model[filtro] = contenido;
+			if (filtro == 'razonSocial') {
+				$scope.model[filtro] = filtrarCaracteresInvalidos(contenido);
+			}
 			if (filtro == 'buqueNombre') {
 				if (contenido != ''){
 					var i = 0;
@@ -114,7 +161,23 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			$scope.cargaPorFiltros();
+			cargaPorFiltros();
+		};
+
+		var filtrarCaracteresInvalidos = function(palabra){
+			if (angular.isDefined(palabra) && palabra.length > 0){
+				var palabraFiltrada;
+				var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
+				palabraFiltrada = palabra;
+				for (var i = 0; i <= caracteresInvalidos.length - 1; i++){
+					if (palabraFiltrada.indexOf(caracteresInvalidos[i], 0) > 0){
+						palabraFiltrada = palabraFiltrada.substring(0, palabraFiltrada.indexOf(caracteresInvalidos[i], 0));
+					}
+				}
+				return palabraFiltrada.toUpperCase();
+			} else {
+				return palabra;
+			}
 		};
 
 		//FUNCIONES DE TABLE TURNOS /////////////////////////////////////////////////////////////////////
@@ -172,27 +235,28 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.cambiarTipoMov = function(tipoMov){
 			if ($scope.ocultarBusqueda || $scope.ocultarFiltros.indexOf('mov', 0) < 0){
 				$scope.model.mov = tipoMov;
-				$scope.$emit('cambioFiltro');
+				$scope.$emit('iniciarBusqueda');
 			}
 		};
 
 		$scope.filtrarOrden = function(filtro){
 			$scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
-			$scope.$emit('cambioFiltro');
+			$scope.$emit('iniciarBusqueda');
 		};
 		///////////////////////////////////////////////////////////////////////////////////////////////////
-		$scope.cargaPorFiltros = function () {
+		var cargaPorFiltros = function () {
 			for (var elemento in $scope.model){
 				if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 			}
 			$scope.$broadcast('checkAutoComplete');
-			$scope.$emit('cambioFiltro', $scope.model);
+			$scope.$emit('iniciarBusqueda', $scope.model);
 		};
 
 		$scope.$on('cambioTerminal', function(){
 			$scope.detallesGates = false;
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+			$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		});
 
 		$scope.$on('$destroy', function(){
