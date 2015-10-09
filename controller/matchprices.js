@@ -83,8 +83,12 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 						price.matches[0].match.forEach(function(codigo){
 							$scope.matchesTerminal.push(codigo);
 						});
-						if (price.matches[0].match.length == 1 && price.matches[0].match[0] == price.code){
-							$scope.propiosTerminal.push(price);
+						if (price.matches[0].match.length >= 1){
+							var propioTerminal = false;
+							price.matches[0].match.forEach(function(unMatch){
+								propioTerminal = (unMatch == price.code);
+							});
+							if (propioTerminal) $scope.propiosTerminal.push(price);
 						}
 					}
 				});
