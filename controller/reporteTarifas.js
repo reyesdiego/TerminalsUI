@@ -82,15 +82,19 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.recargarPricelist = function(){
 			var pos;
-			$scope.agregarQuitarTodo(false);
+			//$scope.agregarQuitarTodo(false);
 			$scope.selectedList.forEach(function(price){
 				if ($scope.tasas){
-					pos = $scope.pricelistTasas.map(function(e) { return e._id}).indexOf(price._id);
+					pos = $scope.pricelistTasas.map(function(e) {
+						return e._id
+					}).indexOf(price._id);
 					if (pos != -1){
 						$scope.pricelistTasas[pos].graficar = price.graficar;
 					}
 				} else {
-					pos = $scope.pricelist.map(function(e) { return e._id}).indexOf(price._id);
+					pos = $scope.pricelist.map(function(e) {
+						return e._id
+					}).indexOf(price._id);
 					if (pos != -1){
 						$scope.pricelist[pos].graficar = price.graficar;
 					}
@@ -163,10 +167,17 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.agregarQuitarTodo = function(onOff){
-			$scope.filteredPrices.forEach(function(precio){
-				precio.graficar = onOff;
-				$scope.agregarGrafico(precio);
-			})
+			if (onOff){
+				$scope.filteredPrices.forEach(function(precio){
+					precio.graficar = onOff;
+					$scope.agregarGrafico(precio);
+				})
+			} else {
+				$scope.selectedList.forEach(function(precio){
+					precio.graficar = onOff;
+					$scope.agregarGrafico(precio);
+				})
+			}
 		};
 
 		$scope.armarGraficoTarifas = function () {

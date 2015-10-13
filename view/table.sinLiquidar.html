@@ -25,27 +25,26 @@
 		</thead>
 		<tbody>
 		<tr ng-repeat="invoice in model.comprobantes">
-			<td class="text-center" style="width: 7%">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
+			<td class="text-center" style="width: 7%; font-size: 9pt">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
 			<!--<td class="text-right" style="width: 7%">{{ invoice.nroPtoVenta }}</td>-->
 			<td class="text-center" style="width: 13%; font-size: 8pt">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
 			<td class="text-left" style="width: 17%; font-size: 9pt">{{ invoice.buque }}</td>
-			<td class="text-right" style="width: 6%">{{ invoice.cnt | numberEx:2 }}</td>
+			<td class="text-right" style="width: 6%; font-size: 9pt">{{ invoice.cnt | numberEx:2 }}</td>
 			<td class="text-right" style="width: 11%; font-size: 9pt">
 				<span class="glyphicon glyphicon-circle-arrow-down text-danger" ng-show="invoice.impUnit < invoice.impUnitAgp"></span>
 				<span class="glyphicon glyphicon-circle-arrow-up text-success" ng-show="invoice.impUnit > invoice.impUnitAgp"></span> U$S {{ invoice.impUnit | currency }}</td>
 			<td class="text-right" style="width: 11%; font-size: 9pt">U$S {{ invoice.impUnitAgp | currency }}</td>
 			<!--<td class="text-right" style="width: 12%">U$S {{ invoice.tasa | currency }}</td>-->
-			<td class="text-right" style="width: 12%">U$S {{ invoice.tasaAgp | currency }}</td>
-			<td class="text-right" style="width: 9%">$ {{ invoice.cotiMoneda | currency }}</td>
+			<td class="text-right" style="width: 12%; font-size: 9pt">U$S {{ invoice.tasaAgp | currency }}</td>
+			<td class="text-right" style="width: 9%; font-size: 9pt">$ {{ invoice.cotiMoneda | currency }}</td>
 			<!--<td class="text-right" style="width: 12%">
 				<span ng-hide="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8">$ {{ invoice.totalTasa | currency }}</span>
 				<span ng-show="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8" style="color: #ff0000">- $ {{ invoice.totalTasa | currency }}</span>
 			</td>-->
-			<td class="text-right" style="width: 12%">
-				<span ng-hide="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8">$ {{ invoice.totalTasaAgp | currency }}</span>
-				<span ng-show="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8" style="color: #ff0000">- $ {{ invoice.totalTasaAgp | currency }}</span>
+			<td class="text-right" style="width: 12%; font-size: 9pt">
+				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">$ {{ invoice.totalTasaAgp | currency }}</span>
 			</td>
-			<td class="text-center" style="width: 4%"><a href ng-click="mostrarDetalle({invoice: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle({invoice: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		</tbody>
 	</table>
