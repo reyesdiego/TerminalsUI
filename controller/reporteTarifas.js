@@ -141,21 +141,11 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 	$scope.isCollapsedDesde = true;
 	$scope.isCollapsedHasta = true;
 
-	$scope.deleteRow = function (index) {
-		$scope.chartData.splice(index, 1);
-	};
-	$scope.addRow = function () {
-		$scope.chartData.push([]);
-	};
 	$scope.selectRow = function (index) {
 		$scope.selected = index;
 	};
 	$scope.rowClass = function (index) {
 		return ($scope.selected === index) ? "selected" : "";
-	};
-
-	$scope.cargaPorFiltros = function () {
-		$scope.cargarReporteHorarios();
 	};
 
 	$scope.agregarGrafico = function(precio){
