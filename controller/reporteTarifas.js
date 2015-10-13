@@ -81,6 +81,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 	$scope.recargarPricelist = function(){
 		var pos;
+		$scope.agregarQuitarTodo(false);
 		$scope.selectedList.forEach(function(price){
 			if ($scope.tasas){
 				pos = $scope.pricelistTasas.map(function(e) { return e._id}).indexOf(price._id);
@@ -157,24 +158,31 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		$scope.cargarReporteHorarios();
 	};
 
+	$scope.agregarGrafico = function(precio){
+		var i = $scope.tablaGrafico.data.indexOf(precio);
+		if (precio.graficar){
+			if (i == -1){
+				$scope.tarifasGraficar.data.push(precio.code);
+				$scope.tablaGrafico.data.push(precio);
+			}
+		} else {
+			$scope.tarifasGraficar.data.splice(i, 1);
+			$scope.tablaGrafico.data.splice(i, 1);
+		}
+	};
+
+	$scope.agregarQuitarTodo = function(onOff){
+		$scope.filteredPrices.forEach(function(precio){
+			precio.graficar = onOff;
+			$scope.agregarGrafico(precio);
+		})
+	};
+
 	$scope.armarGraficoTarifas = function () {
 		$scope.totales = [0, 0, 0, 0];
 
 		$scope.loadingReporteTarifas = true;
-		$scope.tarifasGraficar = {
-			"field": "code",
-			"data": []
-		};
-		$scope.tablaGrafico = {
-			"terminales": [],
-			"data": []
-		};
-		$scope.filteredPrices.forEach(function (price) {
-			if (price.graficar){
-				$scope.tarifasGraficar.data.push(price.code);
-				$scope.tablaGrafico.data.push(price);
-			}
-		});
+
 		if ($scope.tarifasGraficar.data.length <= 0){
 			dialogs.notify("Totales por tarifa", "No se ha seleccionado ninguna tarifa para graficar.");
 			$scope.mostrarGrafico = false;
