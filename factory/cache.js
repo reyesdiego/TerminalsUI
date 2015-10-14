@@ -102,7 +102,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 						if (data.status == 'OK') {
 							generalCache.put('vouchers' + terminal, data.data);
 							data.data.forEach(function (dato) {
-								vouchersArrayCache.put(dato._id, dato.description);
+								vouchersArrayCache.put(dato._id, {desc: dato.description, abrev: dato.abbrev });
 							});
 						}
 					});
@@ -111,7 +111,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 						if (data.status == 'OK') {
 							generalCache.put('vouchers' + terminal, data.data);
 							data.data.forEach(function (dato) {
-								vouchersArrayCache.put(dato._id, dato.description);
+								vouchersArrayCache.put(dato._id, {desc: dato.description, abrev: dato.abbrev });
 							});
 							$rootScope.$broadcast('progreso', {mensaje: 2});
 							deferred.resolve();

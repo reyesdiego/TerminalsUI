@@ -27,7 +27,7 @@
 		<tr ng-repeat="invoice in model.comprobantes">
 			<td class="text-center" style="width: 7%; font-size: 9pt">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
 			<!--<td class="text-right" style="width: 7%">{{ invoice.nroPtoVenta }}</td>-->
-			<td class="text-center" style="width: 13%; font-size: 8pt">{{ invoice.codTipoComprob | nombreComprobante | maxLength : 10}}<a href="" ng-show="((invoice.codTipoComprob | nombreComprobante).length > 10)" popover="{{ invoice.codTipoComprob | nombreComprobante }}" popover-trigger="mouseenter"> (...)</a></td>
+			<td class="text-center" style="width: 13%; font-size: 8pt">{{ invoice.codTipoComprob | nombreComprobante : true }}</td>
 			<td class="text-left" style="width: 17%; font-size: 9pt">{{ invoice.buque }}</td>
 			<td class="text-right" style="width: 6%; font-size: 9pt">{{ invoice.cnt | numberEx:2 }}</td>
 			<td class="text-right" style="width: 11%; font-size: 9pt">

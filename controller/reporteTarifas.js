@@ -107,6 +107,26 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			}
 		};
 
+		$scope.agregarGrafico = function(precio){
+			var i = $scope.tarifasGraficar.data.indexOf(precio.code);
+			if (precio.graficar){
+				if (i == -1){
+					$scope.tarifasGraficar.data.push(precio.code);
+					$scope.tablaGrafico.data.push(precio);
+				}
+			} else {
+				$scope.tarifasGraficar.data.splice(i, 1);
+				$scope.tablaGrafico.data.splice(i, 1);
+			}
+		};
+
+		$scope.agregarQuitarTodo = function(onOff){
+			$scope.filteredPrices.forEach(function(precio){
+				precio.graficar = onOff;
+				$scope.agregarGrafico(precio);
+			});
+		};
+
 		$scope.mostrarGrafico = false;
 
 		$scope.columnChart = 'column';
@@ -151,33 +171,6 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 		$scope.rowClass = function (index) {
 			return ($scope.selected === index) ? "selected" : "";
-		};
-
-		$scope.agregarGrafico = function(precio){
-			var i = $scope.tablaGrafico.data.indexOf(precio);
-			if (precio.graficar){
-				if (i == -1){
-					$scope.tarifasGraficar.data.push(precio.code);
-					$scope.tablaGrafico.data.push(precio);
-				}
-			} else {
-				$scope.tarifasGraficar.data.splice(i, 1);
-				$scope.tablaGrafico.data.splice(i, 1);
-			}
-		};
-
-		$scope.agregarQuitarTodo = function(onOff){
-			if (onOff){
-				$scope.filteredPrices.forEach(function(precio){
-					precio.graficar = onOff;
-					$scope.agregarGrafico(precio);
-				})
-			} else {
-				$scope.selectedList.forEach(function(precio){
-					precio.graficar = onOff;
-					$scope.agregarGrafico(precio);
-				})
-			}
 		};
 
 		$scope.armarGraficoTarifas = function () {
