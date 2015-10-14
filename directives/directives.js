@@ -530,6 +530,7 @@ myapp.directive('tableSinLiquidar', function(){
 		templateUrl:	'view/table.sinLiquidar.html',
 		scope: {
 			model:					"=",
+			tasaAgp:				"=",
 			mostrarDetalle:			"&",
 			cargar:					"&",
 			ordenar:				"&"

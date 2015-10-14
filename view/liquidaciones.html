@@ -25,6 +25,7 @@
 				<div class="col-lg-12" ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle">
 					<table-sin-liquidar
 							model="sinLiquidar"
+							tasa-agp="tasaAgp"
 							mostrar-detalle="mostrarDetalleSinLiquidar(invoice)"
 							cargar="cargarSinLiquidar()"
 							ordenar="filtrarSinLiquidar(filtro)">
@@ -77,6 +78,7 @@
 					<div class="col-lg-12" ng-hide="comprobantesPreLiquidados.cargando || comprobantesPreLiquidados.verDetalle">
 						<table-sin-liquidar
 								model="comprobantesPreLiquidados"
+								tasa-agp="tasaAgp"
 								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
 								cargar="cambioPagina()"
 								ordenar="filtrarPreLiquidados(filtro)">
@@ -149,6 +151,7 @@
 					<div class="col-lg-12 center-block" ng-hide="comprobantesLiquidados.cargando || comprobantesLiquidados.verDetalle">
 						<table-sin-liquidar
 								model="comprobantesLiquidados"
+								tasa-agp="tasaAgp"
 								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
 								cargar="cambioPagina()"
 								ordenar="filtrarLiquidados(filtro)">
