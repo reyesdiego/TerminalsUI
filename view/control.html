@@ -28,7 +28,7 @@
 					</thead>
 					<tbody>
 					<tr ng-repeat="comprobante in comprobantesCantidad">
-						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante }}</td>
+						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
 						<td class="text-right">{{ comprobante.BACTSSA[0] | numero }} ({{ comprobante.BACTSSA[1] | numero | number:2 }} %)</td>
 						<td class="text-right">{{ comprobante.TERMINAL4[0] | numero }} ({{ comprobante.TERMINAL4[1] | numero | number:2 }} %)</td>
 						<td class="text-right">{{ comprobante.TRP[0] | numero }} ({{ comprobante.TRP[1] | numero | number:2 }} %)</td>

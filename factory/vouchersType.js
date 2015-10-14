@@ -9,6 +9,7 @@ myapp.factory('vouchersFactory', ['$http', function($http){
 		var inserturl = serverUrl + '/voucherTypes/' + terminal;
 		$http.get(inserturl)
 			.success(function (data){
+				console.log(data);
 				callback(data);
 			}).error(function(error){
 				callback(error);
