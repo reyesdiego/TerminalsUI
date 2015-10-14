@@ -13,7 +13,7 @@
 		<tr ng-repeat="detalle in datosLiquidacion">
 			<td class="text-center">{{ detalle._id.code }}</td>
 			<td>{{ detalle.descripcion }}</td>
-			<td class="text-right">{{ detalle.tons }}</td>
+			<td class="text-right">{{ detalle.tons | numberEx : 2 }}</td>
 			<td class="text-right">U$S {{ detalle.total | currency }}</td>
 			<td class="text-right">$ {{ detalle.totalPeso | currency }}</td>
 		</tr>
