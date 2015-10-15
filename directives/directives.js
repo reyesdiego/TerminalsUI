@@ -69,7 +69,8 @@ myapp.directive('detalleLiquidacion', function(){
 		restrict:		'E',
 		templateUrl:	'view/detalle.liquidacion.html',
 		scope: {
-			datosLiquidacion:		'='
+			datosLiquidacion:		'=',
+			tasaAgp:				'='
 		}
 	}
 });

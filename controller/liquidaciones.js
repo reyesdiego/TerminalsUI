@@ -64,7 +64,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			},
 			total: 0,
 			currentPage: 1,
-			datos: []
+			datos: [],
+			tasaAgp: false
 		};
 
 		$scope.comprobantesPreLiquidados = {
@@ -328,6 +329,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			liquidacionesFactory.getPrePayment($scope.preLiquidacion.selected._id, function(data){
 				if (data.status == 'OK'){
 					if (angular.isDefined(data.data)){
+						console.log(data);
 						$scope.preLiquidacion.detalle = data.data;
 					} else {
 						$scope.preLiquidacion.detalle = {

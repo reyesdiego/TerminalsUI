@@ -16,9 +16,12 @@ myapp.filter('numberEx', ['numberFilter', '$locale',
 		var formats = $locale.NUMBER_FORMATS;
 		return function(input, fractionSize) {
 			//Get formatted value
-			var formattedValue = number(input, fractionSize);
-
-			return Number(formattedValue.replace(',', '.'));
+			if (angular.isDefined(input)){
+				var formattedValue = number(input, fractionSize);
+				return Number(formattedValue.replace(',', '.'));
+			} else {
+				return 0;
+			}
 		};
 	}
 ]);
