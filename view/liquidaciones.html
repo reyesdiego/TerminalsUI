@@ -71,7 +71,7 @@
 				<hr>
 				<accordion-min heading="Detalle Pre-Liquidación nº {{ preLiquidacion.selected.preNumber }}" ng-show="preLiquidacion.verDetalle">
 					<!--<h5 class="col-lg-12"><strong> Toneladas: {{ preLiquidacion.detalle.tons | number: 2 }} - Tasa: U$S {{ preLiquidacion.detalle.total | currency }} - Importe: $ {{ preLiquidacion.detalle.totalPeso | currency }} - IVA: $ {{ preLiquidacion.detalle.totalPeso * 0.21 | currency }} - Total: $ {{ preLiquidacion.detalle.totalPeso * 1.21 | currency }}</strong></h5>-->
-					<detalle-liquidacion datos-liquidacion="preLiquidacion.detalle"></detalle-liquidacion>
+					<detalle-liquidacion datos-liquidacion="preLiquidacion.detalle" ng-hide="preLiquidacion.detalle.tons == 0"></detalle-liquidacion>
 					<div class="col-lg-12 text-center" ng-show="comprobantesPreLiquidados.cargando">
 						<img class="media-object center-block" src="images/loading.gif">
 					</div>
@@ -154,7 +154,7 @@
 								tasa-agp="tasaAgp"
 								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
 								cargar="cambioPagina()"
-								ordenar="filtrarLiquidados(filtro)">
+								ordenar="filtrarPreLiquidados(filtro)">
 						</table-sin-liquidar>
 					</div>
 					<div class="col-lg-12" ng-show="comprobantesLiquidados.verDetalle">
