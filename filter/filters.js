@@ -16,8 +16,9 @@ myapp.filter('numberEx', ['numberFilter', '$locale',
 		var formats = $locale.NUMBER_FORMATS;
 		return function(input, fractionSize) {
 			//Get formatted value
-			if (angular.isDefined(input)){
+			if (angular.isDefined(input) && input != null){
 				var formattedValue = number(input, fractionSize);
+				formattedValue = formattedValue.replace('.', '');
 				return Number(formattedValue.replace(',', '.'));
 			} else {
 				return 0;
