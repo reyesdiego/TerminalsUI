@@ -64,7 +64,7 @@
 				<td>{{ item.cnt }}</td>
 				<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle | currency }}</td>
 				<td>{{ item.uniMed }}</td>
-				<td>{{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle | currency }}</td>
+				<td><span title="El total no se corresponde con el precio unitario cobrado." class="glyphicon glyphicon-exclamation-sign text-danger" ng-show="item.impTot != item.impUnit*item.cnt"></span> {{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle | currency }}</td>
 			</tr>
 			</tbody>
 			<tfoot class="text-right">
