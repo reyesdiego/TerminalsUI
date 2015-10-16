@@ -22,6 +22,11 @@
 				<div class="col-lg-12 text-center" ng-show="sinLiquidar.cargando">
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
+				<detalle-liquidacion
+						datos-liquidacion="sinLiquidar.preLiquidacion.detalle"
+						tasa-agp="tasaAgp"
+						ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle || sinLiquidar.preLiquidacion.detalle.tons == 0" >
+				</detalle-liquidacion>
 				<div class="col-lg-12" ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle">
 					<table-sin-liquidar
 							model="sinLiquidar"

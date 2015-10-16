@@ -34,7 +34,13 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			total: 0,
 			currentPage: 1,
 			invoiceSelected: {},
-			itemsPerPage: 15
+			itemsPerPage: 15,
+			preLiquidacion: {
+				detalle: {
+					tons: 0,
+					total: 0
+				}
+			}
 		};
 
 		$scope.preLiquidacion = {
@@ -209,7 +215,25 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					};
 				}
 				$scope.sinLiquidar.cargando = false;
-			})
+			});
+			liquidacionesFactory.getPrePayment($scope.sinLiquidar.model, function(data){
+				if (data.status == 'OK'){
+					if (angular.isDefined(data.data)){
+						$scope.sinLiquidar.preLiquidacion.detalle = data.data;
+					} else {
+						$scope.sinLiquidar.preLiquidacion.detalle = {
+							tons: 0,
+							total: 0
+						};
+					}
+				} else {
+					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los detalles de la pre-liquidación');
+					$scope.sinLiquidar.preLiquidacion.detalle = {
+						tons: 0,
+						total: 0
+					};
+				}
+			});
 		};
 
 		$scope.cargarPreLiquidaciones = function(){
@@ -326,7 +350,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				limit: $scope.itemsPerPage
 			};
 			traerComprobantesPreLiquidacion(pagina);
-			liquidacionesFactory.getPrePayment($scope.preLiquidacion.selected._id, function(data){
+			liquidacionesFactory.getPrePayment({ paymentId: $scope.preLiquidacion.selected._id }, function(data){
 				if (data.status == 'OK'){
 					if (angular.isDefined(data.data)){
 						$scope.preLiquidacion.detalle = data.data;

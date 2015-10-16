@@ -21,7 +21,8 @@
 		</tr>
 		<tr>
 			<td colspan="4" class="text-right">Total</td>
-			<td class="text-right">$ {{ datosLiquidacion.totalFinal | currency }}</td>
+			<td class="text-right" ng-hide="tasaAgp">$ {{ datosLiquidacion.totalFinal | currency }}</td>
+			<td class="text-right" ng-show="tasaAgp">$ {{ datosLiquidacion.totalFinalAgp | currency }}</td>
 		</tr>
 		</tbody>
 	</table>
