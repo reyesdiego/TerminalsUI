@@ -178,7 +178,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 		};
 
 		factory.getFacturacionEmpresas = function(datos, callback){
-			var inserturl = serverUrl + '/algunaRuta/' + loginService.getFiltro() + '/algoMas';
+			var inserturl = serverUrl + '/invoices/totalClient/' + datos.razonSocial;
 			$http.get(inserturl, {params: formatService.formatearDatos(datos)})
 				.success(function(data){
 					callback(data);
