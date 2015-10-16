@@ -6,12 +6,24 @@
 myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', 'loginService',
 	function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache, loginService) {
 
+		$scope.tasaAgp = false;
+
 		$rootScope.predicate = 'terminal';
 		$scope.monedaFija = 'DOL';
+		$scope.monedaPie = 'PES';
 		$scope.tarifasElegidas = 1;
 		$scope.total = 0;
+		$scope.totalAgp = 0;
+		$scope.totalPeso = 0;
+		$scope.totalPesoAgp = 0;
 
 		$scope.totalesPorTerminal = [
+			['BACTSSA', 0],
+			['TERMINAL 4', 0],
+			['TRP', 0]
+		];
+
+		$scope.totalesPorTerminalAgp = [
 			['BACTSSA', 0],
 			['TERMINAL 4', 0],
 			['TRP', 0]
@@ -56,6 +68,10 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			['Codigos', 'algo'],
 			['hola', 0]
 		];
+		$scope.chartDataReporteTarifasAgp = [
+			['Codigos', 'algo'],
+			['hola', 0]
+		];
 
 		$scope.deleteRow = function (index) {
 			$scope.chartData.splice(index, 1);
@@ -71,6 +87,22 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		};
 
 		$scope.armarGrafico = function(){
+			$scope.total = 0;
+			$scope.totalAgp = 0;
+			$scope.totalPeso = 0;
+			$scope.totalPesoAgp = 0;
+
+			$scope.totalesPorTerminal = [
+				['BACTSSA', 0],
+				['TERMINAL 4', 0],
+				['TRP', 0]
+			];
+
+			$scope.totalesPorTerminalAgp = [
+				['BACTSSA', 0],
+				['TERMINAL 4', 0],
+				['TRP', 0]
+			];
 			$scope.tarifasElegidas = 2;
 			var base =[
 				['Códigos', 'Tasa importación', 'Tasa exportación', 'Tasa removido'],
@@ -102,11 +134,24 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 						row = 3;
 						break;
 				}
-				base[row][column] = tasa.total;
+				if ($scope.tasaAgp){
+					$scope.totalesPorTerminalAgp[row - 1][1] += tasa.totalPesoAgp;
+					base[row][column] = tasa.totalAgp;
+				} else {
+					$scope.totalesPorTerminal[row - 1][1] += tasa.totalPeso;
+					base[row][column] = tasa.total;
+				}
 				$scope.total += tasa.total;
-				$scope.totalesPorTerminal[row - 1][1] += tasa.total;
+				$scope.totalAgp += tasa.totalAgp;
+				$scope.totalPeso += tasa.totalPeso;
+				$scope.totalPesoAgp += tasa.totalPesoAgp;
+
 			});
-			$scope.chartDataReporteTarifas = base;
+			if ($scope.tasaAgp){
+				$scope.chartDataReporteTarifasAgp = base;
+			} else {
+				$scope.chartDataReporteTarifas = base;
+			}
 			$scope.mostrarGrafico = true;
 		};
 
@@ -129,10 +174,20 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			return $scope.allRates[codigo];
 		};
 
+		$scope.cambioTasa = function(){
+			$scope.tasaAgp = !$scope.tasaAgp;
+			$scope.armarGrafico();
+		};
+
 		$scope.cargaRates = function () {
 			if (!angular.isDefined($scope.model['fechaInicio'])) $scope.model.fechaInicio = $scope.fechaInicio;
 			$scope.total = 0;
 			$scope.totalesPorTerminal = [
+				['BACTSSA', 0],
+				['TERMINAL 4', 0],
+				['TRP', 0]
+			];
+			$scope.totalesPorTerminalAgp = [
 				['BACTSSA', 0],
 				['TERMINAL 4', 0],
 				['TRP', 0]
