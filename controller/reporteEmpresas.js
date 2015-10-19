@@ -54,7 +54,6 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			basePorcentaje.push(['Otros', $scope.totalTerminal - total]);
 			$scope.chartDataReporteEmpresas = baseTotales;
 			$scope.chartDataPorcentaje = basePorcentaje;
-			console.log($scope.chartDataPorcentaje);
 		};
 
 		$scope.clientSelected = function(cliente){
