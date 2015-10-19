@@ -241,7 +241,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			var data = {
 				terminal: loginService.getFiltro(),
 				resultado: $scope.puntosDeVenta,
-				titulo: $scope.tipoComprob + " faltantes " + $scope.totalFaltantes,
+				titulo: $scope.tipoComprob.desc + " faltantes " + $scope.totalFaltantes,
 				desde: fechaInicio,
 				hasta: fechaFin
 			};
@@ -264,7 +264,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			$scope.deshabilitarBuscar = true;
 			$scope.loadingCorrelatividad = true;
 			$scope.puntosDeVenta = [];
-			$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
+			$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob).desc;
 			$scope.mostrarBotonImprimir = false;
 
 			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
