@@ -1,15 +1,29 @@
 /**
  * Created by artiom on 21/08/15.
  */
-myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService',
-	function($scope, controlPanelFactory, dialogs, loginService){
+myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'generalCache',
+	function($scope, controlPanelFactory, dialogs, loginService, generalCache){
+
+		$scope.listaClientes = generalCache.get('clientes' + loginService.getFiltro());
 
 		$scope.cargando = false;
 
+		$scope.clientSelected = function(cliente){
+			var i = $scope.model.clients.indexOf(cliente.nombre);
+			if (i == -1){
+				$scope.model.clients.push(cliente.nombre);
+			} else {
+				$scope.quitarCliente(cliente.nombre);
+			}
+		};
+
+		$scope.quitarCliente = function(cliente){
+			var i = $scope.model.clients.indexOf(cliente);
+			$scope.model.clients.splice(i, 1);
+		};
+
 		$scope.fechaInicio = new Date();
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'contenedor', 'codigo', 'estado', 'buque', 'viaje', 'itemsPerPage'];
 
 		$scope.mensajeResultado = {
 			titulo: 'Reporte empresas',
@@ -26,17 +40,17 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		$scope.model = {
 			fechaInicio: $scope.fechaInicio,
 			fechaFin: $scope.fechaFin,
-			razonSocial: '',
+			clients: [],
 			terminal: ''
 		};
 
 		$scope.resultados =  [];
 
 		$scope.$on('iniciarBusqueda', function(){
-			if ($scope.model.razonSocial != ''){
+			if ($scope.model.clients.length > 0){
 				$scope.cargarReporte();
 			} else {
-				dialogs.notify('Facturación por empresa', 'Debe seleccionar una razón social para realizar la búsqueda');
+				dialogs.notify('Facturación por empresa', 'Debe seleccionar al menos una razón social para realizar la búsqueda');
 			}
 		});
 
@@ -44,11 +58,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 
 		$scope.cargarReporte = function(){
 			$scope.cargando = true;
-			if (!$scope.todasLasTerminales){
-				$scope.model.terminal = loginService.getFiltro();
-			} else {
-				$scope.model.terminal = ''
-			}
+			$scope.model.terminal = loginService.getFiltro();
 			controlPanelFactory.getFacturacionEmpresas($scope.model, function(data){
 				if (data.status == 'OK'){
 					$scope.resultados = data.data;
