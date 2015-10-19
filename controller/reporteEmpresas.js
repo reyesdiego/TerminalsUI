@@ -112,6 +112,8 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 					$scope.resultados = data.data;
 					$scope.totalTerminal = data.total;
 					$scope.armarGrafico();
+					$scope.mensajeResultado.titulo = 'Reporte empresas';
+					$scope.mensajeResultado.tipo = 'panel-info';
 					if ($scope.model.clients.length == 1){
 						$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para ' + $scope.model.clients[0] + ' entre las fechas seleccionadas.';
 					} else {
@@ -127,5 +129,17 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				}
 				$scope.cargando = false;
 			})
-		}
+		};
+
+		$scope.$on('cambioTerminal', function(){
+			$scope.searchClient = '';
+			$scope.listaClientes = generalCache.get('clientes' + loginService.getFiltro());
+			$scope.resultados = [];
+			$scope.mensajeResultado = {
+				titulo: 'Reporte empresas',
+				mensaje: 'Seleccione una razón social para realizar la búsqueda.',
+				tipo: 'panel-info'
+			};
+			$scope.model.clients = [];
+		})
 }]);
