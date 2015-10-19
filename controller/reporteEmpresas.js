@@ -4,9 +4,58 @@
 myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'generalCache',
 	function($scope, controlPanelFactory, dialogs, loginService, generalCache){
 
+		$scope.chartWidth = 600;
+		$scope.chartHeight = 400;
+
+		$scope.chartTitleReporteEmpresas = "Totales por empresa";
+		$scope.chartDataReporteEmpresas = [
+			['Empresas', 'algo'],
+			['hola', 2526]
+		];
+
+		$scope.chartTitlePorcentaje = "Porcentajes respecto del total";
+		$scope.chartDataPorcentaje = [
+			['Codigos', 0],
+			['hola', 2526]
+		];
+
+		$scope.monedaFija = 'PES';
+
+		$scope.selectRow = function (index) {
+			$scope.selected = index;
+		};
+		$scope.rowClass = function (index) {
+			return ($scope.selected === index) ? "selected" : "";
+		};
+
+		$scope.columnChart = 'column';
+		$scope.pieChart = 'pie';
+
 		$scope.listaClientes = generalCache.get('clientes' + loginService.getFiltro());
 
 		$scope.cargando = false;
+
+		$scope.totalTerminal = 0;
+
+		$scope.armarGrafico = function(){
+			var baseTotales = [
+				['Empresas', 'Total']
+			];
+			var basePorcentaje = [];
+			var total = 0;
+			$scope.resultados.forEach(function(cliente){
+				total += cliente.total;
+				var nuevaLinea = [];
+				nuevaLinea.push(cliente.razon);
+				nuevaLinea.push(cliente.total);
+				baseTotales.push(angular.copy(nuevaLinea));
+				basePorcentaje.push(angular.copy(nuevaLinea));
+			});
+			basePorcentaje.push(['Otros', $scope.totalTerminal - total]);
+			$scope.chartDataReporteEmpresas = baseTotales;
+			$scope.chartDataPorcentaje = basePorcentaje;
+			console.log($scope.chartDataPorcentaje);
+		};
 
 		$scope.clientSelected = function(cliente){
 			var i = $scope.model.clients.indexOf(cliente.nombre);
@@ -62,6 +111,8 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			controlPanelFactory.getFacturacionEmpresas($scope.model, function(data){
 				if (data.status == 'OK'){
 					$scope.resultados = data.data;
+					$scope.totalTerminal = data.total;
+					$scope.armarGrafico();
 					$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para ' + $scope.model.razonSocial + ' entre las fechas seleccionadas.';
 				} else {
 					$scope.mensajeResultado = {

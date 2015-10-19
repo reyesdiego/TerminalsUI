@@ -395,13 +395,12 @@
 					</div>
 					<div class="panel-body" style="max-height: 720px; overflow: scroll">
 						<input type="text" class="form-control" ng-model="searchClient" placeholder="Razón Social">
-						<h5 ng-repeat="cliente in filteredClientes = (listaClientes | filter: searchClient ) | limitTo: 20"><a href ng-click="clientSelected(cliente)">{{ cliente.nombre }}</a></h5>
+						<h5 ng-repeat="cliente in filteredClientes = (listaClientes | filter: searchClient )"><a href ng-click="clientSelected(cliente)">{{ cliente.nombre }}</a></h5>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-9">
 				<reporte-empresas-search model="model"></reporte-empresas-search>
-				<!--<reporte-empresas-search model="model"></reporte-empresas-search>-->
 				<div class="col-lg-12">
 					<div-panel config-panel="mensajeResultado">
 						<div>{{ model.clients.length }} clientes seleccionados:</div>
@@ -426,19 +425,54 @@
 							<thead>
 							<tr>
 								<th>Razón social</th>
-								<th>Terminal</th>
+								<th class="text-right">Comprobantes</th>
+								<th class="text-right">Porcentaje</th>
+								<th class="text-right">Promedio</th>
 								<th class="text-right">Total</th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr ng-repeat="total in resultados">
 								<td>{{ total.razon }}</td>
-								<td>{{ total.terminal }}</td>
+								<td class="text-right">{{ total.cnt }}</td>
+								<td class="text-right">% {{ total.total*100/totalTerminal | number: 2 }}</td>
+								<td class="text-right">$ {{ total.avg | currency }}</td>
 								<td class="text-right">$ {{ total.total | currency }}</td>
 							</tr>
 							</tbody>
 						</table>
 					</div>
+				</div>
+			</div>
+			<div class="col-lg-12" ng-hide="cargando || resultados.length == 0">
+				<div class="col-lg-6">
+					<dynamic-chart
+							data="chartDataReporteEmpresas"
+							title="{{chartTitleReporteEmpresas}}"
+							width="{{chartWidth}}"
+							height="{{chartHeight}}"
+							select="selectRow(selectedRowIndexReporteEmpresas)"
+							type="{{columnChart}}"
+							currency="true"
+							stacked="false"
+							is3-d="false"
+							money="monedaFija"
+							columns="1">
+					</dynamic-chart>
+				</div>
+				<div class="col-lg-6">
+					<dynamic-chart
+							data="chartDataPorcentaje"
+							title="{{chartTitlePorcentaje}}"
+							width="{{chartWidth}}"
+							height="{{chartHeight}}"
+							select="selectRow(selectedRowIndexPorcentaje)"
+							type="{{pieChart}}"
+							currency="true"
+							stacked="false"
+							is3-d="true"
+							money="monedaFija">
+					</dynamic-chart>
 				</div>
 			</div>
 		</div>
