@@ -112,7 +112,11 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 					$scope.resultados = data.data;
 					$scope.totalTerminal = data.total;
 					$scope.armarGrafico();
-					$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para ' + $scope.model.razonSocial + ' entre las fechas seleccionadas.';
+					if ($scope.model.clients.length == 1){
+						$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para ' + $scope.model.clients[0] + ' entre las fechas seleccionadas.';
+					} else {
+						$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para los clientes seleccionados entre las fechas dadas.';
+					}
 				} else {
 					$scope.mensajeResultado = {
 						titulo: 'Error',
