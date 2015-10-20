@@ -61,7 +61,7 @@
 			<div-panel ng-repeat="pantalla in puntosDeVenta" config-panel="pantalla" ng-show="pantalla.totalCnt > 0">
 				<p ng-show="pantalla.totalCnt > 1">Se hallaron {{ pantalla.totalCnt }} comprobantes faltantes:</p>
 				<p ng-show="pantalla.totalCnt == 1">Se halló {{ pantalla.totalCnt }} comprobante faltante:</p>
-				<span ng-repeat="numero in pantalla.resultadoCorrelativo track by $index">{{ numero }}<span ng-show="!$last"> - </span></span>
+				<span ng-repeat="numero in pantalla.resultadoCorrelativo track by $index" title="{{ numero.d | date: 'dd/MM/yyyy' }}">{{ numero.n }}<span ng-show="!$last"> - </span></span>
 			</div-panel>
 			<div-panel config-panel="pantalla" ng-show="puntosDeVenta.length == 0">
 				{{ pantalla.mensajeCorrelativo }}
