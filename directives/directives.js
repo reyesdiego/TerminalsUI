@@ -582,7 +582,8 @@ myapp.directive('reporteEmpresasSearch', function(){
 		restrict:		'E',
 		templateUrl:	'view/accordion.reporte.empresas.html',
 		scope: {
-			model:					"="
+			model:					"=",
+			ranking:				"="
 		},
 		controller: 'searchController'
 	}

@@ -1,4 +1,16 @@
 <accordion-min heading="Buscar por">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="!ranking">
+		<div class="input-group">
+			<label class="sr-only" for="topRanking">Clientes de mayor facturación</label>
+			<select id="topRanking" class="form-control" ng-model="model.top">
+				<option value="20" ng-selected="true">Top 20 clientes</option>
+				<option value="15">Top 15 clientes</option>
+				<option value="10">Top 10 clientes</option>
+				<option value="5">Top 5 clientes</option>
+			</select>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codTipoComprob', 0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
 		<div class="input-group">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>

@@ -4,6 +4,8 @@
 myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'generalCache',
 	function($scope, controlPanelFactory, dialogs, loginService, generalCache){
 
+		$scope.ranking = true;
+
 		$scope.chartWidth = 600;
 		$scope.chartHeight = 400;
 
@@ -60,6 +62,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			var i = $scope.model.clients.indexOf(cliente.nombre);
 			if (i == -1){
 				$scope.model.clients.push(cliente.nombre);
+				$scope.ranking = false;
 			} else {
 				$scope.quitarCliente(cliente.nombre);
 			}
@@ -68,6 +71,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		$scope.quitarCliente = function(cliente){
 			var i = $scope.model.clients.indexOf(cliente);
 			$scope.model.clients.splice(i, 1);
+			if ($scope.model.clients.length == 0) $scope.ranking = true;
 		};
 
 		$scope.fechaInicio = new Date();
@@ -89,46 +93,55 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			fechaInicio: $scope.fechaInicio,
 			fechaFin: $scope.fechaFin,
 			clients: [],
-			terminal: ''
+			terminal: '',
+			top: 20
 		};
 
 		$scope.resultados =  [];
 
 		$scope.$on('iniciarBusqueda', function(){
-			if ($scope.model.clients.length > 0){
-				$scope.cargarReporte();
-			} else {
-				dialogs.notify('Facturación por empresa', 'Debe seleccionar al menos una razón social para realizar la búsqueda');
-			}
+			$scope.cargarReporte();
 		});
 
 		$scope.todasLasTerminales = true;
 
+		var tratarResultado = function(data){
+			if (data.status == 'OK'){
+				$scope.resultados = data.data;
+				$scope.totalTerminal = data.total;
+				$scope.armarGrafico();
+				$scope.mensajeResultado.titulo = 'Reporte empresas';
+				$scope.mensajeResultado.tipo = 'panel-info';
+				if ($scope.model.clients.length == 1){
+					$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para ' + $scope.model.clients[0] + ' entre las fechas seleccionadas.';
+				} else {
+					$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para los clientes seleccionados entre las fechas dadas.';
+				}
+			} else {
+				$scope.mensajeResultado = {
+					titulo: 'Error',
+					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+					tipo: 'panel-danger'
+				};
+				$scope.resultados = [];
+			}
+			$scope.cargando = false;
+		};
+
 		$scope.cargarReporte = function(){
 			$scope.cargando = true;
 			$scope.model.terminal = loginService.getFiltro();
-			controlPanelFactory.getFacturacionEmpresas($scope.model, function(data){
-				if (data.status == 'OK'){
-					$scope.resultados = data.data;
-					$scope.totalTerminal = data.total;
-					$scope.armarGrafico();
-					$scope.mensajeResultado.titulo = 'Reporte empresas';
-					$scope.mensajeResultado.tipo = 'panel-info';
-					if ($scope.model.clients.length == 1){
-						$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para ' + $scope.model.clients[0] + ' entre las fechas seleccionadas.';
-					} else {
-						$scope.mensajeResultado.mensaje = 'No se hallaron datos de facturación para los clientes seleccionados entre las fechas dadas.';
-					}
-				} else {
-					$scope.mensajeResultado = {
-						titulo: 'Error',
-						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-						tipo: 'panel-danger'
-					};
-					$scope.resultados = [];
-				}
-				$scope.cargando = false;
-			})
+			var datos = angular.copy($scope.model);
+			if ($scope.ranking){
+				controlPanelFactory.getTopFacturacionEmpresas(datos, function(data){
+					tratarResultado(data);
+				})
+			} else {
+				datos.top = '';
+				controlPanelFactory.getFacturacionEmpresas(datos, function(data){
+					tratarResultado(data);
+				})
+			}
 		};
 
 		$scope.$on('cambioTerminal', function(){

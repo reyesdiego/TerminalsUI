@@ -187,6 +187,16 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 				})
 		};
 
+		factory.getTopFacturacionEmpresas = function(datos, callback){
+			var inserturl = serverUrl + '/invoices/totalClientTop';
+			$http.get(inserturl, {params: formatService.formatearDatos(datos)})
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		function ponerDescripcionYTasas(data) {
 			var datos = data;
 			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
