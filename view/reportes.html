@@ -398,6 +398,7 @@
 						<h5 ng-repeat="cliente in filteredClientes = (listaClientes | filter: searchClient )"><a href ng-click="clientSelected(cliente)">{{ cliente.nombre }}</a></h5>
 					</div>
 				</div>
+				<h6><strong>Total empresas: {{ listaClientes.length }}</strong></h6>
 			</div>
 			<div class="col-lg-9">
 				<reporte-empresas-search model="model" ranking="ranking"></reporte-empresas-search>
