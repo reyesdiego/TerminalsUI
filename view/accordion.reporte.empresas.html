@@ -1,19 +1,15 @@
 <accordion-min heading="Buscar por">
 	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="!ranking">
-		<div class="input-group">
-			<label class="sr-only" for="topRanking">Clientes de mayor facturación</label>
-			<select id="topRanking" class="form-control" ng-model="model.top">
-				<option value="100">Top 100 clientes</option>
-				<option value="50">Top 50 clientes</option>
-				<option value="20" ng-selected="true">Top 20 clientes</option>
-				<option value="15">Top 15 clientes</option>
-				<option value="10">Top 10 clientes</option>
-				<option value="5">Top 5 clientes</option>
-			</select>
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codTipoComprob', 0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-		</div>
+		<select id="topRanking" class="form-control" ng-model="model.top">
+			<option value="100">Top 100 clientes</option>
+			<option value="50">Top 50 clientes</option>
+			<option value="20" ng-selected="true">Top 20 clientes</option>
+			<option value="15">Top 15 clientes</option>
+			<option value="10">Top 10 clientes</option>
+			<option value="5">Top 5 clientes</option>
+		</select>
 	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6">
 		<div class="input-group">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
 			<label for="model.fechaInicio" class="sr-only">Fecha Desde</label>
@@ -21,7 +17,7 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6">
 		<div class="input-group">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
 			<label for="model.fechaFin" class="sr-only">Fecha Hasta</label>
@@ -29,7 +25,7 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('btnBuscar', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6">
 		<div class="input-group">
 			<button class="btn btn-primary" ng-click="filtrado('', '');" ng-disabled="deshabilitarBuscar"><span class="glyphicon glyphicon-search"></span> Buscar</button>
 		</div>
