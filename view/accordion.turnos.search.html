@@ -2,7 +2,6 @@
 	<div class="form-group col-lg-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
 		<div class="input-group">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;">Día <span class="glyphicon glyphicon-calendar"></span></button></span>
-			<label class="sr-only" for="fechaInicio">Día</label>
 			<input id="fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" readonly style="background-color: #ffffff">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaInicio', 'turnos');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
