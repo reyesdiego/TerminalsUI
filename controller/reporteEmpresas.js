@@ -39,7 +39,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 
 		$scope.totalTerminal = 0;
 
-		$scope.armarGrafico = function(){
+		var armarGrafico = function(){
 			var baseTotales = [
 				['Empresas', 'Total']
 			];
@@ -100,16 +100,14 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		$scope.resultados =  [];
 
 		$scope.$on('iniciarBusqueda', function(){
-			$scope.cargarReporte();
+			cargarReporte();
 		});
-
-		$scope.todasLasTerminales = true;
 
 		var tratarResultado = function(data){
 			if (data.status == 'OK'){
 				$scope.resultados = data.data;
 				$scope.totalTerminal = data.total;
-				$scope.armarGrafico();
+				armarGrafico();
 				$scope.mensajeResultado.titulo = 'Reporte empresas';
 				$scope.mensajeResultado.tipo = 'panel-info';
 				if ($scope.model.clients.length == 1){
@@ -128,19 +126,15 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			$scope.cargando = false;
 		};
 
-		$scope.cargarReporte = function(){
+		var cargarReporte = function(){
 			$scope.cargando = true;
 			$scope.model.terminal = loginService.getFiltro();
 			var datos = angular.copy($scope.model);
 			if ($scope.ranking){
-				controlPanelFactory.getTopFacturacionEmpresas(datos, function(data){
-					tratarResultado(data);
-				})
+				controlPanelFactory.getTopFacturacionEmpresas(datos, tratarResultado)
 			} else {
 				datos.top = '';
-				controlPanelFactory.getFacturacionEmpresas(datos, function(data){
-					tratarResultado(data);
-				})
+				controlPanelFactory.getFacturacionEmpresas(datos, tratarResultado)
 			}
 		};
 

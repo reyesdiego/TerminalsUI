@@ -4,6 +4,7 @@
 
 myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'colorTerminalesCache',
 	function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache) {
+
 		$scope.maxDate = new Date();
 		$scope.monedaFija = 'DOL';
 		$scope.search = '';
