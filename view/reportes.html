@@ -402,7 +402,7 @@
 			<div class="col-lg-9">
 				<reporte-empresas-search model="model" ranking="ranking"></reporte-empresas-search>
 				<div class="col-lg-12">
-					<div-panel config-panel="mensajeResultado">
+					<div-panel config-panel="mensajeResultado" ng-show="model.clients.length > 0">
 						<div>{{ model.clients.length }} clientes seleccionados:</div>
 						<div>
 							<span ng-repeat="cliente in model.clients">
