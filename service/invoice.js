@@ -278,7 +278,6 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 				} else {
 					message = 'Se ha producido un error al cargar los comentarios del comprobante';
 					deferred.reject(message);
-					//dialogs.error('Comprobantes', 'Se ha producido un error al cargar los comentarios del comprobante');
 				}
 			});
 			return deferred.promise;
