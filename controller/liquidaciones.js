@@ -44,7 +44,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.preLiquidacion = {
-			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial'],
+			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'buque'],
 			panelMensaje: {
 				titulo: 'Liquidaciones',
 				mensaje: 'No se encontraron pre-liquidaciones realizadas para los filtros seleccionados.',
