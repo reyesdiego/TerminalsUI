@@ -110,7 +110,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
-			$scope.cargaComprobantes();
+			cargaComprobantes();
 		});
 
 		////// Para containers ////////////////////////////////////////////////////////////////////////////////
@@ -249,11 +249,11 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 
 		$scope.filtrar = function(){
 			$scope.hayError = false;
-			$scope.cargaComprobantes();
-			$scope.cargaTasasCargas();
-			$scope.cargaGates();
-			$scope.cargaTurnos();
-			$scope.cargaSumaria();
+			cargaComprobantes();
+			cargaTasasCargas();
+			cargaGates();
+			cargaTurnos();
+			cargaSumaria();
 		};
 
 		$scope.verDetalles = function(contenedor){
@@ -268,7 +268,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			$scope.filtrar();
 		};
 
-		$scope.cargaComprobantes = function(){
+		var cargaComprobantes = function(){
 			$scope.loadingInvoices = true;
 			$scope.mensajeResultado = {
 				titulo: 'Comprobantes',
@@ -292,7 +292,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			});
 		};
 
-		$scope.cargaTasasCargas = function(){
+		var cargaTasasCargas = function(){
 			if (angular.isDefined($scope.model.contenedor) && $scope.model.contenedor != ''){
 				$scope.loadingTasas = true;
 				$scope.configPanelTasas = {
@@ -317,7 +317,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			}
 		};
 
-		$scope.cargaGates = function(page){
+		var cargaGates = function(page){
 			$scope.loadingGates = true;
 			$scope.configPanelGates = {
 				tipo: 'panel-info',
@@ -341,7 +341,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			});
 		};
 
-		$scope.cargaTurnos = function(page){
+		var cargaTurnos = function(page){
 			$scope.loadingTurnos = true;
 			$scope.configPanelTurnos = {
 				tipo: 'panel-info',
@@ -364,7 +364,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			});
 		};
 
-		$scope.cargaSumaria = function(){
+		var cargaSumaria = function(){
 			$scope.cargandoSumaria = true;
 			$scope.sumariaConfigPanel = {
 				tipo: 'panel-info',
