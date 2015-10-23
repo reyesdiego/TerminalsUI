@@ -5,7 +5,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, invoiceService){
 
 		$scope.tasaAgp = false;
-        $scope.byContainer = false;
+		$scope.byContainer = false;
 
 		$scope.fechaInicio = new Date();
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -27,7 +27,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				'filtroOrdenAnterior': '',
 				'filtroOrdenReverse': false,
 				'order': '',
-				'modo': 'sinLiquidar'
+				'modo': 'sinLiquidar',
+				'byContainer': false
 			},
 			cargando: false,
 			verDetalle: false,
@@ -41,11 +42,12 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					tons: 0,
 					total: 0
 				}
-			}
+			},
+			byContainer: false
 		};
 
 		$scope.preLiquidacion = {
-			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'buque'],
+			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'buque', 'byContainer'],
 			panelMensaje: {
 				titulo: 'Liquidaciones',
 				mensaje: 'No se encontraron pre-liquidaciones realizadas para los filtros seleccionados.',
@@ -92,7 +94,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				'filtroOrdenAnterior': '',
 				'filtroOrdenReverse': false,
 				'order': '',
-				'modo': 'sinLiquidar'
+				'modo': 'sinLiquidar',
+				'byContainer': false
 			},
 			comprobantes: [],
 			total: 0,
@@ -100,7 +103,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			cargando: false,
 			invoiceSelected: {},
 			verDetalle: false,
-			itemsPerPage: 15
+			itemsPerPage: 15,
+			byContainer: false
 		};
 
 		$scope.liquidacion = {
@@ -196,6 +200,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.cargarSinLiquidar = function(){
 			$scope.page.skip = ($scope.sinLiquidar.currentPage - 1) * $scope.itemsPerPage;
 			$scope.sinLiquidar.cargando = true;
+			$scope.sinLiquidar.byContainer = $scope.sinLiquidar.model.byContainer;
 			liquidacionesFactory.getComprobantesLiquidar($scope.page, $scope.sinLiquidar.model, function(data){
 				if (data.status == 'OK'){
 					$scope.sinLiquidar.comprobantes = data.data;
@@ -327,6 +332,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		var traerComprobantesPreLiquidacion = function(pagina){
+			$scope.comprobantesPreLiquidados.model.byContainer = $scope.sinLiquidar.model.byContainer;
+			$scope.comprobantesPreLiquidados.byContainer = $scope.sinLiquidar.model.byContainer;
 			liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, $scope.comprobantesPreLiquidados.model, function(data){
 				if (data.status == 'OK'){
 					$scope.comprobantesPreLiquidados.total = data.totalCount;

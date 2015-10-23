@@ -18,6 +18,7 @@
 			if (estaDefinido(array.fechaFin)) array.fechaFin = this.formatearFechaISOString(datos.fechaFin);
 			if (estaDefinido(array.fecha)) array.fecha = this.formatearFechaISOString(datos.fecha);
 			if (estaDefinido(array.rates) && array.rates == '1') array.rates = generalCache.get('ratesMatches' + loginService.getFiltro()).filter(Boolean);
+			if (estaDefinido(array.byContainer) && array.byContainer) array.byContainer = '1';
 			if (estaDefinido(array.order)) array.order = '[{' + datos.order + '}]';
 			return array;
 		};
