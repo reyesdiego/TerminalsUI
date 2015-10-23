@@ -60,7 +60,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 		];
 
-		var datosFacturadoPorDiaTasas = {
+		/*var datosFacturadoPorDiaTasas = {
 			"ratesCount": 0,
 			"ratesTotal": 0,
 			"dataGraf": [
@@ -69,10 +69,10 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 				['TERMINAL 4', 0, ''],
 				['TRP', 0, '']
 			]
-		};
+		};*/
 
 		$scope.chartTitleFacturadoTasas = "Importe de tasa a las cargas por día";
-		$scope.chartDataFacturadoTasas = datosFacturadoPorDiaTasas.dataGraf;
+		/*$scope.chartDataFacturadoTasas = datosFacturadoPorDiaTasas.dataGraf;*/
 
 		$scope.chartDataFacturado = [
 			['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -421,7 +421,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			});
 		};
 
-		$scope.traerDatosFacturadoDiaTasas = function(){
+		/*$scope.traerDatosFacturadoDiaTasas = function(){
 			var datos = {
 				fecha: $scope.desdeTasas,
 				moneda: $rootScope.moneda
@@ -436,7 +436,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 				$scope.control.ratesTotal = graf.ratesTotal;
 				$scope.loadingTasas = false;
 			});
-		};
+		};*/
 
 		$scope.traerDatosFacturadoDia = function(){
 			var datos = {
@@ -480,7 +480,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		if (loginService.getStatus()){
 			$scope.traerTotales();
 			$scope.traerDatosFacturadoMes();
-			$scope.traerDatosFacturadoDiaTasas();
+			//$scope.traerDatosFacturadoDiaTasas();
 			$scope.traerDatosFacturadoDia();
 			$scope.traerDatosGates();
 			$scope.traerDatosTurnos();
@@ -490,7 +490,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.$on('terminoLogin', function(){
 			$scope.traerTotales();
 			$scope.traerDatosFacturadoMes();
-			$scope.traerDatosFacturadoDiaTasas();
+			//$scope.traerDatosFacturadoDiaTasas();
 			$scope.traerDatosFacturadoDia();
 			$scope.traerDatosGates();
 			$scope.traerDatosTurnos();

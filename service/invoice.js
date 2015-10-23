@@ -70,6 +70,9 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			var matchesTerminal = generalCache.get('matches' + loginService.getFiltro());
 			var tasaCargasTerminal = generalCache.get('ratesMatches' + loginService.getFiltro());
 
+			console.log(matchesTerminal);
+			console.log(tasaCargasTerminal);
+
 			var valorTomado;
 			var tarifaError;
 
@@ -105,6 +108,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 							valorTomado = item.impUnit * comprobante.cotiMoneda
 						}
 						if (tasaCargasTerminal.indexOf(item.id) >= 0){
+							console.log(lookup[item.id].topPrices);
 							comprobante.tieneTasa = true;
 							if (angular.isDefined(comprobante.payment) && comprobante.payment != null){
 								if (angular.isDefined(comprobante.payment.number)){
@@ -115,7 +119,10 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 							} else {
 								comprobante.interfazLiquidada = 'text-danger';
 							}
+							console.log(precioEncontrado);
 							if (precioEncontrado){
+								console.log(valorTomado);
+								console.log(precioALaFecha);
 								if (valorTomado != precioALaFecha){
 									tarifaError = {
 										codigo: item.id,
