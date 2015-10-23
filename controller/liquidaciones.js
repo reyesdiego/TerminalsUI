@@ -5,6 +5,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, invoiceService){
 
 		$scope.tasaAgp = false;
+        $scope.byContainer = false;
 
 		$scope.fechaInicio = new Date();
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -71,7 +72,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			total: 0,
 			currentPage: 1,
 			datos: [],
-			tasaAgp: false
+			tasaAgp: false,
+            byContainer: false
 		};
 
 		$scope.comprobantesPreLiquidados = {
