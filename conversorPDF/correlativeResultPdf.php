@@ -140,9 +140,9 @@ foreach ($data['resultado'] as $puntoDeVenta) {
 
 	foreach ($puntoDeVenta['resultadoCorrelativo'] as $resultado){
 		if ($last == $resultado){
-			$textoResultado .= $resultado;
+			$textoResultado .= $resultado['n'];
 		} else {
-			$textoResultado .= $resultado . " - ";
+			$textoResultado .= $resultado['n'] . " - ";
 		}
 	}
 

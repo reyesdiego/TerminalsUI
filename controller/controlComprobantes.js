@@ -241,14 +241,28 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			var data = {
 				terminal: loginService.getFiltro(),
 				resultado: $scope.puntosDeVenta,
-				titulo: $scope.tipoComprob.desc + " faltantes " + $scope.totalFaltantes,
+				titulo: $scope.tipoComprob + " faltantes " + $scope.totalFaltantes,
 				desde: fechaInicio,
 				hasta: fechaFin
 			};
 			downloadFactory.convertToPdf(data, 'correlativeResultPdf', function(data, status){
 				if (status == 'OK'){
+
 					var file = new Blob([data], {type: 'application/pdf'});
 					var fileURL = URL.createObjectURL(file);
+
+					/*var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: 'data:attachment/pdf;charset=utf-8,' + encodeURI(fileURL),
+						target: '_blank',
+						download: 'report.pdf'
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards*/
+
 					window.open(fileURL);
 				} else {
 					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');

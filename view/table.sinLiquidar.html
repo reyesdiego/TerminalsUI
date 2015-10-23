@@ -37,9 +37,10 @@
 			<td class="text-left" style="width: 12%; font-size: 9pt">{{ invoice.buque | maxLength : 8 }}<a href ng-show="invoice.buque.length > 8" popover="{{ invoice.buque }}" popover-trigger="mouseenter">(...)</a> </td>
 			<td class="text-left" style="width: 15%; font-size: 9pt">{{ invoice.razon | maxLength : 10 }}<a href ng-show="invoice.razon.length > 10" popover="{{ invoice.razon }}" popover-trigger="mouseenter">(...)</a></td>
 			<td class="text-right" style="width: 8%; font-size: 9pt">{{ invoice.cnt | numberEx:2 }}</td>
-			<td class="text-right" style="width: 12%; font-size: 9pt">
+			<td class="text-right" style="width: 12%; font-size: 9pt" ng-hide="tasaAgp">
 				<span title=" Tarifa AGP U$S {{ invoice.impUnitAgp | currency }}" class="glyphicon glyphicon-circle-arrow-down text-danger" ng-show="invoice.impUnit < invoice.impUnitAgp"></span>
 				<span title=" Tarifa AGP U$S {{ invoice.impUnitAgp | currency }}" class="glyphicon glyphicon-circle-arrow-up text-success" ng-show="invoice.impUnit > invoice.impUnitAgp"></span> U$S {{ invoice.impUnit | currency }}</td>
+			<td class="text-right" style="width: 12%; font-size: 9pt" ng-show="tasaAgp">U$S {{ invoice.impUnitAgp | currency }}</td>
 			<td ng-hide="tasaAgp" class="text-right" style="width: 12%; font-size: 9pt">
 				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">U$S {{ invoice.tasa | currency }}</span>
 			</td>
