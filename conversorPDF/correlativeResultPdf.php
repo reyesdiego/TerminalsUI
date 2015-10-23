@@ -118,6 +118,7 @@ $data = get_post();
 
 $desde = date('d/m/Y', strtotime($data['desde']));
 $hasta = date('d/m/Y', strtotime($data['hasta']));
+$hoy = date('d/m/Y', strtotime($data['hoy']));
 
 $pdf = new PDF();
 $pdf->setTerminal($data['terminal']);
@@ -128,7 +129,9 @@ $pdf->SetFont('Arial', 'B', 14);
 $pdf->Cell(190, 8, utf8_decode($data['titulo']), 0, "L");
 $pdf->Ln();
 $pdf->SetFont('Arial', 'B', 10);
-$pdf->Cell(190, 8, utf8_decode('Control realizado del ' . $desde . ' hasta el ' . $hasta), 0, "L");
+$pdf->Cell(190, 8, utf8_decode('Reporte generado el ' . $hoy), 0, "L");
+$pdf->Ln();
+$pdf->Cell(190, 8, utf8_decode('Período controlado: Del ' . $desde . ' hasta el ' . $hasta), 0, "L");
 $pdf->Ln(10);
 
 $pdf->SetFillColor(178, 34, 34);

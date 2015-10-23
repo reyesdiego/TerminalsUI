@@ -57,7 +57,7 @@
 		<div class="visible-print-block"><span ng-hide="model.fechaFin == ''">Hasta: {{ model.fechaFin | date: 'dd/MM/yyyy' }}</span></div>
 		<br class="visible-print-block">
 		<div-cargando mostrar="loadingCorrelatividad">
-			<h3 ng-show="totalFaltantes > 0 && totalPuntos == 0"><b>{{ tipoComprob }}</b> faltantes {{ totalFaltantes }}</h3>
+			<h3 ng-show="totalFaltantes > 0 && totalPuntos == 0"><b>{{ tipoComprob.desc }}</b> faltantes {{ totalFaltantes }}</h3>
 			<div-panel ng-repeat="pantalla in puntosDeVenta" config-panel="pantalla" ng-show="pantalla.totalCnt > 0">
 				<p ng-show="pantalla.totalCnt > 1">Se hallaron {{ pantalla.totalCnt }} comprobantes faltantes:</p>
 				<p ng-show="pantalla.totalCnt == 1">Se halló {{ pantalla.totalCnt }} comprobante faltante:</p>

@@ -241,9 +241,10 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			var data = {
 				terminal: loginService.getFiltro(),
 				resultado: $scope.puntosDeVenta,
-				titulo: $scope.tipoComprob + " faltantes " + $scope.totalFaltantes,
+				titulo: $scope.tipoComprob.desc + " faltantes " + $scope.totalFaltantes,
 				desde: fechaInicio,
-				hasta: fechaFin
+				hasta: fechaFin,
+				hoy: new Date()
 			};
 			downloadFactory.convertToPdf(data, 'correlativeResultPdf', function(data, status){
 				if (status == 'OK'){
@@ -251,19 +252,19 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 					var file = new Blob([data], {type: 'application/pdf'});
 					var fileURL = URL.createObjectURL(file);
 
-					/*var anchor = angular.element('<a/>');
+					var anchor = angular.element('<a/>');
 					anchor.css({display: 'none'}); // Make sure it's not visible
 					angular.element(document.body).append(anchor); // Attach to document
 
 					anchor.attr({
-						href: 'data:attachment/pdf;charset=utf-8,' + encodeURI(fileURL),
+						href: fileURL,
 						target: '_blank',
-						download: 'report.pdf'
+						download: $scope.tipoComprob.abrev + '_faltantes_' + loginService.getFiltro() + '.pdf'
 					})[0].click();
 
-					anchor.remove(); // Clean it up afterwards*/
+					anchor.remove(); // Clean it up afterwards
 
-					window.open(fileURL);
+					//window.open(fileURL);
 				} else {
 					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 				}
@@ -278,7 +279,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			$scope.deshabilitarBuscar = true;
 			$scope.loadingCorrelatividad = true;
 			$scope.puntosDeVenta = [];
-			$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob).desc;
+			$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
 			$scope.mostrarBotonImprimir = false;
 
 			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
@@ -661,7 +662,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 					anchor.attr({
 						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
 						target: '_blank',
-						download: 'report.csv'
+						download: 'Comprobantes_erroneos.csv'
 					})[0].click();
 
 					anchor.remove(); // Clean it up afterwards

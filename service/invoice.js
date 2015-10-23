@@ -287,6 +287,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			//$scope.disablePdf = true;
 			var deferred = $q.defer();
 			var imprimirComprobante = {};
+			var nombreReporte = $filter('nombreComprobante')(invoice.codTipoComprob, true) + invoice.nroComprob + '_' + loginService.getFiltro() + '.pdf';
 			angular.copy(invoice, imprimirComprobante);
 			imprimirComprobante.codTipoComprob = $filter('nombreComprobante')(imprimirComprobante.codTipoComprob, false);
 			imprimirComprobante.fecha.emision = $filter('date')(imprimirComprobante.fecha.emision, 'dd/MM/yyyy', 'UTC');
@@ -300,7 +301,19 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
 					var fileURL = URL.createObjectURL(file);
-					window.open(fileURL);
+
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: fileURL,
+						target: '_blank',
+						download: nombreReporte
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+					//window.open(fileURL);
 					deferred.resolve();
 				} else {
 					deferred.reject();

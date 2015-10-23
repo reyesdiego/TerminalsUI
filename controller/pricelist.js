@@ -70,11 +70,24 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 				terminal: loginService.getFiltro(),
 				pricelist: $scope.filteredPrices
 			};
+			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC');
 			downloadFactory.convertToPdf(data, 'pricelistToPdf', function(data, status){
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
 					var fileURL = URL.createObjectURL(file);
-					window.open(fileURL);
+
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: fileURL,
+						target: '_blank',
+						download: nombreReporte
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+					//window.open(fileURL);
 				} else {
 					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 				}
