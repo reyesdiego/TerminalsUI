@@ -65,13 +65,13 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('liquidacion', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('byContainer', 0) >= 0">
+	<!--<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('byContainer', 0) >= 0">
 		<div class="form-control">
 			<label>
 				<input type="checkbox" ng-model="model.byContainer"> Agrupar por contenedor
 			</label>
 		</div>
-	</div>
+	</div>-->
 	<div class="col-lg-4 col-sm-6">
 		<div class="form-group">
 			<button class="btn btn-primary" ng-click="filtrado('', '')" ng-disabled="model.fechaInicio > model.fechaFin">Buscar</button>

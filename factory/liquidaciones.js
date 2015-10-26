@@ -7,9 +7,18 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		var factory = {};
 
 		factory.getComprobantesLiquidar = function(page, datos, callback){
-			factory.cancelRequest('comprobantesLiquidar');
+			if (datos.byContainer){
+				factory.cancelRequest('comprobantesLiquidarContainer');
+			} else {
+				factory.cancelRequest('comprobantesLiquidar');
+			}
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'comprobantesLiquidar');
+			var canceler;
+			if (datos.byContainer){
+				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidarContainer');
+			} else {
+				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidar');
+			}
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -74,9 +83,18 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getComprobantesLiquidados = function(page, liquidacion, datos, callback){
-			factory.cancelRequest('comprobantesLiquidados');
+			if (datos.byContainer){
+				factory.cancelRequest('comprobantesLiquidadosContainer');
+			} else {
+				factory.cancelRequest('comprobantesLiquidados');
+			}
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'comprobantesLiquidados');
+			var canceler;
+			if (datos.byContainer){
+				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidadosContainer');
+			} else {
+				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidados');
+			}
 			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
