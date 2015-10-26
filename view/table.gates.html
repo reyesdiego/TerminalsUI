@@ -32,7 +32,14 @@
 						<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
 						<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO' || gate.buque == ''" ng-click="filtrado('buqueNombre', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
 						<td>{{ gate.viaje }}</td>
-						<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO' || gate.contenedor == ''" ng-click="filtrado('contenedor', gate.contenedor)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.contenedor }}</td>
+						<td>
+							<a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO' || gate.contenedor == ''" ng-click="filtrado('contenedor', gate.contenedor)">
+								<span class="glyphicon glyphicon-search"></span>
+							</a>
+							<span ng-show="gate.carga == 'LL'" class="text-success" title="Contenedor con carga">{{ gate.contenedor }}</span>
+							<span ng-show="gate.carga == 'VA'" class="text-danger" title="Contenedor vacío">{{ gate.contenedor }}</span>
+							<span ng-hide="gate.carga == 'VA' || gate.carga == 'LL'">{{ gate.contenedor }}</span>
+						</td>
 						<td ng-show="noVoyEnTrenVoyEnCamion(gate.patenteCamion)">{{ gate.patenteCamion }}</td>
 						<td ng-show="noVoyEnTrenVoyEnCamion(gate.tren)">{{ gate.tren }}</td>
 						<td class="text-center"><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>

@@ -10,6 +10,8 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		$scope.datosFaltantes = [];
 		$scope.cargando = false;
 
+		$scope.hayError = false;
+
 		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.cargando = false;
 			$scope.datosFaltantes = [];
@@ -52,12 +54,17 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			}
 		});
 
+		$scope.recargar = function(){
+			cargaDatos();
+		};
+
 		var cargaDatos = function(){
 			switch ($scope.datoFaltante){
 				case 'gates':
 					$scope.cargando = true;
 					gatesFactory.getMissingGates(function(data){
 						if (data.status == 'OK'){
+							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
 							$scope.totalItems = $scope.datosFaltantes.length;
 							$scope.datosFaltantes.forEach(function(comprob){
@@ -70,6 +77,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 							};
 							filtrarPorFecha();
 						} else {
+							$scope.hayError = true;
 							$scope.configPanel = {
 								tipo: 'panel-danger',
 								titulo: 'Control gates',
@@ -83,6 +91,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 					$scope.cargando = true;
 					gatesFactory.getMissingInvoices(function(data){
 						if (data.status == 'OK'){
+							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
 							$scope.totalItems = $scope.datosFaltantes.length;
 							$scope.cargando = false;
@@ -96,6 +105,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 							};
 							filtrarPorFecha();
 						} else {
+							$scope.hayError = true;
 							$scope.configPanel = {
 								tipo: 'panel-danger',
 								titulo: 'Control gates',
@@ -109,6 +119,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 					$scope.cargando = true;
 					turnosFactory.getMissingAppointments(function(data){
 						if (data.status == 'OK'){
+							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
 							$scope.totalItems = $scope.datosFaltantes.length;
 							$scope.datosFaltantes.forEach(function(comprob){
@@ -120,6 +131,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 								mensaje: 'No se encontraron comprobantes con turnos faltantes para los filtros seleccionados.'
 							};
 						} else {
+							$scope.hayError = true;
 							$scope.configPanel = {
 								tipo: 'panel-danger',
 								titulo: 'Control gates',
@@ -133,10 +145,12 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 					$scope.cargando = true;
 					gatesFactory.gatesSinTurnos($scope.model, function(data){
 						if (data.status == 'OK'){
+							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
 							$scope.totalItems = $scope.datosFaltantes.length;
 							$scope.filteredDatos = data.data;
 						} else {
+							$scope.hayError = true;
 							$scope.configPanel = {
 								tipo: 'panel-danger',
 								titulo: 'Control gates',

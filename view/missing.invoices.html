@@ -5,7 +5,10 @@
 </div>
 <div class="col-lg-12" ng-hide="cargando">
 	<div ng-hide="datosFaltantes.length != undefined && filteredDatos.length > 0">
-		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
+		<div-panel config-panel="configPanel">
+			{{ configPanel.mensaje }}
+			<p ng-show="hayError">Presione <a href ng-click="recargar()">aquí</a> para volver a intentarlo.</p>
+		</div-panel>
 	</div>
 	<div ng-show="datosFaltantes.length != undefined && filteredDatos.length > 0">
 		<h5><strong>Resultados: {{ filteredDatos.length }}</strong><span class="visible-print-block"><strong>Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ currentPage * itemsPerPage > totalItems ? totalItems : currentPage * itemsPerPage }} (página {{ currentPage }})</strong></span></h5>
