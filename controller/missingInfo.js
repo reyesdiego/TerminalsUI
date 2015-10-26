@@ -167,11 +167,16 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		};
 
 		$scope.$watch('[model.fechaInicio, model.fechaFin]', function(){
-			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+			if ($scope.model.fechaInicio > $scope.model.fechaFin){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			filtrarPorFecha();
+			if ($scope.datoFaltante == 'gatesAppointments'){
+				$scope.mostrarDetalle = false;
+				cargaDatos();
+			} else {
+				filtrarPorFecha();
+			}
 		});
 
 		var filtrarPorFecha = function(){

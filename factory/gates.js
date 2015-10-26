@@ -27,8 +27,8 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
 					callback(data);
-				}).error(function(error){
-					callback(error);
+				}).error(function(error, status){
+					if (status != 0) callback(error);
 				})
 		};
 
