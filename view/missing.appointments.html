@@ -14,7 +14,7 @@
 			<div class="panel-body">
 				<div class="input-group col-lg-12 hidden-print">
 					<input type="text" class="form-control" ng-model="model.search" placeholder="Filtrar resultados" ng-change="filtrarContenedores()" toupper>
-					<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="model.search = ''; filtrarContenedores()"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 				<div ng-show="datosFaltantes.length == 0">No se encontraron gates sin turnos para los filtros seleccionados</div>
 				<div ng-show="hayError">Presione <a href ng-click="recargar()">aquí</a> para volver a intentarlo</div>
