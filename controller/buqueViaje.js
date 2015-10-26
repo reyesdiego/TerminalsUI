@@ -120,7 +120,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			$scope.filtrar();
 		});
 
-		$scope.$on('cambioFiltro', function(){
+		$scope.$on('iniciarBusqueda', function(){
 			$scope.volverAPrincipal = !$scope.volverAPrincipal;
 			if ($scope.model.contenedor != ''){
 				$scope.filtrar();
