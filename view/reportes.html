@@ -113,81 +113,31 @@
 						<thead>
 						<tr>
 							<th></th>
-							<th>BACTSSA</th>
-							<th>TERMINAL4</th>
-							<th>TRP</th>
+							<th class="text-right">BACTSSA</th>
+							<th class="text-right">TERMINAL4</th>
+							<th class="text-right">TRP</th>
 						</tr>
 						</thead>
 						<tbody>
 						<tr>
-							<td><strong>Total</strong></td>
-							<td ng-repeat="total in totalesPorTerminal" ng-hide="tasaAgp">$ {{ total[1] | currency }}</td>
-							<td ng-repeat="total in totalesPorTerminalAgp" ng-show="tasaAgp">$ {{ total[1] | currency }}</td>
+							<td class="text-right"><strong>Total</strong></td>
+							<td ng-repeat="total in chartTotalesPorTerminal.data" class="text-right">$ {{ total[1] | currency }}</td>
 						</tr>
 						</tbody>
 					</table>
 				</div>
-				<div class="row" ng-show="mostrarGrafico && !tasaAgp">
+				<div class="row" ng-show="mostrarGrafico">
 					<div class="col-lg-6 text-center">
 						<dynamic-chart
-								data="chartDataReporteTarifas"
-								title="{{chartTitleReporteTarifas}}"
-								width="{{chartWidthReporteTarifas}}"
-								height="{{chartHeightReporteTarifas}}"
-								select="selectRow(selectedRowIndexReporteTarifas)"
-								type="{{columnChart}}"
-								currency="true"
-								stacked="false"
-								is3-d="false"
-								money="monedaFija"
-								columns="{{ tarifasElegidas }}">
+								chart-object="chartReporteTarifas"
+								select="selectRow(selectedRowIndexReporteTarifas)">
 						</dynamic-chart>
 					</div>
 					<div class="col-lg-6 text-center center-block">
 						<dynamic-chart
-								data="totalesPorTerminal"
-								title="Totales por terminal"
-								width="500"
-								height="500"
+								chart-object="chartTotalesPorTerminal"
 								select="selectRow(selectedRowIndexTotalesTerminal)"
-								colors="barColors"
-								type="{{pieChart}}"
-								currency="true"
-								stacked="false"
-								is3-d="true"
-								money="monedaPie">
-						</dynamic-chart>
-					</div>
-				</div>
-				<div class="row" ng-show="mostrarGrafico && tasaAgp">
-					<div class="col-lg-6 text-center">
-						<dynamic-chart
-								data="chartDataReporteTarifasAgp"
-								title="{{chartTitleReporteTarifas}}"
-								width="{{chartWidthReporteTarifas}}"
-								height="{{chartHeightReporteTarifas}}"
-								select="selectRow(selectedRowIndexReporteTarifas)"
-								type="{{columnChart}}"
-								currency="true"
-								stacked="false"
-								is3-d="false"
-								money="monedaFija"
-								columns="{{ tarifasElegidas }}">
-						</dynamic-chart>
-					</div>
-					<div class="col-lg-6 text-center center-block">
-						<dynamic-chart
-								data="totalesPorTerminalAgp"
-								title="Totales por terminal"
-								width="500"
-								height="500"
-								select="selectRow(selectedRowIndexTotalesTerminal)"
-								colors="barColors"
-								type="{{pieChart}}"
-								currency="true"
-								stacked="false"
-								is3-d="true"
-								money="monedaPie">
+								colors="barColors">
 						</dynamic-chart>
 					</div>
 				</div>
@@ -325,17 +275,8 @@
 		<div class="row" ng-show="mostrarGrafico && !errorTarifario">
 			<div class="col-lg-12 text-center">
 				<dynamic-chart
-						data="chartDataReporteTarifas"
-						title="{{chartTitleReporteTarifas}}"
-						width="{{chartWidthReporteTarifas}}"
-						height="{{chartHeightReporteTarifas}}"
-						select="selectRow(selectedRowIndexReporteTarifas)"
-						type="{{columnChart}}"
-						currency="true"
-						stacked="false"
-						is3-d="false"
-						money="monedaFija"
-						columns="{{ tarifasEncontradas }}">
+						chart-object="chartReporteTarifas"
+						select="selectRow(selectedRowIndexReporteTarifas)">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -343,31 +284,15 @@
 		<div class="row" ng-show="mostrarGrafico && !errorTarifario">
 			<div class="col-lg-6 text-center">
 				<dynamic-chart
-						data="chartDataTotalesTarifas"
-						title="{{chartTitleTotalesTarifas}}"
-						width="{{chartWidthTotales}}"
-						height="{{chartHeightTotales}}"
-						select="selectRow(selectedRowIndexTotalesTarifas)"
-						type="{{pieChart}}"
-						currency="true"
-						stacked="false"
-						is3-d="true"
-						money="monedaFija">
+						chart-object="chartTotalesPorTarifa"
+						select="selectRow(selectedRowIndexTotalesTarifas)">
 				</dynamic-chart>
 			</div>
 			<div class="col-lg-6 text-center">
 				<dynamic-chart
-						data="chartDataTotalesTerminal"
-						title="{{chartTitleTotalesTerminal}}"
-						width="{{chartWidthTotales}}"
-						height="{{chartHeightTotales}}"
+						chart-object="chartTotalesPorTerminal"
 						select="selectRow(selectedRowIndexTotalesTerminal)"
-						colors="barColors"
-						type="{{pieChart}}"
-						currency="true"
-						stacked="false"
-						is3-d="true"
-						money="monedaFija">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -452,31 +377,14 @@
 			<div class="col-lg-12" ng-hide="cargando || resultados.length == 0">
 				<div class="col-lg-6">
 					<dynamic-chart
-							data="chartDataReporteEmpresas"
-							title="{{chartTitleReporteEmpresas}}"
-							width="{{chartWidth}}"
-							height="{{chartHeight}}"
-							select="selectRow(selectedRowIndexReporteEmpresas)"
-							type="{{columnChart}}"
-							currency="true"
-							stacked="false"
-							is3-d="false"
-							money="monedaFija"
-							columns="1">
+							chart-object="chartReporteEmpresas"
+							select="selectRow(selectedRowIndexReporteEmpresas)">
 					</dynamic-chart>
 				</div>
 				<div class="col-lg-6">
 					<dynamic-chart
-							data="chartDataPorcentaje"
-							title="{{chartTitlePorcentaje}}"
-							width="{{chartWidth}}"
-							height="{{chartHeight}}"
-							select="selectRow(selectedRowIndexPorcentaje)"
-							type="{{pieChart}}"
-							currency="true"
-							stacked="false"
-							is3-d="true"
-							money="monedaFija">
+							chart-object="chartPorcentaje"
+							select="selectRow(selectedRowIndexPorcentaje)">
 					</dynamic-chart>
 				</div>
 			</div>

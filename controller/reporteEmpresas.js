@@ -6,22 +6,40 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 
 		$scope.ranking = true;
 
-		$scope.chartWidth = 600;
-		$scope.chartHeight = 400;
+		$scope.chartReporteEmpresas = {
+			title: 'Totales por empresa',
+			width: 600,
+			height: 400,
+			type: 'column',
+			columns: 1,
+			currency: true,
+			stacked: false,
+			is3D: false,
+			money: 'PES',
+			data: [
+				['Empresas', 'algo'],
+				['hola', 2526]
+			],
+			id: 1,
+			image: null
+		};
 
-		$scope.chartTitleReporteEmpresas = "Totales por empresa";
-		$scope.chartDataReporteEmpresas = [
-			['Empresas', 'algo'],
-			['hola', 2526]
-		];
-
-		$scope.chartTitlePorcentaje = "Porcentajes respecto del total";
-		$scope.chartDataPorcentaje = [
-			['Codigos', 0],
-			['hola', 2526]
-		];
-
-		$scope.monedaFija = 'PES';
+		$scope.chartPorcentaje = {
+			title: 'Porcentajes respecto del total',
+			width: 600,
+			height: 400,
+			type: 'pie',
+			currency: true,
+			stacked: false,
+			is3D: true,
+			money: 'PES',
+			data: [
+				['Empresas', 'algo'],
+				['hola', 2526]
+			],
+			id: 2,
+			image: null
+		};
 
 		$scope.selectRow = function (index) {
 			$scope.selected = index;
@@ -29,9 +47,6 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		$scope.rowClass = function (index) {
 			return ($scope.selected === index) ? "selected" : "";
 		};
-
-		$scope.columnChart = 'column';
-		$scope.pieChart = 'pie';
 
 		$scope.listaClientes = generalCache.get('clientes' + loginService.getFiltro());
 
@@ -54,8 +69,8 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				basePorcentaje.push(angular.copy(nuevaLinea));
 			});
 			basePorcentaje.push(['Otros', $scope.totalTerminal - total]);
-			$scope.chartDataReporteEmpresas = baseTotales;
-			$scope.chartDataPorcentaje = basePorcentaje;
+			$scope.chartReporteEmpresas.data = baseTotales;
+			$scope.chartPorcentaje.data = basePorcentaje;
 		};
 
 		$scope.clientSelected = function(cliente){

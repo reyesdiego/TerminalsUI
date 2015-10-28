@@ -6,26 +6,18 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 	return {
 		restrict: 'E',
 		scope: {
-			title:    '@title',
-			width:    '@width',
-			height:   '@height',
-			data:     '=data',
-			selectFn: '&select',
-			series:   '=series',
-			colors:   '=colors',
-			type:     '@type',
-			stacked:  '=stacked',
-			is3D:     '=is3D',
-			currency: '=currency',
-			money:    '=money',
-			columns:  '@'
+			chartObject:	'=',
+			selectFn:		'&',
+			series:			'=',
+			colors:			'='
 		},
 		link: function ($scope, $elm) {
+
 			var data; //= new google.visualization.arrayToDataTable($scope.data);
 			var chart;
 			var prefijo;
 
-			switch ($scope.type){
+			switch ($scope.chartObject.type){
 				case 'column':
 					chart = new google.visualization.ColumnChart($elm[0]);
 					break;
@@ -40,10 +32,10 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 			draw();
 
 			// Watches, to refresh the chart when its data, title or dimensions change
-			$scope.$watch('data', function() {
+			$scope.$watch('chartObject', function() {
 				draw();
 			}, true); // true is for deep object equality checking
-			$scope.$watch('title', function() {
+			/*$scope.$watch('title', function() {
 				draw();
 			});
 			$scope.$watch('width', function() {
@@ -51,7 +43,7 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 			});
 			$scope.$watch('height', function() {
 				draw();
-			});
+			});*/
 
 			// Chart selection handler
 			google.visualization.events.addListener(chart, 'select', function () {
@@ -63,12 +55,18 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 				}
 			});
 
+			google.visualization.events.addListener(chart, 'ready', function () {
+				$scope.$apply(function(){
+					$scope.chartObject.image = chart.getImageURI();
+				});
+			});
+
 			function draw() {
 				if (!draw.triggered) {
 					draw.triggered = true;
 					$timeout(function () {
 						draw.triggered = false;
-						switch ($scope.money){
+						switch ($scope.chartObject.money){
 							case 'PES':
 								prefijo = 'AR$ ';
 								break;
@@ -76,10 +74,10 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 								prefijo = 'US$ ';
 								break;
 						}
-						if ($scope.type == 'pie'){
+						if ($scope.chartObject.type == 'pie'){
 							var label, value;
 							data.removeRows(0, data.getNumberOfRows());
-							angular.forEach($scope.data, function(row) {
+							angular.forEach($scope.chartObject.data, function(row) {
 								label = row[0];
 								value = parseFloat(row[1], 10);
 								if (!isNaN(value)) {
@@ -88,10 +86,10 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 							});
 						}
 						var options = {
-							'title': $scope.title,
-							'width': $scope.width,
-							'height': $scope.height,
-							'series': $scope.series,
+							'title': $scope.chartObject.title,
+							'width': $scope.chartObject.width,
+							'height': $scope.chartObject.height,
+							'series': $scope.chartObject.series,
 							'backgroundColor': {'fill': 'transparent'},
 							'animation':{
 								duration: 1000,
@@ -99,32 +97,32 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 							},
 							'legend': { position: 'top', maxLines: 3 },
 							'bar': { groupWidth: '75%' },
-							'is3D': $scope.is3D,
-							'isStacked': $scope.stacked
+							'is3D': $scope.chartObject.is3D,
+							'isStacked': $scope.chartObject.stacked
 						};
 						if (!angular.equals($scope.colors, undefined)){
 							options.colors = [$scope.colors.bactssa, $scope.colors.terminal4, $scope.colors.trp, 'green'];
 						}
-						if (!angular.equals($scope.stacked, undefined)){
-							options.series = $scope.series;
+						if (!angular.equals($scope.chartObject.stacked, undefined)){
+							options.series = $scope.chartObject.series;
 						}
-						if ($scope.type == 'column'){
-							data = new google.visualization.arrayToDataTable($scope.data);
+						if ($scope.chartObject.type == 'column'){
+							data = new google.visualization.arrayToDataTable($scope.chartObject.data);
 						}
-						if ($scope.currency){
+						if ($scope.chartObject.currency){
 							options.vAxis= {format:prefijo + '###,###,###.##'};
 							var formatter = new google.visualization.NumberFormat(
 								{prefix: prefijo, negativeColor: 'red', negativeParens: true});
 							formatter.format(data, 1);
-							if (!$scope.stacked){
-								for (var i=2; i<=$scope.columns; i++)
+							if (!$scope.chartObject.stacked){
+								for (var i=2; i<=$scope.chartObject.columns; i++)
 									formatter.format(data, i);
 							}
 						}
 						chart.draw(data, options);
 						// No raw selected
 						$scope.selectFn({selectedRowIndex: undefined});
-					}, 100, true);
+					}, 100, true)
 				}
 			}
 		}

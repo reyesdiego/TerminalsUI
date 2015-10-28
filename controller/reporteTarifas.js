@@ -6,7 +6,6 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 	function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache) {
 
 		$scope.maxDate = new Date();
-		$scope.monedaFija = 'DOL';
 		$scope.search = '';
 		$scope.selectedList = [];
 		$scope.pricelist = [];
@@ -16,7 +15,6 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		$scope.loadingReporteTarifas = false;
 
 		$scope.tarifasElegidas = 1;
-		$scope.tarifasEncontradas = 1;
 
 		$scope.maxDate = new Date();
 
@@ -130,30 +128,57 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.mostrarGrafico = false;
 
-		$scope.columnChart = 'column';
-		$scope.pieChart = 'pie';
+		$scope.chartReporteTarifas = {
+			title: 'Códigos de tarifas',
+			width: 1200,
+			height: 600,
+			type: 'column',
+			columns: 1,
+			currency: true,
+			stacked: false,
+			is3D: true,
+			money: 'DOL',
+			data: [
+				['Codigos', 'algo'],
+				['hola', 2526]
+			],
+			id: 1,
+			image: null
+		};
 
-		$scope.chartTitleReporteTarifas = "Códigos de tarifas";
-		$scope.chartWidthReporteTarifas = 1200;
-		$scope.chartHeightReporteTarifas = 600;
-		$scope.chartDataReporteTarifas = [
-			['Codigos', 'algo'],
-			['hola', 2526]
-		];
+		$scope.chartTotalesPorTarifa = {
+			title: 'Totales por tarifas',
+			width: 600,
+			height: 300,
+			type: 'pie',
+			currency: true,
+			stacked: false,
+			is3D: true,
+			money: 'DOL',
+			data: [
+				['Codigos', 0],
+				['hola', 2526]
+			],
+			id: 2,
+			image: null
+		};
 
-		$scope.chartTitleTotalesTarifas = "Totales por tarifas";
-		$scope.chartWidthTotales = 600;
-		$scope.chartHeightTotales = 300;
-		$scope.chartDataTotalesTarifas = [
-			['Codigos', 0],
-			['hola', 2526]
-		];
-
-		$scope.chartTitleTotalesTerminal = "Totales por terminal";
-		$scope.chartDataTotalesTerminal = [
-			['Codigos', 0],
-			['hola', 2526]
-		];
+		$scope.chartTotalesPorTerminal = {
+			title: 'Totales por terminal',
+			width: 600,
+			height: 300,
+			type: 'pie',
+			currency: true,
+			stacked: false,
+			is3D: true,
+			money: 'DOL',
+			data: [
+				['Codigos', 0],
+				['hola', 2526]
+			],
+			id: 3,
+			image: null
+		};
 
 		$scope.barColors = {
 			"bactssa": colorTerminalesCache.get('Bactssa'),
@@ -264,10 +289,10 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 								return 1;
 							return 0; //default return value (no sorting)
 						});
-						$scope.tarifasEncontradas = base[0].length - 1;
-						$scope.chartDataTotalesTerminal = totalesTerminal;
-						$scope.chartDataTotalesTarifas = totalesTarifas;
-						$scope.chartDataReporteTarifas = base;
+						$scope.chartReporteTarifas.columns = base[0].length - 1;
+						$scope.chartTotalesPorTerminal.data = totalesTerminal;
+						$scope.chartTotalesPorTarifa.data = totalesTarifas;
+						$scope.chartReporteTarifas.data = base;
 						$scope.mostrarGrafico = true;
 					} else {
 						dialogs.notify("Totales por tarifa", "No se encontraron datos para las fechas y tarifas seleccionadas.");
