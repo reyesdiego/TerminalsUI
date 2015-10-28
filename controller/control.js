@@ -40,7 +40,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			currency: true,
 			stacked: false,
 			is3D: false,
-			money: $scope.moneda,
+			money: 'PES',
 			columns: 4,
 			data: [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -87,7 +87,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			currency: true,
 			stacked: false,
 			is3D: false,
-			money: $scope.moneda,
+			money: 'PES',
 			columns: 4,
 			data: [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -416,8 +416,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.traerDatosFacturadoMes = function(){
 			var datos = {
-				fecha: $scope.mesDesde,
-				moneda: $rootScope.moneda
+				fecha: $scope.mesDesde
 			};
 			$scope.errorFacturadoMes = false;
 			$scope.isCollapsedMonth = true;
@@ -449,27 +448,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			});
 		};
 
-		/*$scope.traerDatosFacturadoDiaTasas = function(){
-			var datos = {
-				fecha: $scope.desdeTasas,
-				moneda: $rootScope.moneda
-			};
-			$scope.errorCargaTasas = false;
-			$scope.loadingTasas = true;
-			$scope.isCollapsedDayTasas = true;
-			$scope.recargarTasas = false;
-			controlPanelFactory.getTasas(datos, function(graf){
-				$scope.chartDataFacturadoTasas = graf.dataGraf;
-				$scope.control.ratesCount = graf.ratesCount;
-				$scope.control.ratesTotal = graf.ratesTotal;
-				$scope.loadingTasas = false;
-			});
-		};*/
-
 		$scope.traerDatosFacturadoDia = function(){
 			var datos = {
-				fecha: $scope.desde,
-				moneda: $rootScope.moneda
+				fecha: $scope.desde
 			};
 			$scope.traerTotales();
 			$scope.errorFacturadoDia = false;
