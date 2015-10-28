@@ -57,18 +57,9 @@
 			<h4 class="text-left">Facturado diario</h4>
 			<div collapse="!isCollapsedDay">
 				<dynamic-chart
-						data="chartDataFacturado"
-						width="{{chartsWidthFacturado}}"
-						height="{{chartsHeight}}"
+						chart-object="chartFacturado"
 						select="selectRow(selectedRowIndexFacturado)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						stacked="false"
-						currency="true"
-						is3-d="false"
-						money="moneda"
-						columns="4">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -100,18 +91,9 @@
 			</div>
 			<div collapse="!isCollapsedMonth">
 				<dynamic-chart
-						data="chartDataFacturas"
-						width="{{chartsWidthFacturadoMes}}"
-						height="{{chartsHeight}}"
+						chart-object="chartFacturas"
 						select="selectRow(selectedRowIndexFacturas)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						stacked="false"
-						currency="true"
-						is3-d="false"
-						money="moneda"
-						columns="4">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -141,17 +123,9 @@
 			</div>
 			<div collapse="!isCollapsedGates">
 				<dynamic-chart
-						data="chartDataGates"
-						title="{{chartTitleGates}}"
-						width="{{chartsWidth}}"
-						height="{{chartsHeight}}"
+						chart-object="chartGates"
 						select="selectRow(selectedRowIndexGates)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						stacked="false"
-						currency="false"
-						is3-d="false">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -181,16 +155,9 @@
 			</div>
 			<div collapse="!isCollapsedTurnos">
 				<dynamic-chart
-						data="chartDataTurnos"
-						width="{{chartsWidth}}"
-						height="{{chartsHeight}}"
+						chart-object="chartTurnos"
 						select="selectRow(selectedRowIndexTurnos)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						stacked="false"
-						currency="false"
-						is3-d="false">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -252,16 +219,9 @@
 			<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
 				<div class="table-responsive">
 					<dynamic-chart
-							data="chartDataDiaGatesTurnos"
-							width="{{chartWidthDiaGatesTurnos}}"
-							height="{{chartsHeight}}"
+							chart-object="chartDiaGatesTurnos"
 							select="selectRow(selectedRowIndexFacturado)"
-							series="chartSeries"
-							colors="barColors"
-							type="{{columnChart}}"
-							currency="false"
-							stacked="false"
-							is3-d="false">
+							colors="barColors">
 					</dynamic-chart>
 				</div>
 			</div>
