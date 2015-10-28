@@ -163,5 +163,9 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				tipo: 'panel-info'
 			};
 			$scope.model.clients = [];
-		})
+		});
+
+		$scope.descargarPdf = function(){
+
+		}
 }]);

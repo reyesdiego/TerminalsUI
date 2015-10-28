@@ -214,6 +214,10 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			});
 		};
 
+		$scope.descargarPdf = function(){
+
+		};
+
 		if (loginService.getStatus()) $scope.cargaRates();
 
 		$scope.$on('terminoLogin', function(){

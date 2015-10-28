@@ -302,4 +302,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			}
 		};
 
+		$scope.descargarPdf = function(){
+
+		}
+
 	}]);
