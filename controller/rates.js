@@ -74,6 +74,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.rates = {};
 
 		$scope.model = {
+			'tipo': 0,
 			'fechaInicio': $scope.fechaInicio,
 			'fechaFin': $scope.fechaFin
 		};
@@ -81,18 +82,18 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.cargando = false;
 		$scope.mostrarGrafico = false;
 
-		$scope.deleteRow = function (index) {
+		/*$scope.deleteRow = function (index) {
 			$scope.chartData.splice(index, 1);
 		};
 		$scope.addRow = function () {
 			$scope.chartData.push([]);
-		};
+		};*/
 		$scope.selectRow = function (index) {
 			$scope.selected = index;
 		};
-		$scope.rowClass = function (index) {
+		/*$scope.rowClass = function (index) {
 			return ($scope.selected === index) ? "selected" : "";
-		};
+		};*/
 
 		$scope.armarGrafico = function(){
 			$scope.total = 0;

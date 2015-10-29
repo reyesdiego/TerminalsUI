@@ -13,24 +13,47 @@
 	<div ng-controller="ratesCtrl">
 		<br>
 		<accordion-min heading="Filtrar por">
-			<div class="col-lg-4 col-sm-6">
+			<div class="col-lg-3 col-sm-6">
 				<div class="form-group">
 					<div class="input-group">
-						<span class="input-group-addon">Desde</span>
-						<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" />
+						<span class="input-group-addon">Tipo</span>
+						<select class="form-control" ng-model="model.tipo">
+							<option value="0" ng-selected="true">Diario</option>
+							<option value="1">Mensual</option>
+							<option value="2">Anual</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6" ng-show="model.tipo == 0">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Día</span>
+						<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" readonly style="background-color: #ffffff"/>
 								<span class="input-group-btn">
 									<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 								</span>
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4 col-sm-6">
+			<div class="col-lg-4 col-sm-6" ng-show="model.tipo == 1">
 				<div class="form-group">
 					<div class="input-group">
-						<span class="input-group-addon">Hasta</span>
-						<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaFin" is-open="openfechaFin" max-date="maxDate" />
+						<span class="input-group-addon">Mes</span>
+						<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" readonly style="background-color: #ffffff"/>
 								<span class="input-group-btn">
-									<button class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin;"><span class="glyphicon glyphicon-calendar"></span></button>
+									<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-6" ng-show="model.tipo == 2">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">Año</span>
+						<input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy" datepicker-mode="'year'" datepicker-options="{minMode: 'year'}" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" readonly style="background-color: #ffffff"/>
+								<span class="input-group-btn">
+									<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 								</span>
 					</div>
 				</div>
@@ -130,13 +153,13 @@
 					<div class="col-lg-6 text-center">
 						<dynamic-chart
 								chart-object="chartReporteTarifas"
-								select="selectRow(selectedRowIndexReporteTarifas)">
+								select="selectRow(selectedRowIndex)">
 						</dynamic-chart>
 					</div>
 					<div class="col-lg-6 text-center center-block">
 						<dynamic-chart
 								chart-object="chartTotalesPorTerminal"
-								select="selectRow(selectedRowIndexTotalesTerminal)"
+								select="selectRow(selectedRowIndex)"
 								colors="barColors">
 						</dynamic-chart>
 					</div>
