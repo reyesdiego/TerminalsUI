@@ -105,3 +105,7 @@
 		<div-pagination current-page="model.currentPage" items-per-page="itemsPerPage" total-items="totalItems" panel-size="10"></div-pagination>
 	</div>
 </div>
+<button class="btn btn-success" ng-show="!cargando && datosRegistro.length > 0" ng-click="descargarCSV()" ng-disabled="disableDown">
+	<span ng-show="!disableDown"><span class="glyphicon glyphicon-download"></span> Descargar CSV</span>
+	<span ng-show="disableDown"><img src="images/loadingChico.gif" height="20" width="20"> Procesando</span>
+</button>
