@@ -222,6 +222,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			fila[4] = acum/3;
 			base.push(fila.slice());
 			//Finalmente devuelvo la matriz generada con los datos para su asignación
+			console.log(base);
 			return base;
 		};
 
@@ -274,6 +275,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			fila[4] = acum/3;
 			base.push(fila.slice());
 			//Finalmente devuelvo la matriz generada con los datos para su asignación
+			console.log(base);
 			return base;
 		};
 

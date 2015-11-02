@@ -197,6 +197,20 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
+		factory.getDetailRates = function(datos, callback){
+			factory.cancelRequest('ratesDetail');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'ratesDetail');
+			var inserturl = serverUrl + '/invoices/rates/' + datos.tipo;
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
+				.success(function(data){
+					callback(data);
+				})
+				.error(function(error, status){
+					if (status != 0) callback(error)
+				});
+		};
+
 		factory.getCSV = function(datos, callback){
 			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/down';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)})

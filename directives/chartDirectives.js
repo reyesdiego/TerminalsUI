@@ -87,16 +87,16 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 
 						chart.draw(data, options);
 					}
-					$scope.$apply(function () {
-						$scope.selectFn({selectedRowIndex: selectedItem.row});
-					});
 				} else {
 					if ($scope.chartObject.type == 'pie'){
 						options.slices[selectedSlice] = {offset:'0'};
-						selectedSlice = -1
+						selectedSlice = -1;
 						chart.draw(data, options);
 					}
 				}
+				$scope.$apply(function () {
+					$scope.selectFn({selectedRow: selectedItem, id: $scope.chartObject.id});
+				});
 			});
 
 			google.visualization.events.addListener(chart, 'ready', function () {
@@ -133,6 +133,7 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 					draw.triggered = true;
 					$timeout(function () {
 						draw.triggered = false;
+						options.title = $scope.chartObject.title;
 						switch ($scope.chartObject.money){
 							case 'PES':
 								prefijo = 'AR$ ';
