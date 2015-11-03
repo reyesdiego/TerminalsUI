@@ -465,6 +465,9 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			invoiceFactory.getRatesInvoices($scope.model, function (data) {
 				if (data.status === "OK") {
 					$scope.rates = data.data;
+					$scope.rates.forEach(function(rate){
+						rate.descripcion = $scope.ponerDescripcion(rate.code);
+					});
 					if (data.data.length > 0){
 						$scope.armarGrafico();
 					}
@@ -482,11 +485,18 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 		$scope.descargarPdf = function(){
 			var data = {
-				id: $scope.id,
+				id: $scope.$id,
 				rates: $scope.rates,
+				tasaAgp: $scope.tasaAgp,
+				tipo: $scope.modelDetalle.tipo,
+				fecha: $scope.model.fechaInicio,
+				hoy: new Date(),
+				detalle: $scope.verDetalleTerminal,
 				charts: [
 					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image},
-					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image}
+					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image},
+					{filename: $scope.chartDetallePorTerminalFecha.id, image: $scope.chartDetallePorTerminalFecha.image},
+					{filename: $scope.chartDetallePorTerminalPeriodo.id, image: $scope.chartDetallePorTerminalPeriodo.image}
 				]
 			};
 			var nombreReporte = 'rates.pdf';

@@ -114,7 +114,7 @@
 						<tr ng-repeat="tasa in rates | orderBy : predicate : reverse">
 							<td>{{ tasa.terminal }}</td>
 							<td>{{ tasa.code }}</td>
-							<td style="width: 200px">{{ ponerDescripcion(tasa.code) }}</td>
+							<td style="width: 200px">{{ tasa.descripcion }}</td>
 							<td class="text-right">{{ tasa.ton | number: 2 }}</td>
 							<td class="text-right" ng-hide="tasaAgp">U$S {{ tasa.total | currency }}</td>
 							<td class="text-right" ng-show="tasaAgp">U$S {{ tasa.totalAgp | currency }}</td>
@@ -173,7 +173,7 @@
 					</div>
 				</div>
 				<div class="row col-lg-12 text-right" ng-show="mostrarGrafico">
-					<button class="btn btn-success" ng-show="false" ng-click="descargarPdf()"><span class="glyphicon glyphicon-download"></span> Descargar PDF</button>
+					<button class="btn btn-success" ng-click="descargarPdf()"><span class="glyphicon glyphicon-download"></span> Descargar PDF</button>
 				</div>
 			</div>
 		</div-cargando>
