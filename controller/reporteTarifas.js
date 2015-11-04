@@ -2,8 +2,8 @@
  * Created by artiom on 02/10/14.
  */
 
-myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'colorTerminalesCache',
-	function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache) {
+myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'colorTerminalesCache', 'downloadFactory', 'dialogs',
+	function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache, downloadFactory, dialogs) {
 
 		$scope.maxDate = new Date();
 		$scope.search = '';
@@ -303,7 +303,41 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.descargarPdf = function(){
+			var data = {
+				id: $scope.$id,
+				desde: $scope.desde,
+				hasta: $scope.hasta,
+				hoy: new Date(),
+				tabla: $scope.tablaGrafico,
+				totales: $scope.totales,
+				charts: [
+					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image},
+					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image},
+					{filename: $scope.chartTotalesPorTarifa.id, image: $scope.chartTotalesPorTarifa.image}
+				]
+			};
+			var nombreReporte = 'Reporte_tarifas.pdf';
+			downloadFactory.convertToPdf(data, 'reporteTarifasPdf', function(data, status){
+				if (status == 'OK'){
+					var file = new Blob([data], {type: 'application/pdf'});
+					var fileURL = URL.createObjectURL(file);
 
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: fileURL,
+						target: '_blank',
+						download: nombreReporte
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+					//window.open(fileURL);
+				} else {
+					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
+				}
+			})
 		}
 
 	}]);

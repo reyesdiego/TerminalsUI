@@ -130,7 +130,6 @@ foreach ($data['charts'] as $chart) {
 	file_put_contents(".temp/" . $chart['filename'] . $id . ".jpg", $chart['image']);
 }
 
-
 $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
@@ -149,7 +148,7 @@ $pdf->Cell(18, 8, "Toneladas", 1, 0, "R");
 $pdf->Cell(22, 8, "Tasa", 1, 0, "R");
 $pdf->Cell(22, 8, "Importe", 1, 0, "R");
 
-$pdf->Image(".temp/2" . $id . ".jpg", 141, 40, 72);
+$pdf->Image(".temp/2" . $id . ".jpg", 141, 45, 72);
 $pdf->Ln();
 
 foreach($data['rates'] as $rate){
@@ -195,9 +194,30 @@ foreach($data['rates'] as $rate){
 $pdf->Cell(85, 5, "Total", 1, 0, "R");
 $pdf->Cell(22, 5, "US$ " . number_format($acumTasa, 2), 1, 0, "R");
 $pdf->Cell(22, 5, "$ " . number_format($acumTotal, 2), 1, 0, "R");
+$pdf->Ln(10);
+
+$pdf->SetFont('Arial', 'B', 9);
+$y=$pdf->GetY();
+$pdf->Cell(40, 5, "", 1, 0);
+$pdf->Ln();
+$pdf->Cell(40, 5, "Total", 1, 0, "R");
+
+$acumWidth = 0;
+foreach($data['totales'] as $totalTerminal){
+	$pdf->SetFont('Arial', 'B', 9);
+	$pdf->SetY($y);
+	$pdf->SetX(50 + $acumWidth);
+	$pdf->Cell(50, 5, $totalTerminal[0], 1, 0, "R");
+	$pdf->SetFont('Arial', '', 8);
+	$pdf->SetY($y + 5);
+	$pdf->SetX(50 + $acumWidth);
+	$pdf->Cell(50, 5, "$ " . number_format($totalTerminal[1], 2), 1, 0, "R");
+	$acumWidth += 50;
+}
 $pdf->Ln();
 
 $pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX()-10, $pdf->GetY() + 2, 220);
+
 if ($data['detalle']){
 	$pdf->Image(".temp/3" . $id . ".jpg", $pdf->GetX() + 10, $pdf->GetY() + 85, 80);
 	$pdf->Image(".temp/4" . $id . ".jpg", 120, $pdf->GetY() + 85, 80);

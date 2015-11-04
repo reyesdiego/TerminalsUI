@@ -498,6 +498,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				fecha: $scope.model.fechaInicio,
 				hoy: new Date(),
 				detalle: $scope.verDetalleTerminal,
+				totales: $scope.chartTotalesPorTerminal.data,
 				charts: [
 					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image},
 					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image},
@@ -505,7 +506,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 					{filename: $scope.chartDetallePorTerminalPeriodo.id, image: $scope.chartDetallePorTerminalPeriodo.image}
 				]
 			};
-			var nombreReporte = 'rates.pdf';
+			var nombreReporte = 'Reporte_tasas.pdf';
 			downloadFactory.convertToPdf(data, 'reporteRatesPdf', function(data, status){
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
