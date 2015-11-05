@@ -6,6 +6,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		var fecha = formatService.formatearFechaISOString(new Date());
 
+		$scope.tipoFiltro = 'cantidad';
+
 		$scope.openDate = function(event){
 			generalFunctions.openDate(event);
 		};
@@ -20,6 +22,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.control = {
 			"invoicesCount": 0,
+			"totalCount": 0,
 			"ratesCount": 0,
 			"ratesTotal": 0
 		};
@@ -222,7 +225,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			fila[4] = acum/3;
 			base.push(fila.slice());
 			//Finalmente devuelvo la matriz generada con los datos para su asignación
-			console.log(base);
 			return base;
 		};
 
@@ -275,7 +277,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			fila[4] = acum/3;
 			base.push(fila.slice());
 			//Finalmente devuelvo la matriz generada con los datos para su asignación
-			console.log(base);
 			return base;
 		};
 
@@ -318,30 +319,50 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 						.Where('$.codTipoComprob==' + data.data.codTipoComprob)
 						.ToArray();
 					if (response.length == 1) {
-						response[0].total++;
-						if (angular.isDefined(response[0][data.data.terminal][0]) && angular.isNumber(response[0][data.data.terminal][0])) {
-							response[0][data.data.terminal][0]++;
+						response[0].cnt++;
+						response[0].total += data.data.importe.total;
+						if (angular.isDefined(response[0][data.data.terminal].cnt[0]) && angular.isNumber(response[0][data.data.terminal].cnt[0])) {
+							response[0][data.data.terminal].cnt[0]++;
 						} else {
-							response[0][data.data.terminal][0] = 1;
+							response[0][data.data.terminal].cnt[0] = 1;
+						}
+						if (angular.isDefined(response[0][data.data.terminal].total[0]) && angular.isNumber(response[0][data.data.terminal].total[0])) {
+							response[0][data.data.terminal].total[0] += data.data.importe.total;
+						} else {
+							response[0][data.data.terminal].cnt[0] = data.data.importe.total;
 						}
 						for (var obj in response[0]){
 							if (typeof response[0][obj] === 'object'){
-								response[0][obj][1] = response[0][obj][0] * 100 / response[0].total;
+								response[0][obj].cnt[1] = response[0][obj].cnt[0] * 100 / response[0].cnt;
+								response[0][obj].total[1] = response[0][obj].total[0] * 100 / response[0].total;
 							}
 						}
 					} else {
 						var nuevoComprobante = {
 							codTipoComprob : data.data.codTipoComprob,
-							total : 1,
-							BACTSSA : [ 0, 0 ],
-							TERMINAL4 : [ 0, 0 ],
-							TRP : [ 0, 0 ]
+							cnt : 1,
+							total: data.data.importe.total,
+							BACTSSA : {
+								cnt: [0, 0],
+								total: [0, 0]
+							},
+							TERMINAL4 : {
+								cnt: [0, 0],
+								total: [0, 0]
+							},
+							TRP : {
+								cnt: [0, 0],
+								total: [0, 0]
+							}
 						};
-						nuevoComprobante[data.data.terminal][0] = 1;
-						nuevoComprobante[data.data.terminal][1] = 100;
+						nuevoComprobante[data.data.terminal].cnt[0] = 1;
+						nuevoComprobante[data.data.terminal].cnt[1] = 100;
+						nuevoComprobante[data.data.terminal].total[0] = data.data.importe.total;
+						nuevoComprobante[data.data.terminal].total[1] = 100;
 						$scope.comprobantesCantidad.push(nuevoComprobante);
 					}
 					$scope.comprobantesCantidad.invoicesCount++;
+					$scope.comprobantesCantidad.totalCount += data.data.importe.total;
 					$scope.$apply();
 				}
 			}
@@ -392,17 +413,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.mensajeErrorGatesTurnos = error;
 		});
 
-		$scope.deleteRow = function (index) {
-			$scope.chartData.splice(index, 1);
-		};
-		$scope.addRow = function () {
-			$scope.chartData.push([]);
-		};
 		$scope.selectRow = function (index) {
 			$scope.selected = index;
-		};
-		$scope.rowClass = function (index) {
-			return ($scope.selected === index) ? "selected" : "";
 		};
 
 		$scope.traerTotales = function(){
@@ -451,6 +463,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.traerDatosFacturadoDia = function(){
+			console.log('hola');
 			var datos = {
 				fecha: $scope.desde
 			};
@@ -489,7 +502,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		if (loginService.getStatus()){
-			$scope.traerTotales();
+			//$scope.traerTotales();
 			$scope.traerDatosFacturadoMes();
 			//$scope.traerDatosFacturadoDiaTasas();
 			$scope.traerDatosFacturadoDia();
@@ -499,7 +512,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		}
 
 		$scope.$on('terminoLogin', function(){
-			$scope.traerTotales();
+			//$scope.traerTotales();
 			$scope.traerDatosFacturadoMes();
 			//$scope.traerDatosFacturadoDiaTasas();
 			$scope.traerDatosFacturadoDia();

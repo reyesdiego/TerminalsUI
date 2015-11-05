@@ -9,13 +9,26 @@
 	<div class="row">
 		<br>
 		<div class="col-lg-7">
-			<h4 class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
-			<div class="input-group text-left">
-				<label for="desde" class="sr-only">Fecha</label>
-				<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button></span>
-				<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="desde" is-open="openfechaInicio" max-date="maxDate" ng-change="traerDatosFacturadoDia()" disabled/>
+			<h4 ng-show="tipoFiltro=='cantidad'" class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
+			<h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: $ {{ comprobantesCantidad.totalCount | currency }}</h4>
+			<div class="rowcol-lg-12">
+				<div class="form-group col-lg-5">
+					<div class="input-group text-left">
+						<label for="desde" class="sr-only">Fecha</label>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+						<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="desde" is-open="openfechaInicio" max-date="maxDate" ng-change="traerDatosFacturadoDia()" disabled/>
+					</div>
+				</div>
+				<div class="form-group radio col-lg-7 text-right">
+					<label>
+						<input type="radio" ng-model="tipoFiltro" value="cantidad">Cantidad de comprobantes
+					</label>
+					<label>
+						<input type="radio" ng-model="tipoFiltro" value="total">Total facturado
+					</label>
+				</div>
 			</div>
-			<div class="table-responsive" style="max-height: 220px; max-width: 100%; overflow: auto">
+			<div class="col-lg-12 table-responsive" style="max-height: 220px; max-width: 100%; overflow: auto">
 				<table class="table table-bordered table-hover">
 					<thead>
 					<tr>
@@ -27,16 +40,24 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr ng-repeat="comprobante in comprobantesCantidad">
+					<tr ng-show="tipoFiltro=='cantidad'" ng-repeat="comprobante in comprobantesCantidad">
 						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
-						<td class="text-right">{{ comprobante.BACTSSA[0] | numero }} ({{ comprobante.BACTSSA[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.TERMINAL4[0] | numero }} ({{ comprobante.TERMINAL4[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.TRP[0] | numero }} ({{ comprobante.TRP[1] | numero | number:2 }} %)</td>
-						<td class="text-right"><b>{{ comprobante.total }}</b></td>
+						<td class="text-right">{{ comprobante.BACTSSA.cnt[0] | numero }} ({{ comprobante.BACTSSA.cnt[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TERMINAL4.cnt[0] | numero }} ({{ comprobante.TERMINAL4.cnt[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TRP.cnt[0] | numero }} ({{ comprobante.TRP.cnt[1] | numero | number:2 }} %)</td>
+						<td class="text-right"><b>{{ comprobante.cnt }}</b></td>
+					</tr>
+					<tr ng-show="tipoFiltro=='total'" ng-repeat="comprobante in comprobantesCantidad">
+						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
+						<td class="text-right"><span title="({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)">$ {{ comprobante.BACTSSA.total[0] | numero | currency }}</span></td>
+						<td class="text-right"><span title="({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)">$ {{ comprobante.TERMINAL4.total[0] | numero | currency }}</span></td>
+						<td class="text-right"><span title="({{ comprobante.TRP.total[1] | numero | number:2 }} %)">$ {{ comprobante.TRP.total[0] | numero | currency }}</span></td>
+						<td class="text-right"><b>$ {{ comprobante.total | currency }}</b></td>
 					</tr>
 					<tr>
 						<th class="text-right" colspan="4">Total</th>
-						<th class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
+						<th ng-show="tipoFiltro=='cantidad'" class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
+						<th ng-show="tipoFiltro=='total'" class="text-right">$ {{ comprobantesCantidad.totalCount | currency }}</th>
 					</tr>
 					</tbody>
 				</table>

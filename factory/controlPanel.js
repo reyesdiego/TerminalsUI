@@ -13,12 +13,15 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			$http.get(inserturl, { params: formatService.formatearDatos(dia), timeout: canceler.promise })
 				.success(function(data){
 					if (data.status === 'OK'){
-						var total = 0;
+						var invoicesCount = 0, totalCount = 0;
 						for (var i = 0, len=data.data.length; i< len; i++){
-							total += data.data[i].total;
+							invoicesCount += data.data[i].cnt;
+							totalCount += data.data[i].total;
 						}
-						data.data.invoicesCount = total;
-						data.invoicesCount = total;
+						data.data.invoicesCount = invoicesCount;
+						data.data.totalCount = totalCount;
+						data.invoicesCount = invoicesCount;
+						data.totalCount = totalCount;
 					}
 					callback(data);
 				}).error(function(errorText, status){
