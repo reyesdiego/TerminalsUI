@@ -149,6 +149,14 @@ module.exports = function(grunt) {
 					}
 				]
 			}
+		},
+		mkdir: {
+			temp: {
+				options: {
+					mode: 777,
+					create: ['build/conversorPDF/.temp']
+				}
+			}
 		}
 	});
 
@@ -158,6 +166,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-processhtml');
+	grunt.loadNpmTasks('grunt-mkdir');
 
 	// Default task(s).
 	grunt.registerTask('default', [
@@ -170,6 +179,7 @@ module.exports = function(grunt) {
 		'cssmin:terminales',
 		'uglify:js',
 		'processhtml:dist',
-		'copy:main'
+		'copy:main',
+		'mkdir:temp'
 	]);
 };
