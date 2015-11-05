@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 21/08/15.
  */
-myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'generalCache',
-	function($scope, controlPanelFactory, dialogs, loginService, generalCache){
+myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'generalCache', 'downloadFactory',
+	function($scope, controlPanelFactory, dialogs, loginService, generalCache, downloadFactory){
 
 		$scope.ranking = true;
 
@@ -166,6 +166,39 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		});
 
 		$scope.descargarPdf = function(){
+			var data = {
+				id: $scope.$id,
+				desde: $scope.model.fechaInicio,
+				hasta: $scope.model.fechaFin,
+				hoy: new Date(),
+				resultados: $scope.resultados,
+				totalTerminal: $scope.totalTerminal,
+				charts: [
+					{filename: $scope.chartReporteEmpresas.id, image: $scope.chartReporteEmpresas.image},
+					{filename: $scope.chartPorcentaje.id, image: $scope.chartPorcentaje.image}
+				]
+			};
+			var nombreReporte = 'Reporte_empresas.pdf';
+			downloadFactory.convertToPdf(data, 'reporteEmpresasPdf', function(data, status){
+				if (status == 'OK'){
+					var file = new Blob([data], {type: 'application/pdf'});
+					var fileURL = URL.createObjectURL(file);
 
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: fileURL,
+						target: '_blank',
+						download: nombreReporte
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+					//window.open(fileURL);
+				} else {
+					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
+				}
+			})
 		}
 }]);

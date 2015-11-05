@@ -123,12 +123,7 @@ switch ($data['tipo']){
 $acumTasa = 0;
 $acumTotal = 0;
 
-foreach ($data['charts'] as $chart) {
-	$chart['image'] = substr($chart['image'], 1+strrpos($chart['image'], ','));
-	$chart['image'] = base64_decode($chart['image']);
-
-	file_put_contents(".temp/" . $chart['filename'] . $id . ".jpg", $chart['image']);
-}
+crear_archivos_graficos($data['charts'], $id);
 
 $pdf = new PDF();
 $pdf->AliasNbPages();
@@ -223,8 +218,6 @@ if ($data['detalle']){
 	$pdf->Image(".temp/4" . $id . ".jpg", 120, $pdf->GetY() + 85, 80);
 }
 
-foreach ($data['charts'] as $chart) {
-	unlink(".temp/" . $chart['filename'] . $id . ".jpg");
-}
+borrar_archivos_graficos($data['charts'], $id);
 
 $pdf->Output();
