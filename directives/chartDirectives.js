@@ -15,7 +15,7 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 
 			var data; //= new google.visualization.arrayToDataTable($scope.data);
 			var chart;
-			var prefijo;
+			var prefijo = "$ ";
 
 			var options = {
 				'title': $scope.chartObject.title,
@@ -134,14 +134,14 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 					$timeout(function () {
 						draw.triggered = false;
 						options.title = $scope.chartObject.title;
-						switch ($scope.chartObject.money){
+						/*switch ($scope.chartObject.money){
 							case 'PES':
 								prefijo = 'AR$ ';
 								break;
 							case 'DOL':
 								prefijo = 'US$ ';
 								break;
-						}
+						}*/
 						if ($scope.chartObject.type == 'pie'){
 							options.tooltip = {trigger: 'selection'};
 							var label, value;

@@ -17,9 +17,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 		$scope.maxDate = new Date();
 
-		/*$scope.prefijo = 'AR$';
-		$scope.otraMoneda = 'DOL';*/
-
 		$scope.control = {
 			"invoicesCount": 0,
 			"totalCount": 0,
