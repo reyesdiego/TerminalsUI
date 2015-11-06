@@ -208,11 +208,42 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			return response;
 		};
 
+		var setResend = function(resend, comprobante){
+			var deferred = $q.defer();
+			var message;
+			var data = {
+				resend: resend
+			};
+			invoiceFactory.setResendInvoice(data, comprobante._id, function(data){
+				if (data.status == 'OK'){
+					deferred.resolve()
+				} else {
+					message = 'Se ha producido un error al establecer el estado del comprobante.';
+					deferred.reject(message);
+				}
+			});
+			return deferred.promise;
+		};
+
+		var ponerComentario = function(dataComment, logInvoice, comprobante){
+			var deferred = $q.defer();
+			var message;
+			invoiceFactory.postCommentInvoice(logInvoice, function(dataRes){
+				if (dataRes.status == 'OK'){
+					deferred.resolve();
+				} else {
+					message = 'Se ha producido un error al agregar el comentario en el comprobante.';
+					deferred.reject(message);
+				}
+			});
+			return deferred.promise;
+		};
+
 		this.trackInvoice = function(comprobante){
 			var deferred = $q.defer();
 			var estado;
 			var message;
-			//console.log(comprobante);
+			if (!angular.isDefined(comprobante.resend)) comprobante.resend = 0;
 			estado = comprobante.interfazEstado;
 			invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 				if (dataTrack.status == 'OK'){
@@ -229,13 +260,14 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 							},
 							states : function() {
 								return angular.copy(estadosComprobantes);
+							},
+							resend: function() {
+								return comprobante.resend;
 							}
 						}
 					});
-
 					dataTrack = [];
 					modalInstance.result.then(function (dataComment) {
-						//console.log(dataComment);
 						invoiceFactory.putCambiarEstado(comprobante._id, dataComment.newState._id, function(){
 							var logInvoice = {
 								title: dataComment.title,
@@ -243,8 +275,11 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 								comment: dataComment.comment,
 								invoice: comprobante._id
 							};
-							invoiceFactory.postCommentInvoice(logInvoice, function(dataRes){
-								if (dataRes.status == 'OK'){
+							var llamadas = [];
+							llamadas.push(ponerComentario(dataComment, logInvoice, comprobante));
+							llamadas.push(setResend(dataComment.resend, comprobante));
+							$q.all(llamadas)
+								.then(function(){
 									comprobante.interfazEstado = dataComment.newState;
 									switch (dataComment.newState.type){
 										case 'WARN':
@@ -267,12 +302,12 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 										user: loginService.getInfo().user
 									};
 									comprobante.estado.push(nuevoEstado);
+									comprobante.resend = dataComment.resend;
 									deferred.resolve(comprobante);
-								} else {
-									message = 'Se ha producido un error al agregar el comentario en el comprobante.';
-									deferred.reject(message);
-								}
-							});
+								}, function(error){
+									console.log(error);
+									deferred.reject(error);
+								});
 						});
 					}, function(){
 						deferred.resolve();
