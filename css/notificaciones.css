@@ -12,6 +12,10 @@
 	top: 2px;
 }
 
+.comprobanteReenviar {
+	background-color: rgba(255, 0, 7, 0.17);
+}
+
 .usuarioActivo {
 	color: #468847;
 }

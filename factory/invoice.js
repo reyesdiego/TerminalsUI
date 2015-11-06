@@ -184,7 +184,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		};
 
 		factory.setResendInvoice = function(resend, id, callback){
-			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + id;
+			var inserturl = serverUrl + '/invoices/invoice/' + loginService.getFiltro() + '/' + id;
 			$http.put(inserturl, resend)
 				.success(function(data){
 					callback(data);

@@ -216,6 +216,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			};
 			invoiceFactory.setResendInvoice(data, comprobante._id, function(data){
 				if (data.status == 'OK'){
+					comprobante.resend = resend;
 					deferred.resolve()
 				} else {
 					message = 'Se ha producido un error al establecer el estado del comprobante.';
@@ -230,6 +231,28 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			var message;
 			invoiceFactory.postCommentInvoice(logInvoice, function(dataRes){
 				if (dataRes.status == 'OK'){
+					comprobante.interfazEstado = dataComment.newState;
+					switch (dataComment.newState.type){
+						case 'WARN':
+							comprobante.interfazEstado.btnEstado = 'text-warning';
+							break;
+						case 'OK':
+							comprobante.interfazEstado.btnEstado = 'text-success';
+							break;
+						case 'ERROR':
+							comprobante.interfazEstado.btnEstado = 'text-danger';
+							break;
+						case 'UNKNOWN':
+							comprobante.interfazEstado.btnEstado = 'text-info';
+							break;
+					}
+					var nuevoEstado = {
+						_id: comprobante._id,
+						estado: dataComment.newState,
+						grupo: loginService.getGroup(),
+						user: loginService.getInfo().user
+					};
+					comprobante.estado.push(nuevoEstado);
 					deferred.resolve();
 				} else {
 					message = 'Se ha producido un error al agregar el comentario en el comprobante.';
@@ -280,29 +303,6 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 							llamadas.push(setResend(dataComment.resend, comprobante));
 							$q.all(llamadas)
 								.then(function(){
-									comprobante.interfazEstado = dataComment.newState;
-									switch (dataComment.newState.type){
-										case 'WARN':
-											comprobante.interfazEstado.btnEstado = 'text-warning';
-											break;
-										case 'OK':
-											comprobante.interfazEstado.btnEstado = 'text-success';
-											break;
-										case 'ERROR':
-											comprobante.interfazEstado.btnEstado = 'text-danger';
-											break;
-										case 'UNKNOWN':
-											comprobante.interfazEstado.btnEstado = 'text-info';
-											break;
-									}
-									var nuevoEstado = {
-										_id: comprobante._id,
-										estado: dataComment.newState,
-										grupo: loginService.getGroup(),
-										user: loginService.getInfo().user
-									};
-									comprobante.estado.push(nuevoEstado);
-									comprobante.resend = dataComment.resend;
 									deferred.resolve(comprobante);
 								}, function(error){
 									console.log(error);
