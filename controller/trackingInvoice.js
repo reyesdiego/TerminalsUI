@@ -14,6 +14,8 @@ myapp.controller('trackingInvoiceCtrl', ['$scope', '$modalInstance', 'estado', '
 		nuevoEstado: ''
 	};
 
+	$scope.reenviar = false;
+
 	$scope.tracking = track.data;
 	$scope.estado = estado;
 	$scope.interfazModal.nuevoEstado = estado;
@@ -76,7 +78,8 @@ myapp.controller('trackingInvoiceCtrl', ['$scope', '$modalInstance', 'estado', '
 			var commentData = {
 				title: 'Nuevo estado: ' + $scope.interfazModal.estado,
 				comment: $scope.interfazModal.comentario,
-				newState: $scope.interfazModal.nuevoEstado
+				newState: $scope.interfazModal.nuevoEstado,
+				resend: $scope.reenviar
 			};
 			if ($scope.interfazModal.nuevoEstado._id == $scope.estado){
 				commentData.title = $scope.interfazModal.estado

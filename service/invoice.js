@@ -212,6 +212,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			var deferred = $q.defer();
 			var estado;
 			var message;
+			//console.log(comprobante);
 			estado = comprobante.interfazEstado;
 			invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 				if (dataTrack.status == 'OK'){
@@ -234,6 +235,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 
 					dataTrack = [];
 					modalInstance.result.then(function (dataComment) {
+						//console.log(dataComment);
 						invoiceFactory.putCambiarEstado(comprobante._id, dataComment.newState._id, function(){
 							var logInvoice = {
 								title: dataComment.title,
