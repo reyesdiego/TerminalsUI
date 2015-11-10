@@ -68,7 +68,9 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				baseTotales.push(angular.copy(nuevaLinea));
 				basePorcentaje.push(angular.copy(nuevaLinea));
 			});
-			basePorcentaje.push(['Otros', $scope.totalTerminal - total]);
+			var otros = $scope.totalTerminal - total;
+			if (otros < 0) otros = 0;
+			basePorcentaje.push(['Otros', otros]);
 			$scope.chartReporteEmpresas.data = baseTotales;
 			$scope.chartPorcentaje.data = basePorcentaje;
 		};
