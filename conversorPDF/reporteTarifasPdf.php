@@ -43,6 +43,13 @@ class PDF extends FPDF
 		$this->Cell(165, 10, utf8_decode("Administración General de Puertos S.E. - Departamento de Desarrollo"), 0, 0, "R");
 		$this->Image("imagenes/logo_puertochico.jpg", $this->GetX(), $this->GetY() + 2, 5);
 	}
+
+	function CheckPageBreak($h)
+	{
+		//If the height h would cause an overflow, add a new page immediately
+		if($this->GetY()+$h>$this->PageBreakTrigger)
+			$this->AddPage($this->CurOrientation);
+	}
 }
 
 $data = get_post();
@@ -97,10 +104,18 @@ foreach($data['totales'] as $total){
 }
 $pdf->Ln();
 
-$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX() - 10, $pdf->GetY() + 2, 200);
+$h = getChartHeigth($data['charts'][0], 200);
+$pdf->CheckPageBreak($h);
 
-$pdf->Image(".temp/2" . $id . ".jpg", $pdf->GetX() - 10, $pdf->GetY() + 100, 120);
-$pdf->Image(".temp/3" . $id . ".jpg", 100, $pdf->GetY() + 100, 120);
+$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX() - 10, $pdf->GetY() + 2, 220);
+
+$pdf->SetY($pdf->GetY() + $h);
+
+$h = getChartHeigth($data['charts'][1], 120);
+$pdf->CheckPageBreak($h);
+
+$pdf->Image(".temp/2" . $id . ".jpg", $pdf->GetX() - 10, $pdf->GetY() + 2, 120);
+$pdf->Image(".temp/3" . $id . ".jpg", 100, $pdf->GetY() + 2, 120);
 
 borrar_archivos_graficos($data['charts'], $id);
 

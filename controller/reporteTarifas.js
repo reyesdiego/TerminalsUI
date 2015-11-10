@@ -311,9 +311,9 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				tabla: $scope.tablaGrafico,
 				totales: $scope.totales,
 				charts: [
-					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image},
-					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image},
-					{filename: $scope.chartTotalesPorTarifa.id, image: $scope.chartTotalesPorTarifa.image}
+					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image, h: $scope.chartReporteTarifas.height, w: $scope.chartReporteTarifas.width},
+					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image, h: $scope.chartTotalesPorTerminal.height, w: $scope.chartTotalesPorTerminal.width},
+					{filename: $scope.chartTotalesPorTarifa.id, image: $scope.chartTotalesPorTarifa.image, h: $scope.chartTotalesPorTarifa.height, w: $scope.chartTotalesPorTarifa.width}
 				]
 			};
 			var nombreReporte = 'Reporte_tarifas.pdf';

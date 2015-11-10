@@ -43,6 +43,13 @@ class PDF extends FPDF
 		$this->Cell(165, 10, utf8_decode("Administración General de Puertos S.E. - Departamento de Desarrollo"), 0, 0, "R");
 		$this->Image("imagenes/logo_puertochico.jpg", $this->GetX(), $this->GetY() + 2, 5);
 	}
+
+	function CheckPageBreak($h)
+	{
+		//If the height h would cause an overflow, add a new page immediately
+		if($this->GetY()+$h>$this->PageBreakTrigger)
+			$this->AddPage($this->CurOrientation);
+	}
 }
 
 $data = get_post();
@@ -80,6 +87,9 @@ foreach ($data['resultados'] as $resultado) {
 	$pdf->Cell(33, 5, "S " . number_format($resultado['total'], 2), 1, 0, "R");
 	$pdf->Ln();
 }
+
+$h = getChartHeigth($data['charts'][0], 120);
+$pdf->CheckPageBreak($h);
 
 $pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 2, 120);
 $pdf->Image(".temp/2" . $id . ".jpg", 100, $pdf->GetY() + 8, 120);

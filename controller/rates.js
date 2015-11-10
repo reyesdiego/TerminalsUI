@@ -500,10 +500,10 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				detalle: $scope.verDetalleTerminal,
 				totales: $scope.chartTotalesPorTerminal.data,
 				charts: [
-					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image},
-					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image},
-					{filename: $scope.chartDetallePorTerminalFecha.id, image: $scope.chartDetallePorTerminalFecha.image},
-					{filename: $scope.chartDetallePorTerminalPeriodo.id, image: $scope.chartDetallePorTerminalPeriodo.image}
+					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image, h: $scope.chartReporteTarifas.height, w: $scope.chartReporteTarifas.width},
+					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image, h: $scope.chartTotalesPorTerminal.height, w: $scope.chartTotalesPorTerminal.width},
+					{filename: $scope.chartDetallePorTerminalFecha.id, image: $scope.chartDetallePorTerminalFecha.image, h: $scope.chartDetallePorTerminalFecha.height, w: $scope.chartDetallePorTerminalFecha.width},
+					{filename: $scope.chartDetallePorTerminalPeriodo.id, image: $scope.chartDetallePorTerminalPeriodo.image, h: $scope.chartDetallePorTerminalPeriodo.height, w: $scope.chartDetallePorTerminalPeriodo.width}
 				]
 			};
 			var nombreReporte = 'Reporte_tasas.pdf';

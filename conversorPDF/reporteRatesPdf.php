@@ -211,11 +211,21 @@ foreach($data['totales'] as $totalTerminal){
 }
 $pdf->Ln();
 
+$h = getChartHeigth($data['charts'][0], 220);
+
+$pdf->CheckPageBreak($h);
+
 $pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX()-10, $pdf->GetY() + 2, 220);
 
+$pdf->SetY($pdf->GetY() + 2 + $h);
+
 if ($data['detalle']){
-	$pdf->Image(".temp/3" . $id . ".jpg", $pdf->GetX() + 10, $pdf->GetY() + 85, 80);
-	$pdf->Image(".temp/4" . $id . ".jpg", 120, $pdf->GetY() + 85, 80);
+	$h = getChartHeigth($data['charts'][2], 80);
+
+	$pdf->CheckPageBreak($h);
+
+	$pdf->Image(".temp/3" . $id . ".jpg", $pdf->GetX() + 10, $pdf->GetY() + 2, 80);
+	$pdf->Image(".temp/4" . $id . ".jpg", 120, $pdf->GetY() + 2, 80);
 }
 
 borrar_archivos_graficos($data['charts'], $id);

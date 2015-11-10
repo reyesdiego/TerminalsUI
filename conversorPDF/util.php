@@ -28,3 +28,8 @@ function borrar_archivos_graficos($charts, $id){
 		unlink(".temp/" . $chart['filename'] . $id . ".jpg");
 	}
 };
+
+function getChartHeigth($chart, $scaleW){
+	$porcentaje = $scaleW * 100 / $chart['w'];
+	return $porcentaje * $chart['h'] / 100;
+}

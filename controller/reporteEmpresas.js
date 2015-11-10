@@ -174,8 +174,8 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				resultados: $scope.resultados,
 				totalTerminal: $scope.totalTerminal,
 				charts: [
-					{filename: $scope.chartReporteEmpresas.id, image: $scope.chartReporteEmpresas.image},
-					{filename: $scope.chartPorcentaje.id, image: $scope.chartPorcentaje.image}
+					{filename: $scope.chartReporteEmpresas.id, image: $scope.chartReporteEmpresas.image, h: $scope.chartReporteEmpresas.height, w: $scope.chartReporteEmpresas.width},
+					{filename: $scope.chartPorcentaje.id, image: $scope.chartPorcentaje.image, h: $scope.chartPorcentaje.height, w: $scope.chartPorcentaje.width}
 				]
 			};
 			var nombreReporte = 'Reporte_empresas.pdf';
