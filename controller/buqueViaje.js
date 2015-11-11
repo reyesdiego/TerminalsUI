@@ -2,8 +2,8 @@
  * Created by artiom on 08/04/15.
  */
 
-myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', '$state', 'loginService',
-	function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache, $state, loginService){
+myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', '$state', 'loginService', '$q',
+	function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache, $state, loginService, $q){
 		////// Para containers /////////////
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -364,31 +364,68 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			});
 		};
 
-		var cargaSumaria = function(){
-			$scope.cargandoSumaria = true;
-			$scope.sumariaConfigPanel = {
-				tipo: 'panel-info',
-				titulo: 'A.F.I.P. sumaria',
-				mensaje: 'No se encontraron datos en los registros de A.F.I.P. para el contenedor seleccionado.'
-			};
+		var cargaSumariaImpo = function(){
+			var deferred = $q.defer();
 			afipFactory.getContainerSumaria($scope.model.contenedor, function(data){
 				if (data.status == 'OK'){
-					$scope.sumariaAfip = data.data;
+					deferred.resolve(data.data);
 				} else {
 					$scope.sumariaConfigPanel = {
 						tipo: 'panel-danger',
 						titulo: 'A.F.I.P. sumaria',
 						mensaje: 'Se ha producido un error al cargar los datos de la sumaria del contenedor.'
 					};
+					deferred.reject()
 				}
-				$scope.cargandoSumaria = false;
-			})
+			});
+			return deferred.promise;
+		};
+
+		var cargaSumariaExpo = function(){
+			var deferred = $q.defer();
+			afipFactory.getContainerSumariaExpo($scope.model.contenedor, function(data){
+				if (data.status == 'OK'){
+					deferred.resolve(data.data);
+				} else {
+					$scope.sumariaConfigPanel = {
+						tipo: 'panel-danger',
+						titulo: 'A.F.I.P. sumaria',
+						mensaje: 'Se ha producido un error al cargar los datos de la sumaria del contenedor.'
+					};
+					deferred.reject()
+				}
+			});
+			return deferred.promise;
+		};
+
+		var cargaSumaria = function(){
+			$scope.sumariaAfip = [];
+			$scope.cargandoSumaria = true;
+			$scope.sumariaConfigPanel = {
+				tipo: 'panel-info',
+				titulo: 'A.F.I.P. sumaria',
+				mensaje: 'No se encontraron datos en los registros de A.F.I.P. para el contenedor seleccionado.'
+			};
+			var llamadas = [];
+			llamadas.push(cargaSumariaImpo());
+			llamadas.push(cargaSumariaExpo());
+			$q.all(llamadas)
+				.then(function(result){
+					result.forEach(function(resultado){
+						resultado.forEach(function(data){
+							$scope.sumariaAfip.push(data);
+						})
+					});
+					$scope.cargandoSumaria = false;
+				}, function(){
+					$scope.cargandoSumaria = false;
+				})
 		};
 
 		$rootScope.$watch('moneda', function(){
 			$scope.moneda = $rootScope.moneda;
 			if ($scope.detalle){
-				$scope.cargaTasasCargas();
+				cargaTasasCargas();
 			}
 		});
 

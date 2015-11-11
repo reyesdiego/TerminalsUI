@@ -82,8 +82,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getCSV = function(tipoRegistro, filtros, callback){
-			var ruta = '';
-			ruta = obtenerRuta(tipoRegistro);
+			var ruta = obtenerRuta(tipoRegistro);
 
 			ruta += 'down';
 			this.getRegistroCSV(ruta, filtros, function(data, status){
@@ -94,8 +93,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		factory.getAfip = function(tipoRegistro, filtros, page, callback){
 			factory.cancelRequest();
 
-			var ruta = '';
-			ruta = obtenerRuta(tipoRegistro);
+			var ruta = obtenerRuta(tipoRegistro);
 
 			ruta += page.skip + '/' + page.limit;
 			this.getRegistroAfip(ruta, filtros, function(data){
@@ -139,6 +137,25 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer);
 			var inserturl = serverUrl + '/afip/sumariaImpo/' + container;
+			$http.get(inserturl, {timeout: canceler.promise})
+				.success(function(data){
+					callback(data);
+				}).error(function(error, status){
+					if (status != 0){
+						if (error == null){
+							error = {
+								status: 'ERROR'
+							};
+						}
+						callback(error);
+					}
+				});
+		};
+
+		factory.getContainerSumariaExpo = function(container, callback){
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer);
+			var inserturl = serverUrl + '/afip/sumariaExpo/' + container;
 			$http.get(inserturl, {timeout: canceler.promise})
 				.success(function(data){
 					callback(data);
