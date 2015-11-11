@@ -157,6 +157,14 @@ module.exports = function(grunt) {
 					create: ['build/conversorPDF/.temp']
 				}
 			}
+		},
+		chmod: {
+			options: {
+				mode: 'a+w'
+			},
+			tempFolder: {
+				src: ['build/conversorPDF/.temp']
+			}
 		}
 	});
 
@@ -167,6 +175,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-processhtml');
 	grunt.loadNpmTasks('grunt-mkdir');
+	grunt.loadNpmTasks('grunt-chmod');
 
 	// Default task(s).
 	grunt.registerTask('default', [
@@ -180,6 +189,7 @@ module.exports = function(grunt) {
 		'uglify:js',
 		'processhtml:dist',
 		'copy:main',
-		'mkdir:temp'
+		'mkdir:temp',
+		'chmod:tempFolder'
 	]);
 };
