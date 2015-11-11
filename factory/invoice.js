@@ -152,9 +152,10 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				data: { estado: estado },
 				headers: {token: loginService.getToken() }
 			}).success(function (data){
-				callback(data);
+				callback(data, 'OK');
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorTrack', 'Error al cambiar el estado para el comprobante ' + invoiceId);
+				callback(errorText, 'ERROR');
+				//errorFactory.raiseError(errorText, inserturl, 'errorTrack', 'Error al cambiar el estado para el comprobante ' + invoiceId);
 			});
 		};
 

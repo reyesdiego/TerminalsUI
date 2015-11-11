@@ -75,19 +75,21 @@ myapp.controller('trackingInvoiceCtrl', ['$scope', '$modalInstance', 'estado', '
 
 		$scope.guardar = function () {
 			var reenviar = $scope.reenviar ? 1 : 0;
-			if ($scope.interfazModal.comentario == '' && $scope.interfazModal.nuevoEstado.description == $scope.estado.description && reenviar == $scope.resend){
-				$scope.cancelar();
-			} else {
-				var commentData = {
-					title: 'Nuevo estado: ' + $scope.interfazModal.estado,
-					comment: $scope.interfazModal.comentario,
-					newState: $scope.interfazModal.nuevoEstado,
-					resend: reenviar
-				};
+			var commentData = {
+				title: 'Nuevo estado: ' + $scope.interfazModal.estado,
+				comment: $scope.interfazModal.comentario,
+				newState: $scope.interfazModal.nuevoEstado,
+				resend: reenviar,
+				setState: $scope.interfazModal.comentario != '' || $scope.interfazModal.nuevoEstado.description != $scope.estado.description,
+				setResend: reenviar != $scope.resend
+			};
+			if (commentData.setState || commentData.setResend){
 				if ($scope.interfazModal.nuevoEstado._id == $scope.estado){
 					commentData.title = $scope.interfazModal.estado
 				}
 				$modalInstance.close(commentData);
+			} else {
+				$scope.cancelar();
 			}
 		};
 

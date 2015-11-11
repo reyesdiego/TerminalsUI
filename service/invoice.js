@@ -262,6 +262,18 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			return deferred.promise;
 		};
 
+		var cambiarEstado = function(comprobanteId, nuevoEstado){
+			var deferred = $q.defer();
+			invoiceFactory.putCambiarEstado(comprobanteId, nuevoEstado, function(data, status) {
+				if (status == 'OK'){
+					deferred.resolve();
+				} else {
+					deferred.reject(data);
+				}
+			});
+			return deferred.promise;
+		};
+
 		this.trackInvoice = function(comprobante){
 			var deferred = $q.defer();
 			var estado;
@@ -291,24 +303,27 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 					});
 					dataTrack = [];
 					modalInstance.result.then(function (dataComment) {
-						invoiceFactory.putCambiarEstado(comprobante._id, dataComment.newState._id, function(){
-							var logInvoice = {
-								title: dataComment.title,
-								state: dataComment.newState._id,
-								comment: dataComment.comment,
-								invoice: comprobante._id
-							};
-							var llamadas = [];
+						var logInvoice = {
+							title: dataComment.title,
+							state: dataComment.newState._id,
+							comment: dataComment.comment,
+							invoice: comprobante._id
+						};
+						var llamadas = [];
+						if (dataComment.setState){
+							llamadas.push(cambiarEstado(comprobante._id, dataComment.newState._id));
 							llamadas.push(ponerComentario(dataComment, logInvoice, comprobante));
+						}
+						if (dataComment.setResend){
 							llamadas.push(setResend(dataComment.resend, comprobante));
-							$q.all(llamadas)
-								.then(function(){
-									deferred.resolve(comprobante);
-								}, function(error){
-									console.log(error);
-									deferred.reject(error);
-								});
-						});
+						}
+						$q.all(llamadas)
+							.then(function(){
+								deferred.resolve(comprobante);
+							}, function(error){
+								console.log(error);
+								deferred.reject(error);
+							});
 					}, function(){
 						deferred.resolve();
 					});
