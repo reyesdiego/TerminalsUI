@@ -20,8 +20,8 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 		$scope.chartReporteTarifas = {
 			title: "Detalle por tarifas",
-			width: 1200,
-			height: 500,
+			width: 1400,
+			height: 600,
 			series: {7: {type: "line"}},
 			type: 'column',
 			columns: 8,
@@ -56,7 +56,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 		$scope.chartDetallePorTerminalFecha = {
 			title: "",
-			width: 500,
+			width: 700,
 			height: 500,
 			type: 'pie',
 			currency: true,
@@ -70,7 +70,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 		$scope.chartDetallePorTerminalPeriodo = {
 			title: "",
-			width: 500,
+			width: 700,
 			height: 500,
 			type: 'pie',
 			currency: true,

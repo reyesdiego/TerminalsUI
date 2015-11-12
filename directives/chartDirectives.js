@@ -31,7 +31,8 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 				'bar': { groupWidth: '75%' },
 				'is3D': $scope.chartObject.is3D,
 				'isStacked': $scope.chartObject.stacked,
-				'slices': {}
+				'slices': {},
+				'chartArea': { left: '10%' }
 			};
 
 			var selectedSlice = -1;

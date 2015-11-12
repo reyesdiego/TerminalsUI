@@ -130,7 +130,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.chartReporteTarifas = {
 			title: 'Códigos de tarifas',
-			width: 1200,
+			width: 1400,
 			height: 600,
 			type: 'column',
 			columns: 1,
@@ -148,8 +148,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.chartTotalesPorTarifa = {
 			title: 'Totales por tarifas',
-			width: 600,
-			height: 300,
+			width: 700,
+			height: 600,
 			type: 'pie',
 			currency: true,
 			stacked: false,
@@ -165,8 +165,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.chartTotalesPorTerminal = {
 			title: 'Totales por terminal',
-			width: 600,
-			height: 300,
+			width: 700,
+			height: 600,
 			type: 'pie',
 			currency: true,
 			stacked: false,

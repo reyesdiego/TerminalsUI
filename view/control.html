@@ -238,13 +238,11 @@
 				</div>
 			</div>
 			<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
-				<div class="table-responsive">
-					<dynamic-chart
-							chart-object="chartDiaGatesTurnos"
-							select="selectRow(selectedRowIndexFacturado)"
-							colors="barColors">
-					</dynamic-chart>
-				</div>
+				<dynamic-chart
+						chart-object="chartDiaGatesTurnos"
+						select="selectRow(selectedRowIndexFacturado)"
+						colors="barColors">
+				</dynamic-chart>
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="errorGatesTurnos">

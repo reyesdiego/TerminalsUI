@@ -33,7 +33,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.radioModel = 'Gates';
 
 		$scope.chartFacturas = {
-			width: 380,
+			width: 450,
 			height: 320,
 			series: {3: {type: "line"}},
 			type: 'column',
@@ -50,7 +50,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.chartGates = {
-			width: 410,
+			width: 450,
 			height: 320,
 			series: {3: {type: "line"}},
 			type: 'column',
@@ -65,7 +65,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.chartTurnos = {
-			width: 410,
+			width: 450,
 			height: 320,
 			series: {3: {type: "line"}},
 			type: 'column',
@@ -97,8 +97,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.chartDiaGatesTurnos = {
-			width: 1120,
-			height: 320,
+			width: 1200,
+			height: 350,
 			series: {3: {type: "line"}},
 			type: 'column',
 			currency: false,
