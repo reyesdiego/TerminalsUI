@@ -10,7 +10,7 @@
 	<hr>
 	<div class="well" ng-show="tracking.length > 0" style="height: 300px; overflow: scroll;">
 		<div ng-repeat="track in tracking">
-			<h6>{{ track.fecha }}</h6>
+			<h6>{{ track.fecha | date: 'dd/MM/yyyy hh:mm'}}</h6>
 			<h4>{{ track.title }}</h4>
 			<h5>{{ track.comment }}</h5>
 			<h6 class="text-right"><span class="glyphicon glyphicon-user"></span> {{ track.user }}</h6>

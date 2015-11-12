@@ -84,7 +84,7 @@ myapp.controller('trackingInvoiceCtrl', ['$scope', '$modalInstance', 'estado', '
 				setResend: reenviar != $scope.resend
 			};
 			if (commentData.setState || commentData.setResend){
-				if ($scope.interfazModal.nuevoEstado._id == $scope.estado){
+				if ($scope.interfazModal.nuevoEstado._id == $scope.estado._id){
 					commentData.title = $scope.interfazModal.estado
 				}
 				$modalInstance.close(commentData);
