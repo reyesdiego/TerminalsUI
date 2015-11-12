@@ -143,7 +143,7 @@ $pdf->Cell(18, 8, "Toneladas", 1, 0, "R");
 $pdf->Cell(22, 8, "Tasa", 1, 0, "R");
 $pdf->Cell(22, 8, "Importe", 1, 0, "R");
 
-$pdf->Image(".temp/2" . $id . ".jpg", 141, 45, 72);
+$pdf->Image(".temp/2" . $id . ".jpg", 141, 45, 80);
 $pdf->Ln();
 
 foreach($data['rates'] as $rate){
@@ -215,17 +215,17 @@ $h = getChartHeigth($data['charts'][0], 220);
 
 $pdf->CheckPageBreak($h);
 
-$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX()-10, $pdf->GetY() + 2, 220);
+$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 10, 220);
 
-$pdf->SetY($pdf->GetY() + 2 + $h);
+$pdf->SetY($pdf->GetY() + 10 + $h);
 
 if ($data['detalle']){
-	$h = getChartHeigth($data['charts'][2], 80);
+	$h = getChartHeigth($data['charts'][2], 120);
 
 	$pdf->CheckPageBreak($h);
 
-	$pdf->Image(".temp/3" . $id . ".jpg", $pdf->GetX() + 10, $pdf->GetY() + 2, 80);
-	$pdf->Image(".temp/4" . $id . ".jpg", 120, $pdf->GetY() + 2, 80);
+	$pdf->Image(".temp/3" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 2, 120);
+	$pdf->Image(".temp/4" . $id . ".jpg", 100, $pdf->GetY() + 2, 120);
 }
 
 borrar_archivos_graficos($data['charts'], $id);

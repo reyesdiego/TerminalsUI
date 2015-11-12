@@ -91,8 +91,8 @@ foreach ($data['resultados'] as $resultado) {
 $h = getChartHeigth($data['charts'][0], 120);
 $pdf->CheckPageBreak($h);
 
-$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 2, 120);
-$pdf->Image(".temp/2" . $id . ".jpg", 100, $pdf->GetY() + 8, 120);
+$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX() + 5, $pdf->GetY() + 2, 120);
+$pdf->Image(".temp/2" . $id . ".jpg", 110, $pdf->GetY() + 8, 120);
 
 borrar_archivos_graficos($data['charts'], $id);
 
