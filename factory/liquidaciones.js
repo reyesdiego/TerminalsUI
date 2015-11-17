@@ -6,6 +6,28 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		var factory = {};
 
+		factory.getMAT = function(year, callback){
+			// var inserturl = serverUrl + '/alguna ruta en donde se use el year;
+			var inserturl = 'mocks/mat.json'; //mocked route
+			$http.get(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
+		factory.getMatFacturado = function(year, callback){
+			// var inserturl = serverUrl + '/alguna ruta en donde se use el year;
+			var inserturl = 'mocks/matFacturado.json'; //mocked route
+			$http.get(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		factory.getComprobantesLiquidar = function(page, datos, callback){
 			if (datos.byContainer){
 				factory.cancelRequest('comprobantesLiquidarContainer');

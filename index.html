@@ -120,6 +120,7 @@
 	<script src="controller/validarUsuario.js"></script>
 	<script src="controller/liquidaciones.js"></script>
 	<script src="controller/reporteEmpresas.js"></script>
+	<script src="controller/mat.js"></script>
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
@@ -203,6 +204,7 @@
 						<li class="divider"></li>
 						<li class="dropdown-header">Contabilidad</li>
 						<li ng-show="tieneAcceso('liquidaciones')"><a collap ui-sref="liquidaciones">Liquidaciones</a></li>
+						<li ng-show="tieneAcceso('mat')"><a collap ui-sref="mat">M.A.T.</a></li>
 						<li ng-show="tieneAcceso('afip')"><a collap ui-sref="afip">A.F.I.P</a></li>
 						<li class="divider"></li>
 						<li class="dropdown-header">Seguridad</li>

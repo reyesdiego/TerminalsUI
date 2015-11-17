@@ -288,6 +288,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/controlTurnos",
 			templateUrl: "view/appointments.control.html"
 		})
+		.state('mat', {
+			url: "/mat",
+			templateUrl: "view/mat.html"
+		})
 }]);
 
 myapp.config(['$provide', function ($provide) {
