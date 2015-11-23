@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 17/11/15.
  */
-myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', function($scope, liquidacionesFactory, generalFunctions){
+myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', '$modal', function($scope, liquidacionesFactory, generalFunctions, $modal){
 
 	$scope.model ={
 		year: new Date()
@@ -22,6 +22,19 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
+	};
+
+	$scope.actualizarMAT = function(){
+		var modalInstance = $modal.open({
+			templateUrl: 'view/updateMat.html',
+			controller: 'updateMATCtrl',
+			backdrop: 'static'
+		});
+		modalInstance.result.then(function (dataMat) {
+			console.log(dataMat);
+		}, function(){
+			console.log('cancelado');
+		});
 	};
 
 	$scope.cargarDatos = function(){
