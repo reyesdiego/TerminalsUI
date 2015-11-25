@@ -1,13 +1,20 @@
 /**
  * Created by artiom on 17/11/15.
  */
-myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', '$modal', function($scope, liquidacionesFactory, generalFunctions, $modal){
+myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', function($scope, liquidacionesFactory, generalFunctions){
 
-	$scope.model ={
-		year: new Date()
+	$scope.disableModify = true;
+
+	$scope.model = {
+		year: new Date(),
+		valorMAT: {
+			BACTSSA: 0,
+			TERMINAL4: 0,
+			TRP: 0
+		}
 	};
 
-	$scope.matData = [];
+	$scope.matData = {};
 	$scope.matMonth = {
 		BACTSSA: 0,
 		TERMINAL4: 0,
@@ -24,29 +31,25 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 		generalFunctions.openDate(event);
 	};
 
+	$scope.verCambios = function(){
+		$scope.disableModify = ($scope.model.valorMAT.BACTSSA == $scope.matData.BACTSSA && $scope.model.valorMAT.TERMINAL4 == $scope.matData.TERMINAL4 && $scope.model.valorMAT.TRP == $scope.matData.TRP);
+	};
+
 	$scope.actualizarMAT = function(){
-		var modalInstance = $modal.open({
-			templateUrl: 'view/updateMat.html',
-			controller: 'updateMATCtrl',
-			backdrop: 'static'
-		});
-		modalInstance.result.then(function (dataMat) {
-			console.log(dataMat);
-		}, function(){
-			console.log('cancelado');
-		});
+		console.log($scope.model);
 	};
 
 	$scope.cargarDatos = function(){
 		liquidacionesFactory.getMAT($scope.model.year.getFullYear(), function(data){
 			if (data.status == 'OK'){
-				$scope.matData = data.data;
+				$scope.matData = data.data[0];
+				$scope.model.valorMAT = angular.copy($scope.matData);
 				data.data.forEach(function(matData){
 					$scope.matMonth = {
 						BACTSSA: matData.BACTSSA / 12,
 						TERMINAL4: matData.TERMINAL4 / 12,
 						TRP: matData.TRP / 12
-					}
+					};
 				});
 				liquidacionesFactory.getMatFacturado($scope.model.year.getFullYear(), function(data){
 					if (data.status == 'OK'){

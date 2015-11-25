@@ -6,20 +6,6 @@
 		</div>
 	</div>
 
-	<!--<div class="row hidden-print" ng-hide="hayError">
-		<div class="col-lg-12">
-			<div class="input-group">
-				<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
-				<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" ng-model="tasas" ng-change="cargaPricelist()">Sólo tasa a las cargas
-				</label>
-			</div>
-		</div>
-	</div>-->
-
 	<div class="col-lg-3">
 		<div class="form-group">
 			<div class="input-group">
@@ -34,7 +20,7 @@
 
 	<div class="form-group col-lg-offset-6 col-lg-3">
 		<div class="text-right">
-			<button class="btn btn-primary" ng-click="actualizarMAT()"><span class="glyphicon glyphicon-modal-window"></span> Modificar valores</button>
+			<button class="btn btn-primary" ng-disabled="disableModify"><span class="glyphicon glyphicon-modal-window"></span> Modificar valores</button>
 		</div>
 	</div>
 
@@ -49,11 +35,26 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr ng-repeat="mat in matData">
+			<tr>
 				<td class="text-center">{{ model.year | date: 'yyyy' }}</td>
-				<td class="text-right">$ {{ mat.BACTSSA | currency }}</td>
-				<td class="text-right">$ {{ mat.TERMINAL4 | currency }}</td>
-				<td class="text-right">$ {{ mat.TRP | currency }}</td>
+				<td class="text-right">
+					<div class="input-group">
+						<span class="input-group-addon">$ </span>
+						<input class="form-control text-right" type="text" ng-model="model.valorMAT.BACTSSA" ng-change="verCambios()">
+					</div>
+				</td>
+				<td class="text-right">
+					<div class="input-group">
+						<span class="input-group-addon">$ </span>
+						<input class="form-control text-right" type="text" ng-model="model.valorMAT.TERMINAL4" ng-change="verCambios()">
+					</div>
+				</td>
+				<td class="text-right">
+					<div class="input-group">
+						<span class="input-group-addon">$ </span>
+						<input class="form-control text-right" type="text" ng-model="model.valorMAT.TRP" ng-change="verCambios()">
+					</div>
+				</td>
 			</tr>
 			</tbody>
 		</table>
