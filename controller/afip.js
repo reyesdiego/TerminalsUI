@@ -78,6 +78,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			conocimiento: '',
 			buqueNombre: '',
 			contenedor: '',
+			transbordo: '',
 			fechaInicio: $scope.fechaInicio,
 			fechaFin: $scope.fechaFin,
 			filtroOrden: '',
@@ -184,6 +185,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 					conocimiento: '',
 					buqueNombre: '',
 					contenedor: '',
+					transbordo: '',
 					fechaInicio: $scope.fechaInicio,
 					fechaFin: $scope.fechaFin,
 					filtroOrden: '',
@@ -196,71 +198,75 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			$scope.actualRegistro = registro;
 			switch ($scope.actualRegistro){
 				case 'afip.afectacion.afectacion1':
-					$scope.ocultarFiltros = ['documento', 'solicitud', 'detallada', 'conocimiento', 'contenedor'];
+					$scope.ocultarFiltros = ['documento', 'solicitud', 'detallada', 'conocimiento', 'contenedor', 'transbordo'];
 					break;
 				case 'afip.afectacion.afectacion2':
-					$scope.ocultarFiltros = ['documento', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['documento', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
 				case 'afip.detalle.detimpo1':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'buque', 'contenedor'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'buque', 'contenedor', 'transbordo'];
 					break;
 				case 'afip.detalle.detimpo2':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
 				case 'afip.detalle.detimpo3':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
 				case 'afip.detalle.detexpo1':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'transbordo'];
 					break;
 				case 'afip.detalle.detexpo2':
 				case 'afip.detalle.detexpo3':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'solicitud', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
 				case 'afip.solicitud.solicitud1':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'conocimiento', 'contenedor'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'conocimiento', 'contenedor', 'transbordo'];
 					break;
 				case 'afip.solicitud.solicitud2':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'sumaria', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'sumaria', 'buque', 'contenedor', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
 				case 'afip.solicitud.solicitud3':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'sumaria', 'conocimiento', 'buque', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'sumaria', 'conocimiento', 'buque', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
 				case 'afip.sumatorias.impo1':
 				case 'afip.sumatorias.expo1':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'conocimiento', 'contenedor'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'conocimiento', 'contenedor', 'transbordo'];
 					break;
 				case 'afip.sumatorias.impo2':
-				case 'afip.sumatorias.impo3':
 				case 'afip.sumatorias.expo2':
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+					$scope.model.fechaInicio = '';
+					$scope.model.fechaFin = '';
+					break;
+				case 'afip.sumatorias.impo3':
 				case 'afip.sumatorias.expo3':
 				case 'afip.sumatorias.expo5':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'buque', 'contenedor', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
 				case 'afip.sumatorias.impo4':
 				case 'afip.sumatorias.expo4':
-					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'buque', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['documento', 'afectacion', 'detallada', 'solicitud', 'buque', 'fechaInicio', 'fechaFin', 'transbordo'];
 					break;
 				case 'afip.removido.removido1':
-					$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor'];
+					$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'transbordo'];
 					break;
 				case 'afip.removido.removido2':
 				case 'afip.removido.removido3':
-					$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin'];
+					$scope.ocultarFiltros = ['afectacion', 'solicitud', 'detallada', 'sumaria', 'conocimiento', 'buque', 'contenedor', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
