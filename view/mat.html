@@ -20,7 +20,7 @@
 
 	<div class="form-group col-lg-offset-6 col-lg-3">
 		<div class="text-right">
-			<button class="btn btn-primary" ng-disabled="disableModify"><span class="glyphicon glyphicon-modal-window"></span> Modificar valores</button>
+			<button class="btn btn-primary" ng-disabled="disableModify" ng-click="actualizarMAT()"><span class="glyphicon glyphicon-modal-window"></span> Modificar valores</button>
 		</div>
 	</div>
 
@@ -40,19 +40,19 @@
 				<td class="text-right">
 					<div class="input-group">
 						<span class="input-group-addon">$ </span>
-						<input class="form-control text-right" type="text" ng-model="model.valorMAT.BACTSSA" ng-change="verCambios()">
+						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.BACTSSA" ng-change="verCambios()">
 					</div>
 				</td>
 				<td class="text-right">
 					<div class="input-group">
 						<span class="input-group-addon">$ </span>
-						<input class="form-control text-right" type="text" ng-model="model.valorMAT.TERMINAL4" ng-change="verCambios()">
+						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.TERMINAL4" ng-change="verCambios()">
 					</div>
 				</td>
 				<td class="text-right">
 					<div class="input-group">
 						<span class="input-group-addon">$ </span>
-						<input class="form-control text-right" type="text" ng-model="model.valorMAT.TRP" ng-change="verCambios()">
+						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.TRP" ng-change="verCambios()">
 					</div>
 				</td>
 			</tr>

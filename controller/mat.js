@@ -32,6 +32,12 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 	};
 
 	$scope.verCambios = function(){
+		for (var terminal in $scope.model.valorMAT){
+			if ($scope.model.valorMAT.hasOwnProperty(terminal)){
+				if ($scope.model.valorMAT[terminal] == '') $scope.model.valorMAT[terminal] = 0;
+				$scope.model.valorMAT[terminal] = parseFloat($scope.model.valorMAT[terminal]);
+			}
+		}
 		$scope.disableModify = ($scope.model.valorMAT.BACTSSA == $scope.matData.BACTSSA && $scope.model.valorMAT.TERMINAL4 == $scope.matData.TERMINAL4 && $scope.model.valorMAT.TRP == $scope.matData.TRP);
 	};
 
