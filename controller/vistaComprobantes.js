@@ -80,9 +80,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			$scope.mostrarResultado = false;
 			$scope.currentPage = 1;
 			$scope.model[filtro] = contenido;
-			if (filtro == 'razonSocial') {
-				$scope.model[filtro] = $scope.filtrarCaracteresInvalidos(contenido);
-			}
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
