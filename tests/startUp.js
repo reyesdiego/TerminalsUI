@@ -30,7 +30,6 @@ describe('inicio de la aplicación', function(){
 
 	it('prueba el ruteo de la aplicación', inject(['$state', '$rootScope', '$location', function($state, $rootScope, $location){
 
-
 		$state.transitionTo('login');
 		$rootScope.$digest();
 

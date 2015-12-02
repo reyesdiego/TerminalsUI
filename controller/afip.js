@@ -14,7 +14,10 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		$scope.solicitud = 'afip';
 		$scope.sumatoria = 'afip';
 		$scope.removido = 'afip';
+		$scope.transbordos = 'afip';
 		$scope.actualRegistro = '';
+
+		$scope.sumariaDetalle = {};
 
 		if (in_array('afip.afectacion', $rootScope.rutas)){
 			$rootScope.rutas.forEach(function(ruta){
@@ -61,12 +64,18 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
+		if (in_array('afip.transbordos', $rootScope.rutas)){
+			$scope.transbordos = 'afip.transbordos';
+			if ($scope.actualRegistro == '') $scope.actualRegistro = 'afip.transbordos';
+		}
+
 		$scope.tabs = [
 			{ heading: 'Afectación',	uisref: $scope.afectacion,	mostrar: in_array('afip.afectacion', $rootScope.rutas) },
 			{ heading: 'Detallada',		uisref: $scope.detalle,		mostrar: in_array('afip.detalle', $rootScope.rutas) },
 			{ heading: 'Solicitud',		uisref: $scope.solicitud,	mostrar: in_array('afip.solicitud', $rootScope.rutas) },
 			{ heading: 'Sumarias',		uisref: $scope.sumatoria,	mostrar: in_array('afip.sumatorias', $rootScope.rutas) },
-			{ heading: 'Removido',		uisref: $scope.removido,	mostrar: in_array('afip.removido', $rootScope.rutas) }
+			{ heading: 'Removido',		uisref: $scope.removido,	mostrar: in_array('afip.removido', $rootScope.rutas) },
+			{ heading: 'Transbordos', 	uisref: $scope.transbordos, mostrar: in_array('afip.transbordos', $rootScope.rutas) }
 		];
 
 		$scope.model = {
@@ -270,6 +279,11 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
+				case 'afip.transbordos':
+					$scope.ocultarFiltros = ['afectacion', 'documento', 'solicitud', 'detallada', 'fechaInicio', 'fechaFin', 'transbordo'];
+					$scope.model.fechaInicio = '';
+					$scope.model.fechaFin = '';
+					break;
 			}
 			$scope.page.skip = (($scope.model.currentPage - 1) * $scope.itemsPerPage);
 			$scope.page.limit = $scope.itemsPerPage;
@@ -294,6 +308,18 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 					$scope.cargando = false;
 				}
 			});
+		};
+
+		$scope.detalleSumaria = function(sumaria){
+			console.log(sumaria);
+			afipFactory.getDetalleSumaria(sumaria, function(data){
+				console.log(data);
+				if (data.status == 'OK'){
+					$scope.sumariaDetalle = data.data;
+				} else {
+
+				}
+			})
 		};
 
 		$scope.descargarCSV = function(){

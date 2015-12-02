@@ -256,6 +256,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		.state('afip.removido', {
 			templateUrl: "view/afip.removido.html"
 		})
+		.state('afip.transbordos', {
+			templateUrl: "view/afip.transbordos.html"
+		})
 		.state('users', {
 			url: "/users",
 			templateUrl: "view/users.html"

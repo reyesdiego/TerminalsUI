@@ -78,8 +78,29 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 				case 'afip.removido.removido3':
 					return 'registro3_remotrb/';
 					break;
+				case 'afip.transbordos':
+					return 'transbordos/';
+					break;
 			}
 		};
+
+		//afip/transbordos/skip/limit
+
+		//afip/transbordo - query: sumaria
+
+		factory.getDetalleSumaria = function(sumaria, callback){
+			var inserturl = serverUrl + '/afip/transbordo';
+			var data = {
+				sumaria: sumaria
+			};
+			$http.get(inserturl, { params: data })
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 
 		factory.getCSV = function(tipoRegistro, filtros, callback){
 			var ruta = obtenerRuta(tipoRegistro);

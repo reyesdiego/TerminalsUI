@@ -46,7 +46,7 @@ describe('login del usuario', function(){
 
 	it('confirma llamada al servicio http', function(){
 
-		$httpBackend.expectPOST('http://terminales.puertobuenosaires.gob.ar:8090/login')
+		$httpBackend.expectPOST('http://10.1.0.61:8090/login')
 			.respond(200, {status: "OK", data: { token: "askdjsgvdkjaghsvkuv" } });
 
 		authFactory.login('usuario', 'pass')

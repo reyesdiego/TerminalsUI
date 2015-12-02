@@ -63,6 +63,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 						data.acceso.push('modificarTarifario');
 						data.acceso.push('mturnos');
 						data.acceso.push('mat');
+						data.acceso.push('afip.transbordos');
 						//---------------------------------------------
 
 						loginService.setAcceso(data.acceso);
