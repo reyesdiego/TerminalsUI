@@ -65,8 +65,12 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		}
 
 		if (in_array('afip.transbordos', $rootScope.rutas)){
-			$scope.transbordos = 'afip.transbordos';
-			if ($scope.actualRegistro == '') $scope.actualRegistro = 'afip.transbordos';
+			$rootScope.rutas.forEach(function(ruta){
+				if (ruta.indexOf('afip.transbordos.') >= 0 && $scope.removido == 'afip') {
+					$scope.removido = ruta;
+					if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
+				}
+			})
 		}
 
 		$scope.tabs = [
@@ -139,9 +143,11 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 					$scope.listaBuques = afipCache.get('SolicitudBuques');
 					break;
 				case 'afip.sumatorias.impo1':
+				case 'afip.transbordos.impo':
 					$scope.listaBuques = afipCache.get('SumImpoBuques');
 					break;
 				case 'afip.sumatorias.expo1':
+				case 'afip.transbordos.expo':
 					$scope.listaBuques = afipCache.get('SumExpoBuques');
 					break;
 			}
@@ -279,7 +285,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
 					break;
-				case 'afip.transbordos':
+				case 'afip.transbordos.impo':
+				case 'afip.transbordos.expo':
 					$scope.ocultarFiltros = ['afectacion', 'documento', 'solicitud', 'detallada', 'fechaInicio', 'fechaFin', 'transbordo'];
 					$scope.model.fechaInicio = '';
 					$scope.model.fechaFin = '';
@@ -312,7 +319,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 		$scope.detalleSumaria = function(sumaria){
 			console.log(sumaria);
-			afipFactory.getDetalleSumaria(sumaria, function(data){
+			var tipo = $scope.actualRegistro == 'afip.transbordos.impo' ? 'Impo' : 'Expo';
+			afipFactory.getDetalleSumaria(tipo, sumaria, function(data){
 				console.log(data);
 				if (data.status == 'OK'){
 					$scope.sumariaDetalle = data.data;

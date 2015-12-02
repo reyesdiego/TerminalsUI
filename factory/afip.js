@@ -78,8 +78,11 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 				case 'afip.removido.removido3':
 					return 'registro3_remotrb/';
 					break;
-				case 'afip.transbordos':
-					return 'transbordos/';
+				case 'afip.transbordos.impo':
+					return 'transbordosImpo/';
+					break;
+				case 'afip.transbordos.expo':
+					return 'transbordosExpo/';
 					break;
 			}
 		};
@@ -88,8 +91,8 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 
 		//afip/transbordo - query: sumaria
 
-		factory.getDetalleSumaria = function(sumaria, callback){
-			var inserturl = serverUrl + '/afip/transbordo';
+		factory.getDetalleSumaria = function(tipo, sumaria, callback){
+			var inserturl = serverUrl + '/afip/transbordo' + tipo;
 			var data = {
 				sumaria: sumaria
 			};
