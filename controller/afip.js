@@ -318,10 +318,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		};
 
 		$scope.detalleSumaria = function(sumaria){
-			console.log(sumaria);
 			var tipo = $scope.actualRegistro == 'afip.transbordos.impo' ? 'Impo' : 'Expo';
 			afipFactory.getDetalleSumaria(tipo, sumaria, function(data){
-				console.log(data);
 				if (data.status == 'OK'){
 					$scope.sumariaDetalle = data.data;
 					$scope.sumariaDetalle.CONOCIMIENTOS.forEach(function(conocimiento){
@@ -336,7 +334,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 						conocimiento.CONTENEDORES = contLimpio;
 					})
 				} else {
-
+					$scope.sumariaDetalle = {};
+					dialogs.error('AFIP', 'Se ha producido un error al cargar los detalles de la sumaria.');
 				}
 			})
 		};
