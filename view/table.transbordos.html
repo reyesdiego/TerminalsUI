@@ -19,7 +19,7 @@
 		<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden == 'CONOCIMIENTO' && model.filtroOrdenReverse"></span>
 		Conocimiento
 	</a></th>
-	<th style="min-width: 120px"><a href="" ng-click="filtrarOrden('NOMBREATA')">
+	<th style="min-width: 130px"><a href="" ng-click="filtrarOrden('NOMBREATA')">
 		<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden == 'NOMBREATA' && !model.filtroOrdenReverse"></span>
 		<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden == 'NOMBREATA' && model.filtroOrdenReverse"></span>
 		Nombre ATA
@@ -39,7 +39,7 @@
 		<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden == 'PORT' && model.filtroOrdenReverse"></span>
 		Puerto
 	</a></th>
-	<th style="min-width: 80px"><a href="" ng-click="filtrarOrden('NOMBREBUQUE')">
+	<th style="min-width: 120px"><a href="" ng-click="filtrarOrden('NOMBREBUQUE')">
 		<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden == 'NOMBREBUQUE' && !model.filtroOrdenReverse"></span>
 		<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden == 'NOMBREBUQUE' && model.filtroOrdenReverse"></span>
 		Buque
@@ -59,7 +59,7 @@
 		<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden == 'PESO' && model.filtroOrdenReverse"></span>
 		Peso
 	</a></th>
-	<th style="min-width: 110px"><a href="" ng-click="filtrarOrden('LUGAROPERATIVO')">
+	<th style="min-width: 80px"><a href="" ng-click="filtrarOrden('LUGAROPERATIVO')">
 		<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden == 'LUGAROPERATIVO' && !model.filtroOrdenReverse"></span>
 		<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden == 'LUGAROPERATIVO' && model.filtroOrdenReverse"></span>
 		L. operativo
@@ -68,11 +68,6 @@
 		<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden == 'EMBALAJE' && !model.filtroOrdenReverse"></span>
 		<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden == 'EMBALAJE' && model.filtroOrdenReverse"></span>
 		Embalaje
-	</a></th>
-	<th><a href="" ng-click="filtrarOrden('IMPO_EXPO')">
-		<span class="glyphicon glyphicon-sort-by-attributes" ng-show="model.filtroOrden == 'IMPO_EXPO' && !model.filtroOrdenReverse"></span>
-		<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="model.filtroOrden == 'IMPO_EXPO' && model.filtroOrdenReverse"></span>
-		IMPO / EXPO
 	</a></th>
 	<th>
 		<span class="glyphicon glyphicon-zoom-in"></span>
@@ -84,17 +79,16 @@
 	<td>{{ registro.SUMARIA }}</td>
 	<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy' }}</td>
 	<td>{{ registro.CONOCIMIENTO }}</td>
-	<td><text-pop text="{{ registro.NOMBREATA }}" max="8"></text-pop></td>
+	<td><text-pop text="{{ registro.NOMBREATA }}" max="10"></text-pop></td>
 	<td>{{ registro.NRO_LINEA }}</td>
 	<td>{{ registro.COUNTRY }}</td>
-	<td>{{ registro.PORT }}</td>
-	<td><text-pop text="{{ registro.NOMBREBUQUE }}" max="8"></text-pop></td>
+	<td><text-pop text="{{ registro.PORT }}" max="7"></text-pop></td>
+	<td><text-pop text="{{ registro.NOMBREBUQUE }}" max="9"></text-pop></td>
 	<td>{{ registro.CONTENEDOR }}</td>
 	<td>{{ registro.MEDIDA }}</td>
 	<td>{{ registro.PESO }}</td>
 	<td>{{ registro.LUGAROPERATIVO }}</td>
 	<td>{{ registro.EMBALAJE }}</td>
-	<td>{{ registro.IMPO_EXPO }}</td>
 	<td><a href ng-click="detalleSumaria(registro.SUMARIA)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 </tr>
 </tbody>
