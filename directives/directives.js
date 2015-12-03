@@ -588,10 +588,3 @@ myapp.directive('reporteEmpresasSearch', function(){
 		controller: 'searchController'
 	}
 });
-
-myapp.directive('tableTransbordos', function(){
-	return {
-		restrict:		'E',
-		templateUrl:	'view/table.transbordos.html'
-	}
-});

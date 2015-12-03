@@ -14,6 +14,14 @@ Array.prototype.contains = function (item) {
 	return result;
 };
 
+Array.prototype.unique=function(a){
+	return function(){
+		return this.filter(a)
+	}
+}(function(a,b,c){
+	return c.indexOf(a,b+1)<0
+});
+
 Array.prototype.equals = function (array) {
 	// if the other array is a falsy value, return
 	if (!array)
@@ -258,6 +266,12 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('afip.transbordos', {
 			templateUrl: "view/afip.transbordos.html"
+		})
+		.state('afip.transbordos.impo', {
+			templateUrl: "view/table.transbordos.html"
+		})
+		.state('afip.transbordos.expo', {
+			templateUrl: "view/table.transbordos.html"
 		})
 		.state('users', {
 			url: "/users",

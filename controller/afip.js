@@ -67,7 +67,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		if (in_array('afip.transbordos', $rootScope.rutas)){
 			$rootScope.rutas.forEach(function(ruta){
 				if (ruta.indexOf('afip.transbordos.') >= 0 && $scope.removido == 'afip') {
-					$scope.removido = ruta;
+					$scope.transbordos = ruta;
 					if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
 				}
 			})
@@ -324,6 +324,17 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 				console.log(data);
 				if (data.status == 'OK'){
 					$scope.sumariaDetalle = data.data;
+					$scope.sumariaDetalle.CONOCIMIENTOS.forEach(function(conocimiento){
+						var contLimpio = [];
+						conocimiento.CONTENEDORES.forEach(function(contenedor){
+							var encontrado = false;
+							contLimpio.forEach(function(unCont){
+								encontrado = (unCont.CONTENEDOR == contenedor.CONTENEDOR && unCont.MEDIDA == contenedor.MEDIDA);
+							});
+							if (!encontrado) contLimpio.push(contenedor);
+						});
+						conocimiento.CONTENEDORES = contLimpio;
+					})
 				} else {
 
 				}
