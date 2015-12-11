@@ -88,8 +88,8 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr ng-repeat="facturado in dataFacturado">
-				<td class="text-center">{{ facturado.name }}</td>
+			<tr ng-repeat="(mesNombre, facturado) in dataFacturado">
+				<td class="text-center">{{ mesNombre }}</td>
 				<td class="text-right">$ {{ facturado.facturado.BACTSSA | currency }}</td>
 				<td class="text-right" ng-class="facturado.diferencia.BACTSSA >= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ facturado.diferencia.BACTSSA | currency }}</td>
 				<td class="text-right">$ {{ facturado.facturado.TERMINAL4 | currency }}</td>
@@ -106,5 +106,4 @@
 			</tbody>
 		</table>
 	</div>
-
 </div>
