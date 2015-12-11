@@ -6,9 +6,19 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		var factory = {};
 
+		factory.createMat = function(data, callback){
+			var inserturl = serverUrl + '/mats/create';
+			$http.post(inserturl, data)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		factory.getMAT = function(year, callback){
-			// var inserturl = serverUrl + '/alguna ruta en donde se use el year;
-			var inserturl = 'mocks/mat.json'; //mocked route
+			var inserturl = serverUrl + '/mats';
+			//var inserturl = 'mocks/mat.json'; //mocked route
 			$http.get(inserturl)
 				.success(function(data){
 					callback(data);

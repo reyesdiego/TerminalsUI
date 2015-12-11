@@ -25,7 +25,152 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 		TERMINAL4: 0,
 		TRP: 0
 	};
-	$scope.dataFacturado = [];
+	$scope.dataFacturado = {
+		Enero: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Febrero: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Marzo: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Abril: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Mayo: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Junio: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Julio: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Agosto: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Septiembre: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Octubre: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Noviembre: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		},
+		Diciembre: {
+			facturado: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			},
+			diferencia: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		}
+	};
 
 	$scope.openDate = function(event){
 		generalFunctions.openDate(event);
@@ -41,37 +186,40 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 		$scope.disableModify = ($scope.model.valorMAT.BACTSSA == $scope.matData.BACTSSA && $scope.model.valorMAT.TERMINAL4 == $scope.matData.TERMINAL4 && $scope.model.valorMAT.TRP == $scope.matData.TRP);
 	};
 
-	$scope.actualizarMAT = function(){
-		console.log($scope.model);
+	$scope.actualizarMAT = function(terminal){
+		var data = {
+			terminal: terminal,
+			mat: $scope.model.valorMAT[terminal],
+			year: $scope.model.year.getFullYear()
+		};
+		liquidacionesFactory.createMat(data, function(data){
+			if (data.status == 'OK'){
+				$scope.matData[terminal] = data.data[0].mat;
+				$scope.model.valorMAT = angular.copy($scope.matData);
+			}
+		})
 	};
 
 	$scope.cargarDatos = function(){
+		$scope.model = {
+			year: new Date(),
+			valorMAT: {
+				BACTSSA: 0,
+				TERMINAL4: 0,
+				TRP: 0
+			}
+		};
+		$scope.matData = {};
 		liquidacionesFactory.getMAT($scope.model.year.getFullYear(), function(data){
+			console.log(data);
 			if (data.status == 'OK'){
-				$scope.matData = data.data[0];
-				$scope.model.valorMAT = angular.copy($scope.matData);
 				data.data.forEach(function(matData){
-					$scope.matMonth = {
-						BACTSSA: matData.BACTSSA / 12,
-						TERMINAL4: matData.TERMINAL4 / 12,
-						TRP: matData.TRP / 12
-					};
+					$scope.matData[matData.terminal] = matData.mat;
+					/*matData.months.forEach(function(mesFacturado){
+					 $scope.dataFacturado[mesFacturado.month].
+					 });*/
 				});
-				liquidacionesFactory.getMatFacturado($scope.model.year.getFullYear(), function(data){
-					if (data.status == 'OK'){
-						$scope.dataFacturado = data.data;
-						$scope.dataFacturado.forEach(function(mesFacturado){
-							mesFacturado.diferencia = {
-								BACTSSA: mesFacturado.facturado.BACTSSA - $scope.matMonth.BACTSSA,
-								TERMINAL4: mesFacturado.facturado.TERMINAL4 - $scope.matMonth.TERMINAL4,
-								TRP: mesFacturado.facturado.TRP - $scope.matMonth.TRP
-							};
-							$scope.totales.BACTSSA += mesFacturado.diferencia.BACTSSA;
-							$scope.totales.TERMINAL4 += mesFacturado.diferencia.TERMINAL4;
-							$scope.totales.TRP += mesFacturado.diferencia.TRP;
-						})
-					}
-				});
+				$scope.model.valorMAT = angular.copy($scope.matData);
 			}
 		})
 	};
