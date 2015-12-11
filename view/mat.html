@@ -10,7 +10,7 @@
 		<div class="form-group">
 			<div class="input-group">
 				<span class="input-group-addon">Año</span>
-				<input type="text" class="form-control" ng-init="model.year = model.year" ng-keyup="hitEnter($event)" datepicker-popup="yyyy" datepicker-mode="'year'" datepicker-options="{minMode: 'year'}" ng-model="model.year" is-open="openfechaInicio" max-date="maxDate" readonly style="background-color: #ffffff"/>
+				<input type="text" class="form-control" ng-init="model.year = model.year" ng-keyup="hitEnter($event)" datepicker-popup="yyyy" datepicker-mode="'year'" datepicker-options="{minMode: 'year'}" ng-model="model.year" is-open="openfechaInicio" max-date="maxDate" ng-change="cargarDatos()" readonly style="background-color: #ffffff"/>
 				<span class="input-group-btn">
 					<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 				</span>

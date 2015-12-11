@@ -201,14 +201,14 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 	};
 
 	$scope.cargarDatos = function(){
-		$scope.model = {
+		/*$scope.model = {
 			year: new Date(),
 			valorMAT: {
 				BACTSSA: 0,
 				TERMINAL4: 0,
 				TRP: 0
 			}
-		};
+		};*/
 		$scope.matData = {};
 		liquidacionesFactory.getMAT($scope.model.year.getFullYear(), function(data){
 			console.log(data);
