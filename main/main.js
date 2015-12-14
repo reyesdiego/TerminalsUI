@@ -439,6 +439,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		};
 
 		$rootScope.cambioMoneda = true;
+		$rootScope.cambioTerminal = true;
 
 		$rootScope.setEstiloTerminal = function(terminal){
 			if ($rootScope.filtroTerminal != terminal){
@@ -492,7 +493,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.moneda = "DOL";
 
 		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
-		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control'];
+		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat'];
+		$rootScope.rutasSinTerminal = ['control', 'afip', 'reports', 'mat', 'access', 'users', 'cturnos'];
 		$rootScope.$state = $state;
 		// Variables Globales de Paginacion
 		$rootScope.itemsPerPage = 15;
@@ -535,6 +537,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.verificaRutas = function(event, toState){
 			$rootScope.cambioMoneda = !(in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
+			$rootScope.cambioTerminal = !(in_array(toState.name, $rootScope.rutasSinTerminal) || toState.name.indexOf('afip') != -1);
 			if (!in_array(toState.name, $rootScope.rutasComunes)){
 				if (loginService.getStatus()){
 					if ($cookies.get('isLogged') === 'true'){

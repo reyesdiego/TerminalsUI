@@ -220,7 +220,7 @@
 						<li class="visible-sm"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso=='agp'" class="hidden-sm" dropdown>
+				<li ng-show="acceso=='agp' && cambioTerminal" class="hidden-sm" dropdown>
 					<a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a collap ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
