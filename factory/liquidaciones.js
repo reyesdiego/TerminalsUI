@@ -6,14 +6,23 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		var factory = {};
 
-		factory.createMat = function(data, callback){
-			var inserturl = serverUrl + '/mats/create';
-			$http.post(inserturl, data)
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
-				})
+		factory.saveMat = function(data, update, callback){
+			var inserturl = serverUrl + '/mats/mat';
+			if (update){
+				$http.put(inserturl, data)
+					.success(function(data){
+						callback(data);
+					}).error(function(error){
+						callback(error);
+					})
+			} else {
+				$http.post(inserturl, data)
+					.success(function(data){
+						callback(data);
+					}).error(function(error){
+						callback(error);
+					})
+			}
 		};
 
 		factory.getMAT = function(year, callback){

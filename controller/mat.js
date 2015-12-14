@@ -11,6 +11,11 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 			BACTSSA: 0,
 			TERMINAL4: 0,
 			TRP: 0
+		},
+		actualizar:{
+			BACTSSA: false,
+			TERMINAL4: false,
+			TRP: false
 		}
 	};
 
@@ -192,29 +197,29 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 			mat: $scope.model.valorMAT[terminal],
 			year: $scope.model.year.getFullYear()
 		};
-		liquidacionesFactory.createMat(data, function(data){
+		liquidacionesFactory.saveMat(data, $scope.model.actualizar[terminal], function(data){
+			console.log(data);
 			if (data.status == 'OK'){
-				$scope.matData[terminal] = data.data[0].mat;
+				$scope.matData[terminal] = data.data.mat;
 				$scope.model.valorMAT = angular.copy($scope.matData);
 			}
-		})
+		});
 	};
 
 	$scope.cargarDatos = function(){
-		/*$scope.model = {
-			year: new Date(),
-			valorMAT: {
-				BACTSSA: 0,
-				TERMINAL4: 0,
-				TRP: 0
-			}
-		};*/
+		$scope.model.valorMAT.BACTSSA = 0;
+		$scope.model.valorMAT.TERMINAL4 = 0;
+		$scope.model.valorMAT.TRP = 0;
+		$scope.model.actualizar.BACTSSA = false;
+		$scope.model.actualizar.TERMINAL4 = false;
+		$scope.model.actualizar.TRP = false;
 		$scope.matData = {};
 		liquidacionesFactory.getMAT($scope.model.year.getFullYear(), function(data){
 			console.log(data);
 			if (data.status == 'OK'){
 				data.data.forEach(function(matData){
 					$scope.matData[matData.terminal] = matData.mat;
+					$scope.model.actualizar[matData.terminal] = true;
 					/*matData.months.forEach(function(mesFacturado){
 					 $scope.dataFacturado[mesFacturado.month].
 					 });*/
