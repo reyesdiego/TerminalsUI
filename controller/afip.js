@@ -158,9 +158,11 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			$scope.cargaDatos($scope.actualRegistro);
 		});
 
-		$scope.$on('errorInesperado', function(){
+		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.cargando = false;
 			$scope.datosRegistro = [];
+			$scope.totalItems = 0;
+			$scope.panelMensaje = mensaje;
 		});
 
 		$scope.hitEnter = function(evt){
