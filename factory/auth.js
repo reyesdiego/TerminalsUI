@@ -59,15 +59,6 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 
 						$http.defaults.headers.common.token = loginService.getToken();
 
-						//---------------------------------------------
-						data.acceso.push('modificarTarifario');
-						data.acceso.push('mturnos');
-						data.acceso.push('mat');
-						data.acceso.push('afip.transbordos');
-						data.acceso.push('afip.transbordos.impo');
-						data.acceso.push('afip.transbordos.expo');
-						//---------------------------------------------
-
 						loginService.setAcceso(data.acceso);
 
 						$rootScope.rutas = data.acceso;

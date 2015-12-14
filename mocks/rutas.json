@@ -274,7 +274,7 @@
 		{
 			"_id": 42,
 			"description": "AFIP transbordos - Exportaciones",
-			"route": "afip.transbordos",
+			"route": "afip.transbordos.expo",
 			"role": "agp"
 		}
 	]
