@@ -29,14 +29,21 @@
 						<div class="form-group text-right col-lg-12">
 							<a href class="col-lg-offset-1" ng-click="resetPassword()">¿Olvidó su contraseña?</a>
 						</div>
-						<div class="form-group">
+						<div class="form-group hidden-xs">
 							<br>
-							<div class="col-lg-4 text-center">
+							<div class="col-sm-4 text-center">
 								<input type="checkbox" ng-model="sesion">No cerrar sesi&oacute;n
 							</div>
-							<div class="col-lg-8 text-right">
+							<div class="col-sm-8 text-right">
 								<button type="submit" class="btn btn-primary" ng-disabled="entrando"><span class="glyphicon glyphicon-log-in"></span> Ingresar</button>
 								<button type="button" ui-sref="changepass" class="btn"><span class="glyphicon glyphicon-lock"></span> Cambiar contraseña</button>
+							</div>
+						</div>
+						<div class="form-group visible-xs">
+							<div class="col-xs-12">
+								<div><input type="checkbox" ng-model="sesion">No cerrar sesi&oacute;n</div>
+								<div><button type="submit" class="btn btn-primary" ng-disabled="entrando"><span class="glyphicon glyphicon-log-in"></span> Ingresar</button></div>
+								<div><button type="button" ui-sref="changepass" class="btn"><span class="glyphicon glyphicon-lock"></span> Cambiar contraseña</button></div>
 							</div>
 						</div>
 					</fieldset>
