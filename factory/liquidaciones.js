@@ -6,6 +6,16 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		var factory = {};
 
+		factory.getPriceDollar = function(callback){
+			var inserturl = serverUrl + '/afip/dollars';
+			$http.get(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		factory.saveMat = function(data, update, callback){
 			var inserturl = serverUrl + '/mats/mat';
 			if (update){

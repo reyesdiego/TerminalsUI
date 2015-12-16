@@ -8,6 +8,39 @@
 		</div>
 	</div>
 
+	<div class="col-lg-offset-10 col-lg-2 text-right">
+		<button class="btn btn-info" ng-disabled="!ocultarCotizacion" ng-click="ocultarCotizacion = false">Ver cotizacion dólar</button>
+	</div>
+
+	<div class="animate-hide" ng-hide="ocultarCotizacion">
+		<div class="modal-header bg-info" style="border-radius: 5px">
+			<h3>Cotización</h3>
+		</div>
+		<div class="modal-body bg-info">
+			<div class="table-responsive" style="height: 300px; overflow: scroll;">
+				<table class="table table-bordered table-hover" style="text-align: center">
+					<thead>
+					<tr>
+						<th>Fecha</th>
+						<th>Cotización</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="cotizacion in datosDolar">
+						<td>{{ cotizacion.FECHA | date: 'dd/MM/yyyy' }}</td>
+						<td>$ {{ cotizacion.VALOR | currency }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="modal-footer bg-info" style="border-radius: 5px">
+			<button class="btn btn-info" ng-click="ocultarCotizacion = true">Cerrar</button>
+		</div>
+	</div>
+
+
+
 	<tabset justified="true">
 
 		<tab class="hidden-print" heading="Pre-Liquidar" select="cambiarModo('sinLiquidar')">

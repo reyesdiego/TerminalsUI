@@ -22,6 +22,10 @@
     "bootstrap-ui-datetime-picker": "~1.1.5",
     "angular-bootstrap-calendar": "~0.14.3",
     "angular-sanitize": "~1.4.3",
-    "angular-socket-io": "~0.7.0"
+    "angular-socket-io": "~0.7.0",
+    "angular-animate": "1.4.3"
+  },
+  "resolutions": {
+    "angular": "~1.4.3"
   }
 }
