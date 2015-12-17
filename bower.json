@@ -17,7 +17,7 @@
     "angular": "~1.4.3",
     "angular-cookies": "~1.4.3",
     "angular-ui-router": "~0.2.13",
-    "angular-ui-bootstrap-bower": "~0.13.0",
+    "angular-ui-bootstrap-bower": "0.13.3",
     "angular-cache": "~4.3.2",
     "bootstrap-ui-datetime-picker": "~1.1.5",
     "angular-bootstrap-calendar": "~0.14.3",
