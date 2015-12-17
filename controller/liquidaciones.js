@@ -12,11 +12,11 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.ocultarCotizacion = true;
 
-		liquidacionesFactory.getPriceDollar(function(data){
+		/*liquidacionesFactory.getPriceDollar(function(data){
 			if (data.status == 'OK'){
 				$scope.datosDolar = data.data;
 			}
-		});
+		});*/
 
 		$scope.sinLiquidar = {
 			ocultarFiltros: ['liquidacion'],
