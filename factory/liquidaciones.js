@@ -9,8 +9,13 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		factory.getNotPayedCsv = function(datos, callback){
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() +'/download';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
-				.success(function(data){
-					callback(data);
+				.success(function(data, status, headers){
+					var contentType = headers('Content-Type');
+					if (contentType.indexOf('text/csv') >= 0){
+						callback(data, 'OK');
+					} else {
+						callback(data, 'ERROR');
+					}
 				}).error(function(error){
 					callback(error);
 				})

@@ -588,7 +588,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		};
 
 		$scope.descargarCSV = function(){
-			liquidacionesFactory.getNotPayedCsv($scope.sinLiquidar.model, function(data){
+			liquidacionesFactory.getNotPayedCsv($scope.sinLiquidar.model, function(data, status){
 				if (status == 'OK'){
 					var anchor = angular.element('<a/>');
 					anchor.css({display: 'none'}); // Make sure it's not visible
