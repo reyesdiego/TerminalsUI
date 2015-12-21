@@ -587,6 +587,26 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.modo = modo;
 		};
 
+		$scope.descargarCSV = function(){
+			liquidacionesFactory.getNotPayedCsv($scope.sinLiquidar.model, function(data){
+				if (status == 'OK'){
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+						target: '_blank',
+						download: 'SinLiquidar.csv'
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+				} else {
+					dialogs.error('Liquidaciones', 'Se ha producido un error al descargar el listado de comprobantes sin liquidar.');
+				}
+			})
+		};
+
 		if (loginService.getStatus()) {
 			$scope.cargarSinLiquidar();
 			$scope.cargarPreLiquidaciones();

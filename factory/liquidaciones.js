@@ -6,6 +6,16 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		var factory = {};
 
+		factory.getNotPayedCsv = function(datos, callback){
+			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() +'/download';
+			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		factory.getPriceDollar = function(callback){
 			var inserturl = serverUrl + '/afip/dollars';
 			$http.get(inserturl)

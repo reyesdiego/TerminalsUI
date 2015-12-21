@@ -5,6 +5,43 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 
 	$scope.disableModify = true;
 
+	$scope.chartReporteMat = {
+		title: 'MAT por terminal',
+		width: 600,
+		height: 600,
+		type: 'pie',
+		columns: 1,
+		currency: true,
+		stacked: false,
+		is3D: true,
+		money: 'DOL',
+		data: [
+			['BACTSSA', 0],
+			['TERMINAL4', 0],
+			['TRP', 0]
+		],
+		id: 1,
+		image: null
+	};
+
+	$scope.chartMatTotal = {
+		title: 'MAT total',
+		width: 600,
+		height: 600,
+		type: 'pie',
+		columns: 1,
+		currency: true,
+		stacked: false,
+		is3D: true,
+		money: 'DOL',
+		data: [
+			['Total', 0],
+			['Restante', 0]
+		],
+		id: 1,
+		image: null
+	};
+
 	$scope.model = {
 		year: new Date(),
 		valorMAT: {
@@ -217,6 +254,7 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 		liquidacionesFactory.getMAT($scope.model.year.getFullYear(), function(data){
 			console.log(data);
 			if (data.status == 'OK'){
+				var totalMat = 0;
 				data.data.forEach(function(matData){
 					$scope.matData[matData.terminal] = matData.mat;
 					$scope.model.actualizar[matData.terminal] = true;
