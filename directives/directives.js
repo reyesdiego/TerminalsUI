@@ -150,7 +150,7 @@ myapp.directive('invoicesResult', function(){
 	}
 });
 
-myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', function(invoiceService, dialogs){
+myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', 'loginService', function(invoiceService, dialogs, loginService){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/invoices.result.html',
@@ -164,6 +164,7 @@ myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', function(inv
 			moneda:				'='
 		},
 		link: function($scope){
+			$scope.acceso = loginService.getType();
 			$scope.comprobantesControlados = [];
 
 			$scope.checkComprobantes = function(comprobante){
