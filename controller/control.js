@@ -460,7 +460,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.traerDatosFacturadoDia = function(){
-			console.log('hola');
 			var datos = {
 				fecha: $scope.desde
 			};
