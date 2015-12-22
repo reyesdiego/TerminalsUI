@@ -194,7 +194,7 @@
 						<li ng-show="tieneAcceso('cturnos')"><a collap ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>
-				<li ng-show="(tieneAcceso('liquidaciones') || tieneAcceso('control') || tieneAcceso('reports') || tieneAcceso('container') || tieneAcceso('buque') || tieneAcceso('afip') || tieneAcceso('users') || tieneAcceso('access'))" dropdown>
+				<li ng-show="acceso != '' && (tieneAcceso('liquidaciones') || tieneAcceso('control') || tieneAcceso('reports') || tieneAcceso('container') || tieneAcceso('buque') || tieneAcceso('afip') || tieneAcceso('users') || tieneAcceso('access'))" dropdown>
 					<a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-header" ng-show="tieneAcceso('control') || tieneAcceso('reports')">Gráficos</li>
