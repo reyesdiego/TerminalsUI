@@ -7,8 +7,8 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 
 	$scope.chartReporteMat = {
 		title: 'MAT por terminal',
-		width: 600,
-		height: 600,
+		width: 400,
+		height: 400,
 		type: 'pie',
 		columns: 1,
 		currency: true,
@@ -16,9 +16,9 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 		is3D: true,
 		money: 'DOL',
 		data: [
-			['BACTSSA', 0],
-			['TERMINAL4', 0],
-			['TRP', 0]
+			['BACTSSA', 1000],
+			['TERMINAL4', 2000],
+			['TRP', 4000]
 		],
 		id: 1,
 		image: null
@@ -26,8 +26,8 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 
 	$scope.chartMatTotal = {
 		title: 'MAT total',
-		width: 600,
-		height: 600,
+		width: 400,
+		height: 400,
 		type: 'pie',
 		columns: 1,
 		currency: true,
@@ -35,8 +35,8 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 		is3D: true,
 		money: 'DOL',
 		data: [
-			['Total', 0],
-			['Restante', 0]
+			['Total', 7000],
+			['Restante', 10000]
 		],
 		id: 1,
 		image: null
@@ -212,6 +212,13 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 				TRP: 0
 			}
 		}
+	};
+
+	$scope.selectRow = function (index) {
+		$scope.selected = index;
+	};
+	$scope.rowClass = function (index) {
+		return ($scope.selected === index) ? "selected" : "";
 	};
 
 	$scope.openDate = function(event){

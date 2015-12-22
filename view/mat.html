@@ -100,4 +100,17 @@
 			</tbody>
 		</table>
 	</div>
+
+	<div class="row col-lg-12">
+		<dynamic-chart class="col-lg-6"
+				chart-object="chartReporteMat"
+				select="selectRow(selectedRow, id)"
+				colors="barColors">
+		</dynamic-chart>
+		<dynamic-chart class="col-lg-6"
+				chart-object="chartMatTotal"
+				select="selectRow(selectedRow, id)"
+				colors="barColors">
+		</dynamic-chart>
+	</div>
 </div>
