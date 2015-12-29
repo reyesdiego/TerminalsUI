@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 17/11/15.
  */
-myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', 'colorTerminalesCache',
-	function($scope, liquidacionesFactory, generalFunctions, colorTerminalesCache){
+myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', 'colorTerminalesCache', 'dialogs', 'downloadFactory',
+	function($scope, liquidacionesFactory, generalFunctions, colorTerminalesCache, dialogs, downloadFactory){
 
 		$scope.disableModify = true;
 
@@ -45,7 +45,7 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 				['Total', 7000],
 				['Restante', 10000]
 			],
-			id: 1,
+			id: 2,
 			image: null
 		};
 
@@ -279,6 +279,46 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 					$scope.model.valorMAT = angular.copy($scope.matData);
 				}
 			})
+		};
+
+		$scope.descargarPdf = function(){
+			var data = {
+				id: $scope.$id,
+				anio: $scope.model.year.getFullYear(),
+				hoy: new Date(),
+				matData: {
+					valorMAT: angular.copy($scope.model.valorMAT),
+					dataFacturado: angular.copy($scope.dataFacturado)
+				},
+				charts: [
+					{filename: $scope.chartReporteMat.id, image: $scope.chartReporteMat.image, h: $scope.chartReporteMat.height, w: $scope.chartReporteMat.width},
+					{filename: $scope.chartMatTotal.id, image: $scope.chartMatTotal.image, h: $scope.chartMatTotal.height, w: $scope.chartMatTotal.width}
+				]
+			}
+
+			var nombreReporte = 'Reporte_MAT_' + data.anio + '.pdf';
+			downloadFactory.convertToPdf(data, 'reporteMATPdf', function(data, status){
+				if (status == 'OK'){
+					var file = new Blob([data], {type: 'application/pdf'});
+					var fileURL = URL.createObjectURL(file);
+
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: fileURL,
+						target: '_blank',
+						download: nombreReporte
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+					//window.open(fileURL);
+				} else {
+					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
+				}
+			})
+
 		};
 
 		$scope.cargarDatos();
