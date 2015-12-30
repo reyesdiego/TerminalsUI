@@ -85,17 +85,17 @@
 			<tr ng-repeat="(mesNombre, facturado) in dataFacturado">
 				<td class="text-center">{{ mesNombre }}</td>
 				<td class="text-right">$ {{ facturado.facturado.BACTSSA | currency }}</td>
-				<td class="text-right" ng-class="facturado.diferencia.BACTSSA >= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ facturado.diferencia.BACTSSA | currency }}</td>
+				<td class="text-right" ng-class="facturado.diferencia.BACTSSA <= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ facturado.diferencia.BACTSSA | currency }}</td>
 				<td class="text-right">$ {{ facturado.facturado.TERMINAL4 | currency }}</td>
-				<td class="text-right" ng-class="facturado.diferencia.TERMINAL4 >= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ facturado.diferencia.TERMINAL4 | currency }}</td>
+				<td class="text-right" ng-class="facturado.diferencia.TERMINAL4 <= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ facturado.diferencia.TERMINAL4 | currency }}</td>
 				<td class="text-right">$ {{ facturado.facturado.TRP | currency }}</td>
-				<td class="text-right" ng-class="facturado.diferencia.TRP >= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ facturado.diferencia.TRP | currency }}</td>
+				<td class="text-right" ng-class="facturado.diferencia.TRP <= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ facturado.diferencia.TRP | currency }}</td>
 			</tr>
 			<tr>
 				<td class="text-right"><strong>Totales</strong></td>
-				<td colspan="2" class="text-right" ng-class="totales.BACTSSA >= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ totales.BACTSSA | currency }}</td>
-				<td colspan="2" class="text-right" ng-class="totales.TERMINAL4 >= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ totales.TERMINAL4 | currency }}</td>
-				<td colspan="2" class="text-right" ng-class="totales.TRP >= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ totales.TRP | currency }}</td>
+				<td colspan="2" class="text-right" ng-class="totales.BACTSSA <= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ totales.BACTSSA | currency }}</td>
+				<td colspan="2" class="text-right" ng-class="totales.TERMINAL4 <= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ totales.TERMINAL4 | currency }}</td>
+				<td colspan="2" class="text-right" ng-class="totales.TRP <= 0 ? 'usuarioActivo' : 'usuarioInactivo'">$ {{ totales.TRP | currency }}</td>
 			</tr>
 			</tbody>
 		</table>

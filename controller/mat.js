@@ -269,12 +269,22 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 				console.log(data);
 				if (data.status == 'OK'){
 					var totalMat = 0;
+					var facturadoMes = 0;
+					var diferencia = 0;
 					data.data.forEach(function(matData){
 						$scope.matData[matData.terminal] = matData.mat;
 						$scope.model.actualizar[matData.terminal] = true;
-						/*matData.months.forEach(function(mesFacturado){
-						 $scope.dataFacturado[mesFacturado.month].
-						 });*/
+						matData.months.forEach(function(mesFacturado){
+							//Primero debería calcular el total facturado cuando tenga los datos
+							//$scope.dataFacturado[mesFacturado.month].
+							//Luego obtengo la diferencia a partir del mat por mes
+							diferencia = mesFacturado.mat - facturadoMes;
+							$scope.dataFacturado[mesFacturado.month].diferencia[matData.terminal] = diferencia;
+							$scope.totales[matData.terminal] += diferencia;
+
+							diferencia = 0;
+							facturadoMes = 0;
+						});
 					});
 					$scope.model.valorMAT = angular.copy($scope.matData);
 				}
