@@ -288,13 +288,14 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 				hoy: new Date(),
 				matData: {
 					valorMAT: angular.copy($scope.model.valorMAT),
-					dataFacturado: angular.copy($scope.dataFacturado)
+					dataFacturado: angular.copy($scope.dataFacturado),
+					totales: angular.copy($scope.totales)
 				},
 				charts: [
 					{filename: $scope.chartReporteMat.id, image: $scope.chartReporteMat.image, h: $scope.chartReporteMat.height, w: $scope.chartReporteMat.width},
 					{filename: $scope.chartMatTotal.id, image: $scope.chartMatTotal.image, h: $scope.chartMatTotal.height, w: $scope.chartMatTotal.width}
 				]
-			}
+			};
 
 			var nombreReporte = 'Reporte_MAT_' + data.anio + '.pdf';
 			downloadFactory.convertToPdf(data, 'reporteMATPdf', function(data, status){

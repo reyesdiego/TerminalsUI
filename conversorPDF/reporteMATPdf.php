@@ -65,6 +65,7 @@ $hoy = date('d/m/Y', strtotime($data['hoy']));
 
 $valorMat = $data['matData']['valorMAT'];
 $dataFacturado = $data['matData']['dataFacturado'];
+$totales = $data['matData']['totales'];
 
 crear_archivos_graficos($data['charts'], $id);
 
@@ -120,10 +121,16 @@ while ($datosMAT = current($dataFacturado)){
 	next($dataFacturado);
 }
 
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(25, 8, "Totales", 1, 0, "R");
+$pdf->SetFont('Arial', '', 8);
+$pdf->Cell(55, 8, "US$ " . number_format($totales['BACTSSA'], 2), 1, 0, "R");
+$pdf->Cell(55, 8, "US$ " . number_format($totales['TERMINAL4'], 2), 1, 0, "R");
+$pdf->Cell(55, 8, "US$ " . number_format($totales['TRP'], 2), 1, 0, "R");
 $pdf->Ln();
 
-$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX(), $pdf->GetY(), 110);
-$pdf->Image(".temp/2" . $id . ".jpg", 110, $pdf->GetY(), 110);
+$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 2, 100);
+$pdf->Image(".temp/2" . $id . ".jpg", 110, $pdf->GetY() + 2, 100);
 
 borrar_archivos_graficos($data['charts'], $id);
 
