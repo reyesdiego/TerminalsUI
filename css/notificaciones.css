@@ -55,3 +55,7 @@
 	opacity:0;
 	padding:0 10px;
 }
+
+.clickableRow {
+	cursor: pointer;
+}
