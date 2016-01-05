@@ -180,7 +180,7 @@
 				</div>
 				<hr>
 				<liquidaciones-search model="liquidacion.model" ocultar-filtros="liquidacion.ocultarFiltros"></liquidaciones-search>
-				<table-pagos cargando="liquidacion.cargando" datos-pagos="liquidacion.datos" panel-mensaje="liquidacion.panelMensaje" detalle="detalleLiquidacion(pago)"></table-pagos>
+				<table-pagos cargando="liquidacion.cargando" data="liquidacion.datos" panel-mensaje="liquidacion.panelMensaje" detalle="detalleLiquidacion(pago)"></table-pagos>
 				<div class="col-lg-12 hidden-print" ng-show="liquidacion.total > itemsPerPage">
 					<div class="text-center visible-xs"><pagination boundary-links="true" total-items="liquidacion.total" items-per-page="itemsPerPage" ng-model="liquidacion.currentPage" max-size="5" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class="text-center visible-sm"><pagination boundary-links="true" total-items="liquidacion.total" items-per-page="itemsPerPage" ng-model="liquidacion.currentPage" max-size="7" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>

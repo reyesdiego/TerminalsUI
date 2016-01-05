@@ -560,11 +560,23 @@ myapp.directive('tablePagos', function(){
 		restrict:		'E',
 		scope: {
 			cargando:			'=',
-			datosPagos:			'=',
+			data:			'=',
 			panelMensaje:		'=',
 			detalle:			'&'
 		},
-		templateUrl:	'view/table.pagos.html'
+		templateUrl:	'view/table.pagos.html',
+		controller:		'tablaAnidadaCtrl'
+	}
+});
+
+myapp.directive('detalleTransbordo', function(){
+	return {
+		restrict:		'E',
+		scope: {
+			data:			'='
+		},
+		templateUrl:	'view/detalleTransbordos.html',
+		controller:		'tablaAnidadaCtrl'
 	}
 });
 

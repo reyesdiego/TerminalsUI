@@ -366,7 +366,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			});
 		};
 
-		//Funciones para tabla anidada de transbordos
+		/*//Funciones para tabla anidada de transbordos
 		$scope.tableRowExpanded = false;
 		$scope.tableRowIndexExpandedCurr = "";
 		$scope.tableRowIndexExpandedPrev = "";
@@ -404,7 +404,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 					$scope.conocimientoDataCollapse[$scope.tableRowIndexExpandedCurr] = true;
 				}
 			}
-		};
+		};*/
 		//---------------------------------------------------------------------------------------------
 
 		$scope.in_array = function(aguja, pajar){

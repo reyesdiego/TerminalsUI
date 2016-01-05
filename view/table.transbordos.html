@@ -99,7 +99,8 @@
 
 	<div ng-show="sumariaDetalle.CONOCIMIENTOS.length > 0">
 		<h2>Detalles de la sumaria: {{ sumariaDetalle.SUMARIA }}</h2>
-		<div class="table-responsive">
+		<detalle-transbordo data="sumariaDetalle.CONOCIMIENTOS"></detalle-transbordo>
+		<!--<div class="table-responsive" ng-controller="tablaAnidadaCtrl">
 			<table class="table table-bordered table-hover">
 				<thead>
 				<tr>
@@ -108,7 +109,7 @@
 					<th>Peso</th>
 				</tr>
 				</thead>
-				<tbody ng-repeat="conocimiento in sumariaDetalle.CONOCIMIENTOS" ng-switch="conocimientoDataCollapse[$index]">
+				<tbody ng-repeat="conocimiento in sumariaDetalle.CONOCIMIENTOS" ng-switch="dataCollapse[$index]">
 				<tr class="clickableRow"  ng-click="selectTableRow($index, conocimiento.CONOCIMIENTO)">
 					<td>{{ conocimiento.CONOCIMIENTO }}</td>
 					<td>{{ conocimiento.CONTENEDORES.length }}</td>
@@ -136,6 +137,6 @@
 				</tr>
 				</tbody>
 			</table>
-		</div>
+		</div>-->
 	</div>
 </div>
