@@ -336,7 +336,6 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 						});
 						conocimiento.CONTENEDORES = contLimpio;
 					});
-					console.log($scope.sumariaDetalle);
 				} else {
 					$scope.sumariaDetalle = {};
 					dialogs.error('AFIP', 'Se ha producido un error al cargar los detalles de la sumaria.');
@@ -365,47 +364,6 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 				$scope.disableDown = false;
 			});
 		};
-
-		/*//Funciones para tabla anidada de transbordos
-		$scope.tableRowExpanded = false;
-		$scope.tableRowIndexExpandedCurr = "";
-		$scope.tableRowIndexExpandedPrev = "";
-		$scope.conocimientoIdExpanded = "";
-
-		$scope.conocimientoDataCollapseFn = function () {
-			$scope.conocimientoDataCollapse = [];
-			for (var i = 0; i < $scope.sumariaDetalle.CONOCIMIENTOS.length; i += 1) {
-				$scope.conocimientoDataCollapse.push(false);
-			}
-		};
-
-		$scope.selectTableRow = function (index, conocimientoId) {
-			if (typeof $scope.conocimientoDataCollapse === 'undefined') {
-				$scope.conocimientoDataCollapseFn();
-			}
-
-			if ($scope.tableRowExpanded === false && $scope.tableRowIndexExpandedCurr === "" && $scope.conocimientoIdExpanded === "") {
-				$scope.tableRowIndexExpandedPrev = "";
-				$scope.tableRowExpanded = true;
-				$scope.tableRowIndexExpandedCurr = index;
-				$scope.conocimientoIdExpanded = conocimientoId;
-				$scope.conocimientoDataCollapse[index] = true;
-			} else if ($scope.tableRowExpanded === true) {
-				if ($scope.tableRowIndexExpandedCurr === index && $scope.conocimientoIdExpanded === conocimientoId) {
-					$scope.tableRowExpanded = false;
-					$scope.tableRowIndexExpandedCurr = "";
-					$scope.conocimientoIdExpanded = "";
-					$scope.conocimientoDataCollapse[index] = false;
-				} else {
-					$scope.tableRowIndexExpandedPrev = $scope.tableRowIndexExpandedCurr;
-					$scope.tableRowIndexExpandedCurr = index;
-					$scope.conocimientoIdExpanded = conocimientoId;
-					$scope.conocimientoDataCollapse[$scope.tableRowIndexExpandedPrev] = false;
-					$scope.conocimientoDataCollapse[$scope.tableRowIndexExpandedCurr] = true;
-				}
-			}
-		};*/
-		//---------------------------------------------------------------------------------------------
 
 		$scope.in_array = function(aguja, pajar){
 			return in_array(aguja, pajar);
