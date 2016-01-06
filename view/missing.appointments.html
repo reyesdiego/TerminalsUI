@@ -9,18 +9,20 @@
 	<div class="col-lg-12" ng-hide="cargando">
 		<div class="panel panel-info">
 			<div class="panel-heading">
-					<h3 class="panel-title">Gates sin turnos {{ totalItems }}</h3>
+					<h3 class="panel-title">Gates sin turnos {{ filteredDatos.length }}</h3>
 				</div>
 			<div class="panel-body">
 				<div class="input-group col-lg-12 hidden-print">
 					<input type="text" class="form-control" ng-model="model.search" placeholder="Filtrar resultados" ng-change="filtrarContenedores()" toupper>
-					<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+					<span class="input-group-btn"><button class="btn btn-default" ng-click="model.search = ''; filtrarContenedores()"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 				</div>
 				<div ng-show="datosFaltantes.length == 0">No se encontraron gates sin turnos para los filtros seleccionados</div>
+				<div ng-show="hayError">Presione <a href ng-click="recargar()">aquí</a> para volver a intentarlo</div>
 				<div style="max-height: 500px; max-width: 100%; overflow: auto" ng-hide="datosFaltantes.length == 0">
 					<br>
-					<span ng-repeat="contenedor in filteredDatos track by contenedor">
-						<div style="width: auto; float:left; text-align:center" ng-show="::contenedor != ''" ><a href ng-click="::detalleContenedor(contenedor)"> {{ ::contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
+					<span ng-repeat="contenedor in filteredDatos track by $index">
+						<div style="width: auto; float:left; text-align:center" ng-show="contenedor.c.trim() != ''" >
+							<a href ng-click="detalleContenedor(contenedor.c)"><span title="{{ contenedor.g }}">{{ contenedor.c }}</span></a><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
 				</div>
 			</div>

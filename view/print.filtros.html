@@ -7,7 +7,7 @@
 			<span>Punto de venta: {{ model.nroPtoVenta }}</span>
 		</div>
 		<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="model.codTipoComprob == ''">
-			<span>Tipo de comprobante: {{ model.codTipoComprob | nombreComprobante }}</span>
+			<span>Tipo de comprobante: {{ model.codTipoComprob | nombreComprobante : false }}</span>
 		</div>
 		<div class="form-group col-lg-3 col-md-4 col-sm-6"  ng-hide="model.nroComprobante == ''">
 			<span>Nro. Comprobante: {{ model.nroComprobante }}</span>

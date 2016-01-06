@@ -152,9 +152,10 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				data: { estado: estado },
 				headers: {token: loginService.getToken() }
 			}).success(function (data){
-				callback(data);
+				callback(data, 'OK');
 			}).error(function(errorText){
-				errorFactory.raiseError(errorText, inserturl, 'errorTrack', 'Error al cambiar el estado para el comprobante ' + invoiceId);
+				callback(errorText, 'ERROR');
+				//errorFactory.raiseError(errorText, inserturl, 'errorTrack', 'Error al cambiar el estado para el comprobante ' + invoiceId);
 			});
 		};
 
@@ -183,11 +184,36 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				});
 		};
 
+		factory.setResendInvoice = function(resend, id, callback){
+			var inserturl = serverUrl + '/invoices/invoice/' + loginService.getFiltro() + '/' + id;
+			$http.put(inserturl, resend)
+				.success(function(data){
+					callback(data);
+				})
+				.error(function(error){
+					callback(error)
+				});
+		};
+
 		factory.getRatesInvoices = function(datos, callback){
 			factory.cancelRequest('ratesInvoices');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, 'ratesInvoices');
 			var inserturl = serverUrl + '/invoices/rates';
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
+				.success(function(data){
+					callback(data);
+				})
+				.error(function(error, status){
+					if (status != 0) callback(error)
+				});
+		};
+
+		factory.getDetailRates = function(datos, callback){
+			factory.cancelRequest('ratesDetail');
+			var defer = $q.defer();
+			var canceler = HTTPCanceler.get(defer, 'ratesDetail');
+			var inserturl = serverUrl + '/invoices/rates/' + datos.tipo;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
 					callback(data);

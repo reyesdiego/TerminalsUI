@@ -1,17 +1,44 @@
-<div class="container" ng-controller="liquidacionesCtrl">
+<div class="container col-xlg-offset-1 col-xlg-10" ng-controller="liquidacionesCtrl">
 
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="xpage-header">
-				<h1><img ng-src="images/Acceso.gif" height="64" width="64" class="hidden-xs"> Liquidaciones</h1>
+	<div class="row col-lg-12 page-header">
+		<h1><img ng-src="images/liquidaciones.jpg" height="64" width="64" class="hidden-xs"> Liquidaciones</h1>
+	</div>
+
+	<!--<div class="col-lg-offset-10 col-lg-2 text-right">
+		<button class="btn btn-info" ng-disabled="!ocultarCotizacion" ng-click="ocultarCotizacion = false">Ver cotizacion dólar</button>
+	</div>-->
+
+	<div class="animate-hide" ng-hide="ocultarCotizacion">
+		<div class="modal-header bg-info" style="border-radius: 5px">
+			<h3>Cotización</h3>
+		</div>
+		<div class="modal-body bg-info">
+			<div class="table-responsive" style="height: 300px; overflow: scroll;">
+				<table class="table table-bordered table-hover" style="text-align: center">
+					<thead>
+					<tr>
+						<th>Fecha</th>
+						<th>Cotización</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="cotizacion in datosDolar">
+						<td>{{ cotizacion.FECHA | date: 'dd/MM/yyyy' }}</td>
+						<td>$ {{ cotizacion.VALOR | currency }}</td>
+					</tr>
+					</tbody>
+				</table>
 			</div>
+		</div>
+		<div class="modal-footer bg-info" style="border-radius: 5px">
+			<button class="btn btn-info" ng-click="ocultarCotizacion = true">Cerrar</button>
 		</div>
 	</div>
 
 	<tabset justified="true">
 
 		<tab class="hidden-print" heading="Pre-Liquidar" select="cambiarModo('sinLiquidar')">
-			<div class="col-xlg-6 col-lg-12">
+			<div class="col-lg-12">
 				<div>
 					<h3>Comprobantes sin liquidar</h3>
 				</div>
@@ -22,9 +49,15 @@
 				<div class="col-lg-12 text-center" ng-show="sinLiquidar.cargando">
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
+				<detalle-liquidacion
+						datos-liquidacion="sinLiquidar.preLiquidacion.detalle"
+						tasa-agp="tasaAgp"
+						ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle || sinLiquidar.preLiquidacion.detalle.tons == 0" >
+				</detalle-liquidacion>
 				<div class="col-lg-12" ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle">
 					<table-sin-liquidar
 							model="sinLiquidar"
+							tasa-agp="tasaAgp"
 							mostrar-detalle="mostrarDetalleSinLiquidar(invoice)"
 							cargar="cargarSinLiquidar()"
 							ordenar="filtrarSinLiquidar(filtro)">
@@ -45,10 +78,13 @@
 					<div class="col-lg-6 text-left">
 						<button class="btn btn-primary" ng-click="anexarComprobantes()" ng-disabled="!preLiquidacion.verDetalle">Anexar a pre-liquidación {{ preLiquidacion.selected.preNumber }}</button>
 					</div>
+					<div class="col-lg-6 text-right">
+						<button class="btn btn-info" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Descargar CSV</button>
+					</div>
 				</div>
 			</div>
 
-			<div class="col-xlg-6 col-lg-12">
+			<div class="col-lg-12">
 				<div>
 					<h3>Pre-Liquidaciones</h3>
 				</div>
@@ -70,13 +106,18 @@
 				<hr>
 				<accordion-min heading="Detalle Pre-Liquidación nº {{ preLiquidacion.selected.preNumber }}" ng-show="preLiquidacion.verDetalle">
 					<!--<h5 class="col-lg-12"><strong> Toneladas: {{ preLiquidacion.detalle.tons | number: 2 }} - Tasa: U$S {{ preLiquidacion.detalle.total | currency }} - Importe: $ {{ preLiquidacion.detalle.totalPeso | currency }} - IVA: $ {{ preLiquidacion.detalle.totalPeso * 0.21 | currency }} - Total: $ {{ preLiquidacion.detalle.totalPeso * 1.21 | currency }}</strong></h5>-->
-					<detalle-liquidacion datos-liquidacion="preLiquidacion.detalle"></detalle-liquidacion>
+					<detalle-liquidacion
+							datos-liquidacion="preLiquidacion.detalle"
+							tasa-agp="preLiquidacion.tasaAgp"
+							ng-hide="preLiquidacion.detalle.tons == 0">
+					</detalle-liquidacion>
 					<div class="col-lg-12 text-center" ng-show="comprobantesPreLiquidados.cargando">
 						<img class="media-object center-block" src="images/loading.gif">
 					</div>
 					<div class="col-lg-12" ng-hide="comprobantesPreLiquidados.cargando || comprobantesPreLiquidados.verDetalle">
 						<table-sin-liquidar
 								model="comprobantesPreLiquidados"
+								tasa-agp="preLiquidacion.tasaAgp"
 								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
 								cargar="cambioPagina()"
 								ordenar="filtrarPreLiquidados(filtro)">
@@ -135,7 +176,7 @@
 				</div>
 				<hr>
 				<liquidaciones-search model="liquidacion.model" ocultar-filtros="liquidacion.ocultarFiltros"></liquidaciones-search>
-				<table-pagos cargando="liquidacion.cargando" datos-pagos="liquidacion.datos" panel-mensaje="liquidacion.panelMensaje" detalle="detalleLiquidacion(pago)"></table-pagos>
+				<table-pagos cargando="liquidacion.cargando" data="liquidacion.datos" panel-mensaje="liquidacion.panelMensaje" detalle="detalleLiquidacion(pago)"></table-pagos>
 				<div class="col-lg-12 hidden-print" ng-show="liquidacion.total > itemsPerPage">
 					<div class="text-center visible-xs"><pagination boundary-links="true" total-items="liquidacion.total" items-per-page="itemsPerPage" ng-model="liquidacion.currentPage" max-size="5" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 					<div class="text-center visible-sm"><pagination boundary-links="true" total-items="liquidacion.total" items-per-page="itemsPerPage" ng-model="liquidacion.currentPage" max-size="7" ng-click="cargarLiquidaciones()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
@@ -149,9 +190,10 @@
 					<div class="col-lg-12 center-block" ng-hide="comprobantesLiquidados.cargando || comprobantesLiquidados.verDetalle">
 						<table-sin-liquidar
 								model="comprobantesLiquidados"
+								tasa-agp="tasaAgp"
 								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
 								cargar="cambioPagina()"
-								ordenar="filtrarLiquidados(filtro)">
+								ordenar="filtrarPreLiquidados(filtro)">
 						</table-sin-liquidar>
 					</div>
 					<div class="col-lg-12" ng-show="comprobantesLiquidados.verDetalle">

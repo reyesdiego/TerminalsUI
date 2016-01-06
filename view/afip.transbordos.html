@@ -1,0 +1,27 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-2 hidden-print">
+			<br>
+			<ul class="nav nav-pills nav-stacked">
+				<li><b>Transbordos</b></li>
+				<li ng-class="{selectedOption: 'afip.transbordos.impo' == actualRegistro}" ng-show="in_array('afip.transbordos.impo', rutas)"><a ui-sref="afip.transbordos.impo" ng-click="cargaDatos('afip.transbordos.impo')">Impo</a></li>
+				<li ng-class="{selectedOption: 'afip.transbordos.expo' == actualRegistro}" ng-show="in_array('afip.transbordos.expo', rutas)"><a ui-sref="afip.transbordos.expo" ng-click="cargaDatos('afip.transbordos.expo')">Expo</a></li>
+			</ul>
+		</div>
+		<div class="col-md-10">
+			<br>
+			<accordion-afip-search></accordion-afip-search>
+			<div class="col-lg-12" ng-show="datosRegistro.length == 0 && !cargando">
+				<br>
+				<div-panel config-panel="panelMensaje">
+					<span>{{ panelMensaje.mensaje }}</span>
+				</div-panel>
+			</div>
+			<div-cargando mostrar="cargando">
+				<div ng-hide="totalItems == 0">
+					<div ui-view></div>
+				</div>
+			</div-cargando>
+		</div>
+	</div>
+</div>

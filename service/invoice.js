@@ -208,10 +208,77 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			return response;
 		};
 
+		var setResend = function(resend, comprobante){
+			var deferred = $q.defer();
+			var message;
+			var data = {
+				resend: resend
+			};
+			invoiceFactory.setResendInvoice(data, comprobante._id, function(data){
+				if (data.status == 'OK'){
+					comprobante.resend = resend;
+					deferred.resolve()
+				} else {
+					message = 'Se ha producido un error al establecer el estado del comprobante.';
+					deferred.reject(message);
+				}
+			});
+			return deferred.promise;
+		};
+
+		var ponerComentario = function(dataComment, logInvoice, comprobante){
+			var deferred = $q.defer();
+			var message;
+			invoiceFactory.postCommentInvoice(logInvoice, function(dataRes){
+				if (dataRes.status == 'OK'){
+					comprobante.interfazEstado = dataComment.newState;
+					switch (dataComment.newState.type){
+						case 'WARN':
+							comprobante.interfazEstado.btnEstado = 'text-warning';
+							break;
+						case 'OK':
+							comprobante.interfazEstado.btnEstado = 'text-success';
+							break;
+						case 'ERROR':
+							comprobante.interfazEstado.btnEstado = 'text-danger';
+							break;
+						case 'UNKNOWN':
+							comprobante.interfazEstado.btnEstado = 'text-info';
+							break;
+					}
+					var nuevoEstado = {
+						_id: comprobante._id,
+						estado: dataComment.newState,
+						grupo: loginService.getGroup(),
+						user: loginService.getInfo().user
+					};
+					comprobante.estado.push(nuevoEstado);
+					deferred.resolve();
+				} else {
+					message = 'Se ha producido un error al agregar el comentario en el comprobante.';
+					deferred.reject(message);
+				}
+			});
+			return deferred.promise;
+		};
+
+		var cambiarEstado = function(comprobanteId, nuevoEstado){
+			var deferred = $q.defer();
+			invoiceFactory.putCambiarEstado(comprobanteId, nuevoEstado, function(data, status) {
+				if (status == 'OK'){
+					deferred.resolve();
+				} else {
+					deferred.reject(data);
+				}
+			});
+			return deferred.promise;
+		};
+
 		this.trackInvoice = function(comprobante){
 			var deferred = $q.defer();
 			var estado;
 			var message;
+			if (!angular.isDefined(comprobante.resend)) comprobante.resend = 0;
 			estado = comprobante.interfazEstado;
 			invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 				if (dataTrack.status == 'OK'){
@@ -228,57 +295,41 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 							},
 							states : function() {
 								return angular.copy(estadosComprobantes);
+							},
+							resend: function() {
+								return comprobante.resend;
 							}
 						}
 					});
-
 					dataTrack = [];
 					modalInstance.result.then(function (dataComment) {
-						invoiceFactory.putCambiarEstado(comprobante._id, dataComment.newState._id, function(){
-							var logInvoice = {
-								title: dataComment.title,
-								state: dataComment.newState._id,
-								comment: dataComment.comment,
-								invoice: comprobante._id
-							};
-							invoiceFactory.postCommentInvoice(logInvoice, function(dataRes){
-								if (dataRes.status == 'OK'){
-									comprobante.interfazEstado = dataComment.newState;
-									switch (dataComment.newState.type){
-										case 'WARN':
-											comprobante.interfazEstado.btnEstado = 'text-warning';
-											break;
-										case 'OK':
-											comprobante.interfazEstado.btnEstado = 'text-success';
-											break;
-										case 'ERROR':
-											comprobante.interfazEstado.btnEstado = 'text-danger';
-											break;
-										case 'UNKNOWN':
-											comprobante.interfazEstado.btnEstado = 'text-info';
-											break;
-									}
-									var nuevoEstado = {
-										_id: comprobante._id,
-										estado: dataComment.newState,
-										grupo: loginService.getGroup(),
-										user: loginService.getInfo().user
-									};
-									comprobante.estado.push(nuevoEstado);
-									deferred.resolve(comprobante);
-								} else {
-									message = 'Se ha producido un error al agregar el comentario en el comprobante.';
-									deferred.reject(message);
-								}
+						var logInvoice = {
+							title: dataComment.title,
+							state: dataComment.newState._id,
+							comment: dataComment.comment,
+							invoice: comprobante._id
+						};
+						var llamadas = [];
+						if (dataComment.setState){
+							llamadas.push(cambiarEstado(comprobante._id, dataComment.newState._id));
+							llamadas.push(ponerComentario(dataComment, logInvoice, comprobante));
+						}
+						if (dataComment.setResend){
+							llamadas.push(setResend(dataComment.resend, comprobante));
+						}
+						$q.all(llamadas)
+							.then(function(){
+								deferred.resolve(comprobante);
+							}, function(error){
+								console.log(error);
+								deferred.reject(error);
 							});
-						});
 					}, function(){
 						deferred.resolve();
 					});
 				} else {
 					message = 'Se ha producido un error al cargar los comentarios del comprobante';
 					deferred.reject(message);
-					//dialogs.error('Comprobantes', 'Se ha producido un error al cargar los comentarios del comprobante');
 				}
 			});
 			return deferred.promise;
@@ -288,8 +339,9 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			//$scope.disablePdf = true;
 			var deferred = $q.defer();
 			var imprimirComprobante = {};
+			var nombreReporte = $filter('nombreComprobante')(invoice.codTipoComprob, true) + invoice.nroComprob + '_' + loginService.getFiltro() + '.pdf';
 			angular.copy(invoice, imprimirComprobante);
-			imprimirComprobante.codTipoComprob = $filter('nombreComprobante')(imprimirComprobante.codTipoComprob);
+			imprimirComprobante.codTipoComprob = $filter('nombreComprobante')(imprimirComprobante.codTipoComprob, false);
 			imprimirComprobante.fecha.emision = $filter('date')(imprimirComprobante.fecha.emision, 'dd/MM/yyyy', 'UTC');
 			imprimirComprobante.fecha.vcto = $filter('date')(imprimirComprobante.fecha.vcto, 'dd/MM/yyyy', 'UTC');
 			imprimirComprobante.fecha.desde = $filter('date')(imprimirComprobante.fecha.desde, 'dd/MM/yyyy', 'UTC');
@@ -301,7 +353,19 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
 					var fileURL = URL.createObjectURL(file);
-					window.open(fileURL);
+
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: fileURL,
+						target: '_blank',
+						download: nombreReporte
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+					//window.open(fileURL);
 					deferred.resolve();
 				} else {
 					deferred.reject();

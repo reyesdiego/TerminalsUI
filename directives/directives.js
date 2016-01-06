@@ -69,7 +69,8 @@ myapp.directive('detalleLiquidacion', function(){
 		restrict:		'E',
 		templateUrl:	'view/detalle.liquidacion.html',
 		scope: {
-			datosLiquidacion:		'='
+			datosLiquidacion:		'=',
+			tasaAgp:				'='
 		}
 	}
 });
@@ -149,7 +150,7 @@ myapp.directive('invoicesResult', function(){
 	}
 });
 
-myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', function(invoiceService, dialogs){
+myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', 'loginService', function(invoiceService, dialogs, loginService){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/invoices.result.html',
@@ -163,6 +164,7 @@ myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', function(inv
 			moneda:				'='
 		},
 		link: function($scope){
+			$scope.acceso = loginService.getType();
 			$scope.comprobantesControlados = [];
 
 			$scope.checkComprobantes = function(comprobante){
@@ -278,11 +280,13 @@ myapp.directive('divPagination', function(){
 			};
 		},
 		template:
-			'<div class="col-lg-12 hidden-print" ng-show="totalItems > itemsPerPage">' +
-			'	<div class="text-center visible-xs"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="5" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
+			'<div class="col-lg-12 hidden-print hidden-xs" ng-show="totalItems > itemsPerPage">' +
 			'	<div class="text-center visible-sm"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeSM" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
 			'	<div class="text-center visible-md"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeMD" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
 			'	<div class="text-center visible-lg"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeLG" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
+			'</div>' +
+			'<div class="col-lg-12 hidden-print visible-xs" ng-show="totalItems > itemsPerPage">' +
+				'<pager total-items="totalItems" ng-model="currentPage" previous-text="<< Anterior" next-text="Siguiente >>" ng-click="pageChanged()"></pager>' +
 			'</div>'
 
 	}
@@ -530,6 +534,7 @@ myapp.directive('tableSinLiquidar', function(){
 		templateUrl:	'view/table.sinLiquidar.html',
 		scope: {
 			model:					"=",
+			tasaAgp:				"=",
 			mostrarDetalle:			"&",
 			cargar:					"&",
 			ordenar:				"&"
@@ -555,11 +560,23 @@ myapp.directive('tablePagos', function(){
 		restrict:		'E',
 		scope: {
 			cargando:			'=',
-			datosPagos:			'=',
+			data:			'=',
 			panelMensaje:		'=',
 			detalle:			'&'
 		},
-		templateUrl:	'view/table.pagos.html'
+		templateUrl:	'view/table.pagos.html',
+		controller:		'tablaAnidadaCtrl'
+	}
+});
+
+myapp.directive('detalleTransbordo', function(){
+	return {
+		restrict:		'E',
+		scope: {
+			data:			'='
+		},
+		templateUrl:	'view/detalleTransbordos.html',
+		controller:		'tablaAnidadaCtrl'
 	}
 });
 
@@ -580,7 +597,8 @@ myapp.directive('reporteEmpresasSearch', function(){
 		restrict:		'E',
 		templateUrl:	'view/accordion.reporte.empresas.html',
 		scope: {
-			model:					"="
+			model:					"=",
+			ranking:				"="
 		},
 		controller: 'searchController'
 	}

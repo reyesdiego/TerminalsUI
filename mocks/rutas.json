@@ -240,6 +240,42 @@
 			"description": "Turnos sin notificar",
 			"route": "cturnos",
 			"role": "agp"
+		},
+		{
+			"_id": 37,
+			"description": "Control de turnos",
+			"route": "mturnos",
+			"role": "agp"
+		},
+		{
+			"_id": 38,
+			"description": "Modificación de tarifario",
+			"route": "modificarTarifario",
+			"role": "agp"
+		},
+		{
+			"_id": 39,
+			"description": "Control de MAT",
+			"route": "mat",
+			"role": "agp"
+		},
+		{
+			"_id": 40,
+			"description": "Módulos AFIP Transbordos",
+			"route": "afip.transbordos",
+			"role": "agp"
+		},
+		{
+			"_id": 41,
+			"description": "AFIP transbordos - Importaciones",
+			"route": "afip.transbordos.impo",
+			"role": "agp"
+		},
+		{
+			"_id": 42,
+			"description": "AFIP transbordos - Exportaciones",
+			"route": "afip.transbordos.expo",
+			"role": "agp"
 		}
 	]
 }

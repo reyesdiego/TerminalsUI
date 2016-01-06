@@ -2,8 +2,8 @@
  * Created by leo on 18/07/14.
  */
 
-myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService', '$rootScope', '$q', '$injector', 'cacheFactory', '$http',
-	function($state, $cookies, userFactory, loginService, $rootScope, $q, $injector, cacheFactory, $http){
+myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService', '$rootScope', '$q', 'cacheFactory', '$http',
+	function($state, $cookies, userFactory, loginService, $rootScope, $q, cacheFactory, $http){
 		var factory = {};
 
 		factory.userEnter = function(user, pass, useCookies){
@@ -58,11 +58,6 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 						loginService.setToken(data.token.token);
 
 						$http.defaults.headers.common.token = loginService.getToken();
-
-						//---------------------------------------------
-						data.acceso.push('modificarTarifario');
-						data.acceso.push('mturnos');
-						//---------------------------------------------
 
 						loginService.setAcceso(data.acceso);
 

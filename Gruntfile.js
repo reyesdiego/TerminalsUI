@@ -74,6 +74,11 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
+						src: ['bower_components/angular-animate/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
 						src: ['bower_components/angular-bootstrap-calendar/dist/css/*.min.*'],
 						dest: 'build'
 					},
@@ -149,6 +154,22 @@ module.exports = function(grunt) {
 					}
 				]
 			}
+		},
+		mkdir: {
+			temp: {
+				options: {
+					mode: 777,
+					create: ['build/conversorPDF/.temp']
+				}
+			}
+		},
+		chmod: {
+			options: {
+				mode: 'a+w'
+			},
+			tempFolder: {
+				src: ['build/conversorPDF/.temp']
+			}
 		}
 	});
 
@@ -158,6 +179,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-processhtml');
+	grunt.loadNpmTasks('grunt-mkdir');
+	grunt.loadNpmTasks('grunt-chmod');
 
 	// Default task(s).
 	grunt.registerTask('default', [
@@ -170,6 +193,8 @@ module.exports = function(grunt) {
 		'cssmin:terminales',
 		'uglify:js',
 		'processhtml:dist',
-		'copy:main'
+		'copy:main',
+		'mkdir:temp',
+		'chmod:tempFolder'
 	]);
 };

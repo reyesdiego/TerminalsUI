@@ -1,0 +1,38 @@
+<div class="table-responsive">
+	<table class="table table-bordered table-hover">
+		<thead>
+		<tr>
+			<th>Conocimiento</th>
+			<th>Contenedores</th>
+			<th>Peso</th>
+		</tr>
+		</thead>
+		<tbody ng-repeat="conocimiento in data" ng-switch="dataCollapse[$index]">
+		<tr class="clickableRow"  ng-click="selectTableRow($index, conocimiento.CONOCIMIENTO)">
+			<td>{{ conocimiento.CONOCIMIENTO }}</td>
+			<td>{{ conocimiento.CONTENEDORES.length }}</td>
+			<td>{{ conocimiento.PESO }}</td>
+		</tr>
+		<tr data-ng-switch-when="true">
+			<td colspan="3">
+				<div class="col-lg-offset-3 col-lg-6">
+					<table class="table table-hover table-bordered table-striped">
+						<thead>
+						<tr>
+							<th>Contenedor</th>
+							<th>Medida</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="contenedor in data[$index].CONTENEDORES">
+							<td>{{ contenedor.CONTENEDOR }}</td>
+							<td>{{ contenedor.MEDIDA }}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>

@@ -6,10 +6,85 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		var factory = {};
 
+		factory.getNotPayedCsv = function(datos, callback){
+			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() +'/download';
+			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
+				.success(function(data, status, headers){
+					var contentType = headers('Content-Type');
+					if (contentType.indexOf('text/csv') >= 0){
+						callback(data, 'OK');
+					} else {
+						callback(data, 'ERROR');
+					}
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
+		factory.getPriceDollar = function(callback){
+			var inserturl = serverUrl + '/afip/dollars';
+			$http.get(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
+		factory.saveMat = function(data, update, callback){
+			var inserturl = serverUrl + '/mats/mat';
+			if (update){
+				$http.put(inserturl, data)
+					.success(function(data){
+						callback(data);
+					}).error(function(error){
+						callback(error);
+					})
+			} else {
+				$http.post(inserturl, data)
+					.success(function(data){
+						callback(data);
+					}).error(function(error){
+						callback(error);
+					})
+			}
+		};
+
+		factory.getMAT = function(year, callback){
+			var inserturl = serverUrl + '/mats';
+			//var inserturl = 'mocks/mat.json'; //mocked route
+			$http.get(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
+		factory.getMatFacturado = function(year, callback){
+			// var inserturl = serverUrl + '/alguna ruta en donde se use el year;
+			var inserturl = 'mocks/matFacturado.json'; //mocked route
+			$http.get(inserturl)
+				.success(function(data){
+					callback(data);
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		factory.getComprobantesLiquidar = function(page, datos, callback){
-			factory.cancelRequest('comprobantesLiquidar');
+			if (datos.byContainer){
+				factory.cancelRequest('comprobantesLiquidarContainer');
+			} else {
+				factory.cancelRequest('comprobantesLiquidar');
+			}
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'comprobantesLiquidar');
+			var canceler;
+			if (datos.byContainer){
+				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidarContainer');
+			} else {
+				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidar');
+			}
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -74,9 +149,18 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getComprobantesLiquidados = function(page, liquidacion, datos, callback){
-			factory.cancelRequest('comprobantesLiquidados');
+			if (datos.byContainer){
+				factory.cancelRequest('comprobantesLiquidadosContainer');
+			} else {
+				factory.cancelRequest('comprobantesLiquidados');
+			}
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'comprobantesLiquidados');
+			var canceler;
+			if (datos.byContainer){
+				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidadosContainer');
+			} else {
+				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidados');
+			}
 			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -148,9 +232,9 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				})
 		};
 
-		factory.getPrePayment = function(preLiquidacion, callback){
-			var inserturl = serverUrl + '/paying/getPrePayment/' + loginService.getFiltro() + '/' + preLiquidacion;
-			$http.get(inserturl)
+		factory.getPrePayment = function(datos, callback){
+			var inserturl = serverUrl + '/paying/getPrePayment/' + loginService.getFiltro();
+			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
 				.success(function(data){
 					data.data = factory.setDescriptionTasas(data.data);
 					callback(data);
@@ -167,11 +251,14 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		factory.setDescriptionTasas = function(detallesLiquidacion){
 			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
 			var totalFinal = 0;
+			var totalFinalAgp = 0;
 			detallesLiquidacion.forEach(function(detalle){
 				detalle.descripcion = descripciones[detalle._id.code];
 				totalFinal += detalle.totalPeso;
+				totalFinalAgp += detalle.totalPesoAgp;
 			});
 			detallesLiquidacion.totalFinal = totalFinal;
+			detallesLiquidacion.totalFinalAgp = totalFinalAgp;
 			return detallesLiquidacion;
 		};
 

@@ -6,6 +6,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		var fecha = formatService.formatearFechaISOString(new Date());
 
+		$scope.tipoFiltro = 'cantidad';
+
 		$scope.openDate = function(event){
 			generalFunctions.openDate(event);
 		};
@@ -15,11 +17,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 		$scope.maxDate = new Date();
 
-		$scope.prefijo = 'AR$';
-		$scope.otraMoneda = 'DOL';
-
 		$scope.control = {
 			"invoicesCount": 0,
+			"totalCount": 0,
 			"ratesCount": 0,
 			"ratesTotal": 0
 		};
@@ -32,56 +32,84 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.radioModel = 'Gates';
 
-		$scope.chartTitle = "Datos enviados";
-		$scope.chartWidth = 300;
-		$scope.chartHeight = 380;
-
-		$scope.chartsWidthTasas = 390;
-
-		$scope.chartsWidthFacturado = 460;
-
-		$scope.chartsWidthFacturadoMes = 380;
-
-		$scope.columnChart = 'column';
-
-		$scope.chartsHeight = 320;
-		$scope.chartsWidth = 410;
-		$scope.chartSeries = {3: {type: "line"}};
-
-		$scope.chartDataFacturas = [
-			['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
-		];
-
-		$scope.chartDataGates = [
-			['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
-		];
-
-		$scope.chartDataTurnos = [
-			['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
-		];
-
-		var datosFacturadoPorDiaTasas = {
-			"ratesCount": 0,
-			"ratesTotal": 0,
-			"dataGraf": [
-				['Datos', 'Facturado', { role: 'annotation' } ],
-				['BACTSSA', 0, ''],
-				['TERMINAL 4', 0, ''],
-				['TRP', 0, '']
-			]
+		$scope.chartFacturas = {
+			width: 450,
+			height: 320,
+			series: {3: {type: "line"}},
+			type: 'column',
+			currency: true,
+			stacked: false,
+			is3D: false,
+			money: 'PES',
+			columns: 4,
+			data: [
+				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
+			],
+			id: 2,
+			image: null
 		};
 
-		$scope.chartTitleFacturadoTasas = "Importe de tasa a las cargas por día";
-		$scope.chartDataFacturadoTasas = datosFacturadoPorDiaTasas.dataGraf;
+		$scope.chartGates = {
+			width: 450,
+			height: 320,
+			series: {3: {type: "line"}},
+			type: 'column',
+			currency: false,
+			stacked: false,
+			is3D: false,
+			data: [
+				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
+			],
+			id: 3,
+			image: null
+		};
 
-		$scope.chartDataFacturado = [
-			['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
-		];
+		$scope.chartTurnos = {
+			width: 450,
+			height: 320,
+			series: {3: {type: "line"}},
+			type: 'column',
+			currency: false,
+			stacked: false,
+			is3D: false,
+			data: [
+				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
+			],
+			id: 4,
+			image: null
+		};
 
-		$scope.chartWidthDiaGatesTurnos = 1120;
-		$scope.chartDataDiaGatesTurnos = [
-			['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
-		];
+		$scope.chartFacturado = {
+			width: 460,
+			height: 320,
+			series: {3: {type: "line"}},
+			type: 'column',
+			currency: true,
+			stacked: false,
+			is3D: false,
+			money: 'PES',
+			columns: 4,
+			data: [
+				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
+			],
+			id: 1,
+			image: null
+		};
+
+		$scope.chartDiaGatesTurnos = {
+			width: 1200,
+			height: 350,
+			series: {3: {type: "line"}},
+			type: 'column',
+			currency: false,
+			stacked: false,
+			is3D: false,
+			data: [
+				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
+			],
+			id: 5,
+			image: null
+		};
 
 		$scope.isCollapsedMonth = true;
 		$scope.isCollapsedDay = true;
@@ -141,7 +169,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.errorGatesTurnos = false;
 		$scope.mensajeErrorGatesTurnos = '';
 
-		$scope.prepararDatosMes = function(datosGrafico, traerTotal){
+		var prepararDatosMes = function(datosGrafico, traerTotal){
 			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 			var base = [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -197,40 +225,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			return base;
 		};
 
-		$scope.prepararDatosFacturadoDiaTasas = function(datos){
-			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
-			var base = [
-				['Datos', 'Facturado', { role: 'annotation' } ],
-				['BACTSSA', 0, ''],
-				['TERMINAL 4', 0, ''],
-				['TRP', 0, '']
-			];
-			//Para cambiar entre columnas
-			var contarTerminal = 1;
-			//Para cargar promedio
-			//Los datos vienen en objetos que incluyen la terminal, y la suma facturada(cnt)
-			if (datos.dataGraf.length){
-				datos.dataGraf.forEach(function(datosDia){
-					switch (datosDia._id.terminal){
-						case "BACTSSA":
-							contarTerminal = 1;
-							break;
-						case "TERMINAL4":
-							contarTerminal = 2;
-							break;
-						case "TRP":
-							contarTerminal = 3;
-							break;
-					}
-					base[contarTerminal][1] = datosDia.total;
-				});
-			}
-			datos.dataGraf = base;
-			//Finalmente devuelvo la matriz generada con los datos para su asignación
-			return datos;
-		};
-
-		$scope.prepararDatosFacturadoDia = function(datosGrafico){
+		var prepararDatosFacturadoDia = function(datosGrafico){
 			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 			var base = [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
@@ -282,7 +277,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			return base;
 		};
 
-		$scope.prepararDatosGatesTurnosDia = function(datosGrafico){
+		var prepararDatosGatesTurnosDia = function(datosGrafico){
 			var matAux = [];
 			matAux[0] = ['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ];
 			for (var i = 0; i <= 23; i++){
@@ -321,30 +316,50 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 						.Where('$.codTipoComprob==' + data.data.codTipoComprob)
 						.ToArray();
 					if (response.length == 1) {
-						response[0].total++;
-						if (angular.isDefined(response[0][data.data.terminal][0]) && angular.isNumber(response[0][data.data.terminal][0])) {
-							response[0][data.data.terminal][0]++;
+						response[0].cnt++;
+						response[0].total += data.data.importe.total;
+						if (angular.isDefined(response[0][data.data.terminal].cnt[0]) && angular.isNumber(response[0][data.data.terminal].cnt[0])) {
+							response[0][data.data.terminal].cnt[0]++;
 						} else {
-							response[0][data.data.terminal][0] = 1;
+							response[0][data.data.terminal].cnt[0] = 1;
+						}
+						if (angular.isDefined(response[0][data.data.terminal].total[0]) && angular.isNumber(response[0][data.data.terminal].total[0])) {
+							response[0][data.data.terminal].total[0] += data.data.importe.total;
+						} else {
+							response[0][data.data.terminal].cnt[0] = data.data.importe.total;
 						}
 						for (var obj in response[0]){
 							if (typeof response[0][obj] === 'object'){
-								response[0][obj][1] = response[0][obj][0] * 100 / response[0].total;
+								response[0][obj].cnt[1] = response[0][obj].cnt[0] * 100 / response[0].cnt;
+								response[0][obj].total[1] = response[0][obj].total[0] * 100 / response[0].total;
 							}
 						}
 					} else {
 						var nuevoComprobante = {
 							codTipoComprob : data.data.codTipoComprob,
-							total : 1,
-							BACTSSA : [ 0, 0 ],
-							TERMINAL4 : [ 0, 0 ],
-							TRP : [ 0, 0 ]
+							cnt : 1,
+							total: data.data.importe.total,
+							BACTSSA : {
+								cnt: [0, 0],
+								total: [0, 0]
+							},
+							TERMINAL4 : {
+								cnt: [0, 0],
+								total: [0, 0]
+							},
+							TRP : {
+								cnt: [0, 0],
+								total: [0, 0]
+							}
 						};
-						nuevoComprobante[data.data.terminal][0] = 1;
-						nuevoComprobante[data.data.terminal][1] = 100;
+						nuevoComprobante[data.data.terminal].cnt[0] = 1;
+						nuevoComprobante[data.data.terminal].cnt[1] = 100;
+						nuevoComprobante[data.data.terminal].total[0] = data.data.importe.total;
+						nuevoComprobante[data.data.terminal].total[1] = 100;
 						$scope.comprobantesCantidad.push(nuevoComprobante);
 					}
 					$scope.comprobantesCantidad.invoicesCount++;
+					$scope.comprobantesCantidad.totalCount += data.data.importe.total;
 					$scope.$apply();
 				}
 			}
@@ -395,17 +410,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.mensajeErrorGatesTurnos = error;
 		});
 
-		$scope.deleteRow = function (index) {
-			$scope.chartData.splice(index, 1);
-		};
-		$scope.addRow = function () {
-			$scope.chartData.push([]);
-		};
 		$scope.selectRow = function (index) {
 			$scope.selected = index;
-		};
-		$scope.rowClass = function (index) {
-			return ($scope.selected === index) ? "selected" : "";
 		};
 
 		$scope.traerTotales = function(){
@@ -421,15 +427,14 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.traerDatosFacturadoMes = function(){
 			var datos = {
-				fecha: $scope.mesDesde,
-				moneda: $rootScope.moneda
+				fecha: $scope.mesDesde
 			};
 			$scope.errorFacturadoMes = false;
 			$scope.isCollapsedMonth = true;
 			$scope.loadingFacturadoMes = true;
 			$scope.recargarFacturadoMes = false;
 			controlPanelFactory.getFacturasMeses(datos, function(graf){
-				$scope.chartDataFacturas = $scope.prepararDatosMes(graf.data, true);
+				$scope.chartFacturas.data = prepararDatosMes(graf.data, true);
 				$scope.loadingFacturadoMes = false;
 			});
 		};
@@ -439,7 +444,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.isCollapsedGates = true;
 			$scope.loadingGates = true;
 			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}, function(graf){
-				$scope.chartDataGates = $scope.prepararDatosMes(graf, false);
+				$scope.chartGates.data = prepararDatosMes(graf, false);
 				$scope.loadingGates = false;
 			});
 		};
@@ -450,31 +455,13 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.loadingTurnos = true;
 			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }, function(graf){
 				$scope.loadingTurnos = false;
-				$scope.chartDataTurnos = $scope.prepararDatosMes(graf, false);
-			});
-		};
-
-		$scope.traerDatosFacturadoDiaTasas = function(){
-			var datos = {
-				fecha: $scope.desdeTasas,
-				moneda: $rootScope.moneda
-			};
-			$scope.errorCargaTasas = false;
-			$scope.loadingTasas = true;
-			$scope.isCollapsedDayTasas = true;
-			$scope.recargarTasas = false;
-			controlPanelFactory.getTasas(datos, function(graf){
-				$scope.chartDataFacturadoTasas = graf.dataGraf;
-				$scope.control.ratesCount = graf.ratesCount;
-				$scope.control.ratesTotal = graf.ratesTotal;
-				$scope.loadingTasas = false;
+				$scope.chartTurnos.data = prepararDatosMes(graf, false);
 			});
 		};
 
 		$scope.traerDatosFacturadoDia = function(){
 			var datos = {
-				fecha: $scope.desde,
-				moneda: $rootScope.moneda
+				fecha: $scope.desde
 			};
 			$scope.traerTotales();
 			$scope.errorFacturadoDia = false;
@@ -482,7 +469,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.loadingFacturadoDia = true;
 			$scope.recargarFacturadoDia = false;
 			controlPanelFactory.getFacturadoPorDia(datos, function(graf){
-				$scope.chartDataFacturado = $scope.prepararDatosFacturadoDia(graf.data);
+				$scope.chartFacturado.data = prepararDatosFacturadoDia(graf.data);
 				$scope.loadingFacturadoDia = false;
 			});
 		};
@@ -497,51 +484,23 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			if ($scope.radioModel == 'Gates'){
 				controlPanelFactory.getGatesDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
 					$scope.loadingGatesTurnos = false;
-					$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);
+					$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
 					$scope.labelPorHora = 'Gates por hora'
 				});
 			}
 			else if ($scope.radioModel == 'Turnos'){
 				controlPanelFactory.getTurnosDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
 					$scope.loadingGatesTurnos = false;
-					$scope.chartDataDiaGatesTurnos = $scope.prepararDatosGatesTurnosDia(graf);
+					$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
 					$scope.labelPorHora = 'Turnos por hora'
 				});
 			}
 		};
 
-		/*$scope.$watch('moneda', function(){
-			switch ($rootScope.moneda){
-				case 'PES':
-					$scope.prefijo = 'AR$';
-					$scope.otraMoneda = 'DOL';
-					$scope.chartDataFacturado = $scope.chartDataFacturadoAR;
-					$scope.chartDataFacturadoTasas = $scope.chartDataFacturadoTasasAR;
-					$scope.chartDataFacturas = $scope.chartDataFacturasAR;
-					break;
-				case 'DOL':
-					$scope.prefijo = 'US$';
-					$scope.otraMoneda = 'PES';
-					$scope.chartDataFacturado = $scope.chartDataFacturadoUS;
-					$scope.chartDataFacturadoTasas = $scope.chartDataFacturadoTasasUS;
-					$scope.chartDataFacturas = $scope.chartDataFacturasUS;
-					break;
-			}
-			if ($scope.recargarFacturadoDia){
-				$scope.traerDatosFacturadoDia();
-			}
-			if ($scope.recargarTasas){
-				$scope.traerDatosFacturadoDiaTasas();
-			}
-			if ($scope.recargarFacturadoMes){
-				$scope.traerDatosFacturadoMes();
-			}
-		});*/
-
 		if (loginService.getStatus()){
-			$scope.traerTotales();
+			//$scope.traerTotales();
 			$scope.traerDatosFacturadoMes();
-			$scope.traerDatosFacturadoDiaTasas();
+			//$scope.traerDatosFacturadoDiaTasas();
 			$scope.traerDatosFacturadoDia();
 			$scope.traerDatosGates();
 			$scope.traerDatosTurnos();
@@ -549,9 +508,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		}
 
 		$scope.$on('terminoLogin', function(){
-			$scope.traerTotales();
+			//$scope.traerTotales();
 			$scope.traerDatosFacturadoMes();
-			$scope.traerDatosFacturadoDiaTasas();
+			//$scope.traerDatosFacturadoDiaTasas();
 			$scope.traerDatosFacturadoDia();
 			$scope.traerDatosGates();
 			$scope.traerDatosTurnos();

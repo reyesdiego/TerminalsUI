@@ -80,9 +80,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			$scope.mostrarResultado = false;
 			$scope.currentPage = 1;
 			$scope.model[filtro] = contenido;
-			if (filtro == 'razonSocial') {
-				$scope.model[filtro] = $scope.filtrarCaracteresInvalidos(contenido);
-			}
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
@@ -231,11 +228,13 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
 
 		$scope.$on('terminoLogin', function(){
+			$scope.loadingState = true;
 			$scope.acceso = $rootScope.esUsuario;
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos) cargaTodosLosPuntosDeVentas();
 		});
 
 		$scope.$on('cambioTerminal', function(){
+			$scope.loadingState = true;
 			$scope.mostrarResultado = false;
 			$scope.logoTerminal = $rootScope.logoTerminal;
 			$scope.comprobantesVistos = [];

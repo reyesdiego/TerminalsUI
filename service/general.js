@@ -30,8 +30,6 @@ myapp.service('generalFunctions', [function () {
 	};
 
 	this.idToDate = function (id) {
-		var fechaGMT0 = new Date(parseInt(id.substring(0, 8), 16) * 1000);
-		fechaGMT0.setUTCHours(fechaGMT0.getHours(), fechaGMT0.getMinutes(), fechaGMT0.getSeconds());
-		return fechaGMT0;
+		return new Date(parseInt(id.substring(0, 8), 16) * 1000);
 	};
 }]);

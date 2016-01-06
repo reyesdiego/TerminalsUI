@@ -9,7 +9,7 @@
 						<img ng-src="{{ logoTerminal }}" height="100" width="160">
 					</div>
 					<div class="col-lg-8" align="center">
-						<div><h3><strong>{{ verDetalle.codTipoComprob | nombreComprobante }}</strong></h3></div>
+						<div><h3><strong>{{ verDetalle.codTipoComprob | nombreComprobante : false }}</strong></h3></div>
 						<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
 						<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
 						<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
@@ -17,7 +17,7 @@
 					</div>
 				</td>
 				<td class="visible-print" colspan="6" align="center">
-					<div><h3><strong>{{ verDetalle.codTipoComprob | nombreComprobante }}</strong></h3></div>
+					<div><h3><strong>{{ verDetalle.codTipoComprob | nombreComprobante : false }}</strong></h3></div>
 					<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
 					<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
 					<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
@@ -64,7 +64,7 @@
 				<td>{{ item.cnt }}</td>
 				<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle | currency }}</td>
 				<td>{{ item.uniMed }}</td>
-				<td>{{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle | currency }}</td>
+				<td><span title="El total no se corresponde con el precio unitario cobrado." class="glyphicon glyphicon-exclamation-sign text-danger" ng-show="item.impTot - item.impUnit*item.cnt > 0.2 || item.impTot - item.impUnit*item.cnt < - 0.2"></span> {{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle | currency }}</td>
 			</tr>
 			</tbody>
 			<tfoot class="text-right">

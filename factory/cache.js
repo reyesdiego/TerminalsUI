@@ -8,62 +8,91 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 
 		factory.cargaBuques = function(){
 			var deferred = $q.defer();
-			$rootScope.listaTerminales.forEach(function(terminal){
-				if (terminal != loginService.getFiltro()){
-					invoiceFactory.getShipTrips(terminal, function (data) {
-						if (data.status == 'OK') {
-							generalCache.put('buques' + terminal, data.data);
-							//$rootScope.$broadcast('progreso', {mensaje: 2});
-						}
-					});
-				} else {
-					invoiceFactory.getShipTrips(terminal, function (data) {
-						if (data.status == 'OK') {
-							generalCache.put('buques' + terminal, data.data);
-							$rootScope.$broadcast('progreso', {mensaje: 2});
-							deferred.resolve();
-						} else {
-							deferred.reject();
-						}
-					});
-				}
-			});
+			if (loginService.getType() == 'agp'){
+				$rootScope.listaTerminales.forEach(function(terminal){
+					if (terminal != loginService.getFiltro()){
+						invoiceFactory.getShipTrips(terminal, function (data) {
+							if (data.status == 'OK') {
+								generalCache.put('buques' + terminal, data.data);
+								//$rootScope.$broadcast('progreso', {mensaje: 2});
+							}
+						});
+					} else {
+						invoiceFactory.getShipTrips(terminal, function (data) {
+							if (data.status == 'OK') {
+								generalCache.put('buques' + terminal, data.data);
+								$rootScope.$broadcast('progreso', {mensaje: 2});
+								deferred.resolve();
+							} else {
+								deferred.reject();
+							}
+						});
+					}
+				});
+			} else {
+				invoiceFactory.getShipTrips(loginService.getFiltro(), function (data) {
+					if (data.status == 'OK') {
+						generalCache.put('buques' + loginService.getFiltro(), data.data);
+						$rootScope.$broadcast('progreso', {mensaje: 2});
+						deferred.resolve();
+					} else {
+						deferred.reject();
+					}
+				});
+			}
 
 			return deferred.promise;
 		};
 
 		factory.cargaClientes = function(){
 			var deferred = $q.defer();
-			$rootScope.listaTerminales.forEach(function(terminal){
-				if (terminal != loginService.getFiltro()){
-					controlPanelFactory.getClients(terminal, function (data) {
-						if (data.status == 'OK') {
-							var clientes = [];
-							var i = 0;
-							data.data.forEach(function (dato) {
-								clientes.push({id: i++, nombre: dato})
-							});
-							generalCache.put('clientes' + terminal, clientes);
-							//$rootScope.$broadcast('progreso', {mensaje: 2});
-						}
-					});
-				} else {
-					controlPanelFactory.getClients(terminal, function (data) {
-						if (data.status == 'OK') {
-							var clientes = [];
-							var i = 0;
-							data.data.forEach(function (dato) {
-								clientes.push({id: i++, nombre: dato})
-							});
-							generalCache.put('clientes' + terminal, clientes);
-							$rootScope.$broadcast('progreso', {mensaje: 2});
-							deferred.resolve();
-						} else {
-							deferred.reject();
-						}
-					});
-				}
-			});
+			if (loginService.getType() == 'agp'){
+				$rootScope.listaTerminales.forEach(function(terminal){
+					if (terminal != loginService.getFiltro()){
+						controlPanelFactory.getClients(terminal, function (data) {
+							if (data.status == 'OK') {
+								var clientes = [];
+								var i = 0;
+								data.data.forEach(function (dato) {
+									clientes.push({id: i++, nombre: dato})
+								});
+								generalCache.put('clientes' + terminal, clientes);
+								//$rootScope.$broadcast('progreso', {mensaje: 2});
+							}
+						});
+					} else {
+						controlPanelFactory.getClients(terminal, function (data) {
+							if (data.status == 'OK') {
+								var clientes = [];
+								var i = 0;
+								data.data.forEach(function (dato) {
+									clientes.push({id: i++, nombre: dato})
+								});
+								generalCache.put('clientes' + terminal, clientes);
+								$rootScope.$broadcast('progreso', {mensaje: 2});
+								deferred.resolve();
+							} else {
+								deferred.reject();
+							}
+						});
+					}
+				});
+			} else {
+				controlPanelFactory.getClients(loginService.getFiltro(), function (data) {
+					if (data.status == 'OK') {
+						var clientes = [];
+						var i = 0;
+						data.data.forEach(function (dato) {
+							clientes.push({id: i++, nombre: dato})
+						});
+						generalCache.put('clientes' + loginService.getFiltro(), clientes);
+						$rootScope.$broadcast('progreso', {mensaje: 2});
+						deferred.resolve();
+					} else {
+						deferred.reject();
+					}
+				});
+			}
 
 			return deferred.promise;
 		};
@@ -102,7 +131,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 						if (data.status == 'OK') {
 							generalCache.put('vouchers' + terminal, data.data);
 							data.data.forEach(function (dato) {
-								vouchersArrayCache.put(dato._id, dato.description);
+								vouchersArrayCache.put(dato._id, {desc: dato.description, abrev: dato.abbrev });
 							});
 						}
 					});
@@ -111,7 +140,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 						if (data.status == 'OK') {
 							generalCache.put('vouchers' + terminal, data.data);
 							data.data.forEach(function (dato) {
-								vouchersArrayCache.put(dato._id, dato.description);
+								vouchersArrayCache.put(dato._id, {desc: dato.description, abrev: dato.abbrev });
 							});
 							$rootScope.$broadcast('progreso', {mensaje: 2});
 							deferred.resolve();

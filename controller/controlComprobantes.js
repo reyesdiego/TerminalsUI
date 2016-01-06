@@ -241,15 +241,30 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			var data = {
 				terminal: loginService.getFiltro(),
 				resultado: $scope.puntosDeVenta,
-				titulo: $scope.tipoComprob + " faltantes " + $scope.totalFaltantes,
+				titulo: $scope.tipoComprob.desc + " faltantes " + $scope.totalFaltantes,
 				desde: fechaInicio,
-				hasta: fechaFin
+				hasta: fechaFin,
+				hoy: new Date()
 			};
 			downloadFactory.convertToPdf(data, 'correlativeResultPdf', function(data, status){
 				if (status == 'OK'){
+
 					var file = new Blob([data], {type: 'application/pdf'});
 					var fileURL = URL.createObjectURL(file);
-					window.open(fileURL);
+
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: fileURL,
+						target: '_blank',
+						download: $scope.tipoComprob.abrev + '_faltantes_' + loginService.getFiltro() + '.pdf'
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+
+					//window.open(fileURL);
 				} else {
 					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 				}
@@ -556,7 +571,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			'contenedor': '',
 			'buqueNombre': '',
 			'viaje': '',
-			'estado': $scope.estado,
+			'estado': $scope.estado == 'E' ? 'N' : $scope.estado,
 			'code': '',
 			'filtroOrden': 'gateTimestamp',
 			'filtroOrdenAnterior': '',
@@ -565,8 +580,10 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			'itemsPerPage': 15,
 			'rates': '',
 			'payment': '',
-			'payed': ''
+			'payed': '',
+			'resend': $scope.estado == 'E' ? 1 : undefined
 		};
+
 
 		$scope.page = {
 			skip:0,
@@ -579,30 +596,31 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 		$scope.recargar = true;
 
-		$scope.$on('actualizarListado', function(event, data){
-			if ($scope.estado != data){
-				$scope.currentPage = 1;
+		var checkEstado = function(){
+			if ($scope.estado == 'E') {
+				$scope.model.resend = 1;
+			} else {
 				if ($scope.model.estado == 'N'){
 					$scope.model.estado = $scope.estado;
 				}
+			}
+		};
+
+		$scope.$on('actualizarListado', function(event, data){
+			if ($scope.estado != data){
+				$scope.currentPage = 1;
 				traerComprobantes();
 			}
 		});
 
 		$scope.$on('cambioPagina', function(event, data){
 			$scope.currentPage = data;
-			if ($scope.model.estado == 'N'){
-				$scope.model.estado = $scope.estado;
-			}
 			traerComprobantes();
 		});
 
 		$scope.$on('cambioFiltro', function(){
 			$scope.recargar = false;
 			$scope.currentPage = 1;
-			if ($scope.model.estado == 'N'){
-				$scope.model.estado = $scope.estado;
-			}
 			traerComprobantes();
 		});
 
@@ -617,6 +635,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		});
 
 		var traerComprobantes = function(){
+			checkEstado();
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.page.limit = $scope.model.itemsPerPage;
 			$scope.loadingState = true;
@@ -647,7 +666,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 					anchor.attr({
 						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
 						target: '_blank',
-						download: 'report.csv'
+						download: 'Comprobantes_erroneos.csv'
 					})[0].click();
 
 					anchor.remove(); // Clean it up afterwards

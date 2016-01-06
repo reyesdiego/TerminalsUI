@@ -1,0 +1,93 @@
+{
+	"status": "OK",
+	"data":[
+		{
+			"month": "Enero",
+			"facturado": {
+				"BACTSSA": 50000,
+				"TERMINAL4": 100000,
+				"TRP": 200000
+			}
+		},
+		{
+			"month": "Febrero",
+			"facturado": {
+				"BACTSSA": 80000,
+				"TERMINAL4": 150000,
+				"TRP": 205000
+			}
+		},
+		{
+			"month": "Marzo",
+			"facturado": {
+				"BACTSSA": 75000,
+				"TERMINAL4": 200000,
+				"TRP": 180000
+			}
+		},
+		{
+			"month": "Abril",
+			"facturado": {
+				"BACTSSA": 98000,
+				"TERMINAL4": 170000,
+				"TRP": 300000
+			}
+		},
+		{
+			"month": "Mayo",
+			"facturado": {
+				"BACTSSA": 110000,
+				"TERMINAL4": 210000,
+				"TRP": 240000
+			}
+		},
+		{
+			"month": "Junio",
+			"facturado": {
+				"BACTSSA": 100000,
+				"TERMINAL4": 120000,
+				"TRP": 700000
+			}
+		},
+		{
+			"month": "Julio",
+			"facturado": {
+				"BACTSSA": 120000,
+				"TERMINAL4": 340000,
+				"TRP": 800000
+			}
+		},
+		{
+			"month": "Agosto",
+			"facturado": {
+				"BACTSSA": 200000,
+				"TERMINAL4": 500000,
+				"TRP": 750000
+			}
+		},
+		{
+			"month": "Septiembre",
+			"facturado": {
+				"BACTSSA": 115000,
+				"TERMINAL4": 340000,
+				"TRP": 900000
+			}
+		},
+		{
+			"month": "Octubre",
+			"facturado": {
+				"BACTSSA": 150000,
+				"TERMINAL4": 200000,
+				"TRP": 800000
+			}
+		},
+		{
+			"month": "Noviembre",
+			"facturado": {
+				"BACTSSA": 500000,
+				"TERMINAL4": 800000,
+				"TRP": 1000000
+			}
+		}
+	]
+}

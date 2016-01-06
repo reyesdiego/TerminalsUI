@@ -61,8 +61,8 @@
 		<div class="input-group">
 			<select class="form-control" ng-model="model.carga" ng-init="model.carga=''">
 				<option value="" disabled>Según carga</option>
-				<option value="LL">Lleno</option>
-				<option value="VA">Vacío</option>
+				<option value="LL" class="text-success">Lleno</option>
+				<option value="VA" class="text-danger">Vacío</option>
 				<option value="NO">Sin contenedor</option>
 			</select>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('carga', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>

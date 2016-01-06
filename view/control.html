@@ -1,21 +1,32 @@
 <div class="container col-xlg-offset-2 col-xlg-8">
 
-	<div class="row">
-		<div class="col-lg-12">
-			<h1><img ng-src="images/paneldecontrol.png" height="64" width="80" class="hidden-xs">Panel de control</h1>
-		</div>
+	<div class="row col-lg-12 page-header">
+		<h1><img ng-src="images/paneldecontrol.png" height="64" width="80" class="hidden-xs">Panel de control</h1>
 	</div>
 
 	<div class="row">
 		<br>
-		<div class="col-lg-7">
-			<h4 class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
-			<div class="input-group text-left">
-				<label for="desde" class="sr-only">Fecha</label>
-				<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button></span>
-				<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="desde" is-open="openfechaInicio" max-date="maxDate" ng-change="traerDatosFacturadoDia()" disabled/>
+		<div class="col-lg-8">
+			<h4 ng-show="tipoFiltro=='cantidad'" class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
+			<h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: $ {{ comprobantesCantidad.totalCount | currency }}</h4>
+			<div class="rowcol-lg-12">
+				<div class="form-group col-lg-5">
+					<div class="input-group text-left">
+						<label for="desde" class="sr-only">Fecha</label>
+						<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+						<input id="desde" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="desde" is-open="openfechaInicio" max-date="maxDate" ng-change="traerDatosFacturadoDia()" disabled/>
+					</div>
+				</div>
+				<div class="form-group radio col-lg-7 text-right">
+					<label>
+						<input type="radio" ng-model="tipoFiltro" value="cantidad">Cantidad de comprobantes
+					</label>
+					<label>
+						<input type="radio" ng-model="tipoFiltro" value="total">Total facturado
+					</label>
+				</div>
 			</div>
-			<div class="table-responsive" style="max-height: 220px; max-width: 100%; overflow: auto">
+			<div class="col-lg-12 table-responsive" style="max-height: 230px; max-width: 100%; overflow: auto">
 				<table class="table table-bordered table-hover">
 					<thead>
 					<tr>
@@ -27,48 +38,47 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr ng-repeat="comprobante in comprobantesCantidad">
-						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante }}</td>
-						<td class="text-right">{{ comprobante.BACTSSA[0] | numero }} ({{ comprobante.BACTSSA[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.TERMINAL4[0] | numero }} ({{ comprobante.TERMINAL4[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.TRP[0] | numero }} ({{ comprobante.TRP[1] | numero | number:2 }} %)</td>
-						<td class="text-right"><b>{{ comprobante.total }}</b></td>
+					<tr style="font-size: 8pt" ng-show="tipoFiltro=='cantidad'" ng-repeat="comprobante in comprobantesCantidad">
+						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
+						<td class="text-right">{{ comprobante.BACTSSA.cnt[0] | numero }} ({{ comprobante.BACTSSA.cnt[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TERMINAL4.cnt[0] | numero }} ({{ comprobante.TERMINAL4.cnt[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TRP.cnt[0] | numero }} ({{ comprobante.TRP.cnt[1] | numero | number:2 }} %)</td>
+						<td class="text-right"><b>{{ comprobante.cnt }}</b></td>
+					</tr>
+					<tr style="font-size: 8pt" ng-show="tipoFiltro=='total'" ng-repeat="comprobante in comprobantesCantidad">
+						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
+						<td class="text-right">$ {{ comprobante.BACTSSA.total[0] | numero | currency }} ({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right">$ {{ comprobante.TERMINAL4.total[0] | numero | currency }} ({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right">$ {{ comprobante.TRP.total[0] | numero | currency }} ({{ comprobante.TRP.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right"><b>$ {{ comprobante.total | currency }}</b></td>
 					</tr>
 					<tr>
 						<th class="text-right" colspan="4">Total</th>
-						<th class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
+						<th ng-show="tipoFiltro=='cantidad'" class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
+						<th ng-show="tipoFiltro=='total'" class="text-right">$ {{ comprobantesCantidad.totalCount | currency }}</th>
 					</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<div class="col-lg-4" ng-show="errorCargaTasas">
+		<!--<div class="col-lg-4" ng-show="errorCargaTasas">
 			<div class="alert alert-danger">
 				<strong>Error</strong> - No se han podido cargar los datos de los facturado por tasas a las cargas.
 				<h6>{{mensajeErrorCargaTasas}}</h6>
 				<span>Presione <a href ng-click="traerDatosFacturadoDiaTasas()">aquí</a> para reintentar.</span>
 			</div>
-		</div>
+		</div>-->
 
-		<div class="col-lg-5" ng-show="loadingFacturadoDia">
+		<div class="col-lg-4" ng-show="loadingFacturadoDia">
 			<img class="media-object center-block" src="images/loading.gif">
 		</div>
-		<div class="col-lg-5" ng-hide="loadingFacturadoDia || errorFacturadoDia">
+		<div class="col-lg-4" ng-hide="loadingFacturadoDia || errorFacturadoDia">
 			<h4 class="text-left">Facturado diario</h4>
 			<div collapse="!isCollapsedDay">
 				<dynamic-chart
-						data="chartDataFacturado"
-						width="{{chartsWidthFacturado}}"
-						height="{{chartsHeight}}"
+						chart-object="chartFacturado"
 						select="selectRow(selectedRowIndexFacturado)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						stacked="false"
-						currency="true"
-						is3-d="false"
-						money="moneda"
-						columns="4">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -100,18 +110,9 @@
 			</div>
 			<div collapse="!isCollapsedMonth">
 				<dynamic-chart
-						data="chartDataFacturas"
-						width="{{chartsWidthFacturadoMes}}"
-						height="{{chartsHeight}}"
+						chart-object="chartFacturas"
 						select="selectRow(selectedRowIndexFacturas)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						stacked="false"
-						currency="true"
-						is3-d="false"
-						money="moneda"
-						columns="4">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -141,17 +142,9 @@
 			</div>
 			<div collapse="!isCollapsedGates">
 				<dynamic-chart
-						data="chartDataGates"
-						title="{{chartTitleGates}}"
-						width="{{chartsWidth}}"
-						height="{{chartsHeight}}"
+						chart-object="chartGates"
 						select="selectRow(selectedRowIndexGates)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						stacked="false"
-						currency="false"
-						is3-d="false">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -181,16 +174,9 @@
 			</div>
 			<div collapse="!isCollapsedTurnos">
 				<dynamic-chart
-						data="chartDataTurnos"
-						width="{{chartsWidth}}"
-						height="{{chartsHeight}}"
+						chart-object="chartTurnos"
 						select="selectRow(selectedRowIndexTurnos)"
-						series="chartSeries"
-						colors="barColors"
-						type="{{columnChart}}"
-						stacked="false"
-						currency="false"
-						is3-d="false">
+						colors="barColors">
 				</dynamic-chart>
 			</div>
 		</div>
@@ -250,20 +236,11 @@
 				</div>
 			</div>
 			<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
-				<div class="table-responsive">
-					<dynamic-chart
-							data="chartDataDiaGatesTurnos"
-							width="{{chartWidthDiaGatesTurnos}}"
-							height="{{chartsHeight}}"
-							select="selectRow(selectedRowIndexFacturado)"
-							series="chartSeries"
-							colors="barColors"
-							type="{{columnChart}}"
-							currency="false"
-							stacked="false"
-							is3-d="false">
-					</dynamic-chart>
-				</div>
+				<dynamic-chart
+						chart-object="chartDiaGatesTurnos"
+						select="selectRow(selectedRowIndexFacturado)"
+						colors="barColors">
+				</dynamic-chart>
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="errorGatesTurnos">

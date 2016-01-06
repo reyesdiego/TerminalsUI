@@ -16,9 +16,13 @@ myapp.filter('numberEx', ['numberFilter', '$locale',
 		var formats = $locale.NUMBER_FORMATS;
 		return function(input, fractionSize) {
 			//Get formatted value
-			var formattedValue = number(input, fractionSize);
-
-			return Number(formattedValue.replace(',', '.'));
+			if (angular.isDefined(input) && input != null){
+				var formattedValue = number(input, fractionSize);
+				formattedValue = formattedValue.replace('.', '');
+				return Number(formattedValue.replace(',', '.'));
+			} else {
+				return 0;
+			}
 		};
 	}
 ]);
@@ -99,9 +103,13 @@ myapp.filter('numero', [function() {
 }]);
 
 myapp.filter('nombreComprobante', ['vouchersArrayCache', function(vouchersArrayCache) {
-	return (function(numero) {
-		if (angular.isDefined(numero) && angular.isString(vouchersArrayCache.get(numero))) {
-			return vouchersArrayCache.get(numero);
+	return (function(numero, abrev) {
+		if (angular.isDefined(numero) && angular.isDefined(vouchersArrayCache.get(numero))) {
+			if (abrev){
+				return vouchersArrayCache.get(numero).abrev;
+			} else {
+				return vouchersArrayCache.get(numero).desc;
+			}
 		} else {
 			return 'Error de comprobante';
 		}

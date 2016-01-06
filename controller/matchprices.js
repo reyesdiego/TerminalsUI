@@ -83,8 +83,12 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 						price.matches[0].match.forEach(function(codigo){
 							$scope.matchesTerminal.push(codigo);
 						});
-						if (price.matches[0].match.length == 1 && price.matches[0].match[0] == price.code){
-							$scope.propiosTerminal.push(price);
+						if (price.matches[0].match.length >= 1){
+							price.matches[0].match.forEach(function(unMatch){
+								if (unMatch == price.code){
+									$scope.propiosTerminal.push(price);
+								}
+							});
 						}
 					}
 				});
@@ -229,7 +233,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				"terminal": loginService.getInfo().terminal
 			};
 
-			if ($scope.verificarEditado()){
+			if (verificarEditado()){
 				if ($scope.flagEditando){
 					formData.topPrices = angular.copy($scope.tarifaCompleta.topPrices);
 					if (angular.isDefined($scope.newPrice) && $scope.newPrice > 0){
@@ -349,7 +353,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		});
 	};
 
-	$scope.verificarEditado = function(){
+	var verificarEditado = function(){
 		var flagCodigo = false;
 
 		//Comparo que con los cambios hechos, no coincida el código con otra tarifa de la lista
