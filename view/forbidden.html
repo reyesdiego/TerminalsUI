@@ -7,7 +7,9 @@
 	<div class="row col-lg-12">
 		<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error de acceso' }">
 			<p>No tiene privilegios suficientes para acceder a esta sección del sitio.</p>
-			<p><a href="" ui-sref="login">Presione aquí para volver a la pantalla de inicio de sesión.</a></p>
+			<p ng-show="acceso == ''"><a href ui-sref="login">Presione aquí para volver a la pantalla de inicio de sesión.</a></p>
+			<p ng-show="acceso != ''">Si considera que esto es un error, comuníquese con el administrador del sistema.</p>
+			<p ng-show="acceso != ''"><a href ui-sref="login">Presione aquí para volver a la pantalla anterior.</a></p>
 		</div-panel>
 	</div>
 
