@@ -1404,12 +1404,12 @@ pre code {
 }
 @media (min-width: 1600px) {
 	.container {
-		width: 1554px;
+		width: 1570px;
 	}
 }
 @media (min-width: 1900px) {
 	.container {
-		width: 1820px;
+		width: 1870px;
 	}
 }
 .container-fluid {
