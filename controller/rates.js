@@ -354,7 +354,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			armarGrafico();
 			armarGraficoDetalle();
 			if ($scope.verDetalleTerminal){
-				$scope.detallar();
+				detallar();
 			}
 		};
 
