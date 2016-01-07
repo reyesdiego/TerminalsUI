@@ -4,7 +4,11 @@
 myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', 'colorTerminalesCache', 'dialogs', 'downloadFactory',
 	function($scope, liquidacionesFactory, generalFunctions, colorTerminalesCache, dialogs, downloadFactory){
 
-		$scope.disableModify = true;
+		$scope.disableModify = {
+			BACTSSA: true,
+			TERMINAL4: true,
+			TRP: true
+		};
 
 		$scope.barColors = {
 			"bactssa": colorTerminalesCache.get('Bactssa'),
@@ -239,7 +243,9 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 					$scope.model.valorMAT[terminal] = parseFloat($scope.model.valorMAT[terminal]);
 				}
 			}
-			$scope.disableModify = ($scope.model.valorMAT.BACTSSA == $scope.matData.BACTSSA && $scope.model.valorMAT.TERMINAL4 == $scope.matData.TERMINAL4 && $scope.model.valorMAT.TRP == $scope.matData.TRP);
+			$scope.disableModify.BACTSSA = $scope.model.valorMAT.BACTSSA == $scope.matData.BACTSSA;
+			$scope.disableModify.TERMINAL4 = $scope.model.valorMAT.TERMINAL4 == $scope.matData.TERMINAL4;
+			$scope.disableModify.TRP = $scope.model.valorMAT.TRP == $scope.matData.TRP;
 		};
 
 		$scope.actualizarMAT = function(terminal){
