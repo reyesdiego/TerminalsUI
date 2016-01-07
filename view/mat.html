@@ -32,27 +32,27 @@
 				<td class="text-right">
 					<div class="input-group">
 						<span class="input-group-addon">$ </span>
-						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.BACTSSA" ng-change="verCambios()">
+						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.BACTSSA" ng-change="verCambios('BACTSSA')">
 						<span class="input-group-btn">
-							<button class="btn btn-default" ng-disabled="disableModify" ng-click="actualizarMAT('BACTSSA')"><span class="glyphicon glyphicon-save"></span></button>
+							<button class="btn btn-default" ng-disabled="disableModify.BACTSSA" ng-click="actualizarMAT('BACTSSA')"><span class="glyphicon glyphicon-save"></span></button>
 						</span>
 					</div>
 				</td>
 				<td class="text-right">
 					<div class="input-group">
 						<span class="input-group-addon">$ </span>
-						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.TERMINAL4" ng-change="verCambios()">
+						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.TERMINAL4" ng-change="verCambios('TERMINAL4')">
 						<span class="input-group-btn">
-							<button class="btn btn-default" ng-disabled="disableModify" ng-click="actualizarMAT('TERMINAL4')"><span class="glyphicon glyphicon-save"></span></button>
+							<button class="btn btn-default" ng-disabled="disableModify.TERMINAL4" ng-click="actualizarMAT('TERMINAL4')"><span class="glyphicon glyphicon-save"></span></button>
 						</span>
 					</div>
 				</td>
 				<td class="text-right">
 					<div class="input-group">
 						<span class="input-group-addon">$ </span>
-						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.TRP" ng-change="verCambios()">
+						<input class="form-control text-right" type="number" min="0" step="0.01" ng-model="model.valorMAT.TRP" ng-change="verCambios('TRP')">
 						<span class="input-group-btn">
-							<button class="btn btn-default" ng-disabled="disableModify" ng-click="actualizarMAT('TRP')"><span class="glyphicon glyphicon-save"></span></button>
+							<button class="btn btn-default" ng-disabled="disableModify.TRP" ng-click="actualizarMAT('TRP')"><span class="glyphicon glyphicon-save"></span></button>
 						</span>
 					</div>
 				</td>
