@@ -221,6 +221,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			return generalFunctions.colorHorario(gate);
 		};
 		$scope.mostrarDetalle = function(contenedor){
+			$scope.loadingState = true;
 			$scope.paginaAnterior = $scope.currentPage;
 			$scope.totalGates = $scope.totalItems;
 			$scope.detallesGates = true;
@@ -231,6 +232,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 					$scope.invoices = data.data;
 					$scope.totalItems = data.totalCount;
 				}
+				$scope.loadingState = false;
 			});
 		};
 		$scope.ocultarDetallesGates = function(){
