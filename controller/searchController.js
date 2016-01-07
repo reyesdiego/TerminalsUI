@@ -29,6 +29,10 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.listaViajes = [];
 		$scope.volverAPrincipal = true;
 
+		$scope.active = {
+			impo: true,
+			expo: false
+		};
 		$scope.datepickerMode = 'month';
 
 		$scope.$on('notificacionDetalle', function(event, data){
@@ -36,22 +40,26 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			if (data.filtro == 'fechaTurno'){
 				fechaAuxInicio = new Date(data.contenido.inicio);
 				fechaAuxFin = new Date(data.contenido.fin);
-				$scope.model['fechaInicio'] = new Date(fechaAuxInicio.getUTCFullYear(), fechaAuxInicio.getUTCMonth(), fechaAuxInicio.getUTCDate(), fechaAuxInicio.getUTCHours(), fechaAuxInicio.getUTCMinutes());
-				$scope.model['fechaFin'] = new Date(fechaAuxFin.getUTCFullYear(), fechaAuxFin.getUTCMonth(), fechaAuxFin.getUTCDate(), fechaAuxFin.getUTCHours(), fechaAuxFin.getUTCMinutes());
+				$scope.model['fechaInicio'] = new Date(fechaAuxInicio.getFullYear(), fechaAuxInicio.getMonth(), fechaAuxInicio.getCDate(), fechaAuxInicio.getHours(), fechaAuxInicio.getMinutes());
+				$scope.model['fechaFin'] = new Date(fechaAuxFin.getFullYear(), fechaAuxFin.getMonth(), fechaAuxFin.getDate(), fechaAuxFin.getHours(), fechaAuxFin.getMinutes());
 				$scope.$emit('iniciarBusqueda', $scope.model);
 			} else if(data.filtro == 'turno'){
 				fechaAuxInicio = new Date(data.contenido.inicio);
 				fechaAuxFin = new Date(data.contenido.fin);
-				$scope.model['fechaInicio'] = new Date(fechaAuxInicio.getUTCFullYear(), fechaAuxInicio.getUTCMonth(), fechaAuxInicio.getUTCDate(), fechaAuxInicio.getUTCHours(), fechaAuxInicio.getUTCMinutes());
-				$scope.model['fechaFin'] = new Date(fechaAuxFin.getUTCFullYear(), fechaAuxFin.getUTCMonth(), fechaAuxFin.getUTCDate(), fechaAuxFin.getUTCHours(), fechaAuxFin.getUTCMinutes());
+				$scope.model['fechaInicio'] = new Date(fechaAuxInicio.getFullYear(), fechaAuxInicio.getMonth(), fechaAuxInicio.getDate(), fechaAuxInicio.getHours(), fechaAuxInicio.getMinutes());
+				$scope.model['fechaFin'] = new Date(fechaAuxFin.getFullYear(), fechaAuxFin.getMonth(), fechaAuxFin.getDate(), fechaAuxFin.getHours(), fechaAuxFin.getMinutes());
 				$scope.model['mov'] = data.contenido.mov;
+				$scope.active = {
+					impo: (data.contenido.mov == 'IMPO'),
+					expo: (data.contenido.mov == 'EXPO')
+				};
 				$scope.model['buqueNombre'] = data.contenido.buque;
 				$scope.model['contenedor'] = data.contenido.contenedor;
 				$scope.$emit('iniciarBusqueda', $scope.model);
 			} else if(data.filtro == 'gate'){
 				fechaAux = new Date(data.contenido.fecha);
-				$scope.model['fechaInicio'] = new Date(fechaAux.getUTCFullYear(), fechaAux.getUTCMonth(), fechaAux.getUTCDate(), fechaAux.getUTCHours(), fechaAux.getUTCMinutes());
-				$scope.model['fechaFin'] = new Date(fechaAux.getUTCFullYear(), fechaAux.getUTCMonth(), fechaAux.getUTCDate(), fechaAux.getUTCHours(), fechaAux.getUTCMinutes() + 1);
+				$scope.model['fechaInicio'] = new Date(fechaAux.getFullYear(), fechaAux.getMonth(), fechaAux.getDate(), fechaAux.getHours(), fechaAux.getMinutes());
+				$scope.model['fechaFin'] = new Date(fechaAux.getFullYear(), fechaAux.getMonth(), fechaAux.getDate(), fechaAux.getHours(), fechaAux.getMinutes() + 1);
 				$scope.model['buqueNombre'] = data.contenido.buque;
 				$scope.model['contenedor'] = data.contenido.contenedor;
 				$scope.$emit('iniciarBusqueda', $scope.model);
@@ -234,6 +242,10 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 
 		$scope.cambiarTipoMov = function(tipoMov){
 			if ($scope.ocultarBusqueda || $scope.ocultarFiltros.indexOf('mov', 0) < 0){
+				$scope.active = {
+					impo: (tipoMov == 'IMPO'),
+					expo: (tipoMov == 'EXPO')
+				};
 				$scope.model.mov = tipoMov;
 				$scope.$emit('iniciarBusqueda');
 			}

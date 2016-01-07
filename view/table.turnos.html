@@ -9,8 +9,8 @@
 </div>
 <div class="col-lg-12" ng-hide="loadingState">
 	<tabset ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('mov', 0) >= 0 || mostrarHTML">
-		<tab heading="IMPO" ng-click="cambiarTipoMov('IMPO')"></tab>
-		<tab heading="EXPO" ng-click="cambiarTipoMov('EXPO')"></tab>
+		<tab heading="IMPO" ng-click="cambiarTipoMov('IMPO')" active="active.impo"></tab>
+		<tab heading="EXPO" ng-click="cambiarTipoMov('EXPO')" active="active.expo"></tab>
 	</tabset>
 	<br>
 	<div ng-hide="datosTurnos.length != undefined && datosTurnos.length > 0">
