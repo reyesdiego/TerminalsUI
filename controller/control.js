@@ -169,6 +169,16 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.errorGatesTurnos = false;
 		$scope.mensajeErrorGatesTurnos = '';
 
+		$scope.openDatepicker = function(inicio){
+			if (inicio){
+				$scope.isCollapsedDayGatesTurnosFin = true;
+				$scope.isCollapsedDayGatesTurnos = !$scope.isCollapsedDayGatesTurnos;
+			} else {
+				$scope.isCollapsedDayGatesTurnos = true;
+				$scope.isCollapsedDayGatesTurnosFin = !$scope.isCollapsedDayGatesTurnosFin;
+			}
+		};
+
 		var prepararDatosMes = function(datosGrafico, traerTotal){
 			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 			var base = [
