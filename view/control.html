@@ -199,7 +199,7 @@
 				<div class="form-group col-lg-6">
 					<div class="input-group text-left">
 					<span class="input-group-btn">
-						<button class="btn btn-default" ng-click="isCollapsedDayGatesTurnos = !isCollapsedDayGatesTurnos"><i class="glyphicon glyphicon-calendar"></i> Desde</button>
+						<button class="btn btn-default" ng-click="openDatepicker(true)"><i class="glyphicon glyphicon-calendar"></i> Desde</button>
 					</span>
 						<input type="text" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="diaGatesTurnos" />
 					</div>
@@ -207,7 +207,7 @@
 				<div class="form-group col-lg-6">
 					<div class="input-group text-left">
 					<span class="input-group-btn">
-						<button class="btn btn-default" ng-click="isCollapsedDayGatesTurnosFin = !isCollapsedDayGatesTurnosFin"><i class="glyphicon glyphicon-calendar"></i> Hasta</button>
+						<button class="btn btn-default" ng-click="openDatepicker(false)"><i class="glyphicon glyphicon-calendar"></i> Hasta</button>
 					</span>
 						<input type="text" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="diaGatesTurnosFin" />
 					</div>
@@ -235,7 +235,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos">
+			<div class="col-lg-12" collapse="!isCollapsedDayGatesTurnos || !isCollapsedDayGatesTurnosFin">
 				<dynamic-chart
 						chart-object="chartDiaGatesTurnos"
 						select="selectRow(selectedRowIndexFacturado)"
