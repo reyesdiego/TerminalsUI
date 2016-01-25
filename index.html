@@ -138,17 +138,29 @@
 
 <body class="container" ng-controller="navigationCtrl">
 
-<div class="navbar navbar-default navbar-fixed-top hidden-print">
+<nav class="navbar navbar-default navbar-fixed-top hidden-print">
 	<div class="container">
 		<div class="navbar-header">
 			<a ng-click="irA()" class="nav navbar-brand"><img src="images/LogoPUERTO_30x30.png" width="30" height="30"> AGP S.E.</a>
-			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse" ng-show="acceso!=''" ng-click="isCollapsed = !isCollapsed">
+			<!--<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse" ng-show="acceso!=''" ng-click="isCollapsed = !isCollapsed">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
-			</button>
+			</button>-->
 		</div>
 		<div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
+			<ul class="nav navbar-nav navbar-left">
+				<li ng-show="acceso=='agp' && cambioTerminal" class="hidden-sm" dropdown>
+					<a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li class="visible-lg divider"></li>
+						<li><a ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"> Deshabilitar</span><span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"> Habilitar</span> Notificaciones</a></li>
+					</ul>
+				</li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right" ng-hide="cargandoCache">
 				<li ng-show="acceso==''"><a  ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
 				<li ng-show="acceso!='' && (tieneAcceso('tarifario') || tieneAcceso('matches'))" dropdown>
@@ -225,7 +237,7 @@
 						<li class="visible-sm"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 					</ul>
 				</li>
-				<li ng-show="acceso=='agp' && cambioTerminal" class="hidden-sm" dropdown>
+				<!--<li ng-show="acceso=='agp' && cambioTerminal" class="hidden-sm" dropdown>
 					<a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
@@ -234,7 +246,7 @@
 						<li class="visible-lg divider"></li>
 						<li><a ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"> Deshabilitar</span><span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"> Habilitar</span> Notificaciones</a></li>
 					</ul>
-				</li>
+				</li>-->
 				<li class="hidden-sm" ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 				<li ng-show="acceso!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
 				<li ng-show="acceso!=''" dropdown>
@@ -246,7 +258,7 @@
 			</ul>
 		</div>
 	</div>
-</div>
+</nav>
 
 <div class="row wrapper">
 	<div ui-view></div>
