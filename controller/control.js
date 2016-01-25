@@ -188,7 +188,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			var contarTerminal = 1;
 			//Para cargar promedio
 			var acum = 0;
-			var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre", "Diciembre"];
+			var meses = ["01","02","03","04","05","06","07","08","09","10","11", "12"];
 			//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
 			//ordenados por fecha, y siguiendo el orden de terminales "BACTSSA", "Terminal 4", "TRP"???????
 			var flagPrimero = true;
@@ -197,7 +197,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			datosGrafico.forEach(function(datosDia){
 				if (flagPrimero){
 					flagPrimero = false;
-					fila[0] = meses[datosDia._id.month - 1] + ' del ' + datosDia._id.year;
+					fila[0] = meses[datosDia._id.month - 1] + '/' + datosDia._id.year;
 					fechaAnterior = datosDia._id.month;
 				}
 				if (fechaAnterior != datosDia._id.month){
@@ -208,7 +208,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					fila = ['', 0, 0, 0, 0, ''];
 					acum = 0;
 					fechaAnterior = datosDia._id.month;
-					fila[0] = meses[datosDia._id.month - 1] + ' del ' + datosDia._id.year;
+					fila[0] = meses[datosDia._id.month - 1] + '/' + datosDia._id.year;
 				}
 				switch (datosDia._id.terminal){
 					case "BACTSSA":
