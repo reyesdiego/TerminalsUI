@@ -12,7 +12,7 @@
 		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
 	<div ng-show="datosGates.length != undefined && datosGates.length > 0">
-		<h5 ng-hide="detallesGates"><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
+		<h5 ng-hide="detallesGates"><strong>Resultados: {{ totalItems }}</strong> ({{ tiempoConsulta }} segundos)<span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
 		<div ng-hide="detallesGates">
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover" style="text-align: center">

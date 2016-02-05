@@ -4,6 +4,7 @@
 
 myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', function ($scope, gatesFactory, loginService) {
 	$scope.totalItems = 0;
+	$scope.tiempoConsulta = 0;
 	$scope.turnosGates = true;
 	//$scope.currentPage = 1;
 	$scope.configPanel = {
@@ -85,6 +86,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 			if (data.status === "OK") {
 				$scope.gates = data.data;
 				$scope.totalItems = data.totalCount;
+				$scope.tiempoConsulta = (data.time / 1000).toFixed(2); //La paso a segundos
 			} else {
 				$scope.configPanel = {
 					tipo: 'panel-danger',

@@ -53,6 +53,7 @@ myapp.directive('tableGates', function(){
 			model:				'=',
 			datosGates:			'=',
 			totalItems:			'=',
+			tiempoConsulta:		'=',
 			itemsPerPage:		'=',
 			detallesGates:		'=',
 			ocultarFiltros:		'=',
