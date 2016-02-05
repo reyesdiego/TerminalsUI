@@ -215,7 +215,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 
 		//FUNCIONES DE TABLE GATES //////////////////////////////////////////////////////////////////////
 		$scope.noVoyEnTrenVoyEnCamion = function(trenOCamion){
-			return angular.isDefined(trenOCamion);
+			return angular.isDefined(trenOCamion) && trenOCamion != null && trenOCamion != "";
 		};
 		$scope.colorHorario = function (gate) {
 			return generalFunctions.colorHorario(gate);
