@@ -330,6 +330,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 				if (data.status === "OK") {
 					$scope.gates = data.data;
 					$scope.gatesTotalItems = data.totalCount;
+					$scope.gatesTiempoConsulta = (data.time / 1000).toFixed(2);
 				} else {
 					$scope.configPanelGates = {
 						tipo: 'panel-danger',
