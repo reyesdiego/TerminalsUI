@@ -236,6 +236,7 @@ myapp.directive('divPagination', function(){
 			panelSize:			'='
 		},
 		link: function($scope){
+			$scope.lastPage = $scope.currentPage;
 			$scope.$watch('totalItems', function(){
 				switch ($scope.panelSize){
 					case 12:
@@ -277,7 +278,10 @@ myapp.directive('divPagination', function(){
 
 			});
 			$scope.pageChanged = function(){
-				$scope.$emit('cambioPagina', $scope.currentPage);
+				if ($scope.lastPage != $scope.currentPage){
+					$scope.lastPage = $scope.currentPage;
+					$scope.$emit('cambioPagina', $scope.currentPage);
+				}
 			};
 		},
 		template:
