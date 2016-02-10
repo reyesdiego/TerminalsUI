@@ -64,12 +64,13 @@ myapp.filter("emptyToEnd", [function () {
 myapp.filter('conversionMoneda', ['$rootScope', function($rootScope){
 	return function(importe, moneda){
 		if (angular.isDefined(importe) && angular.isDefined(moneda)) {
+			if (importe == '') importe = 0;
 			var importeDevuelto = importe;
 			if ($rootScope.moneda == 'PES' && moneda.codMoneda == 'DOL'){ importeDevuelto = (importe * moneda.cotiMoneda); }
 			else if ($rootScope.moneda == 'DOL' && moneda.codMoneda == 'PES'){ importeDevuelto = (importe / moneda.cotiMoneda); }
 			return importeDevuelto;
 		} else {
-			return null;
+			return 0;
 		}
 	}
 }]);
