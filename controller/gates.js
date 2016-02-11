@@ -41,6 +41,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		'estado': 'N',
 		'code': '',
 		'mov': '',
+		'patenteCamion': '',
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': 'gateTimestamp',
 		'filtroOrdenReverse': true,

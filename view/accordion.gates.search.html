@@ -1,5 +1,5 @@
 <accordion-min heading="Filtrar por">
-	<div class="form-group col-lg-4 col-sm-4" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
 		<div class="input-group">
 			<span class="input-group-btn">
 				<button type="button" class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio">Desde <span class="glyphicon glyphicon-calendar"></span></button>
@@ -7,7 +7,7 @@
 			<input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" readonly style="background-color: #ffffff">
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-sm-4" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
 		<div class="input-group">
 			<span class="input-group-btn">
 				<button type="button" class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin">Hasta <span class="glyphicon glyphicon-calendar"></span></button>
@@ -15,7 +15,7 @@
 			<input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="model.fechaFin" is-open="openfechaFin" min-date="model.fechaInicio" max-date="maxDate" readonly style="background-color: #ffffff">
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-sm-4" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
 		<angucomplete-alt id="idBuque"
 		                  placeholder="Buque"
 		                  pause="100"
@@ -33,7 +33,7 @@
 		                  outside-model="model.buqueNombre"
 		                  auto-match="true"></angucomplete-alt>
 	</div>
-	<div class="form-group col-lg-4 col-sm-4" ng-hide="ocultarFiltros.indexOf('viaje', 0) >= 0 || model.buqueNombre.length == 0">
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('viaje', 0) >= 0 || model.buqueNombre.length == 0">
 		<angucomplete-alt id="idViaje"
 		                  placeholder="Viaje"
 		                  pause="100"
@@ -55,6 +55,18 @@
 		<div class="input-group">
 			<input type="text" ng-model="model.contenedor" class="form-control" placeholder="Contenedor" toupper/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('contenedor', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('patenteCamion', 0) >= 0">
+		<div class="input-group">
+			<input type="text" ng-model="model.patenteCamion" class="form-control" placeholder="Patente" toupper/>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('patenteCamion', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('tren', 0) >= 0">
+		<div class="input-group">
+			<input type="text" ng-model="model.tren" class="form-control" placeholder="Tren" toupper/>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('tren', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-md-4" ng-hide="ocultarFiltros.indexOf('carga', 0) >= 0">
