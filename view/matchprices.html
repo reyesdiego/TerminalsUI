@@ -67,7 +67,7 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr style="height:60px" ng-repeat="price in filteredPrices = (listaSeleccionada | filter: search) | orderBy : predicate : reverse | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage" class="{{ price.claseFila }} hidden-print">
+						<tr style="height:60px" ng-repeat="price in filteredPrices = (listaSeleccionada | filter: search) | orderBy : predicate : reverse | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage" class="fila-animada {{ price.claseFila }} hidden-print">
 							<td class="col-lg-1">
 								<span>{{ price.code }}</span>
 							</td>

@@ -28,7 +28,7 @@
 						<th style="text-align: center">Fin turno</th>
 						<th class="hidden-print" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center">Facturas</th>
 					</tr>
-					<tr ng-repeat="gate in datosGates">
+					<tr ng-repeat="gate in datosGates" class="fila-animada">
 						<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
 						<td><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO' || gate.buque == ''" ng-click="filtrado('buqueNombre', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
 						<td>{{ gate.viaje }}</td>

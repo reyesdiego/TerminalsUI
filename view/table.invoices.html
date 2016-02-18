@@ -14,7 +14,7 @@
 		</tr>
 		</thead>
 		<tbody ng-show="acceso == 'agp'">
-		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }">
+		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }" class="fila-animada">
 			<td class="text-right" style="width: 9%"><span ng-show="invoice.resend == 1" title="Comprobante marcado para reenviar" class="glyphicon glyphicon-warning-sign text-danger"></span> {{ invoice.nroPtoVenta }}</td>
 			<td style="width: 7%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
 			<td class="text-right" style="width: 12%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
@@ -34,7 +34,7 @@
 		</tr>
 		</tbody>
 		<tbody ng-show="acceso == 'terminal'">
-		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }">
+		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }" class="fila-animada">
 			<td class="text-right" style="width: 10%">{{ invoice.nroPtoVenta }}</td>
 			<td style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
 			<td class="text-right" style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>

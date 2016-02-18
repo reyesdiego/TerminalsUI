@@ -47,7 +47,7 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" class="hidden-print" ng-repeat="price in filteredPrices = (pricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (pricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 						<td style="width: 10%">{{ price.code }}</td>
 						<td style="width: 64%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 12%">{{ price.unit}}</td>
