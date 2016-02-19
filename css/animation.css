@@ -47,3 +47,9 @@
 	-webkit-animation-duration:0;
 	animation-duration:0;
 }
+
+.invoice-shadow {
+	-webkit-box-shadow: 10px 10px 8px 0px rgba(0,0,0,1);
+	-moz-box-shadow: 10px 10px 8px 0px rgba(0,0,0,1);
+	box-shadow: 10px 10px 8px 0px rgba(0,0,0,1);
+}

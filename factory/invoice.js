@@ -250,15 +250,26 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				'grupo': loginService.getGroup(),
 				'estado': 'Y'
 			};
-			if (comprobante.estado.length > 0){
-				var encontrado = false;
-				comprobante.estado.forEach(function(estadoGrupo){
-					if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
-						encontrado = true;
-						comprobante.interfazEstado = (estadosArrayCache.get(estadoGrupo.estado)) ? estadosArrayCache.get(estadoGrupo.estado) : estadosArrayCache.get('Y');
+			if (angular.isDefined(comprobante.estado)){
+				if (comprobante.estado.length > 0){
+					var encontrado = false;
+					comprobante.estado.forEach(function(estadoGrupo){
+						if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
+							encontrado = true;
+							comprobante.interfazEstado = (estadosArrayCache.get(estadoGrupo.estado)) ? estadosArrayCache.get(estadoGrupo.estado) : estadosArrayCache.get('Y');
+						}
+					});
+					if (!encontrado){
+						comprobante.estado.push(estadoDefault);
+						comprobante.interfazEstado = {
+							'name': 'Sin ver',
+							'description': 'Sin ver',
+							'btnEstado': 'text-info',
+							'imagen': 'images/unknown.png',
+							'_id': 'Y'
+						};
 					}
-				});
-				if (!encontrado){
+				} else {
 					comprobante.estado.push(estadoDefault);
 					comprobante.interfazEstado = {
 						'name': 'Sin ver',
@@ -269,6 +280,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 					};
 				}
 			} else {
+				comprobante.estado = [];
 				comprobante.estado.push(estadoDefault);
 				comprobante.interfazEstado = {
 					'name': 'Sin ver',
@@ -283,11 +295,13 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 
 		function ponerDescripcionComprobante (comprobante) {
 			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
-			comprobante.detalle.forEach(function(detalles){
-				detalles.items.forEach(function(item){
-					item.descripcion = (descripciones[item.id]) ? descripciones[item.id] : 'No se halló la descripción, verifique que el código esté asociadoo';
+			if (angular.isDefined(comprobante.detalle)){
+				comprobante.detalle.forEach(function(detalles){
+					detalles.items.forEach(function(item){
+						item.descripcion = (descripciones[item.id]) ? descripciones[item.id] : 'No se halló la descripción, verifique que el código esté asociado';
+					});
 				});
-			});
+			}
 			return comprobante;
 		}
 
