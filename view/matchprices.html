@@ -44,7 +44,7 @@
 		<div class="row" ng-hide="hayError">
 			<div class="col-lg-12">
 				<div class="bs-example table-responsive">
-					<table class="table table-bordered table-hover">
+					<table class="invoice-shadow table table-bordered table-hover">
 						<thead>
 						<tr>
 							<th><a href="" ng-click="ordenarPor('code')">
@@ -64,6 +64,7 @@
 							</a></th>
 							<th><span class="glyphicon glyphicon-check"></span> Código asociado</th>
 							<th class="hidden-print" ng-show="acceso=='terminal'"><span class="glyphicon glyphicon-plus-sign"></span> Agregar</th>
+							<th class="col-lg-1 text-center"><span class="glyphicon glyphicon-edit"></span> Editar</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -95,12 +96,16 @@
 									</span>
 								</div>
 							</td>
-							<td class="col-lg-1 text-center" ng-show="acceso=='terminal' && price.terminal != 'AGP'">
+							<td class="col-lg-1 text-center">
+								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)" ng-show="acceso == 'terminal'" ng-disabled="price.terminal == 'AGP'"><span class="glyphicon glyphicon-edit"></span></button>
+								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)" ng-show="acceso == 'agp'" ng-disabled="!(price.terminal == 'AGP' && puedeEditar())"><span class="glyphicon glyphicon-edit"></span></button>
+							</td>
+							<!--<td class="col-lg-1 text-center" ng-show="acceso=='terminal' && price.terminal != 'AGP'">
 								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
 							</td>
 							<td class="col-lg-1 text-center" ng-show="acceso=='agp' && price.terminal == 'AGP' && puedeEditar()">
-								<button class="btn btn-primary" popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
-							</td>
+
+							</td>-->
 						</tr>
 						<tr class="visible-print" ng-repeat="price in listaSeleccionada | filter: search | orderBy : predicate : reverse">
 							<td class="col-lg-1">
