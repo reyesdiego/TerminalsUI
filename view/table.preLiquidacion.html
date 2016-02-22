@@ -7,7 +7,7 @@
 	</div-panel>
 </div>
 <div class="table-responsive col-lg-12" ng-show="datosPagos.length > 0 && !cargando">
-	<table class="table table-striped table-bordered table-hover">
+	<table class="invoice-shadow table table-striped table-bordered table-hover">
 		<thead>
 		<tr class="text-center">
 			<th class="text-right">Número</th>
@@ -16,7 +16,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="pago in datosPagos">
+		<tr ng-repeat="pago in datosPagos" class="fila-animada">
 			<td class="text-right">{{ pago.preNumber }}</td>
 			<td class="text-center">{{ pago.date | date: 'dd/MM/yyyy' }}</td>
 			<td class="text-center"><a href ng-click="detalle({pago: pago})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
