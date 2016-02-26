@@ -56,6 +56,31 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 				});
 		};
 
+		factory.getTrains = function(terminal, callback){
+			var inserturl = serverUrl + '/gates/' + terminal + '/trains';
+			$http.get(inserturl)
+				.success(function(data){
+					data.data = formatTrains(data.data);
+					callback(data);
+				}).error(function(errorText){
+					if (errorText == null) errorText = {status: 'ERROR'};
+					callback(errorText);
+				})
+		};
+
+		function formatTrains (trains){
+			var listaTransformada = [];
+			trains.forEach(function(train){
+				if (train != null){
+					var trenJson = {
+						tren: train
+					};
+					listaTransformada.push(trenJson);
+				}
+			});
+			return listaTransformada;
+		}
+
 		factory.cancelRequest = function(request){
 			HTTPCanceler.cancel(request);
 		};

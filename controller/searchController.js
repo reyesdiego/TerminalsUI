@@ -15,6 +15,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
+		$scope.listaTrenes = generalCache.get('trenes' + loginService.getFiltro());
 		$scope.itemsPerPageData = [
 			{ value: 10, description: '10 items por página', ticked: false},
 			{ value: 15, description: '15 items por página', ticked: true},
@@ -130,12 +131,15 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			}
 		};
 
-		$scope.definidoStatus = function(turno){
-			return angular.isDefined(turno.email);
+		$scope.trenSelected = function(selected){
+			if (angular.isDefined(selected)){
+				$scope.model.tren = selected.title;
+				$scope.filtrado('tren', selected.title);
+			}
 		};
 
-		$scope.filtrarTrenes = function(){
-
+		$scope.definidoStatus = function(turno){
+			return angular.isDefined(turno.email);
 		};
 
 		$scope.filtrado = function(filtro, contenido){
@@ -275,6 +279,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 			$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
+			$scope.listaTrenes = generalCache.get('trenes' + loginService.getFiltro());
 		});
 
 		$scope.$on('$destroy', function(){

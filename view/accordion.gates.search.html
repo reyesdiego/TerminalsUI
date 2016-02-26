@@ -64,10 +64,22 @@
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('tren', 0) >= 0">
-		<div class="input-group">
-			<input type="text" ng-model="model.tren" class="form-control" placeholder="Tren" toupper/>
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('tren', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-		</div>
+		<angucomplete-alt id="idTren"
+		                  placeholder="Tren"
+		                  pause="100"
+		                  selected-object="trenSelected"
+		                  local-data="listaTrenes"
+		                  search-fields="tren"
+		                  title-field="tren"
+		                  minlength="1"
+		                  input-class="form-control"
+		                  filtrar="filtrado(filtrar, contenido)"
+		                  filter-field="tren"
+		                  input-field="tren"
+		                  match-class="highlight"
+		                  limit-results="15"
+		                  outside-model="model.tren"
+		                  auto-match="true"></angucomplete-alt>
 	</div>
 	<div class="form-group col-lg-3 col-md-4" ng-hide="ocultarFiltros.indexOf('carga', 0) >= 0">
 		<div class="input-group">

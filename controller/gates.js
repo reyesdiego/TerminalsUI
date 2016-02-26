@@ -17,7 +17,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 	$scope.fechaInicio = new Date();
 	$scope.fechaFin = new Date();
 	$scope.fechaInicio.setHours(0, 0);
-	$scope.fechaFin.setMinutes(0);
+	$scope.fechaFin.setHours($scope.fechaFin.getHours() + 1, 0);
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.gates = {};
