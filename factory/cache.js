@@ -446,6 +446,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				function(){
 					deferred.reject();
 				});
+			$rootScope.$broadcast('cantidadDeLlamadas', llamadas.length);
 			return deferred.promise;
 		};
 
