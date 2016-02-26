@@ -48,7 +48,8 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		'order': '"gateTimestamp": -1',
 		'fechaConGMT': true,
 		'carga': '',
-		'ontime': ''
+		'ontime': '',
+		'onlyTrains': false
 	};
 
 	$scope.page = {

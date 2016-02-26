@@ -134,6 +134,10 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			return angular.isDefined(turno.email);
 		};
 
+		$scope.filtrarTrenes = function(){
+
+		};
+
 		$scope.filtrado = function(filtro, contenido){
 			if (filtro == 'fechaInicio' && contenido == 'liquidacion') contenido = $scope.minDate;
 			if (filtro == 'fechaFin' && contenido == 'liquidacion') contenido = $scope.model.fechaInicio;
