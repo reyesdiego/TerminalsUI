@@ -522,12 +522,13 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 				dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 			}
 			if (!loginService.getStatus() && $cookies.get('restoreSesion') === 'true'){
+				event.preventDefault();
 				authFactory.login().then(function(){
 					$rootScope.$broadcast('terminoLogin');
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');
 					} else {
-						$rootScope.verificaRutas(event, toState);
+						$state.transitionTo(toState.name);
 					}
 				});
 			} else {
