@@ -48,6 +48,11 @@
 	animation-duration:0;
 }
 
+.fila-vistos.ng-leave {
+	-webkit-animation: zoomOut ease 0.5s;
+	animation: zoomOut ease 0.5s
+}
+
 .invoice-shadow {
 	-webkit-box-shadow: 10px 10px 8px 0px rgba(0,0,0,1);
 	-moz-box-shadow: 10px 10px 8px 0px rgba(0,0,0,1);
