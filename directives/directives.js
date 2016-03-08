@@ -219,13 +219,6 @@ myapp.directive('containersGatesSearch', function(){
 	}
 });
 
-myapp.directive('accordionTurnosSearch', function(){
-	return {
-		restrict:		'E',
-		templateUrl:	'view/accordion.turnos.search.html'
-	}
-});
-
 myapp.directive('divPagination', function(){
 	return {
 		restrict:		'E',
