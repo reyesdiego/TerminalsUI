@@ -1,5 +1,5 @@
 <accordion-min heading="Filtrar por">
-	<div class="form-group col-lg-4 col-sm-4" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
 		<div class="input-group">
 			<span class="input-group-btn">
 				<button type="button" class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio">Desde <span class="glyphicon glyphicon-calendar"></span></button>
@@ -7,7 +7,7 @@
 			<input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDate" readonly style="background-color: #ffffff">
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-sm-4" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
 		<div class="input-group">
 			<span class="input-group-btn">
 				<button type="button" class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin">Hasta <span class="glyphicon glyphicon-calendar"></span></button>
@@ -15,7 +15,7 @@
 			<input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="model.fechaFin" is-open="openfechaFin" min-date="model.fechaInicio" max-date="maxDate" readonly style="background-color: #ffffff">
 		</div>
 	</div>
-	<div class="form-group col-lg-4 col-sm-4" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
 		<angucomplete-alt id="idBuque"
 		                  placeholder="Buque"
 		                  pause="100"
@@ -33,7 +33,7 @@
 		                  outside-model="model.buqueNombre"
 		                  auto-match="true"></angucomplete-alt>
 	</div>
-	<div class="form-group col-lg-4 col-sm-4" ng-hide="ocultarFiltros.indexOf('viaje', 0) >= 0 || model.buqueNombre.length == 0">
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('viaje', 0) >= 0 || model.buqueNombre.length == 0">
 		<angucomplete-alt id="idViaje"
 		                  placeholder="Viaje"
 		                  pause="100"
@@ -57,6 +57,30 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('contenedor', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('patenteCamion', 0) >= 0">
+		<div class="input-group">
+			<input type="text" ng-model="model.patenteCamion" class="form-control" placeholder="Patente" toupper/>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('patenteCamion', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
+	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('tren', 0) >= 0">
+		<angucomplete-alt id="idTren"
+		                  placeholder="Tren"
+		                  pause="100"
+		                  selected-object="trenSelected"
+		                  local-data="listaTrenes"
+		                  search-fields="tren"
+		                  title-field="tren"
+		                  minlength="1"
+		                  input-class="form-control"
+		                  filtrar="filtrado(filtrar, contenido)"
+		                  filter-field="tren"
+		                  input-field="tren"
+		                  match-class="highlight"
+		                  limit-results="15"
+		                  outside-model="model.tren"
+		                  auto-match="true"></angucomplete-alt>
+	</div>
 	<div class="form-group col-lg-3 col-md-4" ng-hide="ocultarFiltros.indexOf('carga', 0) >= 0">
 		<div class="input-group">
 			<select class="form-control" ng-model="model.carga" ng-init="model.carga=''">
@@ -76,6 +100,13 @@
 				<option value="0">Fuera de horario</option>
 			</select>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('ontime', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
+	<div class="form-group col-lg-2 col-sm-4" ng-hide="ocultarFiltros.indexOf('onlyTrains', 0) >= 0">
+		<div class="input-group checkbox checkBoxContainer">
+			<label>
+				<input type="checkbox" ng-model="model.onlyTrains" ng-change="filtrado('', '')"> Sólo trenes
+			</label>
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-sm-4">

@@ -1,10 +1,45 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
-	function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
+myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory',  'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
+	function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, gatesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
 
 		var factory = {};
+
+		factory.cargaTrenes = function(){
+			var deferred = $q.defer();
+			if (loginService.getType() == 'agp'){
+				$rootScope.listaTerminales.forEach(function(terminal){
+					if (terminal != loginService.getFiltro()){
+						gatesFactory.getTrains(terminal, function(data){
+							if (data.status == 'OK'){
+								generalCache.put('trenes' + terminal, data.data);
+							}
+						})
+					} else {
+						gatesFactory.getTrains(terminal, function(data){
+							if (data.status == 'OK'){
+								generalCache.put('trenes' + terminal, data.data);
+								$rootScope.$broadcast('progreso', {mensaje: 2});
+								deferred.resolve();
+							} else {
+								deferred.reject()
+							}
+						})
+					}
+				})
+			} else {
+				gatesFactory.getTrains(loginService.getFiltro(), function(data){
+					if (data.status == 'OK'){
+						generalCache.put('trenes' + terminal, data.data);
+						$rootScope.$broadcast('progreso', {mensaje: 2});
+						deferred.resolve();
+					} else {
+						deferred.reject()
+					}
+				})
+			}
+		};
 
 		factory.cargaBuques = function(){
 			var deferred = $q.defer();
@@ -384,7 +419,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 			var deferred = $q.defer();
 			var llamadas = [];
 			// Buque viaje cache
-			llamadas.push(factory.cargaBuques()); //prueba sacando los métodos que usan oracle
+			llamadas.push(factory.cargaBuques());
 			// Clientes cache
 			llamadas.push(factory.cargaClientes());
 			// Descripciones cache
@@ -401,6 +436,8 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 			llamadas.push(factory.cargaMatchesRates());
 			// All rates cache
 			llamadas.push(factory.cargaAllRates());
+			// Trenes cache
+			llamadas.push(factory.cargaTrenes());
 
 			$q.all(llamadas)
 				.then(function(){
@@ -409,6 +446,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 				function(){
 					deferred.reject();
 				});
+			$rootScope.$broadcast('cantidadDeLlamadas', llamadas.length);
 			return deferred.promise;
 		};
 

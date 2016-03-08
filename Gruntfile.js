@@ -9,6 +9,8 @@ module.exports = function(grunt) {
 					'css/animation.css',
 					'css/dialogs.css',
 					'css/notificaciones.css',
+					'css/animate.css',
+					'css/ionicons.css',
 					'js/angular-notify/angular-notify.css'
 				],
 				dest: 'build/css/aditional.css'

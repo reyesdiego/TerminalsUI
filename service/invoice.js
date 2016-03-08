@@ -89,98 +89,100 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			var precioEncontrado = false;
 			comprobante.noMatch = false;
 
-			comprobante.detalle.forEach(function(detalle){
-				detalle.items.forEach(function(item){
-					precioEncontrado = false;
-					if (angular.isDefined(lookup[item.id])){
-						valorTomado = item.impUnit;
-						lookup[item.id].topPrices.forEach(function(precioMatch){
-							if (comprobante.fecha.emision >= precioMatch.from){
-								precioEncontrado = true;
-								precioALaFecha = precioMatch.price;
-								monedaALaFecha = precioMatch.currency
-							}
-						});
-						if (monedaALaFecha != 'DOL'){
-							valorTomado = item.impUnit * comprobante.cotiMoneda
-						}
-						if (tasaCargasTerminal.indexOf(item.id) >= 0){
-							comprobante.tieneTasa = true;
-							if (angular.isDefined(comprobante.payment) && comprobante.payment != null){
-								if (angular.isDefined(comprobante.payment.number)){
-									comprobante.interfazLiquidada = 'text-success';
-								} else {
-									comprobante.interfazLiquidada = 'text-warning';
+			if (angular.isDefined(comprobante.detalle)){
+				comprobante.detalle.forEach(function(detalle){
+					detalle.items.forEach(function(item){
+						precioEncontrado = false;
+						if (angular.isDefined(lookup[item.id])){
+							valorTomado = item.impUnit;
+							lookup[item.id].topPrices.forEach(function(precioMatch){
+								if (comprobante.fecha.emision >= precioMatch.from){
+									precioEncontrado = true;
+									precioALaFecha = precioMatch.price;
+									monedaALaFecha = precioMatch.currency
 								}
-							} else {
-								comprobante.interfazLiquidada = 'text-danger';
+							});
+							if (monedaALaFecha != 'DOL'){
+								valorTomado = item.impUnit * comprobante.cotiMoneda
 							}
-							if (precioEncontrado){
-								if (valorTomado != precioALaFecha){
+							if (tasaCargasTerminal.indexOf(item.id) >= 0){
+								comprobante.tieneTasa = true;
+								if (angular.isDefined(comprobante.payment) && comprobante.payment != null){
+									if (angular.isDefined(comprobante.payment.number)){
+										comprobante.interfazLiquidada = 'text-success';
+									} else {
+										comprobante.interfazLiquidada = 'text-warning';
+									}
+								} else {
+									comprobante.interfazLiquidada = 'text-danger';
+								}
+								if (precioEncontrado){
+									if (valorTomado != precioALaFecha){
+										tarifaError = {
+											codigo: item.id,
+											currency: monedaALaFecha,
+											topPrice: precioALaFecha,
+											current: item.impUnit,
+											topPrices: lookup[item.id].topPrices,
+											emision: comprobante.fecha.emision,
+											container: detalle.contenedor
+										};
+										comprobante.controlTarifas.push(tarifaError);
+									}
+								} else {
 									tarifaError = {
 										codigo: item.id,
-										currency: monedaALaFecha,
-										topPrice: precioALaFecha,
-										current: item.impUnit,
+										tieneMatch: true,
 										topPrices: lookup[item.id].topPrices,
 										emision: comprobante.fecha.emision,
 										container: detalle.contenedor
 									};
-									comprobante.controlTarifas.push(tarifaError);
+									comprobante.tarifasSinMatch.push(tarifaError);
+									response = true;
+									comprobante.noMatch = true;
 								}
 							} else {
-								tarifaError = {
-									codigo: item.id,
-									tieneMatch: true,
-									topPrices: lookup[item.id].topPrices,
-									emision: comprobante.fecha.emision,
-									container: detalle.contenedor
-								};
-								comprobante.tarifasSinMatch.push(tarifaError);
-								response = true;
-								comprobante.noMatch = true;
+								if (precioEncontrado){
+									if (valorTomado > precioALaFecha){
+										tarifaError = {
+											codigo: item.id,
+											currency: monedaALaFecha,
+											topPrice: precioALaFecha,
+											current: item.impUnit,
+											topPrices: lookup[item.id].topPrices,
+											emision: comprobante.fecha.emision,
+											container: detalle.contenedor
+										};
+										comprobante.controlTarifas.push(tarifaError);
+									}
+								} else {
+									tarifaError = {
+										codigo: item.id,
+										tieneMatch: true,
+										topPrices: lookup[item.id].topPrices,
+										emision: comprobante.fecha.emision,
+										container: detalle.contenedor
+									};
+									comprobante.tarifasSinMatch.push(tarifaError);
+									response = true;
+									comprobante.noMatch = true;
+								}
 							}
 						} else {
-							if (precioEncontrado){
-								if (valorTomado > precioALaFecha){
-									tarifaError = {
-										codigo: item.id,
-										currency: monedaALaFecha,
-										topPrice: precioALaFecha,
-										current: item.impUnit,
-										topPrices: lookup[item.id].topPrices,
-										emision: comprobante.fecha.emision,
-										container: detalle.contenedor
-									};
-									comprobante.controlTarifas.push(tarifaError);
-								}
-							} else {
-								tarifaError = {
-									codigo: item.id,
-									tieneMatch: true,
-									topPrices: lookup[item.id].topPrices,
-									emision: comprobante.fecha.emision,
-									container: detalle.contenedor
-								};
-								comprobante.tarifasSinMatch.push(tarifaError);
-								response = true;
-								comprobante.noMatch = true;
-							}
+							tarifaError = {
+								codigo: item.id,
+								tieneMatch: false,
+								topPrices: [],
+								emision: comprobante.fecha.emision,
+								container: detalle.contenedor
+							};
+							comprobante.tarifasSinMatch.push(tarifaError);
+							response = true;
+							comprobante.noMatch = true;
 						}
-					} else {
-						tarifaError = {
-							codigo: item.id,
-							tieneMatch: false,
-							topPrices: [],
-							emision: comprobante.fecha.emision,
-							container: detalle.contenedor
-						};
-						comprobante.tarifasSinMatch.push(tarifaError);
-						response = true;
-						comprobante.noMatch = true;
-					}
+					});
 				});
-			});
+			}
 			return response;
 		};
 

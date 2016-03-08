@@ -75,6 +75,20 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 							var filtro = angular.isDefined($cookies.get('themeTerminal')) ? $cookies.get('themeTerminal') : 'BACTSSA';
 							loginService.setFiltro(filtro);
 							$rootScope.filtroTerminal = filtro;
+							switch (filtro){
+								case 'BACTSSA':
+									$rootScope.terminalEstilo = 'bootstrap.cerulean';
+									$rootScope.logoTerminal = 'images/logo_bactssa.png';
+									break;
+								case 'TERMINAL4':
+									$rootScope.terminalEstilo = 'bootstrap.united';
+									$rootScope.logoTerminal = 'images/logo_terminal4.png';
+									break;
+								case 'TRP':
+									$rootScope.terminalEstilo = 'bootstrap.flaty';
+									$rootScope.logoTerminal = 'images/logo_trp.png';
+									break;
+							}
 						}
 
 						// Carga la cache si el usuario no tenía el acceso por cookies

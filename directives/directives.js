@@ -53,6 +53,7 @@ myapp.directive('tableGates', function(){
 			model:				'=',
 			datosGates:			'=',
 			totalItems:			'=',
+			tiempoConsulta:		'=',
 			itemsPerPage:		'=',
 			detallesGates:		'=',
 			ocultarFiltros:		'=',
@@ -218,13 +219,6 @@ myapp.directive('containersGatesSearch', function(){
 	}
 });
 
-myapp.directive('accordionTurnosSearch', function(){
-	return {
-		restrict:		'E',
-		templateUrl:	'view/accordion.turnos.search.html'
-	}
-});
-
 myapp.directive('divPagination', function(){
 	return {
 		restrict:		'E',
@@ -235,6 +229,7 @@ myapp.directive('divPagination', function(){
 			panelSize:			'='
 		},
 		link: function($scope){
+			$scope.lastPage = $scope.currentPage;
 			$scope.$watch('totalItems', function(){
 				switch ($scope.panelSize){
 					case 12:
@@ -276,7 +271,10 @@ myapp.directive('divPagination', function(){
 
 			});
 			$scope.pageChanged = function(){
-				$scope.$emit('cambioPagina', $scope.currentPage);
+				if ($scope.lastPage != $scope.currentPage){
+					$scope.lastPage = $scope.currentPage;
+					$scope.$emit('cambioPagina', $scope.currentPage);
+				}
 			};
 		},
 		template:

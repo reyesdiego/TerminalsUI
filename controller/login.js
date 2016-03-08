@@ -8,7 +8,8 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	$scope.sesion = true;
 	$scope.hayError = false;
 
-	$scope.max = 100;
+	//Total de llamadas para ver avance en barra de carga
+	$scope.max = 1;
 
 	$scope.email = '';
 	$scope.password = '';
@@ -36,10 +37,19 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		}
 	}
 
+	$scope.$on('cantidadDeLlamadas', function(e, mensaje){
+		//La cantidad total de llamadas http viene por un evento que envía rootscope desde la cacheFactory, le sumo una por la llamada de login
+		$scope.max = mensaje + 1;
+		$scope.porcentaje = ($scope.progreso * 100 / $scope.max).toFixed();
+		if ($scope.porcentaje >= 80){
+			$scope.mostrarMensaje = $scope.msg[3];
+		}
+	});
+
 	$scope.$on('progreso', function(e, mensaje){
 		if (!$scope.hayError){
 			$scope.mostrarMensaje = $scope.msg[mensaje.mensaje];
-			$scope.progreso += 10;
+			$scope.progreso ++;
 			$scope.porcentaje = ($scope.progreso * 100 / $scope.max).toFixed();
 			if ($scope.porcentaje >= 80){
 				$scope.mostrarMensaje = $scope.msg[3];
@@ -65,7 +75,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 	var volver = function(){
 		$timeout(function(){
 			if ($scope.progreso > 0){
-				$scope.progreso -= 10;
+				$scope.progreso --;
 				$scope.porcentaje = ($scope.progreso * 100 / $scope.max).toFixed();
 				$scope.mostrarMensaje = $scope.msg[5];
 				volver();
@@ -82,9 +92,9 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$scope.entrando = true;
 		$rootScope.cargandoCache = true;
 		authFactory.userEnter($scope.email, $scope.password, $scope.sesion)
-			.then(function(result){
+			.then(function(result) {
 				$rootScope.cargandoCache = false;
-				if (in_array('tarifario', $rootScope.rutas)){
+				if (in_array('tarifario', $rootScope.rutas)) {
 					$state.transitionTo('tarifario');
 				} else {
 					$state.transitionTo($rootScope.rutas[0])

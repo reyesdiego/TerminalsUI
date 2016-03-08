@@ -4,6 +4,7 @@
 
 myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', function ($scope, gatesFactory, loginService) {
 	$scope.totalItems = 0;
+	$scope.tiempoConsulta = 0;
 	$scope.turnosGates = true;
 	//$scope.currentPage = 1;
 	$scope.configPanel = {
@@ -16,7 +17,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 	$scope.fechaInicio = new Date();
 	$scope.fechaFin = new Date();
 	$scope.fechaInicio.setHours(0, 0);
-	$scope.fechaFin.setMinutes(0);
+	$scope.fechaFin.setHours($scope.fechaFin.getHours() + 1, 0);
 
 	// Variable para almacenar la info principal que trae del factory
 	$scope.gates = {};
@@ -40,13 +41,15 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		'estado': 'N',
 		'code': '',
 		'mov': '',
+		'patenteCamion': '',
 		'filtroOrden': 'gateTimestamp',
 		'filtroOrdenAnterior': 'gateTimestamp',
 		'filtroOrdenReverse': true,
 		'order': '"gateTimestamp": -1',
 		'fechaConGMT': true,
 		'carga': '',
-		'ontime': ''
+		'ontime': '',
+		'onlyTrains': false
 	};
 
 	$scope.page = {
@@ -85,6 +88,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 			if (data.status === "OK") {
 				$scope.gates = data.data;
 				$scope.totalItems = data.totalCount;
+				$scope.tiempoConsulta = (data.time / 1000).toFixed(2); //La paso a segundos
 			} else {
 				$scope.configPanel = {
 					tipo: 'panel-danger',

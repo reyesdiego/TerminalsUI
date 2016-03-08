@@ -21,7 +21,7 @@
 	<div class="row" ng-hide="hayError">
 		<div class="col-lg-12">
 			<div class="table-responsive">
-				<table class="export-table table table-striped table-bordered table-hover">
+				<table class="invoice-shadow export-table table table-striped table-bordered table-hover">
 					<thead>
 					<tr>
 						<th style="width: 10%"><a href="" ng-click="ordenarPor('code')">
@@ -47,7 +47,7 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" class="hidden-print" ng-repeat="price in filteredPrices = (pricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (pricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 						<td style="width: 10%">{{ price.code }}</td>
 						<td style="width: 64%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 12%">{{ price.unit}}</td>

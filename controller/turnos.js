@@ -18,7 +18,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 	};
 
-	$scope.ocultarFiltros = ['email'];
+	$scope.ocultarFiltros = ['patenteCamion', 'tren', 'carga', 'ontime', 'onlyTrains'];
 
 	// Fecha (dia y hora)
 	$scope.model = {
@@ -44,6 +44,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 
 	$scope.model.fechaInicio.setHours(0,0);
 	$scope.model.fechaFin.setMinutes(0);
+	$scope.model.fechaFin.setHours($scope.model.fechaFin.getHours() + 1);
 
 	$scope.fechaAuxDesde = new Date();
 	$scope.fechaAuxHasta = new Date();
@@ -57,13 +58,6 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	});
 
 	$scope.$on('iniciarBusqueda', function(event, data){
-		if (angular.isDefined($scope.model.fechaInicio) && $scope.model.fechaInicio != null && $scope.model.fechaInicio != ''){
-			if ($scope.model.fechaFin == '') $scope.model.fechaFin = $scope.model.fechaInicio;
-			$scope.fechaAuxHasta = new Date($scope.model.fechaFin);
-			$scope.fechaAuxDesde = new Date($scope.model.fechaInicio);
-			$scope.model.fechaFin = $scope.fechaAuxDesde;
-			$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
-		}
 		$scope.currentPage = 1;
 		$scope.cargaTurnos();
 	});
