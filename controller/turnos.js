@@ -85,7 +85,6 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 			mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 		};
 		turnosFactory.getTurnos($scope.model, $scope.page, function(data){
-			console.log(data.data);
 			if (data.status === "OK"){
 				$scope.turnos = data.data;
 				$scope.totalItems = data.totalCount;
