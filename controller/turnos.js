@@ -58,13 +58,6 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 	});
 
 	$scope.$on('iniciarBusqueda', function(event, data){
-		/*if (angular.isDefined($scope.model.fechaInicio) && $scope.model.fechaInicio != null && $scope.model.fechaInicio != ''){
-			if ($scope.model.fechaFin == '') $scope.model.fechaFin = $scope.model.fechaInicio;
-			$scope.fechaAuxHasta = new Date($scope.model.fechaFin);
-			$scope.fechaAuxDesde = new Date($scope.model.fechaInicio);
-			$scope.model.fechaFin = $scope.fechaAuxDesde;
-			$scope.model.fechaFin.setHours($scope.fechaAuxHasta.getHours(), $scope.fechaAuxHasta.getMinutes());
-		}*/
 		$scope.currentPage = 1;
 		$scope.cargaTurnos();
 	});
@@ -92,6 +85,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 			mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 		};
 		turnosFactory.getTurnos($scope.model, $scope.page, function(data){
+			console.log(data.data);
 			if (data.status === "OK"){
 				$scope.turnos = data.data;
 				$scope.totalItems = data.totalCount;

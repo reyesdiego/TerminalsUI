@@ -101,7 +101,7 @@ angular.module('angucomplete-alt', [] ).directive('angucompleteAlt', ['$q', '$pa
 			});
 
 			scope.$on('checkAutoComplete', function(){
-				if (scope.searchStr != scope.outsideModel) scope.searchStr = scope.outsideModel;
+				if (scope.searchStr != scope.outsideModel) scope.outsideModel = scope.searchStr;
 			});
 
 			// for IE8 quirkiness about event.which
