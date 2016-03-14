@@ -264,8 +264,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					base.push(fila.slice());
 					//Meto la fila en la matriz y vuelvo a empezar
 					fila = ['', 0, 0, 0, 0, ''];
-					fechaAnterior = datosDia.date;
 					fila[0] = datosDia.date.substr(0, 10).replace('-', '/');
+					fechaAnterior = datosDia.date;
 					acum = 0;
 				}
 				switch (datosDia.terminal){
