@@ -252,21 +252,23 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			datosGrafico.forEach(function(datosDia){
 				if (flagPrimero){
 					//Primera iteración, cargo el día y lo establezco como fecha para comparar
-					fila[0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
-					fechaAnterior = datosDia._id.day;
+					fila[0] = datosDia.date.substr(0, 10).replace(/-/g, '/');
+					fechaAnterior = datosDia.date;
+					//fila[0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
+					//fechaAnterior = datosDia._id.day;
 					flagPrimero = false;
 				}
-				if (fechaAnterior != datosDia._id.day){
+				if (fechaAnterior != datosDia.date){
 					//Al haber un cambio en la fecha cargo el promedio de ese día, avanzo una fila y reseteo las columnas
 					fila[4] = acum/3;
 					base.push(fila.slice());
 					//Meto la fila en la matriz y vuelvo a empezar
 					fila = ['', 0, 0, 0, 0, ''];
-					fechaAnterior = datosDia._id.day;
-					fila[0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
+					fila[0] = datosDia.date.substr(0, 10).replace(/-/g, '/');
+					fechaAnterior = datosDia.date;
 					acum = 0;
 				}
-				switch (datosDia._id.terminal){
+				switch (datosDia.terminal){
 					case "BACTSSA":
 						contarTerminal = 1;
 						break;

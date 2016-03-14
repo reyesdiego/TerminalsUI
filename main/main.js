@@ -106,7 +106,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 	}]);
 
 	// For any unmatched url, send to /login
-	$urlRouterProvider.otherwise("/login");
+	//$urlRouterProvider.otherwise("/login");
+	$urlRouterProvider.otherwise( function($injector, $location) {
+		var $state = $injector.get("$state");
+		$state.go("login");
+	});
 
 	//noinspection JSValidateTypes
 	$stateProvider
