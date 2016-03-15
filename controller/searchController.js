@@ -282,8 +282,4 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.listaTrenes = generalCache.get('trenes' + loginService.getFiltro());
 		});
 
-		$scope.$on('$destroy', function(){
-			invoiceFactory.cancelRequest();
-		});
-
 	}]);

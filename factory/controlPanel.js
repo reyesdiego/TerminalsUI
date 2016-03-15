@@ -5,10 +5,11 @@
 myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 'errorFactory', 'generalCache', '$q', 'HTTPCanceler',
 	function($http, formatService, loginService, errorFactory, generalCache, $q, HTTPCanceler){
 		var factory = {};
+		var namespace = 'control';
 
 		factory.getByDay = function(dia, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getByDay');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getByDay');
 			var inserturl = serverUrl + '/invoices/counts';
 			$http.get(inserturl, { params: formatService.formatearDatos(dia), timeout: canceler.promise })
 				.success(function(data){
@@ -31,7 +32,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		factory.getTasas = function(datos, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getTasas');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getTasas');
 			var inserturl = serverUrl + '/invoices/ratesTotal/' + datos.moneda + '/';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -61,7 +62,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		factory.getTasasContenedor = function(datos, ruta, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getTasasContenedor');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getTasasContenedor');
 			var inserturl = serverUrl + '/invoices/rates/' + loginService.getFiltro() + '/' + datos.contenedor + '/' + datos.currency;
 			var queryString = {};
 			if (ruta == 'buque') queryString = {
@@ -81,7 +82,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		factory.getFacturasMeses = function(datos, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getFacturasMeses');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getFacturasMeses');
 			var inserturl = serverUrl + '/invoices/countsByMonth' ;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data){
@@ -93,7 +94,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		factory.getGatesMeses = function(datos, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getGatesMeses');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getGatesMeses');
 			var inserturl = serverUrl + '/gates/ByMonth';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data){
@@ -105,7 +106,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		factory.getTurnosMeses = function(datos, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getTurnosMeses');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getTurnosMeses');
 			var inserturl = serverUrl + '/appointments/ByMonth';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data){
@@ -118,7 +119,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 		//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
 		factory.getFacturadoPorDia = function(datos, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getFacturadoPorDia');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getFacturadoPorDia');
 			var inserturl = serverUrl + '/invoices/countsByDate';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data){
@@ -130,7 +131,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		factory.getGatesDia = function(datos, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getGatesDia');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getGatesDia');
 			var inserturl = serverUrl + '/gates/ByHour';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data){
@@ -142,7 +143,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		factory.getTurnosDia = function(datos, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getTurnosDia');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getTurnosDia');
 			var inserturl = serverUrl + '/appointments/ByHour';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function (data){
@@ -154,7 +155,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 		//No es necesario poder cancelarlos por separado, no se hacen llamadas sucesivas
 		factory.cancelRequest = function(){
-			HTTPCanceler.cancel();
+			HTTPCanceler.cancel(namespace);
 		};
 
 		//Método de caché - No hace falta cancelarlo - Se pasa la terminal

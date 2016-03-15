@@ -6,6 +6,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 	function($http, loginService, formatService, $q, HTTPCanceler){
 
 		var factory = {};
+		var namespace = 'afip';
 
 		var obtenerRuta = function(tipoRegistro){
 			switch (tipoRegistro) {
@@ -87,10 +88,6 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 			}
 		};
 
-		//afip/transbordos/skip/limit
-
-		//afip/transbordo - query: sumaria
-
 		factory.getDetalleSumaria = function(tipo, sumaria, callback){
 			var inserturl = serverUrl + '/afip/transbordo' + tipo;
 			var data = {
@@ -142,7 +139,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 
 		factory.getRegistroAfip = function(ruta, filtros, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer);
+			var canceler = HTTPCanceler.get(defer, namespace);
 			var inserturl = serverUrl + '/afip/' + ruta;
 			$http.get(inserturl, { params: formatService.formatearDatos(filtros), timeout: canceler.promise })
 				.success(function(data){
@@ -159,7 +156,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 
 		factory.getContainerSumaria = function(container, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer);
+			var canceler = HTTPCanceler.get(defer, namespace);
 			var inserturl = serverUrl + '/afip/sumariaImpo/' + container;
 			$http.get(inserturl, {timeout: canceler.promise})
 				.success(function(data){
@@ -178,7 +175,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 
 		factory.getContainerSumariaExpo = function(container, callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer);
+			var canceler = HTTPCanceler.get(defer, namespace);
 			var inserturl = serverUrl + '/afip/sumariaExpo/' + container;
 			$http.get(inserturl, {timeout: canceler.promise})
 				.success(function(data){
@@ -240,7 +237,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.cancelRequest = function(){
-			HTTPCanceler.cancel();
+			HTTPCanceler.cancel(namespace);
 		};
 
 		return factory;

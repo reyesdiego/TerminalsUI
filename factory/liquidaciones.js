@@ -5,6 +5,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache){
 
 		var factory = {};
+		var namespace = 'liquidaciones';
 
 		factory.getNotPayedCsv = function(datos, callback){
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() +'/download';
@@ -81,9 +82,9 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var defer = $q.defer();
 			var canceler;
 			if (datos.byContainer){
-				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidarContainer');
+				canceler = HTTPCanceler.get(defer, namespace, 'comprobantesLiquidarContainer');
 			} else {
-				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidar');
+				canceler = HTTPCanceler.get(defer, namespace, 'comprobantesLiquidar');
 			}
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
@@ -114,7 +115,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		factory.getPrePayments = function(page, datos, callback){
 			factory.cancelRequest('preliquidaciones');
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'preliquidaciones');
+			var canceler = HTTPCanceler.get(defer, namespace, 'preliquidaciones');
 			var inserturl = serverUrl + '/paying/prePayments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -127,7 +128,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		factory.getPayments = function(page, datos, callback){
 			factory.cancelRequest('liquidaciones');
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'liquidaciones');
+			var canceler = HTTPCanceler.get(defer, namespace, 'liquidaciones');
 			var inserturl = serverUrl + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -157,9 +158,9 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var defer = $q.defer();
 			var canceler;
 			if (datos.byContainer){
-				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidadosContainer');
+				canceler = HTTPCanceler.get(defer, namespace, 'comprobantesLiquidadosContainer');
 			} else {
-				canceler = HTTPCanceler.get(defer, 'comprobantesLiquidados');
+				canceler = HTTPCanceler.get(defer, namespace, 'comprobantesLiquidados');
 			}
 			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
@@ -263,7 +264,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.cancelRequest = function(request){
-			HTTPCanceler.cancel(request);
+			HTTPCanceler.cancel(namespace, request);
 		};
 
 		return factory;

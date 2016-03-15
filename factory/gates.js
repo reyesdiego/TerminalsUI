@@ -5,11 +5,12 @@
 myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', 'HTTPCanceler',
 	function($http, formatService, loginService, $q, HTTPCanceler){
 		var factory = {};
+		var namespace = 'gates';
 
 		factory.getGate = function(datos, page, callback){
 			factory.cancelRequest('getGates');
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getGates');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getGates');
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -22,7 +23,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 		factory.gatesSinTurnos = function(datos, callback){
 			factory.cancelRequest('gatesSinTurnos');
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'gatesSinTurnos');
+			var canceler = HTTPCanceler.get(defer, namespace, 'gatesSinTurnos');
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingAppointments';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.success(function(data){
@@ -34,7 +35,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 
 		factory.getMissingGates = function(callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getMissingGates');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingGates');
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingGates';
 			$http.get(inserturl, {timeout: canceler.promise })
 				.success(function (data){
@@ -46,7 +47,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 
 		factory.getMissingInvoices = function(callback){
 			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, 'getMissingInvoices');
+			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingInvoices');
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingInvoices';
 			$http.get(inserturl, { timeout: canceler.promise })
 				.success(function (data){
@@ -82,7 +83,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 		}
 
 		factory.cancelRequest = function(request){
-			HTTPCanceler.cancel(request);
+			HTTPCanceler.cancel(namespace, request);
 		};
 
 		return factory;
