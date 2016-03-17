@@ -34,31 +34,8 @@ myapp.service('HTTPCanceler', [ '$q', function($q) {
 				canceler[namespace][callId] = $q.defer();
 				inited[namespace][callId]   = true;
 			}
-			console.log(promisesToReject);
-			console.log(canceler);
-			console.log(inited);
 			return canceler[namespace][callId];
 		},
-		/*get: function(defer, namespace) {
-			namespace = namespace || 'default';
-			if (!promisesToReject[namespace]) {
-				promisesToReject[namespace] = [];
-				canceler[namespace]         = null;
-				inited[namespace]           = false;
-			}
-			if (defer){
-				promisesToReject[namespace].push(defer);
-			}
-			//Create new defer in first time and when the promise was canceled before
-			if(!inited[namespace]){
-				canceler[namespace] = $q.defer();
-				inited[namespace]   = true;
-			}
-			console.log(promisesToReject);
-			console.log(canceler);
-			console.log(inited);
-			return canceler[namespace];
-		},*/
 		cancel: function(namespace, callId) {
 			namespace = namespace || 'default';
 			callId = callId || 'default';
@@ -70,32 +47,10 @@ myapp.service('HTTPCanceler', [ '$q', function($q) {
 				inited[namespace][promiseId] = false;
 				// Reject namespace promises
 				angular.forEach(promises, function(defer) {
-					console.log('rechazo todas');
 					defer.reject();
 				});
 				promisesToReject[namespace][promiseId] = [];
 			});
 		}
-		/*cancel: function(namespace) {
-			namespace = namespace || 'default';
-			console.log('el namespace para rechazar es ' + namespace);
-			angular.forEach(promisesToReject, function(promises, promiseNamespace) {
-				console.log(promises);
-				console.log(promiseNamespace);
-				if (!canceler[promiseNamespace]) return;
-				if ('default'!==namespace && namespace!=promiseNamespace) return;
-				canceler[promiseNamespace].resolve();
-				inited[promiseNamespace] = false;
-				// Reject namespace promises
-				angular.forEach(promises, function(defer) {
-					console.log('rechazo todas');
-					defer.reject();
-				});
-				console.log(promisesToReject);
-				console.log(canceler);
-				console.log(inited);
-				promisesToReject[promiseNamespace] = [];
-			});
-		}*/
 	};
 }]);

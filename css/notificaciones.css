@@ -28,6 +28,10 @@
 	color: #ae2018;
 }
 
+.fila-elegida {
+	background-color: #e8e8e8;;
+}
+
 .textarea-td {
 	border: none;
 	width: 100%;

@@ -189,6 +189,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 
 		$scope.detalleContenedor = function(contenedor){
 			$scope.mostrarDetalle = true;
+			$scope.contenedorElegido = contenedor;
 			$scope.$broadcast('detalleContenedor', contenedor);
 		};
 
