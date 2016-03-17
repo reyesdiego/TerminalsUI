@@ -13,7 +13,7 @@
 	<div ng-show="datosFaltantes.length != undefined && filteredDatos.length > 0">
 		<h5><strong>Resultados: {{ filteredDatos.length }}</strong><span class="visible-print-block"><strong>Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ currentPage * itemsPerPage > totalItems ? totalItems : currentPage * itemsPerPage }} (página {{ currentPage }})</strong></span></h5>
 		<div class="table-responsive" ng-hide="cargando">
-			<table class="table table-striped table-bordered table-hover" style="text-align: center">
+			<table class="table table-bordered table-hover" style="text-align: center">
 				<thead>
 				<tr>
 					<th style="text-align: center"><a href="" ng-click="$parent.ordenarPor('gateTimestamp')">
@@ -70,7 +70,7 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr class="fila-animada" ng-repeat="registro in filteredDatos | orderBy: $parent.predicate : $parent.reverse | startFrom:(currentPage-1) * model.itemsPerPage | limitTo:model.itemsPerPage">
+				<tr class="fila-animada" ng-repeat="registro in filteredDatos | orderBy: $parent.predicate : $parent.reverse | startFrom:(currentPage-1) * model.itemsPerPage | limitTo:model.itemsPerPage" ng-class="registro.contenedor == contenedorElegido ? 'fila-elegida' : ''">
 					<td>{{ registro.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ registro.buque }}</td>
 					<td>{{ registro.viaje }}</td>
