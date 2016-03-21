@@ -268,15 +268,16 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			$scope.verDetalleTerminal = false;
 			switch ($scope.modelDetalle.tipo){
 				case 'date':
-					$scope.modelDetalle.fechaInicio = new Date($scope.modelDetalle.fechaFin.getFullYear(), $scope.modelDetalle.fechaFin.getMonth(), $scope.modelDetalle.fechaFin.getDate() - $scope.modelDetalle.contarHaciaAtras);
+					//$scope.modelDetalle.fechaInicio = new Date($scope.modelDetalle.fechaFin.getFullYear(), $scope.modelDetalle.fechaFin.getMonth(), $scope.modelDetalle.fechaFin.getDate() - $scope.modelDetalle.contarHaciaAtras);
+					$scope.modelDetalle.fechaFin.setDate($scope.modelDetalle.fechaInicio.getDate() + 1);
 					break;
 				case 'month':
 					$scope.modelDetalle.fechaInicio = new Date($scope.modelDetalle.fechaFin.getFullYear(), $scope.modelDetalle.fechaFin.getMonth() - $scope.modelDetalle.contarHaciaAtras, $scope.modelDetalle.fechaFin.getDate());
-					//$scope.modelDetalle.fechaFin.setMonth($scope.modelDetalle.fechaFin.getMonth() + 1);
+					$scope.modelDetalle.fechaFin.setMonth($scope.modelDetalle.fechaFin.getMonth() + 1);
 					break;
 				case 'year':
 					$scope.modelDetalle.fechaInicio = new Date($scope.modelDetalle.fechaFin.getFullYear() - $scope.modelDetalle.contarHaciaAtras, $scope.modelDetalle.fechaFin.getMonth(), $scope.modelDetalle.fechaFin.getDate());
-					//$scope.modelDetalle.fechaFin.setFullYear($scope.modelDetalle.fechaFin.getFullYear() + 1);
+					$scope.modelDetalle.fechaFin.setFullYear($scope.modelDetalle.fechaFin.getFullYear() + 1);
 					break;
 			}
 			invoiceFactory.getDetailRates($scope.modelDetalle, function(data){
@@ -454,7 +455,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 					$scope.model.fechaFin = new Date($scope.model.fechaInicio.getFullYear()+1, $scope.model.fechaInicio.getMonth(), $scope.model.fechaInicio.getDate());
 					break;
 			}
-			$scope.modelDetalle.fechaFin = $scope.model.fechaInicio;
+			$scope.modelDetalle.fechaFin = new Date($scope.model.fechaInicio);
 			if (!angular.isDefined($scope.model['fechaInicio'])) $scope.model.fechaInicio = $scope.fechaInicio;
 			$scope.total = 0;
 			$scope.chartTotalesPorTerminal.data = [
