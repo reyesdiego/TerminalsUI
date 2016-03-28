@@ -5,9 +5,11 @@
 myapp.controller('containerSumariaCtrl', ['$scope', 'afipFactory', function($scope, afipFactory){
 
 	$scope.verDetalleManifiesto = false;
+	$scope.manifiestoElegido = '';
 	$scope.manifiesto = {};
 
 	$scope.detalleSumaria = function(sumaria){
+		$scope.manifiestoElegido = sumaria;
 		afipFactory.getManifiestoDetalle(sumaria, function(data){
 			if (data.status == 'OK'){
 				$scope.manifiesto = data.data[0];
