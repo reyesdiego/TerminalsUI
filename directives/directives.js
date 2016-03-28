@@ -367,7 +367,15 @@ myapp.directive('tableContainerSumaria', function(){
 			datosSumaria:	'=',
 			loadingState:	'=',
 			configPanel:	'='
-		}
+		},
+		controller: 'containerSumariaCtrl'
+	}
+});
+
+myapp.directive('detalleManifiesto', function(){
+	return {
+		retrict:        'E',
+		templateUrl:    'view/container.sumaria.manifiesto.html'
 	}
 });
 

@@ -1,0 +1,39 @@
+{
+  "status": "OK",
+  "data": [{
+    "AÑO": 15,
+    "ADUANA": "091",
+    "TIPO": "MANI",
+    "NUMERO": "067951",
+    "LETRA": "Y",
+    "AGENTE": "AGENCIA MARITIMA ROBINSON SA",
+    "PROCESO": "",
+    "CONSOLIDADO": "NO",
+    "ESTADO": "REG",
+    "FECHAREGISTRO": "14/10/15",
+    "FECHAARRIBO": "14/10/15",
+    "TRANSPORTISTA": "HONG FA SHIPPING CO.",
+    "PAISTRANSPORTISTA": "CHINA",
+    "MEDIOTRANSPORTE": "ACUATICO",
+    "PROCEDENCIA": "AFRICA",
+    "BANDERA": "CHINA",
+    "VACIO": "NO",
+    "GIRO": "DNA E NORTE PN 9NA",
+    "MERCADERIA": "NO",
+    "BUQUE": "CHIPOL TAIHU",
+    "CONOCIMIENTOS": [{
+      "CONOCIMIENTO": "HFTH001DALBUE01",
+      "TRANSITOTRANSBORDO": "N",
+      "CONSOLIDADO": "N",
+      "CONSIGNATARIO": "BELGRANO CARGAS Y LOGISTICA SA",
+      "CONTENEDORES": 1,
+      "MARCA": "SIN MARCAS",
+      "PESO": 8615,
+      "BULTOS": 1,
+      "COMENTARIO": "",
+      "CANTIDAD": 103,
+      "ENVASE": "PIEZA",
+      "CONTENIDO": "UNITS COAL OPEN TOP WAGONS, GRAIN HOPPER WAGONS"
+    }]
+  }]
+}

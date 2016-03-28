@@ -1,0 +1,120 @@
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-striped table-responsive">
+            <thead>
+            <tr>
+                <td colspan="6">
+                    <div>
+                        <div>Ejercicio: {{ manifiesto.ANIO }}</div>
+                        <div>Aduana registro: {{ manifiesto.ADUANA }}</div>
+                        <div>Tipo: {{ manifiesto.TIPO }}</div>
+                        <div>Número: {{ manifiesto.NUMERO }}</div>
+                        <div>Letra: {{ manifiesto.LETRA }}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    Agente Transp.: {{ manifiesto.AGENTE }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Código proceso: {{ manifiesto.PROCESO }}
+                </td>
+                <td colspan="3">
+                    Manif. consolidado: {{ manifiesto.CONSOLIDADO }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    Estado: {{ manifiesto.ESTADO }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Fecha registro: {{ manifiesto.FECHAREGISTRO }}
+                </td>
+                <td colspan="3">
+                    Fecha arribo: {{ manifiesto.FECHAARRIBO }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    Transportista: {{ manifiesto.TRANSPORTISTA }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    País del transp.: {{ manifiesto.PAISTRANSPORTISTA }}
+                </td>
+                <td colspan="3">
+                    Medio transporte: {{ manifiesto.MEDIOTRANSPORTE }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Procedencia: {{ manifiesto.PROCEDENCIA }}
+                </td>
+                <td colspan="3">
+                    Bandera: {{ manifiesto.BANDERA }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    Transporte vacío: {{ manifiesto.VACIO }}
+                </td>
+                <td colspan="3">
+                    Lugar de giro: {{ manifiesto.GIRO }}
+                </td>
+            </tr>
+            <tr>
+                <th style="text-align: right; width: 100px">Marca</th>
+                <th style="text-align: left">Peso bruto</th>
+                <th style="text-align: right">
+                    Nª bultos
+                    Comentario
+                </th>
+                <th style="text-align: right; width: 120px">Cantidad</th>
+                <th style="text-align: right">Envase</th>
+                <th style="text-align: right; width: 120px">Contenido</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="conocimiento in manifiesto.CONOCIMIENTOS">
+            <tr>
+                <td colspan="6" style="text-align: left">Conocimiento: {{ conocimiento.CONOCIMIENTO }} </td>
+            </tr>
+            <tr>
+                <td colspan="3">Tránsito/Transbordo: {{ conocimiento.TRANSITOTRANSBORDO }}</td>
+                <td colspan="3">Consolidado: {{ conocimiento.CONSOLIDADO }}</td>
+            </tr>
+            <tr>
+                <td colspan="6">Consignatario: {{ conocimiento.CONSIGNATARIO }}</td>
+            </tr>
+            <tr>
+                <td>{{ conocimiento.MARCA }}</td>
+                <td>{{ conocimiento.PESO }}</td>
+                <td>
+                    <div>{{ conocimiento.BULTOS }}</div>
+                    <div>{{ conocimiento.COMENTARIO }}</div>
+                </td>
+                <td>{{ conocimiento.CANTIDAD }}</td>
+                <td>{{ conocimiento.ENVASE }}</td>
+                <td>{{ conocimiento.CONTENIDO }}</td>
+            </tr>
+            <tr>
+                <td colspan="6">En contenedores: {{ conocimiento.CONTENEDORES }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row hidden-print">
+    <div class="col-lg-10 col-lg-offset-1" style="text-align: center">
+        <br>
+        <button class="btn btn-default" ng-click="ocultarDetalle()"><span class="glyphicon glyphicon-zoom-out"></span> Ocultar</button>
+        <!--<button ng-show="acceso=='agp'" class="btn btn-primary" ng-click="trackInvoice(verDetalle)"><span class="glyphicon glyphicon-bookmark"></span> Cambiar estado</button>
+        <button class="btn btn-success" ng-click="verPdf()" ng-disabled="disablePdf"><span class="glyphicon glyphicon-download"></span> Ver PDF</button>-->
+    </div>
+</div>
