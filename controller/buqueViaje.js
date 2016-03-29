@@ -446,6 +446,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			$scope.buqueElegido = {
 				viajes:[]
 			};
+			if ($scope.model.contenedor != ''){
+				$scope.filtrar();
+			}
 		});
 
 		$scope.$on('destroy', function(){
