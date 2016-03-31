@@ -57,17 +57,21 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		});
 
 		$scope.cargaPricelist = function(){
+			$scope.pricelistAgp = [];
+			$scope.pricelistTerminal = [];
+			$scope.servicios = [];
+			$scope.listaElegida = [];
 			//priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
-			priceFactory.getMatchPrices({onlyRates: false}, loginService.getFiltro(), function(data){
+			priceFactory.getMatchPrices({onlyRates: $scope.tasas}, loginService.getFiltro(), function(data){
 				if (data.status == 'OK'){
 					$scope.hayError = false;
 					$scope.pricelist = data.data;
 					$scope.pricelist.forEach(function(tarifa){
 						var tarifaPropia = false;
-						if (angular.isDefined(tarifa.matches) && tarifa.matches != null && tarifa.matches.length > 0 && tarifa.matches[0].match.length > 0){
-							if (tarifa.terminal == 'AGP'){
-								$scope.pricelistAgp.push(tarifa);
-							} else {
+						if (tarifa.terminal == 'AGP'){
+							$scope.pricelistAgp.push(tarifa);
+						} else {
+							if (angular.isDefined(tarifa.matches) && tarifa.matches != null && tarifa.matches.length > 0 && tarifa.matches[0].match.length > 0){
 								if (tarifa.matches[0].match.length >= 1){
 									tarifa.matches[0].match.forEach(function(unMatch){
 										if (unMatch == tarifa.code){
@@ -76,8 +80,9 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 									});
 									tarifaPropia ? $scope.pricelistTerminal.push(tarifa) : $scope.servicios.push(tarifa);
 								}
+							} else {
+								$scope.servicios.push(tarifa);
 							}
-
 						}
 						if (angular.isDefined(tarifa.unit) && tarifa.unit != null && angular.isDefined(unitTypesArrayCache.get(tarifa.unit))){
 							tarifa.idUnit = tarifa.unit;
