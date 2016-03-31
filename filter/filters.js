@@ -43,11 +43,8 @@ myapp.filter("maxLength", [function(){
 
 myapp.filter('startFrom', [function() {
 	return function(input, start) {
-		console.log(input);
-		if (angular.isDefined(input)){
-			start = +start; //parse to int
-			return input.slice(start);
-		}
+		start = +start; //parse to int
+		return input.slice(start);
 	}
 }]);
 

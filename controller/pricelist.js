@@ -95,7 +95,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 						};
 					});
 					$scope.listaElegida = angular.copy($scope.pricelistAgp);
-					console.log($scope.listaElegida);
 					$scope.totalItems = $scope.listaElegida.length;
 					$scope.userPricelist = angular.copy($scope.pricelist);
 				} else {
