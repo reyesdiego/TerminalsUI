@@ -19,7 +19,7 @@
 						<input type="checkbox" ng-model="tasas" ng-change="prepararDatos()">Sólo tasa a las cargas
 					</label>
 				</div>
-				<div class="radio col-lg-6 right">
+				<!--<div class="radio col-lg-6 right">
 					<label>
 						<input type="radio" ng-model="tipoFiltro" value="conMatch" ng-change="cambiarLista()">Sólo códigos asociados
 					</label>
@@ -29,7 +29,7 @@
 					<label>
 						<input type="radio" ng-model="tipoFiltro" value="sinFiltro" ng-change="cambiarLista()">Sin filtros
 					</label>
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<div class="row" ng-hide="flagGuardado">
@@ -43,6 +43,12 @@
 
 		<div class="row" ng-hide="hayError">
 			<div class="col-lg-12">
+				<ul class="nav nav-tabs hidden-print">
+					<li ng-repeat="tipoTarifa in tiposTarifas" ng-class="{'active': tipoTarifa.active}">
+						<a ng-click="cambiarTarifas(tipoTarifa);">{{ tipoTarifa.nombre }}</a>
+					</li>
+				</ul>
+				<br>
 				<div class="bs-example table-responsive">
 					<table class="invoice-shadow table table-bordered table-hover">
 						<thead>
