@@ -20,6 +20,12 @@
 
 	<div class="row" ng-hide="hayError">
 		<div class="col-lg-12">
+			<ul class="nav nav-tabs hidden-print">
+				<li ng-repeat="tipoTarifa in tiposTarifas" ng-class="{'active': tipoTarifa.active}">
+					<a ng-click="cambiarTarifas(tipoTarifa);">{{ tipoTarifa.nombre }}</a>
+				</li>
+			</ul>
+			<br>
 			<div class="table-responsive">
 				<table class="invoice-shadow export-table table table-striped table-bordered table-hover">
 					<thead>
@@ -47,7 +53,7 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (pricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage track by $index">
 						<td style="width: 10%">{{ price.code }}</td>
 						<td style="width: 64%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 12%">{{ price.unit}}</td>

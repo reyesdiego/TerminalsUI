@@ -6,11 +6,22 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions, $filter, cacheFactory, $q) {
 
 		'use strict';
+		//Array con los tipos de tarifas para establecer filtros
+		$scope.tiposTarifas = [
+			{nombre: 'AGP', active: true},
+			{nombre: 'Servicios', active: false},
+			{nombre: 'Propios', active: false}
+		];
+
 		// Variable para almacenar la info principal que trae del factory
 		$scope.unidadesTarifas = generalCache.get('unitTypes');
 		$scope.pricelist = [];
 		$scope.filteredPrices = [];
 		$scope.userPricelist = [];
+		$scope.pricelistAgp = [];
+		$scope.servicios = [];
+		$scope.pricelistTerminal = [];
+		$scope.listaElegida = [];
 		$scope.tasas = false;
 		$scope.itemsPerPage = 10;
 		$scope.hayError = false;
@@ -20,6 +31,20 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 
 		$scope.openDate = function(e){
 			generalFunctions.openDate(e);
+		};
+
+		$scope.cambiarTarifas = function(tipoTarifa){
+			$scope.tiposTarifas.forEach(function(unaTarifa){
+				unaTarifa.active = (unaTarifa.nombre == tipoTarifa.nombre);
+			});
+			if (tipoTarifa.nombre == 'AGP'){
+				$scope.listaElegida = angular.copy($scope.pricelistAgp);
+			} else if (tipoTarifa.nombre == 'Servicios'){
+				$scope.listaElegida = angular.copy($scope.servicios);
+			} else {
+				$scope.listaElegida = angular.copy($scope.pricelistTerminal);
+			}
+			$scope.totalItems = $scope.listaElegida.length
 		};
 
 		$scope.$on('cambioPagina', function(event, data){
@@ -32,11 +57,28 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		});
 
 		$scope.cargaPricelist = function(){
-			priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
+			//priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
+			priceFactory.getMatchPrices({onlyRates: false}, loginService.getFiltro(), function(data){
 				if (data.status == 'OK'){
 					$scope.hayError = false;
 					$scope.pricelist = data.data;
 					$scope.pricelist.forEach(function(tarifa){
+						var tarifaPropia = false;
+						if (angular.isDefined(tarifa.matches) && tarifa.matches != null && tarifa.matches.length > 0 && tarifa.matches[0].match.length > 0){
+							if (tarifa.terminal == 'AGP'){
+								$scope.pricelistAgp.push(tarifa);
+							} else {
+								if (tarifa.matches[0].match.length >= 1){
+									tarifa.matches[0].match.forEach(function(unMatch){
+										if (unMatch == tarifa.code){
+											tarifaPropia = true;
+										}
+									});
+									tarifaPropia ? $scope.pricelistTerminal.push(tarifa) : $scope.servicios.push(tarifa);
+								}
+							}
+
+						}
 						if (angular.isDefined(tarifa.unit) && tarifa.unit != null && angular.isDefined(unitTypesArrayCache.get(tarifa.unit))){
 							tarifa.idUnit = tarifa.unit;
 							tarifa.unit = unitTypesArrayCache.get(tarifa.unit);
@@ -52,7 +94,9 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 							from: $scope.fechaVigencia
 						};
 					});
-					$scope.totalItems = $scope.pricelist.length;
+					$scope.listaElegida = angular.copy($scope.pricelistAgp);
+					console.log($scope.listaElegida);
+					$scope.totalItems = $scope.listaElegida.length;
 					$scope.userPricelist = angular.copy($scope.pricelist);
 				} else {
 					$scope.hayError = true;
