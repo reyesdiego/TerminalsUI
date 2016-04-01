@@ -175,6 +175,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				hoy: new Date(),
 				resultados: $scope.resultados,
 				totalTerminal: $scope.totalTerminal,
+				terminal: loginService.getFiltro(),
 				charts: [
 					{filename: $scope.chartReporteEmpresas.id, image: $scope.chartReporteEmpresas.image, h: $scope.chartReporteEmpresas.height, w: $scope.chartReporteEmpresas.width},
 					{filename: $scope.chartPorcentaje.id, image: $scope.chartPorcentaje.image, h: $scope.chartPorcentaje.height, w: $scope.chartPorcentaje.width}
