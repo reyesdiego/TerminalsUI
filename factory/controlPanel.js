@@ -201,6 +201,21 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 				})
 		};
 
+		factory.getFacturacionEmpresasCSV = function(datos, callback){
+			var inserturl = serverUrl + '/invoices/totalClient';
+			$http.get(inserturl, {params: formatService.formatearDatos(datos)})
+				.success(function(data, status, headers){
+					var contentType = headers('Content-Type');
+					if (contentType.indexOf('text/csv') >= 0){
+						callback(data, 'OK');
+					} else {
+						callback(data, 'ERROR');
+					}
+				}).error(function(error){
+					callback(error);
+				})
+		};
+
 		function ponerDescripcionYTasas(data) {
 			var datos = data;
 			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
