@@ -56,6 +56,29 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			$scope.mensajeResultado = mensaje;
 		});
 
+		$scope.actualizarPricelist = function(){
+			$scope.pricelistAgp = [];
+			priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function(data){
+				if (data.status == 'OK'){
+					$scope.hayError = false;
+					$scope.pricelist = data.data;
+					$scope.pricelist.forEach(function(tarifa){
+						if (tarifa.terminal == 'AGP') $scope.pricelistAgp.push(tarifa);
+					});
+					$scope.listaElegida = angular.copy($scope.pricelistAgp);
+					$scope.totalItems = $scope.listaElegida.length;
+					$scope.userPricelist = angular.copy($scope.pricelist);
+				} else {
+					$scope.hayError = true;
+					$scope.mensajeResultado = {
+						titulo: 'Tarifario',
+						mensaje: 'Se ha producido un error al cargar los datos del tarifario.',
+						tipo: 'panel-danger'
+					};
+				}
+			})
+		};
+
 		$scope.cargaPricelist = function(){
 			$scope.pricelistAgp = [];
 			$scope.pricelistTerminal = [];
@@ -144,20 +167,20 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 
 		$scope.exportarAExcel = function(){
 			var tabla = "<table>" +
-				"			<tr>" +
-				"				<td>Código</td>" +
-				"				<td>Descripción</td>" +
-				"				<td>Unidad</td>" +
-				"				<td>Tope</td>" +
-				"		</tr>";
+					"			<tr>" +
+					"				<td>Código</td>" +
+					"				<td>Descripción</td>" +
+					"				<td>Unidad</td>" +
+					"				<td>Tope</td>" +
+					"		</tr>";
 
 			$scope.filteredPrices.forEach(function(price){
 				tabla += "<tr>" +
-					"		<td>" + price.code + "</td>" +
-					"		<td>" + price.description + "</td>" +
-					"		<td>" + price.unit + "</td>" +
-					"		<td>" + price.topPrices[0].price + "</td>" +
-					"	</tr>"
+						"		<td>" + price.code + "</td>" +
+						"		<td>" + price.description + "</td>" +
+						"		<td>" + price.unit + "</td>" +
+						"		<td>" + price.topPrices[0].price + "</td>" +
+						"	</tr>"
 			});
 
 			tabla += "</table>";
@@ -227,16 +250,16 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 						llamadas.push($scope.guardarTarifa(price))
 					});
 					$q.all(llamadas)
-						.then(function(){
-							dialogs.notify('Tarifario', 'El tarifario se ha actualizado correctamente');
-							cacheFactory.actualizarMatchesArray(loginService.getFiltro());
-							$scope.cargaPricelist();
-							$scope.disableSave = false;
-						}, function(){
-							dialogs.error('Tarifario', 'Se ha producido un erro al actualizar el tarifario');
-							$scope.cargaPricelist();
-							$scope.disableSave = false;
-						});
+							.then(function(){
+								dialogs.notify('Tarifario', 'El tarifario se ha actualizado correctamente');
+								cacheFactory.actualizarMatchesArray(loginService.getFiltro());
+								$scope.cargaPricelist();
+								$scope.disableSave = false;
+							}, function(){
+								dialogs.error('Tarifario', 'Se ha producido un erro al actualizar el tarifario');
+								$scope.cargaPricelist();
+								$scope.disableSave = false;
+							});
 				})
 			} else {
 				dialogs.notify('Tarifario', 'No se han producido cambios en el tarifario.');
