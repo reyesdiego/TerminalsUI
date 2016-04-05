@@ -31,7 +31,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 			} else {
 				gatesFactory.getTrains(loginService.getFiltro(), function(data){
 					if (data.status == 'OK'){
-						generalCache.put('trenes' + terminal, data.data);
+						generalCache.put('trenes' + loginService.getFiltro(), data.data);
 						$rootScope.$broadcast('progreso', {mensaje: 2});
 						deferred.resolve();
 					} else {
