@@ -172,7 +172,7 @@
 					<ul class="dropdown-menu">
 						<li ng-show="tieneAcceso('tarifario')"><a ui-sref="tarifario">Tarifario</a></li>
 						<li ng-show="tieneAcceso('matches')"><a ui-sref="matches">Asociar</a></li>
-						<li class="divider"></li>
+						<li class="visible-lg divider" ng-show="tieneAcceso('modificarTarifario')"></li>
 						<li ng-show="tieneAcceso('modificarTarifario')"><a  ui-sref="modificarTarifario">Editar</a></li>
 					</ul>
 				</li>
