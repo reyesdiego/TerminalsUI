@@ -2,7 +2,22 @@
  * Created by leo on 02/02/15.
  */
 
-myapp.controller('usersCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'generalFunctions', function($scope, ctrlUsersFactory, dialogs, $q, generalFunctions) {
+myapp.controller('usersCtrl', ['$rootScope', '$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'generalFunctions', function($rootScope, $scope, ctrlUsersFactory, dialogs, $q, generalFunctions) {
+
+	$scope.$on('socket:loggedIn', function(event, data){
+		console.log(data);
+		$scope.datosUsers.forEach(function(user){
+			if (user.user == data.user) user.online = true;
+		})
+	});
+
+	$scope.$on('socket:loggedOff', function(event, data){
+		console.log(data);
+		$scope.datosUsers.forEach(function(user){
+			if (user.user == data.user) user.online = false;
+		})
+	});
+
 	$scope.permiso = false;
 	$scope.datosUsers = [];
 	$scope.panelMensaje = {

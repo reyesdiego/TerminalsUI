@@ -412,6 +412,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.socket = appSocket;
 
+		$rootScope.socket.connect();
+
 		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
 		$rootScope.terminalEstilo = 'bootstrap.cerulean';
 
@@ -516,7 +518,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$state.transitionTo('login');
 			$rootScope.setEstiloTerminal('BACTSSA');
 			$rootScope.filtroTerminal = '';
-			if (angular.isDefined($rootScope.appSocket)) $rootScope.appSocket.disconnect();
+			$rootScope.socket.disconnect();
 		};
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
