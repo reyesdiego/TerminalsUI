@@ -12,6 +12,8 @@ myapp.factory('appSocket', ['socketFactory', function(socketFactory){
 	mySocket.forward('appointment');
 	mySocket.forward('gate');
 	mySocket.forward('invoice');
+	mySocket.forward('onlineUsers');
+	mySocket.forward('logOff');
 
 	return mySocket;
 

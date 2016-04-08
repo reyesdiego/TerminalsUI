@@ -410,6 +410,8 @@ myapp.config(['$cookiesProvider', function($cookiesProvider){
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket', '$http',
 	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
+		$rootScope.socket = appSocket;
+
 		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
 		$rootScope.terminalEstilo = 'bootstrap.cerulean';
 
@@ -527,7 +529,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			}
 			if (!loginService.getStatus() && $cookies.get('restoreSesion') === 'true'){
 				event.preventDefault();
-				authFactory.login().then(function(){
+				authFactory.login().then(function(data){
+					$rootScope.socket.emit('login', data.user);
 					$rootScope.$broadcast('terminoLogin');
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');

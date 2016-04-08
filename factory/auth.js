@@ -9,7 +9,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 		factory.userEnter = function(user, pass, useCookies){
 			var deferred = $q.defer();
 			this.login(user, pass)
-				.then(function(){
+				.then(function(data){
 					if (useCookies){
 						$cookies.put('username', user);
 						$cookies.put('password', pass);
@@ -17,7 +17,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 					}
 					$cookies.put('isLogged', 'true');
 					$cookies.put('restoreSesion', useCookies);
-					deferred.resolve();
+					deferred.resolve(data);
 				},
 				function(error){
 					if (loginService.getStatus()){
@@ -96,7 +96,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 						if (!restoreSesion){
 							cacheFactory.cargaCache()
 								.then(function(){
-									deferred.resolve();
+									deferred.resolve(data);
 								},
 								function(){
 									var cacheError = {
@@ -106,7 +106,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 									deferred.reject(cacheError);
 								});
 						} else {
-							deferred.resolve();
+							deferred.resolve(data);
 						}
 					} else {
 						var myError = {
