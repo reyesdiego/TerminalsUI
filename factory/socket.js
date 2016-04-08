@@ -21,6 +21,12 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFact
 		}
 	});
 
+	mySocket.on('reconnect', function(){
+		if (loginService.getStatus()){
+			mySocket.emit('login', loginService.getInfo().user);
+		}
+	});
+
 	return mySocket;
 
 }]);
