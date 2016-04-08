@@ -14,6 +14,8 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFact
 			mySocket = socketFactory({ioSocket: ioSocket});
 
 			mySocket.on('connect', function () {
+				console.log('socket se conecto');
+
 				mySocket.forward('appointment');
 				mySocket.forward('gate');
 				mySocket.forward('invoice');
@@ -21,20 +23,26 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFact
 				mySocket.forward('loggedOff');
 
 				if (loginService.getStatus()) {
-					mySocket.emit('login', loginService.getInfo().user);
+					this.emit('login', loginService.getInfo().user);
 				}
 			});
 
 			mySocket.on('reconnect', function () {
+				console.log('socket se reconecto');
 				if (loginService.getStatus()) {
-					mySocket.emit('login', loginService.getInfo().user);
+					this.emit('login', loginService.getInfo().user);
 				}
 			});
+
+			mySocket.on('disconnect', function() {
+				console.log('socket se desconecto');
+			})
 		},
 		disconnect: function () {
 			ioSocket.disconnect();
 		},
 		emit: function(ev, data){
+			console.log('socket emite ' + ev);
 			mySocket.emit(ev, data);
 		}
 	}

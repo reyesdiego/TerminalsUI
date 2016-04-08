@@ -510,6 +510,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 
 		$rootScope.salir = function(){
+			$rootScope.socket.emit('logoff', loginService.getInfo().user);
 			authFactory.logout();
 			$rootScope.appointmentNotify = 0;
 			$rootScope.invoiceNotify = 0;
@@ -518,7 +519,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$state.transitionTo('login');
 			$rootScope.setEstiloTerminal('BACTSSA');
 			$rootScope.filtroTerminal = '';
-			$rootScope.socket.disconnect();
 		};
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
