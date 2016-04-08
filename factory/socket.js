@@ -2,7 +2,7 @@
  * Created by artiom on 02/07/15.
  */
 
-myapp.factory('appSocket', ['socketFactory', function(socketFactory){
+myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFactory, loginService){
 
 	//La dirrección deberá ser pasado por config
 	var ioSocket = io.connect(socketUrl);
@@ -14,6 +14,12 @@ myapp.factory('appSocket', ['socketFactory', function(socketFactory){
 	mySocket.forward('invoice');
 	mySocket.forward('onlineUsers');
 	mySocket.forward('logOff');
+
+	mySocket.on('connect', function(){
+		if (loginService.getStatus()){
+			mySocket.emit('login', loginService.getInfo().user);
+		}
+	});
 
 	return mySocket;
 
