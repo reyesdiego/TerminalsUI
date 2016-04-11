@@ -23,6 +23,7 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFact
 				mySocket.forward('loggedOff');
 
 				if (loginService.getStatus()) {
+					console.log('hace login');
 					this.emit('login', loginService.getInfo().user);
 				}
 			});
@@ -30,6 +31,7 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFact
 			mySocket.on('reconnect', function () {
 				console.log('socket se reconecto');
 				if (loginService.getStatus()) {
+					console.log('hace login');
 					this.emit('login', loginService.getInfo().user);
 				}
 			});
