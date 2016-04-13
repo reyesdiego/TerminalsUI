@@ -430,6 +430,31 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			})
 		};
 
+		$scope.descargarCSV = function(){
+			var alterModel = {
+				onlyRates: $scope.tasas,
+				output: 'csv'
+			};
+
+			priceFactory.getMatchPricesCSV(alterModel, loginService.getFiltro(), function(data, status){
+				if (status == 'OK'){
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+						target: '_blank',
+						download: 'Asociacion_tarifario.csv'
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+				} else {
+					dialogs.error('Asociar', 'Se ha producido un error al descargar los datos.');
+				}
+			})
+		};
+
 		if (loginService.getStatus()) $scope.prepararDatos();
 
 		$scope.$on('terminoLogin', function(){

@@ -127,8 +127,11 @@
 
 		<div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
 
-		<div class="row hidden-print" ng-show="acceso=='terminal' && !hayError">
-			<div class="col-lg-12">
+		<div class="row hidden-print">
+            <div class="col-lg-6" ng-show="!hayError">
+                <button class="btn btn-primary" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Exportar a CSV</button>
+            </div>
+			<div class="col-lg-6 text-right" ng-show="acceso == 'terminal' && !hayError">
 				<button class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
 				<button class="btn" ng-click="abrirNuevoConcepto()"><span class="glyphicon glyphicon-asterisk"></span> Nuevo concepto</button>
 			</div>
