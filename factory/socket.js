@@ -10,7 +10,7 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFact
 
 	return {
 		connect: function () {
-			ioSocket = io.connect(socketUrl);
+			ioSocket = io.connect(socketUrl, { transports: ['websocket']});
 			mySocket = socketFactory({ioSocket: ioSocket});
 
 			mySocket.on('connect', function () {
