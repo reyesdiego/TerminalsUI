@@ -8,7 +8,8 @@
 
 			var messages = [];
 
-			var socket = io.connect("http://10.10.0.223:8090", { transports: ['websocket']});
+			//var socket = io.connect("http://10.10.0.223:8090");
+			var socket = io.connect("http://10.10.0.223:8090", { transports: ['polling', 'websocket', 'xhr-polling']});
 
 			var field = document.getElementById("field");
 			var sendButton = document.getElementById("send");
@@ -99,7 +100,7 @@
 					alert("te falta el nombre");
 				} else {
 					var text = field.value;
-					socket.emit('send', { message: text, username: name.value }, function (param) {
+					socket.emit('newUser', { message: text, username: name.value }, function (param) {
                         titulo.innerHTML = param.id;
                         console.log(param);
                     });
