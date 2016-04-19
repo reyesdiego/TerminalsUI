@@ -67,7 +67,8 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 					});
 					$scope.listaElegida = angular.copy($scope.pricelistAgp);
 					$scope.totalItems = $scope.listaElegida.length;
-					$scope.userPricelist = angular.copy($scope.pricelist);
+					$scope.userPricelist = angular.copy($scope.pricelistAgp);
+
 				} else {
 					$scope.hayError = true;
 					$scope.mensajeResultado = {
@@ -124,7 +125,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 					});
 					$scope.listaElegida = angular.copy($scope.pricelistAgp);
 					$scope.totalItems = $scope.listaElegida.length;
-					$scope.userPricelist = angular.copy($scope.pricelist);
+					$scope.userPricelist = angular.copy($scope.pricelistAgp);
 				} else {
 					$scope.hayError = true;
 					$scope.mensajeResultado = {
