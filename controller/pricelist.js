@@ -92,6 +92,11 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 					$scope.pricelist = data.data;
 					$scope.pricelist.forEach(function(tarifa){
 						var tarifaPropia = false;
+						if (!angular.isDefined(tarifa.topPrices[0].price || tarifa.topPrices[0].price == null)){
+							tarifa.orderPrice = 0;
+						} else {
+							tarifa.orderPrice = tarifa.topPrices[0].price;
+						}
 						tarifa.nuevoTopPrice = {
 							currency: tarifa.topPrices[0].currency,
 							price: tarifa.orderPrice,
@@ -116,11 +121,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 						if (angular.isDefined(tarifa.unit) && tarifa.unit != null && angular.isDefined(unitTypesArrayCache.get(tarifa.unit))){
 							tarifa.idUnit = tarifa.unit;
 							tarifa.unit = unitTypesArrayCache.get(tarifa.unit);
-						}
-						if (!angular.isDefined(tarifa.topPrices[0].price || tarifa.topPrices[0].price == null)){
-							tarifa.orderPrice = 0;
-						} else {
-							tarifa.orderPrice = tarifa.topPrices[0].price;
 						}
 					});
 					$scope.listaElegida = angular.copy($scope.pricelistAgp);
