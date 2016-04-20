@@ -92,6 +92,11 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 					$scope.pricelist = data.data;
 					$scope.pricelist.forEach(function(tarifa){
 						var tarifaPropia = false;
+						tarifa.nuevoTopPrice = {
+							currency: tarifa.topPrices[0].currency,
+							price: tarifa.orderPrice,
+							from: $scope.fechaVigencia
+						};
 						if (tarifa.terminal == 'AGP'){
 							$scope.pricelistAgp.push(tarifa);
 						} else {
@@ -117,11 +122,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 						} else {
 							tarifa.orderPrice = tarifa.topPrices[0].price;
 						}
-						tarifa.nuevoTopPrice = {
-							currency: tarifa.topPrices[0].currency,
-							price: tarifa.orderPrice,
-							from: $scope.fechaVigencia
-						};
 					});
 					$scope.listaElegida = angular.copy($scope.pricelistAgp);
 					$scope.totalItems = $scope.listaElegida.length;
@@ -231,7 +231,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		$scope.guardarCambios = function(){
 			var i;
 			var changesList = [];
-			for (i=0; i <= $scope.pricelist.length - 1; i++){
+			for (i=0; i < $scope.userPricelist.length - 1; i++){
 				if (!angular.equals($scope.userPricelist[i], $scope.pricelist[i])){
 					$scope.userPricelist[i].nuevoTopPrice.from = $scope.fechaVigencia;
 					$scope.userPricelist[i].topPrices.push($scope.userPricelist[i].nuevoTopPrice);
