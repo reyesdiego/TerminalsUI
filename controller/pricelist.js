@@ -96,6 +96,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 							tarifa.orderPrice = 0;
 						} else {
 							tarifa.orderPrice = tarifa.topPrices[0].price;
+							tarifa.orderCurrency = tarifa.topPrices[0].currency;
 						}
 						tarifa.nuevoTopPrice = {
 							currency: tarifa.topPrices[0].currency,
@@ -236,11 +237,18 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 					$scope.userPricelist[i].nuevoTopPrice.from = $scope.fechaVigencia;
 					$scope.userPricelist[i].topPrices.push($scope.userPricelist[i].nuevoTopPrice);
 					$scope.userPricelist[i].unit = $scope.userPricelist[i].idUnit;
-					changesList.push($scope.userPricelist[i]);
+					if ($scope.userPricelist[i].nuevoTopPrice.price == $scope.userPricelist[i].orderPrice && $scope.userPricelist[i].nuevoTopPrice.currency == $scope.userPricelist[i].orderCurrency){
+						var aux = angular.copy($scope.userPricelist[i]);
+						aux.nuevoTopPrice = null;
+						changesList.push(aux);
+					} else {
+						changesList.push($scope.userPricelist[i]);
+					}
 				}
 			}
 			var llamadas = [];
 			if (changesList.length > 0){
+				console.log(changesList);
 				var res = dialogs.confirm('Tarifario', 'Se guardarán los cambios para las ' + changesList.length + ' tarifas modificadas, con fecha de vigencia a partir del ' + $filter('date')($scope.fechaVigencia, 'dd/MM/yyyy'))
 				res.result.then(function(){
 					$scope.disableSave = true;
