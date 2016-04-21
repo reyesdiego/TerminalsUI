@@ -21,7 +21,7 @@
 					<div class="input-group">
 						<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaVigencia = !openfechaVigencia;">Fecha de vigencia <span class="glyphicon glyphicon-calendar"></span></button></span>
 						<label for="fechaVigencia" class="sr-only">Fecha de vigencia</label>
-						<input id="fechaVigencia" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="fechaVigencia" is-open="openfechaVigencia" readonly style="background-color: #ffffff">
+						<input id="fechaVigencia" type="text" class="form-control" ng-keyup="hitEnter($event)" datetime-picker="yyyy-MM-dd HH:mm" ng-model="fechaVigencia" is-open="openfechaVigencia" readonly style="background-color: #ffffff">
 					</div>
 				</div>
 			</div>
