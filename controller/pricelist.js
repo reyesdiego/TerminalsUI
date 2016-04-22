@@ -138,6 +138,12 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			});
 		};
 
+		$scope.showDetail = function(index){
+			var realIndex = ($scope.currentPage - 1) * $scope.itemsPerPage + index;
+			$scope.filteredPrices[realIndex].SHOW = !$scope.filteredPrices[realIndex].SHOW;
+		};
+
+
 		$scope.exportarAPdf = function(){
 			var data = {
 				terminal: loginService.getFiltro(),

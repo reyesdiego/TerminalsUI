@@ -61,5 +61,11 @@
 }
 
 .clickableRow {
+	background-color: #f9f9f9;
+	/*cursor: hand;*/
 	cursor: pointer;
+}
+
+.clickableRow:hover{
+	background-color: #dddddd;
 }
