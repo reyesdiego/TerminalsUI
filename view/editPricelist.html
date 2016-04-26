@@ -62,21 +62,21 @@
 					</thead>
 					<tbody ng-repeat="price in filteredPrices = (userPricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 					<tr style="height:60px" class="hidden-print clickableRow" ng-click="showDetail($index)">
-						<td><input class="textarea-td" type="text" ng-model="price.code"></td>
-						<td><textarea class="textarea-td" ng-model="price.description"></textarea></td>
+						<td><input class="textarea-td" type="text" ng-model="price.code" ng-click="$event.stopPropagation()"></td>
+						<td><textarea class="textarea-td" ng-model="price.description" ng-click="$event.stopPropagation()"></textarea></td>
 						<td>
-							<select class="form-control" ng-model="price.idUnit">
+							<select class="form-control" ng-model="price.idUnit" ng-click="$event.stopPropagation()">
 								<option ng-repeat="unidad in unidadesTarifas" value="{{ unidad._id }}" ng-selected="price.idUnit == unidad._id">{{ unidad.description }}</option>
 							</select>
 						</td>
 						<td>
-							<select class="form-control" ng-model="price.nuevoTopPrice.currency">
+							<select class="form-control" ng-model="price.nuevoTopPrice.currency" ng-click="$event.stopPropagation()">
 								<option value="DOL" ng-selected="price.nuevoTopPrice.currency == 'DOL'">U$S</option>
 								<option value="PES" ng-selected="price.nuevoTopPrice.currency == 'PES'">$ARG</option>
 							</select>
 						</td>
 						<td style="text-align: right">
-							<input class="text-right textarea-td" type="number" min="0" step="any" ng-model="price.nuevoTopPrice.price">
+							<input class="text-right textarea-td" type="number" min="0" step="any" ng-model="price.nuevoTopPrice.price" ng-click="$event.stopPropagation()">
 						</td>
 					</tr>
 					<tr ng-repeat="top in price.topPrices" ng-init="price.SHOW = false" ng-show="price.SHOW">
