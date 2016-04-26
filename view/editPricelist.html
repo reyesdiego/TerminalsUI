@@ -60,8 +60,8 @@
 						</a></th>
 					</tr>
 					</thead>
-					<tbody>
-					<tr style="height:60px" class="hidden-print" ng-repeat="price in filteredPrices = (userPricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+					<tbody ng-repeat="price in filteredPrices = (userPricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+					<tr style="height:60px" class="hidden-print clickableRow" ng-click="showDetail($index)">
 						<td><input class="textarea-td" type="text" ng-model="price.code"></td>
 						<td><textarea class="textarea-td" ng-model="price.description"></textarea></td>
 						<td>
@@ -78,6 +78,10 @@
 						<td style="text-align: right">
 							<input class="text-right textarea-td" type="number" min="0" step="any" ng-model="price.nuevoTopPrice.price">
 						</td>
+					</tr>
+					<tr ng-repeat="top in price.topPrices" ng-init="price.SHOW = false" ng-show="price.SHOW">
+						<td colspan="4" class="text-right">Vigencia: {{ top.from | date: 'dd/MM/yyyy HH:mm' }}</td>
+						<td class="text-right">{{ top.currency | formatCurrency }} {{ top.price | currency }}</td>
 					</tr>
 					<tr style="height:60px" class="visible-print" ng-repeat="price in userPricelist | filter:search | orderBy: predicate : reverse">
 						<td style="width: 10%">{{ price.code }}</td>
