@@ -18,7 +18,7 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 		mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 	};
 
-	$scope.ocultarFiltros = ['patenteCamion', 'tren', 'carga', 'ontime', 'onlyTrains'];
+	$scope.ocultarFiltros = ['patenteCamion', 'tren', 'carga', 'ontime', 'onlyTrains', 'size'];
 
 	// Fecha (dia y hora)
 	$scope.model = {
