@@ -171,9 +171,9 @@
 					<a data-ng-hide="dropdown" dropdown-toggle>Tarifas<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li ng-show="tieneAcceso('tarifario')"><a ui-sref="tarifario">Tarifario</a></li>
-						<li ng-show="tieneAcceso('matches')"><a ui-sref="matches">Asociar</a></li>
-						<li class="visible-lg divider" ng-show="tieneAcceso('modificarTarifario')"></li>
-						<li ng-show="tieneAcceso('modificarTarifario')"><a  ui-sref="modificarTarifario">Editar</a></li>
+						<li ng-show="tieneAcceso('matches')"><a ui-sref="matches">Editar</a></li>
+						<!--<li class="visible-lg divider" ng-show="tieneAcceso('modificarTarifario')"></li>
+						<li ng-show="tieneAcceso('modificarTarifario')"><a  ui-sref="modificarTarifario">Editar</a></li>-->
 					</ul>
 				</li>
 				<li ng-show="acceso!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" dropdown>

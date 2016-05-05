@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'cacheFactory',
-	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, cacheFactory) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'cacheFactory', '$state',
+	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, cacheFactory, $state) {
 		'use strict';
 
 		//Array con los tipos de tarifas para establecer filtros
@@ -13,6 +13,19 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			{nombre: 'Propios', active: false},
 			{nombre: 'Con match', active: false}
 		];
+
+		$scope.newTopPrice = {
+			from: new Date(),
+			currency: 'DOL',
+			price: ''
+		};
+
+		$scope.newPrice = {
+			code: '',
+			unit: '',
+			topPrices:[],
+			terminal: ''
+		};
 
 		$scope.nombre = loginService.getFiltro();
 
@@ -213,19 +226,26 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		};
 
 		//El hitEnter para el cuadro donde ponen los códigos nuevos
-		$scope.hitEnter = function(evt, price){
+		/*$scope.hitEnter = function(evt, price){
 			if(angular.equals(evt.keyCode,13))
 				$scope.agregarCodigo(price);
 			price.disabled = !(angular.isDefined(price.new) && price.new != '');
-		};
+		};*/
 
 		$scope.abrirNuevoConcepto = function(tipo){
 			$scope.nuevoConcepto = true;
 			$scope.esRequerido = true;
 			$scope.flagNuevoConcepto = true;
-			if (tipo == 'editar'){
-				$scope.flagEditando = true;
+			if (!(tipo == 'editar')){
+				$scope.newPrice = {
+					code: '',
+					unit: '',
+					topPrices: [],
+					terminal: ''
+				}
 			}
+			$scope.flagEditando = (tipo == 'editar');
+			$state.transitionTo('modificarTarifario');
 		};
 
 		$scope.guardar = function(){
@@ -256,21 +276,97 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		};
 
+		$scope.removeTopPrice = function(index){
+			console.log(index);
+			$scope.newPrice.topPrices.splice(index, 1);
+		};
+
+		$scope.addTopPrice = function(){
+			if (validateTopPrice()){
+				$scope.newPrice.topPrices.push($scope.newTopPrice);
+				$scope.newTopPrice = {
+					from: new Date(),
+					currency: 'DOL',
+					price: ''
+				}
+			}
+		};
+
+		function validateTopPrice(){
+			$scope.newTopPrice.price = parseFloat($scope.newTopPrice.price);
+			return ($scope.newTopPrice.from != '' && $scope.newTopPrice.currency != '' && $scope.newTopPrice.price > 0);
+		}
+
+		$scope.savePrice = function(){
+			var dlg = null;
+			if (verificarEditado()){
+				$scope.newPrice.terminal = loginService.getInfo().terminal;
+				if ($scope.flagEditando){
+					dlg = dialogs.confirm('Guardar', 'Se guardarán todos los cambios realizados sobre la tarifa, ¿confirma la operación?');
+					dlg.result.then(function(){
+						priceFactory.savePriceChanges($scope.newPrice, $scope.newPrice._id, function(data){
+							if (data.status == 'OK'){
+								cacheFactory.actualizarMatchesArray(loginService.getFiltro());
+								dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
+								$scope.newPrice = data.data;
+								$scope.prepararDatos();
+							} else {
+								dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
+							}
+						})
+					})
+				} else {
+					dlg = dialogs.confirm('Nueva tarifa', 'Se agregará una nueva tarifa, ¿confirma la operación?');
+					dlg.result.then(function(){
+						priceFactory.addPrice($scope.newPrice, function(nuevoPrecio){
+							if (nuevoPrecio.status == 'OK'){
+								var nuevoMatch = {
+									code: nuevoPrecio.data.code,
+									terminal: nuevoPrecio.data.terminal,
+									_idPrice: nuevoPrecio.data._id,
+									match:[]
+								};
+								nuevoMatch.match.push(nuevoPrecio.data.code);
+
+								$scope.match = [];
+								$scope.match.push(nuevoMatch);
+
+								priceFactory.addMatchPrice($scope.match, function(data){
+									if (data.status == 'OK'){
+										cacheFactory.actualizarMatchesArray(loginService.getFiltro());
+										dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente.");
+										$scope.salir();
+										$scope.prepararDatos();
+									} else {
+										dialogs.error('Asociar', 'Se ha producido un error al intentar asociar el nuevo valor. ' + data.data);
+									}
+								});
+							} else {
+								dialogs.error('Asociar', 'Se ha producido un error al agregar el nuevo valor. ' + nuevoPrecio.data);
+							}
+						})
+					})
+
+				}
+			}
+		};
+
 		$scope.guardarNuevoConcepto = function(){
 			if ($scope.flagNuevoConcepto){
-				var formData = {
+				$scope.newPrice.terminal = loginService.getInfo().terminal
+				/*var formData = {
 					"description":$scope.descripcion,
 					"topPrices": [{price: $scope.precio, currency: $scope.moneda}],
 					"matches": null,
 					"unit": $scope.unidad,
 					"code": $scope.codigo,
 					"terminal": loginService.getInfo().terminal
-				};
+				};*/
 
 				if (verificarEditado()){
 					if ($scope.flagEditando){
-						formData.topPrices = angular.copy($scope.tarifaCompleta.topPrices);
-						if (angular.isDefined($scope.newPrice) && $scope.newPrice > 0){
+						//$scope.newPrice.topPrices = angular.copy($scope.newPrice.topPrices);
+						if (angular.isDefined($scope.newTopPrice.price) && $scope.newTopPrice.price > 0){
 							var dlg = dialogs.confirm("Nuevo precio", "¿Agregar nuevo precio a la tarifa? Fecha: " + $filter('date')($scope.newFrom, 'yyyy-MM-dd')  + ', moneda: ' + $filter('formatCurrency')($scope.newCurrency) + ', precio: ' + $scope.newPrice);
 							dlg.result.then(function(){
 								var nuevoTopPrice = {
@@ -278,15 +374,15 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 									currency: $scope.newCurrency,
 									from: $scope.newFrom
 								};
-								formData.topPrices.push(nuevoTopPrice);
-								priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
+								$scope.newPrice.topPrices.push(nuevoTopPrice);
+								priceFactory.savePriceChanges($scope.newPrice, $scope.newPrice._id, function(data){
 									if (data.status == 'OK'){
 										cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 										$scope.newPrice = '';
 										$scope.newFrom = new Date();
 										dialogs.notify("Asociar","Se ha asignado el nuevo valor a la tarifa y se han guardado los cambios.");
-										$scope.tarifaCompleta = data.data;
-										$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+										$scope.newPrice = data.data;
+										$scope.preciosHistoricos = $scope.newPrice.topPrices;
 										$scope.preciosHistoricos.forEach(function(precio){
 											precio.from = new Date(precio.from);
 										});
@@ -297,14 +393,14 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 								})
 							});
 						} else {
-							priceFactory.savePriceChanges(formData, $scope.tarifaCompleta._id, function(data){
+							priceFactory.savePriceChanges($scope.newPrice, $scope.newPrice._id, function(data){
 								if (data.status == 'OK'){
 									cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 									$scope.newPrice = '';
 									$scope.newFrom = new Date();
 									dialogs.notify("Asociar","La tarifa ha sido modificada correctamente.");
-									$scope.tarifaCompleta = data.data;
-									$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+									$scope.newPrice = data.data;
+									$scope.preciosHistoricos = $scope.newPrice.topPrices;
 									$scope.preciosHistoricos.forEach(function(precio){
 										precio.from = new Date(precio.from);
 									});
@@ -315,7 +411,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 							})
 						}
 					} else {
-						priceFactory.addPrice(formData, function(nuevoPrecio){
+						priceFactory.addPrice($scope.newPrice, function(nuevoPrecio){
 							if (nuevoPrecio.status == 'OK'){
 								var nuevoMatch = {
 									code: nuevoPrecio.data.code,
@@ -369,17 +465,18 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.editarTarifa = function(tarifa){
 			$scope.posicionTarifa = $scope.pricelist.indexOf(tarifa);
 			priceFactory.getPriceById(tarifa._id, function(data){
+				console.log(data);
 				if (data.status == 'OK'){
-					$scope.tarifaCompleta = data.data;
-					$scope.codigo = $scope.tarifaCompleta.code;
-					$scope.descripcion = $scope.tarifaCompleta.description;
-					$scope.unidad = $scope.tarifaCompleta.unit;
-					$scope.moneda = tarifa.topPrices[0].currency;
-					$scope.precio = tarifa.topPrices[0].price;
-					$scope.preciosHistoricos = $scope.tarifaCompleta.topPrices;
+					$scope.newPrice = data.data;
+					//$scope.codigo = $scope.newPrice.code;
+					//$scope.descripcion = $scope.newPrice.description;
+					//$scope.unidad = $scope.newPrice.unit;
+					//$scope.moneda = tarifa.topPrices[0].currency;
+					//$scope.precio = tarifa.topPrices[0].price;
+					/*$scope.preciosHistoricos = $scope.newPrice.topPrices;
 					$scope.preciosHistoricos.forEach(function(precio){
 						precio.from = new Date(precio.from);
-					});
+					});*/
 					$scope.abrirNuevoConcepto('editar');
 				} else {
 					dialogs.error('Asociar', 'Se ha producido un error al cargar los datos de la tarifa. ' + data.data);
@@ -418,7 +515,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.eliminarTarifa = function(){
 			var dlg = dialogs.confirm('Eliminar', 'Se eliminará la tarifa, ¿confirma la operación?');
 			dlg.result.then(function(){
-				priceFactory.removePrice($scope.tarifaCompleta._id, function(data){
+				priceFactory.removePrice($scope.newPrice._id, function(data){
 					if (data.status == 'OK'){
 						dialogs.notify("Eliminar","La tarifa ha sido eliminada");
 						$scope.prepararDatos();

@@ -133,7 +133,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('matches', {
 			url: "/match",
-			templateUrl: "view/matchprices.html"
+			templateUrl: "view/pricelistEdit.html",
+			controller: 'matchPricesCtrl'
 		})
 		.state('control', {
 			url: "/control",
@@ -302,8 +303,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			templateUrl: "view/liquidaciones.html"
 		})
 		.state('modificarTarifario', {
+			parent: 'matches',
 			url: "/editarTarifario",
-			templateUrl: "view/editPricelist.html"
+			templateUrl: "view/editPricelist.new.html"
+
 		})
 		.state('mturnos', {
 			url: "/controlTurnos",

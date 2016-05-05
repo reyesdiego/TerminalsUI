@@ -13,6 +13,26 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			{nombre: 'Propios', active: false}
 		];
 
+		$scope.datePopUp = {
+			opened: false,
+			format: 'dd/MM/yyyy',
+			options: {
+				formatYear: 'yyyy',
+				startingDay: 1
+			}
+		};
+
+		$scope.newPrice = {
+			code: '',
+			description: '',
+			idUnit: '',
+			topPrices: [{
+				currency: '',
+				from: new Date(),
+				price: 0
+			}]
+		}
+
 		// Variable para almacenar la info principal que trae del factory
 		$scope.unidadesTarifas = generalCache.get('unitTypes');
 		$scope.pricelist = [];
@@ -87,6 +107,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			$scope.listaElegida = [];
 			//priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
 			priceFactory.getMatchPrices({onlyRates: $scope.tasas}, loginService.getFiltro(), function(data){
+				console.log(data);
 				if (data.status == 'OK'){
 					$scope.hayError = false;
 					$scope.pricelist = data.data;
@@ -138,11 +159,19 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			});
 		};
 
+		$scope.savePrice = function(){
+			console.log($scope.newPrice);
+		};
+
 		$scope.showDetail = function(index){
 			var realIndex = ($scope.currentPage - 1) * $scope.itemsPerPage + index;
 			$scope.filteredPrices[realIndex].SHOW = !$scope.filteredPrices[realIndex].SHOW;
 		};
 
+		$scope.removePrice = function(event, priceId){
+			event.stopPropagation();
+			//TODO llamada a la función para borrar tarifa
+		};
 
 		$scope.exportarAPdf = function(){
 			var data = {

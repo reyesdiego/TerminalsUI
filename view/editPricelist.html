@@ -1,4 +1,4 @@
-<div class="container col-xlg-offset-2 col-xlg-8" ng-controller="pricelistCtrl">
+<div class="container col-lg-12">
 
 	<div class="row col-lg-12 page-header">
 		<h1><img ng-src="images/tarifario.png" height="64" width="50" class="hidden-xs">Editar tarifario</h1>
@@ -58,6 +58,9 @@
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'orderPrice' && reverse"></span>
 							<span class="glyphicon glyphicon-usd"></span> Tope
 						</a></th>
+						<th class="col-lg-1 hidden-print">
+							<span class="glyphicon glyphicon-remove"></span>
+						</th>
 					</tr>
 					</thead>
 					<tbody ng-repeat="price in filteredPrices = (userPricelist | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
@@ -78,10 +81,13 @@
 						<td style="text-align: right">
 							<input class="text-right textarea-td" type="number" min="0" step="any" ng-model="price.nuevoTopPrice.price" ng-click="$event.stopPropagation()">
 						</td>
+						<td>
+							<button type="button" class="btn btn-danger" ng-click="removePrice($event)"><span class="glyphicon glyphicon-remove"></span></button>
+						</td>
 					</tr>
 					<tr ng-repeat="top in price.topPrices" ng-init="price.SHOW = false" ng-show="price.SHOW">
 						<td colspan="4" class="text-right">Vigencia: {{ top.from | date: 'dd/MM/yyyy HH:mm' }}</td>
-						<td class="text-right">{{ top.currency | formatCurrency }} {{ top.price | currency }}</td>
+						<td colspan="2" class="text-right">{{ top.currency | formatCurrency }} {{ top.price | currency }}</td>
 					</tr>
 					<tr style="height:60px" class="visible-print" ng-repeat="price in userPricelist | filter:search | orderBy: predicate : reverse">
 						<td style="width: 10%">{{ price.code }}</td>
@@ -98,7 +104,8 @@
 				<span ng-show="!disableSave"><span class="glyphicon glyphicon-save"></span> Guardar</span>
 				<span ng-show="disableSave"><img src="images/loadingChico.gif" width="20" height="20"> Procesando</span>
 			</button>
-			<div-pagination class="col-lg-10" total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+			<div-pagination class="col-lg-8" total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+			<button style="margin-top: 20px" class="col-lg-2 btn btn-default" ui-sref="modificarTarifario.nuevaTarifa"><span class="glyphicon glyphicon-edit"></span> Nueva tarifa</button>
 		</div>
 	</div>
 
@@ -106,6 +113,10 @@
 		<div-panel config-panel="mensajeResultado">
 			<span>{{ mensajeResultado.mensaje }}</span>
 		</div-panel>
+	</div>
+
+	<div class="row">
+		<div ui-view></div>
 	</div>
 
 </div>
