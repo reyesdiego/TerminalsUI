@@ -1,31 +1,31 @@
-<div class="container">
+<div class="container col-xlg-offset-2 col-xlg-8">
     <div class="row col-lg-12 well">
         <form class="form-horizontal" ng-submit="savePrice()">
             <fieldset>
                 <legend>Nueva tarifa</legend>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="terminal" class="col-lg-2 control-label"><span class="glyphicon"></span> Código</label>
-                        <div class="input-group col-lg-9">
-                            <input type="text" class="form-control" ng-model="newPrice.code" id="terminal" placeholder="" ng-required="true" uib-typeahead="terminal for terminal in terminals | filter:$viewValue | limitTo:8" typeahead-editable="false">
+                        <label for="terminal" class="col-lg-3 control-label"><span class="glyphicon"></span> Código</label>
+                        <div class="input-group col-lg-8">
+                            <input type="text" class="form-control" ng-model="newPrice.code" id="terminal" placeholder="Ingrese código de la tarifa" ng-required="true" toupper>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="eraseField('code')"><i class="glyphicon glyphicon-remove"></i></button>
                         </span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="ship" class="col-lg-2 control-label"><span class="glyphicon"></span> Descripción</label>
-                        <div class="input-group col-lg-9">
-                            <input type="text" class="form-control" ng-model="newPrice.description" id="ship" placeholder="" ng-required="true" toupper>
+                        <label for="ship" class="col-lg-3 control-label"><span class="glyphicon"></span> Descripción</label>
+                        <div class="input-group col-lg-8">
+                            <input type="text" class="form-control" ng-model="newPrice.description" id="ship" placeholder="Ingrese descripción de la tarifa" ng-required="true">
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="eraseField('description')"><i class="glyphicon glyphicon-remove"></i></button>
                         </span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputUnidad" class="col-lg-2 control-label"><span class="glyphicon"></span> Unidad</label>
-                        <div class="input-group col-lg-9">
-                            <select class="form-control" id="inputUnidad" ng-model="newPrice.unit" ng-required="true">
+                        <label for="inputUnidad" class="col-lg-3 control-label"><span class="glyphicon"></span> Unidad</label>
+                        <div class="input-group col-lg-8">
+                            <select class="form-control" id="inputUnidad" ng-model="newPrice.unit" ng-required="true" placeholder="Seleccione unidad de medida">
                                 <option ng-repeat="unit in unidadesTarifas" value="{{ unit._id }}">{{ unit.description }}</option>
                             </select>
                             <!--<input type="text" class="form-control" ng-model="newPrice.unit" id="trip" placeholder="" ng-required="true" toupper>-->
@@ -34,6 +34,10 @@
                         </span>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-6">
+                    <legend>Códigos asociados</legend>
+                    <tags-input ng-model="newMatches.array" min-length="1" placeholder="Agregue un código" on-tag-adding="checkMatch($tag)" on-tag-added="setMatches($tag)"></tags-input>
                 </div>
                 <div class="col-lg-6">
                     <div >
@@ -69,7 +73,7 @@
                                         </select>
                                     </td>
                                     <td class="col-lg-4 text-center">
-                                        <input type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="esRequerido">
+                                        <input type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="true">
                                     </td>
                                     <td class="col-lg-1 text-center">
                                         <button type="button" ng-click="removeTopPrice($index)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
@@ -92,7 +96,7 @@
                                         <input type="text" class="form-control" ng-model="newTopPrice.price" placeholder="Ingresar precio">
                                     </td>
                                     <td class="col-lg-1 text-center">
-                                        <button type="button"  ng-click="addTopPrice()" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></button>
+                                        <button type="button"  ng-click="addTopPrice()" class="btn btn-primary"><span class="glyphicon glyphicon-check"></span></button>
                                     </td>
                                 </tr>
                                 </tbody>

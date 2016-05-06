@@ -11,7 +11,8 @@ module.exports = function(grunt) {
 					'css/notificaciones.css',
 					'css/animate.css',
 					'css/ionicons.css',
-					'js/angular-notify/angular-notify.css'
+					'js/angular-notify/angular-notify.css',
+					'bower_components/ng-tags-input/ng-tags-input.css'
 				],
 				dest: 'build/css/aditional.css'
 			},

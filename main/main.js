@@ -72,7 +72,7 @@ function in_array(needle, haystack, argStrict){
 var serverUrl = config.url();
 var socketUrl = config.socket();
 
-var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io', 'ngAnimate']);
+var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
 
 myapp.constant('uiDatetimePickerConfig', {
 	dateFormat: 'yyyy-MM-dd HH:mm',

@@ -1,12 +1,12 @@
 <div class="container col-lg-12" ng-controller="matchPricesCtrl">
 
-    <div class="row col-lg-12 page-header">
+    <div class="row col-lg-12 page-header col-xlg-offset-2 col-xlg-8">
         <h1 class="hidden-xs"><img ng-src="images/asociar.png" height="64" width="64">Edición de tarifario</h1>
         <h1 class="visible-xs">Edición de tarifario</h1>
         <h3>{{terminal.full_name}} <span ng-show="acceso=='agp'">({{nombre}})</span></h3>
     </div>
 
-    <div class="row hidden-print" ng-hide="hayError">
+    <div class="row hidden-print col-xlg-offset-2 col-xlg-8" ng-hide="hayError">
         <div class="col-lg-12">
             <div class="input-group">
                 <input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>

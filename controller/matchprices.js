@@ -27,6 +27,10 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			terminal: ''
 		};
 
+		$scope.newMatches = {
+			array: []
+		};
+
 		$scope.nombre = loginService.getFiltro();
 
 		$scope.flagGuardado = true;
@@ -95,6 +99,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		$scope.prepararDatos = function(){
 			priceFactory.getMatchPrices({onlyRates: $scope.tasas}, loginService.getFiltro(), function (data) {
+				console.log(data);
 				if (data.status == 'OK'){
 					$scope.pricelist = data.data;
 					$scope.pricelistAgp = [];
@@ -176,6 +181,11 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				$scope.listaSeleccionada = angular.copy($scope.codigosConMatch);
 			}
 			$scope.totalItems = $scope.listaSeleccionada.length
+		};
+
+		$scope.checkMatch = function(matchCode){
+			matchCode.text = matchCode.text.toUpperCase();
+			return (!$scope.matchesTerminal.contains(matchCode.text))
 		};
 
 		$scope.agregarCodigo = function(price){
@@ -276,11 +286,13 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		};
 
+		//Saca el top price de una tarifa
 		$scope.removeTopPrice = function(index){
 			console.log(index);
 			$scope.newPrice.topPrices.splice(index, 1);
 		};
 
+		//Agrega el top price a una tarifa
 		$scope.addTopPrice = function(){
 			if (validateTopPrice()){
 				$scope.newPrice.topPrices.push($scope.newTopPrice);
@@ -292,11 +304,13 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		};
 
+		//Se fija que el top price sea válido antes de agregarlo a una tarifa
 		function validateTopPrice(){
 			$scope.newTopPrice.price = parseFloat($scope.newTopPrice.price);
 			return ($scope.newTopPrice.from != '' && $scope.newTopPrice.currency != '' && $scope.newTopPrice.price > 0);
 		}
 
+		//Guarda los cambios realizados sobre una tarifa
 		$scope.savePrice = function(){
 			var dlg = null;
 			if (verificarEditado()){
@@ -306,10 +320,12 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					dlg.result.then(function(){
 						priceFactory.savePriceChanges($scope.newPrice, $scope.newPrice._id, function(data){
 							if (data.status == 'OK'){
-								cacheFactory.actualizarMatchesArray(loginService.getFiltro());
-								dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
-								$scope.newPrice = data.data;
-								$scope.prepararDatos();
+								if ($scope.newMatches.array.length > 0){
+									saveMatchPrices();
+								} else {
+									dialogs.notify('Tarifacio', 'Los cambios se han guardado exitosamente.');
+									$scope.prepararDatos();
+								}
 							} else {
 								dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
 							}
@@ -320,27 +336,12 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					dlg.result.then(function(){
 						priceFactory.addPrice($scope.newPrice, function(nuevoPrecio){
 							if (nuevoPrecio.status == 'OK'){
-								var nuevoMatch = {
-									code: nuevoPrecio.data.code,
-									terminal: nuevoPrecio.data.terminal,
-									_idPrice: nuevoPrecio.data._id,
-									match:[]
-								};
-								nuevoMatch.match.push(nuevoPrecio.data.code);
-
-								$scope.match = [];
-								$scope.match.push(nuevoMatch);
-
-								priceFactory.addMatchPrice($scope.match, function(data){
-									if (data.status == 'OK'){
-										cacheFactory.actualizarMatchesArray(loginService.getFiltro());
-										dialogs.notify("Asociar","El nuevo concepto ha sido añadido correctamente.");
-										$scope.salir();
-										$scope.prepararDatos();
-									} else {
-										dialogs.error('Asociar', 'Se ha producido un error al intentar asociar el nuevo valor. ' + data.data);
-									}
-								});
+								if ($scope.newMatches.array.length > 0){
+									saveMatchPrices();
+								} else {
+									dialogs.notify('Tarifacio', 'Los cambios se han guardado exitosamente.');
+									$scope.prepararDatos();
+								}
 							} else {
 								dialogs.error('Asociar', 'Se ha producido un error al agregar el nuevo valor. ' + nuevoPrecio.data);
 							}
@@ -351,7 +352,23 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		};
 
-		$scope.guardarNuevoConcepto = function(){
+		function saveMatchPrices (){
+			$scope.newPrice.matches[0].match = $scope.newMatches.array.map(function(matchCode){
+				return matchCode.text;
+			});
+			console.log($scope.newPrice.matches[0]);
+			priceFactory.addMatchPrice($scope.newPrice.matches[0], function(data){
+				if (data.status == 'OK'){
+					cacheFactory.actualizarMatchesArray(loginService.getFiltro());
+					dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
+					$scope.prepararDatos();
+				} else {
+					dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
+				}
+			});
+		}
+
+		/*$scope.guardarNuevoConcepto = function(){
 			if ($scope.flagNuevoConcepto){
 				$scope.newPrice.terminal = loginService.getInfo().terminal
 				/*var formData = {
@@ -361,7 +378,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					"unit": $scope.unidad,
 					"code": $scope.codigo,
 					"terminal": loginService.getInfo().terminal
-				};*/
+				};
 
 				if (verificarEditado()){
 					if ($scope.flagEditando){
@@ -441,9 +458,9 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					}
 				}
 			}
-		};
+		};*/
 
-		$scope.salir = function(){
+		/*$scope.salir = function(){
 			$scope.preciosHistoricos = [];
 			$scope.flagNuevoConcepto = false;
 			$scope.flagEditando = false;
@@ -456,15 +473,31 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			$scope.unidad = "";
 			$scope.moneda = "";
 			$scope.precio = "";
-		};
+		};*/
 
-		$scope.esconderAlerta = function(){
+		/*$scope.esconderAlerta = function(){
 			$scope.flagGuardado = true;
-		};
+		};*/
 
+		//Carga la tarifa completa antes de poder editarla
 		$scope.editarTarifa = function(tarifa){
 			$scope.posicionTarifa = $scope.pricelist.indexOf(tarifa);
-			priceFactory.getPriceById(tarifa._id, function(data){
+
+			if (tarifa.matches == null || tarifa.matches.length === 0) {
+				$scope.nuevoMatch = [{
+					terminal: loginService.getInfo().terminal,
+					match: [],
+					_idPrice: tarifa._id,
+					code: tarifa.code
+				}];
+
+				tarifa.matches = $scope.nuevoMatch;
+			}
+			$scope.newPrice = tarifa;
+			$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
+
+			$scope.abrirNuevoConcepto('editar');
+			/*priceFactory.getPriceById(tarifa._id, function(data){
 				console.log(data);
 				if (data.status == 'OK'){
 					$scope.newPrice = data.data;
@@ -476,14 +509,15 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					/*$scope.preciosHistoricos = $scope.newPrice.topPrices;
 					$scope.preciosHistoricos.forEach(function(precio){
 						precio.from = new Date(precio.from);
-					});*/
+					});
 					$scope.abrirNuevoConcepto('editar');
 				} else {
 					dialogs.error('Asociar', 'Se ha producido un error al cargar los datos de la tarifa. ' + data.data);
 				}
-			});
+			});*/
 		};
 
+		//Verifica que al modificar un código no coincida con otro ya existente
 		var verificarEditado = function(){
 			var flagCodigo = false;
 
@@ -512,6 +546,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		};
 
+		//Elimina una tarifa
 		$scope.eliminarTarifa = function(){
 			var dlg = dialogs.confirm('Eliminar', 'Se eliminará la tarifa, ¿confirma la operación?');
 			dlg.result.then(function(){
@@ -527,6 +562,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			})
 		};
 
+		//Descarga CSV
 		$scope.descargarCSV = function(){
 			var alterModel = {
 				onlyRates: $scope.tasas,
@@ -551,6 +587,11 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				}
 			})
 		};
+
+		/*$scope.setMatches = function(matchCode){
+			$scope.newPrice.matches[0].match.push(matchCode.text);
+			console.log($scope.newPrice.matches[0].match);
+		};*/
 
 		if (loginService.getStatus()) $scope.prepararDatos();
 
