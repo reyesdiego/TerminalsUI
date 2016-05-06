@@ -159,18 +159,10 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			});
 		};
 
-		$scope.savePrice = function(){
-			console.log($scope.newPrice);
-		};
 
 		$scope.showDetail = function(index){
 			var realIndex = ($scope.currentPage - 1) * $scope.itemsPerPage + index;
 			$scope.filteredPrices[realIndex].SHOW = !$scope.filteredPrices[realIndex].SHOW;
-		};
-
-		$scope.removePrice = function(event, priceId){
-			event.stopPropagation();
-			//TODO llamada a la función para borrar tarifa
 		};
 
 		$scope.exportarAPdf = function(){
@@ -248,65 +240,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 
 			var base64data = "base64," + btoa(unescape(encodeURIComponent(excelFile)));
 			window.open('data:application/vnd.ms-excel;filename=exportData.doc;' + base64data);
-		};
-
-		$scope.guardarTarifa = function(tarifa){
-			var deferred = $q.defer();
-
-			priceFactory.savePriceChanges(tarifa, tarifa._id, function(data){
-				if (data.status == 'OK'){
-					deferred.resolve();
-				} else {
-					deferred.reject();
-				}
-			});
-
-			return deferred.promise;
-		};
-
-		$scope.guardarCambios = function(){
-			var i;
-			var changesList = [];
-			for (i=0; i < $scope.userPricelist.length - 1; i++){
-				if (!angular.equals($scope.userPricelist[i], $scope.pricelist[i])){
-					$scope.userPricelist[i].nuevoTopPrice.from = $scope.fechaVigencia;
-					$scope.userPricelist[i].topPrices.push($scope.userPricelist[i].nuevoTopPrice);
-					$scope.userPricelist[i].unit = $scope.userPricelist[i].idUnit;
-					if ($scope.userPricelist[i].nuevoTopPrice.price == $scope.userPricelist[i].orderPrice && $scope.userPricelist[i].nuevoTopPrice.currency == $scope.userPricelist[i].orderCurrency){
-						var aux = angular.copy($scope.userPricelist[i]);
-						aux.nuevoTopPrice = null;
-						changesList.push(aux);
-					} else {
-						changesList.push($scope.userPricelist[i]);
-					}
-				}
-			}
-			var llamadas = [];
-			if (changesList.length > 0){
-				var res = dialogs.confirm('Tarifario', 'Se guardarán los cambios para las ' + changesList.length + ' tarifas modificadas, con fecha de vigencia a partir del ' + $filter('date')($scope.fechaVigencia, 'dd/MM/yyyy HH:mm'))
-				res.result.then(function(){
-					$scope.disableSave = true;
-					changesList.forEach(function(price){
-						delete price.nuevoTopPrice;
-						delete price.idUnit;
-
-						llamadas.push($scope.guardarTarifa(price))
-					});
-					$q.all(llamadas)
-							.then(function(){
-								dialogs.notify('Tarifario', 'El tarifario se ha actualizado correctamente');
-								cacheFactory.actualizarMatchesArray(loginService.getFiltro());
-								$scope.cargaPricelist();
-								$scope.disableSave = false;
-							}, function(){
-								dialogs.error('Tarifario', 'Se ha producido un erro al actualizar el tarifario');
-								$scope.cargaPricelist();
-								$scope.disableSave = false;
-							});
-				})
-			} else {
-				dialogs.notify('Tarifario', 'No se han producido cambios en el tarifario.');
-			}
 		};
 
 		if (loginService.getStatus()) $scope.cargaPricelist();

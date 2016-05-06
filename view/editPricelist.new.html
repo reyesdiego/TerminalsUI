@@ -25,17 +25,17 @@
                     <div class="form-group">
                         <label for="inputUnidad" class="col-lg-3 control-label"><span class="glyphicon"></span> Unidad</label>
                         <div class="input-group col-lg-8">
-                            <select class="form-control" id="inputUnidad" ng-model="newPrice.unit" ng-required="true" placeholder="Seleccione unidad de medida">
-                                <option ng-repeat="unit in unidadesTarifas" value="{{ unit._id }}">{{ unit.description }}</option>
+                            <select class="form-control" id="inputUnidad" ng-model="newPrice.unit" ng-required="true" placeholder="Seleccione unidad de medida" ng-click="quieroVer()">
+                                <option ng-repeat="unit in unidadesTarifas" value="{{ unit._id }}" ng-selected="unit._id == newPrice.unit">{{ unit.description }}</option>
                             </select>
                             <!--<input type="text" class="form-control" ng-model="newPrice.unit" id="trip" placeholder="" ng-required="true" toupper>-->
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="eraseField('idUnit')"><i class="glyphicon glyphicon-remove"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="eraseField('unit')"><i class="glyphicon glyphicon-remove"></i></button>
                         </span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6" ng-show="acceso != 'agp'">
                     <legend>Códigos asociados</legend>
                     <tags-input ng-model="newMatches.array" min-length="1" placeholder="Agregue un código" on-tag-adding="checkMatch($tag)" on-tag-added="setMatches($tag)"></tags-input>
                 </div>
