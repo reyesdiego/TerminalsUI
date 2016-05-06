@@ -1,4 +1,5 @@
 <div class="container col-xlg-offset-2 col-xlg-8">
+
     <div class="row col-lg-12 well">
         <form class="form-horizontal" ng-submit="savePrice()">
             <fieldset>
@@ -16,9 +17,10 @@
                     <div class="form-group">
                         <label for="ship" class="col-lg-3 control-label"><span class="glyphicon"></span> Descripción</label>
                         <div class="input-group col-lg-8">
-                            <input type="text" class="form-control" ng-model="newPrice.description" id="ship" placeholder="Ingrese descripción de la tarifa" ng-required="true">
+                            <textarea class="from-control" rows="4" style="resize: none; width: 100%; margin-top: 5px" ng-model="newPrice.description" id="ship" ng-required="true"></textarea>
+                            <!--<input type="text" class="form-control" ng-model="newPrice.description" id="ship" placeholder="Ingrese descripción de la tarifa" ng-required="true">-->
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="eraseField('description')"><i class="glyphicon glyphicon-remove"></i></button>
+                            <button type="button" class="btn btn-default" style="height: 86px;" ng-click="eraseField('description')"><i class="glyphicon glyphicon-remove"></i></button>
                         </span>
                         </div>
                     </div>
