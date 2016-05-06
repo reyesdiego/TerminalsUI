@@ -59,8 +59,6 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 
 						$http.defaults.headers.common.token = loginService.getToken();
 
-						data.acceso.push('modificarTarifario.nuevaTarifa');
-
 						loginService.setAcceso(data.acceso);
 
 						$rootScope.rutas = data.acceso;

@@ -99,7 +99,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		$scope.prepararDatos = function(){
 			priceFactory.getMatchPrices({onlyRates: $scope.tasas}, loginService.getFiltro(), function (data) {
-				console.log(data);
 				if (data.status == 'OK'){
 					$scope.pricelist = data.data;
 					$scope.pricelistAgp = [];
@@ -202,7 +201,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		//Saca el top price de una tarifa
 		$scope.removeTopPrice = function(index){
-			console.log(index);
 			$scope.newPrice.topPrices.splice(index, 1);
 		};
 
@@ -240,6 +238,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 								} else {
 									dialogs.notify('Tarifacio', 'Los cambios se han guardado exitosamente.');
 									$scope.prepararDatos();
+									$state.transitionTo('matches');
 								}
 							} else {
 								dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
@@ -257,6 +256,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 								} else {
 									dialogs.notify('Tarifacio', 'Los cambios se han guardado exitosamente.');
 									$scope.prepararDatos();
+									$state.transitionTo('matches');
 								}
 							} else {
 								dialogs.error('Asociar', 'Se ha producido un error al agregar el nuevo valor. ' + nuevoPrecio.data);
@@ -268,18 +268,26 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		};
 
+		$scope.enableEdition = function(){
+			if ($scope.acceso == 'terminal'){
+				return $scope.newPrice.terminal == loginService.getFiltro();
+			} else {
+				return true;
+			}
+		};
+
 		function saveMatchPrices (){
 			var array= [];
 			$scope.newPrice.matches[0].match = $scope.newMatches.array.map(function(matchCode){
 				return matchCode.text;
 			});
-			console.log($scope.newPrice.matches[0]);
 			array.push($scope.newPrice.matches[0]);
 			priceFactory.addMatchPrice(array, function(data){
 				if (data.status == 'OK'){
 					cacheFactory.actualizarMatchesArray(loginService.getFiltro());
 					dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
 					$scope.prepararDatos();
+					$state.transitionTo('matches');
 				} else {
 					dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
 				}

@@ -8,38 +8,38 @@
                     <div class="form-group">
                         <label for="terminal" class="col-lg-3 control-label"><span class="glyphicon"></span> Código</label>
                         <div class="input-group col-lg-8">
-                            <input type="text" class="form-control" ng-model="newPrice.code" id="terminal" placeholder="Ingrese código de la tarifa" ng-required="true" toupper>
+                            <input type="text" class="form-control" ng-model="newPrice.code" id="terminal" placeholder="Ingrese código de la tarifa" ng-required="true" toupper ng-disabled="!enableEdition()">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="eraseField('code')"><i class="glyphicon glyphicon-remove"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="eraseField('code')" ng-disabled="!enableEdition()"><i class="glyphicon glyphicon-remove"></i></button>
                         </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="ship" class="col-lg-3 control-label"><span class="glyphicon"></span> Descripción</label>
                         <div class="input-group col-lg-8">
-                            <textarea class="from-control" rows="4" style="resize: none; width: 100%; margin-top: 5px" ng-model="newPrice.description" id="ship" ng-required="true"></textarea>
+                            <textarea class="from-control" rows="4" style="resize: none; width: 100%; margin-top: 5px" ng-model="newPrice.description" id="ship" ng-required="true" ng-disabled="!enableEdition()"></textarea>
                             <!--<input type="text" class="form-control" ng-model="newPrice.description" id="ship" placeholder="Ingrese descripción de la tarifa" ng-required="true">-->
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" style="height: 86px;" ng-click="eraseField('description')"><i class="glyphicon glyphicon-remove"></i></button>
+                            <button type="button" class="btn btn-default" style="height: 86px;" ng-click="eraseField('description')" ng-disabled="!enableEdition()"><i class="glyphicon glyphicon-remove"></i></button>
                         </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputUnidad" class="col-lg-3 control-label"><span class="glyphicon"></span> Unidad</label>
                         <div class="input-group col-lg-8">
-                            <select class="form-control" id="inputUnidad" ng-model="newPrice.unit" ng-required="true" placeholder="Seleccione unidad de medida" ng-click="quieroVer()">
+                            <select class="form-control" id="inputUnidad" ng-model="newPrice.unit" ng-required="true" placeholder="Seleccione unidad de medida" ng-disabled="!enableEdition()">
                                 <option ng-repeat="unit in unidadesTarifas" value="{{ unit._id }}" ng-selected="unit._id == newPrice.unit">{{ unit.description }}</option>
                             </select>
                             <!--<input type="text" class="form-control" ng-model="newPrice.unit" id="trip" placeholder="" ng-required="true" toupper>-->
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="eraseField('unit')"><i class="glyphicon glyphicon-remove"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="eraseField('unit')" ng-disabled="!enableEdition()"><i class="glyphicon glyphicon-remove" ng-disabled="!enableEdition()"></i></button>
                         </span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6" ng-show="acceso != 'agp'">
+                <div class="col-lg-6">
                     <legend>Códigos asociados</legend>
-                    <tags-input ng-model="newMatches.array" min-length="1" placeholder="Agregue un código" on-tag-adding="checkMatch($tag)" on-tag-added="setMatches($tag)"></tags-input>
+                    <tags-input ng-model="newMatches.array" min-length="1" placeholder="Agregue un código" on-tag-adding="checkMatch($tag)" on-tag-added="setMatches($tag)" ng-disabled="acceso == 'agp'"></tags-input>
                 </div>
                 <div class="col-lg-6">
                     <div >
@@ -64,41 +64,41 @@
                                 <tr ng-repeat="price in newPrice.topPrices">
                                     <td class="col-lg-4 text-center">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="price.from" is-open="openFechaTarifa"/>
-                                            <span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaTarifa = !openFechaTarifa;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+                                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="price.from" is-open="openFechaTarifa" ng-disabled="!enableEdition()" ng-required="true"/>
+                                            <span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaTarifa = !openFechaTarifa;" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-calendar"></span></button></span>
                                         </div>
                                     </td>
                                     <td class="col-lg-3 text-center">
-                                        <select class="form-control" ng-model="price.currency" ng-required="esRequerido">
+                                        <select class="form-control" ng-model="price.currency" ng-disabled="!enableEdition()">
                                             <option value="DOL" ng-selected="true">U$S</option>
                                             <option value="PES">$ARG</option>
                                         </select>
                                     </td>
                                     <td class="col-lg-4 text-center">
-                                        <input type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="true">
+                                        <input type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="true" ng-disabled="!enableEdition()">
                                     </td>
                                     <td class="col-lg-1 text-center">
-                                        <button type="button" ng-click="removeTopPrice($index)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+                                        <button type="button" ng-click="removeTopPrice($index)" class="btn btn-danger" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-remove"></span></button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="col-lg-4 text-center">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="newTopPrice.from" is-open="openNewFrom"/>
-                                            <span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openNewFrom = !openNewFrom;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+                                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="newTopPrice.from" is-open="openNewFrom" ng-disabled="!enableEdition()"/>
+                                            <span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openNewFrom = !openNewFrom;" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-calendar"></span></button></span>
                                         </div>
                                     </td>
                                     <td class="col-lg-3 text-center">
-                                        <select class="form-control" ng-model="newTopPrice.currency" ng-required="esRequerido">
+                                        <select class="form-control" ng-model="newTopPrice.currency" ng-disabled="!enableEdition()">
                                             <option value="DOL">U$S</option>
                                             <option value="PES">$ARG</option>
                                         </select>
                                     </td>
                                     <td class="col-lg-4 text-center">
-                                        <input type="text" class="form-control" ng-model="newTopPrice.price" placeholder="Ingresar precio">
+                                        <input type="text" class="form-control" ng-model="newTopPrice.price" placeholder="Ingresar precio" ng-disabled="!enableEdition()">
                                     </td>
                                     <td class="col-lg-1 text-center">
-                                        <button type="button"  ng-click="addTopPrice()" class="btn btn-primary"><span class="glyphicon glyphicon-check"></span></button>
+                                        <button type="button"  ng-click="addTopPrice()" class="btn btn-primary" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-check"></span></button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -109,7 +109,7 @@
                 <div class="form-group col-lg-12 text-right">
                     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> Guardar</button>
                     <button type="button" class="btn btn-danger" ng-click="eliminarTarifa()"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
-                    <button type="button" class="btn btn-default" ui-sref="matches"><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</button>
+                    <button type="button" class="btn btn-default" ui-sref="matches"><span class="glyphicon glyphicon-remove-circle"></span> Volver</button>
                 </div>
             </fieldset>
         </form>
