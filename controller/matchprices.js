@@ -343,7 +343,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					if (data.status == 'OK'){
 						dialogs.notify("Eliminar","La tarifa ha sido eliminada");
 						$scope.prepararDatos();
-						$scope.salir();
+						$state.transitionTo('matches');
 					} else {
 						dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + data.data);
 					}
