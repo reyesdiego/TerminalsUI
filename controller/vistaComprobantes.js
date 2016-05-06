@@ -228,17 +228,21 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
 
 		$scope.$on('terminoLogin', function(){
-			$scope.loadingState = true;
 			$scope.acceso = $rootScope.esUsuario;
-			if ($scope.mostrarPtosVenta || $scope.controlCodigos) cargaTodosLosPuntosDeVentas();
+			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
+				$scope.loadingState = true;
+				cargaTodosLosPuntosDeVentas();
+			}
 		});
 
 		$scope.$on('cambioTerminal', function(){
-			$scope.loadingState = true;
 			$scope.mostrarResultado = false;
 			$scope.logoTerminal = $rootScope.logoTerminal;
 			$scope.comprobantesVistos = [];
-			if ($scope.mostrarPtosVenta || $scope.controlCodigos) cargaTodosLosPuntosDeVentas();
+			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
+				$scope.loadingState = true;
+				cargaTodosLosPuntosDeVentas();
+			}
 		});
 
 		$scope.verPdf = function(){

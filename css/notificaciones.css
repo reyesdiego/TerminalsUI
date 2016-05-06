@@ -28,6 +28,10 @@
 	color: #ae2018;
 }
 
+.fila-elegida {
+	background-color: #e8e8e8;;
+}
+
 .textarea-td {
 	border: none;
 	width: 100%;
@@ -57,5 +61,11 @@
 }
 
 .clickableRow {
+	background-color: #f9f9f9;
+	/*cursor: hand;*/
 	cursor: pointer;
+}
+
+.clickableRow:hover{
+	background-color: #dddddd;
 }

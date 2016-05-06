@@ -72,7 +72,7 @@ function in_array(needle, haystack, argStrict){
 var serverUrl = config.url();
 var socketUrl = config.socket();
 
-var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io', 'ngAnimate']);
+var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
 
 myapp.constant('uiDatetimePickerConfig', {
 	dateFormat: 'yyyy-MM-dd HH:mm',
@@ -133,7 +133,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('matches', {
 			url: "/match",
-			templateUrl: "view/matchprices.html"
+			templateUrl: "view/pricelistEdit.html",
+			controller: 'matchPricesCtrl'
 		})
 		.state('control', {
 			url: "/control",
@@ -302,8 +303,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			templateUrl: "view/liquidaciones.html"
 		})
 		.state('modificarTarifario', {
+			parent: 'matches',
 			url: "/editarTarifario",
-			templateUrl: "view/editPricelist.html"
+			templateUrl: "view/editPricelist.new.html"
+
 		})
 		.state('mturnos', {
 			url: "/controlTurnos",
@@ -410,6 +413,10 @@ myapp.config(['$cookiesProvider', function($cookiesProvider){
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket', '$http',
 	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
+		$rootScope.socket = appSocket;
+
+		$rootScope.socket.connect();
+
 		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
 		$rootScope.terminalEstilo = 'bootstrap.cerulean';
 
@@ -498,7 +505,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
 		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat'];
-		$rootScope.rutasSinTerminal = ['control', 'afip', 'reports', 'mat', 'access', 'users', 'cturnos'];
+		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos'];
 		$rootScope.$state = $state;
 		// Variables Globales de Paginacion
 		$rootScope.itemsPerPage = 15;
@@ -506,6 +513,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 
 		$rootScope.salir = function(){
+			$rootScope.socket.emit('logoff', loginService.getInfo().user);
 			authFactory.logout();
 			$rootScope.appointmentNotify = 0;
 			$rootScope.invoiceNotify = 0;
@@ -514,7 +522,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$state.transitionTo('login');
 			$rootScope.setEstiloTerminal('BACTSSA');
 			$rootScope.filtroTerminal = '';
-			if (angular.isDefined($rootScope.appSocket)) $rootScope.appSocket.disconnect();
 		};
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
@@ -527,7 +534,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			}
 			if (!loginService.getStatus() && $cookies.get('restoreSesion') === 'true'){
 				event.preventDefault();
-				authFactory.login().then(function(){
+				authFactory.login().then(function(data){
+					$rootScope.socket.emit('login', data.user);
 					$rootScope.$broadcast('terminoLogin');
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');

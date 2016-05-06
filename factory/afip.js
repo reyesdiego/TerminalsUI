@@ -236,6 +236,18 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 				})
 		};
 
+		factory.getManifiestoDetalle = function(manifiesto, callback){
+			//var insertUrl = serverUrl + '/alguna ruta';
+			var rutaMockeada = '/TerminalsUI/mocks/manifiestoDetalle.json';
+			$http.get(rutaMockeada)
+				.success(function(data){
+					callback(data);
+				})
+				.error(function(error){
+					callback(error);
+				})
+		};
+
 		factory.cancelRequest = function(){
 			HTTPCanceler.cancel(namespace);
 		};

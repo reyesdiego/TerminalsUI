@@ -2237,7 +2237,7 @@ th {
   padding: 8px;
   line-height: 1.428571429;
   vertical-align: top;
-  border-top: 1px solid #ecf0f1;
+  /*border-top: 1px solid #ecf0f1;*/
 }
 .table > thead > tr > th {
   vertical-align: bottom;
@@ -2252,7 +2252,7 @@ th {
   border-top: 0;
 }
 .table > tbody + tbody {
-  border-top: 2px solid #ecf0f1;
+  border-top: 2px solid #dddddd;
 }
 .table .table {
   background-color: #ffffff;
@@ -6416,19 +6416,13 @@ table > tfoot > tr > td,
 .table > tfoot > tr > td {
   border: none;
 }
-table-bordered > thead > tr > th,
 .table-bordered > thead > tr > th,
-table-bordered > tbody > tr > th,
 .table-bordered > tbody > tr > th,
-table-bordered > tfoot > tr > th,
 .table-bordered > tfoot > tr > th,
-table-bordered > thead > tr > td,
 .table-bordered > thead > tr > td,
-table-bordered > tbody > tr > td,
 .table-bordered > tbody > tr > td,
-table-bordered > tfoot > tr > td,
 .table-bordered > tfoot > tr > td {
-  border: 1px solid #a9a9a9;
+  border: 1px solid #cbcbcb;
 }
 .form-control,
 input {

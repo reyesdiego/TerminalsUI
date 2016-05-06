@@ -21,10 +21,11 @@
 							<th>Alta</th>
 							<th>Token</th>
 							<th>Última conexión</th>
+                            <th>Online</th>
 							<th class="text-center">Estado</th>
 						</tr>
 						</thead>
-						<tbody>
+						<tbody style="font-size: 12px">
 						<tr ng-repeat="dato in datosUsers" class="{{ dato.claseFila }}" ng-init="dato.guardar=false">
 							<td>{{ dato.full_name }}</td>
 							<td>{{ dato.user }}</td>
@@ -33,6 +34,7 @@
 							<td>{{ dato.date_created | date: 'dd/MM/yy HH:mm' }}</td>
 							<td>{{ dato.token.date_created | date: 'dd/MM/yy HH:mm' }}</td>
 							<td class="{{ ultimaConexion(dato.lastLogin) }}"><strong>{{ dato.lastLogin | date: 'dd/MM/yy HH:mm'}}</strong></td>
+                            <td class="text-center"><span class="glyphicon" ng-class="dato.online ? 'glyphicon-ok-circle usuarioActivo' : 'glyphicon-ban-circle usuarioInactivo'"></span> </td>
 							<td class="text-center disabled"><input type="checkbox" ng-model="dato.status" ng-change="cambiaUsuario(dato)" ng-disabled="!estaDefinido(dato.token.date_created)"></td>
 						</tr>
 						</tbody>

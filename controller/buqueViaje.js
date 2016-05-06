@@ -116,6 +116,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		////// Para containers ////////////////////////////////////////////////////////////////////////////////
 		$scope.$on('detalleContenedor', function(event, container){
 			$scope.model.contenedor = container;
+			$scope.contenedorElegido.contenedor = container;
 			$scope.volverAPrincipal = !$scope.volverAPrincipal;
 			$scope.filtrar();
 		});
@@ -445,6 +446,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			$scope.buqueElegido = {
 				viajes:[]
 			};
+			if ($scope.model.contenedor != ''){
+				$scope.filtrar();
+			}
 		});
 
 		$scope.$on('destroy', function(){

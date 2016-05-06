@@ -13,6 +13,7 @@
 					<th colspan="2" class="columnaAnidada">Fecha</th>
 					<th rowspan="2">Buque</th>
 					<th rowspan="2">Pa&iacute;s Procedencia</th>
+					<th rowspan="2"><span class="glyphicon glyphicon-zoom-in"></span></th>
 				</tr>
 				<tr>
 					<th>A&ntilde;o</th>
@@ -37,9 +38,13 @@
 					<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy'}}</td>
 					<td>{{ registro.BUQUE }}</td>
 					<td>{{ registro.P_PROCEDENCIA }}</td>
+					<th><a href ng-click="detalleSumaria(registro.SUMARIA)"><span class="glyphicon glyphicon-zoom-in"></span></a></th>
 				</tr>
 				</tbody>
 			</table>
 		</div>
+	</div>
+	<div ng-show="verDetalleManifiesto">
+		<detalle-manifiesto></detalle-manifiesto>
 	</div>
 </div-cargando>

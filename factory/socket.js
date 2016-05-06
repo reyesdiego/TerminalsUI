@@ -2,18 +2,47 @@
  * Created by artiom on 02/07/15.
  */
 
-myapp.factory('appSocket', ['socketFactory', function(socketFactory){
+myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFactory, loginService) {
 
 	//La dirrección deberá ser pasado por config
-	var ioSocket = io.connect(socketUrl);
+	var ioSocket;
+	var mySocket;
 
-	var mySocket = socketFactory({ioSocket: ioSocket});
+	return {
+		connect: function () {
+			ioSocket = io.connect(socketUrl, { transports: ['polling', 'websocket', 'xhr-polling']});
+			mySocket = socketFactory({ioSocket: ioSocket});
 
-	mySocket.forward('appointment');
-	mySocket.forward('gate');
-	mySocket.forward('invoice');
+			mySocket.on('connect', function () {
 
-	return mySocket;
+				mySocket.forward('appointment');
+				mySocket.forward('gate');
+				mySocket.forward('invoice');
+				mySocket.forward('loggedIn');
+				mySocket.forward('loggedOff');
+
+				if (loginService.getStatus()) {
+					this.emit('login', loginService.getInfo().user);
+				}
+			});
+
+			mySocket.on('reconnect', function () {
+				if (loginService.getStatus()) {
+					this.emit('login', loginService.getInfo().user);
+				}
+			});
+
+			mySocket.on('disconnect', function() {
+				console.log('socket se desconecto');
+			})
+		},
+		disconnect: function () {
+			ioSocket.disconnect();
+		},
+		emit: function(ev, data){
+			mySocket.emit(ev, data);
+		}
+	}
 
 }]);
 

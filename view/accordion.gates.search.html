@@ -102,6 +102,16 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('ontime', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
+	<div class="form-group col-lg-3 col-md-4" ng-hide="ocultarFiltros.indexOf('size', 0) >= 0">
+		<div class="input-group">
+			<select class="form-control" ng-model="model.size" ng-init="model.size=''">
+				<option value="" disabled>Según medida</option>
+				<option value="20">20 pies</option>
+				<option value="40">40 pies</option>
+			</select>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('size', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
+	</div>
 	<div class="form-group col-lg-2 col-sm-4" ng-hide="ocultarFiltros.indexOf('onlyTrains', 0) >= 0">
 		<div class="input-group checkbox checkBoxContainer">
 			<label>

@@ -1,24 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Socket testing</title>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+	<title id="titulo">Socket testing</title>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
 	<script>
 		window.onload = function() {
 
 			var messages = [];
 
-			var socket = io.connect('http://10.10.0.223:8080');
+			//var socket = io.connect("http://10.10.0.223:8090");
+			var socket = io.connect("http://10.10.0.223:8090", { transports: ['polling', 'websocket', 'xhr-polling']});
 
 			var field = document.getElementById("field");
 			var sendButton = document.getElementById("send");
 			var content = document.getElementById("content");
 			var name = document.getElementById("name");
+            var titulo = document.getElementById("titulo");
+            var users = document.getElementById("users");
 
 
 			var x;
 
-			socket.on('message', function (data) {
+            socket.once('connect', function () {
+                "use strict";
+                titulo.innerHTML = socket.id;
+                console.log("se conecto él %s", socket.id);
+            });
+
+            socket.once('reconnect', function() {
+                "use strict";
+                titulo.innerHTML = socket.id;
+                console.log("se RE conecto él %s", socket.id);
+            });
+
+
+            socket.on('message', function (data) {
 				if(data.message) {
 					messages.push(data);
 					var html = '';
@@ -55,7 +71,12 @@
 
 			});
 
-
+            socket.on('onlineUsers', function (usersList) {
+                users.innerHTML = usersList;
+            });
+            socket.on('logOff', function (user) {
+                users.innerHTML = user;
+            });
 
 			socket.on('invoice', function (data) {
 				if(data.status === 'OK') {
@@ -79,7 +100,10 @@
 					alert("te falta el nombre");
 				} else {
 					var text = field.value;
-					socket.emit('send', { message: text, username: name.value });
+					socket.emit('newUser', { message: text, username: name.value }, function (param) {
+                        titulo.innerHTML = param.id;
+                        console.log(param);
+                    });
 				}
 			};
 
@@ -91,6 +115,7 @@
 <br/>
 <input id="field" style="width:450px;" >
 <input id="send" type="button" value='Enviar'>
+<p id="users"></p>
 <br/>
 <div id="content"></div>
 </body>

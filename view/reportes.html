@@ -400,27 +400,31 @@
 				</div>
 				<div class="col-lg-12" ng-hide="cargando || resultados.length == 0">
 					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-hover">
+						<table class="table table-striped table-bordered table-hover" style="font-size: 12px">
 							<thead>
 							<tr>
-								<th>Razón social</th>
-								<th class="text-right">Comprobantes</th>
+								<th>CUIT</th>
+                                <th>Razón social</th>
+								<th class="text-right">Comp.</th>
 								<th class="text-right">Porcentaje</th>
 								<th class="text-right">Promedio</th>
+                                <th class="text-right">Máxima</th>
 								<th class="text-right">Total</th>
 							</tr>
 							</thead>
 							<tbody>
 							<tr ng-repeat="total in resultados">
+                                <td>{{ total.cuit }}</td>
 								<td>{{ total.razon }}</td>
 								<td class="text-right">{{ total.cnt }}</td>
 								<td class="text-right">% {{ total.total*100/totalTerminal | number: 2 }}</td>
 								<td class="text-right">$ {{ total.avg | currency }}</td>
+                                <td class="text-right">$ {{ total.max | currency }}</td>
 								<td class="text-right">$ {{ total.total | currency }}</td>
 							</tr>
 							<tr>
-								<td colspan="4" class="text-right"><strong>Total facturado por la terminal en el período</strong></td>
-								<td class="text-right">$ {{ totalTerminal | currency }}</td>
+								<td colspan="5" class="text-right"><strong>Total facturado por la terminal en el período</strong></td>
+								<td colspan="2" class="text-right">$ {{ totalTerminal | currency }}</td>
 							</tr>
 							</tbody>
 						</table>
@@ -443,6 +447,15 @@
 			</div>
 			<div class="col-lg-12 text-right" ng-hide="cargando || resultados.length == 0">
 				<button class="btn btn-success" ng-click="descargarPdf()"><span class="glyphicon glyphicon-download"></span> Descargar PDF</button>
+				<div class="col-lg-2" dropdown is-open="status.isopen" style="margin-top: 20px;">
+					<button id="single-button" type="button" class="btn btn-primary" dropdown-toggle>
+						<span class="glyphicon glyphicon-list"></span> Descargar CSV <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+						<li role="menuitem"><a href ng-click="descargarCsv(false)">Parcial</a></li>
+						<li role="menuitem"><a href ng-click="descargarCsv(true)">Total</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
