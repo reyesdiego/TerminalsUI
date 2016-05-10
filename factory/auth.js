@@ -59,6 +59,13 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 
 						$http.defaults.headers.common.token = loginService.getToken();
 
+						//****************************************
+						data.acceso.push('reports.tasas');
+						data.acceso.push('reports.tarifas');
+						data.acceso.push('reports.empresas');
+						data.acceso.push('reports.terminales');
+						//****************************************
+
 						loginService.setAcceso(data.acceso);
 
 						$rootScope.rutas = data.acceso;

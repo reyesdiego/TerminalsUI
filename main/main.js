@@ -179,8 +179,29 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('reports', {
 			url: "/reportes",
-			templateUrl:"view/reportes.html"
+			templateUrl:"view/reportes.html",
+			controller: 'reportsCtrl'
 		})
+			.state('reports.tasas', {
+				url:'/tasas',
+				templateUrl: 'view/reportes.tasas.html',
+				controller: 'ratesCtrl'
+			})
+			.state('reports.tarifas', {
+				url: '/tarifas',
+				templateUrl: 'view/reportes.tarifas.html',
+				controller: 'reporteTarifasCtrl'
+			})
+			.state('reports.empresas', {
+				url: '/empresas',
+				templateUrl: 'view/reportes.empresas.html',
+				controller: 'facturacionPorEmpresaCtrl'
+			})
+			.state('reports.terminales', {
+				url: '/terminales',
+				templateUrl: 'view/reportes.terminales.html',
+				controller: 'tarifasTerminalesCtrl'
+			})
 		.state('afip', {
 			url: "/afip",
 			templateUrl: "view/afip.html"
