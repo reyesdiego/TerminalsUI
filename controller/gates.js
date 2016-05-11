@@ -86,7 +86,6 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 			mensaje: 'No se han encontrado gates para los filtros seleccionados.'
 		};
 		gatesFactory.getGate($scope.model, $scope.page, function (data) {
-			console.log(data);
 			if (data.status === "OK") {
 				$scope.gates = data.data;
 				$scope.totalItems = data.totalCount;

@@ -62,7 +62,6 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 	};
 
 	factory.addMatchPrice = function (data, callback) {
-		console.log(data);
 		var inserturl = serverUrl + '/matchPrices/matchprice';
 		$http.post(inserturl, data)
 			.success(function (response) {
