@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 10/05/2016.
  */
 
-myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginService', 'generalCache', function($scope, reportsFactory, loginService, generalCache){
+myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginService', 'generalCache', 'dialogs', function($scope, reportsFactory, loginService, generalCache, dialogs){
 
     $scope.descripciones = generalCache.get('descripciones' + loginService.getFiltro());
 
@@ -19,6 +19,8 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
     };
 
     $scope.dataReporte = [];
+
+    $scope.disableDown = false;
 
     $scope.search = '';
 
@@ -53,6 +55,36 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
         if ($scope.dataReporte.length > 0){
             $scope.cargarReporte();
         }
-    })
+    });
+
+    $scope.descargarCSV = function(){
+        $scope.disableDown = true;
+        var param = {
+            year: $scope.model.fecha.getFullYear()
+        };
+        if ($scope.model.tipo == 'month'){
+            param.month = $scope.model.fecha.getMonth() + 1;
+        }
+        param.output = 'csv';
+
+        reportsFactory.getTerminalesCSV(param, function(data, status){
+            $scope.disableDown = false;
+            if (status == 'OK'){
+                var anchor = angular.element('<a/>');
+                anchor.css({display: 'none'}); // Make sure it's not visible
+                angular.element(document.body).append(anchor); // Attach to document
+
+                anchor.attr({
+                    href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+                    target: '_blank',
+                    download: 'Tarifas_terminales.csv'
+                })[0].click();
+
+                anchor.remove(); // Clean it up afterwards
+            } else {
+                dialogs.error('Reportes', 'Se ha producido un error al descargar los datos.');
+            }
+        })
+    };
 
 }]);
