@@ -62,13 +62,17 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
         var param = {
             year: $scope.model.fecha.getFullYear()
         };
+        var nombreReporte = 'Tarifas_terminales_' + loginService.getFiltro() + '_' + param.year;
         if ($scope.model.tipo == 'month'){
             param.month = $scope.model.fecha.getMonth() + 1;
+            nombreReporte += '_' + param.month;
         }
         param.output = 'csv';
+        nombreReporte += '.csv';
 
         reportsFactory.getTerminalesCSV(param, function(data, status){
             $scope.disableDown = false;
+
             if (status == 'OK'){
                 var anchor = angular.element('<a/>');
                 anchor.css({display: 'none'}); // Make sure it's not visible
@@ -77,7 +81,7 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
                 anchor.attr({
                     href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
                     target: '_blank',
-                    download: 'Tarifas_terminales.csv'
+                    download: nombreReporte
                 })[0].click();
 
                 anchor.remove(); // Clean it up afterwards
