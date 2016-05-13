@@ -256,4 +256,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 				});
 		};
 
+		$scope.$on('logout', function(){
+			$scope.mostrarResultado = false;
+		})
+
 	}]);

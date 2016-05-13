@@ -540,6 +540,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.invoiceNotify = 0;
 			$rootScope.gateNotify = 0;
 			$rootScope.esUsuario = '';
+			$rootScope.$broadcast('logout');
 			$state.transitionTo('login');
 			$rootScope.setEstiloTerminal('BACTSSA');
 			$rootScope.filtroTerminal = '';
