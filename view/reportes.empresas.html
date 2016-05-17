@@ -4,7 +4,7 @@
     </div>
     <br>
     <div class="col-lg-12">
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Clientes</h3>
@@ -16,7 +16,7 @@
             </div>
             <h6><strong>Total empresas: {{ listaClientes.length }}</strong></h6>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-9 col-md-12">
             <reporte-empresas-search model="model" ranking="ranking"></reporte-empresas-search>
             <div class="col-lg-12">
                 <div-panel config-panel="mensajeResultado" ng-show="model.clients.length > 0">

@@ -65,28 +65,30 @@
             </div>
         </div>
         <br>
-        <table class="table table-bordered table-responsive table-striped table-hover">
-            <thead>
-            <tr>
-                <th class="col-lg-1 text-center">
-                    Código
-                </th>
-                <th class="col-lg-9">
-                    Descripción
-                </th>
-                <th class="col-lg-2 text-right">
-                    Total
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="tarifa in dataReporte | filter:search">
-                <td class="text-center">{{ tarifa.code }}</td>
-                <td>{{ tarifa.descripcion }}</td>
-                <td class="text-right">U$S {{ tarifa.total | currency }}</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="col-lg-1 text-center">
+                        Código
+                    </th>
+                    <th class="col-lg-9">
+                        Descripción
+                    </th>
+                    <th class="col-lg-2 text-right">
+                        Total
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="tarifa in dataReporte | filter:search">
+                    <td class="text-center">{{ tarifa.code }}</td>
+                    <td>{{ tarifa.descripcion }}</td>
+                    <td class="text-right">U$S {{ tarifa.total | currency }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div ng-show="model.loading">
