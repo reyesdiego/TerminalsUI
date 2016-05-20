@@ -142,9 +142,37 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			controller: "controlCtrl"
 		})
 		.state('cfacturas', {
-			url: "/cfacturas",
-			templateUrl: "view/controlComprobantes.html"
+			url: "/controlComprobantes",
+			templateUrl: "view/controlComprobantes.html",
+			controller: 'controlComprobantesCtrl'
 		})
+			.state('cfacturas.tasas', {
+				url: '/tasas',
+				templateUrl: 'view/control.tasas.html',
+				controller: 'tasaCargasCtrl'
+			})
+			.state('cfacturas.correlatividad', {
+				url: '/correlatividad',
+				templateUrl: 'view/control.correlatividad.html',
+				controller: 'correlatividadCtrl'
+			})
+			.state('cfacturas.codigos', {
+				url: '/codigos',
+				templateUrl: 'view/control.codigos.html',
+				controller: 'codigosCtrl'
+			})
+			.state('cfacturas.revisar', {
+				url: '/revisar',
+				templateUrl: 'view/control.revisar.html'
+			})
+			.state('cfacturas.erroneos', {
+				url: '/erroneos',
+				templateUrl: 'view/control.erroneos.html'
+			})
+			.state('cfacturas.reenviar', {
+				url: '/reenviar',
+				templateUrl: 'view/control.reenviar.html'
+			})
 		.state('gates', {
 			url: "/gates",
 			templateUrl: "view/gates.html"
