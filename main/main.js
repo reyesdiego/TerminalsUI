@@ -179,8 +179,21 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('cgates', {
 			url: '/controlGates',
-			templateUrl: 'view/gates.control.html'
+			templateUrl: 'view/gates.control.html',
+			controller: 'controlGatesCtrl'
 		})
+			.state('cgates.gates', {
+				url: '/gatesFaltantes',
+				templateUrl: 'view/comprobantesSinGates.html'
+			})
+			.state('cgates.invoices', {
+				url: '/comprobantesFaltantes',
+				templateUrl: 'view/gatesSinFacturacion.html'
+			})
+			.state('cgates.appointments', {
+				url: '/turnosFaltantes',
+				templateUrl: 'view/gatesSinTurnos.html'
+			})
 		.state('gates.invoices', {
 			url: "/contenedor=:contenedor",
 			templateUrl: "view/gates.invoices.html"

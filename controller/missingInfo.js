@@ -3,14 +3,33 @@
  */
 myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'turnosFactory', '$filter',
 	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, turnosFactory, $filter){
-		$scope.currentPage = 1;
+		console.log($scope.savedState);
+
+		if ($scope.savedState != null){
+			$scope.currentPage = $scope.savedState.currentPage;
+			$scope.datosFaltantes = $scope.savedState.datosFaltantes;
+			$scope.totalItems = $scope.savedState.totalItems;
+			$scope.model = $scope.savedState.model;
+			$scope.hayError = $scope.savedState.hayError;
+		} else {
+			$scope.currentPage = 1;
+			$scope.datosFaltantes = [];
+			$scope.hayError = false;
+			$scope.model = {
+				fechaInicio: new Date(),
+				fechaFin: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+				itemsPerPage: 15,
+				search: ''
+			};
+
+			$scope.model.fechaInicio.setHours(0, 0, 0, 0);
+			$scope.model.fechaFin.setHours(0, 0, 0, 0);
+			$scope.totalItems = 0;
+		}
 
 		$scope.filteredDatos = [];
 
-		$scope.datosFaltantes = [];
 		$scope.cargando = false;
-
-		$scope.hayError = false;
 
 		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.cargando = false;
@@ -31,16 +50,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			titulo: 'Control gates',
 			mensaje: 'No se encontraron comprobantes con gates faltantes para los filtros seleccionados.'
 		};
-
-		$scope.model = {
-			fechaInicio: new Date(),
-			fechaFin: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-			itemsPerPage: 15,
-			search: ''
-		};
-
-		$scope.model.fechaInicio.setHours(0, 0, 0, 0);
-		$scope.model.fechaFin.setHours(0, 0, 0, 0);
 
 		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'rates'];
 
@@ -180,7 +189,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		});
 
 		var filtrarPorFecha = function(){
-			$scope.filteredDatos = $filter('dateRange')($scope.datosFaltantes, $scope.model.fechaInicio, $scope.model.fechaFin)
+			$scope.filteredDatos = $filter('dateRange')($scope.datosFaltantes, $scope.model.fechaInicio, $scope.model.fechaFin);
 		};
 
 		$scope.filtrarContenedores = function(){
@@ -193,7 +202,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			$scope.$broadcast('detalleContenedor', contenedor);
 		};
 
-		if (loginService.getStatus()) cargaDatos();
+		if (loginService.getStatus() && $scope.savedState == null) cargaDatos();
 
 		$scope.$on('terminoLogin', function(){
 			$scope.acceso = $rootScope.esUsuario;
@@ -203,5 +212,19 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		$scope.$on('cambioTerminal', function(){
 			cargaDatos();
 		});
+
+		$scope.$on('$destroy', function(){
+			if ($scope.totalItems > 0){
+				var modelSave = {
+					currentPage: $scope.currentPage,
+					datosFaltantes: $scope.datosFaltantes,
+					totalItems: $scope.totalItems,
+					model: $scope.model,
+					hayError: $scope.hayError
+				};
+
+				$scope.$emit('saveState', $scope.datoFaltante, modelSave);
+			}
+		})
 
 	}]);

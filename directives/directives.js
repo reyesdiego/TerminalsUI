@@ -384,7 +384,8 @@ myapp.directive('tableMissingGates', function(){
 		restrict:		'E',
 		templateUrl:	'view/missing.gates.html',
 		scope: {
-			datoFaltante:	'='
+			datoFaltante:	'=',
+			savedState:		'='
 		},
 		controller:		'missingInfo'
 	}
@@ -395,7 +396,8 @@ myapp.directive('tableMissingInvoices', function(){
 		restrict:		'E',
 		templateUrl:	'view/missing.invoices.html',
 		scope: {
-			datoFaltante: '='
+			datoFaltante: '=',
+			savedState:		'='
 		},
 		controller:		'missingInfo'
 	}
@@ -406,7 +408,8 @@ myapp.directive('tableMissingAppointments', function(){
 		restrict:		'E',
 		templateUrl:	'view/missing.appointments.html',
 		scope: {
-			datoFaltante: '='
+			datoFaltante: '=',
+			savedState:		'='
 		},
 		controller:		'missingInfo'
 	}
