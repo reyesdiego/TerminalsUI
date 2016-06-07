@@ -1,112 +1,14 @@
 <div class="container col-xlg-offset-2 col-xlg-8">
 
-<div class="row col-lg-12 page-header">
-	<h1><img ng-src="images/invoices.png" height="64" width="64" class="hidden-xs"> Control de comprobantes</h1>
-</div>
-
-<div data-ng-hide="$state.includes('cfacturas.result')" class="row">
-
-<tabset justified="true">
-
-<tab class="hidden-print" heading="Sin Tasa a las cargas">
-	<div ng-controller="tasaCargasCtrl">
-		<div class="col-lg-12 visible-print-block">
-			<h3>Sin Tasa a las cargas</h3>
-		</div>
-		<br>
-		<accordion-invoices-search model="model" ocultar-filtros="ocultarFiltros"></accordion-invoices-search>
-		<div-cargando mostrar="loadingTasaCargas">
-			<div ng-hide="hayError">
-				<div-panel config-panel="{tipo: 'panel-info', titulo: 'Contenedores sin Tasa a las Cargas ' + totalContenedores}">
-					<div ng-show="totalContenedores == 0">No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados</div>
-					<div style="max-height: 200px; max-width: 100%; overflow: auto" ng-hide="totalContenedores == 0">
-						<div class="input-group col-lg-12 hidden-print">
-							<input type="text" class="form-control" ng-model="search" placeholder="Filtrar resultados" toupper>
-							<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-						</div>
-						<br>
-					<span ng-repeat="tasa in resultado | filter: search">
-						<div style="width: auto; float:left; text-align:center" ng-show="tasa.contenedor != ''" ><a href ng-class="{mark: (model.contenedor == tasa.contenedor)}" ng-click="verContenedor(tasa.contenedor)"> {{ tasa.contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
-					</span>
-					</div>
-				</div-panel>
-			</div>
-		</div-cargando>
-		<div class="col-lg-12" ng-show="hayError">
-			<div-panel config-panel="mensajeResultado">
-				<span>{{ mensajeResultado.mensaje }}</span>
-			</div-panel>
-		</div>
-		<div ng-show="mostrarDetalle" ng-controller="buqueViajeCtrl">
-			<buque-viaje-detail></buque-viaje-detail>
-		</div>
+	<div class="row col-lg-12 page-header">
+		<h1><img ng-src="images/invoices.png" height="64" width="64" class="hidden-xs"> Control de comprobantes</h1>
 	</div>
 
-</tab>
-
-<tab class="hidden-print" heading="Control de Correlatividad">
-	<div ng-controller="correlatividadCtrl">
-		<div class="col-lg-12 visible-print-block">
-			<h3>Control de correlatividad<span> - {{ filtroTerminal }}</span></h3>
-		</div>
-		<br>
-		<accordion-invoices-search model="model" ocultar-filtros="ocultarFiltros"></accordion-invoices-search>
-		<div class="visible-print-block"><span ng-hide="model.fechaInicio == ''">Desde: {{ model.fechaInicio | date: 'dd/MM/yyyy' }}</span></div>
-		<div class="visible-print-block"><span ng-hide="model.fechaFin == ''">Hasta: {{ model.fechaFin | date: 'dd/MM/yyyy' }}</span></div>
-		<br class="visible-print-block">
-		<div-cargando mostrar="loadingCorrelatividad">
-			<h3 ng-show="totalFaltantes > 0 && totalPuntos == 0"><b>{{ tipoComprob.desc }}</b> faltantes {{ totalFaltantes }}</h3>
-			<div-panel ng-repeat="pantalla in puntosDeVenta" config-panel="pantalla" ng-show="pantalla.totalCnt > 0">
-				<p ng-show="pantalla.totalCnt > 1">Se hallaron {{ pantalla.totalCnt }} comprobantes faltantes:</p>
-				<p ng-show="pantalla.totalCnt == 1">Se halló {{ pantalla.totalCnt }} comprobante faltante:</p>
-				<span ng-repeat="numero in pantalla.resultadoCorrelativo track by $index" title="{{ numero.d | date: 'dd/MM/yyyy' }}">{{ numero.n }}<span ng-show="!$last"> - </span></span>
-			</div-panel>
-			<div-panel config-panel="pantalla" ng-show="puntosDeVenta.length == 0">
-				{{ pantalla.mensajeCorrelativo }}
-			</div-panel>
-			<div class="text-right" ng-show="totalFaltantes > 0 && totalPuntos == 0">
-				<button class="btn btn-primary" ng-click="imprimirPdf()"><span class="glyphicon glyphicon-download"></span> Imprimir en PDF</button>
-			</div>
-		</div-cargando>
+	<div data-ng-hide="$state.includes('cfacturas.result')" class="row">
+		<tabset justified="true">
+			<tab ng-repeat="tab in tabs" heading="{{ tab.name }}" ui-sref="{{ tab.ref }}" active="tab.active"></tab>
+		</tabset>
+		<div ui-view></div>
 	</div>
-</tab>
-
-<tab class="hidden-print" heading="Control de códigos">
-	<div ng-controller="codigosCtrl">
-		<div class="visible-print-block">
-			<h3>Control de códigos</h3>
-		</div>
-		<br>
-		<vista-comprobantes model="model" datos-invoices="comprobantesRotos" ocultar-filtros="ocultarFiltros" total-items="totalItems" loading-state="loadingControlCodigos" control-codigos="true" codigos-sin-asociar="codigosSinAsociar" mostrar-ptos-venta="mostrarPtosVentas" panel-mensaje="mensajeResultado"></vista-comprobantes>
-	</div>
-</tab>
-
-<tab class="hidden-print" heading="Revisar" ng-show="acceso == 'agp'">
-	<div class="visible-print-block">
-		<h3>Comprobantes sin revisar</h3>
-	</div>
-	<br>
-	<comprobantes-por-estado estado="C" filtro-estados=""></comprobantes-por-estado>
-</tab>
-
-<tab class="hidden-print" heading="Erróneos">
-	<div class="visible-print-block">
-		<h3>Comprobantes erróneos</h3>
-	</div>
-	<br>
-	<comprobantes-por-estado estado="R,T,E" filtro-estados="ERROR"></comprobantes-por-estado>
-</tab>
-
-<tab class="hidden-print" heading="A reenviar">
-	<div class="visible-print-block">
-		<h3>Comprobantes a reenviar</h3>
-	</div>
-	<br>
-	<comprobantes-por-estado estado="E" filtro-estados=""></comprobantes-por-estado>
-</tab>
-
-</tabset>
-
-</div>
 
 </div>

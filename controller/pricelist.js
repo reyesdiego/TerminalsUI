@@ -107,7 +107,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			$scope.listaElegida = [];
 			//priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
 			priceFactory.getMatchPrices({onlyRates: $scope.tasas}, loginService.getFiltro(), function(data){
-				console.log(data);
 				if (data.status == 'OK'){
 					$scope.hayError = false;
 					$scope.pricelist = data.data;

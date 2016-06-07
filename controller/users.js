@@ -5,14 +5,12 @@
 myapp.controller('usersCtrl', ['$rootScope', '$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'generalFunctions', function($rootScope, $scope, ctrlUsersFactory, dialogs, $q, generalFunctions) {
 
 	$scope.$on('socket:loggedIn', function(event, data){
-		console.log(data);
 		$scope.datosUsers.forEach(function(user){
 			if (user.user == data.user) user.online = true;
 		})
 	});
 
 	$scope.$on('socket:loggedOff', function(event, data){
-		console.log(data);
 		$scope.datosUsers.forEach(function(user){
 			if (user.user == data.user) user.online = false;
 		})

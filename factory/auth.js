@@ -59,6 +59,28 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 
 						$http.defaults.headers.common.token = loginService.getToken();
 
+						//****************************************
+						if (in_array('cfacturas', data.acceso)){
+							data.acceso.push('cfacturas.tasas');
+							data.acceso.push('cfacturas.correlatividad');
+							data.acceso.push('cfacturas.codigos');
+							data.acceso.push('cfacturas.revisar');
+							data.acceso.push('cfacturas.erroneos');
+							data.acceso.push('cfacturas.reenviar');
+						}
+						if (in_array('reports', data.acceso)){
+							data.acceso.push('reports.tasas');
+							data.acceso.push('reports.tarifas');
+							data.acceso.push('reports.empresas');
+							data.acceso.push('reports.terminales');
+						}
+						if (in_array('cgates', data.acceso)){
+							data.acceso.push('cgates.gates');
+							data.acceso.push('cgates.invoices');
+							data.acceso.push('cgates.appointments');
+						}
+						//****************************************
+
 						loginService.setAcceso(data.acceso);
 
 						$rootScope.rutas = data.acceso;

@@ -255,7 +255,6 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 				year: $scope.model.year.getFullYear()
 			};
 			liquidacionesFactory.saveMat(data, $scope.model.actualizar[terminal], function(data){
-				console.log(data);
 				if (data.status == 'OK'){
 					$scope.matData[terminal] = data.data.mat;
 					$scope.model.valorMAT = angular.copy($scope.matData);
@@ -272,7 +271,6 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 			$scope.model.actualizar.TRP = false;
 			$scope.matData = {};
 			liquidacionesFactory.getMAT($scope.model.year.getFullYear(), function(data){
-				console.log(data);
 				if (data.status == 'OK'){
 					var totalMat = 0;
 					var facturadoMes = 0;

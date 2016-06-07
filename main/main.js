@@ -142,17 +142,58 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			controller: "controlCtrl"
 		})
 		.state('cfacturas', {
-			url: "/cfacturas",
-			templateUrl: "view/controlComprobantes.html"
+			url: "/controlComprobantes",
+			templateUrl: "view/controlComprobantes.html",
+			controller: 'controlComprobantesCtrl'
 		})
+			.state('cfacturas.tasas', {
+				url: '/tasas',
+				templateUrl: 'view/control.tasas.html',
+				controller: 'tasaCargasCtrl'
+			})
+			.state('cfacturas.correlatividad', {
+				url: '/correlatividad',
+				templateUrl: 'view/control.correlatividad.html',
+				controller: 'correlatividadCtrl'
+			})
+			.state('cfacturas.codigos', {
+				url: '/codigos',
+				templateUrl: 'view/control.codigos.html',
+				controller: 'codigosCtrl'
+			})
+			.state('cfacturas.revisar', {
+				url: '/revisar',
+				templateUrl: 'view/control.revisar.html'
+			})
+			.state('cfacturas.erroneos', {
+				url: '/erroneos',
+				templateUrl: 'view/control.erroneos.html'
+			})
+			.state('cfacturas.reenviar', {
+				url: '/reenviar',
+				templateUrl: 'view/control.reenviar.html'
+			})
 		.state('gates', {
 			url: "/gates",
 			templateUrl: "view/gates.html"
 		})
 		.state('cgates', {
 			url: '/controlGates',
-			templateUrl: 'view/gates.control.html'
+			templateUrl: 'view/gates.control.html',
+			controller: 'controlGatesCtrl'
 		})
+			.state('cgates.gates', {
+				url: '/gatesFaltantes',
+				templateUrl: 'view/comprobantesSinGates.html'
+			})
+			.state('cgates.invoices', {
+				url: '/comprobantesFaltantes',
+				templateUrl: 'view/gatesSinFacturacion.html'
+			})
+			.state('cgates.appointments', {
+				url: '/turnosFaltantes',
+				templateUrl: 'view/gatesSinTurnos.html'
+			})
 		.state('gates.invoices', {
 			url: "/contenedor=:contenedor",
 			templateUrl: "view/gates.invoices.html"
@@ -179,8 +220,29 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('reports', {
 			url: "/reportes",
-			templateUrl:"view/reportes.html"
+			templateUrl:"view/reportes.html",
+			controller: 'reportsCtrl'
 		})
+			.state('reports.tasas', {
+				url:'/tasas',
+				templateUrl: 'view/reportes.tasas.html',
+				controller: 'ratesCtrl'
+			})
+			.state('reports.tarifas', {
+				url: '/tarifas',
+				templateUrl: 'view/reportes.tarifas.html',
+				controller: 'reporteTarifasCtrl'
+			})
+			.state('reports.empresas', {
+				url: '/empresas',
+				templateUrl: 'view/reportes.empresas.html',
+				controller: 'facturacionPorEmpresaCtrl'
+			})
+			.state('reports.terminales', {
+				url: '/terminales',
+				templateUrl: 'view/reportes.terminales.html',
+				controller: 'tarifasTerminalesCtrl'
+			})
 		.state('afip', {
 			url: "/afip",
 			templateUrl: "view/afip.html"
@@ -519,6 +581,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.invoiceNotify = 0;
 			$rootScope.gateNotify = 0;
 			$rootScope.esUsuario = '';
+			$rootScope.$broadcast('logout');
 			$state.transitionTo('login');
 			$rootScope.setEstiloTerminal('BACTSSA');
 			$rootScope.filtroTerminal = '';

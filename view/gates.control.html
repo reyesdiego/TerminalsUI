@@ -5,31 +5,10 @@
 	</div>
 
 	<tabset justified="true">
-
-		<tab class="hidden-print" heading="Facturaciones sin Gate">
-			<div class="visible-print-block">
-				<h3>Comprobantes sin gates</h3>
-			</div>
-			<br>
-			<table-missing-gates dato-faltante="'gates'"></table-missing-gates>
-		</tab>
-
-		<tab class="hidden-print" heading="Gates sin Facturación">
-			<div class="visible-print-block">
-				<h3>Gates sin comprobantes</h3>
-			</div>
-			<br>
-			<table-missing-invoices dato-faltante="'invoices'"></table-missing-invoices>
-		</tab>
-
-		<tab class="hidden-print" heading="Gates sin turnos">
-			<div class="visible-print-block">
-				<h3>Gates sin turnos</h3>
-			</div>
-			<br>
-			<table-missing-appointments dato-faltante="'gatesAppointments'"></table-missing-appointments>
-		</tab>
-
+		<tab ng-repeat="tab in tabs" heading="{{ tab.name }}" ui-sref="{{ tab.ref }}" active="tab.active" class="hidden-print"></tab>
 	</tabset>
+
+	<div ui-view></div>
+
 	<br>
 </div>

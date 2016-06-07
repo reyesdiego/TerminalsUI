@@ -132,6 +132,11 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
+						src: ['bower_components/ng-tags-input/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
 						src: ['fonts/*'],
 						dest: 'build'
 					},

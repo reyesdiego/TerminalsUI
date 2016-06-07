@@ -1,4 +1,4 @@
-<div class="container col-lg-12" ng-controller="matchPricesCtrl">
+<div class="container col-lg-12">
 
     <div class="row col-lg-12 page-header col-xlg-offset-2 col-xlg-8">
         <h1 class="hidden-xs"><img ng-src="images/asociar.png" height="64" width="64">Edición de tarifario</h1>
@@ -38,7 +38,7 @@
                     </li>
                 </ul>
                 <br>
-                <div class="bs-example table-responsive">
+                <div class="table-responsive">
                     <table class="invoice-shadow table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -115,25 +115,20 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
-
-                    <div class="row hidden-print">
-                        <div class="col-lg-6" ng-show="!hayError">
-                            <button class="btn btn-primary" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Exportar a CSV</button>
-                        </div>
-                        <div class="col-lg-6 text-right" ng-show="!hayError">
-                            <!--<button class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>-->
-                            <button class="btn" ng-click="abrirNuevoConcepto()"><span class="glyphicon glyphicon-asterisk"></span> Nuevo concepto</button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-12" ng-show="hayError">
-                        <div-panel config-panel="mensajeResultado">
-                            <span>{{ mensajeResultado.mensaje }}</span>
-                        </div-panel>
-                    </div>
-                    <br>
                 </div>
+                <div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+
+                <div class="row hidden-print" ng-show="!hayError">
+                    <button class="btn btn-primary" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Exportar a CSV</button>
+                    <button class="btn pull-right" ng-click="abrirNuevoConcepto()"><span class="glyphicon glyphicon-asterisk"></span> Nuevo concepto</button>
+                </div>
+
+                <div class="col-lg-12" ng-show="hayError">
+                    <div-panel config-panel="mensajeResultado">
+                        <span>{{ mensajeResultado.mensaje }}</span>
+                    </div-panel>
+                </div>
+                <br>
             </div>
         </div>
 

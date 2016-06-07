@@ -2,8 +2,8 @@
  * Created by artiom on 02/10/14.
  */
 
-myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'colorTerminalesCache', 'downloadFactory', 'dialogs',
-	function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache, downloadFactory, dialogs) {
+myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'colorTerminalesCache', 'downloadFactory',
+	function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache, downloadFactory) {
 
 		$scope.maxDate = new Date();
 		$scope.search = '';
@@ -47,7 +47,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			$scope.errorTarifario = true;
 		});
 
-		if (loginService.getStatus()){
+		function traerDatos () {
 			priceFactory.getPrice('agp', false, function (data) {
 				$scope.pricelist = data.data;
 				$scope.pricelist.forEach(function (price) {
@@ -63,20 +63,12 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			});
 		}
 
+		if (loginService.getStatus()){
+			traerDatos();
+		}
+
 		$scope.$on('terminoLogin', function(){
-			priceFactory.getPrice('agp', false, function (data) {
-				$scope.pricelist = data.data;
-				$scope.pricelist.forEach(function (price) {
-					price.graficar = false;
-				});
-				$scope.selectedList = $scope.pricelist;
-			});
-			priceFactory.getPrice('agp', true, function (data) {
-				$scope.pricelistTasas = data.data;
-				$scope.pricelistTasas.forEach(function (price) {
-					price.graficar = false;
-				});
-			});
+			traerDatos();
 		});
 
 		$scope.recargarPricelist = function(){

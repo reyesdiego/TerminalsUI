@@ -13,7 +13,6 @@ myapp.controller('containerSumariaCtrl', ['$scope', 'afipFactory', function($sco
 		afipFactory.getManifiestoDetalle(sumaria, function(data){
 			if (data.status == 'OK'){
 				$scope.manifiesto = data.data[0];
-				console.log($scope.manifiesto);
 				$scope.verDetalleManifiesto = true;
 			} else {
 				$scope.verDetalleManifiesto = false;

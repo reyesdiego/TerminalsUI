@@ -2,6 +2,21 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
+myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope, $state){
+
+	$state.transitionTo('cfacturas.tasas');
+
+	$scope.tabs = [
+		{name: 'Sin Tasa a las cargas', ref: 'reports.tasas', active: true},
+		{name: 'Control de correlatividad', ref: 'cfacturas.correlatividad', active: false},
+		{name: 'Control de códigos', ref: 'cfacturas.codigos', active: false},
+		{name: 'Revisar', ref: 'cfacturas.revisar', active: false},
+		{name: 'Erróneos', ref: 'cfacturas.erroneos', active: false},
+		{name: 'A reenviar', ref: 'cfacturas.reenviar', active: false}
+	];
+
+}]);
+
 myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'generalFunctions', 'loginService', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, generalFunctions, loginService) {
 
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes', 'rates'];
@@ -584,7 +599,6 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			'resend': $scope.estado == 'E' ? 1 : undefined
 		};
 
-
 		$scope.page = {
 			skip:0,
 			limit: $scope.model.itemsPerPage
@@ -592,7 +606,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 		$scope.comprobantes = [];
 
-		$scope.loadingState = false;
+		$scope.loadingState = true;
 
 		$scope.recargar = true;
 
