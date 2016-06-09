@@ -72,7 +72,7 @@ function in_array(needle, haystack, argStrict){
 var serverUrl = config.url();
 var socketUrl = config.socket();
 
-var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
+var myapp = angular.module('myapp', ['ui.router', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
 
 myapp.constant('uiDatetimePickerConfig', {
 	dateFormat: 'yyyy-MM-dd HH:mm',
@@ -381,7 +381,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 }]);
 
 myapp.config(['$provide', function ($provide) {
-	$provide.decorator('daypickerDirective', ['$delegate', function ($delegate) {
+	/*$provide.decorator('daypickerDirective', ['$delegate', function ($delegate) {
 		var directive = $delegate[0];
 		var compile = directive.compile;
 		directive.compile = function(tElement, tAttrs) {
@@ -392,8 +392,8 @@ myapp.config(['$provide', function ($provide) {
 			};
 		};
 		return $delegate;
-	}]);
-	$provide.decorator('datepickerPopupDirective', ['$delegate', function ($delegate) {
+	}]);*/
+	/*$provide.decorator('datepickerPopupDirective', ['$delegate', function ($delegate) {
 		var directive = $delegate[0];
 		var compile = directive.compile;
 		directive.compile = function(tElement, tAttrs) {
@@ -404,8 +404,8 @@ myapp.config(['$provide', function ($provide) {
 			};
 		};
 		return $delegate;
-	}]);
-	$provide.decorator('calendarConfig', ['$delegate', function ($delegate) {
+	}]);*/
+	/*$provide.decorator('calendarConfig', ['$delegate', function ($delegate) {
 		$delegate.titleFormats.week = 'Semana {week} del {year}';
 		return $delegate;
 	}]);
@@ -455,16 +455,16 @@ myapp.config(['$provide', function ($provide) {
 
 		}];
 		return $delegate;
-	}]);
+	}]);*/
 
 }]);
 
-myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
+/*myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 	calendarConfigProvider.setI18nStrings({
 		eventsLabel: 'Turnos',
 		timeLabel: 'Hora'
 	});
-}]);
+}]);*/
 
 myapp.config(['$cookiesProvider', function($cookiesProvider){
 	var hoy = new Date();
@@ -472,8 +472,8 @@ myapp.config(['$cookiesProvider', function($cookiesProvider){
 	$cookiesProvider.defaults.expires = new Date(hoy.getFullYear(), hoy.getMonth()+1, hoy.getDate());
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket', '$http',
-	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', '$cookies', 'appSocket', '$http',
+	function($rootScope, $state, loginService, authFactory, dialogs, $injector, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
 		$rootScope.socket = appSocket;
 
@@ -482,14 +482,14 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
 		$rootScope.terminalEstilo = 'bootstrap.cerulean';
 
-		moment().format('YYYY-MM-DD');
+		/*moment().format('YYYY-MM-DD');
 		moment.locale('es');
 
 		moment.locale('es', {
 			week : {
 				dow : 7 // Domingo primer día de la semana
 			}
-		});
+		});*/
 
 		$rootScope.appointmentNotify = 0;
 		$rootScope.gateNotify = 0;

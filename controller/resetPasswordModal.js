@@ -2,19 +2,19 @@
  * Created by artiom on 03/02/15.
  */
 
-myapp.controller('resetPasswordDialogCtrl', ['$scope', '$modalInstance', function($scope,$modalInstance){
+myapp.controller('resetPasswordDialogCtrl', ['$scope', '$uibModalInstance', function($scope,$uibModalInstance){
 	$scope.data = {mail: ''};
 	$scope.validEmail = false;
 	$scope.helpText = 'Ingrese la dirección de e-mail con la cual registró su cuenta.';
 	$scope.tipoAyuda = '';
 
 	$scope.cancel = function(){
-		$modalInstance.dismiss('canceled');
+		$uibModalInstance.dismiss('canceled');
 	}; // end cancel
 
 	$scope.save = function(){
 		if ($scope.validEmail){
-			$modalInstance.close($scope.data.mail);
+			$uibModalInstance.close($scope.data.mail);
 		} else {
 			$scope.helpText = 'La dirección ingresada no es válida. Ingrese la dirección de e-mail con la cual registró su cuenta.';
 			$scope.tipoAyuda = 'text-danger';

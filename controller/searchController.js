@@ -8,10 +8,16 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.status = {
 			open: true
 		};
-		$scope.minDate = new Date(2015,0,1);
-		$scope.maxDate = new Date();
+		//$scope.minDate = new Date(2015,0,1);
+		//$scope.maxDate = new Date();
 		$scope.maxDateD = new Date();
 		$scope.maxDateH = $scope.maxDate + 1;
+		$scope.dateOptions = {
+			formatYear: 'yyyy',
+			maxDate: new Date(),
+			minDate: new Date(2015,0,1),
+			startingDay: 1
+		};
 		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());

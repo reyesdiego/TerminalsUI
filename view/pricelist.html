@@ -52,10 +52,10 @@
 						</a></th>
 					</tr>
 					</thead>
-					<tbody ng-repeat="price in filteredPrices = (listaElegida | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage track by $index">
+					<tbody ng-repeat="price in filteredPrices = (listaElegida | filter:search | orderBy: predicate : reverse) | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage track by $index">
 					<tr style="height:60px" class="hidden-print clickableRow" ng-click="showDetail($index)">
 						<td style="width: 10%">{{ price.code }}</td>
-						<td style="width: 64%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+						<td style="width: 64%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)"uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 12%">{{ price.unit}}</td>
 						<td style="text-align: right; width: 14%">
 							<span ng-show="!(price.topPrices[0].price > 0)" class="glyphicon glyphicon-warning-sign text-danger"> Sin definir</span> <span ng-show="price.topPrices[0].price > 0">{{ price.topPrices[0].currency | formatCurrency }} {{ price.topPrices[0].price | currency }}</span>
@@ -77,8 +77,8 @@
 				</table>
 			</div>
 			<div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
-			<div class="col-lg-2" dropdown is-open="status.isopen">
-				<button id="single-button" type="button" class="btn btn-primary" dropdown-toggle>
+			<div class="col-lg-2" uib-dropdown is-open="status.isopen">
+				<button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle>
 					<span class="glyphicon glyphicon-list"></span> Exportar <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
