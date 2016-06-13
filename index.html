@@ -10,7 +10,6 @@
 	<link rel="stylesheet" ng-href="css/{{ terminalEstilo }}.css">
 	<link rel="stylesheet" href="css/terminalColor.css" title="TERMINALES">
 	<!-- build:css css/aditional-min.css -->
-	<link rel="stylesheet" href="css/angucomplete-alt.css">
 	<link rel="stylesheet" href="css/dialogs.css">
 	<link rel="stylesheet" href="css/angular-multi-select.css">
 	<link rel="stylesheet" href="css/notificaciones.css">
@@ -33,7 +32,6 @@
 	<script src="bower_components/angular/angular.js"></script>
 	<!-- /build -->
 	<script src="bower_components/angular-i18n/angular-locale_es-ar.js"></script>
-
 	<!-- build:js bower_components/angular-cookies/angular-cookies.min.js -->
 	<script src="bower_components/angular-cookies/angular-cookies.js"></script>
 	<!-- /build -->
@@ -50,11 +48,7 @@
 	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<!-- /build -->
 	<!-- build:js bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js -->
-	<!--<script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>--
-	<!-- /build -->
-	<!--<script src="js/moment-with-locales.min.js"></script>
-	<!-- build:js bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js -->
-	<!--<script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>--
+	<script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
 	<!-- /build -->
 	<!-- build:js bower_components/angular-socket-io/socket.min.js -->
 	<script src="bower_components/angular-socket-io/socket.js"></script>
@@ -69,7 +63,6 @@
 	<script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
 	<!-- /build -->
 	<script src="js/socket.io.min.js"></script>
-	<!--<script src="js/angular-locale_es-ar.js"></script>
 	<!-- Google charts -->
 	<script src="js/jsapi.js"></script>
 	<!-- App Script -->
@@ -140,7 +133,6 @@
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
-	<script src="directives/angucomplete-alt.js"></script>
 	<script src="directives/chartDirectives.js"></script>
 	<!-- /build -->
 	<!-- Style Switcher-->
@@ -180,8 +172,6 @@
 					<ul class="dropdown-menu">
 						<li ng-show="tieneAcceso('tarifario')"><a ui-sref="tarifario">Tarifario</a></li>
 						<li ng-show="tieneAcceso('matches')"><a ui-sref="matches">Editar</a></li>
-						<!--<li class="visible-lg divider" ng-show="tieneAcceso('modificarTarifario')"></li>
-						<li ng-show="tieneAcceso('modificarTarifario')"><a  ui-sref="modificarTarifario">Editar</a></li>-->
 					</ul>
 				</li>
 				<li ng-show="acceso!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" uib-dropdown>
@@ -202,7 +192,6 @@
 					<a data-ng-hide="dropdown" uib-dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-show="tieneAcceso('turnos')"><a ui-sref="turnos">Ver</a></li>
-						<!--<li ng-show="false"><a  ui-sref="agenda">Agenda</a></li>-->
 						<li ng-show="tieneAcceso('cturnos')"><a ui-sref="cturnos">Sin notificar</a></li>
 						<li ng-show="tieneAcceso('mturnos')"><a ui-sref="mturnos">Control</a></li>
 					</ul>
@@ -216,7 +205,6 @@
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Turnos</li>
 						<li ng-show="tieneAcceso('turnos')"><a ui-sref="turnos">Ver</a></li>
-						<!--<li ng-show="false"><a  ui-sref="agenda">Agenda</a></li>-->
 						<li ng-show="tieneAcceso('cturnos')"><a ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>

@@ -12,6 +12,18 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
         loading: false
     };
 
+    $scope.datepickerMonth = {
+        minMode: 'month',
+        datepickerMode: 'month',
+        maxDate: new Date()
+    };
+
+    $scope.datepickerYear = {
+        minMode: 'year',
+        datepickerMode: 'year',
+        maxDate: new Date()
+    };
+
     $scope.mensajeResultado = {
         titulo: 'Reporte de tarifas',
         mensaje: 'Seleccione año o mes y año y presione cargar para ver el reporte.',

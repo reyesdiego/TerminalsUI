@@ -72,26 +72,122 @@ function in_array(needle, haystack, argStrict){
 var serverUrl = config.url();
 var socketUrl = config.socket();
 
-var myapp = angular.module('myapp', ['ui.router', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
+var myapp = angular.module('myapp', ['ui.router', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngSanitize', 'ngCookies', 'multi-select', 'angular-cache', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
 
 myapp.constant('uiDatetimePickerConfig', {
 	dateFormat: 'yyyy-MM-dd HH:mm',
+	defaultTime: '00:00:00',
+	html5Types: {
+		date: 'yyyy-MM-dd',
+		'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
+		'month': 'yyyy-MM'
+	},
+	initialPicker: 'date',
+	reOpenDefault: false,
 	enableDate: true,
 	enableTime: true,
-	todayText: 'Hoy',
-	nowText: 'Ahora',
-	clearText: 'Borrar',
-	closeText: 'Listo',
-	dateText: 'Fecha',
-	timeText: 'Hora',
+	buttonBar: {
+		show: true,
+		now: {
+			show: true,
+			text: 'Ahora'
+		},
+		today: {
+			show: true,
+			text: 'Hoy'
+		},
+		clear: {
+			show: true,
+			text: 'Borrar'
+		},
+		date: {
+			show: true,
+			text: 'Fecha'
+		},
+		time: {
+			show: true,
+			text: 'Hora'
+		},
+		close: {
+			show: true,
+			text: 'Listo'
+		}
+	},
 	closeOnDateSelection: true,
+	closeOnTimeNow: true,
 	appendToBody: false,
-	showButtonBar: true
+	altInputFormats: [],
+	ngModelOptions: { },
+	saveAs: false,
+	readAs: false
 });
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+
+}]);
+
+//Configuración para interceptar respuestas http y tratar errores
+myapp.config(['$provide', '$httpProvider', function($provide, $httpProvider){
+
+	// register the interceptor as a service
+	$provide.factory('myHttpInterceptor', ['$rootScope', '$q',
+		function($rootScope, $q) {
+			return {
+				// optional method
+				'request': function(config) {
+					return config;
+				},
+				// optional method
+				'requestError': function(rejection) {
+					// do something on error
+
+					/*if (canRecover(rejection)) {
+					 return responseOrNewPromise
+					 }*/
+					return $q.reject(rejection);
+				},
+				// optional method
+				'response': function(response) {
+					// do something on success
+					return response;
+				},
+				// optional method
+				'responseError': function(rejection) {
+					//TODO config custom messages for http Error status
+					console.log(rejection);
+					/*if (rejection.status == 401){
+						if (rejection.config.url != configService.serverUrl + '/login'){
+							$rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+							var deferred = $q.defer();
+							var req = {
+								config: rejection.config,
+								deferred: deferred
+							};
+							$rootScope.requests401.push(req);
+
+							return deferred.promise;
+							//$state.transitionTo('login');
+						}
+					}
+
+					/*if (rejection.status == -1) rejection.data = { message: 'No se ha podido establecer comunicación con el servidor.', status: 'ERROR' };
+					// do something on error
+					/*if (canRecover(rejection)) {
+					 return responseOrNewPromise
+					 }*/
+					if (angular.isDefined(rejection.config.timeout)){
+						if (rejection.config.timeout.$$state.value == 'cancelado por el usuario'){
+							rejection.status = -5;
+						}
+					}
+					return $q.reject(rejection);
+				}
+			};
+		}]);
+
+	$httpProvider.interceptors.push('myHttpInterceptor');
 
 }]);
 
@@ -343,10 +439,6 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		.state('users', {
 			url: "/users",
 			templateUrl: "view/users.html"
-		})
-		.state('agenda', {
-			url: "/agendaTurnos",
-			templateUrl: 'view/turnosAgenda.html'
 		})
 		.state('access', {
 			url: "/controlAcceso",

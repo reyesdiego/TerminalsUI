@@ -12,11 +12,13 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, idLlamada);
 			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					data = ponerDescripcionComprobantes(data);
-					callback(factory.setearInterfaz(data));
-				}).error(function(error, status) {
-					if (status != 0) callback(error);
+				.then(function(response){
+					if (response.statusText == 'OK'){
+						var data = ponerDescripcionComprobantes(response.data);
+						callback(factory.setearInterfaz(data));
+					}
+				}, function(response) {
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
@@ -91,19 +93,20 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, idLlamada);
 			var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					if (data == null){
-						data = {
+				.then(function(response){
+					console.log(response);
+					if (response.data == null){
+						response.data = {
 							status: 'ERROR',
 							data: []
 						}
 					}
-					data.data.sort(function(a,b){
+					response.data.data.sort(function(a,b){
 						return a - b;
 					});
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0) callback(error);
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
