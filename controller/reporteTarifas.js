@@ -5,18 +5,21 @@
 myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'colorTerminalesCache', 'downloadFactory',
 	function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache, downloadFactory) {
 
-		$scope.maxDate = new Date();
 		$scope.search = '';
 		$scope.selectedList = [];
 		$scope.pricelist = [];
 		$scope.pricelistTasas = [];
 		$scope.filteredPrices = [];
 
+		$scope.datepickerOptions = {
+			formatYear: 'yyyy',
+			maxDate: new Date(),
+			startingDay: 1
+		};
+
 		$scope.loadingReporteTarifas = false;
 
 		$scope.tarifasElegidas = 1;
-
-		$scope.maxDate = new Date();
 
 		$scope.paginaAnterior = 1;
 
@@ -181,8 +184,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		$scope.hasta = new Date();
 		$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 
-		$scope.isCollapsedDesde = true;
-		$scope.isCollapsedHasta = true;
+		$scope.isCollapsedDesde = false;
+		$scope.isCollapsedHasta = false;
 
 		$scope.selectRow = function (index) {
 			$scope.selected = index;

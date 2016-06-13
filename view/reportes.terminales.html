@@ -16,9 +16,9 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Mes</span>
-                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM" datepicker-mode="'month'" datepicker-options="{minMode: 'month'}" ng-model="model.fecha" is-open="openfechaInicio" max-date="maxDate" readonly style="background-color: #ffffff"/>
+                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM" datepicker-options="datepickerMonth" ng-model="model.fecha" is-open="openfechaInicio" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
 								<span class="input-group-btn">
-									<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+									<button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 								</span>
                 </div>
             </div>
@@ -27,9 +27,9 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Año</span>
-                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy" datepicker-mode="'year'" datepicker-options="{minMode: 'year'}" ng-model="model.fecha" is-open="openfechaInicio" max-date="maxDate" readonly style="background-color: #ffffff"/>
+                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy" datepicker-options="datepickerYear" ng-model="model.fecha" is-open="openfechaInicio" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
 								<span class="input-group-btn">
-									<button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+									<button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
 								</span>
                 </div>
             </div>

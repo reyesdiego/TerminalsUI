@@ -38,22 +38,10 @@
 		</div>
 	</div>
 	<div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
-		<angucomplete-alt id="idBuque"
-						  placeholder="Buque"
-						  pause="100"
-						  selected-object="buqueSelected"
-						  local-data="listaBuques"
-						  search-fields="D"
-						  title-field="D"
-						  minlength="1"
-						  input-class="form-control col-lg-12"
-						  filtrar="filtrado(filtrar, contenido)"
-						  filter-field="buqueNombre"
-						  input-field="D"
-						  match-class="highlight"
-						  limit-results="15"
-						  outside-model="model.buqueNombre"
-						  auto-match="true"></angucomplete-alt>
+		<div class="input-group">
+			<input type="text" ng-model="model.buqueNombre" uib-typeahead="buque.buque for buque in listaBuques | filter:$viewValue | limitTo:15" class="form-control" placeholder="Buque" toupper typeahead-on-select="buqueSelected($item, $model, $label, $event)" typeahead-editable="false"/>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('buqueNombre', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		</div>
 	</div>
 	<div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
 		<div class="input-group">
@@ -63,15 +51,15 @@
 	</div>
 	<div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
 		<div class="input-group">
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
-			<input id="model.fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" max-date="maxDateD" readonly style="background-color: #ffffff">
+			<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
+			<input id="model.fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" datepicker-options="dateOptions" readonly style="background-color: #ffffff" clear-text="Borrar" close-text="Listo" current-text="Hoy">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
 	<div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
 		<div class="input-group">
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openfechaFin = !openfechaFin;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
-			<input id="model.fechaFin" type="text" class="form-control" ng-keyup="hitEnter($event)" datepicker-popup="yyyy-MM-dd" ng-model="model.fechaFin" is-open="openfechaFin" max-date="maxDateH" readonly style="background-color: #ffffff">
+			<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaFin = !openfechaFin;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
+			<input id="model.fechaFin" type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" ng-model="model.fechaFin" is-open="openfechaFin" datepicker-options="dateHasta" readonly style="background-color: #ffffff" clear-text="Borrar" close-text="Listo" current-text="Hoy">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>

@@ -25,8 +25,8 @@ myapp.service('generalFunctions', [function () {
 	};
 
 	this.openDate = function (event) {
-		event.preventDefault();
-		event.stopPropagation();
+		//event.preventDefault();
+		//event.stopPropagation();
 	};
 
 	this.idToDate = function (id) {

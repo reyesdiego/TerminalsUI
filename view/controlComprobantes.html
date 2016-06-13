@@ -5,9 +5,9 @@
 	</div>
 
 	<div data-ng-hide="$state.includes('cfacturas.result')" class="row">
-		<tabset justified="true">
-			<tab ng-repeat="tab in tabs" heading="{{ tab.name }}" ui-sref="{{ tab.ref }}" active="tab.active"></tab>
-		</tabset>
+		<uib-tabset justified="true">
+			<uib-tab ng-repeat="tab in tabs" heading="{{ tab.name }}" ui-sref="{{ tab.ref }}" active="tab.active"></uib-tab>
+		</uib-tabset>
 		<div ui-view></div>
 	</div>
 

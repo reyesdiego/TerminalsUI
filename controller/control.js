@@ -8,14 +8,39 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.tipoFiltro = 'cantidad';
 
-		$scope.openDate = function(event){
-			generalFunctions.openDate(event);
-		};
+		$scope.openfechaInicio = false;
+
 		$scope.hitEnter = function(evt){
 			if(angular.equals(evt.keyCode,13))
 				$scope.filtrar();
 		};
 		$scope.maxDate = new Date();
+
+		$scope.datepickerNormal = {
+			formatYear: 'yyyy',
+			maxDate: new Date(),
+			minDate: new Date(2015,0,1),
+			startingDay: 1
+		};
+
+		$scope.datepickerMonth = {
+			minMode: 'month',
+			datepickerMode: 'month',
+			showWeeks: false,
+			maxDate: new Date()
+		};
+
+		$scope.datepickerMonthTurnos = {
+			minMode: 'month',
+			datepickerMode: 'month',
+			showWeeks: false,
+			maxDate: new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 1), '01' )
+		};
+
+		$scope.datepickerGatesTurnos = {
+			showWeeks: false,
+			maxDate: new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 2), 0 )
+		};
 
 		$scope.control = {
 			"invoicesCount": 0,
@@ -111,13 +136,12 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			image: null
 		};
 
-		$scope.isCollapsedMonth = true;
-		$scope.isCollapsedDay = true;
-		$scope.isCollapsedGates = true;
-		$scope.isCollapsedTurnos = true;
-		$scope.isCollapsedDayTasas = true;
-		$scope.isCollapsedDayGatesTurnos = true;
-		$scope.isCollapsedDayGatesTurnosFin = true;
+		$scope.isOpenMonth = false;
+		$scope.isOpenGates = false;
+		$scope.isOpenTurnos = false;
+		$scope.isOpenDayTasas = false;
+		$scope.isOpenDayGatesTurnos = false;
+		$scope.isOpenDayGatesTurnosFin = false;
 
 		// Fecha (dia y hora)
 		$scope.desde = new Date();
@@ -168,16 +192,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.loadingGatesTurnos = false;
 		$scope.errorGatesTurnos = false;
 		$scope.mensajeErrorGatesTurnos = '';
-
-		$scope.openDatepicker = function(inicio){
-			if (inicio){
-				$scope.isCollapsedDayGatesTurnosFin = true;
-				$scope.isCollapsedDayGatesTurnos = !$scope.isCollapsedDayGatesTurnos;
-			} else {
-				$scope.isCollapsedDayGatesTurnos = true;
-				$scope.isCollapsedDayGatesTurnosFin = !$scope.isCollapsedDayGatesTurnosFin;
-			}
-		};
 
 		var prepararDatosMes = function(datosGrafico, traerTotal){
 			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
@@ -442,7 +456,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 				fecha: $scope.mesDesde
 			};
 			$scope.errorFacturadoMes = false;
-			$scope.isCollapsedMonth = true;
+			$scope.isOpenMonth = false;
 			$scope.loadingFacturadoMes = true;
 			$scope.recargarFacturadoMes = false;
 			controlPanelFactory.getFacturasMeses(datos, function(graf){
@@ -453,7 +467,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.traerDatosGates = function(){
 			$scope.errorGates = false;
-			$scope.isCollapsedGates = true;
+			$scope.isOpenGates = false;
 			$scope.loadingGates = true;
 			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}, function(graf){
 				$scope.chartGates.data = prepararDatosMes(graf, false);
@@ -463,7 +477,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.traerDatosTurnos = function(){
 			$scope.errorTurnos = false;
-			$scope.isCollapsedTurnos = true;
+			$scope.isOpenTurnos = false;
 			$scope.loadingTurnos = true;
 			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }, function(graf){
 				$scope.loadingTurnos = false;
@@ -477,7 +491,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			};
 			$scope.traerTotales();
 			$scope.errorFacturadoDia = false;
-			$scope.isCollapsedDay = true;
 			$scope.loadingFacturadoDia = true;
 			$scope.recargarFacturadoDia = false;
 			controlPanelFactory.getFacturadoPorDia(datos, function(graf){
@@ -488,8 +501,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.traerDatosGatesTurnosDia = function(){
 			$scope.errorGatesTurnos = false;
-			$scope.isCollapsedDayGatesTurnos = true;
-			$scope.isCollapsedDayGatesTurnosFin = true;
+			$scope.isOpenDayGatesTurnos = false;
+			$scope.isOpenDayGatesTurnosFin = false;
 			$scope.loadingGatesTurnos = true;
 			$scope.diaGatesTurnos.setHours(0, 0, 0);
 			$scope.diaGatesTurnosFin.setHours(0, 0, 0);

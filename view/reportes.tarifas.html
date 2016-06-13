@@ -18,30 +18,20 @@
             <div class="col-lg-6">
                 <label for="fechaInicio">Desde</label>
                 <p class="input-group">
-                    <input type="text" id="fechaInicio" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="desde" />
+                    <input type="text" id="fechaInicio" readonly class="form-control" ng-model="desde" uib-datepicker-popup="yyyy-MM-dd" is-open="isCollapsedDesde" datepicker-options="datepickerOptions" clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 								<span class="input-group-btn">
-									<button class="btn btn-default" ng-click="isCollapsedDesde = !isCollapsedDesde"><i class="glyphicon glyphicon-calendar"></i></button>
+									<button type="button" class="btn btn-default" ng-click="isCollapsedDesde = !isCollapsedDesde"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>
                 </p>
-                <div collapse="isCollapsedDesde">
-                    <div>
-                        <datepicker ng-model="desde" show-weeks="false" ng-change="isCollapsedDesde = !isCollapsedDesde" max-date="maxDate"></datepicker>
-                    </div>
-                </div>
             </div>
             <div class="col-lg-6">
                 <label for="fechaFin">Hasta</label>
                 <p class="input-group">
-                    <input type="text" id="fechaFin" readonly="true" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="hasta" />
+                    <input type="text" id="fechaFin" readonly class="form-control" ng-model="hasta" uib-datepicker-popup="yyyy-MM-dd" is-open="isCollapsedHasta" datepicker-options="datepickerOptions" clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 								<span class="input-group-btn">
-									<button class="btn btn-default" ng-click="isCollapsedHasta = !isCollapsedHasta"><i class="glyphicon glyphicon-calendar"></i></button>
+									<button type="button" class="btn btn-default" ng-click="isCollapsedHasta = !isCollapsedHasta"><i class="glyphicon glyphicon-calendar"></i></button>
 								</span>
                 </p>
-                <div collapse="isCollapsedHasta">
-                    <div>
-                        <datepicker ng-model="hasta" show-weeks="false" ng-change="isCollapsedHasta = !isCollapsedHasta" max-date="maxDate"></datepicker>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -87,8 +77,8 @@
     </div>
 
     <div class="row hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
-        <div class="col-lg-10 hidden-xs"><pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-        <div class="col-lg-10 visible-xs"><pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+        <div class="col-lg-10 hidden-xs"><uib-pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="20" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
+        <div class="col-lg-10 visible-xs"><uib-pagination boundary-links="true" total-items="filteredPrices.length" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
         <div class="col-lg-2 text-right" style="margin-top: 20px">
             <button class="btn btn-primary" ng-click="armarGraficoTarifas()"><span class="glyphicon glyphicon-asterisk"></span> Cargar gráfico</button>
         </div>

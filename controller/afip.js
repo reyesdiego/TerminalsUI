@@ -133,7 +133,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			switch ($state.current.name){
 				case 'afip':
 					$state.transitionTo($scope.actualRegistro);
-					$scope.cargaDatos($scope.actualRegistro);
+					//$scope.cargaDatos($scope.actualRegistro);
 					$scope.tabs[0].active = true;
 					break;
 				case 'afip.afectacion.afectacion1':
@@ -187,6 +187,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		};
 
 		$scope.cargaDatos = function(registro){
+			console.log('carga');
 			$scope.sumariaDetalle = {};
 			$scope.cargando = true;
 			$scope.panelMensaje = {

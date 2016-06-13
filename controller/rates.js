@@ -16,6 +16,12 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.totalPeso = 0;
 		$scope.totalPesoAgp = 0;
 
+		$scope.datepickerOptions = [
+			{maxDate: new Date()},
+			{maxDate: new Date(), datepickerMode: 'month', minMode: 'month'},
+			{maxDate: new Date(), datepickerMode: 'year', minMode: 'year'}
+		];
+
 		$scope.meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 		$scope.chartReporteTarifas = {
@@ -101,7 +107,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 		// Variable para almacenar la info principal que trae del factory
-		$scope.rates = {};
+		$scope.rates = [];
 		$scope.detalleRates = {};
 
 		$scope.model = {
@@ -337,8 +343,6 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			if(angular.equals(evt.keyCode,13))
 				$scope.filtrar();
 		};
-
-		$scope.maxDate = new Date();
 
 		$scope.$on('errorInesperado', function(e, mensaje){
 			$scope.cargando = false;

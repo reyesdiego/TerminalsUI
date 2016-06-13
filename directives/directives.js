@@ -279,12 +279,12 @@ myapp.directive('divPagination', function(){
 		},
 		template:
 			'<div class="col-lg-12 hidden-print hidden-xs" ng-show="totalItems > itemsPerPage">' +
-			'	<div class="text-center visible-sm"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeSM" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
-			'	<div class="text-center visible-md"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeMD" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
-			'	<div class="text-center visible-lg"><pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeLG" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>' +
+			'	<div class="text-center visible-sm"><uib-pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeSM" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>' +
+			'	<div class="text-center visible-md"><uib-pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeMD" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>' +
+			'	<div class="text-center visible-lg"><uib-pagination boundary-links="true" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSizeLG" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>' +
 			'</div>' +
 			'<div class="col-lg-12 hidden-print visible-xs" ng-show="totalItems > itemsPerPage">' +
-				'<pager total-items="totalItems" ng-model="currentPage" previous-text="<< Anterior" next-text="Siguiente >>" ng-click="pageChanged()"></pager>' +
+				'<uib-pager total-items="totalItems" ng-model="currentPage" previous-text="<< Anterior" next-text="Siguiente >>" ng-click="pageChanged()"></uib-pager>' +
 			'</div>'
 
 	}
@@ -492,16 +492,16 @@ myapp.directive('accordionMin', [function () {
 		},
 		template:
 			'<div class="col-lg-12 hidden-print" ng-init="estado = true">' +
-			'	<accordion>' +
-			'		<accordion-group is-open="estado">' +
-			'			<accordion-heading>' +
+			'	<uib-accordion>' +
+			'		<uib-accordion-group is-open="estado">' +
+			'			<uib-accordion-heading>' +
 			'				<strong>{{ heading }}</strong><i class="pull-right glyphicon" ng-class="{\'glyphicon-chevron-down\': estado, \'glyphicon-chevron-right\': !estado}"></i>' +
-			'			</accordion-heading>' +
+			'			</uib-accordion-heading>' +
 			'			<div class="row">' +
 			'				<div ng-transclude></div>' +
 			'			</div>' +
-			'		</accordion-group>' +
-			'	</accordion>' +
+			'		</uib-accordion-group>' +
+			'	</uib-accordion>' +
 			'</div>'
 	}
 }]);
