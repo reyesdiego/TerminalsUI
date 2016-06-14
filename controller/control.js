@@ -155,43 +155,41 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.maxDateTurnos = new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 1), '01' );
 		$scope.maxDateGatesTurnos = new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 2), 0 );
 
-		$scope.monthMode = 'month';
 		//Flag para mostrar los tabs con los resultados una vez recibidos los datos
 		$scope.terminoCarga = false;
 
 		$scope.control.ratesCount = 0;
 		$scope.control.ratesTotal = 0;
 
-		$scope.loadingTotales = false;
-		$scope.errorTotales = false;
-		$scope.mensajeErrorTotales = '';
+		$scope.facturadoDia = {
+			loading: false,
+			error: false,
+			mensaje: ''
+		};
 
-		$scope.loadingTasas = false;
-		$scope.errorCargaTasas = false;
-		$scope.mensajeErrorCargaTasas = '';
-		$scope.recargarTasas = false;
+		$scope.facturadoMes = {
+			loading: false,
+			error: false,
+			mensaje: ''
+		};
 
-		$scope.loadingFacturadoDia = false;
-		$scope.errorFacturadoDia = false;
-		$scope.mensajeErrorFacturadoDia = '';
-		$scope.recargarFacturadoDia = false;
+		$scope.cantGates = {
+			loading: false,
+			error: false,
+			mensaje: ''
+		};
 
-		$scope.loadingFacturadoMes = false;
-		$scope.errorFacturadoMes = false;
-		$scope.mensajeErrorFacturadoMes = '';
-		$scope.recargarFacturadoMes = false;
+		$scope.cantTurnos = {
+			loading: false,
+			error: false,
+			mensaje: ''
+		};
 
-		$scope.loadingGates = false;
-		$scope.errorGates = false;
-		$scope.mensajeErrorGates = '';
-
-		$scope.loadingTurnos = false;
-		$scope.errorTurnos = false;
-		$scope.mensajeErrorTurnos = '';
-
-		$scope.loadingGatesTurnos = false;
-		$scope.errorGatesTurnos = false;
-		$scope.mensajeErrorGatesTurnos = '';
+		$scope.gatesTurnos = {
+			loading: false,
+			error: false,
+			mensaje: ''
+		};
 
 		var prepararDatosMes = function(datosGrafico, traerTotal){
 			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
@@ -391,49 +389,44 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			}
 		});
 
-		$scope.$on('errorGetByDay', function(event, error){
-			$scope.loadingTotales = false;
-			$scope.errorTotales = true;
-			$scope.mensajeErrorTotales = error;
-		});
-
-		$scope.$on('errorTasas', function(event, error){
-			$scope.loadingTasas = false;
-			$scope.errorCargaTasas = true;
-			$scope.mensajeErrorCargaTasas = error;
-			$scope.recargarTasas = true;
-		});
-
 		$scope.$on('gatesMeses', function(event, error){
-			$scope.loadingGates = false;
-			$scope.errorGates = true;
-			$scope.mensajeErrorGates = error;
+			$scope.cantGates = {
+				loading: false,
+				error: true,
+				mensaje: error
+			};
 		});
 
 		$scope.$on('turnosMeses', function(event, error){
-			$scope.loadingTurnos = false;
-			$scope.errorTurnos = true;
-			$scope.mensajeErrorTurnos = error;
+			$scope.cantTurnos = {
+				loading: false,
+				error: true,
+				mensaje: error
+			};
 		});
 
 		$scope.$on('errorFacturadoPorDia', function(event, error){
-			$scope.loadingFacturadoDia = false;
-			$scope.errorFacturadoDia = true;
-			$scope.mensajeErrorFacturadoDia = error;
-			$scope.recargarFacturadoDia = true;
+			$scope.facturadoDia = {
+				loading: false,
+				error: true,
+				mensaje: error
+			};
 		});
 
 		$scope.$on('errorFacturasMeses', function(event, error){
-			$scope.loadingFacturadoMes = false;
-			$scope.errorFacturadoMes = true;
-			$scope.mensajeErrorFacturadoMes = error;
-			$scope.recargarFacturadoMes = true;
+			$scope.facturadoMes = {
+				loading: false,
+				error: true,
+				mensaje: error
+			};
 		});
 
 		$scope.$on('errorGatesTurnosDia', function(event, error){
-			$scope.loadingGatesTurnos = false;
-			$scope.errorGatesTurnos = true;
-			$scope.mensajeErrorGatesTurnos = error;
+			$scope.gatesTurnos = {
+				loading: false,
+				error: true,
+				mensaje: error
+			};
 		});
 
 		$scope.selectRow = function (index) {
@@ -441,10 +434,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.traerTotales = function(){
-			$scope.errorTotales = false;
-			$scope.loadingTotales = true;
 			controlPanelFactory.getByDay({ fecha: $scope.desde }, function(data){
-				$scope.loadingTotales = false;
 				$scope.control.invoicesCount = data.invoicesCount;
 				$scope.fecha = fecha;
 				$scope.comprobantesCantidad = data.data;
@@ -455,32 +445,31 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			var datos = {
 				fecha: $scope.mesDesde
 			};
-			$scope.errorFacturadoMes = false;
+			$scope.facturadoMes.error = false;
+			$scope.facturadoMes.loading = true;
 			$scope.isOpenMonth = false;
-			$scope.loadingFacturadoMes = true;
-			$scope.recargarFacturadoMes = false;
 			controlPanelFactory.getFacturasMeses(datos, function(graf){
 				$scope.chartFacturas.data = prepararDatosMes(graf.data, true);
-				$scope.loadingFacturadoMes = false;
+				$scope.facturadoMes.loading = false;
 			});
 		};
 
 		$scope.traerDatosGates = function(){
-			$scope.errorGates = false;
 			$scope.isOpenGates = false;
-			$scope.loadingGates = true;
+			$scope.cantGates.error = false;
+			$scope.cantGates.loading = true;
 			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}, function(graf){
 				$scope.chartGates.data = prepararDatosMes(graf, false);
-				$scope.loadingGates = false;
+				$scope.cantGates.loading = false;
 			});
 		};
 
 		$scope.traerDatosTurnos = function(){
-			$scope.errorTurnos = false;
 			$scope.isOpenTurnos = false;
-			$scope.loadingTurnos = true;
+			$scope.cantTurnos.error = false;
+			$scope.cantTurnos.loading = true;
 			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }, function(graf){
-				$scope.loadingTurnos = false;
+				$scope.cantTurnos.loading = false;
 				$scope.chartTurnos.data = prepararDatosMes(graf, false);
 			});
 		};
@@ -490,32 +479,33 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 				fecha: $scope.desde
 			};
 			$scope.traerTotales();
-			$scope.errorFacturadoDia = false;
-			$scope.loadingFacturadoDia = true;
-			$scope.recargarFacturadoDia = false;
+			$scope.facturadoDia.error = false;
+			$scope.facturadoDia.loading = true;
 			controlPanelFactory.getFacturadoPorDia(datos, function(graf){
 				$scope.chartFacturado.data = prepararDatosFacturadoDia(graf.data);
-				$scope.loadingFacturadoDia = false;
+				$scope.facturadoDia.loading = false;
 			});
 		};
 
 		$scope.traerDatosGatesTurnosDia = function(){
-			$scope.errorGatesTurnos = false;
 			$scope.isOpenDayGatesTurnos = false;
 			$scope.isOpenDayGatesTurnosFin = false;
-			$scope.loadingGatesTurnos = true;
+
+			$scope.gatesTurnos.error = false;
+			$scope.gatesTurnos.loading = true;
+
 			$scope.diaGatesTurnos.setHours(0, 0, 0);
 			$scope.diaGatesTurnosFin.setHours(0, 0, 0);
 			if ($scope.radioModel == 'Gates'){
 				controlPanelFactory.getGatesDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
-					$scope.loadingGatesTurnos = false;
+					$scope.gatesTurnos.loading = false;
 					$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
 					$scope.labelPorHora = 'Gates por hora'
 				});
 			}
 			else if ($scope.radioModel == 'Turnos'){
 				controlPanelFactory.getTurnosDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
-					$scope.loadingGatesTurnos = false;
+					$scope.gatesTurnos.loading = false;
 					$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
 					$scope.labelPorHora = 'Turnos por hora'
 				});
@@ -523,9 +513,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		if (loginService.getStatus()){
-			//$scope.traerTotales();
 			$scope.traerDatosFacturadoMes();
-			//$scope.traerDatosFacturadoDiaTasas();
 			$scope.traerDatosFacturadoDia();
 			$scope.traerDatosGates();
 			$scope.traerDatosTurnos();
@@ -533,9 +521,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		}
 
 		$scope.$on('terminoLogin', function(){
-			//$scope.traerTotales();
 			$scope.traerDatosFacturadoMes();
-			//$scope.traerDatosFacturadoDiaTasas();
 			$scope.traerDatosFacturadoDia();
 			$scope.traerDatosGates();
 			$scope.traerDatosTurnos();
