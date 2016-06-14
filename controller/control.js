@@ -222,7 +222,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					fechaAnterior = datosDia.month;
 					fila[0] = meses[datosDia.month - 1] + '/' + datosDia.year;
 				}
-				switch (datosDia._id.terminal){
+				switch (datosDia.terminal){
 					case "BACTSSA":
 						contarTerminal = 1;
 						break;
