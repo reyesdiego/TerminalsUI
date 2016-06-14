@@ -13,6 +13,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
+					console.log(response.data);
 					if (response.statusText == 'OK'){
 						var data = ponerDescripcionComprobantes(response.data);
 						callback(factory.setearInterfaz(data));
