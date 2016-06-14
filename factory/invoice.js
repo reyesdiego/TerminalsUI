@@ -94,7 +94,6 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
-					console.log(response);
 					if (response.data == null){
 						response.data = {
 							status: 'ERROR',

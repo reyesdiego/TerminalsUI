@@ -209,18 +209,18 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			datosGrafico.forEach(function(datosDia){
 				if (flagPrimero){
 					flagPrimero = false;
-					fila[0] = meses[datosDia._id.month - 1] + '/' + datosDia._id.year;
-					fechaAnterior = datosDia._id.month;
+					fila[0] = meses[datosDia.month - 1] + '/' + datosDia.year;
+					fechaAnterior = datosDia.month;
 				}
-				if (fechaAnterior != datosDia._id.month){
+				if (fechaAnterior != datosDia.month){
 					//Al llegar a la tercer terminal cargo el promedio de ese día, meto la fila en la matriz y reseteo las columnas
 					fila[4] = acum/3;
 					base.push(fila.slice());
 					//Meto la fila en la matriz y vuelvo a empezar
 					fila = ['', 0, 0, 0, 0, ''];
 					acum = 0;
-					fechaAnterior = datosDia._id.month;
-					fila[0] = meses[datosDia._id.month - 1] + '/' + datosDia._id.year;
+					fechaAnterior = datosDia.month;
+					fila[0] = meses[datosDia.month - 1] + '/' + datosDia.year;
 				}
 				switch (datosDia._id.terminal){
 					case "BACTSSA":
