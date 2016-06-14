@@ -139,8 +139,9 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var inserturl = serverUrl + '/invoices/invoice/' + id;
 			$http.get(inserturl)
 				.success(function (data){
+					console.log(data);
 					data.data = setearInterfazComprobante(data.data);
-					data.data.transferencia = formatService.formatearFechaISOString(generalFunctions.idToDate(data.data._id));
+					data.data.transferencia = formatService.formatearFechaISOString(data.data.registrado_en);
 					callback(ponerUnidadDeMedida(ponerDescripcionComprobante(data.data)));
 				}).error(function(error){
 					errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
@@ -178,7 +179,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				.success(function (data){
 					data.data = filtrarComentarios(data.data);
 					data.data.forEach(function(comment){
-						comment.fecha = formatService.formatearFechaISOString(generalFunctions.idToDate(comment._id));
+						comment.fecha = formatService.formatearFechaISOString(comment.registrado_en);
 					});
 					callback(data);
 				})
