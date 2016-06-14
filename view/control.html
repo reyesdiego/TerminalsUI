@@ -8,7 +8,7 @@
 		<br>
 		<div class="col-lg-8">
 			<h4 ng-show="tipoFiltro=='cantidad'" class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
-			<h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: $ {{ comprobantesCantidad.totalCount | currency }}</h4>
+			<h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: {{ comprobantesCantidad.totalCount | currency }}</h4>
 			<div class="rowcol-lg-12">
 				<div class="form-group col-lg-5">
 					<div class="input-group text-left">
@@ -47,15 +47,15 @@
 					</tr>
 					<tr style="font-size: 8pt" ng-show="tipoFiltro=='total'" ng-repeat="comprobante in comprobantesCantidad">
 						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
-						<td class="text-right">$ {{ comprobante.BACTSSA.total[0] | numero | currency }} ({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right">$ {{ comprobante.TERMINAL4.total[0] | numero | currency }} ({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right">$ {{ comprobante.TRP.total[0] | numero | currency }} ({{ comprobante.TRP.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right"><b>$ {{ comprobante.total | currency }}</b></td>
+						<td class="text-right">{{ comprobante.BACTSSA.total[0] | numero | currency }} ({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TERMINAL4.total[0] | numero | currency }} ({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TRP.total[0] | numero | currency }} ({{ comprobante.TRP.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right"><b>{{ comprobante.total | currency }}</b></td>
 					</tr>
 					<tr>
 						<th class="text-right" colspan="4">Total</th>
 						<th ng-show="tipoFiltro=='cantidad'" class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
-						<th ng-show="tipoFiltro=='total'" class="text-right">$ {{ comprobantesCantidad.totalCount | currency }}</th>
+						<th ng-show="tipoFiltro=='total'" class="text-right">{{ comprobantesCantidad.totalCount | currency }}</th>
 					</tr>
 					</tbody>
 				</table>
