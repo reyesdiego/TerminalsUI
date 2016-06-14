@@ -8,7 +8,7 @@
 		<br>
 		<div class="col-lg-8">
 			<h4 ng-show="tipoFiltro=='cantidad'" class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
-			<h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: $ {{ comprobantesCantidad.totalCount | currency }}</h4>
+			<h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: {{ comprobantesCantidad.totalCount | currency }}</h4>
 			<div class="rowcol-lg-12">
 				<div class="form-group col-lg-5">
 					<div class="input-group text-left">
@@ -47,32 +47,25 @@
 					</tr>
 					<tr style="font-size: 8pt" ng-show="tipoFiltro=='total'" ng-repeat="comprobante in comprobantesCantidad">
 						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
-						<td class="text-right">$ {{ comprobante.BACTSSA.total[0] | numero | currency }} ({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right">$ {{ comprobante.TERMINAL4.total[0] | numero | currency }} ({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right">$ {{ comprobante.TRP.total[0] | numero | currency }} ({{ comprobante.TRP.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right"><b>$ {{ comprobante.total | currency }}</b></td>
+						<td class="text-right">{{ comprobante.BACTSSA.total[0] | numero | currency }} ({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TERMINAL4.total[0] | numero | currency }} ({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right">{{ comprobante.TRP.total[0] | numero | currency }} ({{ comprobante.TRP.total[1] | numero | number:2 }} %)</td>
+						<td class="text-right"><b>{{ comprobante.total | currency }}</b></td>
 					</tr>
 					<tr>
 						<th class="text-right" colspan="4">Total</th>
 						<th ng-show="tipoFiltro=='cantidad'" class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
-						<th ng-show="tipoFiltro=='total'" class="text-right">$ {{ comprobantesCantidad.totalCount | currency }}</th>
+						<th ng-show="tipoFiltro=='total'" class="text-right">{{ comprobantesCantidad.totalCount | currency }}</th>
 					</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<!--<div class="col-lg-4" ng-show="errorCargaTasas">
-			<div class="alert alert-danger">
-				<strong>Error</strong> - No se han podido cargar los datos de los facturado por tasas a las cargas.
-				<h6>{{mensajeErrorCargaTasas}}</h6>
-				<span>Presione <a href ng-click="traerDatosFacturadoDiaTasas()">aquí</a> para reintentar.</span>
-			</div>
-		</div>-->
 
-		<div class="col-lg-4" ng-show="loadingFacturadoDia">
+		<div class="col-lg-4" ng-show="facturadoDia.loading">
 			<img class="media-object center-block" src="images/loading.gif">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingFacturadoDia || errorFacturadoDia">
+		<div class="col-lg-4" ng-hide="facturadoDia.loading || facturadoDia.error">
 			<h4 class="text-left">Facturado diario</h4>
 			<div>
 				<dynamic-chart
@@ -82,20 +75,20 @@
 				</dynamic-chart>
 			</div>
 		</div>
-		<div class="col-lg-4" ng-show="errorFacturadoDia">
+		<div class="col-lg-4" ng-show="facturadoDia.error">
 			<div class="alert alert-danger">
 				<strong>Error</strong> - No se han podido cargar los datos de los facturado por día.
-				<h6>{{mensajeErrorFacturadoDia}}</h6>
+				<h6>{{ facturadoDia.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosFacturadoDia()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-lg-4" ng-show="loadingFacturadoMes">
+		<div class="col-lg-4" ng-show="facturadoMes.loading">
 			<img class="media-object center-block" src="images/loading.gif">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingFacturadoMes || errorFacturadoMes">
+		<div class="col-lg-4" ng-hide="facturadoMes.loading || facturadoMes.error">
 			<h4 class="text-left">Facturado mensual</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -111,18 +104,18 @@
 				</dynamic-chart>
 			</div>
 		</div>
-		<div class="col-lg-4" ng-show="errorFacturadoMes">
+		<div class="col-lg-4" ng-show="facturadoMes.error">
 			<div class="alert alert-danger">
 				<strong>Error</strong> - No se han podido cargar los datos de los facturado por mes.
-				<h6>{{mensajeErrorFacturadoMes}}</h6>
+				<h6>{{ facturadoMes.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosFacturadoMes()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
 
-		<div class="col-lg-4" ng-show="loadingGates">
+		<div class="col-lg-4" ng-show="cantGates.loading">
 			<img class="media-object center-block" src="images/loading.gif">
 		</div>
-		<div class="col-lg-4" ng-show="!loadingGates || errorGates">
+		<div class="col-lg-4" ng-hide="cantGates.loading || cantGates.error">
 			<h4 class="text-left">Gates mensuales</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -138,18 +131,18 @@
 				</dynamic-chart>
 			</div>
 		</div>
-		<div class="col-lg-4" ng-show="errorGates">
+		<div class="col-lg-4" ng-show="cantGates.error">
 			<div class="alert alert-danger">
 				<strong>Error</strong> - No se han podido cargar los datos de los gates.
-				<h6>{{mensajeErrorGates}}</h6>
+				<h6>{{ cantGates.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosGates()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
 
-		<div class="col-lg-4" ng-show="loadingTurnos">
+		<div class="col-lg-4" ng-show="cantTurnos.loading">
 			<img class="media-object center-block" src="images/loading.gif">
 		</div>
-		<div class="col-lg-4" ng-hide="loadingTurnos || errorTurnos">
+		<div class="col-lg-4" ng-hide="cantTurnos.loading || cantTurnos.error">
 			<h4 class="text-left">Turnos mensuales</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -165,20 +158,20 @@
 				</dynamic-chart>
 			</div>
 		</div>
-		<div class="col-lg-4" ng-show="errorTurnos">
+		<div class="col-lg-4" ng-show="cantTurnos.error">
 			<div class="alert alert-danger">
 				<strong>Error</strong> - No se han podido cargar los datos de los turnos.
-				<h6>{{mensajeErrorTurnos}}</h6>
+				<h6>{{ cantTurnos.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosTurnos()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
 	</div>
 
 	<div class="row">
-		<div ng-show="loadingGatesTurnos">
+		<div ng-show="gatesTurnos.loading">
 			<img class="media-object center-block" src="images/loading.gif">
 		</div>
-		<div ng-hide="loadingGatesTurnos">
+		<div ng-hide="gatesTurnos.loading || gatesTurnos.error">
 			<h4 class="text-left">{{ labelPorHora }}</h4>
 			<div class="row col-lg-6 col-lg-offset-2">
 				<div class="form-group col-lg-6">
@@ -206,20 +199,6 @@
 					</div>
 				</div>
 			</div>
-			<!--<div class="col-lg-4 col-lg-offset-3">
-				<div uib-collapse="isOpenDayGatesTurnos">
-					<div class="well well-lg">
-						<uib-datepicker ng-model="diaGatesTurnos" datepicker-options="datepickerGatesTurnos" show-weeks="false" ></uib-datepicker>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-lg-offset-3">
-				<div uib-collapse="isOpenDayGatesTurnosFin">
-					<div class="well well-lg">
-						<uib-datepicker ng-model="diaGatesTurnosFin" datepicker-options="datepickerGatesTurnos" ng-change="traerDatosGatesTurnosDia()"></uib-datepicker>
-					</div>
-				</div>
-			</div>-->
 			<div class="col-lg-12">
 				<dynamic-chart
 						chart-object="chartDiaGatesTurnos"
@@ -228,10 +207,10 @@
 				</dynamic-chart>
 			</div>
 		</div>
-		<div class="col-lg-4" ng-show="errorGatesTurnos">
+		<div class="col-lg-4" ng-show="gatesTurnos.error">
 			<div class="alert alert-danger">
 				<strong>Error</strong> - No se han podido cargar los datos de los turnos.
-				<h6>{{mensajeErrorGatesTurnos}}</h6>
+				<h6>{{ gatesTurnos.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
 			</div>
 		</div>

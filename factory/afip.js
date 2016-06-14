@@ -138,7 +138,6 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getRegistroAfip = function(ruta, filtros, callback){
-			console.log('hooola');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace);
 			var inserturl = serverUrl + '/afip/' + ruta;

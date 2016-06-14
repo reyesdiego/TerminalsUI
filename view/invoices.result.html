@@ -63,33 +63,33 @@
 					<td><a href class="hidden-print" ng-click="filtrado('code', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
 					<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="existeDescripcion(item.id)"></span> <text-pop text="{{ item.descripcion }}" max="190"></text-pop></td>
 					<td>{{ item.cnt }}</td>
-					<td>{{ moneda | formatCurrency }} {{ item.impUnit | conversionMoneda: verDetalle | currency }}</td>
+					<td>{{ item.impUnit | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }}</td>
 					<td>{{ item.uniMed }}</td>
-					<td><span title="El total no se corresponde con el precio unitario cobrado." class="glyphicon glyphicon-exclamation-sign text-danger" ng-show="item.impTot - item.impUnit*item.cnt > 0.2 || item.impTot - item.impUnit*item.cnt < - 0.2"></span> {{ moneda | formatCurrency }} {{ item.impTot | conversionMoneda: verDetalle | currency }}</td>
+					<td><span title="El total no se corresponde con el precio unitario cobrado." class="glyphicon glyphicon-exclamation-sign text-danger" ng-show="item.impTot - item.impUnit*item.cnt > 0.2 || item.impTot - item.impUnit*item.cnt < - 0.2"></span> {{ item.impTot | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }}</td>
 				</tr>
 				</tbody>
 				<tfoot class="text-right">
 				<tr>
 					<td colspan="2">Subtotal</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.subtotal | conversionMoneda: verDetalle | currency }}</td>
+					<td colspan="4">{{ verDetalle.importe.subtotal | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">IVA</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.iva | conversionMoneda: verDetalle | currency }}</td>
+					<td colspan="4">{{ verDetalle.importe.iva | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">Otros Tributos</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.otrosTributos | conversionMoneda: verDetalle | currency }}</td>
+					<td colspan="4">{{ verDetalle.importe.otrosTributos | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }}</td>
 				</tr>
 				<tr>
 					<td colspan="2">Total</td>
-					<td colspan="4">{{ moneda | formatCurrency }} {{ verDetalle.importe.total | conversionMoneda: verDetalle | currency }}</td>
+					<td colspan="4">{{ verDetalle.importe.total | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }}</td>
 				</tr>
 				<tr class="text-center">
 					<td colspan="6">
-						<span>Monto Gravado {{ moneda | formatCurrency }} {{ verDetalle.importe.gravado | conversionMoneda: verDetalle | currency }} | </span>
-						<span>Monto No Gravado {{ moneda | formatCurrency }} {{ verDetalle.importe.noGravado | conversionMoneda: verDetalle | currency }} | </span>
-						<span>Exento {{ moneda | formatCurrency }} {{ verDetalle.importe.exento | conversionMoneda: verDetalle | currency }} | </span>
+						<span>Monto Gravado {{ verDetalle.importe.gravado | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }} | </span>
+						<span>Monto No Gravado {{ verDetalle.importe.noGravado | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }} | </span>
+						<span>Exento {{ verDetalle.importe.exento | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }} | </span>
 						<span><b>Cotizaci&oacute;n Moneda U$s1 = ${{ verDetalle.cotiMoneda }}</b></span>
 					</td>
 				</tr>

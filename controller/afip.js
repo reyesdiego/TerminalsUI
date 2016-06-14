@@ -187,7 +187,6 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		};
 
 		$scope.cargaDatos = function(registro){
-			console.log('carga');
 			$scope.sumariaDetalle = {};
 			$scope.cargando = true;
 			$scope.panelMensaje = {
