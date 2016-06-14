@@ -94,10 +94,10 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 				sumaria: sumaria
 			};
 			$http.get(inserturl, { params: data })
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
 				})
 		};
 
@@ -125,15 +125,15 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		factory.getRegistroCSV = function(ruta, filtros, callback){
 			var inserturl = serverUrl + '/afip/' + ruta;
 			$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
-				.success(function(data, status, headers) {
-					var contentType = headers('Content-Type');
+				.then(function(response) {
+					var contentType = response.headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){
-						callback(data, 'OK');
+						callback(response.data, 'OK');
 					} else {
-						callback(data, 'ERROR');
+						callback(response.data, 'ERROR');
 					}
-				}).error(function(data){
-					callback(data, 'ERROR');
+				}, function(response){
+					callback(response.data, 'ERROR');
 				});
 		};
 
@@ -142,10 +142,10 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 			var canceler = HTTPCanceler.get(defer, namespace);
 			var inserturl = serverUrl + '/afip/' + ruta;
 			$http.get(inserturl, { params: formatService.formatearDatos(filtros), timeout: canceler.promise })
-				.success(function(data){
-					callback(data);
-				}).error(function(errorText, status){
-					if (status != 0){
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5){
 						var data={
 							status: 'ERROR'
 						};
@@ -159,16 +159,16 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 			var canceler = HTTPCanceler.get(defer, namespace);
 			var inserturl = serverUrl + '/afip/sumariaImpo/' + container;
 			$http.get(inserturl, {timeout: canceler.promise})
-				.success(function(data){
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0){
-						if (error == null){
-							error = {
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5){
+						if (response.data == null){
+							response.data = {
 								status: 'ERROR'
 							};
 						}
-						callback(error);
+						callback(response.data);
 					}
 				});
 		};
@@ -178,16 +178,16 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 			var canceler = HTTPCanceler.get(defer, namespace);
 			var inserturl = serverUrl + '/afip/sumariaExpo/' + container;
 			$http.get(inserturl, {timeout: canceler.promise})
-				.success(function(data){
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0){
-						if (error == null){
-							error = {
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5){
+						if (response.data == null){
+							response.data = {
 								status: 'ERROR'
 							};
 						}
-						callback(error);
+						callback(response.data);
 					}
 				});
 		};
@@ -195,44 +195,55 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		factory.getSumariaImpoBuques = function (callback) {
 			var inserturl = serverUrl + '/afip/registro1_sumimpomani/buques';
 			$http.get(inserturl)
-				.success(function (data) {
-					callback(data, false);
+				.then(function (response) {
+					callback(response.data, false);
+				}, function (response) {
+					callback(response.data, true);
 				})
-				.error(function (error) {
-					callback(error, true);
-				})
+
 		};
 
 		factory.getSumariaExpoBuques = function (callback) {
 			var inserturl = serverUrl + '/afip/registro1_sumexpomane/buques';
 			$http.get(inserturl)
-				.success(function (data) {
-					callback(data, false);
+				.then(function (response) {
+					callback(response.data, false);
+				}, function (response) {
+					callback(response.data, true);
 				})
-				.error(function (error) {
-					callback(error, true);
-				})
+
 		};
 
 		factory.getAfectacionBuques = function (callback) {
 			var inserturl = serverUrl + '/afip/registro1_afectacion/buques';
 			$http.get(inserturl)
-				.success(function (data) {
-					callback(data, false);
+				.then(function (response) {
+					callback(response.data, false);
+				}, function (response) {
+					callback(response.data, true);
 				})
-				.error(function (error) {
-					callback(error, true);
-				})
+
 		};
 
 		factory.getSolicitudBuques = function(callback){
 			var inserturl = serverUrl + '/afip/registro1_solicitud/buques';
 			$http.get(inserturl)
-				.success(function(data){
-					callback(data, false);
-				})
-				.error(function(error){
-					callback(error, true)
+				.then(function(response){
+					callback(response.data, false);
+				}, function(response){
+					callback(response.data, true)
+				});
+
+		};
+
+		factory.getManifiestoDetalle = function(manifiesto, callback){
+			//var insertUrl = serverUrl + '/alguna ruta';
+			var rutaMockeada = '/TerminalsUI/mocks/manifiestoDetalle.json';
+			$http.get(rutaMockeada)
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
 				})
 		};
 

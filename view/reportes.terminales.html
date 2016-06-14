@@ -1,0 +1,98 @@
+<div class="container col-lg-12">
+    <br>
+    <accordion-min heading="Buscar por">
+        <div class="col-lg-3 col-sm-6">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Tipo</span>
+                    <select class="form-control" ng-model="model.tipo">
+                        <option value="month">Mensual</option>
+                        <option value="year" ng-selected="true">Anual</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6" ng-show="model.tipo == 'month'">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Mes</span>
+                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM" datepicker-options="datepickerMonth" ng-model="model.fecha" is-open="openfechaInicio" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6" ng-show="model.tipo == 'year'">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Año</span>
+                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy" datepicker-options="datepickerYear" ng-model="model.fecha" is-open="openfechaInicio" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <div class="input-group">
+                <button class="btn btn-primary" ng-click="cargarReporte();"><span class="glyphicon glyphicon-search"></span> Cargar</button>
+            </div>
+        </div>
+    </accordion-min>
+
+    <div class="col-lg-12" ng-show="dataReporte.length == 0 && !model.loading">
+        <div-panel config-panel="mensajeResultado">
+            <span>{{ mensajeResultado.mensaje }}</span>
+        </div-panel>
+    </div>
+
+    <div ng-hide="model.loading || dataReporte.length == 0">
+        <div class="row col-lg-12">
+            <div class="form-group col-lg-8">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
+                    <span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                </div>
+            </div>
+            <div class="form-group col-lg-2 pull-right">
+                <div class="input-group">
+                    <button type="button" class="btn btn-primary" ng-click="descargarCSV()" ng-disabled="disableDown">
+                        <span ng-show="!disableDown"><span class="glyphicon glyphicon-download"></span> Descargar CSV</span>
+                        <span ng-show="disableDown"><img src="images/loadingChico.gif" height="20" width="20"> Procesando</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="col-lg-1 text-center">
+                        Código
+                    </th>
+                    <th class="col-lg-9">
+                        Descripción
+                    </th>
+                    <th class="col-lg-2 text-right">
+                        Total
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="tarifa in dataReporte | filter:search">
+                    <td class="text-center">{{ tarifa.code }}</td>
+                    <td>{{ tarifa.descripcion }}</td>
+                    <td class="text-right">U$S {{ tarifa.total | currency }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div ng-show="model.loading">
+        <img class="media-object center-block" src="images/loading.gif">
+    </div>
+
+</div>

@@ -1,0 +1,186 @@
+<div class="container col-lg-12">
+    <br>
+    <accordion-min heading="Filtrar por">
+        <div class="col-lg-3 col-sm-12">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Tipo</span>
+                    <select class="form-control" ng-model="modelDetalle.tipo">
+                        <option value="date" ng-selected="true">Diario</option>
+                        <option value="month">Mensual</option>
+                        <option value="year">Anual</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12" ng-show="modelDetalle.tipo == 'date'">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Día</span>
+                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" ng-model="model.fechaInicio" is-open="openfechaInicio" datepicker-options="datepickerOptions[0]" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-12" ng-show="modelDetalle.tipo == 'month'">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Mes</span>
+                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM" datepicker-options="datepickerOptions[1]" ng-model="model.fechaInicio" is-open="openfechaInicio" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6" ng-show="modelDetalle.tipo == 'year'">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Año</span>
+                    <input type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy" datepicker-options="datepickerOptions[2]" ng-model="model.fechaInicio" is-open="openfechaInicio" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+            <div class="form-group">
+                <button class="btn btn-primary" ng-click="cargaRates()">Buscar</button>
+            </div>
+        </div>
+    </accordion-min>
+    <div-cargando mostrar="cargando">
+        <div ng-hide="rates.length != undefined && rates.length > 0">
+            <div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
+        </div>
+        <div ng-show="rates.length != undefined && rates.length > 0">
+            <div class="checkbox col-lg-8 col-md-12">
+                <input type="checkbox" ng-click="cambioTasa()"> Usar tasa AGP
+            </div>
+            <div class="table-responsive col-lg-8 col-md-12">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th><a href="" ng-click="ordenarPor('terminal')">
+                            <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'terminal' && !reverse"></span>
+                            <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'terminal' && reverse"></span>
+                            Terminal
+                        </a></th>
+                        <th>C&oacute;digo</th>
+                        <th>Descripci&oacute;n</th>
+                        <th><a href="" ng-click="ordenarPor('ton')">
+                            <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'ton' && !reverse"></span>
+                            <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'ton' && reverse"></span>
+                            Toneladas
+                        </a></th>
+                        <th class="text-right" ng-hide="tasaAgp"><a href="" ng-click="ordenarPor('total')">
+                            <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'total' && !reverse"></span>
+                            <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'total' && reverse"></span>
+                            Tasa
+                        </a></th>
+                        <th class="text-right" ng-show="tasaAgp"><a href="" ng-click="ordenarPor('totalAgp')">
+                            <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'total' && !reverse"></span>
+                            <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'total' && reverse"></span>
+                            Tasa
+                        </a></th>
+                        <th class="text-right" ng-hide="tasaAgp"><a href="" ng-click="ordenarPor('totalPeso')">
+                            <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'totalPeso' && !reverse"></span>
+                            <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'totalPeso' && reverse"></span>
+                            Importe
+                        </a></th>
+                        <th class="text-right" ng-show="tasaAgp"><a href="" ng-click="ordenarPor('totalPesoAgp')">
+                            <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'totalPesoAgp' && !reverse"></span>
+                            <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'totalPesoAgp' && reverse"></span>
+                            Importe
+                        </a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="tasa in rates | orderBy : predicate : reverse">
+                        <td>{{ tasa.terminal }}</td>
+                        <td>{{ tasa.code }}</td>
+                        <td style="width: 200px">{{ tasa.descripcion }}</td>
+                        <td class="text-right">{{ tasa.ton | number: 2 }}</td>
+                        <td class="text-right" ng-hide="tasaAgp">U$S {{ tasa.total | currency }}</td>
+                        <td class="text-right" ng-show="tasaAgp">U$S {{ tasa.totalAgp | currency }}</td>
+                        <td class="text-right" ng-hide="tasaAgp">$ {{ tasa.totalPeso | currency }}</td>
+                        <td class="text-right" ng-show="tasaAgp">$ {{ tasa.totalPesoAgp | currency }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-right"><strong>Total</strong></td>
+                        <td class="text-right" ng-hide="tasaAgp">U$S {{ total | currency }}</td>
+                        <td class="text-right" ng-show="tasaAgp">U$S {{ totalAgp | currency }}</td>
+                        <td class="text-right" ng-hide="tasaAgp">$ {{ totalPeso | currency }}</td>
+                        <td class="text-right" ng-show="tasaAgp">$ {{ totalPesoAgp | currency }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-4 col-md-12 text-center center-block">
+                <dynamic-chart
+                        chart-object="chartTotalesPorTerminal"
+                        select="selectRow(selectedRow, id)"
+                        colors="barColors">
+                </dynamic-chart>
+            </div>
+            <div class="col-lg-12 table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-right">BACTSSA</th>
+                        <th class="text-right">TERMINAL4</th>
+                        <th class="text-right">TRP</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="text-right"><strong>Total</strong></td>
+                        <td ng-repeat="total in chartTotalesPorTerminal.data" class="text-right">$ {{ total[1] | currency }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-12" ng-show="mostrarGrafico">
+					<span>
+						<strong ng-show="modelDetalle.tipo == 'date'">Días hacia atrás:</strong>
+						<strong ng-show="modelDetalle.tipo == 'month'">Meses hacia atrás:</strong>
+						<strong ng-show="modelDetalle.tipo == 'year'">Años hacia atrás:</strong>
+						<input class="text-right" type="number" min="0" step="1" ng-model="modelDetalle.contarHaciaAtras">
+						<button class="btn btn-primary" ng-click="actualizarDetalle()">Actualizar</button>
+					</span>
+            </div>
+            <div class="col-lg-12 text-center" ng-hide="mostrarGrafico">
+                <img class="media-object center-block" src="images/loading.gif">
+            </div>
+            <div class="row" ng-show="mostrarGrafico">
+                <div class="col-lg-12 left table-responsive">
+                    <dynamic-chart
+                            chart-object="chartReporteTarifas"
+                            select="selectRow(selectedRow, id)">
+                    </dynamic-chart>
+                </div>
+            </div>
+            <div class="row col-lg-12" ng-show="verDetalleTerminal">
+                <div class="col-lg-6 col-md-12">
+                    <dynamic-chart
+                            chart-object="chartDetallePorTerminalFecha"
+                            select="selectRow(selectedRow, id)">
+                    </dynamic-chart>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <dynamic-chart
+                            chart-object="chartDetallePorTerminalPeriodo"
+                            select="selectRow(selectedRow, id)">
+                    </dynamic-chart>
+                </div>
+            </div>
+            <div class="row col-lg-12 text-right" ng-show="mostrarGrafico">
+                <button class="btn btn-success" ng-click="descargarPdf()"><span class="glyphicon glyphicon-download"></span> Descargar PDF</button>
+            </div>
+        </div>
+    </div-cargando>
+</div>

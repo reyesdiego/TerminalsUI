@@ -2,8 +2,8 @@
 	<div class="row col-lg-12 page-header">
 		<h1><img ng-src="images/afip.png" height="32" width="98" class="hidden-xs"> Registros A.F.I.P.</h1>
 	</div>
-	<tabset justified="true" class="hidden-print">
-		<tab ng-repeat="tab in tabs" heading="{{ tab.heading }}" active="tab.active" ui-sref="{{ tab.uisref }}" ng-click="cargaDatos(tab.uisref)" ng-show="tab.mostrar"></tab>
-	</tabset>
+	<uib-tabset justified="true" class="hidden-print">
+		<uib-tab ng-repeat="tab in tabs" heading="{{ tab.heading }}" active="tab.active" ui-sref="{{ tab.uisref }}" ng-click="cargaDatos(tab.uisref)" ng-show="tab.mostrar"></uib-tab>
+	</uib-tabset>
 	<div ui-view></div>
 </div>

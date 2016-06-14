@@ -49,7 +49,8 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		'fechaConGMT': true,
 		'carga': '',
 		'ontime': '',
-		'onlyTrains': false
+		'onlyTrains': false,
+		'size': ''
 	};
 
 	$scope.page = {
@@ -90,6 +91,8 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 				$scope.totalItems = data.totalCount;
 				$scope.tiempoConsulta = (data.time / 1000).toFixed(2); //La paso a segundos
 			} else {
+				$scope.gates = [];
+				$scope.totalItems = 0;
 				$scope.configPanel = {
 					tipo: 'panel-danger',
 					titulo: 'Gates',

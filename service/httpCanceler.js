@@ -43,7 +43,7 @@ myapp.service('HTTPCanceler', [ '$q', function($q) {
 			angular.forEach(promisesToReject[namespace], function(promises, promiseId) {
 				if (!canceler[namespace][promiseId]) return;
 				if ('default'!==callId && callId!=promiseId) return;
-				canceler[namespace][promiseId].resolve();
+				canceler[namespace][promiseId].resolve('cancelado por usuario');
 				inited[namespace][promiseId] = false;
 				// Reject namespace promises
 				angular.forEach(promises, function(defer) {

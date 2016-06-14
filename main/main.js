@@ -72,26 +72,122 @@ function in_array(needle, haystack, argStrict){
 var serverUrl = config.url();
 var socketUrl = config.socket();
 
-var myapp = angular.module('myapp', ['ui.router', 'mwl.calendar', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'angucomplete-alt', 'multi-select', 'angular-cache', 'ui.bootstrap.datetimepicker', 'cgNotify', 'btford.socket-io', 'ngAnimate']);
+var myapp = angular.module('myapp', ['ui.router', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngSanitize', 'ngCookies', 'multi-select', 'angular-cache', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
 
 myapp.constant('uiDatetimePickerConfig', {
 	dateFormat: 'yyyy-MM-dd HH:mm',
+	defaultTime: '00:00:00',
+	html5Types: {
+		date: 'yyyy-MM-dd',
+		'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
+		'month': 'yyyy-MM'
+	},
+	initialPicker: 'date',
+	reOpenDefault: false,
 	enableDate: true,
 	enableTime: true,
-	todayText: 'Hoy',
-	nowText: 'Ahora',
-	clearText: 'Borrar',
-	closeText: 'Listo',
-	dateText: 'Fecha',
-	timeText: 'Hora',
+	buttonBar: {
+		show: true,
+		now: {
+			show: true,
+			text: 'Ahora'
+		},
+		today: {
+			show: true,
+			text: 'Hoy'
+		},
+		clear: {
+			show: true,
+			text: 'Borrar'
+		},
+		date: {
+			show: true,
+			text: 'Fecha'
+		},
+		time: {
+			show: true,
+			text: 'Hora'
+		},
+		close: {
+			show: true,
+			text: 'Listo'
+		}
+	},
 	closeOnDateSelection: true,
+	closeOnTimeNow: true,
 	appendToBody: false,
-	showButtonBar: true
+	altInputFormats: [],
+	ngModelOptions: { },
+	saveAs: false,
+	readAs: false
 });
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+
+}]);
+
+//Configuración para interceptar respuestas http y tratar errores
+myapp.config(['$provide', '$httpProvider', function($provide, $httpProvider){
+
+	// register the interceptor as a service
+	$provide.factory('myHttpInterceptor', ['$rootScope', '$q',
+		function($rootScope, $q) {
+			return {
+				// optional method
+				'request': function(config) {
+					return config;
+				},
+				// optional method
+				'requestError': function(rejection) {
+					// do something on error
+
+					/*if (canRecover(rejection)) {
+					 return responseOrNewPromise
+					 }*/
+					return $q.reject(rejection);
+				},
+				// optional method
+				'response': function(response) {
+					// do something on success
+					return response;
+				},
+				// optional method
+				'responseError': function(rejection) {
+					//TODO config custom messages for http Error status
+					console.log(rejection);
+					/*if (rejection.status == 401){
+						if (rejection.config.url != configService.serverUrl + '/login'){
+							$rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+							var deferred = $q.defer();
+							var req = {
+								config: rejection.config,
+								deferred: deferred
+							};
+							$rootScope.requests401.push(req);
+
+							return deferred.promise;
+							//$state.transitionTo('login');
+						}
+					}
+
+					/*if (rejection.status == -1) rejection.data = { message: 'No se ha podido establecer comunicación con el servidor.', status: 'ERROR' };
+					// do something on error
+					/*if (canRecover(rejection)) {
+					 return responseOrNewPromise
+					 }*/
+					if (angular.isDefined(rejection.config.timeout)){
+						if (rejection.config.timeout.$$state.value == 'cancelado por el usuario'){
+							rejection.status = -5;
+						}
+					}
+					return $q.reject(rejection);
+				}
+			};
+		}]);
+
+	$httpProvider.interceptors.push('myHttpInterceptor');
 
 }]);
 
@@ -133,7 +229,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('matches', {
 			url: "/match",
-			templateUrl: "view/matchprices.html"
+			templateUrl: "view/pricelistEdit.html",
+			controller: 'matchPricesCtrl'
 		})
 		.state('control', {
 			url: "/control",
@@ -141,17 +238,58 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			controller: "controlCtrl"
 		})
 		.state('cfacturas', {
-			url: "/cfacturas",
-			templateUrl: "view/controlComprobantes.html"
+			url: "/controlComprobantes",
+			templateUrl: "view/controlComprobantes.html",
+			controller: 'controlComprobantesCtrl'
 		})
+			.state('cfacturas.tasas', {
+				url: '/tasas',
+				templateUrl: 'view/control.tasas.html',
+				controller: 'tasaCargasCtrl'
+			})
+			.state('cfacturas.correlatividad', {
+				url: '/correlatividad',
+				templateUrl: 'view/control.correlatividad.html',
+				controller: 'correlatividadCtrl'
+			})
+			.state('cfacturas.codigos', {
+				url: '/codigos',
+				templateUrl: 'view/control.codigos.html',
+				controller: 'codigosCtrl'
+			})
+			.state('cfacturas.revisar', {
+				url: '/revisar',
+				templateUrl: 'view/control.revisar.html'
+			})
+			.state('cfacturas.erroneos', {
+				url: '/erroneos',
+				templateUrl: 'view/control.erroneos.html'
+			})
+			.state('cfacturas.reenviar', {
+				url: '/reenviar',
+				templateUrl: 'view/control.reenviar.html'
+			})
 		.state('gates', {
 			url: "/gates",
 			templateUrl: "view/gates.html"
 		})
 		.state('cgates', {
 			url: '/controlGates',
-			templateUrl: 'view/gates.control.html'
+			templateUrl: 'view/gates.control.html',
+			controller: 'controlGatesCtrl'
 		})
+			.state('cgates.gates', {
+				url: '/gatesFaltantes',
+				templateUrl: 'view/comprobantesSinGates.html'
+			})
+			.state('cgates.invoices', {
+				url: '/comprobantesFaltantes',
+				templateUrl: 'view/gatesSinFacturacion.html'
+			})
+			.state('cgates.appointments', {
+				url: '/turnosFaltantes',
+				templateUrl: 'view/gatesSinTurnos.html'
+			})
 		.state('gates.invoices', {
 			url: "/contenedor=:contenedor",
 			templateUrl: "view/gates.invoices.html"
@@ -178,8 +316,29 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('reports', {
 			url: "/reportes",
-			templateUrl:"view/reportes.html"
+			templateUrl:"view/reportes.html",
+			controller: 'reportsCtrl'
 		})
+			.state('reports.tasas', {
+				url:'/tasas',
+				templateUrl: 'view/reportes.tasas.html',
+				controller: 'ratesCtrl'
+			})
+			.state('reports.tarifas', {
+				url: '/tarifas',
+				templateUrl: 'view/reportes.tarifas.html',
+				controller: 'reporteTarifasCtrl'
+			})
+			.state('reports.empresas', {
+				url: '/empresas',
+				templateUrl: 'view/reportes.empresas.html',
+				controller: 'facturacionPorEmpresaCtrl'
+			})
+			.state('reports.terminales', {
+				url: '/terminales',
+				templateUrl: 'view/reportes.terminales.html',
+				controller: 'tarifasTerminalesCtrl'
+			})
 		.state('afip', {
 			url: "/afip",
 			templateUrl: "view/afip.html"
@@ -281,10 +440,6 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/users",
 			templateUrl: "view/users.html"
 		})
-		.state('agenda', {
-			url: "/agendaTurnos",
-			templateUrl: 'view/turnosAgenda.html'
-		})
 		.state('access', {
 			url: "/controlAcceso",
 			templateUrl: 'view/controlAcceso.html'
@@ -302,8 +457,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			templateUrl: "view/liquidaciones.html"
 		})
 		.state('modificarTarifario', {
+			parent: 'matches',
 			url: "/editarTarifario",
-			templateUrl: "view/editPricelist.html"
+			templateUrl: "view/editPricelist.new.html"
+
 		})
 		.state('mturnos', {
 			url: "/controlTurnos",
@@ -316,7 +473,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 }]);
 
 myapp.config(['$provide', function ($provide) {
-	$provide.decorator('daypickerDirective', ['$delegate', function ($delegate) {
+	/*$provide.decorator('daypickerDirective', ['$delegate', function ($delegate) {
 		var directive = $delegate[0];
 		var compile = directive.compile;
 		directive.compile = function(tElement, tAttrs) {
@@ -327,8 +484,8 @@ myapp.config(['$provide', function ($provide) {
 			};
 		};
 		return $delegate;
-	}]);
-	$provide.decorator('datepickerPopupDirective', ['$delegate', function ($delegate) {
+	}]);*/
+	/*$provide.decorator('datepickerPopupDirective', ['$delegate', function ($delegate) {
 		var directive = $delegate[0];
 		var compile = directive.compile;
 		directive.compile = function(tElement, tAttrs) {
@@ -339,8 +496,8 @@ myapp.config(['$provide', function ($provide) {
 			};
 		};
 		return $delegate;
-	}]);
-	$provide.decorator('calendarConfig', ['$delegate', function ($delegate) {
+	}]);*/
+	/*$provide.decorator('calendarConfig', ['$delegate', function ($delegate) {
 		$delegate.titleFormats.week = 'Semana {week} del {year}';
 		return $delegate;
 	}]);
@@ -390,16 +547,16 @@ myapp.config(['$provide', function ($provide) {
 
 		}];
 		return $delegate;
-	}]);
+	}]);*/
 
 }]);
 
-myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
+/*myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
 	calendarConfigProvider.setI18nStrings({
 		eventsLabel: 'Turnos',
 		timeLabel: 'Hora'
 	});
-}]);
+}]);*/
 
 myapp.config(['$cookiesProvider', function($cookiesProvider){
 	var hoy = new Date();
@@ -407,20 +564,24 @@ myapp.config(['$cookiesProvider', function($cookiesProvider){
 	$cookiesProvider.defaults.expires = new Date(hoy.getFullYear(), hoy.getMonth()+1, hoy.getDate());
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', 'moment', '$cookies', 'appSocket', '$http',
-	function($rootScope, $state, loginService, authFactory, dialogs, $injector, moment, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', '$cookies', 'appSocket', '$http',
+	function($rootScope, $state, loginService, authFactory, dialogs, $injector, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
+
+		$rootScope.socket = appSocket;
+
+		$rootScope.socket.connect();
 
 		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
 		$rootScope.terminalEstilo = 'bootstrap.cerulean';
 
-		moment().format('YYYY-MM-DD');
+		/*moment().format('YYYY-MM-DD');
 		moment.locale('es');
 
 		moment.locale('es', {
 			week : {
 				dow : 7 // Domingo primer día de la semana
 			}
-		});
+		});*/
 
 		$rootScope.appointmentNotify = 0;
 		$rootScope.gateNotify = 0;
@@ -498,7 +659,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
 		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat'];
-		$rootScope.rutasSinTerminal = ['control', 'afip', 'reports', 'mat', 'access', 'users', 'cturnos'];
+		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos'];
 		$rootScope.$state = $state;
 		// Variables Globales de Paginacion
 		$rootScope.itemsPerPage = 15;
@@ -506,15 +667,16 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 
 		$rootScope.salir = function(){
+			$rootScope.socket.emit('logoff', loginService.getInfo().user);
 			authFactory.logout();
 			$rootScope.appointmentNotify = 0;
 			$rootScope.invoiceNotify = 0;
 			$rootScope.gateNotify = 0;
 			$rootScope.esUsuario = '';
+			$rootScope.$broadcast('logout');
 			$state.transitionTo('login');
 			$rootScope.setEstiloTerminal('BACTSSA');
 			$rootScope.filtroTerminal = '';
-			if (angular.isDefined($rootScope.appSocket)) $rootScope.appSocket.disconnect();
 		};
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
@@ -527,7 +689,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			}
 			if (!loginService.getStatus() && $cookies.get('restoreSesion') === 'true'){
 				event.preventDefault();
-				authFactory.login().then(function(){
+				authFactory.login().then(function(data){
+					$rootScope.socket.emit('login', data.user);
 					$rootScope.$broadcast('terminoLogin');
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');

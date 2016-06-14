@@ -35,6 +35,21 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 			});
 	};
 
+	factory.getMatchPricesCSV = function(datos, terminal, callback) {
+		var inserturl = serverUrl + '/matchPrices/' + terminal;
+		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			.success(function(data, status, headers){
+				var contentType = headers('Content-Type');
+				if (contentType.indexOf('text/csv') >= 0){
+					callback(data, 'OK');
+				} else {
+					callback(data, 'ERROR');
+				}
+			}).error(function(error){
+				callback(error);
+			})
+	};
+
 	//Se pasa la terminal al ser un método de caché
 	factory.getArrayMatches = function(terminal, callback){
 		var inserturl = serverUrl + '/matchPrices/price/' + terminal;

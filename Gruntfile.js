@@ -4,14 +4,14 @@ module.exports = function(grunt) {
 		concat: {
 			css: {
 				src: [
-					'css/angucomplete-alt.css',
 					'css/angular-multi-select.css',
 					'css/animation.css',
 					'css/dialogs.css',
 					'css/notificaciones.css',
 					'css/animate.css',
 					'css/ionicons.css',
-					'js/angular-notify/angular-notify.css'
+					'js/angular-notify/angular-notify.css',
+					'bower_components/ng-tags-input/ng-tags-input.css'
 				],
 				dest: 'build/css/aditional.css'
 			},
@@ -81,16 +81,6 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['bower_components/angular-bootstrap-calendar/dist/css/*.min.*'],
-						dest: 'build'
-					},
-					{
-						expand: true,
-						src: ['bower_components/angular-bootstrap-calendar/dist/js/*-tpls.min.*'],
-						dest: 'build'
-					},
-					{
-						expand: true,
 						src: ['bower_components/angular/angular-csp.css'],
 						dest: 'build'
 					},
@@ -106,12 +96,27 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
+						src: ['bower_components/angular-i18n/angular-locale_es-ar.js'],
+						dest: 'build'
+					},
+					{
+						expand: true,
 						src: ['bower_components/angular-sanitize/*.min.*'],
 						dest: 'build'
 					},
 					{
 						expand: true,
-						src: ['bower_components/angular-ui-bootstrap-bower/*-tpls.min.*'],
+						src: ['bower_components/angular-bootstrap/*-tpls.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-bootstrap/ui-bootstrap-csp.css'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/angular-bootstrap/uib/template/*'],
 						dest: 'build'
 					},
 					{
@@ -127,6 +132,11 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						src: ['bower_components/angular-socket-io/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/ng-tags-input/*.min.*'],
 						dest: 'build'
 					},
 					{

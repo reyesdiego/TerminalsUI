@@ -1,3 +1,7 @@
 .idea/
 .bowerrc
 includes/js/utils/*
+bower_components
+node_modules
+other
+build

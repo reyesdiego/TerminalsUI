@@ -12,11 +12,13 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, idLlamada);
 			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					data = ponerDescripcionComprobantes(data);
-					callback(factory.setearInterfaz(data));
-				}).error(function(error, status) {
-					if (status != 0) callback(error);
+				.then(function(response){
+					if (response.statusText == 'OK'){
+						var data = ponerDescripcionComprobantes(response.data);
+						callback(factory.setearInterfaz(data));
+					}
+				}, function(response) {
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
@@ -91,19 +93,19 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, idLlamada);
 			var inserturl = serverUrl + '/invoices/cashbox/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					if (data == null){
-						data = {
+				.then(function(response){
+					if (response.data == null){
+						response.data = {
 							status: 'ERROR',
 							data: []
 						}
 					}
-					data.data.sort(function(a,b){
+					response.data.data.sort(function(a,b){
 						return a - b;
 					});
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0) callback(error);
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
@@ -137,8 +139,9 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var inserturl = serverUrl + '/invoices/invoice/' + id;
 			$http.get(inserturl)
 				.success(function (data){
+					console.log(data);
 					data.data = setearInterfazComprobante(data.data);
-					data.data.transferencia = formatService.formatearFechaISOString(generalFunctions.idToDate(data.data._id));
+					data.data.transferencia = formatService.formatearFechaISOString(data.data.registrado_en);
 					callback(ponerUnidadDeMedida(ponerDescripcionComprobante(data.data)));
 				}).error(function(error){
 					errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
@@ -176,7 +179,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				.success(function (data){
 					data.data = filtrarComentarios(data.data);
 					data.data.forEach(function(comment){
-						comment.fecha = formatService.formatearFechaISOString(generalFunctions.idToDate(comment._id));
+						comment.fecha = formatService.formatearFechaISOString(comment.registrado_en);
 					});
 					callback(data);
 				})

@@ -2,8 +2,8 @@
  * Created by artiom on 16/07/15.
  */
 
-myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$filter', 'generalCache', '$modal', 'loginService',
-	function (invoiceFactory, downloadFactory, $q, $filter, generalCache, $modal, loginService) {
+myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$filter', 'generalCache', '$uibModal', 'loginService',
+	function (invoiceFactory, downloadFactory, $q, $filter, generalCache, $uibModal, loginService) {
 
 		var estadosComprobantes = generalCache.get('estados');
 
@@ -284,7 +284,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 			estado = comprobante.interfazEstado;
 			invoiceFactory.getTrackInvoice(comprobante._id, function(dataTrack){
 				if (dataTrack.status == 'OK'){
-					var modalInstance = $modal.open({
+					var modalInstance = $uibModal.open({
 						templateUrl: 'view/trackingInvoice.html',
 						controller: 'trackingInvoiceCtrl',
 						backdrop: 'static',

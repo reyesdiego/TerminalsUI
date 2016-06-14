@@ -93,6 +93,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$rootScope.cargandoCache = true;
 		authFactory.userEnter($scope.email, $scope.password, $scope.sesion)
 			.then(function(result) {
+				$rootScope.socket.emit('login', result.user);
 				$rootScope.cargandoCache = false;
 				if (in_array('tarifario', $rootScope.rutas)) {
 					$state.transitionTo('tarifario');

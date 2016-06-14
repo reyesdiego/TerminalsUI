@@ -175,6 +175,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				hoy: new Date(),
 				resultados: $scope.resultados,
 				totalTerminal: $scope.totalTerminal,
+				terminal: loginService.getFiltro(),
 				charts: [
 					{filename: $scope.chartReporteEmpresas.id, image: $scope.chartReporteEmpresas.image, h: $scope.chartReporteEmpresas.height, w: $scope.chartReporteEmpresas.width},
 					{filename: $scope.chartPorcentaje.id, image: $scope.chartPorcentaje.image, h: $scope.chartPorcentaje.height, w: $scope.chartPorcentaje.width}
@@ -199,7 +200,33 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 					anchor.remove(); // Clean it up afterwards
 					//window.open(fileURL);
 				} else {
-					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
+					dialogs.error('Reporte empresas', 'Se ha producido un error al exportar el reporte a PDF');
+				}
+			})
+		};
+
+		$scope.descargarCsv = function(all){
+			var alterModel = angular.copy($scope.model);
+			alterModel.output = 'csv';
+			if (all){
+				alterModel.clientes = [];
+				alterModel.top = '';
+			}
+			controlPanelFactory.getFacturacionEmpresasCSV(alterModel, function(data, status){
+				if (status == 'OK'){
+					var anchor = angular.element('<a/>');
+					anchor.css({display: 'none'}); // Make sure it's not visible
+					angular.element(document.body).append(anchor); // Attach to document
+
+					anchor.attr({
+						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+						target: '_blank',
+						download: 'Facturacion_empresas.csv'
+					})[0].click();
+
+					anchor.remove(); // Clean it up afterwards
+				} else {
+					dialogs.error('Reporte empresas', 'Se ha producido un error al descargar el reporte.');
 				}
 			})
 		}

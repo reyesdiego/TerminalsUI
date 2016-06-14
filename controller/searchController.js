@@ -8,10 +8,23 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.status = {
 			open: true
 		};
-		$scope.minDate = new Date(2015,0,1);
-		$scope.maxDate = new Date();
-		$scope.maxDateD = new Date();
-		$scope.maxDateH = $scope.maxDate + 1;
+		var hoy = new Date();
+		$scope.dateOptions = {
+			formatYear: 'yyyy',
+			maxDate: hoy,
+			startingDay: 1
+		};
+		$scope.dateHasta = {
+			formatYear: 'yyyy',
+			maxDate: new Date(hoy.getTime() + 24*60*60*1000),
+			startingDay: 1
+		};
+		$scope.dateOptionsLiquidaciones = {
+			formatYear: 'yyyy',
+			maxDate: hoy,
+			minDate: new Date(2015,0,1),
+			startingDay: 1
+		};
 		$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 		$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
@@ -34,7 +47,9 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			impo: true,
 			expo: false
 		};
-		$scope.datepickerMode = 'month';
+		//$scope.datepickerMode = 'month';
+
+		$scope.mostrarViajes = false;
 
 		$scope.$on('notificacionDetalle', function(event, data){
 			var fechaAuxInicio, fechaAuxFin, fechaAux;
@@ -101,11 +116,11 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			}
 			$scope.filtrado('estado', contenido);
 		};
-		$scope.buqueSelected = function(selected){
-			if (angular.isDefined(selected)){
-				$scope.model.buqueNombre = selected.originalObject.buque;
-				var i = 0;
-				selected.originalObject.viajes.forEach(function(viaje){
+		$scope.buqueSelected = function(item, model, label, event){
+			var i = 0;
+			if (model != ''){
+				$scope.mostrarViajes = true;
+				item.viajes.forEach(function(viaje){
 					var objetoViaje = {
 						'id': i,
 						'viaje': viaje.viaje
@@ -113,28 +128,9 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 					$scope.listaViajes.push(objetoViaje);
 					i++;
 				});
-				$scope.filtrado('buque', selected.title);
-			}
-		};
-
-		$scope.viajeSelected = function(selected){
-			if (angular.isDefined(selected)){
-				$scope.model.viaje = selected.title;
-				$scope.filtrado('viaje', selected.title);
-			}
-		};
-
-		$scope.clientSelected = function(selected){
-			if (angular.isDefined(selected) && selected.title != $scope.model.razonSocial){
-				$scope.model.razonSocial = selected.title;
-				$scope.filtrado('razonSocial', selected.title);
-			}
-		};
-
-		$scope.trenSelected = function(selected){
-			if (angular.isDefined(selected)){
-				$scope.model.tren = selected.title;
-				$scope.filtrado('tren', selected.title);
+				$scope.filtrado('buqueNombre', $scope.model.buqueNombre);
+			} else {
+				$scope.mostrarViajes = false;
 			}
 		};
 
@@ -171,6 +167,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 					});
 				} else {
 					$scope.model.viaje = '';
+					$scope.mostrarViajes = false;
 				}
 			}
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
@@ -200,6 +197,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.mostrarHTML = false;
 
 		$scope.comprobanteTurno = function(contenedor, idTurno){
+			console.log('aca?');
 			$scope.loadingState = true;
 			turnosFactory.comprobanteTurno(contenedor, idTurno, function(data, status){
 				if (status == 'OK'){

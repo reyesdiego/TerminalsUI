@@ -2,8 +2,8 @@
  * Created by artiom on 03/09/14.
  */
 
-myapp.controller('trackingInvoiceCtrl', ['$scope', '$modalInstance', 'estado', 'track', 'states', 'resend',
-	function($scope, $modalInstance, estado, track, states, resend) {
+myapp.controller('trackingInvoiceCtrl', ['$scope', '$uibModalInstance', 'estado', 'track', 'states', 'resend',
+	function($scope, $uibModalInstance, estado, track, states, resend) {
 		$scope.states = states;
 		$scope.resend = resend;
 
@@ -87,13 +87,13 @@ myapp.controller('trackingInvoiceCtrl', ['$scope', '$modalInstance', 'estado', '
 				if ($scope.interfazModal.nuevoEstado._id == $scope.estado._id){
 					commentData.title = $scope.interfazModal.estado
 				}
-				$modalInstance.close(commentData);
+				$uibModalInstance.close(commentData);
 			} else {
 				$scope.cancelar();
 			}
 		};
 
 		$scope.cancelar = function () {
-			$modalInstance.dismiss('cancel');
+			$uibModalInstance.dismiss('cancel');
 		};
 	}]);

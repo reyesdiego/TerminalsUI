@@ -26,6 +26,17 @@ class PDF extends FPDF
 		$this->SetX(50);
 		$this->Cell(110,10,utf8_decode('Reporte de Facturación a Empresas'),0,0,'C');
 
+        switch ($this->terminal){
+            case 'BACTSSA':
+        	    $this->Image('imagenes/logo_bactssa.jpg', 160, 8, 40);
+        		break;
+        	case 'TERMINAL4':
+        		$this->Image('imagenes/logo_terminal4.jpg', 160, 8, 40);
+        		break;
+        	case 'TRP':
+        		$this->Image('imagenes/logo_trp.jpg', 160, 8, 40);
+        		break;
+        }
 		//Salto de línea
 		$this->Ln(15);
 	}
@@ -61,6 +72,7 @@ $hoy = date('d/m/Y', strtotime($data['hoy']));
 crear_archivos_graficos($data['charts'], $id);
 
 $pdf = new PDF();
+$pdf->setTerminal($data['terminal']);
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 11);
@@ -69,24 +81,31 @@ $pdf->Ln();
 $pdf->Cell(190, 8, utf8_decode('Período controlado: Del ' . $desde . ' hasta el ' . $hasta), 0, "L");
 $pdf->Ln(10);
 
-$pdf->SetFont('Arial', 'B', 9);
-$pdf->Cell(75, 5, utf8_decode('Razón Social'), 1, 0);
-$pdf->Cell(27, 5, 'Comprobantes', 1, 0, "R");
-$pdf->Cell(23, 5, 'Porcentaje', 1, 0, "R");
-$pdf->Cell(32, 5, 'Promedio', 1, 0, "R");
-$pdf->Cell(33, 5, 'Total', 1, 0, "R");
+$pdf->SetFont('Arial', 'B', 8);
+$pdf->Cell(20, 5, 'CUIT', 1, 0);
+$pdf->Cell(60, 5, utf8_decode('Razón Social'), 1, 0);
+$pdf->Cell(15, 5, 'Comp.', 1, 0, "R");
+$pdf->Cell(15, 5, '%', 1, 0, "R");
+$pdf->Cell(25, 5, 'Promedio', 1, 0, "R");
+$pdf->Cell(25, 5, utf8_decode('Máxima'), 1, 0, "R");
+$pdf->Cell(30, 5, 'Total', 1, 0, "R");
 $pdf->Ln();
 
-$pdf->SetFont('Arial', '', 8);
+$pdf->SetFont('Arial', '', 7);
 foreach ($data['resultados'] as $resultado) {
 	$porcentaje = $resultado['total'] * 100 / $data['totalTerminal'];
-	$pdf->Cell(75, 5, utf8_decode($resultado['razon']), 1, 0);
-	$pdf->Cell(27, 5, $resultado['cnt'], 1, 0, "R");
-	$pdf->Cell(23, 5, number_format($porcentaje, 2) . " %", 1, 0, "R");
-	$pdf->Cell(32, 5, "$ " . number_format($resultado['avg'], 2), 1, 0, "R");
-	$pdf->Cell(33, 5, "S " . number_format($resultado['total'], 2), 1, 0, "R");
+	$pdf->Cell(20, 5, $resultado['cuit'], 1, 0);
+	$pdf->Cell(60, 5, utf8_decode($resultado['razon']), 1, 0);
+	$pdf->Cell(15, 5, $resultado['cnt'], 1, 0, "R");
+	$pdf->Cell(15, 5, number_format($porcentaje, 2) . " %", 1, 0, "R");
+	$pdf->Cell(25, 5, "$ " . number_format($resultado['avg'], 2), 1, 0, "R");
+	$pdf->Cell(25, 5, "$ " . number_format($resultado['max'], 2), 1, 0, "R");
+	$pdf->Cell(30, 5, "$ " . number_format($resultado['total'], 2), 1, 0, "R");
 	$pdf->Ln();
 }
+$pdf->Cell(135, 5, utf8_decode('Total facturado por la terminal en el período'), 1, 0, "R");
+$pdf->Cell(55, 5, "$ " . number_format($data['totalTerminal'], 2), 1, 0, "R");
+$pdf->Ln();
 
 $h = getChartHeigth($data['charts'][0], 120);
 $pdf->CheckPageBreak($h);
