@@ -12,21 +12,21 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			var canceler = HTTPCanceler.get(defer, namespace, 'getByDay');
 			var inserturl = serverUrl + '/invoices/counts';
 			$http.get(inserturl, { params: formatService.formatearDatos(dia), timeout: canceler.promise })
-				.success(function(data){
-					if (data.status === 'OK'){
+				.then(function(response){
+					if (response.statusText === 'OK'){
 						var invoicesCount = 0, totalCount = 0;
-						for (var i = 0, len=data.data.length; i< len; i++){
-							invoicesCount += data.data[i].cnt;
-							totalCount += data.data[i].total;
+						for (var i = 0, len=response.data.data.length; i< len; i++){
+							invoicesCount += response.data.data[i].cnt;
+							totalCount += response.data.data[i].total;
 						}
-						data.data.invoicesCount = invoicesCount;
-						data.data.totalCount = totalCount;
-						data.invoicesCount = invoicesCount;
-						data.totalCount = totalCount;
+						response.data.data.invoicesCount = invoicesCount;
+						response.data.data.totalCount = totalCount;
+						response.data.invoicesCount = invoicesCount;
+						response.data.totalCount = totalCount;
 					}
-					callback(data);
-				}).error(function(errorText, status){
-					if (status != 0) errorFactory.raiseError(errorText, inserturl, 'errorGetByDay', 'Error al cargar el conteo diario de comprobantes.');
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorGetByDay', 'Error al cargar el conteo diario de comprobantes.');
 				});
 		};
 
@@ -35,28 +35,28 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			var canceler = HTTPCanceler.get(defer, namespace, 'getTasas');
 			var inserturl = serverUrl + '/invoices/ratesTotal/' + datos.moneda + '/';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
+				.then(function(response){
 					var result = {
 						"ratesCount": 0,
 						"ratesTotal": 0,
 						"dataGraf": []
 					};
-					if (data.data.length){
+					if (response.data.data.length){
 						var cnt = 0;
 						var facturado = 0;
-						for (var i = 0, len=data.data.length; i< len; i++){
-							cnt += data.data[i].cnt;
-							facturado += data.data[i].total;
+						for (var i = 0, len=response.data.data.length; i< len; i++){
+							cnt += response.data.data[i].cnt;
+							facturado += response.data.data[i].total;
 						}
 						result = {
 							"ratesCount": cnt,
 							"ratesTotal": facturado,
-							"dataGraf": data.data
+							"dataGraf": response.data.data
 						}
 					}
 					callback(result);
-				}).error(function(errorText, status){
-					if (status != 0) errorFactory.raiseError(errorText, inserturl, 'errorTasas', 'Error al cargar total de facturado por tasa a las cargas.');
+				}, function(response){
+					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorTasas', 'Error al cargar total de facturado por tasa a las cargas.');
 				});
 		};
 
@@ -71,11 +71,11 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			};
 			if (datos.contenedor != undefined && datos.contenedor != ''){
 				$http.get(inserturl, { params: formatService.formatearDatos(queryString), timeout: canceler.promise})
-					.success(function (data){
-						data = ponerDescripcionYTasas(data);
-						callback(data);
-					}).error(function(errorText, status){
-						if (status != 0) callback(errorText);
+					.then(function (response){
+						response.data = ponerDescripcionYTasas(response.data);
+						callback(response.data);
+					}, function(response){
+						if (response.status != -5) callback(response.data);
 					});
 			}
 		};
@@ -85,10 +85,10 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			var canceler = HTTPCanceler.get(defer, namespace, 'getFacturasMeses');
 			var inserturl = serverUrl + '/invoices/countsByMonth' ;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText, status){
-					if (status != 0) errorFactory.raiseError(errorText, inserturl, 'errorFacturasMeses', 'Error al cargar gráfico de facturado por mes.');
+				.then(function (response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorFacturasMeses', 'Error al cargar gráfico de facturado por mes.');
 				});
 		};
 
@@ -97,10 +97,10 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			var canceler = HTTPCanceler.get(defer, namespace, 'getGatesMeses');
 			var inserturl = serverUrl + '/gates/ByMonth';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function (data){
-					callback(data.data);
-				}).error(function(errorText, status){
-					if (status != 0) errorFactory.raiseError(errorText, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
+				.then(function (response){
+					callback(response.data.data);
+				}, function(response){
+					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
 				});
 		};
 
@@ -109,10 +109,10 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			var canceler = HTTPCanceler.get(defer, namespace, 'getTurnosMeses');
 			var inserturl = serverUrl + '/appointments/ByMonth';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText, status){
-					if (status != 0) errorFactory.raiseError(errorText, inserturl, 'turnosMeses', 'Error al cargar gráfico de cantidad de turnos por mes.');
+				.then(function (response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'turnosMeses', 'Error al cargar gráfico de cantidad de turnos por mes.');
 				});
 		};
 
@@ -122,10 +122,10 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			var canceler = HTTPCanceler.get(defer, namespace, 'getFacturadoPorDia');
 			var inserturl = serverUrl + '/invoices/countsByDate';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText, status){
-					if (status != 0) errorFactory.raiseError(errorText, inserturl, 'errorFacturadoPorDia', 'Error al cargar monto facturado por día.');
+				.then(function (response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorFacturadoPorDia', 'Error al cargar monto facturado por día.');
 				});
 		};
 
@@ -134,10 +134,10 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			var canceler = HTTPCanceler.get(defer, namespace, 'getGatesDia');
 			var inserturl = serverUrl + '/gates/ByHour';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function (data){
-					callback(data.data);
-				}).error(function(errorText, status){
-					if (status != 0) errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
+				.then(function (response){
+					callback(response.data.data);
+				}, function(response){
+					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
 				});
 		};
 
@@ -146,10 +146,10 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			var canceler = HTTPCanceler.get(defer, namespace, 'getTurnosDia');
 			var inserturl = serverUrl + '/appointments/ByHour';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText, status){
-					if (status != 0) errorFactory.raiseError(errorText, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de turnos por día.');
+				.then(function (response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de turnos por día.');
 				});
 		};
 
@@ -162,11 +162,11 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 		factory.getClients = function(terminal, callback){
 			var inserturl = serverUrl + '/invoices/' + terminal + '/clients';
 			$http.get(inserturl)
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText){
-					if (errorText == null) errorText = {status: 'ERROR'};
-					callback(errorText);
+				.then(function (response){
+					callback(response.data);
+				}, function(response){
+					if (response.data == null) response.data = {status: 'ERROR'};
+					callback(response.data);
 				});
 		};
 
@@ -174,46 +174,46 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 		factory.getShips = function(callback){
 			var inserturl = serverUrl + '/invoices/'+loginService.getFiltro()+'/ships';
 			$http.get(inserturl)
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText){
-					errorFactory.raiseError(errorText, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
+				.success(function (response){
+					callback(response.data);
+				}, function(response){
+					errorFactory.raiseError(response.data, inserturl, 'errorListaAutoCompletar', 'Error al cargar listado de buques.');
 				});
 		};
 
 		factory.getFacturacionEmpresas = function(datos, callback){
 			var inserturl = serverUrl + '/invoices/totalClient';
 			$http.get(inserturl, {params: formatService.formatearDatos(datos)})
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
+				});
 		};
 
 		factory.getTopFacturacionEmpresas = function(datos, callback){
 			var inserturl = serverUrl + '/invoices/totalClientTop';
 			$http.get(inserturl, {params: formatService.formatearDatos(datos)})
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
+				});
 		};
 
 		factory.getFacturacionEmpresasCSV = function(datos, callback){
 			var inserturl = serverUrl + '/invoices/totalClient';
 			$http.get(inserturl, {params: formatService.formatearDatos(datos)})
-				.success(function(data, status, headers){
-					var contentType = headers('Content-Type');
+				.then(function(response){
+					var contentType = response.headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){
-						callback(data, 'OK');
+						callback(response.data, 'OK');
 					} else {
-						callback(data, 'ERROR');
+						callback(response.data, 'ERROR');
 					}
-				}).error(function(error){
-					callback(error);
-				})
+				}, function(response){
+					callback(response.data, 'ERROR');
+				});
 		};
 
 		function ponerDescripcionYTasas(data) {
