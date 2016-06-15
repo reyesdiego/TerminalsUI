@@ -27,11 +27,11 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		factory.getDescriptionItem = function(terminal, callback){
 			var inserturl = serverUrl + '/matchPrices/matches/' + terminal;
 			$http.get(inserturl)
-				.success(function(data) {
-					callback(data);
-				}).error(function(errorText) {
-					if (errorText == null) errorText = {status: 'ERROR'};
-					callback(errorText);
+				.then(function(response) {
+					callback(response.data);
+				}, function(response) {
+					if (response.data == null) response.data = {status: 'ERROR'};
+					callback(response.data);
 				});
 		};
 
@@ -41,11 +41,11 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, 'containersSinTasaCargas');
 			var inserturl = serverUrl + '/invoices/containersNoRates/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data) {
-					callback(data);
-				})
-				.error(function(error, status) {
-					if (status != 0) callback(error)
+				.then(function(response) {
+					callback(response.data);
+				}, function(response) {
+					if (response.data == null) response.data = { status: 'ERROR'};
+					if (response.status != -5) callback(response.data)
 				});
 		};
 
@@ -56,20 +56,20 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, 'invoicesNoMatches');
 			var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function (data) {
-					if (data == null) {
-						data = {
+				.then(function (response) {
+					if (response.data == null) {
+						response.data = {
 							status: 'ERROR',
 							data: []
 						}
 					}
-					if (data.data == null) data.data = [];
+					if (response.data.data == null) response.data.data = [];
 
-					data = ponerDescripcionComprobantes(data);
-					callback(factory.setearInterfaz(data));
+					response.data = ponerDescripcionComprobantes(response.data);
+					callback(factory.setearInterfaz(response.data));
 
-				}).error(function(errorText, status) {
-					if (status != 0) callback(errorText);
+				}, function(response) {
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
@@ -81,10 +81,10 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var param = formatService.formatearDatos(datos);
 			param.x = socketIoRegister;
 			$http.get(inserturl, { params: param, timeout: canceler.promise })
-				.success(function (data) {
-					callback(data);
-				}).error(function(error, status) {
-					if (status != 0) callback(error);
+				.then(function (response) {
+					callback(response.data);
+				}, function(response) {
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
@@ -114,11 +114,11 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		factory.getShipTrips = function(terminal, callback){
 			var inserturl = serverUrl + '/invoices/' + terminal + '/shipTrips';
 			$http.get(inserturl)
-				.success(function(data){
-					callback(data);
-				}).error(function(errorText){
-					if(errorText == null) errorText = {status: 'ERROR'};
-					callback(errorText);
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if(response.data == null) response.data = {status: 'ERROR'};
+					callback(response.data);
 				});
 		};
 
@@ -128,24 +128,23 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, 'shipContainers');
 			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					callback(data);
-				}).error(function(errorText, status){
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
 					//errorFactory.raiseError(errorText, inserturl, 'errorDatos', 'Error al traer los contenedores para el buque y el viaje seleccionado.');
-					if (status != 0) callback(errorText);
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
 		factory.getInvoiceById = function(id, callback){
 			var inserturl = serverUrl + '/invoices/invoice/' + id;
 			$http.get(inserturl)
-				.success(function (data){
-					console.log(data);
-					data.data = setearInterfazComprobante(data.data);
-					data.data.transferencia = formatService.formatearFechaISOString(data.data.registrado_en);
-					callback(ponerUnidadDeMedida(ponerDescripcionComprobante(data.data)));
-				}).error(function(error){
-					errorFactory.raiseError(error, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
+				.then(function (response){
+					response.data.data = setearInterfazComprobante(response.data.data);
+					response.data.data.transferencia = formatService.formatearFechaISOString(response.data.data.registrado_en);
+					callback(ponerUnidadDeMedida(ponerDescripcionComprobante(response.data.data)));
+				}, function(response){
+					errorFactory.raiseError(response.data, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
 				});
 		};
 
@@ -156,10 +155,10 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				url: inserturl,
 				data: { estado: estado },
 				headers: {token: loginService.getToken() }
-			}).success(function (data){
-				callback(data, 'OK');
-			}).error(function(errorText){
-				callback(errorText, 'ERROR');
+			}).then(function (response){
+				callback(response.data, 'OK');
+			}, function(response){
+				callback(response.data, 'ERROR');
 				//errorFactory.raiseError(errorText, inserturl, 'errorTrack', 'Error al cambiar el estado para el comprobante ' + invoiceId);
 			});
 		};
@@ -167,36 +166,34 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 		factory.postCommentInvoice = function(data, callback){
 			var inserturl = serverUrl + '/comments/comment';
 			$http.post(inserturl, data)
-				.success(function (data){
-					callback(data);
-				}).error(function(errorText){
-					errorFactory.raiseError(errorText, inserturl, 'errorTrack', 'Error al añadir comentario al comprobante.');
+				.then(function (response){
+					callback(response.data);
+				}, function(response){
+					errorFactory.raiseError(response.data, inserturl, 'errorTrack', 'Error al añadir comentario al comprobante.');
 				});
 		};
 
 		factory.getTrackInvoice = function(invoiceId, callback){
 			var inserturl = serverUrl + '/comments/' + invoiceId;
 			$http.get(inserturl)
-				.success(function (data){
-					data.data = filtrarComentarios(data.data);
-					data.data.forEach(function(comment){
+				.then(function (response){
+					response.data.data = filtrarComentarios(response.data.data);
+					response.data.data.forEach(function(comment){
 						comment.fecha = formatService.formatearFechaISOString(comment.registrado_en);
 					});
-					callback(data);
-				})
-				.error(function(error){
-					callback(error);
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
 				});
 		};
 
 		factory.setResendInvoice = function(resend, id, callback){
 			var inserturl = serverUrl + '/invoices/invoice/' + loginService.getFiltro() + '/' + id;
 			$http.put(inserturl, resend)
-				.success(function(data){
-					callback(data);
-				})
-				.error(function(error){
-					callback(error)
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data)
 				});
 		};
 
@@ -206,11 +203,10 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, 'ratesInvoices');
 			var inserturl = serverUrl + '/invoices/rates';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					callback(data);
-				})
-				.error(function(error, status){
-					if (status != 0) callback(error)
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data)
 				});
 		};
 
@@ -220,26 +216,25 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 			var canceler = HTTPCanceler.get(defer, namespace, 'ratesDetail');
 			var inserturl = serverUrl + '/invoices/rates/' + datos.tipo;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					callback(data);
-				})
-				.error(function(error, status){
-					if (status != 0) callback(error)
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data)
 				});
 		};
 
 		factory.getCSV = function(datos, callback){
 			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/down';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
-				.success(function(data, status, headers) {
-					var contentType = headers('Content-Type');
+				.then(function(response) {
+					var contentType = response.headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){
-						callback(data, 'OK');
+						callback(response.data, 'OK');
 					} else {
-						callback(data, 'ERROR');
+						callback(response.data, 'ERROR');
 					}
-				}).error(function(data){
-					callback(data, 'ERROR');
+				}, function(response){
+					callback(response.data, 'ERROR');
 				});
 		};
 
