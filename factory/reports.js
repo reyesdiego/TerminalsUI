@@ -8,35 +8,36 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 	factory.getTerminalesCSV = function(datos, callback) {
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/byRates';
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
-				.success(function(data, status, headers){
-					var contentType = headers('Content-Type');
+				.then(function(response){
+					var contentType = response.headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){
-						callback(data, 'OK');
+						callback(response.data, 'OK');
 					} else {
-						callback(data, 'ERROR');
+						callback(response.data, 'ERROR');
 					}
-				}).error(function(error){
-					callback(error);
+				}, function(response){
+					callback(response.data, 'ERROR');
 				});
 	};
 
 	factory.getReporteTerminales = function(param, callback){
 		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/byRates';
 		$http.get(inserturl, {params: formatService.formatearDatos(param)})
-				.success(function(response){
-					callback(response);
-				}).error(function(error){
-					callback(error);
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
 				});
 	};
 
 	factory.getReporteTarifas = function(fecha, tarifas, callback){
 		var inserturl = serverUrl + '/invoices/byRates?fechaInicio=' + formatService.formatearFechaISOString(fecha.fechaInicio) + '&fechaFin=' + formatService.formatearFechaISOString(fecha.fechaFin);
 		$http.post(inserturl, tarifas)
-			.success(function (response) {
-				callback(response);
-			}).error(function(errorText) {
+			.then(function (response) {
+				callback(response.data);
+			}, function(response) {
 				dialogs.error('Error', 'Error al añadir el Match en la base');
+				//TODO ver que pasa aca
 			});
 	};
 

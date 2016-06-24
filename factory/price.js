@@ -7,10 +7,10 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 	factory.getAllRates = function(callback){
 		var inserturl = serverUrl + '/prices/rates/1/all';
 		$http.get(inserturl)
-			.success(function (data){
-				callback(data, false);
-			}).error(function(error){
-				callback(error, true);
+			.then(function (response){
+				callback(response.data, false);
+			}, function(response){
+				callback(response.data, true);
 			});
 	};
 
@@ -18,86 +18,87 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 		var inserturl = serverUrl + '/prices/' + terminal;
 		if (datos){ inserturl = inserturl + '?onlyRates=true' }
 		$http.get(inserturl)
-			.success(function (data){
-				callback(data);
-			}).error(function(error){
-				callback(error);
+			.then(function (response){
+				callback(response.data);
+			}, function(response){
+				callback(response.data);
 			});
 	};
 
 	factory.getMatchPrices = function(datos, terminal, callback) {
 		var inserturl = serverUrl + '/matchPrices/' + terminal;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
-			.success(function (data){
-				callback(data);
-			}).error(function(error){
-				callback(error);
+			.then(function (response){
+				callback(response.data);
+			}, function(response){
+				callback(response.data);
 			});
 	};
 
 	factory.getMatchPricesCSV = function(datos, terminal, callback) {
 		var inserturl = serverUrl + '/matchPrices/' + terminal;
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
-			.success(function(data, status, headers){
-				var contentType = headers('Content-Type');
+			.then(function(response){
+				var contentType = response.headers('Content-Type');
 				if (contentType.indexOf('text/csv') >= 0){
-					callback(data, 'OK');
+					callback(response.data, 'OK');
 				} else {
-					callback(data, 'ERROR');
+					callback(response.data, 'ERROR');
 				}
-			}).error(function(error){
-				callback(error);
-			})
+			}, function(response){
+				callback(response.data, 'ERROR');
+			});
 	};
 
 	//Se pasa la terminal al ser un método de caché
 	factory.getArrayMatches = function(terminal, callback){
 		var inserturl = serverUrl + '/matchPrices/price/' + terminal;
 		$http.get(inserturl)
-			.success(function (data){
-				callback(data);
-			}).error(function(error){
-				console.log(error);
+			.then(function (response){
+				callback(response.data);
+			}, function(response){
+				console.log(response.data);
+				//TODO verificar que pasa acá
 			});
 	};
 
 	factory.addMatchPrice = function (data, callback) {
 		var inserturl = serverUrl + '/matchPrices/matchprice';
 		$http.post(inserturl, data)
-			.success(function (response) {
-				callback(response);
-			}).error(function(error) {
-				callback(error);
+			.then(function (response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 
 	factory.noMatches = function (data, callback){
 		var inserturl = serverUrl + '/matchPrices/noMatches/' + loginService.getFiltro();
 		$http.get(inserturl, { params: formatService.formatearDatos(data) })
-			.success(function (data){
-				callback(data);
-			}).error(function(error){
-				callback(error);
+			.then(function (response){
+				callback(response.data);
+			}, function(response){
+				callback(response.data);
 			});
 	};
 
 	factory.addPrice = function (data, callback) {
 		var inserturl = serverUrl + '/prices/price';
 		$http.post(inserturl, data)
-			.success(function(response) {
-				callback(response);
-			}).error(function(error) {
-				callback(error);
+			.then(function(response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 
 	factory.getPriceById = function(id, callback){
 		var inserturl = serverUrl + '/prices/' + id + '/' + loginService.getFiltro();
 		$http.get(inserturl)
-			.success(function(response) {
-				callback(response);
-			}).error(function(error) {
-				callback(error);
+			.then(function(response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 
@@ -107,30 +108,30 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', functio
 		});
 		var inserturl = serverUrl + '/prices/price/' + id;
 		$http.put(inserturl, formData)
-			.success(function(response) {
-				callback(response);
-			}).error(function(error) {
-				callback(error);
+			.then(function(response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 
 	factory.getUnitTypes = function(callback){
 		var inserturl = serverUrl + '/unitTypes';
 		$http.get(inserturl)
-			.success(function(response) {
-				callback(response);
-			}).error(function(errorText) {
-				callback(errorText);
+			.then(function(response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 
 	factory.removePrice = function(id, callback){
 		var inserturl = serverUrl + '/prices/price/' + id;
 		$http.delete(inserturl)
-			.success(function(response) {
-				callback(response);
-			}).error(function(error) {
-				callback(error);
+			.then(function(response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 

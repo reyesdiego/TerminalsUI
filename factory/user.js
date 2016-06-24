@@ -8,21 +8,21 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 	factory.login = function(datos, callback){
 		var inserturl = serverUrl + '/login';
 		$http.post(inserturl, datos)
-			.success(function(data) {
-				callback(data, false);
-			}).error(function(error) {
-				if (angular.isDefined(error) && error != null){
+			.then(function(response) {
+				callback(response.data, false);
+			}, function(response) {
+				if (angular.isDefined(response.data) && response.data != null){
 					// ACC-0001 usuario o contraseña incorrecto
 					// ACC-0001 usuario o contraseñas vacío
 					// ACC-0003 no entro al correo
 					// ACC-0004 no habilitado en el sistema
-					callback(error, true);
+					callback(response.data, true);
 				} else {
-					error = {
+					response.data = {
 						code: 'ACC-0020',
 						message: 'Se ha producido un error de comunicación con el servidor.'
 					};
-					callback(error, true);
+					callback(response.data, true);
 				}
 			});
 	};
@@ -30,40 +30,40 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 	factory.cambiarContraseña = function(formData, callback){
 		var inserturl = serverUrl + '/agp/password';
 		$http.post(inserturl, formData)
-			.success(function(data) {
-				callback(data);
-			}).error(function(err) {
-				callback(err);
+			.then(function(response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 
 	factory.newUser = function(formData, callback){
 		var inserturl = serverUrl + '/agp/register';
 		$http.post(inserturl, formData)
-			.success(function(data) {
-				callback(data);
-			}).error(function(err) {
-				callback(err);
+			.then(function(response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 
 	factory.resetPassword = function(mail, callback){
 		var inserturl = serverUrl + '/agp/resetPassword/' + mail;
 		$http.post(inserturl)
-			.success(function(data) {
-				callback(data);
-			}).error(function(err) {
-				callback(err);
+			.then(function(response) {
+				callback(response.data);
+			}, function(response) {
+				callback(response.data);
 			});
 	};
 
 	factory.validateUser = function(salt, callback){
 		var inserturl = serverUrl + '/agp/account/token';
 		$http.get(inserturl, { params: formatService.formatearDatos(salt) })
-			.success(function(data){
-				callback(data);
-			}).error(function(data){
-				callback(data);
+			.then(function(response){
+				callback(response.data);
+			}, function(response){
+				callback(response.data);
 			});
 	};
 

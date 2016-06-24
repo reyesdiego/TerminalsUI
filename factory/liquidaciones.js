@@ -10,44 +10,44 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		factory.getNotPayedCsv = function(datos, callback){
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() +'/download';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
-				.success(function(data, status, headers){
-					var contentType = headers('Content-Type');
+				.then(function(response){
+					var contentType = response.headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){
-						callback(data, 'OK');
+						callback(response.data, 'OK');
 					} else {
-						callback(data, 'ERROR');
+						callback(response.data, 'ERROR');
 					}
-				}).error(function(error){
-					callback(error);
-				})
+				}, function(response){
+					callback(response.data, 'ERROR');
+				});
 		};
 
 		factory.getPriceDollar = function(callback){
 			var inserturl = serverUrl + '/afip/dollars';
 			$http.get(inserturl)
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
+				});
 		};
 
 		factory.saveMat = function(data, update, callback){
 			var inserturl = serverUrl + '/mats/mat';
 			if (update){
 				$http.put(inserturl, data)
-					.success(function(data){
-						callback(data);
-					}).error(function(error){
-						callback(error);
-					})
+					.then(function(response){
+						callback(response.data);
+					}, function(response){
+						callback(response.data);
+					});
 			} else {
 				$http.post(inserturl, data)
-					.success(function(data){
-						callback(data);
-					}).error(function(error){
-						callback(error);
-					})
+					.then(function(response){
+						callback(response.data);
+					}, function(response){
+						callback(response.data);
+					});
 			}
 		};
 
@@ -55,22 +55,22 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var inserturl = serverUrl + '/mats';
 			//var inserturl = 'mocks/mat.json'; //mocked route
 			$http.get(inserturl)
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
+				});
 		};
 
 		factory.getMatFacturado = function(year, callback){
 			// var inserturl = serverUrl + '/alguna ruta en donde se use el year;
 			var inserturl = 'mocks/matFacturado.json'; //mocked route
 			$http.get(inserturl)
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
+				});
 		};
 
 		factory.getComprobantesLiquidar = function(page, datos, callback){
@@ -88,19 +88,19 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			}
 			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					data.data = factory.estadoAdapter(data.data);
-					callback(invoiceFactory.setearInterfaz(data));
-				}).error(function(error, status){
-					if (status != 0){
-						if (error == null){
-							error = {
+				.then(function(response){
+					response.data.data = factory.estadoAdapter(response.data.data);
+					callback(invoiceFactory.setearInterfaz(response.data));
+				}, function(response){
+					if (response.status != -5){
+						if (response.data == null){
+							response.data = {
 								status: 'ERROR'
 							}
 						}
-						callback(error);
+						callback(response.data);
 					}
-				})
+				});
 		};
 
 		factory.estadoAdapter = function(comprobantes){
@@ -118,11 +118,11 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var canceler = HTTPCanceler.get(defer, namespace, 'preliquidaciones');
 			var inserturl = serverUrl + '/paying/prePayments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0) callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data);
+				});
 		};
 
 		factory.getPayments = function(page, datos, callback){
@@ -131,12 +131,12 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			var canceler = HTTPCanceler.get(defer, namespace, 'liquidaciones');
 			var inserturl = serverUrl + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					data.data = factory.setTotalesLiquidacion(data.data);
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0) callback(error);
-				})
+				.then(function(response){
+					response.data.data = factory.setTotalesLiquidacion(response.data.data);
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data);
+				});
 		};
 
 		factory.setTotalesLiquidacion = function(detallesLiquidaciones){
@@ -164,55 +164,55 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			}
 			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0){
-						if (error == null){
-							error = {
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5){
+						if (response.data == null){
+							response.data = {
 								status: 'ERROR',
 								message: 'Se ha producido un error al procesar la liquidación.'
 							}
 						}
-						callback(error);
+						callback(response.data);
 					}
-				})
+				});
 		};
 
 		//No se debería poder cancelar
 		factory.setPrePayment = function(callback){
 			var inserturl = serverUrl + '/paying/prePayment';
 			$http.post(inserturl, { terminal: loginService.getFiltro() })
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					if (error == null){
-						error = {
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.data == null){
+						response.data = {
 							status: 'ERROR'
 						}
 					}
-					callback(error);
-				})
+					callback(response.data);
+				});
 		};
 
 		factory.setPayment = function(preNumber, callback){
 			var inserturl = serverUrl + '/paying/payment';
 			$http.put(inserturl, {terminal: loginService.getFiltro(), preNumber: preNumber})
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
+				});
 		};
 
 		factory.deletePrePayment = function(paymentId, callback){
 			var inserturl = serverUrl + '/paying/prePayment/' + paymentId;
 			$http.delete(inserturl)
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					callback(response.data);
+				});
 		};
 
 		factory.addToPrePayment = function(preLiquidacion, datos, callback){
@@ -221,32 +221,32 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				paymentId: preLiquidacion
 			};
 			$http.put(inserturl, liquidacion,{ params: formatService.formatearDatos(datos) })
-				.success(function(data){
-					callback(data);
-				}).error(function(error){
-					if (error == null){
-						error = {
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.data == null){
+						response.data = {
 							status: 'ERROR'
 						}
-					}
-					callback(error);
-				})
+					};
+					callback(response.data);
+				});
 		};
 
 		factory.getPrePayment = function(datos, callback){
 			var inserturl = serverUrl + '/paying/getPrePayment/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
-				.success(function(data){
-					data.data = factory.setDescriptionTasas(data.data);
-					callback(data);
-				}).error(function(error){
-					if (error == null){
-						error = {
+				.then(function(response){
+					response.data.data = factory.setDescriptionTasas(response.data.data);
+					callback(response.data);
+				}, function(response){
+					if (response.data == null){
+						response.data = {
 							status: 'ERROR'
 						}
 					}
-					callback(error);
-				})
+					callback(response.data);
+				});
 		};
 
 		factory.setDescriptionTasas = function(detallesLiquidacion){

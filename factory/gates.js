@@ -13,10 +13,10 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			var canceler = HTTPCanceler.get(defer, namespace, 'getGates');
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0) callback(error);
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
@@ -26,11 +26,11 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			var canceler = HTTPCanceler.get(defer, namespace, 'gatesSinTurnos');
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingAppointments';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.success(function(data){
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0) callback(error);
-				})
+				.then(function(response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data);
+				});
 		};
 
 		factory.getMissingGates = function(callback){
@@ -38,10 +38,10 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingGates');
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingGates';
 			$http.get(inserturl, {timeout: canceler.promise })
-				.success(function (data){
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0) callback(error);
+				.then(function (response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
@@ -50,23 +50,23 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingInvoices');
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingInvoices';
 			$http.get(inserturl, { timeout: canceler.promise })
-				.success(function (data){
-					callback(data);
-				}).error(function(error, status){
-					if (status != 0) callback(error);
+				.then(function (response){
+					callback(response.data);
+				}, function(response){
+					if (response.status != -5) callback(response.data);
 				});
 		};
 
 		factory.getTrains = function(terminal, callback){
 			var inserturl = serverUrl + '/gates/' + terminal + '/trains';
 			$http.get(inserturl)
-				.success(function(data){
-					data.data = formatTrains(data.data);
-					callback(data);
-				}).error(function(errorText){
-					if (errorText == null) errorText = {status: 'ERROR'};
-					callback(errorText);
-				})
+				.then(function(response){
+					response.data.data = formatTrains(response.data.data);
+					callback(response.data);
+				}, function(response){
+					if (response.data == null) response.data = {status: 'ERROR'};
+					callback(response.data);
+				});
 		};
 
 		function formatTrains (trains){

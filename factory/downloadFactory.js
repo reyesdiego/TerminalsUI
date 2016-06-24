@@ -11,13 +11,15 @@ myapp.factory('downloadFactory', ['$http', '$filter', function($http){
 			url: 'conversorPDF/' + route + '.php',
 			responseType : 'arraybuffer',
 			data: data
-		}).success(function(data, status, headers) {
-			var contentType = headers('Content-Type');
+		}).then(function(response) {
+			var contentType = response.headers('Content-Type');
 			if (contentType.indexOf('application/pdf') >= 0){
-				callback(data, 'OK');
+				callback(response.data, 'OK');
 			} else {
-				callback(data, 'ERROR');
+				callback(response.data, 'ERROR');
 			}
+		}, function(response){
+			callback(response.data, 'ERROR')
 		});
 	};
 

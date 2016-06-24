@@ -8,10 +8,10 @@ myapp.factory('statesFactory', ['$http', function($http){
 	factory.getStatesType = function(callback){
 		var inserturl = serverUrl + '/states';
 		$http.get(inserturl)
-			.success(function (data){
-				callback(data);
-			}).error(function(errorText){
-				callback(errorText);
+			.then(function (response){
+				callback(response.data);
+			}, function(response){
+				callback(response.data);
 			});
 	};
 
