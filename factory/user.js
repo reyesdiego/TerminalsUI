@@ -11,7 +11,7 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 			.then(function(response) {
 				callback(response.data, false);
 			}, function(response) {
-				if (angular.isDefined(response.data) && response.data != null){
+				if (angular.isDefined(response.data.data) && response.data.data != null){
 					// ACC-0001 usuario o contraseña incorrecto
 					// ACC-0001 usuario o contraseñas vacío
 					// ACC-0003 no entro al correo
