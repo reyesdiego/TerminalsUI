@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'cacheFactory', '$state',
-	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, cacheFactory, $state) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'cacheFactory', '$state', 'focus',
+	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, cacheFactory, $state, focus) {
 		'use strict';
 
 		//Array con los tipos de tarifas para establecer filtros
@@ -36,8 +36,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.flagGuardado = true;
 		$scope.flagCambios = false;
 
-		$scope.nuevoConcepto = false;
-
 		$scope.pricelist = [];
 		$scope.filteredPrices = [];
 		$scope.pricelistAgp = [];
@@ -50,7 +48,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.search = "";
 
 		$scope.esRequerido = true;
-		$scope.flagNuevoConcepto = true;
 		$scope.unidad = "CONTAINER";
 		$scope.moneda = "PES";
 
@@ -184,9 +181,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		};
 
 		$scope.abrirNuevoConcepto = function(tipo){
-			$scope.nuevoConcepto = true;
 			$scope.esRequerido = true;
-			$scope.flagNuevoConcepto = true;
 			if (!(tipo == 'editar')){
 				$scope.newPrice = {
 					code: '',
@@ -212,7 +207,8 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					from: new Date(),
 					currency: 'DOL',
 					price: ''
-				}
+				};
+				focus('focusMe');
 			}
 		};
 
@@ -263,14 +259,17 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 							}
 						})
 					})
-
 				}
 			}
 		};
 
 		$scope.enableEdition = function(){
-			if ($scope.acceso == 'terminal'){
-				return $scope.newPrice.terminal == loginService.getFiltro();
+			if ($scope.flagEditando){
+				if ($scope.acceso == 'terminal'){
+					return $scope.newPrice.terminal == loginService.getFiltro();
+				} else {
+					return true;
+				}
 			} else {
 				return true;
 			}
@@ -309,6 +308,9 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				tarifa.matches = $scope.nuevoMatch;
 			}
 			$scope.newPrice = angular.copy(tarifa);
+			$scope.newPrice.topPrices.forEach(function(price){
+				price.from = new Date(price.from);
+			});
 			$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
 
 			$scope.abrirNuevoConcepto('editar');

@@ -64,7 +64,7 @@
                                 <tr ng-repeat="price in newPrice.topPrices">
                                     <td class="col-lg-4 text-center">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="price.from" is-open="openFechaTarifa" ng-disabled="!enableEdition()" ng-required="true"/>
+                                            <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="price.from" is-open="openFechaTarifa" ng-disabled="!enableEdition()" ng-required="true" clear-text="Borrar" close-text="Listo" current-text="Hoy" style="background-color: #ffffff"/>
                                             <span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openFechaTarifa = !openFechaTarifa;" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-calendar"></span></button></span>
                                         </div>
                                     </td>
@@ -75,7 +75,8 @@
                                         </select>
                                     </td>
                                     <td class="col-lg-4 text-center">
-                                        <input type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="true" ng-disabled="!enableEdition()">
+                                        <input ng-show="!$last" type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="true" ng-disabled="!enableEdition()">
+                                        <input ng-show="$last" type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="true" ng-disabled="!enableEdition()" focus-on="focusMe">
                                     </td>
                                     <td class="col-lg-1 text-center">
                                         <button type="button" ng-click="removeTopPrice($index)" class="btn btn-danger" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-remove"></span></button>
@@ -84,7 +85,7 @@
                                 <tr>
                                     <td class="col-lg-4 text-center">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="newTopPrice.from" is-open="openNewFrom" ng-disabled="!enableEdition()"/>
+                                            <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="newTopPrice.from" is-open="openNewFrom" ng-disabled="!enableEdition()" clear-text="Borrar" close-text="Listo" current-text="Hoy" style="background-color: #ffffff"/>
                                             <span class="input-group-btn"><button class="btn btn-default" ng-click="openDate($event); openNewFrom = !openNewFrom;" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-calendar"></span></button></span>
                                         </div>
                                     </td>
@@ -95,10 +96,10 @@
                                         </select>
                                     </td>
                                     <td class="col-lg-4 text-center">
-                                        <input type="text" class="form-control" ng-model="newTopPrice.price" placeholder="Ingresar precio" ng-disabled="!enableEdition()">
+                                        <input type="text" class="form-control" ng-model="newTopPrice.price" placeholder="Ingresar precio" ng-disabled="!enableEdition()" ng-change="addTopPrice()">
                                     </td>
                                     <td class="col-lg-1 text-center">
-                                        <button type="button"  ng-click="addTopPrice()" class="btn btn-primary" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-check"></span></button>
+                                        <!--<button type="button" ng-click="addTopPrice()" class="btn btn-primary" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-check"></span></button>-->
                                     </td>
                                 </tr>
                                 </tbody>
