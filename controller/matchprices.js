@@ -24,7 +24,13 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			code: '',
 			unit: '',
 			topPrices:[],
-			terminal: ''
+			terminal: '',
+			matches: [{
+				terminal: loginService.getInfo().terminal,
+				match: [],
+				_idPrice: '',
+				code: ''
+			}]
 		};
 
 		$scope.newMatches = {
@@ -187,8 +193,17 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					code: '',
 					unit: '',
 					topPrices: [],
-					terminal: ''
-				}
+					terminal: '',
+					matches: [{
+						terminal: loginService.getInfo().terminal,
+						match: [],
+						_idPrice: '',
+						code: ''
+					}]
+				};
+				$scope.newMatches = {
+					array: []
+				};
 			}
 			$scope.flagEditando = (tipo == 'editar');
 			$state.transitionTo('modificarTarifario');
@@ -247,12 +262,31 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 						$scope.newPrice.unit = String($scope.newPrice.unit);
 						priceFactory.addPrice($scope.newPrice, function(nuevoPrecio){
 							if (nuevoPrecio.status == 'OK'){
-								if ($scope.newMatches.array.length > 0){
+								$scope.newPrice.matches = [{
+									terminal: loginService.getInfo().terminal,
+									match: [],
+									_idPrice: nuevoPrecio.data._id,
+									code: $scope.newPrice.code
+								}];
+								if ($scope.acceso == 'terminal'){
+									//Si es una nueva tarifa de la terminal, tiene que tener asociado su mismo código,
+									//por lo tanto lo busco y si no está lo agrego antes de mandar a guardar los matches
+									var encontrado = false;
+									$scope.newMatches.array.forEach(function(match){
+										encontrado = (match.text == $scope.newPrice.code);
+									});
+									if (!encontrado){
+										$scope.newMatches.array.push({ text: $scope.newPrice.code })
+									}
 									saveMatchPrices();
 								} else {
-									dialogs.notify('Tarifacio', 'Los cambios se han guardado exitosamente.');
-									$scope.prepararDatos();
-									$state.transitionTo('matches');
+									if ($scope.newMatches.array.length > 0){
+										saveMatchPrices();
+									} else {
+										dialogs.notify('Tarifacio', 'Los cambios se han guardado exitosamente.');
+										$scope.prepararDatos();
+										$state.transitionTo('matches');
+									}
 								}
 							} else {
 								dialogs.error('Asociar', 'Se ha producido un error al agregar el nuevo valor. ' + nuevoPrecio.data);
@@ -278,7 +312,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		function saveMatchPrices (){
 			var array= [];
 			$scope.newPrice.matches[0].match = $scope.newMatches.array.map(function(matchCode){
-				return matchCode.text;
+					return matchCode.text;
 			});
 			array.push($scope.newPrice.matches[0]);
 			priceFactory.addMatchPrice(array, function(data){
@@ -298,14 +332,14 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			$scope.posicionTarifa = $scope.pricelist.indexOf(tarifa);
 
 			if (tarifa.matches == null || tarifa.matches.length === 0) {
-				$scope.nuevoMatch = [{
+				tarifa.matches = [{
 					terminal: loginService.getInfo().terminal,
 					match: [],
 					_idPrice: tarifa._id,
 					code: tarifa.code
 				}];
-
-				tarifa.matches = $scope.nuevoMatch;
+			} else {
+				tarifa.matches[0]._idPrice = tarifa._id
 			}
 			$scope.newPrice = angular.copy(tarifa);
 			$scope.newPrice.topPrices.forEach(function(price){
@@ -322,14 +356,14 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 			//Comparo que con los cambios hechos, no coincida el código con otra tarifa de la lista
 			var listaSinCodigo = $scope.pricelist.slice();
-			listaSinCodigo.splice($scope.posicionTarifa, 1);
+			if ($scope.flagEditando) listaSinCodigo.splice($scope.posicionTarifa, 1);
 			listaSinCodigo.forEach(function(tarifa){
-				if ($scope.codigo == tarifa.code){
+				if ($scope.newPrice.code == tarifa.code){
 					flagCodigo = true;
 				}
 				if (tarifa.matches != null && tarifa.matches.length > 0){
 					tarifa.matches[0].match.forEach(function(codigo){
-						if (codigo == $scope.codigo){
+						if (codigo == $scope.newPrice.code){
 							flagCodigo = true;
 						}
 					})
