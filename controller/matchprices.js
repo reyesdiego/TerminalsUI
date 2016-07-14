@@ -108,6 +108,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					$scope.servicios = [];
 					$scope.codigosConMatch = [];
 					$scope.propiosTerminal = [];
+					$scope.matchesTerminal = [];
 					//Cargo todos los códigos ya asociados de la terminal para control
 					$scope.pricelist.forEach(function(price){
 						var propioTerminal = false;
@@ -182,6 +183,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		//Verifica que un codigo no se encuentre ya asociado antes de agregarlo
 		$scope.checkMatch = function(matchCode){
+			//TODO chequear si es posible que asignen a una tarifa, su mismo código como asociado
 			matchCode.text = matchCode.text.toUpperCase();
 			return (!$scope.matchesTerminal.contains(matchCode.text))
 		};
@@ -244,13 +246,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 						$scope.newPrice.unit = String($scope.newPrice.unit);
 						priceFactory.savePriceChanges($scope.newPrice, $scope.newPrice._id, function(data){
 							if (data.status == 'OK'){
-								if ($scope.newMatches.array.length > 0){
-									saveMatchPrices();
-								} else {
-									dialogs.notify('Tarifacio', 'Los cambios se han guardado exitosamente.');
-									$scope.prepararDatos();
-									$state.transitionTo('matches');
-								}
+								saveMatchPrices();
 							} else {
 								dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
 							}
@@ -278,16 +274,8 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 									if (!encontrado){
 										$scope.newMatches.array.push({ text: $scope.newPrice.code })
 									}
-									saveMatchPrices();
-								} else {
-									if ($scope.newMatches.array.length > 0){
-										saveMatchPrices();
-									} else {
-										dialogs.notify('Tarifacio', 'Los cambios se han guardado exitosamente.');
-										$scope.prepararDatos();
-										$state.transitionTo('matches');
-									}
 								}
+								saveMatchPrices();
 							} else {
 								dialogs.error('Asociar', 'Se ha producido un error al agregar el nuevo valor. ' + nuevoPrecio.data);
 							}
@@ -329,7 +317,12 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		//Carga la tarifa completa antes de poder editarla
 		$scope.editarTarifa = function(tarifa){
-			$scope.posicionTarifa = $scope.pricelist.indexOf(tarifa);
+
+			var indice = 0;
+			$scope.pricelist.forEach(function(price){
+				if (price.code == tarifa.code) $scope.posicionTarifa = indice;
+				indice++;
+			});
 
 			if (tarifa.matches == null || tarifa.matches.length === 0) {
 				tarifa.matches = [{

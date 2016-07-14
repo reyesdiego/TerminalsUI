@@ -75,7 +75,7 @@
                             </td>
                             <td class="col-lg-2" style="text-align: right">
 								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="acceso=='terminal'">
-									<a title="Eliminar" href ng-click="borrar(price, codigo)">{{ codigo }}</a>
+									{{ codigo }}
 									<span ng-show="!$last">, </span>
 								</span>
 								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="acceso=='agp'">
