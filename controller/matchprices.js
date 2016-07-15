@@ -339,7 +339,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				price.from = new Date(price.from);
 			});
 			$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
-
 			$scope.abrirNuevoConcepto('editar');
 		};
 

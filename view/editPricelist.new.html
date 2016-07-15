@@ -70,8 +70,8 @@
                                     </td>
                                     <td class="col-lg-3 text-center">
                                         <select class="form-control" ng-model="price.currency" ng-disabled="!enableEdition()">
-                                            <option value="DOL" ng-selected="true">U$S</option>
-                                            <option value="PES">$ARG</option>
+                                            <option value="DOL" ng-selected="price.currency == 'DOL'">U$S</option>
+                                            <option value="PES" ng-selected="price.currency == 'PES'">$ARG</option>
                                         </select>
                                     </td>
                                     <td class="col-lg-4 text-center">
