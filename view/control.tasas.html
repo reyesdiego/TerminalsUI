@@ -14,8 +14,8 @@
                         <span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
                     </div>
                     <br>
-					<span ng-repeat="tasa in resultado | filter: search">
-						<div style="width: auto; float:left; text-align:center" ng-show="tasa.contenedor != ''" ><a href ng-class="{mark: (model.contenedor == tasa.contenedor)}" ng-click="verContenedor(tasa.contenedor)"> {{ tasa.contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
+					<span ng-repeat="contenedor in resultado | filter: search">
+						<div style="width: auto; float:left; text-align:center" ng-show="contenedor != ''" ><a href ng-class="{mark: (model.contenedor == contenedor)}" ng-click="verContenedor(contenedor)"> {{ contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
                 </div>
             </div-panel>

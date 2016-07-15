@@ -109,10 +109,12 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.$broadcast('checkAutoComplete');
 		invoiceFactory.getContainersSinTasaCargas($scope.model, function(data){
 			if (data.status == "OK"){
+				console.log(data);
 				$scope.totalContenedores = data.totalCount;
-				data.data.forEach(function(contenedor){
+				$scope.resultado = data.data;
+				/*data.data.forEach(function(contenedor){
 					$scope.resultado.push(contenedor.contenedor);
-				});
+				});*/
 			} else {
 				$scope.hayError = true;
 				$scope.mensajeResultado = {
