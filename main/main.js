@@ -177,6 +177,12 @@ myapp.config(['$provide', '$httpProvider', function($provide, $httpProvider){
 					/*if (canRecover(rejection)) {
 					 return responseOrNewPromise
 					 }*/
+					if (rejection.data == null){
+						rejection.data = {
+							status: 'ERROR',
+							message: 'Fallo de comunicación con el servidor'
+						};
+					}
 					if (angular.isDefined(rejection.config.timeout)){
 						if (rejection.config.timeout.$$state.value == 'cancelado por el usuario'){
 							rejection.status = -5;
