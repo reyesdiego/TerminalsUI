@@ -38,7 +38,6 @@ myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope
 				$scope.viewsStates[view].used = true;
 				break;
 			case 'codigos':
-				console.log('hola');
 				$scope.viewsStates[view].model = model;
 				$scope.viewsStates[view].codigosSinAsociar = data1;
 				$scope.viewsStates[view].comprobantesRotos = data2;
@@ -46,7 +45,6 @@ myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope
 				$scope.viewsStates[view].used = true;
 				break;
 		}
-		console.log($scope.viewsStates);
 	});
 
 }]);
@@ -597,7 +595,6 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 	};
 
 	$scope.$on('$destroy', function(){
-		console.log('aca estamos');
 		$scope.$emit('updateView', 'codigos', $scope.model, $scope.codigosSinAsociar, $scope.comprobantesRotos, $scope.totalItems);
 		//invoiceFactory.cancelRequest();
 	});
