@@ -20,13 +20,32 @@ myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope
 			used: false,
 			model:{},
 			resultado: []
+		},
+		codigos: {
+			used: false,
+			model: {},
+			codigosSinAsociar: [],
+			comprobantesRotos: [],
+			totalItems: 0
 		}
 	};
 
-	$scope.$on('updateView', function(ev, view, model, result){
-		$scope.viewsStates[view].model = model;
-		$scope.viewsStates[view].resultado = result;
-		$scope.viewsStates[view].used = true;
+	$scope.$on('updateView', function(ev, view, model, data1, data2, data3){
+		switch (view){
+			case 'tasas':
+				$scope.viewsStates[view].model = model;
+				$scope.viewsStates[view].resultado = data1;
+				$scope.viewsStates[view].used = true;
+				break;
+			case 'codigos':
+				console.log('hola');
+				$scope.viewsStates[view].model = model;
+				$scope.viewsStates[view].codigosSinAsociar = data1;
+				$scope.viewsStates[view].comprobantesRotos = data2;
+				$scope.viewsStates[view].totalItems = data3;
+				$scope.viewsStates[view].used = true;
+				break;
+		}
 		console.log($scope.viewsStates);
 	});
 
@@ -160,11 +179,11 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		controlTasaCargas();
 	});
 
-	$scope.$on('destroy', function(){
+	/*$scope.$on('$destroy', function(){
 		invoiceFactory.cancelRequest();
 		turnosFactory.cancelRequest();
 		//Agregar las que falten
-	});
+	});*/
 
 }]);
 
@@ -577,9 +596,18 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		});
 	};
 
-	$scope.$on('destroy', function(){
-		invoiceFactory.cancelRequest();
+	$scope.$on('$destroy', function(){
+		console.log('aca estamos');
+		$scope.$emit('updateView', 'codigos', $scope.model, $scope.codigosSinAsociar, $scope.comprobantesRotos, $scope.totalItems);
+		//invoiceFactory.cancelRequest();
 	});
+
+	if ($scope.viewsStates.codigos.used){
+		$scope.model = $scope.viewsStates.codigos.model;
+		$scope.codigosSinAsociar = $scope.viewsStates.codigos.codigosSinAsociar;
+		$scope.comprobantesRotos = $scope.viewsStates.codigos.comprobantesRotos;
+		$scope.totalItems = $scope.viewsStates.codigos.totalItems;
+	}
 
 }]);
 
@@ -717,8 +745,8 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		};
 
 
-		$scope.$on('destroy', function(){
-			invoiceFactory.cancelRequest();
+		$scope.$on('$destroy', function(){
+			//invoiceFactory.cancelRequest();
 		});
 
 	}]);
