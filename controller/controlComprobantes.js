@@ -7,13 +7,28 @@ myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope
 	$state.transitionTo('cfacturas.tasas');
 
 	$scope.tabs = [
-		{name: 'Sin Tasa a las cargas', ref: 'reports.tasas', active: true},
+		{name: 'Sin Tasa a las cargas', ref: 'cfacturas.tasas', active: true},
 		{name: 'Control de correlatividad', ref: 'cfacturas.correlatividad', active: false},
 		{name: 'Control de códigos', ref: 'cfacturas.codigos', active: false},
 		{name: 'Revisar', ref: 'cfacturas.revisar', active: false},
 		{name: 'Erróneos', ref: 'cfacturas.erroneos', active: false},
 		{name: 'A reenviar', ref: 'cfacturas.reenviar', active: false}
 	];
+
+	$scope.viewsStates = {
+		tasas: {
+			used: false,
+			model:{},
+			resultado: []
+		}
+	};
+
+	$scope.$on('updateView', function(ev, view, model, result){
+		$scope.viewsStates[view].model = model;
+		$scope.viewsStates[view].resultado = result;
+		$scope.viewsStates[view].used = true;
+		console.log($scope.viewsStates);
+	});
 
 }]);
 
@@ -109,12 +124,9 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		$scope.$broadcast('checkAutoComplete');
 		invoiceFactory.getContainersSinTasaCargas($scope.model, function(data){
 			if (data.status == "OK"){
-				console.log(data);
 				$scope.totalContenedores = data.totalCount;
 				$scope.resultado = data.data;
-				/*data.data.forEach(function(contenedor){
-					$scope.resultado.push(contenedor.contenedor);
-				});*/
+				$scope.$emit('updateView', 'tasas', $scope.model, $scope.resultado);
 			} else {
 				$scope.hayError = true;
 				$scope.mensajeResultado = {
@@ -127,7 +139,18 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		});
 	};
 
-	if (loginService.getStatus()) controlTasaCargas();
+	if (loginService.getStatus()){
+		if ($scope.viewsStates.tasas.used){
+			$scope.model = $scope.viewsStates.tasas.model;
+			$scope.resultado = $scope.viewsStates.tasas.resultado;
+			$scope.totalContenedores = $scope.resultado.length;
+			$scope.loadingTasaCargas = false;
+			$scope.hayError = false;
+		} else {
+			controlTasaCargas();
+		}
+	}
+
 
 	$scope.$on('terminoLogin', function(){
 		controlTasaCargas();
