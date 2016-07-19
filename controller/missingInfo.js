@@ -3,7 +3,6 @@
  */
 myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'turnosFactory', '$filter',
 	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, turnosFactory, $filter){
-		console.log($scope.savedState);
 
 		if ($scope.savedState != null){
 			$scope.currentPage = $scope.savedState.currentPage;
