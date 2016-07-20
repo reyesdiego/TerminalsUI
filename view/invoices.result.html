@@ -90,7 +90,7 @@
 						<span>Monto Gravado {{ verDetalle.importe.gravado | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }} | </span>
 						<span>Monto No Gravado {{ verDetalle.importe.noGravado | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }} | </span>
 						<span>Exento {{ verDetalle.importe.exento | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }} | </span>
-						<span><b>Cotizaci&oacute;n Moneda U$s1 = ${{ verDetalle.cotiMoneda }}</b></span>
+						<span><b>Cotizaci&oacute;n Moneda U$s1 = {{ verDetalle.cotiMoneda | currency: $ }}</b></span>
 					</td>
 				</tr>
 				<tr class="text-center">
@@ -118,8 +118,8 @@
 				</tr>
 				<tr ng-repeat="tarifaError in verDetalle.controlTarifas">
 					<td>{{ tarifaError.codigo }}</td>
-					<td>{{ tarifaError.currency | formatCurrency }} {{ tarifaError.topPrice }}</td>
-					<td>{{ tarifaError.currency | formatCurrency }} {{ tarifaError.current }}</td>
+					<td>{{ tarifaError.topPrice | currency: (tarifaError.currency | formatCurrency) }}</td>
+					<td>{{ tarifaError.current | currency: (tarifaError.currency | formatCurrency) }}</td>
 					<td>
 						<span ng-repeat="fecha in tarifaError.topPrices | orderBy: from : true | limitTo: 1">{{ fecha.from | date: 'dd/MM/yyyy':'UTC' }}</span>
 					</td>
