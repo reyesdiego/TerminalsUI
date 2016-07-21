@@ -103,7 +103,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 								}
 							});
 							if (monedaALaFecha != 'DOL'){
-								valorTomado = item.impUnit * comprobante.cotiMoneda
+								valorTomado = (item.impUnit * comprobante.cotiMoneda).toFixed(2);
 							}
 							if (tasaCargasTerminal.indexOf(item.id) >= 0){
 								comprobante.tieneTasa = true;
