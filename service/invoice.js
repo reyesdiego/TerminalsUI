@@ -94,7 +94,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 					detalle.items.forEach(function(item){
 						precioEncontrado = false;
 						if (angular.isDefined(lookup[item.id])){
-							valorTomado = item.impUnit;
+							valorTomado = item.impUnit.toFixed(2);
 							lookup[item.id].topPrices.forEach(function(precioMatch){
 								if (comprobante.fecha.emision >= precioMatch.from){
 									precioEncontrado = true;
