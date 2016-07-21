@@ -478,92 +478,6 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 }]);
 
-myapp.config(['$provide', function ($provide) {
-	/*$provide.decorator('daypickerDirective', ['$delegate', function ($delegate) {
-		var directive = $delegate[0];
-		var compile = directive.compile;
-		directive.compile = function(tElement, tAttrs) {
-			var link = compile.apply(this, arguments);
-			return function(scope, elem, attrs) {
-				link.apply(this, arguments);
-				scope.showWeeks = false;
-			};
-		};
-		return $delegate;
-	}]);*/
-	/*$provide.decorator('datepickerPopupDirective', ['$delegate', function ($delegate) {
-		var directive = $delegate[0];
-		var compile = directive.compile;
-		directive.compile = function(tElement, tAttrs) {
-			var link = compile.apply(this, arguments);
-			return function(scope, elem, attrs) {
-				link.apply(this, arguments);
-				scope.showButtonBar = false;
-			};
-		};
-		return $delegate;
-	}]);*/
-	/*$provide.decorator('calendarConfig', ['$delegate', function ($delegate) {
-		$delegate.titleFormats.week = 'Semana {week} del {year}';
-		return $delegate;
-	}]);
-	$provide.decorator('mwlCalendarDirective', ['$delegate', function ($delegate) {
-		$delegate[0].$$isolateBindings.dayViewStart.mode = '=';
-		return $delegate;
-	}]);
-	$provide.decorator('mwlCalendarDayDirective', ['$delegate', function ($delegate) {
-		$delegate[0].controller = ['$scope', '$timeout', 'moment', 'calendarHelper', 'calendarConfig', function($scope, $timeout, moment, calendarHelper, calendarConfig) {
-
-			var vm = this;
-			var dayViewStart, dayViewEnd;
-
-			vm.calendarConfig = calendarConfig;
-
-			function updateDays() {
-				dayViewStart = moment($scope.dayViewStart || '00:00', 'HH:mm');
-				dayViewEnd = moment($scope.dayViewEnd || '23:00', 'HH:mm');
-				vm.dayViewSplit = parseInt($scope.dayViewSplit);
-				vm.hourHeight = (60 / $scope.dayViewSplit) * 30;
-				vm.hours = [];
-				var dayCounter = moment(dayViewStart);
-				for (var i = 0; i <= dayViewEnd.diff(dayViewStart, 'hours'); i++) {
-					vm.hours.push({
-						label: dayCounter.format(calendarConfig.dateFormats.hour)
-					});
-					dayCounter.add(1, 'hour');
-				}
-			}
-
-			var originalLocale = moment.locale();
-
-			$scope.$on('calendar.refreshView', function() {
-
-				if (originalLocale !== moment.locale()) {
-					originalLocale = moment.locale();
-					updateDays();
-				}
-
-				vm.view = calendarHelper.getDayView($scope.events, $scope.currentDay, dayViewStart.hours(), dayViewEnd.hours(), vm.hourHeight);
-
-			});
-
-			$scope.$watch('dayViewStart', updateDays);
-
-			updateDays();
-
-		}];
-		return $delegate;
-	}]);*/
-
-}]);
-
-/*myapp.config(['calendarConfigProvider', function(calendarConfigProvider){
-	calendarConfigProvider.setI18nStrings({
-		eventsLabel: 'Turnos',
-		timeLabel: 'Hora'
-	});
-}]);*/
-
 myapp.config(['$cookiesProvider', function($cookiesProvider){
 	var hoy = new Date();
 
@@ -579,15 +493,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
 		$rootScope.terminalEstilo = 'bootstrap.cerulean';
-
-		/*moment().format('YYYY-MM-DD');
-		moment.locale('es');
-
-		moment.locale('es', {
-			week : {
-				dow : 7 // Domingo primer día de la semana
-			}
-		});*/
 
 		$rootScope.appointmentNotify = 0;
 		$rootScope.gateNotify = 0;
@@ -641,8 +546,6 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.esUsuario = loginService.getType();
 			$rootScope.terminal = loginService.getInfo();
 			$rootScope.grupo = loginService.getGroup();
-			//$rootScope.cargarCache = true;
-			//$rootScope.primerRuteo = true;
 		}
 
 		$rootScope.mensajeResultado = {
