@@ -323,7 +323,7 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 							.then(function(){
 								deferred.resolve(comprobante);
 							}, function(error){
-								console.log(error);
+								//console.log(error);
 								deferred.reject(error);
 							});
 					}, function(){

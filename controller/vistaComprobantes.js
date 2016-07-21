@@ -116,6 +116,12 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			$scope.comprobantesVistos = response.comprobantesVistos;
 		};
 
+		$scope.cambiarEstado = function(comprobante){
+			invoiceFactory.getInvoiceById(comprobante._id, function(data){
+				$scope.trackInvoice(data);
+			})
+		};
+
 
 		$scope.ocultarResultado = function(comprobante){
 			$scope.checkComprobantes(comprobante);
