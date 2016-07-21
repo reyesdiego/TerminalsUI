@@ -10,6 +10,6 @@
 	color: #2c3e50;
 }
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-	display: none !important;
+html, body{
+	display: none
 }

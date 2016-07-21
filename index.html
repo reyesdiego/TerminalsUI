@@ -23,10 +23,6 @@
 	<!-- Less test -->
 	<!--<link rel="stylesheet/less" type="text/css" href="less/bootstrap.cerulean.less"/>
 	<script src="angular/less-1.7.3.min.js" type="text/javascript"></script>-->
-	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
-	<!--[if lt IE 9]-->
-	<script src="js/html5.js"></script>
-	<!--[endif]-->
 	<!-- Angular y modulos-->
 	<!-- build:js bower_components/angular/angular.min.js -->
 	<script src="bower_components/angular/angular.js"></script>
@@ -137,14 +133,18 @@
 	<!-- /build -->
 	<!-- Style Switcher-->
 	<script src="js/linq.min.js"></script>
+	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]-->
+	<script src="js/html5.js"></script>
+	<!--[endif]-->
 </head>
 
-<body class="container" ng-controller="navigationCtrl" ng-cloak>
+<body class="container" ng-controller="navigationCtrl">
 
 <nav class="navbar navbar-default navbar-fixed-top hidden-print">
 	<div class="container">
 		<div class="navbar-header" uib-dropdown>
-			<a ng-click="irA()" class="nav navbar-brand" style="padding: 0px !important"><img src="images/logoBlanco.png" style="max-height: 100%"/></a>
+			<a ng-click="irA()" class="nav navbar-brand" style="padding: 0 !important"><img src="images/logoBlanco.png" style="max-height: 100%"/></a>
 			<!--<a ng-click="irA()" class="nav navbar-brand"> SCT</a>-->
 			<button class="navbar-toggle collapsed" type="button"  ng-hide="cargandoCache" data-target=".navbar-responsive-collapse" ng-click="isCollapsed = !isCollapsed" aria-expanded="false">
 				<span class="icon-bar"></span>
