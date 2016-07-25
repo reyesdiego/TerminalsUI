@@ -188,14 +188,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			}
 		};
 
-		$scope.filtrado = function(filtro, contenido){
-			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
-				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
-				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
-			}
-			cargaDatos();
-		};
-
 		/*$scope.$watch('[model.fechaInicio, model.fechaFin]', function(){
 			if ($scope.model.fechaInicio > $scope.model.fechaFin){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);

@@ -11,12 +11,14 @@ myapp.controller('controlGatesCtrl', ['$scope', '$state', function($scope, $stat
         {name: 'Gates sin turnos', ref: 'cgates.appointments', active: false}
     ];
 
+    //Guarda el estado de sus hijos para no tener que volver a llamar al servidor mientras se navegue entre ellos.
     $scope.childModels = {
         gates: null,
         invoices: null,
         gatesAppointments: null
     };
 
+    //Evento que registra el estado de sus hijos, se ejecuta cuando se destruye el scope de alguno de sus hijos
     $scope.$on('saveState', function(ev, dato, model){
         $scope.childModels[dato] = model;
     })
