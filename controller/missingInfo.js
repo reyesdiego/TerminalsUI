@@ -72,11 +72,13 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		};
 
 		var cargaDatos = function(){
+			$scope.mostrarDetalle = false;
 			var page = {
 				skip: ($scope.currentPage - 1) * $scope.model.itemsPerPage,
 				limit: $scope.model.itemsPerPage
 			};
 			switch ($scope.datoFaltante){
+				//Facturaciones sin gates
 				case 'gates':
 					$scope.cargando = true;
 					gatesFactory.getMissingGates($scope.model, page, function(data){
@@ -104,6 +106,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 						$scope.cargando = false;
 					});
 					break;
+				//Gates sin facturaciones
 				case 'invoices':
 					$scope.cargando = true;
 					gatesFactory.getMissingInvoices($scope.model, page, function(data){
@@ -132,6 +135,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 						$scope.cargando = false;
 					});
 					break;
+				//Facturaciones sin turnos
 				case 'appointments':
 					$scope.cargando = true;
 					turnosFactory.getMissingAppointments($scope.model, function(data){
@@ -158,6 +162,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 						$scope.cargando = false;
 					});
 					break;
+				//Gates sin turnos
 				case 'gatesAppointments':
 					$scope.cargando = true;
 					gatesFactory.gatesSinTurnos($scope.model, function(data){
