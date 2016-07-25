@@ -33,11 +33,11 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 				});
 		};
 
-		factory.getMissingGates = function(callback){
+		factory.getMissingGates = function(datos, page, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingGates');
-			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingGates';
-			$http.get(inserturl, {timeout: canceler.promise })
+			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingGates/' + page.skip + '/' + page.limit;
+			$http.get(inserturl, {params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function (response){
 					callback(response.data);
 				}, function(response){
@@ -45,11 +45,12 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 				});
 		};
 
-		factory.getMissingInvoices = function(callback){
+		factory.getMissingInvoices = function(datos, page, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingInvoices');
+			//var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingInvoices/' + page.skip + '/' + page.limit;
 			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingInvoices';
-			$http.get(inserturl, { timeout: canceler.promise })
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function (response){
 					callback(response.data);
 				}, function(response){

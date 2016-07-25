@@ -37,12 +37,12 @@ myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginServi
 				});
 		};
 
-		factory.getMissingAppointments = function(callback){
+		factory.getMissingAppointments = function(datos, callback){
 			factory.cancelRequest('missingAppointments');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'missingAppointments');
 			var inserturl = serverUrl + '/appointments/' + loginService.getFiltro() + '/missingAppointments';
-			$http.get(inserturl, { timeout: canceler.promise })
+			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
 				}, function(response){

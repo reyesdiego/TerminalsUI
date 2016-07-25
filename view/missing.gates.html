@@ -7,40 +7,32 @@
 		<img class="media-object center-block" src="images/loading.gif">
 	</div>
 	<div class="col-lg-12" ng-hide="cargando">
-		<div ng-hide="datosFaltantes.length != undefined && filteredDatos.length > 0">
+		<div ng-hide="datosFaltantes.length != undefined && datosFaltantes.length > 0">
 			<div-panel config-panel="configPanel">
 				{{ configPanel.mensaje }}
 				<p ng-show="hayError">Presione <a href ng-click="recargar()">aquí</a> para volver a intentarlo.</p>
 			</div-panel>
 		</div>
-		<div ng-show="datosFaltantes.length != undefined && filteredDatos.length > 0">
-			<h5><strong>Resultados: {{ filteredDatos.length }}</strong><span class="visible-print-block"><strong>Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ currentPage * itemsPerPage > totalItems ? totalItems : currentPage * itemsPerPage }} (página {{ currentPage }})</strong></span></h5>
+		<div ng-show="datosFaltantes.length != undefined && datosFaltantes.length > 0">
+			<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ currentPage * itemsPerPage > totalItems ? totalItems : currentPage * itemsPerPage }} (página {{ currentPage }})</strong></span></h5>
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 					<thead>
 					<tr>
-						<th><a href="" ng-click="$parent.ordenarPor('c')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="$parent.predicate == 'c' && !$parent.reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="$parent.predicate == 'c' && $parent.reverse"></span>
-							Contenedor
-						</a></th>
-						<th><a href="" ng-click="$parent.ordenarPor('f')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="$parent.predicate == 'f' && !$parent.reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="$parent.predicate == 'f' && $parent.reverse"></span>
-							Fecha
-						</a></th>
+						<th>Contenedor</th>
+						<th>Fecha</th>
 						<th class="hidden-print" style="text-align: center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 					</tr>
 					</thead>
 					<tbody>
-					<tr class="fila-animada" ng-repeat="invoice in filteredDatos | orderBy: $parent.predicate : $parent.reverse | startFrom:(currentPage-1) * model.itemsPerPage | limitTo:model.itemsPerPage track by $index" ng-class="invoice.c == contenedorElegido ? 'fila-elegida' : ''">
-						<td>{{ invoice.c }}</td>
-						<td>{{ invoice.f | date: 'dd/MM/yyyy' }}</td>
-						<td class="hidden-print" style="text-align: center"><a href ng-click="::detalleContenedor(invoice.c)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+					<tr class="fila-animada" ng-repeat="invoice in datosFaltantes track by $index" ng-class="invoice.contenedor == contenedorElegido ? 'fila-elegida' : ''">
+						<td>{{ invoice.contenedor }}</td>
+						<td>{{ invoice.fecha | date: 'dd/MM/yyyy' }}</td>
+						<td class="hidden-print" style="text-align: center"><a href ng-click="::detalleContenedor(invoice.contenedor)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 					</tr>
 				</table>
 			</div>
-			<div-pagination total-items="filteredDatos.length" current-page="currentPage" items-per-page="model.itemsPerPage"></div-pagination>
+			<div-pagination total-items="totalItems" current-page="currentPage" items-per-page="model.itemsPerPage"></div-pagination>
 			<div class="row text-right" ng-show="mostrarDetalle">
 				<button class="btn btn-info" ng-click="mostrarDetalle = false">Ocultar detalle</button>
 			</div>

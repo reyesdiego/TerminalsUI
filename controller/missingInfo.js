@@ -27,7 +27,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		}
 
 		$scope.filteredDatos = [];
-
 		$scope.cargando = false;
 
 		$scope.$on('errorInesperado', function(e, mensaje){
@@ -50,16 +49,22 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			mensaje: 'No se encontraron comprobantes con gates faltantes para los filtros seleccionados.'
 		};
 
-		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'rates'];
+		$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'rates'];
+
+		$scope.$on('cambioPagina', function(event, data){
+			$scope.currentPage = data;
+			cargaDatos();
+		});
 
 		$scope.$on('iniciarBusqueda', function(event, data){
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			if ($scope.datoFaltante == 'gatesAppointments'){
+			cargaDatos();
+			/*if ($scope.datoFaltante == 'gatesAppointments'){
 				cargaDatos();
-			}
+			}*/
 		});
 
 		$scope.recargar = function(){
@@ -67,23 +72,27 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 		};
 
 		var cargaDatos = function(){
+			var page = {
+				skip: ($scope.currentPage - 1) * $scope.model.itemsPerPage,
+				limit: $scope.model.itemsPerPage
+			};
 			switch ($scope.datoFaltante){
 				case 'gates':
 					$scope.cargando = true;
-					gatesFactory.getMissingGates(function(data){
+					gatesFactory.getMissingGates($scope.model, page, function(data){
 						if (data.status == 'OK'){
 							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
-							$scope.totalItems = $scope.datosFaltantes.length;
-							$scope.datosFaltantes.forEach(function(comprob){
+							$scope.totalItems = data.totalCount;
+							/*$scope.datosFaltantes.forEach(function(comprob){
 								comprob.fecha = comprob.f;
-							});
+							});*/
 							$scope.configPanel = {
 								tipo: 'panel-success',
 								titulo: 'Control gates',
 								mensaje: 'No se encontraron comprobantes con gates faltantes para los filtros seleccionados.'
 							};
-							filtrarPorFecha();
+							//filtrarPorFecha();
 						} else {
 							$scope.hayError = true;
 							$scope.configPanel = {
@@ -97,7 +106,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 					break;
 				case 'invoices':
 					$scope.cargando = true;
-					gatesFactory.getMissingInvoices(function(data){
+					gatesFactory.getMissingInvoices($scope.model, page, function(data){
 						if (data.status == 'OK'){
 							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
@@ -125,7 +134,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 					break;
 				case 'appointments':
 					$scope.cargando = true;
-					turnosFactory.getMissingAppointments(function(data){
+					turnosFactory.getMissingAppointments($scope.model, function(data){
 						if (data.status == 'OK'){
 							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
@@ -174,18 +183,29 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			}
 		};
 
-		$scope.$watch('[model.fechaInicio, model.fechaFin]', function(){
+		$scope.filtrado = function(filtro, contenido){
+			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
+				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
+			}
+			cargaDatos();
+		};
+
+		/*$scope.$watch('[model.fechaInicio, model.fechaFin]', function(){
 			if ($scope.model.fechaInicio > $scope.model.fechaFin){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			if ($scope.datoFaltante == 'gatesAppointments'){
+			$scope.currentPage = 1;
+			$scope.mostrarDetalle = false;
+			cargaDatos();
+			/*if ($scope.datoFaltante == 'gatesAppointments'){
 				$scope.mostrarDetalle = false;
 				cargaDatos();
 			} else {
 				filtrarPorFecha();
 			}
-		});
+		});*/
 
 		var filtrarPorFecha = function(){
 			$scope.filteredDatos = $filter('dateRange')($scope.datosFaltantes, $scope.model.fechaInicio, $scope.model.fechaFin);
