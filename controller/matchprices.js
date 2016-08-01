@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'cacheFactory', '$state', 'focus',
-	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, cacheFactory, $state, focus) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus',
+	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus) {
 		'use strict';
 
 		//Array con los tipos de tarifas para establecer filtros
@@ -305,7 +305,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			array.push($scope.newPrice.matches[0]);
 			priceFactory.addMatchPrice(array, function(data){
 				if (data.status == 'OK'){
-					cacheFactory.actualizarMatchesArray(loginService.getFiltro());
+					initialLoadFactory.actualizarMatchesArray(loginService.getFiltro());
 					dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
 					$scope.prepararDatos();
 					$state.transitionTo('matches');
@@ -426,9 +426,9 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			$scope.prepararDatos();
 		});
 
-		$scope.$on('cambioTerminal', function(){
+		/*$scope.$on('cambioTerminal', function(){
 			$scope.nombre = loginService.getFiltro();
 			$scope.prepararDatos();
-		})
+		})*/
 
 	}]);

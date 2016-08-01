@@ -62,12 +62,12 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
         });
     };
 
-    $scope.$on('cambioTerminal', function(){
+    /*$scope.$on('cambioTerminal', function(){
         $scope.descripciones = generalCache.get('descripciones' + loginService.getFiltro());
         if ($scope.dataReporte.length > 0){
             $scope.cargarReporte();
         }
-    });
+    });*/
 
     $scope.descargarCSV = function(){
         $scope.disableDown = true;

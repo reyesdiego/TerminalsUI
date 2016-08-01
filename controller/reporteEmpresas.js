@@ -155,7 +155,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			}
 		};
 
-		$scope.$on('cambioTerminal', function(){
+		/*$scope.$on('cambioTerminal', function(){
 			$scope.searchClient = '';
 			$scope.listaClientes = generalCache.get('clientes' + loginService.getFiltro());
 			$scope.resultados = [];
@@ -165,7 +165,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				tipo: 'panel-info'
 			};
 			$scope.model.clients = [];
-		});
+		});*/
 
 		$scope.descargarPdf = function(){
 			var data = {

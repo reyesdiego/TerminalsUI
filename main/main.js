@@ -197,7 +197,9 @@ myapp.config(['$provide', '$httpProvider', function($provide, $httpProvider){
 
 }]);
 
-myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($stateProvider, $urlRouterProvider, $provide) {
+myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFactoryProvider', function ($stateProvider, $urlRouterProvider, $provide, initialLoadFactoryProvider) {
+
+	var initialLoadFactory = initialLoadFactoryProvider.$get();
 
 	$provide.decorator("$exceptionHandler", ['$delegate', '$injector', function($delegate, $injector){
 		return function(exception, cause){
@@ -218,35 +220,70 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 	$stateProvider
 		.state('login', {
 			url: "/login",
-			templateUrl: "view/login.html"
+			templateUrl: "view/login.html",
+			controller: "loginCtrl"
 		})
 		.state('register', {
 			url: "/registro",
-			templateUrl: "view/newUser.html"
+			templateUrl: "view/newUser.html",
+			controller: "registerCtrl"
 		})
 		.state('tarifario', {
 			url: "/pricelist",
-			templateUrl: "view/pricelist.html"
+			templateUrl: "view/pricelist.html",
+			controller: "pricelistCtrl",
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades
+			}
 		})
 		.state('invoices', {
 			url: "/invoices",
 			templateUrl: "view/invoices.html",
-			controller: "invoicesCtrl"
+			controller: "invoicesCtrl",
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades,
+				buques: initialLoadFactory.cargaBuques,
+				trenes: initialLoadFactory.cargaTrenes,
+				clientes: initialLoadFactory.cargaClientes,
+				vouchers: initialLoadFactory.cargaVouchers,
+				estados: initialLoadFactory.cargaEstados,
+				matches: initialLoadFactory.cargaMatchesArray,
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				descripciones: initialLoadFactory.cargaDescripciones
+			}
 		})
 		.state('matches', {
 			url: "/match",
 			templateUrl: "view/pricelistEdit.html",
-			controller: 'matchPricesCtrl'
+			controller: 'matchPricesCtrl',
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades
+			}
 		})
 		.state('control', {
 			url: "/control",
 			templateUrl: "view/control.html",
-			controller: "controlCtrl"
+			controller: "controlCtrl",
+			resolve: {
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				descripciones: initialLoadFactory.cargaDescripciones
+			}
 		})
 		.state('cfacturas', {
 			url: "/controlComprobantes",
 			templateUrl: "view/controlComprobantes.html",
-			controller: 'controlComprobantesCtrl'
+			controller: 'controlComprobantesCtrl',
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades,
+				buques: initialLoadFactory.cargaBuques,
+				trenes: initialLoadFactory.cargaTrenes,
+				clientes: initialLoadFactory.cargaClientes,
+				vouchers: initialLoadFactory.cargaVouchers,
+				estados: initialLoadFactory.cargaEstados,
+				matches: initialLoadFactory.cargaMatchesArray,
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				descripciones: initialLoadFactory.cargaDescripciones
+			}
 		})
 			.state('cfacturas.tasas', {
 				url: '/tasas',
@@ -277,12 +314,35 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			})
 		.state('gates', {
 			url: "/gates",
-			templateUrl: "view/gates.html"
+			templateUrl: "view/gates.html",
+			controller: "gatesCtrl",
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades,
+				buques: initialLoadFactory.cargaBuques,
+				trenes: initialLoadFactory.cargaTrenes,
+				clientes: initialLoadFactory.cargaClientes,
+				vouchers: initialLoadFactory.cargaVouchers,
+				estados: initialLoadFactory.cargaEstados,
+				matches: initialLoadFactory.cargaMatchesArray,
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				descripciones: initialLoadFactory.cargaDescripciones
+			}
 		})
 		.state('cgates', {
 			url: '/controlGates',
 			templateUrl: 'view/gates.control.html',
-			controller: 'controlGatesCtrl'
+			controller: 'controlGatesCtrl',
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades,
+				buques: initialLoadFactory.cargaBuques,
+				trenes: initialLoadFactory.cargaTrenes,
+				clientes: initialLoadFactory.cargaClientes,
+				vouchers: initialLoadFactory.cargaVouchers,
+				estados: initialLoadFactory.cargaEstados,
+				matches: initialLoadFactory.cargaMatchesArray,
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				descripciones: initialLoadFactory.cargaDescripciones
+			}
 		})
 			.state('cgates.gates', {
 				url: '/gatesFaltantes',
@@ -302,19 +362,50 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('turnos', {
 			url: "/turnos",
-			templateUrl: "view/turnos.html"
+			templateUrl: "view/turnos.html",
+			controller: "turnosCtrl",
+			resolve: {
+				ratesMatches: initialLoadFactory.cargaMatchesRates
+			}
 		})
 		.state('changepass', {
 			url: "/cambiarpass",
-			templateUrl: "view/newpass.html"
+			templateUrl: "view/newpass.html",
+			controller: "changePassCtrl",
+			resolve: {
+				ratesMatches: initialLoadFactory.cargaMatchesRates
+			}
 		})
 		.state('container',{
 			url: "/contenedor",
-			templateUrl: "view/container.html"
+			templateUrl: "view/container.html",
+			controller: "buqueViajeCtrl",
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades,
+				buques: initialLoadFactory.cargaBuques,
+				trenes: initialLoadFactory.cargaTrenes,
+				clientes: initialLoadFactory.cargaClientes,
+				vouchers: initialLoadFactory.cargaVouchers,
+				estados: initialLoadFactory.cargaEstados,
+				matches: initialLoadFactory.cargaMatchesArray,
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				descripciones: initialLoadFactory.cargaDescripciones
+			}
 		})
 		.state('buque',{
 			url: "/buqueViaje",
-			templateUrl: "view/buque.viaje.html"
+			templateUrl: "view/buque.viaje.html",
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades,
+				buques: initialLoadFactory.cargaBuques,
+				trenes: initialLoadFactory.cargaTrenes,
+				clientes: initialLoadFactory.cargaClientes,
+				vouchers: initialLoadFactory.cargaVouchers,
+				estados: initialLoadFactory.cargaEstados,
+				matches: initialLoadFactory.cargaMatchesArray,
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				descripciones: initialLoadFactory.cargaDescripciones
+			}
 		})
 		.state('forbidden', {
 			url: "/forbidden",
@@ -328,26 +419,51 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			.state('reports.tasas', {
 				url:'/tasas',
 				templateUrl: 'view/reportes.tasas.html',
-				controller: 'ratesCtrl'
+				controller: 'ratesCtrl',
+				resolve: {
+					unitTypes: initialLoadFactory.cargaUnidades,
+					descripciones: initialLoadFactory.cargaDescripciones,
+					ratesMatches: initialLoadFactory.cargaMatchesRates,
+					allRates: initialLoadFactory.cargaAllRates
+				}
 			})
 			.state('reports.tarifas', {
 				url: '/tarifas',
 				templateUrl: 'view/reportes.tarifas.html',
-				controller: 'reporteTarifasCtrl'
+				controller: 'reporteTarifasCtrl',
+				resolve: {
+					ratesMatches: initialLoadFactory.cargaMatchesRates
+				}
 			})
 			.state('reports.empresas', {
 				url: '/empresas',
 				templateUrl: 'view/reportes.empresas.html',
-				controller: 'facturacionPorEmpresaCtrl'
+				controller: 'facturacionPorEmpresaCtrl',
+				resolve: {
+					clientes: initialLoadFactory.cargaClientes,
+					descripciones: initialLoadFactory.cargaDescripciones,
+					ratesMatches: initialLoadFactory.cargaMatchesRates
+				}
 			})
 			.state('reports.terminales', {
 				url: '/terminales',
 				templateUrl: 'view/reportes.terminales.html',
-				controller: 'tarifasTerminalesCtrl'
+				controller: 'tarifasTerminalesCtrl',
+				resolve: {
+					descripciones: initialLoadFactory.cargaDescripciones,
+					ratesMatches: initialLoadFactory.cargaMatchesRates
+				}
 			})
 		.state('afip', {
 			url: "/afip",
-			templateUrl: "view/afip.html"
+			templateUrl: "view/afip.html",
+			controller: "afipCtrl",
+			resolve: {
+				sumImpoBuques: initialLoadFactory.cargaSumariaImpoBuques,
+				sumExpoBuques: initialLoadFactory.cargaSumariaExpoBuques,
+				solicitudBuques: initialLoadFactory.cargaSolicitudBuques,
+				afectacionBuques: initialLoadFactory.cargaAfectacionBuques
+			}
 		})
 		.state('afip.afectacion.afectacion1', {
 			templateUrl: "view/afip.afectacion1.html"
@@ -444,23 +560,42 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 		})
 		.state('users', {
 			url: "/users",
-			templateUrl: "view/users.html"
+			templateUrl: "view/users.html",
+			controller: "usersCtrl"
 		})
 		.state('access', {
 			url: "/controlAcceso",
-			templateUrl: 'view/controlAcceso.html'
+			templateUrl: 'view/controlAcceso.html',
+			controller: "accessControlCtrl"
 		})
 		.state('cturnos', {
 			url: "/colaTurnos",
-			templateUrl: 'view/turnosEncolados.html'
+			templateUrl: 'view/turnosEncolados.html',
+			controller: "queuedMailsCtrl",
+			resolve: {
+				ratesMatches: initialLoadFactory.cargaMatchesRates
+			}
 		})
 		.state('validar', {
 			url: "/validarUsuario",
-			templateUrl: "view/validarUsuario.html"
+			templateUrl: "view/validarUsuario.html",
+			controller: "validarUsuarioCtrl" //TODO tal vez necesite ratesMatches, revisarlo...
 		})
 		.state('liquidaciones', {
 			url: "/liquidaciones",
-			templateUrl: "view/liquidaciones.html"
+			templateUrl: "view/liquidaciones.html",
+			controller: "liquidacionesCtrl",
+			resolve: {
+				unitTypes: initialLoadFactory.cargaUnidades,
+				buques: initialLoadFactory.cargaBuques,
+				trenes: initialLoadFactory.cargaTrenes,
+				clientes: initialLoadFactory.cargaClientes,
+				vouchers: initialLoadFactory.cargaVouchers,
+				estados: initialLoadFactory.cargaEstados,
+				matches: initialLoadFactory.cargaMatchesArray,
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				descripciones: initialLoadFactory.cargaDescripciones
+			}
 		})
 		.state('modificarTarifario', {
 			parent: 'matches',
@@ -472,6 +607,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', function ($sta
 			url: "/controlTurnos",
 			templateUrl: "view/appointments.control.html"
 		})
+		//Esta vista no se está usando en realidad, no está la parte del servidor
 		.state('mat', {
 			url: "/mat",
 			templateUrl: "view/mat.html"
@@ -506,6 +642,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.cargarCache = false;
 		$rootScope.primerRuteo = false;
 		$rootScope.cargandoCache = false;
+
+		$rootScope.loadingNewView = false;
 
 		$rootScope.ordenarPor = function(filtro){
 			if ($rootScope.predicate == filtro){
@@ -566,7 +704,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.moneda = "DOL";
 
-		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'cambioTerminal'];
+		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register'];
 		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat'];
 		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos'];
 		$rootScope.$state = $state;
@@ -590,9 +728,11 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
 			$rootScope.setEstiloTerminal($cookies.get('themeTerminal'));
+			$rootScope.loadingNewView = false;
 		});
 
 		$rootScope.$on('$stateChangeStart', function(event, toState){
+			$rootScope.loadingNewView = true;
 			if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 				dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 			}

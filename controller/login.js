@@ -91,7 +91,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 			$scope.barType = "progress-bar-info";
 			$scope.mostrarMensaje = $scope.msg[0];
 			$scope.entrando = true;
-			$rootScope.cargandoCache = true;
+			//$rootScope.cargandoCache = true;
 			authFactory.userEnter($scope.email, $scope.password, $scope.sesion)
 					.then(function(result) {
 								$rootScope.socket.emit('login', result.user);

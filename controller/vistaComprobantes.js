@@ -241,7 +241,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			}
 		});
 
-		$scope.$on('cambioTerminal', function(){
+		/*$scope.$on('cambioTerminal', function(){
 			$scope.mostrarResultado = false;
 			$scope.logoTerminal = $rootScope.logoTerminal;
 			$scope.comprobantesVistos = [];
@@ -249,7 +249,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 				$scope.loadingState = true;
 				cargaTodosLosPuntosDeVentas();
 			}
-		});
+		});*/
 
 		$scope.verPdf = function(){
 			$scope.disablePdf = true;

@@ -622,12 +622,12 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.cargarLiquidaciones();
 		});
 
-		$scope.$on('cambioTerminal', function(){
+		/*$scope.$on('cambioTerminal', function(){
 			$scope.sinLiquidar.verDetalle = false;
 			$scope.preLiquidacion.verDetalle = false;
 			$scope.liquidacion.verDetalle = false;
 			$scope.recargar();
-		});
+		});*/
 
 		$scope.recargar = function(){
 			$scope.preLiquidacion.verDetalle = false;

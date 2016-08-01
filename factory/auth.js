@@ -2,8 +2,8 @@
  * Created by leo on 18/07/14.
  */
 
-myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService', '$rootScope', '$q', 'cacheFactory', '$http',
-	function($state, $cookies, userFactory, loginService, $rootScope, $q, cacheFactory, $http){
+myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService', '$rootScope', '$q', 'initialLoadFactory', '$http',
+	function($state, $cookies, userFactory, loginService, $rootScope, $q, initialLoadFactory, $http){
 		var factory = {};
 
 		factory.userEnter = function(user, pass, useCookies){
@@ -114,7 +114,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 						}
 
 						// Carga la cache si el usuario no tenía el acceso por cookies
-						var restoreSesion = $cookies.get('restoreSesion') === 'true';
+						/*var restoreSesion = $cookies.get('restoreSesion') === 'true';
 						if (!restoreSesion){
 							cacheFactory.cargaCache()
 								.then(function(){
@@ -129,7 +129,8 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 								});
 						} else {
 							deferred.resolve(data);
-						}
+						}*/
+						deferred.resolve(data);
 					} else {
 						var myError = {
 							code: 'ACC-0010'
@@ -155,7 +156,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 			$cookies.remove('restoreSesion');
 			$cookies.remove('username');
 			$cookies.remove('password');
-			cacheFactory.limpiaCache();
+			initialLoadFactory.limpiaCache();
 			loginService.unsetLogin();
 		};
 

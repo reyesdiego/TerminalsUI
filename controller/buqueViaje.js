@@ -431,7 +431,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			}
 		});
 
-		$scope.$on('cambioTerminal', function(){
+		/*$scope.$on('cambioTerminal', function(){
 			$scope.volverAPrincipal = !$scope.volverAPrincipal;
 			$scope.invoices = [];
 			$scope.gates = [];
@@ -449,7 +449,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			if ($scope.model.contenedor != ''){
 				$scope.filtrar();
 			}
-		});
+		});*/
 
 		$scope.$on('destroy', function(){
 			invoiceFactory.cancelRequest();

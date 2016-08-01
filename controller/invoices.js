@@ -78,12 +78,13 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', func
 		});
 	};
 
-	$scope.$on('cambioTerminal', function(){
+	/*$scope.$on('cambioTerminal', function(){
 		$scope.cargando = true;
-	});
+	});*/
 
-	$scope.$on('$destroy', function(){
+	/*$scope.$on('$destroy', function(){
+		console.log('DESTRUIR');
 		invoiceFactory.cancelRequest();
-	});
+	});*/
 
 }]);

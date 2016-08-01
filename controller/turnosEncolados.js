@@ -96,8 +96,8 @@ myapp.controller('queuedMailsCtrl', ['$scope', 'turnosFactory', 'loginService', 
 		$scope.cargaTurnos();
 	});
 
-	$scope.$on('cambioTerminal', function(){
+	/*$scope.$on('cambioTerminal', function(){
 		$scope.cargaTurnos();
-	});
+	});*/
 
 }]);

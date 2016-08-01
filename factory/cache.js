@@ -411,10 +411,10 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 
 		factory.cargaCache = function () {
 			//afip cache
-			factory.cargaAfectacionBuques();
+			/*factory.cargaAfectacionBuques();
 			factory.cargaSolicitudBuques();
 			factory.cargaSumariaImpoBuques();
-			factory.cargaSumariaExpoBuques();
+			factory.cargaSumariaExpoBuques();*/
 
 			var deferred = $q.defer();
 			var llamadas = [];

@@ -69,7 +69,8 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		$scope.setearTerminal = function(terminal){
 			if ($rootScope.filtroTerminal != terminal){
 				$rootScope.setEstiloTerminal(terminal);
-				$rootScope.$broadcast('cambioTerminal');
+				//$rootScope.$broadcast('cambioTerminal');
+				$state.reload();
 			}
 		};
 

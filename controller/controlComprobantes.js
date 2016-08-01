@@ -173,9 +173,9 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		controlTasaCargas();
 	});
 
-	$scope.$on('cambioTerminal', function(){
+	/*$scope.$on('cambioTerminal', function(){
 		controlTasaCargas();
-	});
+	});*/
 
 	/*$scope.$on('$destroy', function(){
 		invoiceFactory.cancelRequest();
@@ -388,7 +388,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			traerPuntosDeVenta();
 		});
 
-		$scope.$on('cambioTerminal', function(){
+		/*$scope.$on('cambioTerminal', function(){
 			$scope.arrayCargados = [];
 			$scope.totalFaltantes = 0;
 			$scope.pantalla = {
@@ -398,7 +398,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			};
 			$scope.puntosDeVenta = [];
 			traerPuntosDeVenta();
-		});
+		});*/
 
 		$scope.$on('$destroy', function(){
 			correlativeSocket.disconnect();
@@ -742,8 +742,8 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 		};
 
 
-		$scope.$on('$destroy', function(){
+		/*$scope.$on('$destroy', function(){
 			//invoiceFactory.cancelRequest();
-		});
+		});*/
 
 	}]);

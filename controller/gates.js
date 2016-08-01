@@ -109,12 +109,12 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		$scope.cargaGates();
 	});
 
-	$scope.$on('cambioTerminal', function(){
+	/*$scope.$on('cambioTerminal', function(){
 		$scope.cargaGates();
-	});
+	});*/
 
-	$scope.$on('$destroy', function(){
+	/*$scope.$on('$destroy', function(){
 		gatesFactory.cancelRequest();
-	});
+	});*/
 
 }]);

@@ -225,9 +225,9 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			cargaDatos();
 		});
 
-		$scope.$on('cambioTerminal', function(){
+		/*$scope.$on('cambioTerminal', function(){
 			cargaDatos();
-		});
+		});*/
 
 		$scope.$on('$destroy', function(){
 			if ($scope.totalItems > 0){

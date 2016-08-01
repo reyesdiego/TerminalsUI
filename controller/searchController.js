@@ -197,7 +197,6 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.mostrarHTML = false;
 
 		$scope.comprobanteTurno = function(contenedor, idTurno){
-			console.log('aca?');
 			$scope.loadingState = true;
 			turnosFactory.comprobanteTurno(contenedor, idTurno, function(data, status){
 				if (status == 'OK'){
@@ -272,12 +271,12 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.$emit('iniciarBusqueda', $scope.model);
 		};
 
-		$scope.$on('cambioTerminal', function(){
+		/*$scope.$on('cambioTerminal', function(){
 			$scope.detallesGates = false;
 			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
 			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
 			$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
 			$scope.listaTrenes = generalCache.get('trenes' + loginService.getFiltro());
-		});
+		});*/
 
 	}]);
