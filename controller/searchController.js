@@ -170,11 +170,11 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 					$scope.mostrarViajes = false;
 				}
 			}
-			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+			/*if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			cargaPorFiltros();
+			cargaPorFiltros();*/
 		};
 
 		var filtrarCaracteresInvalidos = function(palabra){
@@ -263,7 +263,11 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.$emit('iniciarBusqueda');
 		};
 		///////////////////////////////////////////////////////////////////////////////////////////////////
-		var cargaPorFiltros = function () {
+		$scope.cargaPorFiltros = function () {
+			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
+				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
+				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
+			}
 			for (var elemento in $scope.model){
 				if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 			}

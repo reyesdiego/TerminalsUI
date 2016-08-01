@@ -42,7 +42,7 @@
 	<div class="form-group col-lg-3 col-sm-4" ng-hide="ocultarFiltros.indexOf('tren', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-model="model.tren" uib-typeahead="tren.tren for tren in listaTrenes | filter:$viewValue | limitTo:15" class="form-control" placeholder="Tren" toupper typeahead-on-select="filtrado('tren', $model)" typeahead-editable="false"/>
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('viaje', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('tren', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
 	<div class="form-group col-lg-3 col-md-4" ng-hide="ocultarFiltros.indexOf('carga', 0) >= 0">
@@ -85,7 +85,7 @@
 	</div>
 	<div class="form-group col-lg-3 col-sm-4">
 		<div class="input-group">
-			<button class="btn btn-primary" ng-click="filtrado('', '')" ng-disabled="model.fechaInicio > model.fechaFin">Buscar</button>
+			<button class="btn btn-primary" ng-click="cargaPorFiltros()" ng-disabled="model.fechaInicio > model.fechaFin">Buscar</button>
 		</div>
 	</div>
 </accordion-min>
