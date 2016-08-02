@@ -31,7 +31,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 				from: new Date(),
 				price: 0
 			}]
-		}
+		};
 
 		// Variable para almacenar la info principal que trae del factory
 		$scope.unidadesTarifas = generalCache.get('unitTypes');
@@ -46,6 +46,8 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		$scope.itemsPerPage = 10;
 		$scope.hayError = false;
 		$scope.disableSave = false;
+
+		$scope.procesando = false;
 
 		$scope.fechaVigencia = new Date();
 
@@ -165,12 +167,14 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		};
 
 		$scope.exportarAPdf = function(){
+			$scope.procesando = true;
 			var data = {
 				terminal: loginService.getFiltro(),
 				pricelist: $scope.filteredPrices
 			};
 			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC');
 			downloadFactory.convertToPdf(data, 'pricelistToPdf', function(data, status){
+				$scope.procesando = false;
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
 					var fileURL = URL.createObjectURL(file);
@@ -194,51 +198,32 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		};
 
 		$scope.exportarAExcel = function(){
-			var tabla = "<table>" +
-					"			<tr>" +
-					"				<td>Código</td>" +
-					"				<td>Descripción</td>" +
-					"				<td>Unidad</td>" +
-					"				<td>Tope</td>" +
-					"		</tr>";
+			$scope.procesando = true;
+			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.csv';
 
-			$scope.filteredPrices.forEach(function(price){
-				tabla += "<tr>" +
-						"		<td>" + price.code + "</td>" +
-						"		<td>" + price.description + "</td>" +
-						"		<td>" + price.unit + "</td>" +
-						"		<td>" + price.topPrices[0].price + "</td>" +
-						"	</tr>"
+			var csvContent = "data:text/csv;charset=utf-8,";
+			csvContent += "Código|Descripción|Unidad|Tope";
+
+			$scope.pricelist.forEach(function(price){
+				csvContent += "\n";
+				csvContent += price.code + "|" + price.description + "|" + price.unit + "|" + price.topPrices[0].price;
 			});
 
-			tabla += "</table>";
+			var encodedUri = encodeURI(csvContent);
 
-			var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
-			excelFile += "<head>";
-			excelFile += "<!--[if gte mso 9]>";
-			excelFile += "<xml>";
-			excelFile += "<x:ExcelWorkbook>";
-			excelFile += "<x:ExcelWorksheets>";
-			excelFile += "<x:ExcelWorksheet>";
-			excelFile += "<x:Name>";
-			excelFile += "{worksheet}";
-			excelFile += "</x:Name>";
-			excelFile += "<x:WorksheetOptions>";
-			excelFile += "<x:DisplayGridlines/>";
-			excelFile += "</x:WorksheetOptions>";
-			excelFile += "</x:ExcelWorksheet>";
-			excelFile += "</x:ExcelWorksheets>";
-			excelFile += "</x:ExcelWorkbook>";
-			excelFile += "</xml>";
-			excelFile += "<![endif]-->";
-			excelFile += "</head>";
-			excelFile += "<body>";
-			excelFile += tabla;
-			excelFile += "</body>";
-			excelFile += "</html>";
+			var anchor = angular.element('<a/>');
+			anchor.css({display: 'none'}); // Make sure it's not visible
+			angular.element(document.body).append(anchor); // Attach to document
 
-			var base64data = "base64," + btoa(unescape(encodeURIComponent(excelFile)));
-			window.open('data:application/vnd.ms-excel;filename=exportData.doc;' + base64data);
+			anchor.attr({
+				href: encodedUri,
+				target: '_blank',
+				download: nombreReporte
+			})[0].click();
+
+			anchor.remove(); // Clean it up afterwards
+			$scope.procesando = false;
+
 		};
 
 		if (loginService.getStatus()) $scope.cargaPricelist();

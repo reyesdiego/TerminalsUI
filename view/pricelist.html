@@ -78,12 +78,13 @@
 			</div>
 			<div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
 			<div class="col-lg-2" uib-dropdown is-open="status.isopen">
-				<button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle>
-					<span class="glyphicon glyphicon-list"></span> Exportar <span class="caret"></span>
+				<button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disable="procesando">
+					<span ng-show="!procesando"><span class="glyphicon glyphicon-list"></span> Exportar <span class="caret"></span></span>
+					<span ng-show="procesando"><img src="images/loadingChico.gif" height="20" width="20"> Procesando</span>
 				</button>
 				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
 					<li role="menuitem"><a href ng-click="exportarAPdf()">a PDF</a></li>
-					<li role="menuitem"><a href ng-click="exportarAExcel()">a Excel</a></li>
+					<li role="menuitem"><a href ng-click="exportarAExcel()">a CSV</a></li>
 				</ul>
 			</div>
 		</div>
