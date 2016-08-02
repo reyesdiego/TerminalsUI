@@ -242,9 +242,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			controller: "invoicesCtrl",
 			resolve: {
 				unitTypes: initialLoadFactory.cargaUnidades,
-				buques: initialLoadFactory.cargaBuques,
-				trenes: initialLoadFactory.cargaTrenes,
-				clientes: initialLoadFactory.cargaClientes,
+				//buques: initialLoadFactory.cargaBuques,
+				//trenes: initialLoadFactory.cargaTrenes,
+				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: initialLoadFactory.cargaVouchers,
 				estados: initialLoadFactory.cargaEstados,
 				matches: initialLoadFactory.cargaMatchesArray,
@@ -275,9 +275,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			controller: 'controlComprobantesCtrl',
 			resolve: {
 				unitTypes: initialLoadFactory.cargaUnidades,
-				buques: initialLoadFactory.cargaBuques,
-				trenes: initialLoadFactory.cargaTrenes,
-				clientes: initialLoadFactory.cargaClientes,
+				//buques: initialLoadFactory.cargaBuques,
+				//trenes: initialLoadFactory.cargaTrenes,
+				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: initialLoadFactory.cargaVouchers,
 				estados: initialLoadFactory.cargaEstados,
 				matches: initialLoadFactory.cargaMatchesArray,
@@ -318,9 +318,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			controller: "gatesCtrl",
 			resolve: {
 				unitTypes: initialLoadFactory.cargaUnidades,
-				buques: initialLoadFactory.cargaBuques,
-				trenes: initialLoadFactory.cargaTrenes,
-				clientes: initialLoadFactory.cargaClientes,
+				//buques: initialLoadFactory.cargaBuques,
+				//trenes: initialLoadFactory.cargaTrenes,
+				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: initialLoadFactory.cargaVouchers,
 				estados: initialLoadFactory.cargaEstados,
 				matches: initialLoadFactory.cargaMatchesArray,
@@ -334,9 +334,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			controller: 'controlGatesCtrl',
 			resolve: {
 				unitTypes: initialLoadFactory.cargaUnidades,
-				buques: initialLoadFactory.cargaBuques,
-				trenes: initialLoadFactory.cargaTrenes,
-				clientes: initialLoadFactory.cargaClientes,
+				//buques: initialLoadFactory.cargaBuques,
+				//trenes: initialLoadFactory.cargaTrenes,
+				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: initialLoadFactory.cargaVouchers,
 				estados: initialLoadFactory.cargaEstados,
 				matches: initialLoadFactory.cargaMatchesArray,
@@ -382,9 +382,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			controller: "buqueViajeCtrl",
 			resolve: {
 				unitTypes: initialLoadFactory.cargaUnidades,
-				buques: initialLoadFactory.cargaBuques,
-				trenes: initialLoadFactory.cargaTrenes,
-				clientes: initialLoadFactory.cargaClientes,
+				//buques: initialLoadFactory.cargaBuques,
+				//trenes: initialLoadFactory.cargaTrenes,
+				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: initialLoadFactory.cargaVouchers,
 				estados: initialLoadFactory.cargaEstados,
 				matches: initialLoadFactory.cargaMatchesArray,
@@ -398,8 +398,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			resolve: {
 				unitTypes: initialLoadFactory.cargaUnidades,
 				buques: initialLoadFactory.cargaBuques,
-				trenes: initialLoadFactory.cargaTrenes,
-				clientes: initialLoadFactory.cargaClientes,
+				//trenes: initialLoadFactory.cargaTrenes,
+				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: initialLoadFactory.cargaVouchers,
 				estados: initialLoadFactory.cargaEstados,
 				matches: initialLoadFactory.cargaMatchesArray,
@@ -424,7 +424,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 					unitTypes: initialLoadFactory.cargaUnidades,
 					descripciones: initialLoadFactory.cargaDescripciones,
 					ratesMatches: initialLoadFactory.cargaMatchesRates,
-					allRates: initialLoadFactory.cargaAllRates
+					allRates: initialLoadFactory.cargaAllRates,
+					estados: initialLoadFactory.cargaEstados
 				}
 			})
 			.state('reports.tarifas', {
@@ -442,7 +443,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				resolve: {
 					clientes: initialLoadFactory.cargaClientes,
 					descripciones: initialLoadFactory.cargaDescripciones,
-					ratesMatches: initialLoadFactory.cargaMatchesRates
+					ratesMatches: initialLoadFactory.cargaMatchesRates,
+					estados: initialLoadFactory.cargaEstados
 				}
 			})
 			.state('reports.terminales', {
@@ -587,9 +589,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			controller: "liquidacionesCtrl",
 			resolve: {
 				unitTypes: initialLoadFactory.cargaUnidades,
-				buques: initialLoadFactory.cargaBuques,
-				trenes: initialLoadFactory.cargaTrenes,
-				clientes: initialLoadFactory.cargaClientes,
+				//buques: initialLoadFactory.cargaBuques,
+				//trenes: initialLoadFactory.cargaTrenes,
+				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: initialLoadFactory.cargaVouchers,
 				estados: initialLoadFactory.cargaEstados,
 				matches: initialLoadFactory.cargaMatchesArray,
@@ -746,6 +748,9 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 					} else {
 						$state.transitionTo(toState.name);
 					}
+				}, function(err){
+					dialogs.error('Error', 'Fallo de comunicación con el servidor, inténtelo nuevamente más tarde');
+					$rootScope.salir();
 				});
 			} else {
 				$rootScope.verificaRutas(event, toState);

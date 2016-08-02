@@ -19,18 +19,18 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'inv
             var deferred = $q.defer();
             if (generalCache.get('trenes' + loginService.getFiltro())){
                 //console.log('hay trenes');
-                deferred.resolve();
+                deferred.resolve(generalCache.get('trenes' + loginService.getFiltro()));
             } else {
                 //console.log('no hay trenes');
                 gatesFactory.getTrains(loginService.getFiltro(), function(data){
                     if (data.status == 'OK'){
                         //console.log('cargamos trenes');
                         generalCache.put('trenes' + loginService.getFiltro(), data.data);
-                        deferred.resolve();
+                        deferred.resolve(data.data);
                     } else {
                         //console.log('error trenes');
                         generalCache.put('trenes' + loginService.getFiltro(), []);
-                        deferred.resolve()
+                        deferred.resolve([])
                     }
                 })
             }
@@ -42,18 +42,18 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'inv
             var deferred = $q.defer();
             if (generalCache.get('buques' + loginService.getFiltro())){
                 //console.log('hay buques');
-                deferred.resolve();
+                deferred.resolve(generalCache.get('buques' + loginService.getFiltro()));
             } else {
                 //console.log('no hay buques');
                 invoiceFactory.getShipTrips(loginService.getFiltro(), function (data) {
                     if (data.status == 'OK') {
                         //console.log('cargamos buques');
                         generalCache.put('buques' + loginService.getFiltro(), data.data);
-                        deferred.resolve();
+                        deferred.resolve(data.data);
                     } else {
                         //console.log('error buques');
                         generalCache.put('buques' + loginService.getFiltro(), []);
-                        deferred.resolve();
+                        deferred.resolve([]);
                     }
                 });
             }
@@ -65,7 +65,7 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'inv
             var deferred = $q.defer();
             if (generalCache.get('clientes' + loginService.getFiltro())){
                 //console.log('hay clientes');
-                deferred.resolve();
+                deferred.resolve(generalCache.get('clientes' + loginService.getFiltro()));
             } else {
                 //console.log('no hay clientes');
                 controlPanelFactory.getClients(loginService.getFiltro(), function (data) {
@@ -78,11 +78,11 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'inv
                             clientes.push({id: i++, nombre: dato})
                         });
                         generalCache.put('clientes' + loginService.getFiltro(), clientes);
-                        deferred.resolve();
+                        deferred.resolve(clientes);
                     } else {
                         //console.log('error clientes');
                         generalCache.put('clientes' + loginService.getFiltro(), []);
-                        deferred.resolve();
+                        deferred.resolve([]);
                     }
                 });
             }
