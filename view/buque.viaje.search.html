@@ -25,19 +25,19 @@
 		<h6><span class="glyphicon glyphicon-certificate"></span> - Contiene datos de la AFIP</h6>
 	</div>
 	<div class="row col-lg-9">
-		<tabset justified="true" class="hidden-print" ng-show="!loadingState">
-			<tab ng-show="mostrarAnterior" ng-click="mostrarMenosViajes()">
-				<tab-heading>
+		<uib-tabset justified="true" class="hidden-print" ng-show="!loadingState">
+			<uib-tab ng-show="mostrarAnterior" ng-click="mostrarMenosViajes()">
+				<uib-tab-heading>
 					<i class="glyphicon glyphicon-arrow-left"></i> Anterior
-				</tab-heading>
-			</tab>
-			<tab ng-repeat="viaje in buqueElegido.viajes | startFrom: filtrarDesde | limitTo: 6" heading="{{ viaje.fecha | date: 'dd/MM/yyyy' }} - {{ viaje.viaje }}" ng-click="filtrado('viaje', viaje.viaje)" active="viaje.active"></tab>
-			<tab ng-show="buqueElegido.viajes.length > 6 && buqueElegido.viajes.length - filtrarDesde > 6 " ng-click="mostrarMasViajes()">
-				<tab-heading>
+				</uib-tab-heading>
+			</uib-tab>
+			<uib-tab ng-repeat="viaje in buqueElegido.viajes | startFrom: filtrarDesde | limitTo: 6" heading="{{ viaje.fecha | date: 'dd/MM/yyyy' }} - {{ viaje.viaje }}" ng-click="filtrado('viaje', viaje.viaje)" active="viaje.active"></uib-tab>
+			<uib-tab ng-show="buqueElegido.viajes.length > 6 && buqueElegido.viajes.length - filtrarDesde > 6 " ng-click="mostrarMasViajes()">
+				<uib-tab-heading>
 					<i class="glyphicon glyphicon-arrow-right"></i> Siguiente
-				</tab-heading>
-			</tab>
-		</tabset>
+				</uib-tab-heading>
+			</uib-tab>
+		</uib-tabset>
 		<br>
 		<div class="col-lg-12" ng-show="datosContainers.length == 0 && !loadingState">
 			<div-panel config-panel="panelMensaje">
@@ -60,8 +60,8 @@
 							<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 						</div>
 						<br>
-					<span ng-repeat="tasa in containersSinRates | filter: search">
-						<div style="width: auto; float:left; text-align:center" ng-show="tasa.contenedor.contenedor != ''" ><a href ng-class="{mark: (model.contenedor == tasa.contenedor)}" ng-click="verDetalles(tasa.contenedor)"> {{ tasa.contenedor.contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
+					<span ng-repeat="container in containersSinRates | filter: search">
+						<div style="width: auto; float:left; text-align:center" ng-show="container != ''" ><a href ng-class="{mark: (model.contenedor == container)}" ng-click="verDetalles(container)"> {{ container }}</a><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
 					</div>
 				</div-panel>

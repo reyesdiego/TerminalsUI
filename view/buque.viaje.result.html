@@ -17,7 +17,7 @@
 		</thead>
 		<tbody>
 		<tr ng-repeat="datosContenedor in filteredContainers = (datosContainers | filter:search) | startFrom:(currentPageContainers-1) * itemsPerPage | limitTo:itemsPerPage">
-			<td class="text-center"><a ng-show="datosContenedor.gates.length == 0" href popover="No se encontraron gates para este contenedor" popover-trigger="mouseenter"><span class="glyphicon glyphicon-exclamation-sign alert-danger"></span></a><span> {{ datosContenedor.contenedor.contenedor }}</span></td>
+			<td class="text-center"><a ng-show="datosContenedor.gates.length == 0" href uib-popover="No se encontraron gates para este contenedor" popover-trigger="mouseenter"><span class="glyphicon glyphicon-exclamation-sign alert-danger"></span></a><span> {{ datosContenedor.contenedor.contenedor }}</span></td>
 			<td class="text-right" style="width: 10%"><span> {{ datosContenedor.contenedor.toneladas }}</span></td>
 			<td class="text-center" style="width: 3%"><a href ng-click="verDetalles(datosContenedor.contenedor)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
@@ -26,10 +26,10 @@
 </div>
 <span class="glyphicon glyphicon-exclamation-sign alert-danger"></span> - Contenedor sin gates
 <div class="col-lg-12 hidden-print hidden-xs" ng-show="filteredContainers.length > itemsPerPage">
-	<div class="text-center visible-xs"><pagination boundary-links="true" total-items="filteredContainers.length" items-per-page="itemsPerPage" ng-model="currentPageContainers" max-size="6" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-	<div class="text-center visible-sm"><pagination boundary-links="true" total-items="filteredContainers.length" items-per-page="itemsPerPage" ng-model="currentPageContainers" max-size="10" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-	<div class="text-center visible-md"><pagination boundary-links="true" total-items="filteredContainers.length" items-per-page="itemsPerPage" ng-model="currentPageContainers" max-size="10" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-	<div class="text-center visible-lg"><pagination boundary-links="true" total-items="filteredContainers.length" items-per-page="itemsPerPage" ng-model="currentPageContainers" max-size="15" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+	<div class="text-center visible-xs"><uib-pagination boundary-links="true" total-items="filteredContainers.length" items-per-page="itemsPerPage" ng-model="currentPageContainers" max-size="6" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
+	<div class="text-center visible-sm"><uib-pagination boundary-links="true" total-items="filteredContainers.length" items-per-page="itemsPerPage" ng-model="currentPageContainers" max-size="10" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
+	<div class="text-center visible-md"><uib-pagination boundary-links="true" total-items="filteredContainers.length" items-per-page="itemsPerPage" ng-model="currentPageContainers" max-size="10" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
+	<div class="text-center visible-lg"><uib-pagination boundary-links="true" total-items="filteredContainers.length" items-per-page="itemsPerPage" ng-model="currentPageContainers" max-size="15" ng-click="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
 </div>
 <div class="col-lg-12 hidden-print visible-xs" ng-show="filteredContainers.length > itemsPerPage">
 	<pager total-items="filteredContainers.length" ng-model="currentPageContainers" previous-text="<< Anterior" next-text="Siguiente >>" ng-click="pageChanged()"></pager>
