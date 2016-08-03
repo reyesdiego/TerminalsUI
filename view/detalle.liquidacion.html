@@ -14,15 +14,15 @@
 			<td class="text-center">{{ detalle._id.code }}</td>
 			<td>{{ detalle.descripcion }}</td>
 			<td class="text-right">{{ detalle.cnt | numberEx : 2 }}</td>
-			<td class="text-right" ng-hide="tasaAgp">U$S {{ detalle.total | currency }}</td>
-			<td class="text-right" ng-show="tasaAgp">U$S {{ detalle.totalAgp | currency }}</td>
-			<td class="text-right" ng-hide="tasaAgp">$ {{ detalle.totalPeso | currency }}</td>
-			<td class="text-right" ng-show="tasaAgp">$ {{ detalle.totalPesoAgp | currency }}</td>
+			<td class="text-right" ng-hide="tasaAgp">{{ detalle.total | currency: ('DOL' | formatCurrency) }}</td>
+			<td class="text-right" ng-show="tasaAgp">{{ detalle.totalAgp | currency: ('DOL' | formatCurrency) }}</td>
+			<td class="text-right" ng-hide="tasaAgp">{{ detalle.totalPeso | currency: ('PES' | formatCurrency) }}</td>
+			<td class="text-right" ng-show="tasaAgp">{{ detalle.totalPesoAgp | currency: ('PES' | formatCurrency) }}</td>
 		</tr>
 		<tr>
 			<td colspan="4" class="text-right">Total</td>
-			<td class="text-right" ng-hide="tasaAgp">$ {{ datosLiquidacion.totalFinal | currency }}</td>
-			<td class="text-right" ng-show="tasaAgp">$ {{ datosLiquidacion.totalFinalAgp | currency }}</td>
+			<td class="text-right" ng-hide="tasaAgp">{{ datosLiquidacion.totalFinal | currency: ('PES' | formatCurrency) }}</td>
+			<td class="text-right" ng-show="tasaAgp">{{ datosLiquidacion.totalFinalAgp | currency: ('PES' | formatCurrency) }}</td>
 		</tr>
 		</tbody>
 	</table>

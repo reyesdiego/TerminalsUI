@@ -24,7 +24,7 @@
 					<tbody>
 					<tr ng-repeat="cotizacion in datosDolar">
 						<td>{{ cotizacion.FECHA | date: 'dd/MM/yyyy' }}</td>
-						<td>$ {{ cotizacion.VALOR | currency }}</td>
+						<td>{{ cotizacion.VALOR | currency: ('PES' | formatCurrency) }}</td>
 					</tr>
 					</tbody>
 				</table>

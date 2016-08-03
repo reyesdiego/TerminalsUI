@@ -41,10 +41,10 @@
 						<td class="text-center">{{ detalle._id }}</td>
 						<td>{{ detalle.desc }}</td>
 						<td class="text-right">{{ detalle.cant }}</td>
-						<td class="text-right">U$S {{ detalle.totalDol | currency }}</td>
-						<td class="text-right">$ {{ detalle.totalPes | currency }}</td>
-						<td class="text-right">$ {{ detalle.iva | currency }}</td>
-						<td class="text-right">$ {{ detalle.total | currency }}</td>
+						<td class="text-right">{{ detalle.totalDol | currency: ('DOL' | formatCurrency) }}</td>
+						<td class="text-right">{{ detalle.totalPes | currency: ('PES' | formatCurrency) }}</td>
+						<td class="text-right">{{ detalle.iva | currency: ('PES' | formatCurrency) }}</td>
+						<td class="text-right">{{ detalle.total | currency: ('PES' | formatCurrency) }}</td>
 					</tr>
 					</tbody>
 				</table>
