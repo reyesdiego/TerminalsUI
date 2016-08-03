@@ -265,7 +265,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			$scope.tasas = [];
 			$scope.detalle = true;
 			$scope.contenedorElegido = contenedor;
-			$scope.model.contenedor = contenedor.contenedor;
+			$scope.model.contenedor = contenedor;
 			$scope.filtrar();
 		};
 
