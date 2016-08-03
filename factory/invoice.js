@@ -141,9 +141,10 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'erro
 				.then(function (response){
 					response.data.data = setearInterfazComprobante(response.data.data);
 					response.data.data.transferencia = formatService.formatearFechaISOString(response.data.data.registrado_en);
-					callback(ponerUnidadDeMedida(ponerDescripcionComprobante(response.data.data)));
+					callback(ponerUnidadDeMedida(ponerDescripcionComprobante(response.data.data)), true);
 				}, function(response){
 					errorFactory.raiseError(response.data, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
+					callback({}, false);
 				});
 		};
 

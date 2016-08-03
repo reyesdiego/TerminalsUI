@@ -117,8 +117,10 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		};
 
 		$scope.cambiarEstado = function(comprobante){
-			invoiceFactory.getInvoiceById(comprobante._id, function(data){
-				$scope.trackInvoice(data);
+			invoiceFactory.getInvoiceById(comprobante._id, function(data, success){
+				if (success){
+					$scope.trackInvoice(data);
+				}
 			})
 		};
 
@@ -185,6 +187,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 					$scope.comprobantesVistos = response.comprobantesVistos;
 					$scope.commentsInvoice = response.commentsInvoice;
 					$scope.mostrarResultado = true;
+					$scope.loadingState = false;
+				}, function(){
 					$scope.loadingState = false;
 				});
 		};

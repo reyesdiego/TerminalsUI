@@ -41,26 +41,32 @@ myapp.service('invoiceService', ['invoiceFactory', 'downloadFactory', '$q', '$fi
 
 		this.mostrarDetalle = function(comprobanteId, comprobantesVistos, datosInvoices) {
 			var deferred = $q.defer();
-			invoiceFactory.getInvoiceById(comprobanteId, function (comprobDetalle) {
-				var response = {
-					detalle: comprobDetalle,
-					commentsInvoice: []
-				};
-				response.noMatch = controlarTarifas(comprobDetalle);
-				var checkResult = internalCheckComprobantes(comprobDetalle, comprobantesVistos, datosInvoices);
-				response.datosInvoices = checkResult.datosInvoices;
-				response.comprobantesVistos = checkResult.comprobantesVistos;
+			invoiceFactory.getInvoiceById(comprobanteId, function (comprobDetalle, success) {
+				if (success){
+					var response = {
+						detalle: comprobDetalle,
+						commentsInvoice: []
+					};
+					response.noMatch = controlarTarifas(comprobDetalle);
+					var checkResult = internalCheckComprobantes(comprobDetalle, comprobantesVistos, datosInvoices);
+					response.datosInvoices = checkResult.datosInvoices;
+					response.comprobantesVistos = checkResult.comprobantesVistos;
 
-				invoiceFactory.getTrackInvoice(comprobanteId, function(dataTrack){
-					if (dataTrack.status == 'OK'){
-						dataTrack.data.forEach(function(comment){
-							if (comment.group == loginService.getGroup()){
-								response.commentsInvoice.push(comment);
-							}
-						});
-					}
-					deferred.resolve(response);
-				});
+					invoiceFactory.getTrackInvoice(comprobanteId, function(dataTrack){
+						if (dataTrack.status == 'OK'){
+							dataTrack.data.forEach(function(comment){
+								if (comment.group == loginService.getGroup()){
+									response.commentsInvoice.push(comment);
+								}
+							});
+							deferred.resolve(response);
+						} else {
+							deferred.reject();
+						}
+					});
+				} else {
+					deferred.reject();
+				}
 			});
 			return deferred.promise;
 		};
