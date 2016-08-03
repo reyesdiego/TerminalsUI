@@ -235,7 +235,10 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			invoiceFactory.getContainersSinTasaCargas($scope.model, function(data){
 				if (data.status == "OK"){
 					$scope.totalSinRates = data.totalCount;
-					$scope.containersSinRates = data.data;
+					data.data.forEach(function(contenedor){
+						contenedor = {contenedor: contenedor};
+						$scope.containersSinRates.push(contenedor);
+					});
 				} else {
 					$scope.hayError = true;
 					$scope.mensajeResultado = {
@@ -265,7 +268,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			$scope.tasas = [];
 			$scope.detalle = true;
 			$scope.contenedorElegido = contenedor;
-			$scope.model.contenedor = contenedor;
+			$scope.model.contenedor = contenedor.contenedor;
 			$scope.filtrar();
 		};
 

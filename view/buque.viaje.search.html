@@ -61,7 +61,7 @@
 						</div>
 						<br>
 					<span ng-repeat="container in containersSinRates | filter: search">
-						<div style="width: auto; float:left; text-align:center" ng-show="container != ''" ><a href ng-class="{mark: (model.contenedor == container)}" ng-click="verDetalles(container)"> {{ container }}</a><span ng-show="!$last"> -&nbsp</span></div>
+						<div style="width: auto; float:left; text-align:center" ng-show="container.contenedor != ''" ><a href ng-class="{mark: (model.contenedor == container.contenedor)}" ng-click="verDetalles(container)"> {{ container.contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
 					</div>
 				</div-panel>
