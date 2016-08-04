@@ -141,7 +141,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 				item.viajes.forEach(function(viaje){
 					var objetoViaje = {
 						'id': i,
-						'viaje': viaje.viaje
+						'viaje': viaje[0]
 					};
 					$scope.listaViajes.push(objetoViaje);
 					i++;
@@ -165,10 +165,10 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 				$scope.model.fechaFin = '';
 			}
 			$scope.model[filtro] = contenido;
-			if (filtro == 'razonSocial') {
+			if (filtro == 'razonSocial'){
 				$scope.model[filtro] = filtrarCaracteresInvalidos(contenido);
 			}
-			if (filtro == 'buqueNombre') {
+			if (filtro == 'buqueNombre'){
 				if (contenido != ''){
 					var i = 0;
 					$scope.listaBuques.forEach(function(buque){
@@ -176,7 +176,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 							buque.viajes.forEach(function(viaje){
 								var objetoViaje = {
 									'id': i,
-									'viaje': viaje.viaje
+									'viaje': viaje[0]
 								};
 								$scope.listaViajes.push(objetoViaje);
 								i++;

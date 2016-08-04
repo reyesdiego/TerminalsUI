@@ -178,9 +178,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			$scope.buqueElegido.elegido = '';
 			selected.elegido = 'bg-info';
 			$scope.buqueElegido = selected;
-			$scope.buqueElegido.viajes[0].active = true;
+			$scope.buqueElegido.viajes[0][2] = true;
 			$scope.model.buqueNombre = selected.buque;
-			$scope.model.viaje = selected.viajes[0].viaje;
+			$scope.model.viaje = selected.viajes[0][0];
 			$scope.traerResultados();
 		};
 

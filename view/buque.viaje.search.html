@@ -31,7 +31,7 @@
 					<i class="glyphicon glyphicon-arrow-left"></i> Anterior
 				</uib-tab-heading>
 			</uib-tab>
-			<uib-tab ng-repeat="viaje in buqueElegido.viajes | startFrom: filtrarDesde | limitTo: 6" heading="{{ viaje.fecha | date: 'dd/MM/yyyy' }} - {{ viaje.viaje }}" ng-click="filtrado('viaje', viaje.viaje)" active="viaje.active"></uib-tab>
+			<uib-tab ng-repeat="viaje in buqueElegido.viajes | startFrom: filtrarDesde | limitTo: 6" heading="{{ viaje[1] }} - {{ viaje[0] }}" ng-click="filtrado('viaje', viaje[0])" active="viaje[2]"></uib-tab>
 			<uib-tab ng-show="buqueElegido.viajes.length > 6 && buqueElegido.viajes.length - filtrarDesde > 6 " ng-click="mostrarMasViajes()">
 				<uib-tab-heading>
 					<i class="glyphicon glyphicon-arrow-right"></i> Siguiente
