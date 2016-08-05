@@ -56,13 +56,13 @@
                             <td>{{ total.razon }}</td>
                             <td class="text-right">{{ total.cnt }}</td>
                             <td class="text-right">% {{ total.total*100/totalTerminal | number: 2 }}</td>
-                            <td class="text-right">$ {{ total.avg | currency }}</td>
-                            <td class="text-right">$ {{ total.max | currency }}</td>
-                            <td class="text-right">$ {{ total.total | currency }}</td>
+                            <td class="text-right">{{ total.avg | currency: ('PES' | formatCurrency ) }}</td>
+                            <td class="text-right">{{ total.max | currency: ('PES' | formatCurrency ) }}</td>
+                            <td class="text-right">{{ total.total | currency: ('PES' | formatCurrency ) }}</td>
                         </tr>
                         <tr>
                             <td colspan="5" class="text-right"><strong>Total facturado por la terminal en el período</strong></td>
-                            <td colspan="2" class="text-right">$ {{ totalTerminal | currency }}</td>
+                            <td colspan="2" class="text-right">{{ totalTerminal | currency: ('PES' | formatCurrency ) }}</td>
                         </tr>
                         </tbody>
                     </table>
