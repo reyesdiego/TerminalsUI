@@ -71,8 +71,14 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 		$scope.totalItems = 0;
 		$scope.panelMensaje = {
 			titulo: 'Buque - Viaje',
-			mensaje: 'No se encontraron contenedores para los filtros seleccionados.',
+			mensaje: 'Seleccione un buque para realizar la búsqueda.',
 			tipo: 'panel-info'
+		};
+		$scope.totalSinRates = 0;
+		$scope.panelContainerNoRates = {
+			tipo: 'panel-info',
+			titulo: 'Contenedores sin Tasa a las Cargas',
+			mensaje: 'Seleccione un buque para realizar la búsqueda'
 		};
 		$scope.sumariaConfigPanel = {
 			tipo: 'panel-info',
@@ -223,6 +229,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 				if (data.status == 'OK'){
 					$scope.datosContainers = data.data;
 					$scope.totalItems = $scope.datosContainers.length;
+					if ($scope.totalItems == 0){
+						$scope.panelMensaje.mensaje = 'No se encontraron contenedores para los filtros seleccionados';
+					}
 				} else {
 					$scope.panelMensaje = {
 						titulo: 'Buque - Viaje',
@@ -235,13 +244,17 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			invoiceFactory.getContainersSinTasaCargas($scope.model, function(data){
 				if (data.status == "OK"){
 					$scope.totalSinRates = data.totalCount;
+					if ($scope.totalSinRates == 0){
+						$scope.panelContainerNoRates.mensaje = 'No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados';
+					}
 					data.data.forEach(function(contenedor){
 						contenedor = {contenedor: contenedor};
 						$scope.containersSinRates.push(contenedor);
 					});
 				} else {
+					$scope.totalSinRates = 0;
 					$scope.hayError = true;
-					$scope.mensajeResultado = {
+					$scope.panelContainerNoRates = {
 						titulo: 'Error',
 						mensaje: 'Se ha producido un error al cargar los datos.',
 						tipo: 'panel-danger'
