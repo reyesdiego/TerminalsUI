@@ -2,7 +2,7 @@
 <html ng-app="myapp">
 
 <head>
-	<title>Administraci&oacute;n General de Puertos S.E.</title>
+	<title ng-bind="pageTitle">Administraci&oacute;n General de Puertos S.E.</title>
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
@@ -126,6 +126,7 @@
 	<script src="controller/containerSumaria.js"></script>
 	<script src="controller/tarifasTerminales.js"></script>
 	<script src="controller/controlGates.js"></script>
+	<script src="controller/trackContainer.js"></script>
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
@@ -141,7 +142,7 @@
 
 <body class="container" ng-controller="navigationCtrl">
 
-<nav class="navbar navbar-default navbar-fixed-top hidden-print">
+<nav class="navbar navbar-default navbar-fixed-top hidden-print" ng-hide="inTrackContainer">
 	<div class="container">
 		<div class="navbar-header" uib-dropdown>
 			<a ng-click="irA()" class="nav navbar-brand" style="padding: 0 !important"><img src="images/logoBlanco.png" style="max-height: 100%"/></a>

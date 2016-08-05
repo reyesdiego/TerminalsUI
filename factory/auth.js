@@ -79,6 +79,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 							data.acceso.push('cgates.invoices');
 							data.acceso.push('cgates.appointments');
 						}
+						data.acceso.push('trackContainer');
 						//****************************************
 
 						loginService.setAcceso(data.acceso);

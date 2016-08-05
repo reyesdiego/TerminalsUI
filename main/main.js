@@ -609,6 +609,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			url: "/controlTurnos",
 			templateUrl: "view/appointments.control.html"
 		})
+		.state('trackContainer', {
+			url: "/trackContainer",
+			templateUrl: "view/trackContainer.html",
+			controller: 'trackContainerCtrl'
+		})
 		//Esta vista no se está usando en realidad, no está la parte del servidor
 		.state('mat', {
 			url: "/mat",
@@ -625,6 +630,8 @@ myapp.config(['$cookiesProvider', function($cookiesProvider){
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', '$cookies', 'appSocket', '$http',
 	function($rootScope, $state, loginService, authFactory, dialogs, $injector, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
+		$rootScope.pageTitle = 'Administración General de Puertos S.E.';
+		$rootScope.inTrackContainer = false;
 		$rootScope.socket = appSocket;
 
 		$rootScope.socket.connect();
@@ -707,8 +714,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.moneda = "DOL";
 
 		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register'];
-		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat', 'liquidaciones'];
-		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos'];
+		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat', 'liquidaciones', 'trackContainer'];
+		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos', 'trackContainer'];
 		$rootScope.$state = $state;
 		// Variables Globales de Paginacion
 		$rootScope.itemsPerPage = 15;
@@ -729,6 +736,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		};
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
+			$rootScope.inTrackContainer = to.name == 'trackContainer';
 			$rootScope.setEstiloTerminal($cookies.get('themeTerminal'));
 			$rootScope.loadingNewView = false;
 		});

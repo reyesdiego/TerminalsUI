@@ -8,7 +8,7 @@
 			<th><encabezado-tabla-ordenado titulo="Razón Social" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="razon" filtro-orden="razonOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fecha.emision" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Importe Total" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="importe.total" filtro-orden="importeOrden"></encabezado-tabla-ordenado></th>
-			<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
+			<th ng-hide="inTrackContainer" class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 			<th ng-show="acceso=='agp'" class="col-lg-1 hidden-print text-center">Estado</th>
 			<th ng-show="acceso=='agp'" class="text-center hidden-print">TC</th>
 		</tr>
@@ -26,7 +26,7 @@
 				<span ng-hide="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8">{{ invoice.importe.total | conversionMoneda: invoice | currency: (moneda | formatCurrency) }}</span>
 				<span ng-show="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8" style="color: #ff0000"> -{{ invoice.importe.total | conversionMoneda: invoice | currency: (moneda | formatCurrency) }}</span>
 			</td>
-			<td class="hidden-print text-center" style="width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td ng-hide="inTrackContainer" class="hidden-print text-center" style="width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			<!--<td style="width: 14%" class="hidden-print text-left">
 				<a href ng-click="trackInvoice(invoice)" uib-popover="{{ invoice.lastComment }}" popover-trigger="mouseenter"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
 			</td>-->

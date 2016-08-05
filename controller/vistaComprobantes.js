@@ -1,8 +1,10 @@
 /**
  * Created by artiom on 30/03/15.
  */
-myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', 'generalFunctions', 'dialogs', 'invoiceService',
-	function($rootScope, $scope, invoiceFactory, loginService, generalFunctions, dialogs, invoiceService){
+myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', 'generalFunctions', 'dialogs', 'invoiceService', '$state', '$window',
+	function($rootScope, $scope, invoiceFactory, loginService, generalFunctions, dialogs, invoiceService, $state, $window){
+		$scope.inTrackContainer = $rootScope.inTrackContainer;
+
 		$scope.status = {
 			open: true
 		};
@@ -213,6 +215,12 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			}
 		};
 
+		$scope.trackContainer = function(contenedor){
+			$window.localStorage.setItem('trackContainer', contenedor);
+			var url = $state.href('trackContainer');
+			$window.open(url,'_blank');
+		};
+
 		$scope.chequearTarifas = function(comprobante){
 			var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
 			$scope.comprobantesControlados = resultado.data;
@@ -238,6 +246,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
 
 		$scope.$on('terminoLogin', function(){
+			console.log('esta por aca???');
 			$scope.acceso = $rootScope.esUsuario;
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
 				$scope.loadingState = true;

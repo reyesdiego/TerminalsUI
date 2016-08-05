@@ -25,7 +25,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 			if (!$rootScope.cargandoCache) {
 				if (loginService.getStatus()){
 					$state.transitionTo($state.current.name);
-					window.location.reload();
+					$state.reload();
 				} else {
 					$state.transitionTo('login');
 				}
