@@ -5,6 +5,7 @@ myapp.controller('trackContainerCtrl', ['$rootScope', '$scope', '$window', 'invo
     function($rootScope, $scope, $window, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, $q, $state){
 
         $rootScope.pageTitle = $window.localStorage.getItem('trackContainer');
+        $scope.filtrosComprobantes = ['codTipoComprob', 'razonSocial', 'nroComprobante', 'fechaInicio'];
         //$rootScope.inTrackContainer = true;
 
         $scope.contenedorElegido = { contenedor: $window.localStorage.getItem('trackContainer')};
