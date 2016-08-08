@@ -464,6 +464,12 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 
 	$scope.mostrarPtosVentas = false;
 
+	$scope.panelMensaje = {
+		titulo: 'Control de códigos',
+		mensaje: 'Seleccione los parámetros y presione "Buscar" para iniciar la búsqueda.',
+		tipo: 'panel-info'
+	};
+
 	$scope.$on('errorInesperado', function(){
 		$scope.loadingControlCodigos = false;
 		$scope.comprobantesRotos = [];
