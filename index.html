@@ -140,106 +140,106 @@
 	<!--[endif]-->
 </head>
 
-<body class="container" ng-controller="navigationCtrl">
+<body class="container-fluid col-lg-12" ng-controller="navigationCtrl">
 
 <nav class="navbar navbar-default navbar-fixed-top hidden-print" ng-hide="inTrackContainer">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="navbar-header" uib-dropdown>
 			<a ng-click="irA()" class="nav navbar-brand" style="padding: 0 !important"><img src="images/logoBlanco.png" style="max-height: 100%"/></a>
 			<!--<a ng-click="irA()" class="nav navbar-brand"> SCT</a>-->
-			<button class="navbar-toggle collapsed" type="button"  ng-hide="cargandoCache" data-target=".navbar-responsive-collapse" ng-click="isCollapsed = !isCollapsed" aria-expanded="false">
+			<button class="navbar-toggle collapsed" type="button"  ng-hide="cargandoCache" data-target=".navbar-responsive-collapse" ng-click="cerrarMenu()" aria-expanded="false">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
 		</div>
 
-		<div class="navbar-collapse collapse navbar-responsive-collapse" aria-expanded="false" uib-collapse="isCollapsed">
+		<div class="navbar-collapse collapse" aria-expanded="false" uib-collapse="isCollapsed">
 			<ul class="nav navbar-nav navbar-left" ng-hide="cargandoCache">
 				<li ng-show="acceso=='agp' && cambioTerminal" class="hidden-sm" uib-dropdown>
 					<a href data-toggle="dropdown" uib-dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
-						<li><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
-						<li><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li ng-click="cerrarMenu()"><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li ng-click="cerrarMenu()"><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li ng-click="cerrarMenu()"><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
 						<li class="visible-lg divider"></li>
-						<li><a ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"></span> <span ng-show="verNotificaciones">Deshabilitar</span> <span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"></span> <span ng-show="!verNotificaciones">Habilitar</span> Notificaciones</a></li>
+						<li ng-click="cerrarMenu()"><a ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"></span> <span ng-show="verNotificaciones">Deshabilitar</span> <span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"></span> <span ng-show="!verNotificaciones">Habilitar</span> Notificaciones</a></li>
 					</ul>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" ng-hide="cargandoCache">
-				<li ng-show="acceso==''"><a ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
+				<li ng-show="acceso==''" ng-click="cerrarMenu()"><a ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
 				<li ng-show="acceso!='' && (tieneAcceso('tarifario') || tieneAcceso('matches'))" uib-dropdown>
-					<a data-ng-hide="dropdown" uib-dropdown-toggle>Tarifas<b class="caret"></b></a>
+					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Tarifas<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-show="tieneAcceso('tarifario')"><a ui-sref="tarifario">Tarifario</a></li>
-						<li ng-show="tieneAcceso('matches')"><a ui-sref="matches">Editar</a></li>
+						<li ng-show="tieneAcceso('tarifario')" ng-click="cerrarMenu()"><a ui-sref="tarifario">Tarifario</a></li>
+						<li ng-show="tieneAcceso('matches')" ng-click="cerrarMenu()"><a ui-sref="matches">Editar</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" uib-dropdown>
-					<a data-ng-hide="dropdown" uib-dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="invoiceNotify==0" class="burbuja {{ invoiceAnimar }}">{{ invoiceNotify }}</span></a>
+					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="invoiceNotify==0" class="burbuja {{ invoiceAnimar }}">{{ invoiceNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li ng-show="tieneAcceso('invoices')"><a ui-sref="invoices">Ver</a></li>
-						<li ng-show="tieneAcceso('cfacturas')"><a ui-sref="cfacturas">Control</a></li>
+						<li ng-show="tieneAcceso('invoices')" ng-click="cerrarMenu()"><a ui-sref="invoices">Ver</a></li>
+						<li ng-show="tieneAcceso('cfacturas')" ng-click="cerrarMenu()"><a ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
 				<li class="hidden-sm" ng-show="acceso!='' && (tieneAcceso('gates') || tieneAcceso('cgates'))" uib-dropdown>
-					<a data-ng-hide="dropdown" uib-dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
+					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li ng-show="tieneAcceso('gates')"><a ui-sref="gates">Ver</a></li>
-						<li ng-show="tieneAcceso('cgates')"><a ui-sref="cgates">Control</a></li>
+						<li ng-show="tieneAcceso('gates')" ng-click="cerrarMenu()"><a ui-sref="gates">Ver</a></li>
+						<li ng-show="tieneAcceso('cgates')" ng-click="cerrarMenu()"><a ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
 				<li class="hidden-sm" ng-show="acceso!='' && (tieneAcceso('turnos') || tieneAcceso('agenda') || tieneAcceso('cturnos'))" uib-dropdown>
-					<a data-ng-hide="dropdown" uib-dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
+					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
-						<li ng-show="tieneAcceso('turnos')"><a ui-sref="turnos">Ver</a></li>
-						<li ng-show="tieneAcceso('cturnos')"><a ui-sref="cturnos">Sin notificar</a></li>
-						<li ng-show="tieneAcceso('mturnos')"><a ui-sref="mturnos">Control</a></li>
+						<li ng-show="tieneAcceso('turnos')" ng-click="cerrarMenu()"><a ui-sref="turnos">Ver</a></li>
+						<li ng-show="tieneAcceso('cturnos')" ng-click="cerrarMenu()"><a ui-sref="cturnos">Sin notificar</a></li>
+						<li ng-show="tieneAcceso('mturnos')" ng-click="cerrarMenu()"><a ui-sref="mturnos">Control</a></li>
 					</ul>
 				</li>
 				<li class="visible-sm" ng-show="acceso!='' && (tieneAcceso('turnos') || tieneAcceso('agenda')) || tieneAcceso('cturnos') || (tieneAcceso('gates') || tieneAcceso('cgates'))" uib-dropdown>
-					<a data-ng-hide="dropdown" uib-dropdown-toggle>Gates/Turnos<b class="caret"></b></a>
+					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Gates/Turnos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="visible-sm dropdown-header">Gates</li>
-						<li ng-show="tieneAcceso('gates')"><a ui-sref="gates">Ver</a></li>
-						<li ng-show="tieneAcceso('cgates')"><a ui-sref="cgates">Control</a></li>
+						<li ng-show="tieneAcceso('gates')" ng-click="cerrarMenu()"><a ui-sref="gates">Ver</a></li>
+						<li ng-show="tieneAcceso('cgates')" ng-click="cerrarMenu()"><a ui-sref="cgates">Control</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Turnos</li>
-						<li ng-show="tieneAcceso('turnos')"><a ui-sref="turnos">Ver</a></li>
-						<li ng-show="tieneAcceso('cturnos')"><a ui-sref="cturnos">Sin notificar</a></li>
+						<li ng-show="tieneAcceso('turnos')" ng-click="cerrarMenu()"><a ui-sref="turnos">Ver</a></li>
+						<li ng-show="tieneAcceso('cturnos')" ng-click="cerrarMenu()"><a ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>
 				<li ng-show="acceso != '' && (tieneAcceso('liquidaciones') || tieneAcceso('control') || tieneAcceso('reports') || tieneAcceso('container') || tieneAcceso('buque') || tieneAcceso('afip') || tieneAcceso('users') || tieneAcceso('access'))" uib-dropdown>
-					<a data-toggle="dropdown" uib-dropdown-toggle>Administrar<b class="caret"></b></a>
+					<a href data-toggle="dropdown" uib-dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-header" ng-show="tieneAcceso('control') || tieneAcceso('reports')">Gráficos</li>
-						<li ng-show="tieneAcceso('control')"><a ui-sref="control">Control</a></li>
-						<li ng-show="tieneAcceso('reports')"><a ui-sref="reports">Reportes</a></li>
+						<li ng-show="tieneAcceso('control')" ng-click="cerrarMenu()"><a ui-sref="control">Control</a></li>
+						<li ng-show="tieneAcceso('reports')" ng-click="cerrarMenu()"><a ui-sref="reports">Reportes</a></li>
 						<li class="divider" ng-show="(tieneAcceso('control') || tieneAcceso('reports')) && (tieneAcceso('container') || tieneAcceso('buque'))"></li>
 						<li class="dropdown-header" ng-show="tieneAcceso('container') || tieneAcceso('buque')">Contenedores</li>
-						<li ng-show="tieneAcceso('container')"><a ui-sref="container">Ver</a></li>
-						<li ng-show="tieneAcceso('buque')"><a ui-sref="buque">Buque - Viaje</a></li>
+						<li ng-show="tieneAcceso('container')" ng-click="cerrarMenu()"><a ui-sref="container">Ver</a></li>
+						<li ng-show="tieneAcceso('buque')" ng-click="cerrarMenu()"><a ui-sref="buque">Buque - Viaje</a></li>
 						<li class="divider" ng-show="(tieneAcceso('container') || tieneAcceso('buque')) && (tieneAcceso('liquidaciones') || tieneAcceso('mat') || tieneAcceso('afip'))"></li>
 						<li class="dropdown-header" ng-show="tieneAcceso('liquidaciones') || tieneAcceso('mat') || tieneAcceso('afip')">Contabilidad</li>
-						<li ng-show="tieneAcceso('liquidaciones')"><a  ui-sref="liquidaciones">Liquidaciones</a></li>
-						<li ng-show="tieneAcceso('mat')"><a ui-sref="mat">M.A.T.</a></li>
-						<li ng-show="tieneAcceso('afip')"><a ui-sref="afip">A.F.I.P</a></li>
+						<li ng-show="tieneAcceso('liquidaciones')" ng-click="cerrarMenu()"><a  ui-sref="liquidaciones">Liquidaciones</a></li>
+						<li ng-show="tieneAcceso('mat')" ng-click="cerrarMenu()"><a ui-sref="mat">M.A.T.</a></li>
+						<li ng-show="tieneAcceso('afip')" ng-click="cerrarMenu()"><a ui-sref="afip">A.F.I.P</a></li>
 						<li class="divider" ng-show="(tieneAcceso('liquidaciones') || tieneAcceso('mat') || tieneAcceso('afip')) && (tieneAcceso('users') || tieneAcceso('access'))"></li>
 						<li class="dropdown-header" ng-show="tieneAcceso('users') || tieneAcceso('access')">Seguridad</li>
-						<li ng-show="tieneAcceso('users')"><a ui-sref="users">Usuarios</a></li>
-						<li ng-show="tieneAcceso('access')"><a ui-sref="access">Control de acceso</a></li>
+						<li ng-show="tieneAcceso('users')" ng-click="cerrarMenu()"><a ui-sref="users">Usuarios</a></li>
+						<li ng-show="tieneAcceso('access')" ng-click="cerrarMenu()"><a ui-sref="access">Control de acceso</a></li>
 						<li class="visible-sm divider" ng-show="tieneAcceso('users') || tieneAcceso('access')"></li>
 						<li class="visible-sm dropdown-header">Seleccione Terminal</li>
-						<li class="visible-sm"><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
-						<li class="visible-sm"><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
-						<li class="visible-sm"><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li class="visible-sm" ng-click="cerrarMenu()"><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li class="visible-sm" ng-click="cerrarMenu()"><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li class="visible-sm" ng-click="cerrarMenu()"><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
 						<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Cambiar moneda</li>
-						<li class="visible-sm"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
+						<li class="visible-sm" ng-click="cerrarMenu()"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
 					</ul>
 				</li>
-				<li class="hidden-sm" ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
+				<li class="hidden-sm" ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();" ng-click="cerrarMenu()">{{ moneda | formatCurrency}}</a></li>
 				<li ng-show="acceso!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
 				<li ng-show="acceso!=''" uib-dropdown>
 					<a href data-toggle="dropdown" uib-dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ terminal.user }}<b class="caret"></b></a>
@@ -256,7 +256,7 @@
 	<img class="media-object center-block" src="images/loading.gif">
 	<span class="center-block text-center">Cargando datos de la vista...</span>
 </div>
-<div ng-hide="loadingNewView" class="row wrapper">
+<div ng-hide="loadingNewView" class="container-fluid row wrapper">
 	<div ui-view></div>
 </div>
 

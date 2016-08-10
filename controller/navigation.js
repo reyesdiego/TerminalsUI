@@ -5,6 +5,8 @@
 myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginService', 'authFactory', 'generalFunctions', '$timeout', 'notify', '$filter',
 	function($scope, $rootScope, $state, loginService, authFactory, generalFunctions, $timeout, notify, $filter) {
 
+		$scope.isCollapsed = true;
+
 		notify.config({
 			duration: 20000,
 			position: 'left',
@@ -20,6 +22,10 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		$scope.acceso = '';
 		$scope.grupo = '';
 		$rootScope.filtroTerminal = '';
+
+		$scope.cerrarMenu = function(){
+			if (!$scope.isCollapsed) $scope.isCollapsed = true;
+		};
 
 		$scope.irA = function(){
 			if (!$rootScope.cargandoCache) {

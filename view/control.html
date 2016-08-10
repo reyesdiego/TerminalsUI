@@ -1,4 +1,4 @@
-<div class="container col-xlg-offset-2 col-xlg-8">
+<div class="container col-lg-offset-1 col-lg-10 col-md-12">
 
 	<div class="row col-lg-12 page-header">
 		<h1><img ng-src="images/paneldecontrol.png" height="64" width="80" class="hidden-xs">Panel de control</h1>
@@ -67,7 +67,7 @@
 		</div>
 		<div class="col-lg-4" ng-hide="facturadoDia.loading || facturadoDia.error">
 			<h4 class="text-left">Facturado diario</h4>
-			<div>
+			<div class="table-responsive">
 				<dynamic-chart
 						chart-object="chartFacturado"
 						select="selectRow(selectedRowIndexFacturado)"
@@ -96,7 +96,7 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenMonth" datepicker-options="datepickerMonth" ng-model="mesDesde" ng-change="traerDatosFacturadoMes()" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div>
+			<div class="table-responsive">
 				<dynamic-chart
 						chart-object="chartFacturas"
 						select="selectRow(selectedRowIndexFacturas)"
@@ -123,7 +123,7 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenGates" datepicker-options="datepickerMonth" ng-change="traerDatosGates()" ng-model="mesDesdeGates" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div>
+			<div class="table-responsive">
 				<dynamic-chart
 						chart-object="chartGates"
 						select="selectRow(selectedRowIndexGates)"
@@ -150,7 +150,7 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenTurnos" datepicker-options="datepickerMonthTurnos" ng-change="traerDatosTurnos()" ng-model="mesDesdeTurnos" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div>
+			<div class="table-responsive">
 				<dynamic-chart
 						chart-object="chartTurnos"
 						select="selectRow(selectedRowIndexTurnos)"
@@ -199,7 +199,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-12">
+			<div class="col-lg-12 table-responsive">
 				<dynamic-chart
 						chart-object="chartDiaGatesTurnos"
 						select="selectRow(selectedRowIndexFacturado)"

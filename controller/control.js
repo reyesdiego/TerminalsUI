@@ -449,8 +449,13 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.facturadoMes.loading = true;
 			$scope.isOpenMonth = false;
 			controlPanelFactory.getFacturasMeses(datos, function(graf){
-				$scope.chartFacturas.data = prepararDatosMes(graf.data, true);
-				$scope.facturadoMes.loading = false;
+				if (graf){
+					$scope.chartFacturas.data = prepararDatosMes(graf.data, true);
+					$scope.facturadoMes.loading = false;
+				} else {
+					$scope.facturadoMes.error = true;
+					$scope.facturadoMes.loading = false;
+				}
 			});
 		};
 
@@ -459,8 +464,13 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.cantGates.error = false;
 			$scope.cantGates.loading = true;
 			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}, function(graf){
-				$scope.chartGates.data = prepararDatosMes(graf, false);
-				$scope.cantGates.loading = false;
+				if (graf){
+					$scope.chartGates.data = prepararDatosMes(graf, false);
+					$scope.cantGates.loading = false;
+				} else {
+					$scope.cantGates.error = true;
+					$scope.cantGates.loading = false;
+				}
 			});
 		};
 
@@ -469,8 +479,13 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.cantTurnos.error = false;
 			$scope.cantTurnos.loading = true;
 			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }, function(graf){
-				$scope.cantTurnos.loading = false;
-				$scope.chartTurnos.data = prepararDatosMes(graf, false);
+				if (graf){
+					$scope.cantTurnos.loading = false;
+					$scope.chartTurnos.data = prepararDatosMes(graf, false);
+				} else {
+					$scope.cantTurnos.error = true;
+					$scope.cantTurnos.loading = false;
+				}
 			});
 		};
 
@@ -482,8 +497,13 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.facturadoDia.error = false;
 			$scope.facturadoDia.loading = true;
 			controlPanelFactory.getFacturadoPorDia(datos, function(graf){
-				$scope.chartFacturado.data = prepararDatosFacturadoDia(graf.data);
-				$scope.facturadoDia.loading = false;
+				if (graf){
+					$scope.chartFacturado.data = prepararDatosFacturadoDia(graf.data);
+					$scope.facturadoDia.loading = false;
+				} else {
+					$scope.facturadoDia.error = true;
+					$scope.facturadoDia.loading = false;
+				}
 			});
 		};
 
@@ -498,16 +518,26 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.diaGatesTurnosFin.setHours(0, 0, 0);
 			if ($scope.radioModel == 'Gates'){
 				controlPanelFactory.getGatesDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
-					$scope.gatesTurnos.loading = false;
-					$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
-					$scope.labelPorHora = 'Gates por hora'
+					if (graf) {
+						$scope.gatesTurnos.loading = false;
+						$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
+						$scope.labelPorHora = 'Gates por hora'
+					} else {
+						$scope.gatesTurnos.error = true;
+						$scope.gatesTurnos.loading = false;
+					}
 				});
 			}
 			else if ($scope.radioModel == 'Turnos'){
 				controlPanelFactory.getTurnosDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
-					$scope.gatesTurnos.loading = false;
-					$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
-					$scope.labelPorHora = 'Turnos por hora'
+					if (graf){
+						$scope.gatesTurnos.loading = false;
+						$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
+						$scope.labelPorHora = 'Turnos por hora'
+					} else {
+						$scope.gatesTurnos.error = true;
+						$scope.gatesTurnos.loading = false;
+					}
 				});
 			}
 		};
