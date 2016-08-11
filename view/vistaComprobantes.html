@@ -34,7 +34,7 @@
 			<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong> Mostrando del {{ currentPage * model.itemsPerPage - (model.itemsPerPage - 1) }} al {{ mostrarTope() }} (página {{ currentPage }})</strong></span></h5>
 			<ul ng-show="mostrarPtosVenta" class="nav nav-tabs hidden-print">
 				<li ng-repeat="punto in todosLosPuntosDeVentas" ng-class="{'active': punto.active}" ng-hide="punto.hide">
-					<a ng-click="cambiaPtoVenta(punto);">{{ punto.heading }}</a>
+					<a href ng-click="cambiaPtoVenta(punto);">{{ punto.heading }}</a>
 				</li>
 			</ul>
 			<br>
