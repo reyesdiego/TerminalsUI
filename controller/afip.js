@@ -178,7 +178,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			$scope.cargaDatos($scope.actualRegistro);
+			//$scope.cargaDatos($scope.actualRegistro);
 		};
 
 		$scope.filtrarOrden = function(filtro){

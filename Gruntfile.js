@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 		concat: {
 			css: {
 				src: [
+					'css/app.css',
 					'css/angular-multi-select.css',
 					'css/animation.css',
 					'css/dialogs.css',

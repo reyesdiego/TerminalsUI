@@ -14,20 +14,20 @@
 	<div ng-show="datosGates.length != undefined && datosGates.length > 0">
 		<h5 ng-hide="detallesGates"><strong>Resultados: {{ totalItems }}</strong> ({{ tiempoConsulta }} segundos)<span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
 		<div ng-hide="detallesGates">
-			<div class="table-responsive">
-				<table class="invoice-shadow table table-bordered table-hover" style="text-align: center">
+
+				<table class="invoice-shadow table table-responsive table-bordered table-hover text-center">
 					<tr>
-						<th style="text-align: center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
-						<th style="text-align: center">Buque</th>
-						<th style="text-align: center">Viaje</th>
-						<th style="text-align: center">Contenedor</th>
-						<th style="text-align: center">Pies</th>
-						<th style="text-align: center">Patente cami&oacute;n</th>
-						<th style="text-align: center" colspan="2">Tipo</th>
-						<th style="text-align: center"><encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
-						<th style="text-align: center">Inicio turno</th>
-						<th style="text-align: center">Fin turno</th>
-						<th class="hidden-print" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center">Facturas</th>
+						<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
+						<th class="text-center">Buque</th>
+						<th class="text-center">Viaje</th>
+						<th class="text-center">Contenedor</th>
+						<th class="text-center">Pies</th>
+						<th class="text-center">Patente cami&oacute;n</th>
+						<th class="text-center" colspan="2">Tipo</th>
+						<th class="text-center"><encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
+						<th class="text-center">Inicio turno</th>
+						<th class="text-center">Fin turno</th>
+						<th class="hidden-print text-center" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0">Facturas</th>
 					</tr>
 					<tr ng-repeat="gate in datosGates" class="fila-animada">
 						<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
@@ -51,7 +51,7 @@
 						<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
 						<td class="hidden-print" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)" ng-hide="gate.carga == 'NO' || gate.contenedor == ''"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 				</table>
-			</div>
+
 			<div-pagination total-items="totalItems" current-page="currentPage" items-per-page="itemsPerPage"></div-pagination>
 		</div>
 	</div>

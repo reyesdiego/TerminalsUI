@@ -3,7 +3,7 @@
 		<span>{{ model.panelMensaje.mensaje }}</span>
 	</div-panel>
 </div>
-<div class="table-responsive" ng-show="model.comprobantes.length > 0">
+<div ng-show="model.comprobantes.length > 0">
 	<div class="col-lg-12">
 		<h5 class="col-lg-4 text-left">
 			<strong>Resultados: {{ model.total }}</strong><span class="visible-print-block"><strong> Mostrando del {{ model.currentPage * model.itemsPerPage - (model.itemsPerPage - 1) }} al {{ mostrarTope(model.currentPage, model.total) }} (página {{ model.currentPage }})</strong></span>
@@ -18,7 +18,7 @@
 		</div>
 	</div>
 
-	<table class="invoice-shadow table table-striped table-bordered">
+	<table class="invoice-shadow table table-striped table-bordered table-responsive">
 		<thead>
 		<tr class="text-center">
 			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
