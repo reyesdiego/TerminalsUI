@@ -18,10 +18,11 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 					// ACC-0004 no habilitado en el sistema
 					callback(response.data, true);
 				} else {
-					response.data = {
+					//console.log(response);
+					/*response.data = {
 						code: 'ACC-0020',
 						message: 'Se ha producido un error de comunicación con el servidor.'
-					};
+					};*/
 					callback(response.data, true);
 				}
 			});
