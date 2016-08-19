@@ -3,7 +3,7 @@
 		<span>{{ model.panelMensaje.mensaje }}</span>
 	</div-panel>
 </div>
-<div ng-show="model.comprobantes.length > 0">
+<div class="table-responsive" ng-show="model.comprobantes.length > 0">
 	<div class="col-lg-12">
 		<h5 class="col-lg-4 text-left">
 			<strong>Resultados: {{ model.total }}</strong><span class="visible-print-block"><strong> Mostrando del {{ model.currentPage * model.itemsPerPage - (model.itemsPerPage - 1) }} al {{ mostrarTope(model.currentPage, model.total) }} (página {{ model.currentPage }})</strong></span>
@@ -17,8 +17,8 @@
 			</label>
 		</div>
 	</div>
-	<div class="table-responsive">
-		<table class="invoice-shadow table table-striped table-bordered table-responsive">
+
+		<table class="invoice-shadow table table-striped table-bordered">
 			<thead>
 			<tr class="text-center">
 				<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
@@ -91,12 +91,12 @@
 			</tr>
 			</tbody>
 		</table>
-	</div>
+
 	<div class="col-lg-12 hidden-print" ng-show="model.total > model.itemsPerPage">
-		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="5" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-sm"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="7" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-md"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="11" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
-		<div class="text-center visible-lg"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="15" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
+		<div class="text-center visible-xs"><uib-pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="5" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
+		<div class="text-center visible-sm"><uib-pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="7" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
+		<div class="text-center visible-md"><uib-pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="11" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
+		<div class="text-center visible-lg"><uib-pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="15" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination></div>
 	</div>
 	<br>
 </div>
