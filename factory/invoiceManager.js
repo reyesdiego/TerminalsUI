@@ -6,7 +6,7 @@ myapp.factory('invoiceManager', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
         namespace: 'invoices',
         getInvoices: function(idLlamada, datos, page, callback) {
             this.cancelRequest(idLlamada);
-            var canceler = HTTPCanceler.get($q.defer(), namespace, idLlamada);
+            var canceler = HTTPCanceler.get($q.defer(), this.namespace, idLlamada);
             var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function(response){
@@ -29,7 +29,7 @@ myapp.factory('invoiceManager', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
         },
         getInvoicesNoMatches: function(datos, page, callback){
             this.cancelRequest('invoicesNoMatches');
-            var canceler = HTTPCanceler.get($q.defer(), namespace, 'invoicesNoMatches');
+            var canceler = HTTPCanceler.get($q.defer(), this.namespace, 'invoicesNoMatches');
             var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function (response) {
@@ -59,4 +59,5 @@ myapp.factory('invoiceManager', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             HTTPCanceler.cancel(this.namespace, request);
         }
     }
+    return invoiceManager;
 }]);

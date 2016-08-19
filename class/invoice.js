@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 17/08/2016.
  */
-myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', function($http, $q, formatService, generalCache, loginService, $uibModal){
+myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache){
     function Invoice(invoiceData){
         if (invoiceData){
             this.setData(invoiceData);
@@ -34,13 +34,16 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                 'estado': 'Y'
             };
             if (this.estado){
+                console.log('tiene estado');
                 if (this.estado.length > 0){
                     var encontrado = false;
                     var scope = this;
                     this.estado.forEach(function(estadoGrupo){
+                        console.log(estadoGrupo);
                         if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
                             encontrado = true;
                             scope.interfazEstado = (estadosArrayCache.get(estadoGrupo.estado)) ? estadosArrayCache.get(estadoGrupo.estado) : estadosArrayCache.get('Y');
+                            console.log(scope.interfazEstado);
                         }
                     });
                     if (!encontrado){
@@ -105,7 +108,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                     var comentariosFiltrados = [];
                     response.data.data.forEach(function(comentario){
                         if (comentario.group == loginService.getGroup() || comentario.group === 'ALL'){
-                            comentario.fecha = formatService.formatearFechaISOString(comment.registrado_en);
+                            comentario.fecha = formatService.formatearFechaISOString(comentario.registrado_en);
                             comentariosFiltrados.push(comentario);
                         }
                     });
@@ -183,7 +186,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                     backdrop: 'static',
                     resolve: {
                         estado: function () {
-                            return scope.estado;
+                            return scope.interfazEstado;
                         },
                         track: function() {
                             return comentarios;
@@ -226,10 +229,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             return deferred.promise;
         },
         mostrarDetalle: function(){
-            var scope = this;
-            this.loadById().then(function(){
-
-            })
+            return this.loadById().then(this.getTrack());
         },
         controlarTarifas: function(){
             /***************** ASQUEROSO ***********************************/
@@ -348,4 +348,5 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             return response;
         }
     }
+    return Invoice;
 }]);

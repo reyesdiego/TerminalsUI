@@ -103,32 +103,39 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		};
 
 		$scope.trackInvoice = function(comprobante){
-			invoiceService.trackInvoice(comprobante)
+			/*invoiceService.trackInvoice(comprobante)
 				.then(function(response){
 					if (angular.isDefined(response)) comprobante = response;
 				}, function(message){
 					dialogs.error('Liquidaciones', message);
-				})
+				})*/
+			comprobante.trackInvoice().then(function(invoice){
+				console.log(invoice);
+				console.log(comprobante);
+			}, function(response){
+				console.log(response);
+			})
 		};
 
 		$scope.checkComprobantes = function(comprobante){
-			var response;
+			/*var response;
 			response = invoiceService.checkComprobantes(comprobante, $scope.comprobantesVistos, $scope.datosInvoices);
 			$scope.datosInvoices = response.datosInvoices;
-			$scope.comprobantesVistos = response.comprobantesVistos;
+			$scope.comprobantesVistos = response.comprobantesVistos;*/
 		};
 
 		$scope.cambiarEstado = function(comprobante){
-			invoiceFactory.getInvoiceById(comprobante._id, function(data, success){
+			comprobante.loadById().then($scope.trackInvoice(comprobante));
+			/*invoiceFactory.getInvoiceById(comprobante._id, function(data, success){
 				if (success){
 					$scope.trackInvoice(data);
 				}
-			})
+			})*/
 		};
 
 
 		$scope.ocultarResultado = function(comprobante){
-			$scope.checkComprobantes(comprobante);
+			//$scope.checkComprobantes(comprobante);
 			$scope.mostrarResultado = false;
 		};
 
@@ -182,7 +189,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 
 		$scope.mostrarDetalle = function(comprobante){
 			$scope.loadingState = true;
-			invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.datosInvoices)
+			/*invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.datosInvoices)
 				.then(function(response){
 					$scope.verDetalle = response.detalle;
 					$scope.datosInvoices = response.datosInvoices;
@@ -192,7 +199,19 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 					$scope.loadingState = false;
 				}, function(){
 					$scope.loadingState = false;
-				});
+				});*/
+			if (!comprobante.controlled){
+				$scope.comprobantesVistos.push(comprobante);
+				comprobante.controlled = true;
+			}
+			comprobante.mostrarDetalle().then(function(comments){
+				$scope.verDetalle = comprobante;
+				$scope.commentsInvoice = comments;
+				$scope.mostrarResultado = true;
+				$scope.loadingState = false;
+			}, function(){
+				$scope.loadingState = false;
+			})
 		};
 
 		$scope.devolverEstado = function(estado){
@@ -222,9 +241,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		};
 
 		$scope.chequearTarifas = function(comprobante){
-			var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
+			/*var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
 			$scope.comprobantesControlados = resultado.data;
-			return resultado.retValue;
+			return resultado.retValue;*/
 		};
 
 		$scope.existeDescripcion = function(itemId){
