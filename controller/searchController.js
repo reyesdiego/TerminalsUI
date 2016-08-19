@@ -2,8 +2,8 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', 'turnosFactory', '$sce', 'dialogs', 'loginService', '$filter', 'initialLoadFactory',
-	function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, turnosFactory, $sce, dialogs, loginService, $filter, initialLoadFactory){
+myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', 'turnosFactory', '$sce', 'dialogs', 'loginService', '$filter', 'initialLoadFactory', 'invoiceManager',
+	function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, turnosFactory, $sce, dialogs, loginService, $filter, initialLoadFactory, invoiceManager){
 
 		$scope.status = {
 			open: true
@@ -250,7 +250,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.detallesGates = true;
 			$scope.contenedor = contenedor.contenedor;
 			var datos = { 'contenedor': contenedor.contenedor };
-			invoiceFactory.getInvoice($scope.$id, datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
+			invoiceManager.getInvoices($scope.$id, datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
 				if (data.status === 'OK') {
 					$scope.invoices = data.data;
 					$scope.totalItems = data.totalCount;

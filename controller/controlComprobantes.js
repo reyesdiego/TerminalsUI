@@ -406,7 +406,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 
 }]);
 
-myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', function($scope, invoiceFactory, priceFactory) {
+myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', 'invoiceManager', function($scope, invoiceFactory, priceFactory, invoiceManager) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'rates'];
 
 	$scope.fechaInicio = new Date();
@@ -546,7 +546,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 				$scope.loadingControlCodigos = false;
 			}
 		});
-		invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
+		invoiceManager.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
 			if (invoicesNoMatches.status == 'OK'){
 				$scope.comprobantesRotos = invoicesNoMatches.data;
 				$scope.totalItems = invoicesNoMatches.totalCount;
@@ -565,7 +565,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		$scope.loadingControlCodigos = true;
 		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.model.itemsPerPage);
 		$scope.pageFiltros.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.pageFiltros, function(data){
+		invoiceManager.getInvoices($scope.$id, $scope.model, $scope.pageFiltros, function(data){
 			if (data.status == 'OK'){
 				$scope.totalItems = data.totalCount;
 				$scope.comprobantesRotos = data.data;
@@ -585,7 +585,7 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', fun
 		$scope.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 		$scope.pageCodigos.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(data){
+		invoiceManager.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(data){
 			if (data.status == 'OK'){
 				$scope.comprobantesRotos = data.data;
 				$scope.totalItems = data.totalCount;
@@ -709,7 +709,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.page.limit = $scope.model.itemsPerPage;
 			$scope.loadingState = true;
-			invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.page, function(invoiceError){
+			invoiceManager.getInvoices($scope.$id, $scope.model, $scope.page, function(invoiceError){
 				if (invoiceError.status == 'OK'){
 					$scope.comprobantes = invoiceError.data;
 					$scope.totalItems = invoiceError.totalCount;
