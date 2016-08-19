@@ -17,80 +17,81 @@
 			</label>
 		</div>
 	</div>
-
-	<table class="invoice-shadow table table-striped table-bordered table-responsive">
-		<thead>
-		<tr class="text-center">
-			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-center"><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-left"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-left"><encabezado-tabla-ordenado titulo="Cliente" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="razon" filtro-orden="razonOrden"></encabezado-tabla-ordenado></th>
-			<th ng-show="model.byContainer" class="text-left"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="container" filtro-orden="containerOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Ton." filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="cnt" filtro-orden="cntOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Tarifa" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="impUnit" filtro-orden="impUnitOrden"></encabezado-tabla-ordenado></th>
-			<th ng-hide="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="tasa" filtro-orden="tasaOrden"></encabezado-tabla-ordenado></th>
-			<th ng-show="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="tasaAgp" filtro-orden="tasaAgpOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-right"><encabezado-tabla-ordenado titulo="Cot." filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="cotiMoneda" filtro-orden="cotiMonedaOrden"></encabezado-tabla-ordenado></th>
-			<th ng-hide="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="totalTasa" filtro-orden="totalTasaOrden"></encabezado-tabla-ordenado></th>
-			<th ng-show="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="totalTasaAgp" filtro-orden="totalTasaAgpOrden"></encabezado-tabla-ordenado></th>
-			<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr ng-hide="model.byContainer" ng-repeat="invoice in model.comprobantes" ng-class="{comprobanteReenviar: (invoice.interfazEstado. _id == 'R' || invoice.interfazEstado. _id == 'T')}" class="fila-animada">
-			<td class="text-center" style="width: 9%; font-size: 9pt">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
-			<td class="text-center" style="width: 6%; font-size: 9pt"><span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
-			<td class="text-left" style="width: 12%; font-size: 9pt">{{ invoice.buque }}</td>
-			<td class="text-left" style="width: 20%; font-size: 9pt">{{ invoice.razon }}</td>
-			<td class="text-right" style="width: 6%; font-size: 9pt">{{ invoice.cnt | numberEx:2 }}</td>
-			<td class="text-right" style="width: 10%; font-size: 9pt" ng-hide="tasaAgp">
-				<span title=" Tarifa AGP {{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}" class="glyphicon glyphicon-circle-arrow-down text-danger" ng-show="invoice.impUnit < invoice.impUnitAgp"></span>
-				<span title=" Tarifa AGP {{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}" class="glyphicon glyphicon-circle-arrow-up text-success" ng-show="invoice.impUnit > invoice.impUnitAgp"></span>{{ invoice.impUnit | currency: ('DOL' | formatCurrency) }}</td>
-			<td class="text-right" style="width: 9%; font-size: 9pt" ng-show="tasaAgp">{{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}</td>
-			<td ng-hide="tasaAgp" class="text-right" style="width: 9%; font-size: 9pt">
-				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.tasa | currency: ('DOL' | formatCurrency) }}</span>
-			</td>
-			<td ng-show="tasaAgp" class="text-right" style="width: 9%; font-size: 9pt">
-				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.tasaAgp | currency: ('DOL' | formatCurrency) }}</span>
-			</td>
-			<td class="text-right" style="width: 8%; font-size: 9pt">{{ invoice.cotiMoneda | currency: ('PES' | formatCurrency) }}</td>
-			<td ng-hide="tasaAgp" class="text-right" style="width: 14%; font-size: 9pt">
-				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasa | currency: ('PES' | formatCurrency)}}</span>
-			</td>
-			<td ng-show="tasaAgp" class="text-right" style="width: 14%; font-size: 9pt">
-				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasaAgp | currency: ('PES' | formatCurrency)}}</span>
-			</td>
-			<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle({invoice: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-		</tr>
-		</tbody>
-		<tr ng-show="model.byContainer" ng-repeat="invoice in model.comprobantesByContainer">
-			<td class="text-center" style="width: 9%; font-size: 9pt">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
-			<td class="text-center" style="width: 6%; font-size: 9pt"><span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
-			<td class="text-left" style="width: 12%; font-size: 9pt">{{ invoice.buque }}</td>
-			<td class="text-left" style="width: 20%; font-size: 9pt">{{ invoice.razon }}</td>
-			<td class="text-right" style="width: 6%; font-size: 9pt">{{ invoice.container }}</td>
-			<td class="text-right" style="width: 6%; font-size: 9pt">{{ invoice.cnt | numberEx:2 }}</td>
-			<td class="text-right" style="width: 10%; font-size: 9pt" ng-hide="tasaAgp">
-				<span title=" Tarifa AGP {{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}" class="glyphicon glyphicon-circle-arrow-down text-danger" ng-show="invoice.impUnit < invoice.impUnitAgp"></span>
-				<span title=" Tarifa AGP {{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}" class="glyphicon glyphicon-circle-arrow-up text-success" ng-show="invoice.impUnit > invoice.impUnitAgp"></span>{{ invoice.impUnit | currency: ('DOL' | formatCurrency) }}</td>
-			<td class="text-right" style="width: 11%; font-size: 9pt" ng-show="tasaAgp">{{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}</td>
-			<td ng-hide="tasaAgp" class="text-right" style="width: 11%; font-size: 9pt">
-				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.tasa | currency: ('DOL' | formatCurrency) }}</span>
-			</td>
-			<td ng-show="tasaAgp" class="text-right" style="width: 11%; font-size: 9pt">
-				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.tasaAgp | currency: ('DOL' | formatCurrency) }}</span>
-			</td>
-			<td class="text-right" style="width: 8%; font-size: 9pt">{{ invoice.cotiMoneda | currency: ('PES' | formatCurrency) }}</td>
-			<td ng-hide="tasaAgp" class="text-right" style="width: 14%; font-size: 9pt">
-				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasa | currency: ('PES' | formatCurrency) }}</span>
-			</td>
-			<td ng-show="tasaAgp" class="text-right" style="width: 14%; font-size: 9pt">
-				<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasaAgp | currency: ('PES' | formatCurrency) }}</span>
-			</td>
-			<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle({invoice: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-		</tr>
-		</tbody>
-	</table>
+	<div class="table-responsive">
+		<table class="invoice-shadow table table-striped table-bordered table-responsive">
+			<thead>
+			<tr class="text-center">
+				<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-center"><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-left"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-left"><encabezado-tabla-ordenado titulo="Cliente" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="razon" filtro-orden="razonOrden"></encabezado-tabla-ordenado></th>
+				<th ng-show="model.byContainer" class="text-left"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="container" filtro-orden="containerOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-right"><encabezado-tabla-ordenado titulo="Ton." filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="cnt" filtro-orden="cntOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-right"><encabezado-tabla-ordenado titulo="Tarifa" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="impUnit" filtro-orden="impUnitOrden"></encabezado-tabla-ordenado></th>
+				<th ng-hide="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="tasa" filtro-orden="tasaOrden"></encabezado-tabla-ordenado></th>
+				<th ng-show="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="tasaAgp" filtro-orden="tasaAgpOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-right"><encabezado-tabla-ordenado titulo="Cot." filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="cotiMoneda" filtro-orden="cotiMonedaOrden"></encabezado-tabla-ordenado></th>
+				<th ng-hide="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="totalTasa" filtro-orden="totalTasaOrden"></encabezado-tabla-ordenado></th>
+				<th ng-show="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar({filtro: filtro})" oculta-filtros="model.ocultarFiltros" model="model.model" filtro="totalTasaAgp" filtro-orden="totalTasaAgpOrden"></encabezado-tabla-ordenado></th>
+				<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-hide="model.byContainer" ng-repeat="invoice in model.comprobantes" ng-class="{comprobanteReenviar: (invoice.interfazEstado. _id == 'R' || invoice.interfazEstado. _id == 'T')}" class="fila-animada">
+				<td class="text-center" style="width: 9%; font-size: 9pt">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
+				<td class="text-center" style="width: 6%; font-size: 9pt"><span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
+				<td class="text-left" style="width: 12%; font-size: 9pt">{{ invoice.buque }}</td>
+				<td class="text-left" style="width: 20%; font-size: 9pt">{{ invoice.razon }}</td>
+				<td class="text-right" style="width: 6%; font-size: 9pt">{{ invoice.cnt | numberEx:2 }}</td>
+				<td class="text-right" style="width: 10%; font-size: 9pt" ng-hide="tasaAgp">
+					<span title=" Tarifa AGP {{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}" class="glyphicon glyphicon-circle-arrow-down text-danger" ng-show="invoice.impUnit < invoice.impUnitAgp"></span>
+					<span title=" Tarifa AGP {{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}" class="glyphicon glyphicon-circle-arrow-up text-success" ng-show="invoice.impUnit > invoice.impUnitAgp"></span>{{ invoice.impUnit | currency: ('DOL' | formatCurrency) }}</td>
+				<td class="text-right" style="width: 9%; font-size: 9pt" ng-show="tasaAgp">{{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}</td>
+				<td ng-hide="tasaAgp" class="text-right" style="width: 9%; font-size: 9pt">
+					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.tasa | currency: ('DOL' | formatCurrency) }}</span>
+				</td>
+				<td ng-show="tasaAgp" class="text-right" style="width: 9%; font-size: 9pt">
+					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.tasaAgp | currency: ('DOL' | formatCurrency) }}</span>
+				</td>
+				<td class="text-right" style="width: 8%; font-size: 9pt">{{ invoice.cotiMoneda | currency: ('PES' | formatCurrency) }}</td>
+				<td ng-hide="tasaAgp" class="text-right" style="width: 14%; font-size: 9pt">
+					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasa | currency: ('PES' | formatCurrency)}}</span>
+				</td>
+				<td ng-show="tasaAgp" class="text-right" style="width: 14%; font-size: 9pt">
+					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasaAgp | currency: ('PES' | formatCurrency)}}</span>
+				</td>
+				<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle({invoice: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			</tr>
+			</tbody>
+			<tr ng-show="model.byContainer" ng-repeat="invoice in model.comprobantesByContainer">
+				<td class="text-center" style="width: 9%; font-size: 9pt">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
+				<td class="text-center" style="width: 6%; font-size: 9pt"><span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
+				<td class="text-left" style="width: 12%; font-size: 9pt">{{ invoice.buque }}</td>
+				<td class="text-left" style="width: 20%; font-size: 9pt">{{ invoice.razon }}</td>
+				<td class="text-right" style="width: 6%; font-size: 9pt">{{ invoice.container }}</td>
+				<td class="text-right" style="width: 6%; font-size: 9pt">{{ invoice.cnt | numberEx:2 }}</td>
+				<td class="text-right" style="width: 10%; font-size: 9pt" ng-hide="tasaAgp">
+					<span title=" Tarifa AGP {{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}" class="glyphicon glyphicon-circle-arrow-down text-danger" ng-show="invoice.impUnit < invoice.impUnitAgp"></span>
+					<span title=" Tarifa AGP {{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}" class="glyphicon glyphicon-circle-arrow-up text-success" ng-show="invoice.impUnit > invoice.impUnitAgp"></span>{{ invoice.impUnit | currency: ('DOL' | formatCurrency) }}</td>
+				<td class="text-right" style="width: 11%; font-size: 9pt" ng-show="tasaAgp">{{ invoice.impUnitAgp | currency: ('DOL' | formatCurrency) }}</td>
+				<td ng-hide="tasaAgp" class="text-right" style="width: 11%; font-size: 9pt">
+					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.tasa | currency: ('DOL' | formatCurrency) }}</span>
+				</td>
+				<td ng-show="tasaAgp" class="text-right" style="width: 11%; font-size: 9pt">
+					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.tasaAgp | currency: ('DOL' | formatCurrency) }}</span>
+				</td>
+				<td class="text-right" style="width: 8%; font-size: 9pt">{{ invoice.cotiMoneda | currency: ('PES' | formatCurrency) }}</td>
+				<td ng-hide="tasaAgp" class="text-right" style="width: 14%; font-size: 9pt">
+					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasa | currency: ('PES' | formatCurrency) }}</span>
+				</td>
+				<td ng-show="tasaAgp" class="text-right" style="width: 14%; font-size: 9pt">
+					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasaAgp | currency: ('PES' | formatCurrency) }}</span>
+				</td>
+				<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle({invoice: invoice})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
 	<div class="col-lg-12 hidden-print" ng-show="model.total > model.itemsPerPage">
 		<div class="text-center visible-xs"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="5" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>
 		<div class="text-center visible-sm"><pagination boundary-links="true" total-items="model.total" items-per-page="model.itemsPerPage" ng-model="model.currentPage" max-size="7" ng-click="cargar()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination></div>

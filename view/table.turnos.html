@@ -18,8 +18,8 @@
 	</div>
 	<div ng-show="datosTurnos.length != undefined && datosTurnos.length > 0 && !mostrarHTML">
 		<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
-
-			<table class="invoice-shadow table table-responsive table-bordered table-hover" style="text-align: center">
+		<div class="table-responsive">
+			<table class="invoice-shadow table table-bordered table-hover" style="text-align: center">
 				<tr style="font-size: 10pt">
 					<th ng-show="control" style="text-align: center">Terminal</th>
 					<th style="text-align: center" colspan="3"><encabezado-tabla-ordenado titulo="Turno" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="inicio" filtro-orden="inicioOrden"></encabezado-tabla-ordenado></th>
@@ -59,7 +59,7 @@
 					<td class="text-center"><a href ng-click="comprobanteTurno(turno.contenedor, turno._id)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 				</tr>
 			</table>
-
+		</div>
 		<div-pagination total-items="totalItems" current-page="currentPage" items-per-page="itemsPerPage"></div-pagination>
 	</div>
 

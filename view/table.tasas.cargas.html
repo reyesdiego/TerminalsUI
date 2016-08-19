@@ -2,9 +2,9 @@
 	<div ng-hide="tasas.length != undefined && tasas.length > 0">
 		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
-	<div ng-show="tasas.length != undefined && tasas.length > 0">
+	<div ng-show="tasas.length != undefined && tasas.length > 0" class="table-responsive">
 
-			<table class="table-responsive invoice-shadow table table-striped table-bordered table-hover">
+			<table class="invoice-shadow table table-striped table-bordered table-hover">
 				<thead>
 				<tr>
 					<th>C&oacute;digo</th>
