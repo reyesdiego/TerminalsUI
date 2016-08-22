@@ -185,8 +185,8 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 
 }]);
 
-myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'vouchersArrayCache', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs',
-	function($rootScope, $scope, invoiceFactory, vouchersArrayCache, correlativeSocket, loginService, downloadFactory, dialogs) {
+myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceManager', 'vouchersArrayCache', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs',
+	function($rootScope, $scope, invoiceManager, vouchersArrayCache, correlativeSocket, loginService, downloadFactory, dialogs) {
 
 		var socketIoRegister = '';
 
@@ -215,7 +215,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		};
 
 		var traerPuntosDeVenta = function(){
-			invoiceFactory.getCashbox($scope.$id, {}, function(data){
+			invoiceManager.getCashbox($scope.$id, {}, function(data){
 				if (data.status == 'OK'){
 					var i;
 					$scope.terminalSellPoints = data.data;
@@ -339,7 +339,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
 			$scope.mostrarBotonImprimir = false;
 
-			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
+			invoiceManager.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
 				if (dataComprob.status == 'OK'){
 					if ($scope.totalPuntos > 0){
 						$scope.leerData = false;
@@ -406,7 +406,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 
 }]);
 
-myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', 'invoiceManager', function($scope, invoiceFactory, priceFactory, invoiceManager) {
+myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceManager', function($scope, priceFactory, invoiceManager) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'rates'];
 
 	$scope.fechaInicio = new Date();
@@ -614,8 +614,8 @@ myapp.controller('codigosCtrl', ['$scope', 'invoiceFactory', 'priceFactory', 'in
 
 }]);
 
-myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'dialogs',
-	function($rootScope, $scope, invoiceFactory, dialogs ) {
+myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceManager', 'dialogs',
+	function($rootScope, $scope, invoiceManager, dialogs ) {
 
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
@@ -727,7 +727,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 		$scope.descargarCSV = function(){
 			$scope.disableDown = true;
-			invoiceFactory.getCSV($scope.model, function(data, status){
+			invoiceManager.getCSV($scope.model, function(data, status){
 				if (status == 'OK'){
 					var anchor = angular.element('<a/>');
 					anchor.css({display: 'none'}); // Make sure it's not visible
@@ -741,7 +741,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 					anchor.remove(); // Clean it up afterwards
 				} else {
-					dialogs.error('Comprobantes', 'Se ha producio un error al exportar los datos a CSV.');
+					dialogs.error('Comprobantes', 'Se ha producido un error al exportar los datos a CSV.');
 				}
 				$scope.disableDown = false;
 			});

@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 17/08/2016.
  */
-myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache){
+myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', 'downloadFactory', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache, downloadFactory){
     function Invoice(invoiceData){
         if (invoiceData){
             this.setData(invoiceData);
@@ -27,82 +27,79 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                             item.uniMed = unidadesTarifas[item.uniMed];
                     });
                 });
+            } else {
+                this.controlTarifas = [];
+                this.tarifasSinMatch = [];
+                this.interfazLiquidada = '';
+                this.tieneTasa = false;
+                this.noMatch = false;
             }
 
+            this.setInterface();
+            if (!this.resend || this.resend == null){
+                this.resend = false;
+            }
+
+            this.transferencia = formatService.formatearFechaISOString(this.registrado_en);
+        },
+        setInterface: function(){
             var estadoDefault = {
                 'grupo': loginService.getGroup(),
-                'estado': 'Y'
+                'estado': 'Y',
+                'user': 'agp'
             };
             if (this.estado){
-                console.log('tiene estado');
-                if (this.estado.length > 0){
-                    var encontrado = false;
-                    var scope = this;
-                    this.estado.forEach(function(estadoGrupo){
-                        console.log(estadoGrupo);
-                        if (estadoGrupo.grupo == loginService.getGroup() || estadoGrupo.grupo === 'ALL'){
-                            encontrado = true;
-                            scope.interfazEstado = (estadosArrayCache.get(estadoGrupo.estado)) ? estadosArrayCache.get(estadoGrupo.estado) : estadosArrayCache.get('Y');
-                            console.log(scope.interfazEstado);
-                        }
-                    });
-                    if (!encontrado){
-                        this.estado.push(estadoDefault);
-                        this.interfazEstado = {
-                            'name': 'Sin ver',
-                            'description': 'Sin ver',
-                            'btnEstado': 'text-info',
-                            'imagen': 'images/unknown.png',
-                            '_id': 'Y'
-                        };
-                    }
+                if (this.estado.grupo == loginService.getGroup() || this.estado.grupo === 'ALL'){
+                    this.interfazEstado = (estadosArrayCache.get(this.estado.estado)) ? estadosArrayCache.get(this.estado.estado) : estadosArrayCache.get('Y');
                 } else {
-                    this.estado.push(estadoDefault);
+                    this.estado = estadoDefault;
                     this.interfazEstado = {
                         'name': 'Sin ver',
                         'description': 'Sin ver',
                         'btnEstado': 'text-info',
                         'imagen': 'images/unknown.png',
-                        '_id': 'Y'
+                        '_id': 'Y',
+                        'type': 'UNKNOWN'
                     };
                 }
             } else {
-                this.estado = [];
-                this.estado.push(estadoDefault);
+                this.estado = estadoDefault;
                 this.interfazEstado = {
                     'name': 'Sin ver',
                     'description': 'Sin ver',
                     'btnEstado': 'text-info',
                     'imagen': 'images/unknown.png',
-                    '_id': 'Y'
+                    '_id': 'Y',
+                    'type': 'UNKNOWN'
                 };
             }
-
-            this.transferencia = formatService.formatearFechaISOString(this.registrado_en);
-            this.controlTarifas = [];
-            this.tarifasSinMatch = [];
-            this.interfazLiquidada = '';
-            this.tieneTasa = false;
-            this.noMatch = false;
+        },
+        existeDescripcion: function(item){
+            return item.descripcion != 'No se halló la descripción, verifique que el código esté asociado';
         },
         loadById: function(){
             var deferred = $q.defer();
-            var inserturl = serverUrl + '/invoices/invoice/' + this._id;
-            var scope = this;
-            $http.get(inserturl)
-                .then(function (response){
-                    scope.setData(response.data.data);
-                    deferred.resolve();
-                }, function(response){
-                    deferred.reject(response.data);
-                    /*errorFactory.raiseError(response.data, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
-                    callback({}, false);*/
-                });
+            if (!this.detalle){
+                var inserturl = serverUrl + '/invoices/invoice/' + this._id;
+                var scope = this;
+                $http.get(inserturl)
+                    .then(function (response){
+                        scope.setData(response.data.data);
+                        deferred.resolve();
+                    }, function(response){
+                        deferred.reject(response.data);
+                        /*errorFactory.raiseError(response.data, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
+                         callback({}, false);*/
+                    });
+            } else {
+                deferred.resolve();
+            }
             return deferred.promise;
         },
         getTrack: function(){
             var deferred = $q.defer();
             var inserturl = serverUrl + '/comments/' + this._id;
+            var scope = this;
             $http.get(inserturl)
                 .then(function (response){
                     var comentariosFiltrados = [];
@@ -112,7 +109,16 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                             comentariosFiltrados.push(comentario);
                         }
                     });
-                    deferred.resolve(comentariosFiltrados);
+                    if (comentariosFiltrados.length > 0){
+                        scope.estado = {
+                            estado: comentariosFiltrados[comentariosFiltrados.length-1].state,
+                            grupo: comentariosFiltrados[comentariosFiltrados.length-1].group,
+                            user: comentariosFiltrados[comentariosFiltrados.length-1].user
+                        };
+                        scope.setInterface();
+                    }
+                    scope.comments = comentariosFiltrados;
+                    deferred.resolve();
                 }, function(response){
                     deferred.reject(response.data);
                 });
@@ -154,13 +160,13 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                                 scope.interfazEstado.btnEstado = 'text-info';
                                 break;
                         }
-                        var nuevoEstado = {
+                        scope.estado = {
                             _id: scope._id,
                             estado: dataComment.newState,
                             grupo: loginService.getGroup(),
                             user: loginService.getInfo().user
                         };
-                        scope.estado.push(nuevoEstado);
+                        scope.setInterface();
                         deferred.resolve();
                     } else {
                         message = 'Se ha producido un error al agregar el comentario en el comprobante.';
@@ -173,13 +179,31 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             return deferred.promise;
         },
         setResend: function(resendStatus){
-
+            var deferred = $q.defer();
+            var message;
+            var data = {
+                resend: resendStatus
+            };
+            var inserturl = serverUrl + '/invoices/invoice/' + loginService.getFiltro() + '/' + this._id;
+            $http.put(inserturl, data)
+                .then(function(response){
+                    if (response.data.status == 'OK'){
+                        comprobante.resend = resendStatus;
+                        deferred.resolve()
+                    } else {
+                        message = 'Se ha producido un error al establecer el estado del comprobante.';
+                        deferred.reject(response.data);
+                    }
+                }, function(response){
+                    deferred.reject(response.data);
+                });
+            return deferred.promise;
         },
         trackInvoice: function(){
             var estadosComprobantes = generalCache.get('estados');
             var scope = this;
             var deferred = $q.defer();
-            this.getTrack().then(function(comentarios){
+            this.getTrack().then(function(){
                 var modalInstance = $uibModal.open({
                     templateUrl: 'view/trackingInvoice.html',
                     controller: 'trackingInvoiceCtrl',
@@ -189,7 +213,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                             return scope.interfazEstado;
                         },
                         track: function() {
-                            return comentarios;
+                            return scope.comments;
                         },
                         states : function() {
                             return angular.copy(estadosComprobantes);
@@ -247,7 +271,6 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             var precioALaFecha;
             var monedaALaFecha;
 
-            var response = false;
             var precioEncontrado = false;
             var scope = this;
 
@@ -300,7 +323,6 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                                         container: detalle.contenedor
                                     };
                                     scope.tarifasSinMatch.push(tarifaError);
-                                    response = true;
                                     scope.noMatch = true;
                                 }
                             } else {
@@ -326,7 +348,6 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                                         container: detalle.contenedor
                                     };
                                     scope.tarifasSinMatch.push(tarifaError);
-                                    response = true;
                                     scope.noMatch = true;
                                 }
                             }
@@ -339,14 +360,50 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                                 container: detalle.contenedor
                             };
                             scope.tarifasSinMatch.push(tarifaError);
-                            response = true;
                             scope.noMatch = true;
                         }
                     });
                 });
             }
-            return response;
+        },
+        verPdf: function(){
+            //$scope.disablePdf = true;
+            var deferred = $q.defer();
+            var imprimirComprobante = {};
+            var nombreReporte = $filter('nombreComprobante')(this.codTipoComprob, true) + this.nroComprob + '_' + loginService.getFiltro() + '.pdf';
+            angular.copy(this, imprimirComprobante);
+            imprimirComprobante.codTipoComprob = $filter('nombreComprobante')(imprimirComprobante.codTipoComprob, false);
+            imprimirComprobante.fecha.emision = $filter('date')(imprimirComprobante.fecha.emision, 'dd/MM/yyyy', 'UTC');
+            imprimirComprobante.fecha.vcto = $filter('date')(imprimirComprobante.fecha.vcto, 'dd/MM/yyyy', 'UTC');
+            imprimirComprobante.fecha.desde = $filter('date')(imprimirComprobante.fecha.desde, 'dd/MM/yyyy', 'UTC');
+            imprimirComprobante.fecha.hasta = $filter('date')(imprimirComprobante.fecha.hasta, 'dd/MM/yyyy', 'UTC');
+            imprimirComprobante.detalle.forEach(function(detalle){
+                detalle.buque.fecha = $filter('date')(detalle.buque.fecha, 'dd/MM/yyyy', 'UTC');
+            });
+            downloadFactory.convertToPdf(imprimirComprobante, 'invoiceToPdf', function(data, status){
+                if (status == 'OK'){
+                    var file = new Blob([data], {type: 'application/pdf'});
+                    var fileURL = URL.createObjectURL(file);
+
+                    var anchor = angular.element('<a/>');
+                    anchor.css({display: 'none'}); // Make sure it's not visible
+                    angular.element(document.body).append(anchor); // Attach to document
+
+                    anchor.attr({
+                        href: fileURL,
+                        target: '_blank',
+                        download: nombreReporte
+                    })[0].click();
+
+                    anchor.remove(); // Clean it up afterwards
+                    //window.open(fileURL);
+                    deferred.resolve();
+                } else {
+                    deferred.reject();
+                }
+            });
+            return deferred.promise;
         }
-    }
+    };
     return Invoice;
 }]);

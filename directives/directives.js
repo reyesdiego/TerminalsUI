@@ -116,6 +116,7 @@ myapp.directive('accordionComprobantesVistos', function(){
 		templateUrl:	'view/accordion.comprobantes.vistos.html',
 		link: function ($scope) {
 			$scope.quitarVista = function (comprobante) {
+				comprobante.controlled = false;
 				var pos = $scope.comprobantesVistos.indexOf(comprobante);
 				$scope.comprobantesVistos.splice(pos, 1);
 			};
