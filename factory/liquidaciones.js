@@ -73,7 +73,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				});
 		};
 
-		factory.getComprobantesLiquidar = function(page, datos, callback){
+		/*factory.getComprobantesLiquidar = function(page, datos, callback){
 			if (datos.byContainer){
 				factory.cancelRequest('comprobantesLiquidarContainer');
 			} else {
@@ -101,7 +101,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 						callback(response.data);
 					}
 				});
-		};
+		};*/
 
 		factory.estadoAdapter = function(comprobantes){
 			comprobantes.forEach(function(comprobante){

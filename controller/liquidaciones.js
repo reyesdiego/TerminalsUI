@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', 'invoiceService', '$q',
-	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, invoiceService, $q){
+myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', '$q', 'invoiceManager',
+	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, $q, invoiceManager){
 
 		$scope.tasaAgp = false;
 		$scope.byContainer = false;
@@ -261,7 +261,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		var cargarComprobantesSinLiquidarSinAgrupar = function(){
 			var deferred = $q.defer();
-			liquidacionesFactory.getComprobantesLiquidar($scope.page, $scope.sinLiquidar.model, function(data){
+			invoiceManager.getComprobantesLiquidar($scope.page, $scope.sinLiquidar.model, function(data){
 				if (data.status == 'OK'){
 					$scope.sinLiquidar.comprobantes = data.data;
 					deferred.resolve(data.totalCount);
@@ -277,7 +277,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			var deferred = $q.defer();
 			var alterModel = angular.copy($scope.sinLiquidar.model);
 			alterModel.byContainer = true;
-			liquidacionesFactory.getComprobantesLiquidar($scope.page, alterModel, function(data){
+			invoiceManager.getComprobantesLiquidar($scope.page, alterModel, function(data){
 				if (data.status == 'OK'){
 					$scope.sinLiquidar.comprobantesByContainer = data.data;
 					deferred.resolve(data.totalCount);
@@ -402,7 +402,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		var traerComprobantesPreLiquidacionSinAgrupar = function(pagina){
 			var deferred = $q.defer();
-			liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, $scope.comprobantesPreLiquidados.model, function(data){
+			invoiceManager.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, $scope.comprobantesPreLiquidados.model, function(data){
 				if (data.status == 'OK'){
 					$scope.comprobantesPreLiquidados.comprobantes = data.data;
 					deferred.resolve(data.totalCount);
@@ -418,7 +418,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			var deferred = $q.defer();
 			var alterModel = angular.copy($scope.comprobantesPreLiquidados.model);
 			alterModel.byContainer = true;
-			liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, alterModel, function(data){
+			invoiceManager.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, alterModel, function(data){
 				if (data.status == 'OK'){
 					$scope.comprobantesPreLiquidados.comprobantesByContainer = data.data;
 					deferred.resolve(data.totalCount);
@@ -467,7 +467,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				skip: ($scope.comprobantesLiquidados.currentPage - 1) * $scope.itemsPerPage,
 				limit: $scope.itemsPerPage
 			};
-			liquidacionesFactory.getComprobantesLiquidados(pagina, $scope.liquidacion.selected._id, $scope.comprobantesLiquidados.model, function(data){
+			invoiceManager.getComprobantesLiquidados(pagina, $scope.liquidacion.selected._id, $scope.comprobantesLiquidados.model, function(data){
 				if (data.status == 'OK'){
 					$scope.comprobantesLiquidados.total = data.totalCount;
 					$scope.comprobantesLiquidados.comprobantes = data.data;
@@ -510,12 +510,15 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.mostrarDetalleSinLiquidar = function(comprobante){
 			$scope.sinLiquidar.cargando = true;
-			invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.sinLiquidar.comprobantes)
-				.then(function(response){
-					$scope.sinLiquidar.invoiceSelected = response.detalle;
-					$scope.sinLiquidar.comprobantes = response.datosInvoices;
-					$scope.commentsInvoice = response.commentsInvoice;
+			comprobante.mostrarDetalle()
+				.then(function(){
+					$scope.sinLiquidar.invoiceSelected = comprobante;
+					//$scope.sinLiquidar.comprobantes = response.datosInvoices;
+					//$scope.commentsInvoice = response.commentsInvoice;
 					$scope.sinLiquidar.verDetalle = true;
+					$scope.sinLiquidar.cargando = false;
+				}, function(){
+					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar el comprobante');
 					$scope.sinLiquidar.cargando = false;
 				});
 		};
@@ -523,22 +526,28 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.mostrarDetallePreLiquidado = function(comprobante){
 			if ($scope.modo == 'sinLiquidar'){
 				$scope.comprobantesPreLiquidados.cargando = true;
-				invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.comprobantesPreLiquidados.comprobantes)
-					.then(function(response){
-						$scope.comprobantesPreLiquidados.invoiceSelected = response.detalle;
-						$scope.comprobantesPreLiquidados.comprobantes = response.datosInvoices;
-						$scope.commentsInvoice = response.commentsInvoice;
+				comprobante.mostrarDetalle()
+					.then(function(){
+						$scope.comprobantesPreLiquidados.invoiceSelected = comprobante;
+						//$scope.comprobantesPreLiquidados.comprobantes = response.datosInvoices;
+						//$scope.commentsInvoice = response.commentsInvoice;
 						$scope.comprobantesPreLiquidados.verDetalle = true;
+						$scope.comprobantesPreLiquidados.cargando = false;
+					}, function(){
+						dialogs.error('Liquidaciones', 'Se ha producido un error al cargar el comprobante');
 						$scope.comprobantesPreLiquidados.cargando = false;
 					})
 			} else {
 				$scope.comprobantesLiquidados.cargando = true;
-				invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.comprobantesLiquidados.comprobantes)
-					.then(function(response){
-						$scope.comprobantesLiquidados.invoiceSelected = response.detalle;
-						$scope.comprobantesLiquidados.comprobantes = response.datosInvoices;
-						$scope.commentsInvoice = response.commentsInvoice;
+				comprobante.mostrarDetalle()
+					.then(function(){
+						$scope.comprobantesLiquidados.invoiceSelected = comprobante;
+						//$scope.comprobantesLiquidados.comprobantes = response.datosInvoices;
+						//$scope.commentsInvoice = response.commentsInvoice;
 						$scope.comprobantesLiquidados.verDetalle = true;
+						$scope.comprobantesLiquidados.cargando = false;
+					}, function(){
+						dialogs.error('Liquidaciones', 'Se ha producido un error al cargar el comprobante');
 						$scope.comprobantesLiquidados.cargando = false;
 					})
 			}

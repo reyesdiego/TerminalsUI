@@ -4,24 +4,23 @@
 myapp.factory('invoiceManager', ['Invoice', '$http', '$q', 'HTTPCanceler', 'loginService', 'formatService', function(Invoice, $http, $q, HTTPCanceler, loginService, formatService){
     var invoiceManager = {
         namespace: 'invoices',
+        retrieveInvoices: function(invoicesData){
+            var invoiceArray = [];
+            invoicesData.forEach(function(invoiceData){
+                var invoice = new Invoice(invoiceData);
+                invoiceArray.push(invoice);
+            });
+            return invoiceArray;
+        },
         getInvoices: function(idLlamada, datos, page, callback) {
             this.cancelRequest(idLlamada);
             var canceler = HTTPCanceler.get($q.defer(), this.namespace, idLlamada);
             var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+            var factory = this;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function(response){
-                    var invoiceArray = [];
-                    response.data.data.forEach(function(invoiceData){
-                        var invoice = new Invoice(invoiceData);
-                        invoiceArray.push(invoice);
-                    });
-                    response.data.data = invoiceArray;
+                    response.data.data = factory.retrieveInvoices(response.data.data);
                     callback(response.data);
-                    /*if (response.statusText == 'OK'){
-
-                        var data = ponerDescripcionComprobantes(response.data);
-                        callback(factory.setearInterfaz(data));
-                    }*/
                 }, function(response) {
                     if (response.status != -5) callback(response.data);
                 });
@@ -31,28 +30,74 @@ myapp.factory('invoiceManager', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             this.cancelRequest('invoicesNoMatches');
             var canceler = HTTPCanceler.get($q.defer(), this.namespace, 'invoicesNoMatches');
             var inserturl = serverUrl + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+            var factory = this;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function (response) {
-                    var invoiceArray = [];
-                    response.data.data.forEach(function(invoiceData){
-                        var invoice = new Invoice(invoiceData);
-                        invoiceArray.push(invoice);
-                    });
-                    response.data.data = invoiceArray;
+                    response.data.data = factory.retrieveInvoices(response.data.data);
                     callback(response.data);
-                    /*if (response.data == null) {
-                     response.data = {
-                     status: 'ERROR',
-                     data: []
-                     }
-                     }
-                     if (response.data.data == null) response.data.data = [];
-
-                     response.data = ponerDescripcionComprobantes(response.data);
-                     callback(factory.setearInterfaz(response.data));*/
-
                 }, function(response) {
                     if (response.status != -5) callback(response.data);
+                });
+        },
+        getComprobantesLiquidar: function(page, datos, callback){
+            if (datos.byContainer){
+                this.cancelRequest('comprobantesLiquidarContainer');
+            } else {
+                this.cancelRequest('comprobantesLiquidar');
+            }
+            var defer = $q.defer();
+            var canceler;
+            if (datos.byContainer){
+                canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidarContainer');
+            } else {
+                canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidar');
+            }
+            var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+            var factory = this;
+            $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
+                .then(function(response){
+                    response.data.data = factory.retrieveInvoices(response.data.data);
+                    callback(response.data);
+                }, function(response){
+                    if (response.status != -5){
+                        if (response.data == null){
+                            response.data = {
+                                status: 'ERROR'
+                            }
+                        }
+                        callback(response.data);
+                    }
+                });
+        },
+        getComprobantesLiquidados: function(page, liquidacion, datos, callback){
+            if (datos.byContainer){
+                this.cancelRequest('comprobantesLiquidadosContainer');
+            } else {
+                this.cancelRequest('comprobantesLiquidados');
+            }
+            var defer = $q.defer();
+            var canceler;
+            if (datos.byContainer){
+                canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidadosContainer');
+            } else {
+                canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidados');
+            }
+            var factory = this;
+            var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
+            $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
+                .then(function(response){
+                    response.data.data = factory.retrieveInvoices(response.data.data);
+                    callback(response.data);
+                }, function(response){
+                    if (response.status != -5){
+                        if (response.data == null){
+                            response.data = {
+                                status: 'ERROR',
+                                message: 'Se ha producido un error al procesar la liquidación.'
+                            }
+                        }
+                        callback(response.data);
+                    }
                 });
         },
         getCorrelative: function(datos, socketIoRegister, callback){
