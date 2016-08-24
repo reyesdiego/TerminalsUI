@@ -27,12 +27,12 @@
                     <div class="form-group">
                         <label for="inputUnidad" class="col-lg-3 control-label"><span class="glyphicon"></span> Unidad</label>
                         <div class="input-group col-lg-8">
-                            <select class="form-control" id="inputUnidad" ng-model="newPrice.unit" ng-required="true" placeholder="Seleccione unidad de medida" ng-disabled="!enableEdition()">
-                                <option ng-repeat="unit in unidadesTarifas" value="{{ unit._id }}" ng-selected="unit._id == newPrice.unit">{{ unit.description }}</option>
+                            <select class="form-control" id="inputUnidad" ng-model="newPrice.idUnit" ng-required="true" placeholder="Seleccione unidad de medida" ng-disabled="!enableEdition()">
+                                <option ng-repeat="unit in unidadesTarifas" value="{{ unit._id }}" ng-selected="unit._id == newPrice.idUnit">{{ unit.description }}</option>
                             </select>
                             <!--<input type="text" class="form-control" ng-model="newPrice.unit" id="trip" placeholder="" ng-required="true" toupper>-->
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="eraseField('unit')" ng-disabled="!enableEdition()"><i class="glyphicon glyphicon-remove" ng-disabled="!enableEdition()"></i></button>
+                            <button type="button" class="btn btn-default" ng-click="eraseField('idUnit')" ng-disabled="!enableEdition()"><i class="glyphicon glyphicon-remove" ng-disabled="!enableEdition()"></i></button>
                         </span>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                                         <input ng-show="$last" type="text" class="form-control" ng-model="price.price" placeholder="Ingresar precio" ng-required="true" ng-disabled="!enableEdition()" focus-on="focusMe">
                                     </td>
                                     <td class="col-lg-1 text-center">
-                                        <button type="button" ng-click="removeTopPrice($index)" class="btn btn-danger" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-remove"></span></button>
+                                        <button type="button" ng-click="newPrice.removeTopPrice($index)" class="btn btn-danger" ng-disabled="!enableEdition()"><span class="glyphicon glyphicon-remove"></span></button>
                                     </td>
                                 </tr>
                                 <tr>

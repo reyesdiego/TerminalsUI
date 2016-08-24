@@ -11,13 +11,13 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			return pricesArray;
 		},
 		getAllRates: function(callback){
-		var inserturl = serverUrl + '/prices/rates/1/all';
-		$http.get(inserturl)
-				.then(function (response){
-					callback(response.data, false);
-				}, function(response){
-					callback(response.data, true);
-				});
+			var inserturl = serverUrl + '/prices/rates/1/all';
+			$http.get(inserturl)
+					.then(function (response){
+						callback(response.data, false);
+					}, function(response){
+						callback(response.data, true);
+					});
 		},
 		getPrice: function(terminal, datos, callback) {
 			var inserturl = serverUrl + '/prices/' + terminal;
@@ -67,15 +67,6 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 						//TODO verificar que pasa acá
 					});
 		},
-		addMatchPrice: function (data, callback) {
-			var inserturl = serverUrl + '/matchPrices/matchprice';
-			$http.post(inserturl, data)
-					.then(function (response) {
-						callback(response.data);
-					}, function(response) {
-						callback(response.data);
-					});
-		},
 		noMatches: function (data, callback){
 			var inserturl = serverUrl + '/matchPrices/noMatches/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(data) })
@@ -85,48 +76,9 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 						callback(response.data);
 					});
 		},
-		addPrice: function (data, callback) {
-			var inserturl = serverUrl + '/prices/price';
-			$http.post(inserturl, data)
-					.then(function(response) {
-						callback(response.data);
-					}, function(response) {
-						callback(response.data);
-					});
-		},
-		getPriceById: function(id, callback){
-			var inserturl = serverUrl + '/prices/' + id + '/' + loginService.getFiltro();
-			$http.get(inserturl)
-					.then(function(response) {
-						callback(response.data);
-					}, function(response) {
-						callback(response.data);
-					});
-		},
-		savePriceChanges: function(formData, id, callback){
-			formData.topPrices.forEach(function(unPrecio){
-				unPrecio.from = formatService.formatearFechaISOString(unPrecio.from);
-			});
-			var inserturl = serverUrl + '/prices/price/' + id;
-			$http.put(inserturl, formData)
-					.then(function(response) {
-						callback(response.data);
-					}, function(response) {
-						callback(response.data);
-					});
-		},
 		getUnitTypes: function(callback){
 			var inserturl = serverUrl + '/unitTypes';
 			$http.get(inserturl)
-					.then(function(response) {
-						callback(response.data);
-					}, function(response) {
-						callback(response.data);
-					});
-		},
-		removePrice: function(id, callback){
-			var inserturl = serverUrl + '/prices/price/' + id;
-			$http.delete(inserturl)
 					.then(function(response) {
 						callback(response.data);
 					}, function(response) {
