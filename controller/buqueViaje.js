@@ -2,8 +2,8 @@
  * Created by artiom on 08/04/15.
  */
 
-myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', '$state', 'loginService', '$q',
-	function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache, $state, loginService, $q){
+myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'dialogs', 'generalCache', '$state', 'loginService', '$q', 'invoiceManager',
+	function($rootScope, $scope, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, dialogs, generalCache, $state, loginService, $q, invoiceManager){
 		////// Para containers /////////////
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -294,7 +294,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 			};
 			$scope.pageComprobantes.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-			invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.pageComprobantes, function(data){
+			/*invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.pageComprobantes, function(data){
 				if(data.status === 'OK'){
 					$scope.invoices = data.data;
 					$scope.invoicesTotalItems = data.totalCount;
@@ -306,7 +306,20 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'c
 					};
 				}
 				$scope.loadingInvoices = false;
-			});
+			});*/
+			invoiceManager.getInvoices($scope.$id, $scope.model, $scope.pageComprobantes, function(data){
+				if(data.status === 'OK'){
+					$scope.invoices = data.data;
+					$scope.invoicesTotalItems = data.totalCount;
+				} else {
+					$scope.mensajeResultado = {
+						titulo: 'Comprobantes',
+						mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
+						tipo: 'panel-danger'
+					};
+				}
+				$scope.loadingInvoices = false;
+			})
 		};
 
 		var cargaTasasCargas = function(){

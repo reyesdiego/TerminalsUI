@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus',
-	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus', 'Price',
+	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus, Price) {
 		'use strict';
 
 		//Array con los tipos de tarifas para establecer filtros
@@ -20,18 +20,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			price: ''
 		};
 
-		$scope.newPrice = {
-			code: '',
-			unit: '',
-			topPrices:[],
-			terminal: '',
-			matches: [{
-				terminal: loginService.getInfo().terminal,
-				match: [],
-				_idPrice: '',
-				code: ''
-			}]
-		};
+		$scope.newPrice = new Price();
 
 		$scope.newMatches = {
 			array: []
@@ -111,34 +100,19 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					$scope.matchesTerminal = [];
 					//Cargo todos los códigos ya asociados de la terminal para control
 					$scope.pricelist.forEach(function(price){
-						var propioTerminal = false;
 						$scope.matchesTerminal.push(price.code);
-						if (angular.isDefined(price.matches) && price.matches != null && price.matches.length > 0 && price.matches[0].match.length > 0){
+						if (price.tarifaAgp){
+							$scope.pricelistAgp.push(price);
+						}
+						if (price.tarifaTerminal){
+							$scope.propiosTerminal.push(price)
+						}
+						if (price.servicio){
+							$scope.servicios.push(price)
+						}
+						if (price.tieneMatch()){
 							$scope.codigosConMatch.push(price);
-							price.matches[0].match.forEach(function(codigo){
-								$scope.matchesTerminal.push(codigo);
-							});
-							if (price.terminal == 'AGP'){
-								$scope.pricelistAgp.push(price);
-							} else {
-								if (price.matches[0].match.length >= 1){
-									price.matches[0].match.forEach(function(unMatch){
-										if (unMatch == price.code){
-											propioTerminal = true;
-											//$scope.propiosTerminal.push(price);
-										}
-									});
-									propioTerminal ? $scope.propiosTerminal.push(price) : $scope.servicios.push(price);
-								} else {
-									$scope.servicios.push(price);
-								}
-							}
-						} else {
-							if (price.terminal == 'AGP'){
-								$scope.pricelistAgp.push(price);
-							} else {
-								$scope.servicios.push(price);
-							}
+							$scope.matchesTerminal.push(price.getMatches());
 						}
 					});
 					switch ($scope.tipoFiltro){
@@ -191,18 +165,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.abrirNuevoConcepto = function(tipo){
 			$scope.esRequerido = true;
 			if (!(tipo == 'editar')){
-				$scope.newPrice = {
-					code: '',
-					unit: '',
-					topPrices: [],
-					terminal: '',
-					matches: [{
-						terminal: loginService.getInfo().terminal,
-						match: [],
-						_idPrice: '',
-						code: ''
-					}]
-				};
+				$scope.newPrice = new Price();
 				$scope.newMatches = {
 					array: []
 				};
@@ -211,77 +174,37 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			$state.transitionTo('modificarTarifario');
 		};
 
-		//Saca el top price de una tarifa
-		$scope.removeTopPrice = function(index){
-			$scope.newPrice.topPrices.splice(index, 1);
-		};
-
 		//Agrega el top price a una tarifa
 		$scope.addTopPrice = function(){
-			if (validateTopPrice()){
-				$scope.newPrice.topPrices.push($scope.newTopPrice);
-				$scope.newTopPrice = {
-					from: new Date(),
-					currency: 'DOL',
-					price: ''
-				};
-				focus('focusMe');
-			}
+			$scope.newPrice.addTopPrice($scope.newTopPrice);
+			$scope.newTopPrice = {
+				from: new Date(),
+				currency: 'DOL',
+				price: ''
+			};
+			focus('focusMe');
 		};
-
-		//Se fija que el top price sea válido antes de agregarlo a una tarifa
-		function validateTopPrice(){
-			$scope.newTopPrice.price = parseFloat($scope.newTopPrice.price);
-			return ($scope.newTopPrice.from != '' && $scope.newTopPrice.currency != '' && $scope.newTopPrice.price > 0);
-		}
 
 		//Guarda los cambios realizados sobre una tarifa
 		$scope.savePrice = function(){
 			var dlg = null;
 			if (verificarEditado()){
-				$scope.newPrice.terminal = loginService.getInfo().terminal;
-				if ($scope.flagEditando){
-					dlg = dialogs.confirm('Guardar', 'Se guardarán todos los cambios realizados sobre la tarifa, ¿confirma la operación?');
-					dlg.result.then(function(){
-						$scope.newPrice.unit = String($scope.newPrice.unit);
-						priceFactory.savePriceChanges($scope.newPrice, $scope.newPrice._id, function(data){
-							if (data.status == 'OK'){
-								saveMatchPrices();
-							} else {
-								dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
-							}
-						})
-					})
-				} else {
-					dlg = dialogs.confirm('Nueva tarifa', 'Se agregará una nueva tarifa, ¿confirma la operación?');
-					dlg.result.then(function(){
-						$scope.newPrice.unit = String($scope.newPrice.unit);
-						priceFactory.addPrice($scope.newPrice, function(nuevoPrecio){
-							if (nuevoPrecio.status == 'OK'){
-								$scope.newPrice.matches = [{
-									terminal: loginService.getInfo().terminal,
-									match: [],
-									_idPrice: nuevoPrecio.data._id,
-									code: $scope.newPrice.code
-								}];
-								if ($scope.acceso == 'terminal'){
-									//Si es una nueva tarifa de la terminal, tiene que tener asociado su mismo código,
-									//por lo tanto lo busco y si no está lo agrego antes de mandar a guardar los matches
-									var encontrado = false;
-									$scope.newMatches.array.forEach(function(match){
-										encontrado = (match.text == $scope.newPrice.code);
-									});
-									if (!encontrado){
-										$scope.newMatches.array.push({ text: $scope.newPrice.code })
-									}
-								}
-								saveMatchPrices();
-							} else {
-								dialogs.error('Asociar', 'Se ha producido un error al agregar el nuevo valor. ' + nuevoPrecio.data);
-							}
-						})
-					})
-				}
+				dlg = dialogs.confirm('Guardar', 'Se guardarán todos los cambios realizados sobre la tarifa, ¿confirma la operación?');
+				dlg.result.then(function(){
+					$scope.newPrice.unit = String($scope.newPrice.idUnit);
+					$scope.newPrice.setMatches($scope.newMatches.array.map(function(matchCode){
+						return matchCode.text;
+					}));
+					$scope.newPrice.saveChanges()
+							.then(function(){
+								initialLoadFactory.actualizarMatchesArray(loginService.getFiltro());
+								dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
+								$scope.prepararDatos();
+								$state.transitionTo('matches');
+							}, function(){
+								dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
+							});
+				});
 			}
 		};
 
@@ -297,43 +220,14 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			}
 		};
 
-		function saveMatchPrices (){
-			var array= [];
-			$scope.newPrice.matches[0].match = $scope.newMatches.array.map(function(matchCode){
-					return matchCode.text;
-			});
-			array.push($scope.newPrice.matches[0]);
-			priceFactory.addMatchPrice(array, function(data){
-				if (data.status == 'OK'){
-					initialLoadFactory.actualizarMatchesArray(loginService.getFiltro());
-					dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
-					$scope.prepararDatos();
-					$state.transitionTo('matches');
-				} else {
-					dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
-				}
-			});
-		}
-
 		//Carga la tarifa completa antes de poder editarla
 		$scope.editarTarifa = function(tarifa){
-
 			var indice = 0;
 			$scope.pricelist.forEach(function(price){
 				if (price.code == tarifa.code) $scope.posicionTarifa = indice;
 				indice++;
 			});
 
-			if (tarifa.matches == null || tarifa.matches.length === 0) {
-				tarifa.matches = [{
-					terminal: loginService.getInfo().terminal,
-					match: [],
-					_idPrice: tarifa._id,
-					code: tarifa.code
-				}];
-			} else {
-				tarifa.matches[0]._idPrice = tarifa._id
-			}
 			$scope.newPrice = angular.copy(tarifa);
 			$scope.newPrice.topPrices.forEach(function(price){
 				price.from = new Date(price.from);
@@ -375,15 +269,18 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.eliminarTarifa = function(){
 			var dlg = dialogs.confirm('Eliminar', 'Se eliminará la tarifa, ¿confirma la operación?');
 			dlg.result.then(function(){
-				priceFactory.removePrice($scope.newPrice._id, function(data){
-					if (data.status == 'OK'){
-						dialogs.notify("Eliminar","La tarifa ha sido eliminada");
-						$scope.prepararDatos();
-						$state.transitionTo('matches');
-					} else {
-						dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + data.data);
-					}
-				})
+				$scope.newPrice.removePrice()
+						.then(function(response){
+							if (response.status == 'OK'){
+								dialogs.notify("Eliminar","La tarifa ha sido eliminada");
+								$scope.prepararDatos();
+								$state.transitionTo('matches');
+							} else {
+								dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
+							}
+						}, function(response){
+							dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
+						});
 			})
 		};
 
@@ -425,10 +322,5 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			$scope.nombre = loginService.getFiltro();
 			$scope.prepararDatos();
 		});
-
-		/*$scope.$on('cambioTerminal', function(){
-			$scope.nombre = loginService.getFiltro();
-			$scope.prepararDatos();
-		})*/
 
 	}]);

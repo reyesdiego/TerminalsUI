@@ -2,7 +2,7 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
+myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'invoiceManager', function($rootScope, $scope, invoiceFactory, invoiceManager){
 
 	$scope.fechaInicio = new Date();
 	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -61,7 +61,7 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', func
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.invoices = [];
-		invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.page, function(data){
+		invoiceManager.getInvoices($scope.$id, $scope.model, $scope.page, function(data){
 			if(data.status === 'OK'){
 				$scope.invoices = data.data;
 				$scope.totalItems = data.totalCount;

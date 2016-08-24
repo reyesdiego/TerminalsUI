@@ -1,9 +1,13 @@
+
 /**
  * Created by artiom on 03/09/14.
  */
 
 myapp.controller('trackingInvoiceCtrl', ['$scope', '$uibModalInstance', 'estado', 'track', 'states', 'resend',
 	function($scope, $uibModalInstance, estado, track, states, resend) {
+
+		console.log(estado);
+
 		$scope.states = states;
 		$scope.resend = resend;
 
@@ -18,7 +22,7 @@ myapp.controller('trackingInvoiceCtrl', ['$scope', '$uibModalInstance', 'estado'
 
 		$scope.reenviar = resend != 0;
 
-		$scope.tracking = track.data;
+		$scope.tracking = track;
 		$scope.estado = estado;
 		$scope.interfazModal.nuevoEstado = estado;
 

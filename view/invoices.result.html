@@ -62,7 +62,7 @@
 				</tr>
 				<tr style="text-align: right" ng-repeat="item in contenedor.items">
 					<td><a href class="hidden-print" ng-click="filtrado('code', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
-					<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="existeDescripcion(item.id)"></span> <text-pop text="{{ item.descripcion }}" max="190"></text-pop></td>
+					<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="verDetalle.existeDescripcion(item)"></span> <text-pop text="{{ item.descripcion }}" max="190"></text-pop></td>
 					<td>{{ item.cnt }}</td>
 					<td>{{ item.impUnit | conversionMoneda: verDetalle | currency: (moneda | formatCurrency) }}</td>
 					<td>{{ item.uniMed }}</td>
@@ -163,7 +163,7 @@
 		</div>
 	</div-panel>
 </div>
-<accordion-min heading="Comentarios del comprobante" ng-show="commentsInvoice.length > 0">
+<accordion-min heading="Comentarios del comprobante" ng-show="verDetalle.comments.length > 0">
 	<div class="table-responsive col-lg-12 center-block hidden-print-block">
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
@@ -175,7 +175,7 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr ng-repeat="comment in commentsInvoice">
+			<tr ng-repeat="comment in verDetalle.comments">
 				<td class="text-center">{{ comment.fecha | date: 'dd/MM/yyyy hh:mm':'UTC' }}</td>
 				<td>{{ comment.user }}</td>
 				<td>{{ comment.comment }}</td>
@@ -188,8 +188,8 @@
 <div class="row hidden-print">
 	<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
 		<br>
-		<button class="btn btn-default" ng-click="ocultarResultado(verDetalle)"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
-		<button ng-show="acceso=='agp'" class="btn btn-primary" ng-click="trackInvoice(verDetalle)"><span class="glyphicon glyphicon-bookmark"></span> Cambiar estado</button>
+		<button class="btn btn-default" ng-click="ocultarResultado()"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+		<button ng-show="acceso=='agp'" class="btn btn-primary" ng-click="verDetalle.trackInvoice()"><span class="glyphicon glyphicon-bookmark"></span> Cambiar estado</button>
 		<button class="btn btn-success" ng-click="verPdf()" ng-disabled="disablePdf"><span class="glyphicon glyphicon-download"></span> Ver PDF</button>
 	</div>
 </div>

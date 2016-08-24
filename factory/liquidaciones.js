@@ -73,36 +73,6 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				});
 		};
 
-		factory.getComprobantesLiquidar = function(page, datos, callback){
-			if (datos.byContainer){
-				factory.cancelRequest('comprobantesLiquidarContainer');
-			} else {
-				factory.cancelRequest('comprobantesLiquidar');
-			}
-			var defer = $q.defer();
-			var canceler;
-			if (datos.byContainer){
-				canceler = HTTPCanceler.get(defer, namespace, 'comprobantesLiquidarContainer');
-			} else {
-				canceler = HTTPCanceler.get(defer, namespace, 'comprobantesLiquidar');
-			}
-			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
-			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.then(function(response){
-					response.data.data = factory.estadoAdapter(response.data.data);
-					callback(invoiceFactory.setearInterfaz(response.data));
-				}, function(response){
-					if (response.status != -5){
-						if (response.data == null){
-							response.data = {
-								status: 'ERROR'
-							}
-						}
-						callback(response.data);
-					}
-				});
-		};
-
 		factory.estadoAdapter = function(comprobantes){
 			comprobantes.forEach(function(comprobante){
 				var tempEstado = comprobante.estado;
@@ -147,36 +117,6 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				});
 			});
 			return detallesLiquidaciones;
-		};
-
-		factory.getComprobantesLiquidados = function(page, liquidacion, datos, callback){
-			if (datos.byContainer){
-				factory.cancelRequest('comprobantesLiquidadosContainer');
-			} else {
-				factory.cancelRequest('comprobantesLiquidados');
-			}
-			var defer = $q.defer();
-			var canceler;
-			if (datos.byContainer){
-				canceler = HTTPCanceler.get(defer, namespace, 'comprobantesLiquidadosContainer');
-			} else {
-				canceler = HTTPCanceler.get(defer, namespace, 'comprobantesLiquidados');
-			}
-			var inserturl = serverUrl + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
-			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-				.then(function(response){
-					callback(response.data);
-				}, function(response){
-					if (response.status != -5){
-						if (response.data == null){
-							response.data = {
-								status: 'ERROR',
-								message: 'Se ha producido un error al procesar la liquidación.'
-							}
-						}
-						callback(response.data);
-					}
-				});
 		};
 
 		//No se debería poder cancelar

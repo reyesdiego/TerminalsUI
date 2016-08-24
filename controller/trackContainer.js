@@ -1,8 +1,8 @@
 /**
  * Created by kolesnikov-a on 04/08/2016.
  */
-myapp.controller('trackContainerCtrl', ['$rootScope', '$scope', '$window', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', '$q', '$state',
-    function($rootScope, $scope, $window, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, $q, $state){
+myapp.controller('trackContainerCtrl', ['$rootScope', '$scope', '$window', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', '$q', '$state', 'invoiceManager',
+    function($rootScope, $scope, $window, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, afipFactory, $q, $state, invoiceManager){
 
         $rootScope.pageTitle = $window.localStorage.getItem('trackContainer');
         $scope.filtrosComprobantes = ['codTipoComprob', 'razonSocial', 'nroComprobante', 'fechaInicio'];
@@ -40,7 +40,7 @@ myapp.controller('trackContainerCtrl', ['$rootScope', '$scope', '$window', 'invo
             };
             $scope.pageComprobantes.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
             $scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-            invoiceFactory.getInvoice($scope.$id, $scope.model, $scope.pageComprobantes, function(data){
+            invoiceManager.getInvoices($scope.$id, $scope.model, $scope.pageComprobantes, function(data){
                 if(data.status === 'OK'){
                     $scope.invoices = data.data;
                     $scope.invoicesTotalItems = data.totalCount;

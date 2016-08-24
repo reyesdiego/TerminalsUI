@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 30/03/15.
  */
-myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', 'generalFunctions', 'dialogs', 'invoiceService', '$state', '$window',
-	function($rootScope, $scope, invoiceFactory, loginService, generalFunctions, dialogs, invoiceService, $state, $window){
+myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceManager',
+	function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceManager){
 		$scope.inTrackContainer = $rootScope.inTrackContainer;
 
 		$scope.status = {
@@ -102,33 +102,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			$scope.$emit('cambioOrden', $scope.model);
 		};
 
-		$scope.trackInvoice = function(comprobante){
-			invoiceService.trackInvoice(comprobante)
-				.then(function(response){
-					if (angular.isDefined(response)) comprobante = response;
-				}, function(message){
-					dialogs.error('Liquidaciones', message);
-				})
-		};
-
-		$scope.checkComprobantes = function(comprobante){
-			var response;
-			response = invoiceService.checkComprobantes(comprobante, $scope.comprobantesVistos, $scope.datosInvoices);
-			$scope.datosInvoices = response.datosInvoices;
-			$scope.comprobantesVistos = response.comprobantesVistos;
-		};
-
-		$scope.cambiarEstado = function(comprobante){
-			invoiceFactory.getInvoiceById(comprobante._id, function(data, success){
-				if (success){
-					$scope.trackInvoice(data);
-				}
-			})
-		};
-
-
-		$scope.ocultarResultado = function(comprobante){
-			$scope.checkComprobantes(comprobante);
+		$scope.ocultarResultado = function(){
 			$scope.mostrarResultado = false;
 		};
 
@@ -143,7 +117,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		// Funciones de Puntos de Venta
 		var cargaPuntosDeVenta = function(){
 			if ($scope.todosLosPuntosDeVentas.length > 0){
-				invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
+				invoiceManager.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 					if (data.status == 'OK'){
 						$scope.todosLosPuntosDeVentas.forEach(function(puntosVenta){
 							puntosVenta.hide = data.data.indexOf(puntosVenta.punto, 0) < 0;
@@ -165,7 +139,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		};
 
 		var cargaTodosLosPuntosDeVentas = function(){
-			invoiceFactory.getCashbox($scope.$id, '', function(data){
+			invoiceManager.getCashbox($scope.$id, '', function(data){
 				if (data.status == 'OK'){
 					var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
 					$scope.todosLosPuntosDeVentas.push(dato);
@@ -182,17 +156,18 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 
 		$scope.mostrarDetalle = function(comprobante){
 			$scope.loadingState = true;
-			invoiceService.mostrarDetalle(comprobante._id, $scope.comprobantesVistos, $scope.datosInvoices)
-				.then(function(response){
-					$scope.verDetalle = response.detalle;
-					$scope.datosInvoices = response.datosInvoices;
-					$scope.comprobantesVistos = response.comprobantesVistos;
-					$scope.commentsInvoice = response.commentsInvoice;
-					$scope.mostrarResultado = true;
-					$scope.loadingState = false;
-				}, function(){
-					$scope.loadingState = false;
-				});
+			if (!comprobante.controlled){
+				$scope.comprobantesVistos.push(comprobante);
+				comprobante.controlled = true;
+			}
+			comprobante.mostrarDetalle().then(function(){
+				comprobante.controlarTarifas();
+				$scope.verDetalle = comprobante;
+				$scope.mostrarResultado = true;
+				$scope.loadingState = false;
+			}, function(){
+				$scope.loadingState = false;
+			})
 		};
 
 		$scope.devolverEstado = function(estado){
@@ -221,16 +196,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			$window.open(url,'_blank');
 		};
 
-		$scope.chequearTarifas = function(comprobante){
-			var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
-			$scope.comprobantesControlados = resultado.data;
-			return resultado.retValue;
-		};
-
-		$scope.existeDescripcion = function(itemId){
-			return invoiceService.existeDescripcion(itemId);
-		};
-
 		$scope.mostrarTope = function(){
 			var max = $scope.currentPage * 10;
 			return max > $scope.totalItems ? $scope.totalItems : max;
@@ -246,7 +211,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
 
 		$scope.$on('terminoLogin', function(){
-			console.log('esta por aca???');
 			$scope.acceso = $rootScope.esUsuario;
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
 				$scope.loadingState = true;
@@ -254,19 +218,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'invoiceFacto
 			}
 		});
 
-		/*$scope.$on('cambioTerminal', function(){
-			$scope.mostrarResultado = false;
-			$scope.logoTerminal = $rootScope.logoTerminal;
-			$scope.comprobantesVistos = [];
-			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
-				$scope.loadingState = true;
-				cargaTodosLosPuntosDeVentas();
-			}
-		});*/
-
 		$scope.verPdf = function(){
 			$scope.disablePdf = true;
-			invoiceService.verPdf($scope.verDetalle)
+			$scope.verDetalle.verPdf()
 				.then(function(){
 					$scope.disablePdf = false;
 				}, function(){

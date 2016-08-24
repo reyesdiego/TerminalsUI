@@ -116,6 +116,7 @@ myapp.directive('accordionComprobantesVistos', function(){
 		templateUrl:	'view/accordion.comprobantes.vistos.html',
 		link: function ($scope) {
 			$scope.quitarVista = function (comprobante) {
+				comprobante.controlled = false;
 				var pos = $scope.comprobantesVistos.indexOf(comprobante);
 				$scope.comprobantesVistos.splice(pos, 1);
 			};
@@ -151,7 +152,7 @@ myapp.directive('invoicesResult', function(){
 	}
 });
 
-myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', 'loginService', function(invoiceService, dialogs, loginService){
+myapp.directive('detalleComprobante', ['dialogs', 'loginService', function(dialogs, loginService){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/invoices.result.html',
@@ -168,39 +169,39 @@ myapp.directive('detalleComprobante', ['invoiceService', 'dialogs', 'loginServic
 			$scope.acceso = loginService.getType();
 			$scope.comprobantesControlados = [];
 
-			$scope.checkComprobantes = function(comprobante){
+			/*$scope.checkComprobantes = function(comprobante){
 				var response;
 				response = invoiceService.checkComprobantes(comprobante, $scope.comprobantesVistos, $scope.comprobantes);
 				$scope.comprobantes = response.datosInvoices;
-			};
+			};*/
 
 			$scope.ocultarResultado = function(comprobante){
-				$scope.checkComprobantes(comprobante);
+				//$scope.checkComprobantes(comprobante);
 				$scope.mostrar = false;
 			};
 
-			$scope.trackInvoice = function(comprobante){
+			/*$scope.trackInvoice = function(comprobante){
 				invoiceService.trackInvoice(comprobante)
 					.then(function(response){
 						if (angular.isDefined(response)) comprobante = response;
 					}, function(message){
 						dialogs.error('Liquidaciones', message);
 					})
-			};
+			};*/
 
-			$scope.existeDescripcion = function(itemId){
+			/*$scope.existeDescripcion = function(itemId){
 				return invoiceService.existeDescripcion(itemId);
-			};
+			};*/
 
-			$scope.chequearTarifas = function(comprobante){
+			/*$scope.chequearTarifas = function(comprobante){
 				var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
 				$scope.comprobantesControlados = resultado.data;
 				return resultado.retValue;
-			};
+			};*/
 
 			$scope.verPdf = function(){
 				$scope.disablePdf = true;
-				invoiceService.verPdf($scope.verDetalle)
+				$scope.verDetalle.verPdf()
 					.then(function(){
 						$scope.disablePdf = false;
 					}, function(){
