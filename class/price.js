@@ -67,11 +67,8 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                 }
             }
             if (angular.isDefined(this.unit) && this.unit != null && angular.isDefined(unitTypesArrayCache.get(this.unit))){
-                console.log(this.unit);
                 this.idUnit = this.unit;
                 this.unit = unitTypesArrayCache.get(this.unit);
-            } else {
-                console.log('no tiene unidad');
             }
             this.mostrarDetalle = false;
         },
