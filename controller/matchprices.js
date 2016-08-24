@@ -20,18 +20,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			price: ''
 		};
 
-		$scope.newPrice = {
-			code: '',
-			unit: '',
-			topPrices:[],
-			terminal: '',
-			matches: [{
-				terminal: loginService.getInfo().terminal,
-				match: [],
-				_idPrice: '',
-				code: ''
-			}]
-		};
+		$scope.newPrice = new Price();
 
 		$scope.newMatches = {
 			array: []
@@ -200,14 +189,9 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.savePrice = function(){
 			var dlg = null;
 			if (verificarEditado()){
-				//$scope.newPrice.terminal = loginService.getInfo().terminal;
-				//if ($scope.flagEditando){
 				dlg = dialogs.confirm('Guardar', 'Se guardarán todos los cambios realizados sobre la tarifa, ¿confirma la operación?');
 				dlg.result.then(function(){
 					$scope.newPrice.unit = String($scope.newPrice.idUnit);
-					/*$scope.newPrice.matches[0].match = $scope.newMatches.array.map(function(matchCode){
-					 return matchCode.text;
-					 });*/
 					$scope.newPrice.setMatches($scope.newMatches.array.map(function(matchCode){
 						return matchCode.text;
 					}));
@@ -220,51 +204,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 							}, function(){
 								dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
 							});
-					/*$scope.newPrice.savePriceChanges()
-					 .then(function(){
-					 $scope.newPrice.saveMatchPrices($scope.newMatches)
-					 .then(function(){
-					 initialLoadFactory.actualizarMatchesArray(loginService.getFiltro());
-					 dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
-					 $scope.prepararDatos();
-					 $state.transitionTo('matches');
-					 }, function(){
-					 dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
-					 });
-					 }, function(data){
-					 dialogs.error('Asociar', 'Se ha producido un error al guardar los datos asociados. ' + data.data);
-					 })*/
 				});
-				/*} else {
-				 dlg = dialogs.confirm('Nueva tarifa', 'Se agregará una nueva tarifa, ¿confirma la operación?');
-				 dlg.result.then(function(){
-				 $scope.newPrice.unit = String($scope.newPrice.unit);
-				 priceFactory.addPrice($scope.newPrice, function(nuevoPrecio){
-				 if (nuevoPrecio.status == 'OK'){
-				 $scope.newPrice.matches = [{
-				 terminal: loginService.getInfo().terminal,
-				 match: [],
-				 _idPrice: nuevoPrecio.data._id,
-				 code: $scope.newPrice.code
-				 }];
-				 if ($scope.acceso == 'terminal'){
-				 //Si es una nueva tarifa de la terminal, tiene que tener asociado su mismo código,
-				 //por lo tanto lo busco y si no está lo agrego antes de mandar a guardar los matches
-				 var encontrado = false;
-				 $scope.newMatches.array.forEach(function(match){
-				 encontrado = (match.text == $scope.newPrice.code);
-				 });
-				 if (!encontrado){
-				 $scope.newMatches.array.push({ text: $scope.newPrice.code })
-				 }
-				 }
-				 saveMatchPrices();
-				 } else {
-				 dialogs.error('Asociar', 'Se ha producido un error al agregar el nuevo valor. ' + nuevoPrecio.data);
-				 }
-				 })
-				 })
-				 }*/
 			}
 		};
 
@@ -279,24 +219,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				return true;
 			}
 		};
-
-		/*function saveMatchPrices (){
-		 var array= [];
-		 $scope.newPrice.matches[0].match = $scope.newMatches.array.map(function(matchCode){
-		 return matchCode.text;
-		 });
-		 array.push($scope.newPrice.matches[0]);
-		 priceFactory.addMatchPrice(array, function(data){
-		 if (data.status == 'OK'){
-		 initialLoadFactory.actualizarMatchesArray(loginService.getFiltro());
-		 dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
-		 $scope.prepararDatos();
-		 $state.transitionTo('matches');
-		 } else {
-		 dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
-		 }
-		 });
-		 }*/
 
 		//Carga la tarifa completa antes de poder editarla
 		$scope.editarTarifa = function(tarifa){
@@ -359,21 +281,11 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 						}, function(response){
 							dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
 						});
-				/*priceFactory.removePrice($scope.newPrice._id, function(data){
-					if (data.status == 'OK'){
-						dialogs.notify("Eliminar","La tarifa ha sido eliminada");
-						$scope.prepararDatos();
-						$state.transitionTo('matches');
-					} else {
-						dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + data.data);
-					}
-				})*/
 			})
 		};
 
 		//Borra el valor de un campo de la nueva tarifa
 		$scope.eraseField = function(field){
-			console.log($scope.newPrice.unit);
 			$scope.newPrice[field] = ''
 		};
 
@@ -410,10 +322,5 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 			$scope.nombre = loginService.getFiltro();
 			$scope.prepararDatos();
 		});
-
-		/*$scope.$on('cambioTerminal', function(){
-		 $scope.nombre = loginService.getFiltro();
-		 $scope.prepararDatos();
-		 })*/
 
 	}]);
