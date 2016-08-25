@@ -195,6 +195,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					$scope.newPrice.setMatches($scope.newMatches.array.map(function(matchCode){
 						return matchCode.text;
 					}));
+					console.log($scope.newPrice);
 					$scope.newPrice.saveChanges()
 							.then(function(){
 								initialLoadFactory.actualizarMatchesArray(loginService.getFiltro());
