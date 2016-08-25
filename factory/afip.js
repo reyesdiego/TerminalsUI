@@ -2,8 +2,8 @@
  * Created by artiom on 17/12/14.
  */
 
-myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'HTTPCanceler',
-	function($http, loginService, formatService, $q, HTTPCanceler){
+myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'HTTPCanceler', 'APP_CONFIG',
+	function($http, loginService, formatService, $q, HTTPCanceler, APP_CONFIG){
 
 		var factory = {};
 		var namespace = 'afip';
@@ -89,7 +89,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getDetalleSumaria = function(tipo, sumaria, callback){
-			var inserturl = serverUrl + '/afip/transbordo' + tipo;
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/transbordo' + tipo;
 			var data = {
 				sumaria: sumaria
 			};
@@ -123,7 +123,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getRegistroCSV = function(ruta, filtros, callback){
-			var inserturl = serverUrl + '/afip/' + ruta;
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/' + ruta;
 			$http.get(inserturl, { params: formatService.formatearDatos(filtros) })
 				.then(function(response) {
 					var contentType = response.headers('Content-Type');
@@ -140,7 +140,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		factory.getRegistroAfip = function(ruta, filtros, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace);
-			var inserturl = serverUrl + '/afip/' + ruta;
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/' + ruta;
 			$http.get(inserturl, { params: formatService.formatearDatos(filtros), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -157,7 +157,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		factory.getContainerSumaria = function(container, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace);
-			var inserturl = serverUrl + '/afip/sumariaImpo/' + container;
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/sumariaImpo/' + container;
 			$http.get(inserturl, {timeout: canceler.promise})
 				.then(function(response){
 					callback(response.data);
@@ -176,7 +176,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		factory.getContainerSumariaExpo = function(container, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace);
-			var inserturl = serverUrl + '/afip/sumariaExpo/' + container;
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/sumariaExpo/' + container;
 			$http.get(inserturl, {timeout: canceler.promise})
 				.then(function(response){
 					callback(response.data);
@@ -193,7 +193,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getSumariaImpoBuques = function (callback) {
-			var inserturl = serverUrl + '/afip/registro1_sumimpomani/buques';
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/registro1_sumimpomani/buques';
 			$http.get(inserturl)
 				.then(function (response) {
 					callback(response.data, false);
@@ -204,7 +204,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getSumariaExpoBuques = function (callback) {
-			var inserturl = serverUrl + '/afip/registro1_sumexpomane/buques';
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/registro1_sumexpomane/buques';
 			$http.get(inserturl)
 				.then(function (response) {
 					callback(response.data, false);
@@ -215,7 +215,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getAfectacionBuques = function (callback) {
-			var inserturl = serverUrl + '/afip/registro1_afectacion/buques';
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/registro1_afectacion/buques';
 			$http.get(inserturl)
 				.then(function (response) {
 					callback(response.data, false);
@@ -226,7 +226,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getSolicitudBuques = function(callback){
-			var inserturl = serverUrl + '/afip/registro1_solicitud/buques';
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/registro1_solicitud/buques';
 			$http.get(inserturl)
 				.then(function(response){
 					callback(response.data, false);
@@ -237,7 +237,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 		};
 
 		factory.getManifiestoDetalle = function(manifiesto, callback){
-			//var insertUrl = serverUrl + '/alguna ruta';
+			//var insertUrl = APP_CONFIG.SERVER_URL + '/alguna ruta';
 			var rutaMockeada = '/TerminalsUI/mocks/manifiestoDetalle.json';
 			$http.get(rutaMockeada)
 				.then(function(response){

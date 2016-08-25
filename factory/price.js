@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price', function($http, loginService, formatService, Price){
+myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price', 'APP_CONFIG', function($http, loginService, formatService, Price, APP_CONFIG){
 	var priceFactory = {
 		retrievePrice: function(priceData){
 			var pricesArray = [];
@@ -11,7 +11,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			return pricesArray;
 		},
 		getAllRates: function(callback){
-			var inserturl = serverUrl + '/prices/rates/1/all';
+			var inserturl = APP_CONFIG.SERVER_URL + '/prices/rates/1/all';
 			$http.get(inserturl)
 					.then(function (response){
 						callback(response.data, false);
@@ -20,7 +20,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 					});
 		},
 		getPrice: function(terminal, datos, callback) {
-			var inserturl = serverUrl + '/prices/' + terminal;
+			var inserturl = APP_CONFIG.SERVER_URL + '/prices/' + terminal;
 			if (datos){ inserturl = inserturl + '?onlyRates=true' }
 			var factory = this;
 			$http.get(inserturl)
@@ -32,7 +32,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 					});
 		},
 		getMatchPrices: function(datos, terminal, callback) {
-			var inserturl = serverUrl + '/matchPrices/' + terminal;
+			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/' + terminal;
 			var factory = this;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 					.then(function (response){
@@ -43,7 +43,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 					});
 		},
 		getMatchPricesCSV: function(datos, terminal, callback) {
-			var inserturl = serverUrl + '/matchPrices/' + terminal;
+			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/' + terminal;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 					.then(function(response){
 						var contentType = response.headers('Content-Type');
@@ -58,7 +58,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 		},
 		//Se pasa la terminal al ser un método de caché
 		getArrayMatches: function(terminal, callback){
-			var inserturl = serverUrl + '/matchPrices/price/' + terminal;
+			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/price/' + terminal;
 			$http.get(inserturl)
 					.then(function (response){
 						callback(response.data);
@@ -68,7 +68,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 					});
 		},
 		noMatches: function (data, callback){
-			var inserturl = serverUrl + '/matchPrices/noMatches/' + loginService.getFiltro();
+			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/noMatches/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(data) })
 					.then(function (response){
 						callback(response.data);
@@ -77,7 +77,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 					});
 		},
 		getUnitTypes: function(callback){
-			var inserturl = serverUrl + '/unitTypes';
+			var inserturl = APP_CONFIG.SERVER_URL + '/unitTypes';
 			$http.get(inserturl)
 					.then(function(response) {
 						callback(response.data);

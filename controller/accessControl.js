@@ -2,7 +2,7 @@
  * Created by artiom on 13/05/15.
  */
 
-myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', '$filter', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q, loginService, $filter){
+myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', '$filter', 'generalFunctions', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q, loginService, $filter, generalFunctions){
 
 	$scope.permiso = false;
 	$scope.panelMensaje = {
@@ -163,10 +163,10 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 		angular.copy(usuario.acceso, $scope.rutasUsuarioOriginal);
 		angular.copy(usuario.emailToApp, $scope.notificacionesUsuarioOriginal);
 		$scope.tareas.forEach(function(tarea){
-			tarea.acceso = in_array(tarea.route, usuario.acceso);
+			tarea.acceso = generalFunctions.in_array(tarea.route, usuario.acceso);
 		});
 		$scope.notificaciones.forEach(function(notif){
-			notif.habilitar = in_array(notif.valor, usuario.emailToApp);
+			notif.habilitar = generalFunctions.in_array(notif.valor, usuario.emailToApp);
 		});
 		$scope.modo = 'tareas';
 		$scope.tabTareas.active = true;

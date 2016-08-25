@@ -1,8 +1,8 @@
 /**
  * Created by Diego Reyes on 1/23/14.
  */
-myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$uibModal', '$timeout',
-	function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $uibModal, $timeout) {
+myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService', 'authFactory', 'userFactory', 'dialogs', '$uibModal', '$timeout', 'generalFunctions',
+	function($rootScope, $scope, $state, loginService, authFactory, userFactory, dialogs, $uibModal, $timeout, generalFunctions) {
 		'use strict';
 		$scope.barType = "progress-bar-info";
 		$scope.entrando = false;
@@ -31,7 +31,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 			if (!angular.isDefined($rootScope.rutas)){
 				$rootScope.rutas = loginService.getAcceso();
 			}
-			if (in_array('tarifario', $rootScope.rutas)){
+			if (generalFunctions.in_array('tarifario', $rootScope.rutas)){
 				$state.transitionTo('tarifario');
 			} else {
 				$state.transitionTo($rootScope.rutas[0])
@@ -96,7 +96,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					.then(function(result) {
 								$rootScope.socket.emit('login', result.user);
 								$rootScope.cargandoCache = false;
-								if (in_array('tarifario', $rootScope.rutas)) {
+								if (generalFunctions.in_array('tarifario', $rootScope.rutas)) {
 									$state.transitionTo('tarifario');
 								} else {
 									$state.transitionTo($rootScope.rutas[0])
@@ -127,7 +127,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
 					dlg.result.then(function(){
 								$rootScope.cargandoCache = false;
-								if (in_array('tarifario', $rootScope.rutas)){
+								if (generalFunctions.in_array('tarifario', $rootScope.rutas)){
 									$state.transitionTo('tarifario');
 								} else {
 									$state.transitionTo($rootScope.rutas[0])

@@ -185,8 +185,8 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 
 }]);
 
-myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceManager', 'vouchersArrayCache', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs',
-	function($rootScope, $scope, invoiceManager, vouchersArrayCache, correlativeSocket, loginService, downloadFactory, dialogs) {
+myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceManager', 'vouchersArrayCache', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs', 'generalFunctions',
+	function($rootScope, $scope, invoiceManager, vouchersArrayCache, correlativeSocket, loginService, downloadFactory, dialogs, generalFunctions) {
 
 		var socketIoRegister = '';
 
@@ -344,7 +344,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceManager'
 					if ($scope.totalPuntos > 0){
 						$scope.leerData = false;
 						dataComprob.data.forEach(function(punto){
-							if (!in_array(punto.nroPtoVenta, $scope.arrayCargados)){
+							if (!generalFunctions.in_array(punto.nroPtoVenta, $scope.arrayCargados)){
 								generarInterfaz(punto);
 							}
 						});

@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 23/08/2016.
  */
-myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', 'loginService', function($http, unitTypesArrayCache, $q, formatService, loginService){
+myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', 'loginService', 'APP_CONFIG', function($http, unitTypesArrayCache, $q, formatService, loginService, APP_CONFIG){
     function Price(priceData){
         if (priceData){
             this.setData(priceData);
@@ -104,7 +104,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
         },
         addNewPrice: function(){
             var deferred = $q.defer();
-            var inserturl = serverUrl + '/prices/price';
+            var inserturl = APP_CONFIG.SERVER_URL + '/prices/price';
             var scope = this;
             $http.post(inserturl, this)
                 .then(function(response) {
@@ -137,7 +137,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             this.topPrices.forEach(function(unPrecio){
                 unPrecio.from = formatService.formatearFechaISOString(unPrecio.from);
             });
-            var inserturl = serverUrl + '/prices/price/' + this._id;
+            var inserturl = APP_CONFIG.SERVER_URL + '/prices/price/' + this._id;
             var scope = this;
             $http.put(inserturl, this)
                 .then(function(response) {
@@ -157,10 +157,9 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
         },
         saveMatchPrices: function(){
             var deferred = $q.defer();
-            var inserturl = serverUrl + '/matchPrices/matchprice';
+            var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/matchprice';
             $http.post(inserturl, this.matches)
                 .then(function (response) {
-                    console.log(response);
                     deferred.resolve(response.data);
                 }, function(response) {
                     deferred.reject(response.data);
@@ -169,7 +168,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
         },
         removePrice: function(){
             var deferred = $q.defer();
-            var inserturl = serverUrl + '/prices/price/' + this._id;
+            var inserturl = APP_CONFIG.SERVER_URL + '/prices/price/' + this._id;
             $http.delete(inserturl)
                 .then(function(response) {
                     deferred.resolve(response.data);

@@ -2,8 +2,8 @@
  * Created by leo on 18/07/14.
  */
 
-myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService', '$rootScope', '$q', 'initialLoadFactory', '$http',
-	function($state, $cookies, userFactory, loginService, $rootScope, $q, initialLoadFactory, $http){
+myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService', '$rootScope', '$q', 'initialLoadFactory', '$http', 'generalFunctions',
+	function($state, $cookies, userFactory, loginService, $rootScope, $q, initialLoadFactory, $http, generalFunctions){
 		var factory = {};
 
 		factory.userEnter = function(user, pass, useCookies){
@@ -60,7 +60,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 						$http.defaults.headers.common.token = loginService.getToken();
 
 						//****************************************
-						if (in_array('cfacturas', data.acceso)){
+						if (generalFunctions.in_array('cfacturas', data.acceso)){
 							data.acceso.push('cfacturas.tasas');
 							data.acceso.push('cfacturas.correlatividad');
 							data.acceso.push('cfacturas.codigos');
@@ -68,13 +68,13 @@ myapp.factory('authFactory', ['$state', '$cookies', 'userFactory', 'loginService
 							data.acceso.push('cfacturas.erroneos');
 							data.acceso.push('cfacturas.reenviar');
 						}
-						if (in_array('reports', data.acceso)){
+						if (generalFunctions.in_array('reports', data.acceso)){
 							data.acceso.push('reports.tasas');
 							data.acceso.push('reports.tarifas');
 							data.acceso.push('reports.empresas');
 							data.acceso.push('reports.terminales');
 						}
-						if (in_array('cgates', data.acceso)){
+						if (generalFunctions.in_array('cgates', data.acceso)){
 							data.acceso.push('cgates.gates');
 							data.acceso.push('cgates.invoices');
 							data.acceso.push('cgates.appointments');

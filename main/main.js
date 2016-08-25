@@ -4,24 +4,6 @@
 
 google.load("visualization", "1", {packages:["corechart"]});
 
-Array.prototype.contains = function (item) {
-	var result = false;
-	this.forEach(function (data) {
-		if (data === item)
-			result = true;
-		return result;
-	});
-	return result;
-};
-
-Array.prototype.unique=function(a){
-	return function(){
-		return this.filter(a)
-	}
-}(function(a,b,c){
-	return c.indexOf(a,b+1)<0
-});
-
 Array.prototype.equals = function (array) {
 	// if the other array is a falsy value, return
 	if (!array)
@@ -48,29 +30,6 @@ Array.prototype.equals = function (array) {
 	}
 	return true;
 };
-
-function in_array(needle, haystack, argStrict){
-	var key = '',
-		strict = !! argStrict;
-
-	if(strict){
-		for(key in haystack){
-			if(haystack.hasOwnProperty(key) && haystack[key] === needle){
-				return true;
-			}
-		}
-	}else{
-		for(key in haystack){
-			if(haystack.hasOwnProperty(key) && haystack[key] == needle){
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-var serverUrl = config.url();
-var socketUrl = config.socket();
 
 var myapp = angular.module('myapp', ['ui.router', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngSanitize', 'ngCookies', 'multi-select', 'angular-cache', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
 
@@ -627,8 +586,8 @@ myapp.config(['$cookiesProvider', function($cookiesProvider){
 	$cookiesProvider.defaults.expires = new Date(hoy.getFullYear(), hoy.getMonth()+1, hoy.getDate());
 }]);
 
-myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', '$cookies', 'appSocket', '$http',
-	function($rootScope, $state, loginService, authFactory, dialogs, $injector, $cookies, appSocket, $http){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
+myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', '$cookies', 'appSocket', '$http', 'generalFunctions',
+	function($rootScope, $state, loginService, authFactory, dialogs, $injector, $cookies, appSocket, $http, generalFunctions){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
 		$rootScope.pageTitle = 'Administración General de Puertos S.E.';
 		$rootScope.inTrackContainer = false;
@@ -766,12 +725,12 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		});
 
 		$rootScope.verificaRutas = function(event, toState){
-			$rootScope.cambioMoneda = !(in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
-			$rootScope.cambioTerminal = !(in_array(toState.name, $rootScope.rutasSinTerminal) || toState.name.indexOf('afip') != -1);
-			if (!in_array(toState.name, $rootScope.rutasComunes)){
+			$rootScope.cambioMoneda = !(generalFunctions.in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
+			$rootScope.cambioTerminal = !(generalFunctions.in_array(toState.name, $rootScope.rutasSinTerminal) || toState.name.indexOf('afip') != -1);
+			if (!generalFunctions.in_array(toState.name, $rootScope.rutasComunes)){
 				if (loginService.getStatus()){
 					if ($cookies.get('isLogged') === 'true'){
-						if(!in_array(toState.name, loginService.getAcceso())){
+						if(!generalFunctions.in_array(toState.name, loginService.getAcceso())){
 							$rootScope.usuarioNoAutorizado(event);
 						}
 					} else {

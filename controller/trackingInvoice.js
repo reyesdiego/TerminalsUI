@@ -6,8 +6,6 @@
 myapp.controller('trackingInvoiceCtrl', ['$scope', '$uibModalInstance', 'estado', 'track', 'states', 'resend',
 	function($scope, $uibModalInstance, estado, track, states, resend) {
 
-		console.log(estado);
-
 		$scope.states = states;
 		$scope.resend = resend;
 

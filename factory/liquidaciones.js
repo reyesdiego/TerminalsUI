@@ -1,14 +1,14 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'generalCache',
-	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache){
+myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'generalCache', 'APP_CONFIG',
+	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache, APP_CONFIG){
 
 		var factory = {};
 		var namespace = 'liquidaciones';
 
 		factory.getNotPayedCsv = function(datos, callback){
-			var inserturl = serverUrl + '/paying/notPayed/' + loginService.getFiltro() +'/download';
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/notPayed/' + loginService.getFiltro() +'/download';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
 				.then(function(response){
 					var contentType = response.headers('Content-Type');
@@ -23,7 +23,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getPriceDollar = function(callback){
-			var inserturl = serverUrl + '/afip/dollars';
+			var inserturl = APP_CONFIG.SERVER_URL + '/afip/dollars';
 			$http.get(inserturl)
 				.then(function(response){
 					callback(response.data);
@@ -33,7 +33,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.saveMat = function(data, update, callback){
-			var inserturl = serverUrl + '/mats/mat';
+			var inserturl = APP_CONFIG.SERVER_URL + '/mats/mat';
 			if (update){
 				$http.put(inserturl, data)
 					.then(function(response){
@@ -52,7 +52,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getMAT = function(year, callback){
-			var inserturl = serverUrl + '/mats';
+			var inserturl = APP_CONFIG.SERVER_URL + '/mats';
 			//var inserturl = 'mocks/mat.json'; //mocked route
 			$http.get(inserturl)
 				.then(function(response){
@@ -63,7 +63,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getMatFacturado = function(year, callback){
-			// var inserturl = serverUrl + '/alguna ruta en donde se use el year;
+			// var inserturl = APP_CONFIG.SERVER_URL + '/alguna ruta en donde se use el year;
 			var inserturl = 'mocks/matFacturado.json'; //mocked route
 			$http.get(inserturl)
 				.then(function(response){
@@ -86,7 +86,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			factory.cancelRequest('preliquidaciones');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'preliquidaciones');
-			var inserturl = serverUrl + '/paying/prePayments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -99,7 +99,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			factory.cancelRequest('liquidaciones');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'liquidaciones');
-			var inserturl = serverUrl + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					response.data.data = factory.setTotalesLiquidacion(response.data.data);
@@ -121,7 +121,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 
 		//No se debería poder cancelar
 		factory.setPrePayment = function(callback){
-			var inserturl = serverUrl + '/paying/prePayment';
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayment';
 			$http.post(inserturl, { terminal: loginService.getFiltro() })
 				.then(function(response){
 					callback(response.data);
@@ -136,7 +136,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.setPayment = function(preNumber, callback){
-			var inserturl = serverUrl + '/paying/payment';
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/payment';
 			$http.put(inserturl, {terminal: loginService.getFiltro(), preNumber: preNumber})
 				.then(function(response){
 					callback(response.data);
@@ -146,7 +146,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.deletePrePayment = function(paymentId, callback){
-			var inserturl = serverUrl + '/paying/prePayment/' + paymentId;
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayment/' + paymentId;
 			$http.delete(inserturl)
 				.then(function(response){
 					callback(response.data);
@@ -156,7 +156,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.addToPrePayment = function(preLiquidacion, datos, callback){
-			var inserturl = serverUrl + '/paying/addToPrePayment/' + loginService.getFiltro();
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/addToPrePayment/' + loginService.getFiltro();
 			var liquidacion = {
 				paymentId: preLiquidacion
 			};
@@ -174,7 +174,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getPrePayment = function(datos, callback){
-			var inserturl = serverUrl + '/paying/getPrePayment/' + loginService.getFiltro();
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/getPrePayment/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
 				.then(function(response){
 					response.data.data = factory.setDescriptionTasas(response.data.data);

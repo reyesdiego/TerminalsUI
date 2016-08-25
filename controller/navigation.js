@@ -81,7 +81,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		};
 
 		$scope.tieneAcceso = function(aguja){
-			return in_array(aguja, $scope.rutas);
+			return generalFunctions.in_array(aguja, $scope.rutas);
 		};
 
 		$scope.imprimirVista = function(){

@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus', 'Price',
-	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus, Price) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus', 'Price', 'generalFunctions',
+	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus, Price, generalFunctions) {
 		'use strict';
 
 		//Array con los tipos de tarifas para establecer filtros
@@ -60,7 +60,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		$scope.puedeEditar = function(){
 			if ($scope.acceso == 'agp'){
-				return in_array('modificarTarifario', $rootScope.rutas);
+				return generalFunctions.in_array('modificarTarifario', $rootScope.rutas);
 			}
 		};
 
@@ -159,7 +159,8 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.checkMatch = function(matchCode){
 			//TODO chequear si es posible que asignen a una tarifa, su mismo código como asociado
 			matchCode.text = matchCode.text.toUpperCase();
-			return (!$scope.matchesTerminal.contains(matchCode.text))
+			//return (!$scope.matchesTerminal.contains(matchCode.text))
+			return !generalFunctions.in_array(matchCode.text, $scope.matchesTerminal);
 		};
 
 		$scope.abrirNuevoConcepto = function(tipo){
@@ -195,7 +196,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 					$scope.newPrice.setMatches($scope.newMatches.array.map(function(matchCode){
 						return matchCode.text;
 					}));
-					console.log($scope.newPrice);
 					$scope.newPrice.saveChanges()
 							.then(function(){
 								initialLoadFactory.actualizarMatchesArray(loginService.getFiltro());
