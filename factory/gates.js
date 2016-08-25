@@ -2,8 +2,8 @@
  * Created by leo on 14/04/14.
  */
 
-myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', 'HTTPCanceler',
-	function($http, formatService, loginService, $q, HTTPCanceler){
+myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', 'HTTPCanceler', 'APP_CONFIG',
+	function($http, formatService, loginService, $q, HTTPCanceler, APP_CONFIG){
 		var factory = {};
 		var namespace = 'gates';
 
@@ -11,7 +11,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			factory.cancelRequest('getGates');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getGates');
-			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -24,7 +24,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			factory.cancelRequest('gatesSinTurnos');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'gatesSinTurnos');
-			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingAppointments';
+			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingAppointments';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -36,7 +36,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 		factory.getMissingGates = function(datos, page, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingGates');
-			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingGates/' + page.skip + '/' + page.limit;
+			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingGates/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, {params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function (response){
 					callback(response.data);
@@ -48,8 +48,8 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 		factory.getMissingInvoices = function(datos, page, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingInvoices');
-			//var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingInvoices/' + page.skip + '/' + page.limit;
-			var inserturl = serverUrl + '/gates/' + loginService.getFiltro() + '/missingInvoices';
+			//var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingInvoices/' + page.skip + '/' + page.limit;
+			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingInvoices';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function (response){
 					callback(response.data);
@@ -59,7 +59,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 		};
 
 		factory.getTrains = function(terminal, callback){
-			var inserturl = serverUrl + '/gates/' + terminal + '/trains';
+			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + terminal + '/trains';
 			$http.get(inserturl)
 				.then(function(response){
 					response.data.data = formatTrains(response.data.data);

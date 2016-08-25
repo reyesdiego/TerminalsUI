@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 17/08/2016.
  */
-myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', 'downloadFactory', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache, downloadFactory){
+myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', 'downloadFactory', 'APP_CONFIG', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache, downloadFactory, APP_CONFIG){
     function Invoice(invoiceData){
         if (invoiceData){
             this.setData(invoiceData);
@@ -80,7 +80,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
         loadById: function(){
             var deferred = $q.defer();
             if (!this.detalle){
-                var inserturl = serverUrl + '/invoices/invoice/' + this._id;
+                var inserturl = APP_CONFIG.SERVER_URL + '/invoices/invoice/' + this._id;
                 var scope = this;
                 $http.get(inserturl)
                     .then(function (response){
@@ -98,7 +98,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
         },
         getTrack: function(){
             var deferred = $q.defer();
-            var inserturl = serverUrl + '/comments/' + this._id;
+            var inserturl = APP_CONFIG.SERVER_URL + '/comments/' + this._id;
             var scope = this;
             $http.get(inserturl)
                 .then(function (response){
@@ -127,7 +127,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
         },
         updateState: function(newState){
             var deferred = $q.defer();
-            var inserturl = serverUrl + '/invoices/setState/' + loginService.getFiltro() + '/' + this._id;
+            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/setState/' + loginService.getFiltro() + '/' + this._id;
             var data = { estado: newState };
             $http.put(inserturl,  data).then(function (response){
                 deferred.resolve(response.data);
@@ -140,7 +140,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
         addComment: function(dataComment, newComment){
             var deferred = $q.defer();
             var message;
-            var inserturl = serverUrl + '/comments/comment';
+            var inserturl = APP_CONFIG.SERVER_URL + '/comments/comment';
             var scope = this;
             $http.post(inserturl, newComment)
                 .then(function (response){
@@ -184,7 +184,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             var data = {
                 resend: resendStatus
             };
-            var inserturl = serverUrl + '/invoices/invoice/' + loginService.getFiltro() + '/' + this._id;
+            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/invoice/' + loginService.getFiltro() + '/' + this._id;
             $http.put(inserturl, data)
                 .then(function(response){
                     if (response.data.status == 'OK'){

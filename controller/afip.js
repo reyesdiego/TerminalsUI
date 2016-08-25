@@ -19,7 +19,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 		$scope.sumariaDetalle = {};
 
-		if (in_array('afip.afectacion', $rootScope.rutas)){
+		if (generalFunctions.in_array('afip.afectacion', $rootScope.rutas)){
 			$rootScope.rutas.forEach(function(ruta){
 				if (ruta.indexOf('afip.afectacion.') >= 0 && $scope.afectacion == 'afip') {
 					$scope.afectacion = ruta;
@@ -28,7 +28,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (in_array('afip.detalle', $rootScope.rutas)){
+		if (generalFunctions.in_array('afip.detalle', $rootScope.rutas)){
 			$rootScope.rutas.forEach(function(ruta){
 				if (ruta.indexOf('afip.detalle.') >= 0 && $scope.detalle == 'afip') {
 					$scope.detalle = ruta;
@@ -37,7 +37,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (in_array('afip.solicitud', $rootScope.rutas)){
+		if (generalFunctions.in_array('afip.solicitud', $rootScope.rutas)){
 			$rootScope.rutas.forEach(function(ruta){
 				if (ruta.indexOf('afip.solicitud.') >= 0 && $scope.solicitud == 'afip') {
 					$scope.solicitud = ruta;
@@ -46,7 +46,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (in_array('afip.sumatorias', $rootScope.rutas)){
+		if (generalFunctions.in_array('afip.sumatorias', $rootScope.rutas)){
 			$rootScope.rutas.forEach(function(ruta){
 				if (ruta.indexOf('afip.sumatorias.') >= 0 && $scope.sumatoria == 'afip') {
 					$scope.sumatoria = ruta;
@@ -55,7 +55,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (in_array('afip.removido', $rootScope.rutas)){
+		if (generalFunctions.in_array('afip.removido', $rootScope.rutas)){
 			$rootScope.rutas.forEach(function(ruta){
 				if (ruta.indexOf('afip.removido.') >= 0 && $scope.removido == 'afip') {
 					$scope.removido = ruta;
@@ -64,7 +64,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (in_array('afip.transbordos', $rootScope.rutas)){
+		if (generalFunctions.in_array('afip.transbordos', $rootScope.rutas)){
 			$rootScope.rutas.forEach(function(ruta){
 				if (ruta.indexOf('afip.transbordos.') >= 0 && $scope.removido == 'afip') {
 					$scope.transbordos = ruta;
@@ -74,12 +74,12 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		}
 
 		$scope.tabs = [
-			{ heading: 'Afectación',	uisref: $scope.afectacion,	mostrar: in_array('afip.afectacion', $rootScope.rutas) },
-			{ heading: 'Detallada',		uisref: $scope.detalle,		mostrar: in_array('afip.detalle', $rootScope.rutas) },
-			{ heading: 'Solicitud',		uisref: $scope.solicitud,	mostrar: in_array('afip.solicitud', $rootScope.rutas) },
-			{ heading: 'Sumarias',		uisref: $scope.sumatoria,	mostrar: in_array('afip.sumatorias', $rootScope.rutas) },
-			{ heading: 'Removido',		uisref: $scope.removido,	mostrar: in_array('afip.removido', $rootScope.rutas) },
-			{ heading: 'Transbordos', 	uisref: $scope.transbordos, mostrar: in_array('afip.transbordos', $rootScope.rutas) }
+			{ heading: 'Afectación',	uisref: $scope.afectacion,	mostrar: generalFunctions.in_array('afip.afectacion', $rootScope.rutas) },
+			{ heading: 'Detallada',		uisref: $scope.detalle,		mostrar: generalFunctions.in_array('afip.detalle', $rootScope.rutas) },
+			{ heading: 'Solicitud',		uisref: $scope.solicitud,	mostrar: generalFunctions.in_array('afip.solicitud', $rootScope.rutas) },
+			{ heading: 'Sumarias',		uisref: $scope.sumatoria,	mostrar: generalFunctions.in_array('afip.sumatorias', $rootScope.rutas) },
+			{ heading: 'Removido',		uisref: $scope.removido,	mostrar: generalFunctions.in_array('afip.removido', $rootScope.rutas) },
+			{ heading: 'Transbordos', 	uisref: $scope.transbordos, mostrar: generalFunctions.in_array('afip.transbordos', $rootScope.rutas) }
 		];
 
 		$scope.model = {
@@ -366,7 +366,7 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		};
 
 		$scope.in_array = function(aguja, pajar){
-			return in_array(aguja, pajar);
+			return generalFunctions.in_array(aguja, pajar);
 		};
 
 		if (loginService.getStatus()) $scope.cargaDatos($scope.actualRegistro);

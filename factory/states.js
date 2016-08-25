@@ -2,11 +2,11 @@
  * Created by diego on 12/10/14.
  */
 
-myapp.factory('statesFactory', ['$http', function($http){
+myapp.factory('statesFactory', ['$http', 'APP_CONFIG', function($http, APP_CONFIG){
 	var factory = {};
 
 	factory.getStatesType = function(callback){
-		var inserturl = serverUrl + '/states';
+		var inserturl = APP_CONFIG.SERVER_URL + '/states';
 		$http.get(inserturl)
 			.then(function (response){
 				callback(response.data);

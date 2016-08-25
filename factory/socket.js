@@ -2,7 +2,7 @@
  * Created by artiom on 02/07/15.
  */
 
-myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFactory, loginService) {
+myapp.factory('appSocket', ['socketFactory', 'loginService', 'APP_CONFIG', function(socketFactory, loginService, APP_CONFIG) {
 
 	//La dirrección deberá ser pasado por config
 	var ioSocket;
@@ -10,7 +10,7 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFact
 
 	return {
 		connect: function () {
-			ioSocket = io.connect(socketUrl, { transports: ['polling', 'websocket', 'xhr-polling']});
+			ioSocket = io.connect(APP_CONFIG.SOCKET_URL, { transports: ['polling', 'websocket', 'xhr-polling']});
 			mySocket = socketFactory({ioSocket: ioSocket});
 
 			mySocket.on('connect', function () {
@@ -47,7 +47,7 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', function(socketFact
 }]);
 
 myapp.factory('correlativeSocket', ['socketFactory', function(socketFactory){
-	var ioSocket = io.connect(socketUrl);
+	var ioSocket = io.connect(APP_CONFIG.SOCKET_URL);
 
 	return socketFactory({ioSocket: ioSocket});
 }]);

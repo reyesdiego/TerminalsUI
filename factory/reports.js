@@ -2,11 +2,11 @@
  * Created by Artiom on 17/06/14.
  */
 
-myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', function($http, dialogs, formatService, loginService){
+myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', 'APP_CONFIG', function($http, dialogs, formatService, loginService, APP_CONFIG){
 	var factory = {};
 
 	factory.getTerminalesCSV = function(datos, callback) {
-		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/byRates';
+		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/byRates';
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 				.then(function(response){
 					var contentType = response.headers('Content-Type');
@@ -21,7 +21,7 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 	};
 
 	factory.getReporteTerminales = function(param, callback){
-		var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/byRates';
+		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/byRates';
 		$http.get(inserturl, {params: formatService.formatearDatos(param)})
 				.then(function(response){
 					callback(response.data);
@@ -31,7 +31,7 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 	};
 
 	factory.getReporteTarifas = function(fecha, tarifas, callback){
-		var inserturl = serverUrl + '/invoices/byRates?fechaInicio=' + formatService.formatearFechaISOString(fecha.fechaInicio) + '&fechaFin=' + formatService.formatearFechaISOString(fecha.fechaFin);
+		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/byRates?fechaInicio=' + formatService.formatearFechaISOString(fecha.fechaInicio) + '&fechaFin=' + formatService.formatearFechaISOString(fecha.fechaFin);
 		$http.post(inserturl, tarifas)
 			.then(function (response) {
 				callback(response.data);

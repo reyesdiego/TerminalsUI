@@ -1,14 +1,14 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'estadosArrayCache', 'generalCache', 'generalFunctions', '$q', 'HTTPCanceler',
-	function($http, loginService, formatService, estadosArrayCache, generalCache, generalFunctions, $q, HTTPCanceler){
+myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'estadosArrayCache', 'generalCache', 'generalFunctions', '$q', 'HTTPCanceler', 'APP_CONFIG',
+	function($http, loginService, formatService, estadosArrayCache, generalCache, generalFunctions, $q, HTTPCanceler, APP_CONFIG){
 		var factory = {};
 		var namespace = 'invoices';
 
 		//Se pasa la terminal al ser de caché
 		factory.getDescriptionItem = function(terminal, callback){
-			var inserturl = serverUrl + '/matchPrices/matches/' + terminal;
+			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/matches/' + terminal;
 			$http.get(inserturl)
 				.then(function(response) {
 					callback(response.data);
@@ -22,7 +22,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'esta
 			factory.cancelRequest('containersSinTasaCargas');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'containersSinTasaCargas');
-			var inserturl = serverUrl + '/invoices/containersNoRates/' + loginService.getFiltro();
+			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/containersNoRates/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response) {
 					callback(response.data);
@@ -34,7 +34,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'esta
 
 		//Al ser un método de caché se le pasa la terminal
 		factory.getShipTrips = function(terminal, callback){
-			var inserturl = serverUrl + '/invoices/' + terminal + '/shipTrips';
+			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + terminal + '/shipTrips';
 			$http.get(inserturl)
 				.then(function(response){
 					callback(response.data);
@@ -48,7 +48,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'esta
 			factory.cancelRequest('shipContainers');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'shipContainers');
-			var inserturl = serverUrl + '/invoices/' + loginService.getFiltro() + '/shipContainers';
+			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/shipContainers';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -61,7 +61,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'esta
 			factory.cancelRequest('ratesInvoices');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'ratesInvoices');
-			var inserturl = serverUrl + '/invoices/rates';
+			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/rates';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -74,7 +74,7 @@ myapp.factory('invoiceFactory', ['$http', 'loginService', 'formatService', 'esta
 			factory.cancelRequest('ratesDetail');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'ratesDetail');
-			var inserturl = serverUrl + '/invoices/rates/' + datos.tipo;
+			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/rates/' + datos.tipo;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);

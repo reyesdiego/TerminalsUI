@@ -2,11 +2,11 @@
  * Created by leo on 02/02/15.
  */
 
-myapp.factory('ctrlUsersFactory', ['$http', function($http){
+myapp.factory('ctrlUsersFactory', ['$http', 'APP_CONFIG', function($http, APP_CONFIG){
 	var factory = {};
 
 	factory.getUsers = function(callback){
-		var inserturl = serverUrl + '/agp/accounts';
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/accounts';
 		$http.get(inserturl)
 			.then(function(response){
 				callback(response.data);
@@ -16,7 +16,7 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	};
 
 	factory.userEnabled = function(id, callback) {
-		var inserturl = serverUrl + '/agp/account/' + id + '/enable';
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/account/' + id + '/enable';
 		$http.put(inserturl)
 			.then(function(response){
 				callback(response.data);
@@ -26,7 +26,7 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	};
 
 	factory.userDisabled = function(id, callback) {
-		var inserturl = serverUrl + '/agp/account/' + id + '/disable';
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/account/' + id + '/disable';
 		$http.put(inserturl)
 			.then(function(response){
 				callback(response.data);
@@ -36,7 +36,7 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	};
 
 	factory.getRoutes = function(callback){
-		var inserturl = serverUrl + '/tasks';
+		var inserturl = APP_CONFIG.SERVER_URL + '/tasks';
 		$http.get(inserturl)
 			.then(function(response){
 				callback(response.data);
@@ -46,7 +46,7 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	};
 
 	factory.setAccess = function(id, acceso, callback){
-		var inserturl = serverUrl + '/agp/account/' + id + '/tasks';
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/account/' + id + '/tasks';
 		$http.put(inserturl, acceso)
 			.then(function(response){
 				callback(response.data);
@@ -56,7 +56,7 @@ myapp.factory('ctrlUsersFactory', ['$http', function($http){
 	};
 
 	factory.setNotifications = function(id, notif, callback){
-		var inserturl = serverUrl + '/agp/account/' + id + '/emailToApp';
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/account/' + id + '/emailToApp';
 		$http.put(inserturl, notif)
 			.then(function(response){
 				callback(response.data);

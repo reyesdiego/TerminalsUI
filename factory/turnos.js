@@ -2,8 +2,8 @@
  * Created by leo on 28/04/14.
  */
 
-myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginService', '$q', 'HTTPCanceler',
-	function($http, dialogs, formatService, loginService, $q, HTTPCanceler){
+myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginService', '$q', 'HTTPCanceler', 'APP_CONFIG',
+	function($http, dialogs, formatService, loginService, $q, HTTPCanceler, APP_CONFIG){
 		var factory = {};
 		var namespace = 'turnos';
 
@@ -15,7 +15,7 @@ myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginServi
 			factory.cancelRequest('getTurnos');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getTurnos');
-			var inserturl = serverUrl + '/appointments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+			var inserturl = APP_CONFIG.SERVER_URL + '/appointments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -28,7 +28,7 @@ myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginServi
 			factory.cancelRequest('getQueuedMails');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getQueuedMails');
-			var inserturl = serverUrl + '/appointmentEmailQueues/' + page.skip + '/' + page.limit;
+			var inserturl = APP_CONFIG.SERVER_URL + '/appointmentEmailQueues/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -41,7 +41,7 @@ myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginServi
 			factory.cancelRequest('missingAppointments');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'missingAppointments');
-			var inserturl = serverUrl + '/appointments/' + loginService.getFiltro() + '/missingAppointments';
+			var inserturl = APP_CONFIG.SERVER_URL + '/appointments/' + loginService.getFiltro() + '/missingAppointments';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -51,7 +51,7 @@ myapp.factory('turnosFactory', ['$http', 'dialogs', 'formatService', 'loginServi
 		};
 
 		factory.comprobanteTurno = function(contenedor, id, callback){
-			var insertUrl = serverUrl + "/appointments/container/" + contenedor;
+			var insertUrl = APP_CONFIG.SERVER_URL + "/appointments/container/" + contenedor;
 			$http.get(insertUrl, {params:{ _id: id }}).then(function(response){
 				callback(response.data, 'OK');
 			}, function(response){

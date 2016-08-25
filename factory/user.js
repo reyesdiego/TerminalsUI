@@ -2,11 +2,11 @@
  * Created by Diego Reyes on 3/19/14.
  */
 
-myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($http, dialogs, formatService){
+myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', 'APP_CONFIG', function($http, dialogs, formatService, APP_CONFIG){
 	var factory = {};
 
 	factory.login = function(datos, callback){
-		var inserturl = serverUrl + '/login';
+		var inserturl = APP_CONFIG.SERVER_URL + '/login';
 		$http.post(inserturl, datos)
 			.then(function(response) {
 				callback(response.data, false);
@@ -29,7 +29,7 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 	};
 
 	factory.cambiarContraseña = function(formData, callback){
-		var inserturl = serverUrl + '/agp/password';
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/password';
 		$http.post(inserturl, formData)
 			.then(function(response) {
 				callback(response.data);
@@ -39,7 +39,7 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 	};
 
 	factory.newUser = function(formData, callback){
-		var inserturl = serverUrl + '/agp/register';
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/register';
 		$http.post(inserturl, formData)
 			.then(function(response) {
 				callback(response.data);
@@ -49,7 +49,7 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 	};
 
 	factory.resetPassword = function(mail, callback){
-		var inserturl = serverUrl + '/agp/resetPassword/' + mail;
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/resetPassword/' + mail;
 		$http.post(inserturl)
 			.then(function(response) {
 				callback(response.data);
@@ -59,7 +59,7 @@ myapp.factory('userFactory', ['$http', 'dialogs', 'formatService', function($htt
 	};
 
 	factory.validateUser = function(salt, callback){
-		var inserturl = serverUrl + '/agp/account/token';
+		var inserturl = APP_CONFIG.SERVER_URL + '/agp/account/token';
 		$http.get(inserturl, { params: formatService.formatearDatos(salt) })
 			.then(function(response){
 				callback(response.data);

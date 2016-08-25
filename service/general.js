@@ -32,4 +32,24 @@ myapp.service('generalFunctions', [function () {
 	this.idToDate = function (id) {
 		return new Date(parseInt(id.substring(0, 8), 16) * 1000);
 	};
+
+	this.in_array = function(needle, haystack, argStrict){
+		var key = '',
+				strict = !! argStrict;
+
+		if(strict){
+			for(key in haystack){
+				if(haystack.hasOwnProperty(key) && haystack[key] === needle){
+					return true;
+				}
+			}
+		}else{
+			for(key in haystack){
+				if(haystack.hasOwnProperty(key) && haystack[key] == needle){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }]);
