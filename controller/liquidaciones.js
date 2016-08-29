@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', '$q', 'invoiceManager',
-	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, $q, invoiceManager){
+myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', '$q', 'invoiceFactory',
+	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, $q, invoiceFactory){
 
 		$scope.tasaAgp = false;
 		$scope.byContainer = false;
@@ -261,7 +261,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		var cargarComprobantesSinLiquidarSinAgrupar = function(){
 			var deferred = $q.defer();
-			invoiceManager.getComprobantesLiquidar($scope.page, $scope.sinLiquidar.model, function(data){
+			invoiceFactory.getComprobantesLiquidar($scope.page, $scope.sinLiquidar.model, function(data){
 				if (data.status == 'OK'){
 					$scope.sinLiquidar.comprobantes = data.data;
 					deferred.resolve(data.totalCount);
@@ -277,7 +277,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			var deferred = $q.defer();
 			var alterModel = angular.copy($scope.sinLiquidar.model);
 			alterModel.byContainer = true;
-			invoiceManager.getComprobantesLiquidar($scope.page, alterModel, function(data){
+			invoiceFactory.getComprobantesLiquidar($scope.page, alterModel, function(data){
 				if (data.status == 'OK'){
 					$scope.sinLiquidar.comprobantesByContainer = data.data;
 					deferred.resolve(data.totalCount);
@@ -402,7 +402,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		var traerComprobantesPreLiquidacionSinAgrupar = function(pagina){
 			var deferred = $q.defer();
-			invoiceManager.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, $scope.comprobantesPreLiquidados.model, function(data){
+			invoiceFactory.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, $scope.comprobantesPreLiquidados.model, function(data){
 				if (data.status == 'OK'){
 					$scope.comprobantesPreLiquidados.comprobantes = data.data;
 					deferred.resolve(data.totalCount);
@@ -418,7 +418,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			var deferred = $q.defer();
 			var alterModel = angular.copy($scope.comprobantesPreLiquidados.model);
 			alterModel.byContainer = true;
-			invoiceManager.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, alterModel, function(data){
+			invoiceFactory.getComprobantesLiquidados(pagina, $scope.preLiquidacion.selected._id, alterModel, function(data){
 				if (data.status == 'OK'){
 					$scope.comprobantesPreLiquidados.comprobantesByContainer = data.data;
 					deferred.resolve(data.totalCount);
@@ -467,7 +467,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				skip: ($scope.comprobantesLiquidados.currentPage - 1) * $scope.itemsPerPage,
 				limit: $scope.itemsPerPage
 			};
-			invoiceManager.getComprobantesLiquidados(pagina, $scope.liquidacion.selected._id, $scope.comprobantesLiquidados.model, function(data){
+			invoiceFactory.getComprobantesLiquidados(pagina, $scope.liquidacion.selected._id, $scope.comprobantesLiquidados.model, function(data){
 				if (data.status == 'OK'){
 					$scope.comprobantesLiquidados.total = data.totalCount;
 					$scope.comprobantesLiquidados.comprobantes = data.data;

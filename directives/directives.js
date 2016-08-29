@@ -169,35 +169,9 @@ myapp.directive('detalleComprobante', ['dialogs', 'loginService', function(dialo
 			$scope.acceso = loginService.getType();
 			$scope.comprobantesControlados = [];
 
-			/*$scope.checkComprobantes = function(comprobante){
-				var response;
-				response = invoiceService.checkComprobantes(comprobante, $scope.comprobantesVistos, $scope.comprobantes);
-				$scope.comprobantes = response.datosInvoices;
-			};*/
-
-			$scope.ocultarResultado = function(comprobante){
-				//$scope.checkComprobantes(comprobante);
+			$scope.ocultarResultado = function(){
 				$scope.mostrar = false;
 			};
-
-			/*$scope.trackInvoice = function(comprobante){
-				invoiceService.trackInvoice(comprobante)
-					.then(function(response){
-						if (angular.isDefined(response)) comprobante = response;
-					}, function(message){
-						dialogs.error('Liquidaciones', message);
-					})
-			};*/
-
-			/*$scope.existeDescripcion = function(itemId){
-				return invoiceService.existeDescripcion(itemId);
-			};*/
-
-			/*$scope.chequearTarifas = function(comprobante){
-				var resultado = invoiceService.chequearTarifas(comprobante, $scope.comprobantesControlados);
-				$scope.comprobantesControlados = resultado.data;
-				return resultado.retValue;
-			};*/
 
 			$scope.verPdf = function(){
 				$scope.disablePdf = true;

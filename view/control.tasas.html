@@ -15,7 +15,7 @@
                     </div>
                     <br>
 					<span ng-repeat="contenedor in resultado | filter: search">
-						<div style="width: auto; float:left; text-align:center" ng-show="contenedor != ''" ><a href ng-class="{mark: (model.contenedor == contenedor)}" ng-click="verContenedor(contenedor)"> {{ contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
+						<div style="width: auto; float:left; text-align:center" ng-show="contenedor.contenedor != ''" ><a href ng-class="{mark: (model.contenedor == contenedor.contendor)}" ng-click="verContenedor(contenedor)"> {{ contenedor.contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
                 </div>
             </div-panel>

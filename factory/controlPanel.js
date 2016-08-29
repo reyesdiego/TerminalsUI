@@ -60,7 +60,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 				});
 		};
 
-		factory.getTasasContenedor = function(datos, ruta, callback){
+		/*factory.getTasasContenedor = function(datos, ruta, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getTasasContenedor');
 			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/rates/' + loginService.getFiltro() + '/' + datos.contenedor + '/' + datos.currency;
@@ -78,7 +78,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 						if (response.status != -5) callback(response.data);
 					});
 			}
-		};
+		};*/
 
 		factory.getFacturasMeses = function(datos, callback){
 			var defer = $q.defer();

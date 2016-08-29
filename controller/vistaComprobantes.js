@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 30/03/15.
  */
-myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceManager',
-	function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceManager){
+myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceFactory',
+	function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceFactory){
 		$scope.inTrackContainer = $rootScope.inTrackContainer;
 
 		$scope.status = {
@@ -117,7 +117,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		// Funciones de Puntos de Venta
 		var cargaPuntosDeVenta = function(){
 			if ($scope.todosLosPuntosDeVentas.length > 0){
-				invoiceManager.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
+				invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 					if (data.status == 'OK'){
 						$scope.todosLosPuntosDeVentas.forEach(function(puntosVenta){
 							puntosVenta.hide = data.data.indexOf(puntosVenta.punto, 0) < 0;
@@ -139,7 +139,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		};
 
 		var cargaTodosLosPuntosDeVentas = function(){
-			invoiceManager.getCashbox($scope.$id, '', function(data){
+			invoiceFactory.getCashbox($scope.$id, '', function(data){
 				if (data.status == 'OK'){
 					var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
 					$scope.todosLosPuntosDeVentas.push(dato);
