@@ -46,7 +46,7 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', 'APP_CONFIG', funct
 
 }]);
 
-myapp.factory('correlativeSocket', ['socketFactory', function(socketFactory){
+myapp.factory('correlativeSocket', ['socketFactory', 'APP_CONFIG', function(socketFactory, APP_CONFIG){
 	var ioSocket = io.connect(APP_CONFIG.SOCKET_URL);
 
 	return socketFactory({ioSocket: ioSocket});

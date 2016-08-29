@@ -165,7 +165,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 				$scope.verDetalle = comprobante;
 				$scope.mostrarResultado = true;
 				$scope.loadingState = false;
-			}, function(){
+			}, function(error){
+				dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos del comprobante. ' + error.data.message);
 				$scope.loadingState = false;
 			})
 		};

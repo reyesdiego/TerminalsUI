@@ -115,7 +115,7 @@ myapp.config(['$provide', '$httpProvider', function($provide, $httpProvider){
 				// optional method
 				'responseError': function(rejection) {
 					//TODO config custom messages for http Error status
-					console.log(rejection);
+					//console.log(rejection);
 					/*if (rejection.status == 401){
 						if (rejection.config.url != configService.serverUrl + '/login'){
 							$rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
@@ -143,7 +143,7 @@ myapp.config(['$provide', '$httpProvider', function($provide, $httpProvider){
 						};
 					}
 					if (angular.isDefined(rejection.config.timeout)){
-						if (rejection.config.timeout.$$state.value == 'cancelado por el usuario'){
+						if (rejection.config.timeout.$$state.value == 'canceled'){
 							rejection.status = -5;
 						}
 					}
