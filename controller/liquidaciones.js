@@ -459,7 +459,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			});
 		};
 
-		$scope.detalleLiquidacion = function(liquidacion){
+		$scope.detalleLiquidacion = function(event, liquidacion){
+			event.stopPropagation();
 			if (liquidacion) $scope.liquidacion.selected = liquidacion;
 			$scope.liquidacion.verDetalle = true;
 			$scope.comprobantesLiquidados.cargando = true;
@@ -517,8 +518,9 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					//$scope.commentsInvoice = response.commentsInvoice;
 					$scope.sinLiquidar.verDetalle = true;
 					$scope.sinLiquidar.cargando = false;
-				}, function(){
-					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar el comprobante');
+				}, function(error){
+					console.log(error);
+					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los datos del comprobante. ' + error.data.message);
 					$scope.sinLiquidar.cargando = false;
 				});
 		};

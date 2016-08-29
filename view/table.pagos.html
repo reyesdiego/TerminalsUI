@@ -20,7 +20,7 @@
 			<!--<td class="text-right" ng-hide="final == 'true'">{{ pago.preNumber }}</td>-->
 			<td class="text-right" valign="middle">{{ pago.number }}</td>
 			<td class="text-center" valign="middle">{{ pago.date | date: 'dd/MM/yyyy' }}</td>
-			<td class="text-center"><a href ng-click="detalle({pago: pago})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td class="text-center"><a href ng-click="detalle({$event: $event, pago: pago})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		<tr data-ng-switch-when="true">
 			<td colspan="3">

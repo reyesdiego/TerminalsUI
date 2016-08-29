@@ -19,8 +19,8 @@ module.exports = function(grunt) {
 			js : {
 				src : [
 					'js/angular-notify/angular-notify.js',
-					'main/*',
-					'includes/js/utils/configProd.js',
+					'main/main.js',
+					'main/configProd.js',
 					'class/*',
 					'controller/*',
 					'directives/*',

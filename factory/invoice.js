@@ -89,6 +89,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                     response.data.data = factory.retrieveInvoices(response.data.data);
                     callback(response.data);
                 }, function(response){
+                    console.log(response);
                     if (response.status != -5){
                         if (response.data == null){
                             response.data = {

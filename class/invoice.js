@@ -27,13 +27,13 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                             item.uniMed = unidadesTarifas[item.uniMed];
                     });
                 });
-            } else {
-                this.controlTarifas = [];
-                this.tarifasSinMatch = [];
-                this.interfazLiquidada = '';
-                this.tieneTasa = false;
-                this.noMatch = false;
             }
+
+            if (!this.controlTarifas) this.controlTarifas = [];
+            if (!this.tarifasSinMatch) this.tarifasSinMatch = [];
+            if (!this.interfazLiquidada) this.interfazLiquidada = '';
+            if (!this.tieneTasa) this.tieneTasa = false;
+            if (!this.noMatch) this.noMatch = false;
 
             this.setInterface();
             if (!this.resend || this.resend == null){
@@ -87,7 +87,8 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                         scope.setData(response.data.data);
                         deferred.resolve();
                     }, function(response){
-                        deferred.reject(response.data);
+                        console.log(response);
+                        deferred.reject(response);
                         /*errorFactory.raiseError(response.data, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
                          callback({}, false);*/
                     });
@@ -253,7 +254,15 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             return deferred.promise;
         },
         mostrarDetalle: function(){
-            return this.loadById().then(this.getTrack());
+            var deferred = $q.defer();
+            var scope = this;
+            this.loadById().then(function(){
+                scope.getTrack();
+                deferred.resolve();
+            }, function(error){
+                deferred.reject(error);
+            });
+            return deferred.promise;
         },
         controlarTarifas: function(){
             /***************** ASQUEROSO ***********************************/

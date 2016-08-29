@@ -378,18 +378,6 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			traerPuntosDeVenta();
 		});
 
-		/*$scope.$on('cambioTerminal', function(){
-			$scope.arrayCargados = [];
-			$scope.totalFaltantes = 0;
-			$scope.pantalla = {
-				titulo:  "Correlatividad",
-				tipo: "panel-info",
-				mensajeCorrelativo : 'Seleccione tipo de comprobante y presione el botón "Buscar" para realizar el control.'
-			};
-			$scope.puntosDeVenta = [];
-			traerPuntosDeVenta();
-		});*/
-
 		$scope.$on('$destroy', function(){
 			correlativeSocket.disconnect();
 		});

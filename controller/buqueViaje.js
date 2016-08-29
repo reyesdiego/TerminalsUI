@@ -2,8 +2,8 @@
  * Created by artiom on 08/04/15.
  */
 
-myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 'generalCache', '$state', 'loginService',
-	function($rootScope, $scope, containerFactory, generalCache, $state, loginService){
+myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 'generalCache', '$state', 'loginService', 'Container',
+	function($rootScope, $scope, containerFactory, generalCache, $state, loginService, Container){
 		////// Para containers /////////////
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -34,13 +34,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 		};
 
 		$scope.loadingState = false;
-		$scope.invoices = [];
 		$scope.loadingInvoices = false;
-		$scope.gates = [];
 		$scope.loadingGates = false;
-		$scope.turnos = [];
 		$scope.loadingTurnos = false;
-		$scope.tasas = [];
 		$scope.loadingTasas = false;
 		$scope.detalleGates = false;
 		$scope.volverAPrincipal = false;
@@ -64,7 +60,11 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 		};
 		$scope.detalle = false;
 		$scope.contenedorElegido = {
-			contenedor: ''
+			contenedor: '',
+			invoices: {
+				data: [],
+				total: 0
+			}
 		};
 		$scope.currentPageContainers = 1;
 		$scope.itemsPerPage = 10;
@@ -130,12 +130,9 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 		$scope.$on('iniciarBusqueda', function(){
 			$scope.volverAPrincipal = !$scope.volverAPrincipal;
 			if ($scope.model.contenedor != ''){
+				$scope.contenedorElegido = new Container({contenedor: $scope.model.contenedor});
 				$scope.filtrar();
 			} else {
-				$scope.invoices = [];
-				$scope.tasas = [];
-				$scope.gates = [];
-				$scope.turnos = [];
 				$scope.sumariaConfigPanel = {
 					tipo: 'panel-info',
 					titulo: 'A.F.I.P. sumaria',
@@ -272,10 +269,6 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 
 		$scope.verDetalles = function(contenedor){
 			$scope.volverAPrincipal = !$scope.volverAPrincipal;
-			$scope.invoices = [];
-			$scope.gates = [];
-			$scope.turnos = [];
-			$scope.tasas = [];
 			$scope.detalle = true;
 			$scope.contenedorElegido = contenedor;
 			$scope.model.contenedor = contenedor.contenedor;
@@ -388,26 +381,6 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 				cargaTasasCargas();
 			}
 		});
-
-		/*$scope.$on('cambioTerminal', function(){
-			$scope.volverAPrincipal = !$scope.volverAPrincipal;
-			$scope.invoices = [];
-			$scope.gates = [];
-			$scope.turnos = [];
-			$scope.tasas = [];
-			$scope.detalle = false;
-			$scope.totalItems = 0;
-			$scope.datosContainers = [];
-			$scope.totalSinRates = 0;
-			$scope.containersSinRates = [];
-			$scope.buques = generalCache.get('buques' + loginService.getFiltro());
-			$scope.buqueElegido = {
-				viajes:[]
-			};
-			if ($scope.model.contenedor != ''){
-				$scope.filtrar();
-			}
-		});*/
 
 		$scope.$on('destroy', function(){
 			containerFactory.cancelRequest();
