@@ -49,7 +49,7 @@ myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope
 
 }]);
 
-myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 'turnosFactory', 'afipFactory', 'generalFunctions', 'loginService', function($scope, invoiceFactory, gatesFactory, turnosFactory, afipFactory, generalFunctions, loginService) {
+myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory', 'afipFactory', 'generalFunctions', 'loginService', function($scope, containerFactory, gatesFactory, afipFactory, generalFunctions, loginService) {
 
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'documentoCliente', 'codigo', 'estado', 'buque', 'itemsPerPage', 'contenedor', 'comprobantes', 'rates'];
 	//$scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden', 'codigo', 'contenedor', 'comprobantes', 'buque', 'rates'];
@@ -139,7 +139,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 		}
 		$scope.$broadcast('checkAutoComplete');
-		invoiceFactory.getContainersSinTasaCargas($scope.model, function(data){
+		containerFactory.getContainersSinTasaCargas($scope.model, function(data){
 			if (data.status == "OK"){
 				$scope.totalContenedores = data.totalCount;
 				$scope.resultado = data.data;
@@ -173,20 +173,10 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'invoiceFactory', 'gatesFactory', 
 		controlTasaCargas();
 	});
 
-	/*$scope.$on('cambioTerminal', function(){
-		controlTasaCargas();
-	});*/
-
-	/*$scope.$on('$destroy', function(){
-		invoiceFactory.cancelRequest();
-		turnosFactory.cancelRequest();
-		//Agregar las que falten
-	});*/
-
 }]);
 
-myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceManager', 'vouchersArrayCache', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs', 'generalFunctions',
-	function($rootScope, $scope, invoiceManager, vouchersArrayCache, correlativeSocket, loginService, downloadFactory, dialogs, generalFunctions) {
+myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'vouchersArrayCache', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs', 'generalFunctions',
+	function($rootScope, $scope, invoiceFactory, vouchersArrayCache, correlativeSocket, loginService, downloadFactory, dialogs, generalFunctions) {
 
 		var socketIoRegister = '';
 
@@ -215,7 +205,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceManager'
 		};
 
 		var traerPuntosDeVenta = function(){
-			invoiceManager.getCashbox($scope.$id, {}, function(data){
+			invoiceFactory.getCashbox($scope.$id, {}, function(data){
 				if (data.status == 'OK'){
 					var i;
 					$scope.terminalSellPoints = data.data;
@@ -339,7 +329,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceManager'
 			$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
 			$scope.mostrarBotonImprimir = false;
 
-			invoiceManager.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
+			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
 				if (dataComprob.status == 'OK'){
 					if ($scope.totalPuntos > 0){
 						$scope.leerData = false;
@@ -406,7 +396,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceManager'
 
 }]);
 
-myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceManager', function($scope, priceFactory, invoiceManager) {
+myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceFactory', function($scope, priceFactory, invoiceFactory) {
 	$scope.ocultarFiltros = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'rates'];
 
 	$scope.fechaInicio = new Date();
@@ -546,7 +536,7 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceManager', fun
 				$scope.loadingControlCodigos = false;
 			}
 		});
-		invoiceManager.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
+		invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
 			if (invoicesNoMatches.status == 'OK'){
 				$scope.comprobantesRotos = invoicesNoMatches.data;
 				$scope.totalItems = invoicesNoMatches.totalCount;
@@ -565,7 +555,7 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceManager', fun
 		$scope.loadingControlCodigos = true;
 		$scope.pageFiltros.skip = (($scope.currentPageFiltros - 1) * $scope.model.itemsPerPage);
 		$scope.pageFiltros.limit = $scope.model.itemsPerPage;
-		invoiceManager.getInvoices($scope.$id, $scope.model, $scope.pageFiltros, function(data){
+		invoiceFactory.getInvoices($scope.$id, $scope.model, $scope.pageFiltros, function(data){
 			if (data.status == 'OK'){
 				$scope.totalItems = data.totalCount;
 				$scope.comprobantesRotos = data.data;
@@ -585,7 +575,7 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceManager', fun
 		$scope.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 		$scope.pageCodigos.limit = $scope.model.itemsPerPage;
-		invoiceManager.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(data){
+		invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(data){
 			if (data.status == 'OK'){
 				$scope.comprobantesRotos = data.data;
 				$scope.totalItems = data.totalCount;
@@ -602,7 +592,6 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceManager', fun
 
 	$scope.$on('$destroy', function(){
 		$scope.$emit('updateView', 'codigos', $scope.model, $scope.codigosSinAsociar, $scope.comprobantesRotos, $scope.totalItems);
-		//invoiceFactory.cancelRequest();
 	});
 
 	if ($scope.viewsStates.codigos.used){
@@ -614,8 +603,8 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceManager', fun
 
 }]);
 
-myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceManager', 'dialogs',
-	function($rootScope, $scope, invoiceManager, dialogs ) {
+myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'dialogs',
+	function($rootScope, $scope, invoiceFactory, dialogs ) {
 
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
@@ -709,7 +698,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceM
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.page.limit = $scope.model.itemsPerPage;
 			$scope.loadingState = true;
-			invoiceManager.getInvoices($scope.$id, $scope.model, $scope.page, function(invoiceError){
+			invoiceFactory.getInvoices($scope.$id, $scope.model, $scope.page, function(invoiceError){
 				if (invoiceError.status == 'OK'){
 					$scope.comprobantes = invoiceError.data;
 					$scope.totalItems = invoiceError.totalCount;
@@ -727,7 +716,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceM
 
 		$scope.descargarCSV = function(){
 			$scope.disableDown = true;
-			invoiceManager.getCSV($scope.model, function(data, status){
+			invoiceFactory.getCSV($scope.model, function(data, status){
 				if (status == 'OK'){
 					var anchor = angular.element('<a/>');
 					anchor.css({display: 'none'}); // Make sure it's not visible
@@ -746,10 +735,5 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceM
 				$scope.disableDown = false;
 			});
 		};
-
-
-		/*$scope.$on('$destroy', function(){
-			//invoiceFactory.cancelRequest();
-		});*/
 
 	}]);

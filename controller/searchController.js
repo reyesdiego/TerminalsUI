@@ -2,8 +2,8 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', 'invoiceFactory', 'turnosFactory', '$sce', 'dialogs', 'loginService', '$filter', 'initialLoadFactory', 'invoiceManager',
-	function($scope, generalCache, contenedoresCache, generalFunctions, invoiceFactory, turnosFactory, $sce, dialogs, loginService, $filter, initialLoadFactory, invoiceManager){
+myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', '$sce', 'dialogs', 'loginService', '$filter', 'initialLoadFactory', 'invoiceFactory',
+	function($scope, generalCache, contenedoresCache, generalFunctions, $sce, dialogs, loginService, $filter, initialLoadFactory, invoiceFactory){
 
 		$scope.status = {
 			open: true
@@ -214,18 +214,18 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		//FUNCIONES DE TABLE TURNOS /////////////////////////////////////////////////////////////////////
 		$scope.mostrarHTML = false;
 
-		$scope.comprobanteTurno = function(contenedor, idTurno){
+		$scope.comprobanteTurno = function(turno){
 			$scope.loadingState = true;
-			turnosFactory.comprobanteTurno(contenedor, idTurno, function(data, status){
-				if (status == 'OK'){
+			turno.getComprobante()
+				.then(function(data){
 					$scope.respuesta = data;
 					$scope.mostrarHTML = true;
-				} else {
-					dialogs.error('Consulta de turnos', 'Se ha producido un error al cargar los datos');
+					$scope.loadingState = false;
+				}, function(error){
+					dialogs.error('Consulta de turnos', 'Se ha producido un error al cargar los datos. ' + error);
 					$scope.mostrarResultado = true;
-				}
-				$scope.loadingState = false;
-			});
+					$scope.loadingState = false;
+				});
 		};
 
 		$scope.ocultarTurno = function(){
@@ -250,7 +250,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.detallesGates = true;
 			$scope.contenedor = contenedor.contenedor;
 			var datos = { 'contenedor': contenedor.contenedor };
-			invoiceManager.getInvoices($scope.$id, datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
+			invoiceFactory.getInvoices($scope.$id, datos, { skip: 0, limit: $scope.itemsPerPage }, function (data) {
 				if (data.status === 'OK') {
 					$scope.invoices = data.data;
 					$scope.totalItems = data.totalCount;
