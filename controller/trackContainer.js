@@ -6,6 +6,7 @@ myapp.controller('trackContainerCtrl', ['$rootScope', '$scope', '$window', '$sta
 
         $rootScope.pageTitle = $window.localStorage.getItem('trackContainer');
         $scope.filtrosComprobantes = ['codTipoComprob', 'razonSocial', 'nroComprobante', 'fechaInicio'];
+        $scope.moneda = 'DOL';
         //$rootScope.inTrackContainer = true;
 
         $scope.contenedorElegido = new Container({ contenedor: $window.localStorage.getItem('trackContainer')});
