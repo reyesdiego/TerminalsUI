@@ -174,9 +174,12 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 		};
 
 		factory.getPrePayment = function(datos, callback){
+			console.log('acá en get prePayment');
+			console.log(datos);
 			var inserturl = APP_CONFIG.SERVER_URL + '/paying/getPrePayment/' + loginService.getFiltro();
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)})
 				.then(function(response){
+					console.log(response);
 					response.data.data = factory.setDescriptionTasas(response.data.data);
 					callback(response.data);
 				}, function(response){
