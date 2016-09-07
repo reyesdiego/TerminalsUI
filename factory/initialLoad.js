@@ -4,8 +4,8 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory',  'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
-    function (CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, gatesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
+myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory',  'containerFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory',  'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
+    function (CacheFactory, controlPanelFactory, containerFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, gatesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
 
         //Se encarga de asegurarse de que antes de cargar cada vista, esta tenga los datos necesarios para funcionar, si no están hace las llamadas y los guarda en caché
         //No devuelve datos.
@@ -45,7 +45,7 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'inv
                 deferred.resolve(generalCache.get('buques' + loginService.getFiltro()));
             } else {
                 //console.log('no hay buques');
-                invoiceFactory.getShipTrips(loginService.getFiltro(), function (data) {
+                containerFactory.getShipTrips(loginService.getFiltro(), function (data) {
                     if (data.status == 'OK') {
                         //console.log('cargamos buques');
                         generalCache.put('buques' + loginService.getFiltro(), data.data);

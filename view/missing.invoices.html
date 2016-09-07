@@ -12,7 +12,7 @@
 	</div>
 	<div ng-show="datosFaltantes.length != undefined && filteredDatos.length > 0">
 		<h5><strong>Resultados: {{ filteredDatos.length }}</strong><span class="visible-print-block"><strong>Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ currentPage * itemsPerPage > totalItems ? totalItems : currentPage * itemsPerPage }} (página {{ currentPage }})</strong></span></h5>
-		<div class="table-responsive" ng-hide="cargando">
+		<div class="table-responsive invoice-shadow" ng-hide="cargando">
 			<table class="table table-bordered table-hover" style="text-align: center">
 				<thead>
 				<tr>
@@ -74,7 +74,7 @@
 					<td>{{ registro.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ registro.buque }}</td>
 					<td>{{ registro.viaje }}</td>
-					<td class="usuarioActivo">{{ registro.contenedor }}</td>
+					<td class="usuarioActivo">{{ registro.contenedor.contenedor }}</td>
 					<td>{{ registro.patenteCamion }}</td>
 					<td><span class="label" ng-class="{'label-success' : registro.tipo == 'IN', 'label-danger' : registro.tipo == 'OUT'}">{{ registro.tipo }}</span></td>
 					<td ng-init="colorH = colorHorario(registro)" ng-style="{'color': colorH}">{{ registro.gateTimestamp | date: 'HH:mm' }}</td>

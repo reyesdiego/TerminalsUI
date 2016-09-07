@@ -564,6 +564,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/editPricelist.new.html"
 
 		})
+		//TODO controlar lo que devuelve el servidor
 		.state('mturnos', {
 			url: "/controlTurnos",
 			templateUrl: "view/appointments.control.html"
@@ -573,7 +574,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/trackContainer.html",
 			controller: 'trackContainerCtrl'
 		})
-		//Esta vista no se está usando en realidad, no está la parte del servidor
+		//TODO Esta vista no se está usando en realidad, no está la parte del servidor
 		.state('mat', {
 			url: "/mat",
 			templateUrl: "view/mat.html"

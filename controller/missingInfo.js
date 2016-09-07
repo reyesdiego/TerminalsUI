@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 12/03/15.
  */
-myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'turnosFactory', '$filter',
-	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, turnosFactory, $filter){
+myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginService', 'dialogs', 'generalFunctions', 'turnosFactory', '$filter', 'containerFactory', 'Container',
+	function($rootScope, $scope, gatesFactory, loginService, dialogs, generalFunctions, turnosFactory, $filter, containerFactory, Container){
 
 		if ($scope.savedState != null){
 			$scope.currentPage = $scope.savedState.currentPage;
@@ -81,7 +81,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 				//Facturaciones sin gates
 				case 'gates':
 					$scope.cargando = true;
-					gatesFactory.getMissingGates($scope.model, page, function(data){
+					containerFactory.getMissingGates($scope.model, page, function(data){
 						if (data.status == 'OK'){
 							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
@@ -113,6 +113,9 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 						if (data.status == 'OK'){
 							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
+							$scope.datosFaltantes.forEach(function(registro){
+								registro.contenedor = new Container({contenedor: registro.contenedor, ship: registro.buque, trip: registro.viaje});
+							});
 							$scope.totalItems = $scope.datosFaltantes.length;
 							$scope.cargando = false;
 							$scope.datosFaltantes.forEach(function(registro){
@@ -138,14 +141,11 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 				//Facturaciones sin turnos
 				case 'appointments':
 					$scope.cargando = true;
-					turnosFactory.getMissingAppointments($scope.model, function(data){
+					containerFactory.getMissingAppointments($scope.model, function(data){
 						if (data.status == 'OK'){
 							$scope.hayError = false;
-							$scope.datosFaltantes = data.data;
+							$scope.datosFaltantes = data.data.slice(0, 10);
 							$scope.totalItems = $scope.datosFaltantes.length;
-							$scope.datosFaltantes.forEach(function(comprob){
-								comprob.fecha = comprob.f;
-							});
 							$scope.configPanel = {
 								tipo: 'panel-success',
 								titulo: 'Control gates',
@@ -165,7 +165,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 				//Gates sin turnos
 				case 'gatesAppointments':
 					$scope.cargando = true;
-					gatesFactory.gatesSinTurnos($scope.model, function(data){
+					containerFactory.gatesSinTurnos($scope.model, function(data){
 						if (data.status == 'OK'){
 							$scope.hayError = false;
 							$scope.datosFaltantes = data.data;
@@ -214,7 +214,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 
 		$scope.detalleContenedor = function(contenedor){
 			$scope.mostrarDetalle = true;
-			$scope.contenedorElegido = contenedor;
+			$scope.contenedorElegido = contenedor.contenedor;
 			$scope.$broadcast('detalleContenedor', contenedor);
 		};
 

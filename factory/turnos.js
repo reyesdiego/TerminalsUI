@@ -36,21 +36,10 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 				var defer = $q.defer();
 				var canceler = HTTPCanceler.get(defer, this.namespace, 'getQueuedMails');
 				var inserturl = APP_CONFIG.SERVER_URL + '/appointmentEmailQueues/' + page.skip + '/' + page.limit;
+				var factory = this;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 						.then(function(response){
-							callback(response.data);
-						}, function(response){
-							if (response.status != -5) callback(response.data);
-						});
-			},
-			getMissingAppointments: function(datos, callback){
-				this.cancelRequest('missingAppointments');
-				var defer = $q.defer();
-				var canceler = HTTPCanceler.get(defer, this.namespace, 'missingAppointments');
-				var inserturl = APP_CONFIG.SERVER_URL + '/appointments/' + loginService.getFiltro() + '/missingAppointments';
-				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
-						.then(function(response){
-							console.log(response.data);
+							response.data.data = factory.retrieveAppointments(response.data.data);
 							callback(response.data);
 						}, function(response){
 							if (response.status != -5) callback(response.data);
