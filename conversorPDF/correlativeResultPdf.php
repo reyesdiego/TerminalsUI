@@ -14,7 +14,7 @@ class PDF extends FPDF
 	function Header()
 	{
 		//Logo
-		$this->Image('imagenes/logo.jpg',10,8,40);
+		$this->Image('imagenes/logoPuerto.jpg',10,8,45);
 		//Arial bold 15
 		$this->SetFont('Arial','B',16);
 		//Movernos a la derecha
@@ -52,7 +52,7 @@ class PDF extends FPDF
 		//Número de página
 		$this->Cell(20,10,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'L');
 		$this->Cell(165, 10, utf8_decode("Administración General de Puertos S.E. - Departamento de Desarrollo"), 0, 0, "R");
-		$this->Image("imagenes/logo_puertochico.jpg", $this->GetX(), $this->GetY() + 2, 5);
+		//$this->Image("imagenes/logo_puertochico.jpg", $this->GetX(), $this->GetY() + 2, 5);
 	}
 
 	function CheckPageBreak($h)

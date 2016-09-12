@@ -5,8 +5,8 @@
 	</div>
 
 	<div class="col-lg-12">
-		<uib-tabset justified="true" class="hidden-print">
-			<uib-tab ng-repeat="tab in tabs" heading="{{ tab.name }}" active="tab.active" ui-sref="{{ tab.ref }}"></uib-tab>
+		<uib-tabset justified="true" class="hidden-print" active="active">
+			<uib-tab ng-repeat="tab in tabs" heading="{{ tab.name }}" ui-sref="{{ tab.ref }}"></uib-tab>
 		</uib-tabset>
 	</div>
 

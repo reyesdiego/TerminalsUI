@@ -4,16 +4,20 @@
 
 myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope, $state){
 
-	$state.transitionTo('cfacturas.tasas');
+	$scope.active = 0;
 
 	$scope.tabs = [
-		{name: 'Sin Tasa a las cargas', ref: 'cfacturas.tasas', active: true},
-		{name: 'Control de correlatividad', ref: 'cfacturas.correlatividad', active: false},
-		{name: 'Control de códigos', ref: 'cfacturas.codigos', active: false},
-		{name: 'Revisar', ref: 'cfacturas.revisar', active: false},
-		{name: 'Erróneos', ref: 'cfacturas.erroneos', active: false},
-		{name: 'A reenviar', ref: 'cfacturas.reenviar', active: false}
+		{name: 'Sin Tasa a las cargas', ref: 'cfacturas.tasas'},
+		{name: 'Control de correlatividad', ref: 'cfacturas.correlatividad'},
+		{name: 'Control de códigos', ref: 'cfacturas.codigos'},
+		{name: 'Revisar', ref: 'cfacturas.revisar'},
+		{name: 'Erróneos', ref: 'cfacturas.erroneos'},
+		{name: 'A reenviar', ref: 'cfacturas.reenviar'}
 	];
+
+	for (var i = 0; i < $scope.tabs.length; i++){
+		if ($state.$current.self.name == $scope.tabs[i].ref) $scope.active = i;
+	}
 
 	$scope.viewsStates = {
 		tasas: {

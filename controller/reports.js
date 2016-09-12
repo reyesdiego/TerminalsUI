@@ -4,13 +4,18 @@
 
 myapp.controller('reportsCtrl', ['$scope', '$state', function ($scope, $state){
 
-	$state.transitionTo('reports.tasas');
+	$scope.active = 0;
 
 	$scope.tabs = [
-		{name: 'Tasas a las cargas', ref: 'reports.tasas', active: true},
-		{name: 'Totales por tarifa', ref: 'reports.tarifas', active: false},
-		{name: 'Facturación por empresa', ref: 'reports.empresas', active: false},
-		{name: 'Tarifas por terminal', ref: 'reports.terminales', active: false}
+		{name: 'Tasas a las cargas', ref: 'reports.tasas'},
+		{name: 'Totales por tarifa', ref: 'reports.tarifas'},
+		{name: 'Facturación por empresa', ref: 'reports.empresas'},
+		{name: 'Tarifas por terminal', ref: 'reports.terminales'}
 	];
+
+	for (var i = 0; i < $scope.tabs.length; i++){
+		if ($state.$current.self.name == $scope.tabs[i].ref) $scope.active = i;
+	}
+
 
 }]);
