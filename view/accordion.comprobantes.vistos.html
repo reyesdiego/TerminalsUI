@@ -26,7 +26,7 @@
 					<td class="hidden-print" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 					<td style="text-align: center; width: 3%"><a href ng-click="quitarVista(invoice)"><span class="glyphicon glyphicon-remove"></span></a></td>
 					<td style="text-align: left; width: 14%">
-						<a href ng-click="trackInvoice(invoice)"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ng-click="trackInvoice(invoice)"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
+						<a href ng-click="invoice.trackInvoice()"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16"><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
 					</td>
 				</tr>
 				</tbody>
