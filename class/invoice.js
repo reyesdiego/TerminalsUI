@@ -44,13 +44,15 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
         },
         setInterface: function(){
             var estadoDefault = {
-                'grupo': loginService.getGroup(),
-                'estado': 'Y',
+                'gruop': loginService.getGroup(),
+                'state': 'Y',
                 'user': 'agp'
             };
+            console.log(this);
             if (this.estado){
-                if (this.estado.grupo == loginService.getGroup() || this.estado.grupo === 'ALL'){
-                    this.interfazEstado = (estadosArrayCache.get(this.estado.estado)) ? estadosArrayCache.get(this.estado.estado) : estadosArrayCache.get('Y');
+                console.log('tiene estado');
+                if (this.estado.group == loginService.getGroup() || this.estado.group === 'ALL'){
+                    this.interfazEstado = (estadosArrayCache.get(this.estado.state)) ? estadosArrayCache.get(this.estado.state) : estadosArrayCache.get('Y');
                 } else {
                     this.estado = estadoDefault;
                     this.interfazEstado = {
@@ -112,8 +114,8 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                     });
                     if (comentariosFiltrados.length > 0){
                         scope.estado = {
-                            estado: comentariosFiltrados[comentariosFiltrados.length-1].state,
-                            grupo: comentariosFiltrados[comentariosFiltrados.length-1].group,
+                            state: comentariosFiltrados[comentariosFiltrados.length-1].state,
+                            gruop: comentariosFiltrados[comentariosFiltrados.length-1].group,
                             user: comentariosFiltrados[comentariosFiltrados.length-1].user
                         };
                         scope.setInterface();
