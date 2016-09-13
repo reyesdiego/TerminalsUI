@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 17/08/2016.
  */
-myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', 'downloadFactory', 'APP_CONFIG', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache, downloadFactory, APP_CONFIG){
+myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', 'downloadFactory', 'APP_CONFIG', '$filter', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache, downloadFactory, APP_CONFIG, $filter){
     function Invoice(invoiceData){
         if (invoiceData){
             this.setData(invoiceData);

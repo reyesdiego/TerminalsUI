@@ -15,7 +15,7 @@
 		</div>
 		<div ng-show="datosFaltantes.length != undefined && datosFaltantes.length > 0">
 			<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ currentPage * itemsPerPage - (itemsPerPage - 1) }} al {{ currentPage * itemsPerPage > totalItems ? totalItems : currentPage * itemsPerPage }} (página {{ currentPage }})</strong></span></h5>
-			<div class="table-responsive">
+			<div class="table-responsive invoice-shadow">
 				<table class="table table-bordered table-hover">
 					<thead>
 					<tr>
@@ -25,10 +25,10 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr class="fila-animada" ng-repeat="invoice in datosFaltantes track by $index" ng-class="invoice.contenedor == contenedorElegido ? 'fila-elegida' : ''">
-						<td>{{ invoice.contenedor }}</td>
-						<td>{{ invoice.fecha | date: 'dd/MM/yyyy' }}</td>
-						<td class="hidden-print" style="text-align: center"><a href ng-click="::detalleContenedor(invoice.contenedor)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+					<tr class="fila-animada" ng-repeat="contenedor in datosFaltantes track by $index" ng-class="contenedor.contenedor == contenedorElegido ? 'fila-elegida' : ''">
+						<td>{{ contenedor.contenedor }}</td>
+						<td>{{ contenedor.fecha | date: 'dd/MM/yyyy' }}</td>
+						<td class="hidden-print" style="text-align: center"><a href ng-click="::detalleContenedor(contenedor)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 					</tr>
 				</table>
 			</div>

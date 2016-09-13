@@ -13,6 +13,51 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'es
 				});
 				return containersArray;
 			},
+			getMissingGates: function(datos, page, callback){
+				var defer = $q.defer();
+				var canceler = HTTPCanceler.get(defer, this.namespace, 'getMissingGates');
+				var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingGates/' + page.skip + '/' + page.limit;
+				var factory = this;
+				$http.get(inserturl, {params: formatService.formatearDatos(datos), timeout: canceler.promise })
+						.then(function (response){
+							response.data.data = factory.retrieveContainers(response.data.data);
+							callback(response.data);
+						}, function(response){
+							if (response.status != -5) callback(response.data);
+						});
+			},
+			gatesSinTurnos: function(datos, callback){
+				this.cancelRequest('gatesSinTurnos');
+				var defer = $q.defer();
+				var canceler = HTTPCanceler.get(defer, this.namespace, 'gatesSinTurnos');
+				var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingAppointments';
+				var factory = this;
+				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
+						.then(function(response){
+							response.data.data = factory.retrieveContainers(response.data.data.map(function(container){
+								return {contenedor: container.c, fecha: container.g}
+							}));
+							callback(response.data);
+						}, function(response){
+							if (response.status != -5) callback(response.data);
+						});
+			},
+			getMissingAppointments: function(datos, callback){
+				this.cancelRequest('missingAppointments');
+				var defer = $q.defer();
+				var canceler = HTTPCanceler.get(defer, this.namespace, 'missingAppointments');
+				var inserturl = APP_CONFIG.SERVER_URL + '/appointments/' + loginService.getFiltro() + '/missingAppointments';
+				var factory = this;
+				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
+						.then(function(response){
+							response.data.data = factory.retrieveContainers(response.data.data.map(function(container){
+								return {contenedor: container.c, fecha: container.f}
+							}));
+							callback(response.data);
+						}, function(response){
+							if (response.status != -5) callback(response.data);
+						});
+			},
 			getContainersSinTasaCargas: function(datos, callback) {
 				this.cancelRequest('containersSinTasaCargas');
 				var defer = $q.defer();

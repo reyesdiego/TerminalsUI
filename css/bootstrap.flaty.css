@@ -2447,7 +2447,7 @@ table th[class*="col-"] {
   background-color: #e43725;
 }
 .table-responsive {
-  overflow-x: auto;
+  /*overflow-x: auto;*/
   min-height: 0.01%;
 }
 @media screen and (max-width: 767px) {

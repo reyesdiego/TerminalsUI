@@ -21,8 +21,8 @@
 				<div style="max-height: 500px; max-width: 100%; overflow: auto" ng-hide="datosFaltantes.length == 0">
 					<br>
 					<span ng-repeat="contenedor in filteredDatos track by $index">
-						<div style="width: auto; float:left; text-align:center" ng-show="contenedor.c.trim() != ''" >
-							<a href ng-click="detalleContenedor(contenedor.c)"><span title="{{ contenedor.g }}">{{ contenedor.c }}</span></a><span ng-show="!$last"> -&nbsp</span></div>
+						<div style="width: auto; float:left; text-align:center" ng-show="contenedor.contenedor.trim() != ''" >
+							<a href ng-click="detalleContenedor(contenedor)"><span title="{{ contenedor.fecha }}">{{ contenedor.contenedor }}</span></a><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
 				</div>
 			</div>

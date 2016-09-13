@@ -153,7 +153,7 @@
 		<div class="navbar-header" uib-dropdown>
 			<a ng-click="irA()" class="nav navbar-brand" style="padding: 0 !important"><img src="images/logoBlanco.png" style="max-height: 100%"/></a>
 			<!--<a ng-click="irA()" class="nav navbar-brand"> SCT</a>-->
-			<button class="navbar-toggle collapsed" type="button"  ng-hide="cargandoCache" data-target=".navbar-responsive-collapse" ng-click="cerrarMenu()" aria-expanded="false">
+			<button class="navbar-toggle collapsed" type="button"  ng-hide="cargandoCache" data-target=".navbar-responsive-collapse" ng-click="isCollapsed = !isCollapsed" aria-expanded="false">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -165,11 +165,11 @@
 				<li ng-show="acceso=='agp' && cambioTerminal" class="hidden-sm" uib-dropdown>
 					<a href data-toggle="dropdown" uib-dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-click="cerrarMenu()"><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
-						<li ng-click="cerrarMenu()"><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
-						<li ng-click="cerrarMenu()"><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
 						<li class="visible-lg divider"></li>
-						<li ng-click="cerrarMenu()"><a ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"></span> <span ng-show="verNotificaciones">Deshabilitar</span> <span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"></span> <span ng-show="!verNotificaciones">Habilitar</span> Notificaciones</a></li>
+						<li ng-click="cerrarMenu()"><a href ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"></span> <span ng-show="verNotificaciones">Deshabilitar</span> <span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"></span> <span ng-show="!verNotificaciones">Habilitar</span> Notificaciones</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -268,8 +268,8 @@
 
 <footer class="footer">
 	<hr>
-	<span class="hidden-xs">Administración General de Puertos S.E. - Departamento de desarrollo <img src="images/logoPuerto.png" width="150" height="50"></span>
-	<span class="visible-xs">AGP S.E. - Depto. de desarrollo <img src="images/logoPuerto.png" width="30" height="30"></span>
+	<span class="hidden-xs">Administración General de Puertos S.E. - Departamento de desarrollo<!-- <img src="images/logoPuerto.png" width="150" height="50">--></span>
+	<span class="visible-xs">AGP S.E. - Depto. de desarrollo<!-- <img src="images/logoPuerto.png" width="30" height="30">--></span>
 </footer>
 
 </body>

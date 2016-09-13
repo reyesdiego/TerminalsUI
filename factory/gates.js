@@ -20,7 +20,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 				});
 		};
 
-		factory.gatesSinTurnos = function(datos, callback){
+		/*factory.gatesSinTurnos = function(datos, callback){
 			factory.cancelRequest('gatesSinTurnos');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'gatesSinTurnos');
@@ -31,9 +31,9 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 				}, function(response){
 					if (response.status != -5) callback(response.data);
 				});
-		};
+		};*/
 
-		factory.getMissingGates = function(datos, page, callback){
+		/*factory.getMissingGates = function(datos, page, callback){
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingGates');
 			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingGates/' + page.skip + '/' + page.limit;
@@ -43,7 +43,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 				}, function(response){
 					if (response.status != -5) callback(response.data);
 				});
-		};
+		};*/
 
 		factory.getMissingInvoices = function(datos, page, callback){
 			var defer = $q.defer();

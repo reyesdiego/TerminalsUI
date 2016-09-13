@@ -50,6 +50,10 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			$scope.errorTarifario = true;
 		});
 
+		$scope.$on('cambioPagina', function(event, data){
+			$scope.currentPage = data;
+		});
+
 		function traerDatos () {
 			priceFactory.getPrice('agp', false, function (data) {
 				$scope.pricelist = data.data;

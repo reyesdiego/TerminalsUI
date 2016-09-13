@@ -2,17 +2,17 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope, $state){
+myapp.controller('controlComprobantesCtrl', ['$scope', function($scope){
 
-	$state.transitionTo('cfacturas.tasas');
+	$scope.active = 0;
 
 	$scope.tabs = [
-		{name: 'Sin Tasa a las cargas', ref: 'cfacturas.tasas', active: true},
-		{name: 'Control de correlatividad', ref: 'cfacturas.correlatividad', active: false},
-		{name: 'Control de códigos', ref: 'cfacturas.codigos', active: false},
-		{name: 'Revisar', ref: 'cfacturas.revisar', active: false},
-		{name: 'Erróneos', ref: 'cfacturas.erroneos', active: false},
-		{name: 'A reenviar', ref: 'cfacturas.reenviar', active: false}
+		{name: 'Sin Tasa a las cargas', ref: 'cfacturas.tasas'},
+		{name: 'Control de correlatividad', ref: 'cfacturas.correlatividad'},
+		{name: 'Control de códigos', ref: 'cfacturas.codigos'},
+		{name: 'Revisar', ref: 'cfacturas.revisar'},
+		{name: 'Erróneos', ref: 'cfacturas.erroneos'},
+		{name: 'A reenviar', ref: 'cfacturas.reenviar'}
 	];
 
 	$scope.viewsStates = {
@@ -44,6 +44,12 @@ myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope
 				$scope.viewsStates[view].totalItems = data3;
 				$scope.viewsStates[view].used = true;
 				break;
+		}
+	});
+
+	$scope.$on('$stateChangeSuccess', function (ev, to) {
+		for (var i = 0; i < $scope.tabs.length; i++){
+			if (to.name == $scope.tabs[i].ref) $scope.active = i;
 		}
 	});
 

@@ -242,7 +242,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				matches: initialLoadFactory.cargaMatchesArray,
 				ratesMatches: initialLoadFactory.cargaMatchesRates,
 				descripciones: initialLoadFactory.cargaDescripciones
-			}
+			},
+			redirectTo: 'cfacturas.tasas'
 		})
 			.state('cfacturas.tasas', {
 				url: '/tasas',
@@ -301,7 +302,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				matches: initialLoadFactory.cargaMatchesArray,
 				ratesMatches: initialLoadFactory.cargaMatchesRates,
 				descripciones: initialLoadFactory.cargaDescripciones
-			}
+			},
+			redirectTo: 'cgates.gates'
 		})
 			.state('cgates.gates', {
 				url: '/gatesFaltantes',
@@ -373,7 +375,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 		.state('reports', {
 			url: "/reportes",
 			templateUrl:"view/reportes.html",
-			controller: 'reportsCtrl'
+			controller: 'reportsCtrl',
+			redirectTo: 'reports.tasas'
 		})
 			.state('reports.tasas', {
 				url:'/tasas',
@@ -564,6 +567,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/editPricelist.new.html"
 
 		})
+		//TODO controlar lo que devuelve el servidor
 		.state('mturnos', {
 			url: "/controlTurnos",
 			templateUrl: "view/appointments.control.html"
@@ -573,7 +577,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/trackContainer.html",
 			controller: 'trackContainerCtrl'
 		})
-		//Esta vista no se está usando en realidad, no está la parte del servidor
+		//TODO Esta vista no se está usando en realidad, no está la parte del servidor
 		.state('mat', {
 			url: "/mat",
 			templateUrl: "view/mat.html"
@@ -682,7 +686,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 
 		$rootScope.salir = function(){
-			$rootScope.socket.emit('logoff', loginService.getInfo().user);
+			if (loginService.getStatus()) $rootScope.socket.emit('logoff', loginService.getInfo().user);
 			authFactory.logout();
 			$rootScope.appointmentNotify = 0;
 			$rootScope.invoiceNotify = 0;
@@ -694,22 +698,25 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.filtroTerminal = '';
 		};
 
+
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
-			console.log('success');
 			$rootScope.inTrackContainer = to.name == 'trackContainer';
 			$rootScope.setEstiloTerminal($cookies.get('themeTerminal'));
 			$rootScope.loadingNewView = false;
 		});
 
 		$rootScope.$on('$stateChangeStart', function(event, toState){
-			console.log('cambio estado');
+			if (toState.redirectTo){
+				event.preventDefault();
+				$state.transitionTo(toState.redirectTo);
+			}
+
 			$rootScope.loadingNewView = true;
 			if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 				dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 			}
 			if (!loginService.getStatus() && $cookies.get('restoreSesion') === 'true'){
 				event.preventDefault();
-				console.log('hay que loguear');
 				authFactory.login().then(function(data){
 					$rootScope.socket.emit('login', data.user);
 					$rootScope.$broadcast('terminoLogin');
@@ -719,11 +726,11 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 						$state.transitionTo(toState.name);
 					}
 				}, function(err){
-					dialogs.error('Error', 'Fallo de comunicación con el servidor, inténtelo nuevamente más tarde');
+					//console.log(err);
+					dialogs.error('Error', err.message);
 					$rootScope.salir();
 				});
 			} else {
-				console.log('verifica rutas');
 				$rootScope.verificaRutas(event, toState);
 			}
 		});
@@ -732,13 +739,9 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.cambioMoneda = !(generalFunctions.in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
 			$rootScope.cambioTerminal = !(generalFunctions.in_array(toState.name, $rootScope.rutasSinTerminal) || toState.name.indexOf('afip') != -1);
 			if (!generalFunctions.in_array(toState.name, $rootScope.rutasComunes)){
-				console.log('no es comun');
 				if (loginService.getStatus()){
-					console.log('logueado');
 					if ($cookies.get('isLogged') === 'true'){
-						console.log('tiene cookie');
 						if(!generalFunctions.in_array(toState.name, loginService.getAcceso())){
-							console.log('no tiene acceso');
 							$rootScope.usuarioNoAutorizado(event);
 						}
 					} else {

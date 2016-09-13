@@ -33,6 +33,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             var factory = this;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function (response) {
+                    if (response.data.data == null) response.data.data = [];
                     response.data.data = factory.retrieveInvoices(response.data.data);
                     callback(response.data);
                 }, function(response) {

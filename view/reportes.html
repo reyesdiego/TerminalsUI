@@ -1,12 +1,12 @@
-<div class="container container col-lg-offset-1 col-lg-10 col-md-12">
+<div class="container-fluid col-lg-offset-1 col-lg-10 col-md-12">
 
 	<div class="row col-lg-12 page-header">
 		<h1><img ng-src="images/reportes.png" height="64" width="64" class="hidden-xs">Reportes</h1>
 	</div>
 
-	<div class="row">
-		<uib-tabset justified="true" class="hidden-print">
-			<uib-tab ng-repeat="tab in tabs" heading="{{ tab.name }}" active="tab.active" ui-sref="{{ tab.ref }}"></uib-tab>
+	<div class="col-lg-12">
+		<uib-tabset justified="true" class="hidden-print" active="active">
+			<uib-tab ng-repeat="tab in tabs" heading="{{ tab.name }}" ui-sref="{{ tab.ref }}"></uib-tab>
 		</uib-tabset>
 	</div>
 

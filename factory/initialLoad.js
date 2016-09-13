@@ -4,7 +4,7 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'containerFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory',  'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
+myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory',  'containerFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory',  'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
     function (CacheFactory, controlPanelFactory, containerFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, gatesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
 
         //Se encarga de asegurarse de que antes de cargar cada vista, esta tenga los datos necesarios para funcionar, si no están hace las llamadas y los guarda en caché
@@ -90,20 +90,20 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'con
         };
 
         factory.cargaDescripciones = function(){
-            console.log('descripciones');
+            //console.log('descripciones');
             var deferred = $q.defer();
             if (generalCache.get('descripciones' + loginService.getFiltro())){
-                console.log('hay descripciones');
+                //console.log('hay descripciones');
                 deferred.resolve();
             } else {
-                console.log('no hay descripciones');
+                //console.log('no hay descripciones');
                 invoiceFactory.getDescriptionItem(loginService.getFiltro(), function (data) {
                     if (data.status == 'OK') {
-                        console.log('cargamos descripciones');
+                        //console.log('cargamos descripciones');
                         generalCache.put('descripciones' + loginService.getFiltro(), data.data);
                         deferred.resolve();
                     } else {
-                        console.log('error descripciones');
+                        //console.log('error descripciones');
                         generalCache.put('descripciones' + loginService.getFiltro(), []);
                         deferred.resolve();
                     }
@@ -113,23 +113,23 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'con
         };
 
         factory.cargaVouchers = function(){
-            console.log('vouchers');
+            //console.log('vouchers');
             var deferred = $q.defer();
             if (generalCache.get('vouchers' + loginService.getFiltro())){
-                console.log('hay vouchers');
+                //console.log('hay vouchers');
                 deferred.resolve();
             } else {
-                console.log('no hay vouchers');
+                //console.log('no hay vouchers');
                 vouchersFactory.getVouchersType(loginService.getFiltro(), function (data) {
                     if (data.status == 'OK') {
-                        console.log('cargamos vouchers');
+                        //console.log('cargamos vouchers');
                         generalCache.put('vouchers' + loginService.getFiltro(), data.data);
                         data.data.forEach(function (dato) {
                             vouchersArrayCache.put(dato._id, {desc: dato.description, abrev: dato.abbrev });
                         });
                         deferred.resolve();
                     } else {
-                        console.log('error vouchers');
+                        //console.log('error vouchers');
                         generalCache.put('vouchers' + loginService.getFiltro(), []);
                         deferred.resolve();
                     }
@@ -139,23 +139,23 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'con
         };
 
         factory.cargaUnidades = function(){
-            console.log('unidades');
+            //console.log('unidades');
             var deferred = $q.defer();
             if (generalCache.get('unitTypes')){
-                console.log('hay unidades');
+                //console.log('hay unidades');
                 deferred.resolve();
             } else {
-                console.log('no hay unidades');
+                //console.log('no hay unidades');
                 priceFactory.getUnitTypes(function (data) {
                     if (data.status == 'OK') {
-                        console.log('cargamos unidades');
+                        //console.log('cargamos unidades');
                         generalCache.put('unitTypes', data.data);
                         data.data.forEach(function (dato) {
                             unitTypesArrayCache.put(dato._id, dato.description);
                         });
                         deferred.resolve();
                     } else {
-                        console.log('error unidades');
+                        //console.log('error unidades');
                         generalCache.put('unitTypes', []);
                         deferred.resolve();
                     }
@@ -165,16 +165,16 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'con
         };
 
         factory.cargaEstados = function(){
-            console.log('estados');
+            //console.log('estados');
             var deferred = $q.defer();
             if (generalCache.get('estados')){
-                console.log('hay estados');
+                //console.log('hay estados');
                 deferred.resolve();
             } else {
-                console.log('no hay estados');
+                //console.log('no hay estados');
                 statesFactory.getStatesType(function (data) {
                     if (data.status == 'OK') {
-                        console.log('cargamos estados');
+                        //console.log('cargamos estados');
                         var estados = data.data;
                         estados.forEach(function (estado) {
                             switch (estado.type) {
@@ -206,7 +206,7 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'con
                         });
                         deferred.resolve();
                     } else {
-                        console.log('error estados');
+                        //console.log('error estados');
                         generalCache.put('estados', []);
                         deferred.resolve();
                     }
@@ -225,20 +225,20 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'con
         };
 
         factory.cargaMatchesArray = function(){
-            console.log('matches');
+            //console.log('matches');
             var deferred = $q.defer();
             if (generalCache.get('matches' + loginService.getFiltro())){
-                console.log('hay matches');
+                //console.log('hay matches');
                 deferred.resolve();
             } else {
-                console.log('no hay matches');
+                //console.log('no hay matches');
                 priceFactory.getArrayMatches(loginService.getFiltro(), function(data){
                     if (data.status == 'OK'){
-                        console.log('cargamos matches');
+                        //console.log('cargamos matches');
                         generalCache.put('matches' + loginService.getFiltro(), data.data);
                         deferred.resolve();
                     } else {
-                        console.log('error matches');
+                        //console.log('error matches');
                         generalCache.put('matches' + loginService.getFiltro(), []);
                         deferred.resolve();
                     }
@@ -248,16 +248,16 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'con
         };
 
         factory.cargaMatchesRates = function(){
-            console.log('rates');
+            //console.log('rates');
             var deferred = $q.defer();
             if (generalCache.get('ratesMatches' + loginService.getFiltro())){
-                console.log('hay rates');
+                //console.log('hay rates');
                 deferred.resolve();
             } else {
-                console.log('no hay rates');
+                //console.log('no hay rates');
                 priceFactory.getMatchPrices({onlyRates: true}, loginService.getFiltro(), function (data) {
                     if (data.status == 'OK') {
-                        console.log('cargamos rates');
+                        //console.log('cargamos rates');
                         var tasasCargasTerminal = [];
                         data.data.forEach(function (tasaCargas) {
                             if (tasaCargas.matches != null && tasaCargas.matches.length > 0) {
@@ -267,7 +267,7 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory', 'con
                         generalCache.put('ratesMatches' + loginService.getFiltro(), tasasCargasTerminal);
                         deferred.resolve();
                     } else {
-                        console.log('error rates');
+                        //console.log('error rates');
                         generalCache.put('ratesMatches' + loginService.getFiltro(), []);
                         deferred.resolve();
                     }

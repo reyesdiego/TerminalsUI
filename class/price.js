@@ -109,6 +109,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             $http.post(inserturl, this)
                 .then(function(response) {
                     if (response.data.status == 'OK'){
+                        scope.matches[0]._idPrice = response.data.data._id;
                         if (loginService.getType() == 'terminal'){
                             var encontrado = false;
                             scope.matches[0].match.forEach(function(match){
