@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope, $state){
+myapp.controller('controlComprobantesCtrl', ['$scope', function($scope){
 
 	$scope.active = 0;
 
@@ -14,10 +14,6 @@ myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope
 		{name: 'Erróneos', ref: 'cfacturas.erroneos'},
 		{name: 'A reenviar', ref: 'cfacturas.reenviar'}
 	];
-
-	for (var i = 0; i < $scope.tabs.length; i++){
-		if ($state.$current.self.name == $scope.tabs[i].ref) $scope.active = i;
-	}
 
 	$scope.viewsStates = {
 		tasas: {
@@ -48,6 +44,12 @@ myapp.controller('controlComprobantesCtrl', ['$scope', '$state', function($scope
 				$scope.viewsStates[view].totalItems = data3;
 				$scope.viewsStates[view].used = true;
 				break;
+		}
+	});
+
+	$scope.$on('$stateChangeSuccess', function (ev, to) {
+		for (var i = 0; i < $scope.tabs.length; i++){
+			if (to.name == $scope.tabs[i].ref) $scope.active = i;
 		}
 	});
 

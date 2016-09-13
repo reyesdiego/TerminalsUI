@@ -242,7 +242,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				matches: initialLoadFactory.cargaMatchesArray,
 				ratesMatches: initialLoadFactory.cargaMatchesRates,
 				descripciones: initialLoadFactory.cargaDescripciones
-			}
+			},
+			redirectTo: 'cfacturas.tasas'
 		})
 			.state('cfacturas.tasas', {
 				url: '/tasas',
@@ -301,7 +302,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				matches: initialLoadFactory.cargaMatchesArray,
 				ratesMatches: initialLoadFactory.cargaMatchesRates,
 				descripciones: initialLoadFactory.cargaDescripciones
-			}
+			},
+			redirectTo: 'cgates.gates'
 		})
 			.state('cgates.gates', {
 				url: '/gatesFaltantes',
@@ -373,7 +375,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 		.state('reports', {
 			url: "/reportes",
 			templateUrl:"view/reportes.html",
-			controller: 'reportsCtrl'
+			controller: 'reportsCtrl',
+			redirectTo: 'reports.tasas'
 		})
 			.state('reports.tasas', {
 				url:'/tasas',
@@ -683,7 +686,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 
 		$rootScope.salir = function(){
-			$rootScope.socket.emit('logoff', loginService.getInfo().user);
+			if (loginService.getStatus()) $rootScope.socket.emit('logoff', loginService.getInfo().user);
 			authFactory.logout();
 			$rootScope.appointmentNotify = 0;
 			$rootScope.invoiceNotify = 0;
@@ -695,6 +698,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.filtroTerminal = '';
 		};
 
+
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
 			$rootScope.inTrackContainer = to.name == 'trackContainer';
 			$rootScope.setEstiloTerminal($cookies.get('themeTerminal'));
@@ -702,6 +706,11 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		});
 
 		$rootScope.$on('$stateChangeStart', function(event, toState){
+			if (toState.redirectTo){
+				event.preventDefault();
+				$state.transitionTo(toState.redirectTo);
+			}
+
 			$rootScope.loadingNewView = true;
 			if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 				dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
@@ -717,7 +726,8 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 						$state.transitionTo(toState.name);
 					}
 				}, function(err){
-					dialogs.error('Error', 'Fallo de comunicación con el servidor, inténtelo nuevamente más tarde');
+					//console.log(err);
+					dialogs.error('Error', err.message);
 					$rootScope.salir();
 				});
 			} else {
