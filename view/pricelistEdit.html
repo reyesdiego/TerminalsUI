@@ -52,9 +52,9 @@
                                 <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'description' && reverse"></span>
                                 <span class="glyphicon glyphicon-credit-card"></span> Tarifa
                             </a></th>
-                            <th><a href="" ng-click="ordenarPor('topPrices[0].price')">
-                                <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'topPrices[0].price' && !reverse"></span>
-                                <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'topPrices[0].price' && reverse"></span>
+                            <th><a href="" ng-click="ordenarPor('price')">
+                                <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'price' && !reverse"></span>
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'price' && reverse"></span>
                                 <span class="glyphicon glyphicon-credit-card"></span> Tope
                             </a></th>
                             <th><span class="glyphicon glyphicon-check"></span> Código asociado</th>
@@ -71,7 +71,7 @@
                                 <span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
                             </td>
                             <td class="col-lg-1 text-right">
-                                <span>{{ price.topPrices[price.topPrices.length-1].price | currency: (price.topPrices[price.topPrices.length-1].currency | formatCurrency) }}</span>
+                                <span>{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2" style="text-align: right">
 								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="acceso=='terminal'">
@@ -104,7 +104,7 @@
                                 <span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
                             </td>
                             <td class="col-lg-2 text-right">
-                                <span>{{ price.topPrices[0].price | currency: (price.topPrices[0].currency | formatCurrency) }}</span>
+                                <span>{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2 anchoFijoImpresion" style="text-align: right">
 								<span ng-repeat="codigo in price.matches[0].match track by $index">

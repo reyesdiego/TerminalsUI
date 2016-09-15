@@ -31,14 +31,14 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             this.tarifaAgp = false;
             this.servicio = false;
 
-            if (!angular.isDefined(this.topPrices[0].price || this.topPrices[0].price == null)){
+            if (!angular.isDefined(this.price || this.price == null)){
                 this.orderPrice = 0;
             } else {
-                this.orderPrice = this.topPrices[0].price;
-                this.orderCurrency = this.topPrices[0].currency;
+                this.orderPrice = this.price;
+                this.orderCurrency = this.currency;
             }
             this.nuevoTopPrice = {
-                currency: this.topPrices[0].currency,
+                currency: this.currency,
                 price: this.orderPrice,
                 from: new Date()
             };
