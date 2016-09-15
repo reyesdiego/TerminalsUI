@@ -31,16 +31,6 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 						callback(response.data);
 					});
 		},
-		getPriceById: function(idPrice, terminal, callback){
-			var inserturl = APP_CONFIG.SERVER_URL + '/prices/' + idPrice + '/' + terminal;
-			var factory = this;
-			$http.get(inserturl)
-				.then(function(response){
-					callback(true, new Price(response.data.data))
-				}, function(response){
-					callback(false, response.data)
-				})
-		},
 		getMatchPrices: function(datos, terminal, callback) {
 			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/' + terminal;
 			var factory = this;

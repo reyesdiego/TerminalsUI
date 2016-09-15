@@ -72,6 +72,19 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             }
             this.mostrarDetalle = false;
         },
+        getTopPrices: function(){
+            var deferred = $q.defer();
+            var inserturl = APP_CONFIG.SERVER_URL + '/prices/' + this._id + '/' + loginService.getFiltro();
+            var scope = this;
+            $http.get(inserturl)
+                .then(function(response){
+                    scope.topPrices = response.data.data.topPrices;
+                    deferred.resolve();
+                }, function(response){
+                    deferred.reject(response.data);
+                });
+            return deferred.promise;
+        },
         addTopPrice: function(topPrice){
             topPrice.price = parseFloat(topPrice.price);
             if (topPrice.from != '' && topPrice.currency != '' && topPrice.price > 0){

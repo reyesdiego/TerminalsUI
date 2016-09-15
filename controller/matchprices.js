@@ -230,19 +230,18 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				indice++;
 			});
 
-			priceFactory.getPriceById(tarifa._id, loginService.getFiltro(), function(success, price){
-				if (success){
-					$scope.newPrice = price;
-					$scope.newPrice.topPrices.forEach(function(price){
-						price.from = new Date(price.from);
+			tarifa.getTopPrices()
+					.then(function(){
+						$scope.newPrice = tarifa;
+						$scope.newPrice.topPrices.forEach(function(price){
+							price.from = new Date(price.from);
+						});
+						$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
+						$scope.abrirNuevoConcepto('editar');
+					}, function(error){
+						console.log(error);
+						dialogs('Error', 'Se ha producido un error al cargar los datos de la tarifa.');
 					});
-					$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
-					$scope.abrirNuevoConcepto('editar');
-				} else {
-					console.log(price);
-					dialogs('Error', 'Se ha producido un error al cargar los datos de la tarifa.');
-				}
-			});
 
 		};
 
