@@ -223,18 +223,27 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		//Carga la tarifa completa antes de poder editarla
 		$scope.editarTarifa = function(tarifa){
+
 			var indice = 0;
 			$scope.pricelist.forEach(function(price){
 				if (price.code == tarifa.code) $scope.posicionTarifa = indice;
 				indice++;
 			});
 
-			$scope.newPrice = angular.copy(tarifa);
-			$scope.newPrice.topPrices.forEach(function(price){
-				price.from = new Date(price.from);
+			priceFactory.getPriceById(tarifa._id, loginService.getFiltro(), function(success, price){
+				if (success){
+					$scope.newPrice = price;
+					$scope.newPrice.topPrices.forEach(function(price){
+						price.from = new Date(price.from);
+					});
+					$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
+					$scope.abrirNuevoConcepto('editar');
+				} else {
+					console.log(price);
+					dialogs('Error', 'Se ha producido un error al cargar los datos de la tarifa.');
+				}
 			});
-			$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
-			$scope.abrirNuevoConcepto('editar');
+
 		};
 
 		//Verifica que al modificar un código no coincida con otro ya existente
