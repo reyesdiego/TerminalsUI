@@ -46,24 +46,18 @@
 				<div ng-hide="sinLiquidar.verDetalle">
 					<liquidaciones-search model="sinLiquidar.model" ocultar-filtros="sinLiquidar.ocultarFiltros"></liquidaciones-search>
 				</div>
-				<div class="col-lg-12 text-center" ng-show="sinLiquidar.cargando">
-					<img class="media-object center-block" src="images/loading.gif">
-				</div>
 				<detalle-liquidacion
-						datos-liquidacion="sinLiquidar.preLiquidacion.detalle"
+						datos-liquidacion="sinLiquidarPayment.detail"
 						tasa-agp="tasaAgp"
-						ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle || sinLiquidar.preLiquidacion.detalle.tons == 0" >
+						ng-hide="sinLiquidar.cargando" >
 				</detalle-liquidacion>
-				<div class="col-lg-12" ng-hide="sinLiquidar.cargando || sinLiquidar.verDetalle">
-					<table-sin-liquidar
-							model="sinLiquidar"
-							tasa-agp="tasaAgp"
-							mostrar-detalle="mostrarDetalleSinLiquidar(invoice)"
-							cargar="cargarSinLiquidar()"
-							ordenar="filtrarSinLiquidar(filtro)">
-					</table-sin-liquidar>
-				</div>
-				<div class="col-lg-12" ng-show="sinLiquidar.verDetalle">
+				<table-sin-liquidar
+						payment="sinLiquidarPayment"
+						model="sinLiquidar"
+						tasa-agp="tasaAgp"
+						ordenar="filtrarSinLiquidar(filtro)">
+				</table-sin-liquidar>
+				<!--<div class="col-lg-12" ng-show="sinLiquidar.verDetalle">
 					<detalle-comprobante
 							ver-detalle="sinLiquidar.invoiceSelected"
 							mostrar="sinLiquidar.verDetalle"
@@ -73,7 +67,7 @@
 							logo-terminal="logoTerminal"
 							moneda="moneda">
 					</detalle-comprobante>
-				</div>
+				</div>-->
 				<div class="row">
 					<div class="col-lg-6 text-left">
 						<button class="btn btn-primary" ng-click="anexarComprobantes()" ng-disabled="!preLiquidacion.verDetalle">Anexar a pre-liquidación {{ preLiquidacion.selected.preNumber }}</button>
@@ -118,8 +112,8 @@
 						<table-sin-liquidar
 								model="comprobantesPreLiquidados"
 								tasa-agp="preLiquidacion.tasaAgp"
-								mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
-								cargar="cambioPagina()"
+								<!--mostrar-detalle="mostrarDetallePreLiquidado(invoice)"
+								cargar="cambioPagina()"-->
 								ordenar="filtrarPreLiquidados(filtro)">
 						</table-sin-liquidar>
 					</div>

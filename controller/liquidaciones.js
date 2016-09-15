@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', '$q', 'invoiceFactory',
-	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, $q, invoiceFactory){
+myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', '$q', 'invoiceFactory', 'Payment',
+	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, $q, invoiceFactory, Payment){
 
 		$scope.tasaAgp = false;
 		$scope.byContainer = false;
@@ -39,9 +39,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			},
 			cargando: false,
 			verDetalle: false,
-			comprobantes: [],
-			comprobantesByContainer: [],
-			total: 0,
 			currentPage: 1,
 			invoiceSelected: {},
 			itemsPerPage: 15,
@@ -53,6 +50,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			},
 			byContainer: false
 		};
+
+		$scope.sinLiquidarPayment = new Payment($scope.sinLiquidar.model);
 
 		$scope.preLiquidacion = {
 			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'buque', 'byContainer'],
@@ -183,6 +182,18 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.commentsInvoice = [];
 
+		$scope.$on('cambioPagina', function(ev, payment, model){
+			$scope.page.skip = (model.currentPage - 1) * $scope.itemsPerPage;
+			model.cargando = true;
+
+			payment.getInvoices($scope.page, function(success, err){
+				model.cargando = false;
+				if (!success){
+					console.log(err);
+				}
+			})
+		});
+
 		$scope.cambioPagina = function(){
 			if ($scope.modo == 'sinLiquidar'){
 				//$scope.comprobantesPreLiquidados.currentPage = data;
@@ -206,10 +217,41 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		});
 
 		$scope.cargarSinLiquidar = function(){
+
 			$scope.page.skip = ($scope.sinLiquidar.currentPage - 1) * $scope.itemsPerPage;
 			$scope.sinLiquidar.cargando = true;
-			cargarComprobantesSinLiquidar();
+
+			$scope.sinLiquidarPayment.getPrePaymentDetail(function(success){
+				$scope.sinLiquidar.cargando = false;
+				if (!success)
+					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los detalles de la pre-liquidación');
+			});
+
+			/*$scope.sinLiquidarPayment.getInvoices($scope.page, function(success){
+				if (success){
+					if ($scope.sinLiquidarPayment.invoicesByContainer.totalCount == 0) {
+						$scope.sinLiquidar.panelMensaje = {
+							titulo: 'Liquidaciones',
+							mensaje: 'No se encontraron comprobantes pendientes a liquidar para los filtros seleccionados.',
+							tipo: 'panel-info'
+						};
+					}
+					$scope.sinLiquidar.cargando = false;
+				} else {
+					//$scope.sinLiquidar.total = 0;
+					$scope.sinLiquidar.panelMensaje = {
+						titulo: 'Liquidaciones',
+						mensaje: 'Se ha producido un error al cargar los comprobantes sin liquidar.',
+						tipo: 'panel-danger'
+					};
+					$scope.sinLiquidar.cargando = false;
+				}
+			});*/
+
+			/*cargarComprobantesSinLiquidar();
 			liquidacionesFactory.getPrePayment($scope.sinLiquidar.model, function(data){
+				console.log('pre liquidacion no generada');
+				console.log(data);
 				if (data.status == 'OK'){
 					if (angular.isDefined(data.data)){
 						$scope.sinLiquidar.preLiquidacion.detalle = data.data;
@@ -226,7 +268,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 						total: 0
 					};
 				}
-			});
+			});*/
 		};
 
 		var cargarComprobantesSinLiquidar = function(){
@@ -293,6 +335,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.page.skip = ($scope.preLiquidacion.currentPage - 1) * $scope.itemsPerPage;
 			$scope.preLiquidacion.cargando = true;
 			liquidacionesFactory.getPrePayments($scope.page, $scope.preLiquidacion.model, function(data){
+				console.log('pre liquidaciones generadas');
+				console.log(data);
 				if (data.status == 'OK'){
 					$scope.preLiquidacion.datos = data.data;
 					$scope.preLiquidacion.total = data.totalCount;
