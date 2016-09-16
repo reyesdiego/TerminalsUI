@@ -124,8 +124,22 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 				});
 			}
 			return deferred.promise;
+		},
+		addToPrePayment: function(prePayment){
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/addToPrePayment/' + loginService.getFiltro();
+			var liquidacion = {
+				paymentId: prePayment
+			};
+			return $http.put(inserturl, liquidacion,{ params: formatService.formatearDatos(this.searchParams) })
+		},
+		deletePayment: function(){
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayment/' + this._id;
+			return $http.delete(inserturl)
+		},
+		setPayment: function(){
+			var inserturl = APP_CONFIG.SERVER_URL + '/paying/payment';
+			return $http.put(inserturl, {terminal: loginService.getFiltro(), preNumber: this.preNumber})
 		}
-
 	};
 
 	return Payment;

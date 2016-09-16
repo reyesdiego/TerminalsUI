@@ -126,41 +126,6 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 							callback(response.data);
 						});
 			},
-			setPayment: function(preNumber, callback){
-				var inserturl = APP_CONFIG.SERVER_URL + '/paying/payment';
-				$http.put(inserturl, {terminal: loginService.getFiltro(), preNumber: preNumber})
-						.then(function(response){
-							callback(response.data);
-						}, function(response){
-							callback(response.data);
-						});
-			},
-			deletePrePayment: function(paymentId, callback){
-				var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayment/' + paymentId;
-				$http.delete(inserturl)
-						.then(function(response){
-							callback(response.data);
-						}, function(response){
-							callback(response.data);
-						});
-			},
-			addToPrePayment: function(preLiquidacion, datos, callback){
-				var inserturl = APP_CONFIG.SERVER_URL + '/paying/addToPrePayment/' + loginService.getFiltro();
-				var liquidacion = {
-					paymentId: preLiquidacion
-				};
-				$http.put(inserturl, liquidacion,{ params: formatService.formatearDatos(datos) })
-						.then(function(response){
-							callback(response.data);
-						}, function(response){
-							if (response.data == null){
-								response.data = {
-									status: 'ERROR'
-								}
-							};
-							callback(response.data);
-						});
-			},
 			getPrePayment: function(datos, callback){
 				console.log('acá en get prePayment');
 				console.log(datos);
