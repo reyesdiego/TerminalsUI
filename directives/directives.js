@@ -70,8 +70,8 @@ myapp.directive('detalleLiquidacion', function(){
 		restrict:		'E',
 		templateUrl:	'view/detalle.liquidacion.html',
 		scope: {
-			datosLiquidacion:		'=',
-			tasaAgp:				'='
+			payment:	'=',
+			tasaAgp:	'='
 		}
 	}
 });
@@ -520,9 +520,14 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 			payment:				"=",
 			model:					"=",
 			tasaAgp:				"=",
-			ordenar:				"&"
+			ocultarFiltros:			"="
 		},
 		link: function(scope){
+			scope.panelMensaje = {
+				titulo: 'Liquidaciones',
+				mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
+				tipo: 'panel-info'
+			};
 			scope.cargando = false;
 			scope.byContainer = false;
 			scope.itemsPerPage = 15;
@@ -537,7 +542,14 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 				scope.cargando = true;
 				scope.payment.getInvoices(page, function(success, err){
 					scope.cargando = false;
-					if (!success) console.log(err)
+					if (!success) {
+						console.log(err);
+						scope.panelMensaje = {
+							titulo: 'Liquidaciones',
+							mensaje: 'Se produjo un error al cargar los comprobantes.',
+							tipo: 'panel-danger'
+						};
+					}
 				})
 			}
 

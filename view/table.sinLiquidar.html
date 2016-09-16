@@ -3,7 +3,7 @@
 </div>
 <div ng-hide="cargando || mostrarResultado">
 	<div class="row col-lg-12 center-block" ng-show="payment.invoices.totalCount == 0">
-		<div-panel config-panel="model.panelMensaje">
+		<div-panel config-panel="panelMensaje">
 			<span>{{ panelMensaje.mensaje }}</span>
 		</div-panel>
 	</div>
@@ -28,18 +28,18 @@
 		<table class="invoice-shadow table table-striped table-bordered">
 			<thead>
 			<tr class="text-center">
-				<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
-				<th class="text-center"><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
-				<th class="text-left"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
-				<th class="text-left"><encabezado-tabla-ordenado titulo="Cliente" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="razon" filtro-orden="razonOrden"></encabezado-tabla-ordenado></th>
-				<th ng-show="byContainer" class="text-left"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="container" filtro-orden="containerOrden"></encabezado-tabla-ordenado></th>
-				<th class="text-right"><encabezado-tabla-ordenado titulo="Ton." filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="cnt" filtro-orden="cntOrden"></encabezado-tabla-ordenado></th>
-				<th class="text-right"><encabezado-tabla-ordenado titulo="Tarifa" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="impUnit" filtro-orden="impUnitOrden"></encabezado-tabla-ordenado></th>
-				<th ng-hide="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="tasa" filtro-orden="tasaOrden"></encabezado-tabla-ordenado></th>
-				<th ng-show="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="tasaAgp" filtro-orden="tasaAgpOrden"></encabezado-tabla-ordenado></th>
-				<th class="text-right"><encabezado-tabla-ordenado titulo="Cot." filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="cotiMoneda" filtro-orden="cotiMonedaOrden"></encabezado-tabla-ordenado></th>
-				<th ng-hide="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="totalTasa" filtro-orden="totalTasaOrden"></encabezado-tabla-ordenado></th>
-				<th ng-show="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar(filtro)" oculta-filtros="model.ocultarFiltros" model="payment.searchParams" filtro="totalTasaAgp" filtro-orden="totalTasaAgpOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="emision" filtro-orden="emisionOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-center"><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-left"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-left"><encabezado-tabla-ordenado titulo="Cliente" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="razon" filtro-orden="razonOrden"></encabezado-tabla-ordenado></th>
+				<th ng-show="byContainer" class="text-left"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="container" filtro-orden="containerOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-right"><encabezado-tabla-ordenado titulo="Ton." filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="cnt" filtro-orden="cntOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-right"><encabezado-tabla-ordenado titulo="Tarifa" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="impUnit" filtro-orden="impUnitOrden"></encabezado-tabla-ordenado></th>
+				<th ng-hide="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="tasa" filtro-orden="tasaOrden"></encabezado-tabla-ordenado></th>
+				<th ng-show="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Tasa" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="tasaAgp" filtro-orden="tasaAgpOrden"></encabezado-tabla-ordenado></th>
+				<th class="text-right"><encabezado-tabla-ordenado titulo="Cot." filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="cotiMoneda" filtro-orden="cotiMonedaOrden"></encabezado-tabla-ordenado></th>
+				<th ng-hide="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="totalTasa" filtro-orden="totalTasaOrden"></encabezado-tabla-ordenado></th>
+				<th ng-show="tasaAgp" class="text-right"><encabezado-tabla-ordenado titulo="Importe" filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="totalTasaAgp" filtro-orden="totalTasaAgpOrden"></encabezado-tabla-ordenado></th>
 				<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 			</tr>
 			</thead>

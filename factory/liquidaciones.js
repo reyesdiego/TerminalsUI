@@ -1,11 +1,19 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'generalCache', 'APP_CONFIG',
-	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache, APP_CONFIG){
+myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'generalCache', 'APP_CONFIG', 'Payment',
+	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache, APP_CONFIG, Payment){
 
 		var liquidacionesFactory = {
 			namespace: 'liquidaciones',
+			retrievePayment: function(paymentsData, searchParams){
+				var paymentsArray = [];
+				paymentsData.forEach(function(paymentData){
+					var payment = new Payment(searchParams, paymentData);
+					paymentsArray.push(payment);
+				});
+				return paymentsArray;
+			},
 			getNotPayedCsv: function(datos, callback){
 				var inserturl = APP_CONFIG.SERVER_URL + '/paying/notPayed/' + loginService.getFiltro() +'/download';
 				$http.get(inserturl, { params: formatService.formatearDatos(datos)})
@@ -80,8 +88,10 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				var defer = $q.defer();
 				var canceler = HTTPCanceler.get(defer, this.namespace, 'preliquidaciones');
 				var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+				var factory = this;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 						.then(function(response){
+							response.data.data = factory.retrievePayment(response.data.data, datos);
 							callback(response.data);
 						}, function(response){
 							if (response.status != -5) callback(response.data);
@@ -95,20 +105,11 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				var factory = this;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 						.then(function(response){
-							response.data.data = factory.setTotalesLiquidacion(response.data.data);
+							response.data.data = factory.retrievePayment(response.data.data, datos);
 							callback(response.data);
 						}, function(response){
 							if (response.status != -5) callback(response.data);
 						});
-			},
-			setTotalesLiquidacion: function(detallesLiquidaciones){
-				var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
-				detallesLiquidaciones.forEach(function(liquidacion){
-					liquidacion.detail.forEach(function(detalle){
-						detalle.desc = descripciones[detalle._id];
-					});
-				});
-				return detallesLiquidaciones;
 			},
 			//No se debería poder cancelar
 			setPrePayment: function(callback){
