@@ -273,7 +273,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			pantalla.titulo = "Punto de Venta " + punto.nroPtoVenta;
 			if (punto.totalCount > 0){
 				pantalla.totalCnt = punto.totalCount;
-				pantalla.tipo = "panel-danger";
+				pantalla.tipo = "panel-info";
 				pantalla.resultadoCorrelativo = punto.data;
 				$scope.mostrarBotonImprimir = true;
 				$scope.puntosDeVenta.push(angular.copy(pantalla));
