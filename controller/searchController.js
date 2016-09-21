@@ -165,6 +165,7 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 				$scope.model.fechaFin = '';
 			}
 			$scope.model[filtro] = contenido;
+			if (filtro == 'fechaInicio' && ((contenido != 'liquidacion' || contenido != 'turnos') && contenido != '')) $scope.model[filtro] = new Date(contenido);
 			if (filtro == 'razonSocial'){
 				$scope.model[filtro] = filtrarCaracteresInvalidos(contenido);
 			}

@@ -82,6 +82,11 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			$scope.mostrarResultado = false;
 			$scope.currentPage = 1;
 			$scope.model[filtro] = contenido;
+			if (filtro == 'fechaInicio') {
+				$scope.model[filtro] = new Date(contenido);
+				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
+				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
+			}
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
