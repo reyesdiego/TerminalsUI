@@ -238,7 +238,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                         llamadas.push(scope.addComment(dataComment, logInvoice));
                     }
                     if (dataComment.setResend){
-                        llamadas.push(scope.setResend(dataComment.setResend()));
+                        llamadas.push(scope.setResend(dataComment.resend));
                     }
                     $q.all(llamadas)
                         .then(function(){
