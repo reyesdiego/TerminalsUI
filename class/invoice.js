@@ -87,7 +87,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                         scope.setData(response.data.data);
                         deferred.resolve();
                     }, function(response){
-                        console.log(response);
+                        //console.log(response);
                         deferred.reject(response);
                         /*errorFactory.raiseError(response.data, inserturl, 'errorDatos', 'Error al cargar el comprobante ' + id);
                          callback({}, false);*/
