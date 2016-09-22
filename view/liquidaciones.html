@@ -44,6 +44,9 @@
 				</div>
 				<hr>
 				<liquidaciones-search model="sinLiquidar.model" ocultar-filtros="sinLiquidar.ocultarFiltros"></liquidaciones-search>
+				<div class="col-lg-12 text-center" ng-show="sinLiquidar.cargando">
+					<img class="media-object center-block" src="images/loading.gif">
+				</div>
 				<detalle-liquidacion
 						payment="sinLiquidarPayment"
 						tasa-agp="tasaAgp"
@@ -52,7 +55,8 @@
 				<table-sin-liquidar
 						payment="sinLiquidarPayment"
 						tasa-agp="tasaAgp"
-						ocultar-filtros="sinLiquidar.ocultarFiltros">
+						ocultar-filtros="sinLiquidar.ocultarFiltros"
+						ng-if="!sinLiquidar.cargando">
 				</table-sin-liquidar>
 				<div class="row">
 					<div class="col-lg-6 text-left">
@@ -84,17 +88,18 @@
 					</div>
 				</div>
 				<hr>
-				<accordion-min heading="Detalle Pre-Liquidación nº {{ preLiquidacion.selected.preNumber }}" ng-if="preLiquidacion.verDetalle">
+				<accordion-min heading="Detalle Pre-Liquidación nº {{ preLiquidacion.selected.preNumber }}" ng-show="preLiquidacion.verDetalle">
 					<!--<h5 class="col-lg-12"><strong> Toneladas: {{ preLiquidacion.detalle.tons | number: 2 }} - Tasa: U$S {{ preLiquidacion.detalle.total | currency }} - Importe: $ {{ preLiquidacion.detalle.totalPeso | currency }} - IVA: $ {{ preLiquidacion.detalle.totalPeso * 0.21 | currency }} - Total: $ {{ preLiquidacion.detalle.totalPeso * 1.21 | currency }}</strong></h5>-->
 					<detalle-liquidacion
 							payment="preLiquidacion.selected"
 							tasa-agp="preLiquidacion.tasaAgp"
-							ng-hide="preLiquidacion.detalle.tons == 0">
+							ng-hide="!preLiquidacion.verDetalle">
 					</detalle-liquidacion>
 					<table-sin-liquidar
 							payment="preLiquidacion.selected"
 							ocultar-filtros="ocultarFiltrosComprobantes"
-							tasa-agp="preLiquidacion.tasaAgp">
+							tasa-agp="preLiquidacion.tasaAgp"
+							ng-if="preLiquidacion.verDetalle">
 					</table-sin-liquidar>
 				</accordion-min>
 				<div class="col-lg-12 text-right">

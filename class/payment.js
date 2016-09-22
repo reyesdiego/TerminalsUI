@@ -13,6 +13,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 			totalCount: 0
 		};
 		this.detail = [];
+		this.reload = false;
 		if (searchParams)
 			this.searchParams = searchParams;
 		if (paymentData)

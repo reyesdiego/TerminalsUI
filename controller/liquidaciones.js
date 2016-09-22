@@ -130,6 +130,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los detalles de la pre-liquidación');
 			});
 
+
 		};
 
 		$scope.cargarPreLiquidaciones = function(){
@@ -189,9 +190,10 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.cargarDetallePreLiquidacion = function(liquidacion){
 
 			$scope.preLiquidacion.selected = liquidacion;
-			$scope.preLiquidacion.verDetalle = true;
+			$scope.preLiquidacion.verDetalle = false;
 
 			$scope.preLiquidacion.selected.getPrePaymentDetail(function(success){
+				$scope.preLiquidacion.verDetalle = true;
 				if (!success)
 					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los detalles de la pre-liquidación');
 
