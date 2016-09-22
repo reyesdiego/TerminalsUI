@@ -71,6 +71,13 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		$scope.unidadesTarifas = generalCache.get('unitTypes');
 
+		$scope.dateOptions = [{
+			minDate: new Date('01/01/2013')
+		}];
+		$scope.newDateOptions = {
+			minDate: new Date('01/01/2013')
+		};
+
 		$scope.openFechaTarifa = false;
 		$scope.openDate = function($event) {
 			$event.preventDefault();
@@ -177,6 +184,8 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		//Agrega el top price a una tarifa
 		$scope.addTopPrice = function(){
+			$scope.dateOptions.push({ minDate: $scope.newTopPrice.from});
+			$scope.newDateOptions.minDate = $scope.newTopPrice.from;
 			$scope.newPrice.addTopPrice($scope.newTopPrice);
 			$scope.newTopPrice = {
 				from: new Date(),
@@ -223,18 +232,33 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		//Carga la tarifa completa antes de poder editarla
 		$scope.editarTarifa = function(tarifa){
+
 			var indice = 0;
 			$scope.pricelist.forEach(function(price){
 				if (price.code == tarifa.code) $scope.posicionTarifa = indice;
 				indice++;
 			});
 
-			$scope.newPrice = angular.copy(tarifa);
-			$scope.newPrice.topPrices.forEach(function(price){
-				price.from = new Date(price.from);
-			});
-			$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
-			$scope.abrirNuevoConcepto('editar');
+			tarifa.getTopPrices()
+					.then(function(){
+						$scope.newPrice = tarifa;
+						$scope.newPrice.topPrices.forEach(function(price){
+							price.from = new Date(price.from);
+						});
+						$scope.newDateOptions.minDate = $scope.newPrice.topPrices[$scope.newPrice.topPrices.length-1].from;
+						for (var i = 1; i < $scope.newPrice.topPrices.length; i++){
+							var dateOptions = {
+								minDate: $scope.newPrice.topPrices[i-1].from
+							};
+							$scope.dateOptions.push(dateOptions);
+						}
+						$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
+						$scope.abrirNuevoConcepto('editar');
+					}, function(error){
+						console.log(error);
+						dialogs.error('Error', 'Se ha producido un error al cargar los datos de la tarifa.');
+					});
+
 		};
 
 		//Verifica que al modificar un código no coincida con otro ya existente
@@ -283,6 +307,25 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 							dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
 						});
 			})
+		};
+
+		$scope.sacarTopPrice = function(index){
+			$scope.newPrice.removeTopPrice(index);
+			$scope.dateOptions = [{
+				minDate: new Date('01/01/2013')
+			}];
+			if ($scope.newPrice.topPrices.length > 0){
+				$scope.newDateOptions.minDate = $scope.newPrice.topPrices[$scope.newPrice.topPrices.length-1].from;
+			} else {
+				$scope.newDateOptions.minDate = new Date('01/01/2013');
+			}
+
+			for (var i = 1; i < $scope.newPrice.topPrices.length; i++){
+				var dateOptions = {
+					minDate: $scope.newPrice.topPrices[i-1].from
+				};
+				$scope.dateOptions.push(dateOptions);
+			}
 		};
 
 		//Borra el valor de un campo de la nueva tarifa

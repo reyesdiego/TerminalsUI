@@ -134,7 +134,9 @@ $pdf->Ln();
 $pdf->Cell(190, 8, utf8_decode('Período controlado: Del ' . $desde . ' hasta el ' . $hasta), 0, "L");
 $pdf->Ln(10);
 
-$pdf->SetFillColor(178, 34, 34);
+$pdf->SetFillColor(51, 153, 255);
+
+$first = true;
 
 foreach ($data['resultado'] as $puntoDeVenta) {
 
@@ -163,7 +165,11 @@ foreach ($data['resultado'] as $puntoDeVenta) {
 	$nb=$pdf->NbLines(190, utf8_decode($textoResultado));
 	$h=4*$nb + 8;
 	//Issue a page break first if needed
-	$pdf->CheckPageBreak($h);
+	if ($first){
+	    $first = false;
+	} else {
+	    $pdf->CheckPageBreak($h);
+	}
 
 	$pdf->SetTextColor(255, 255, 255);
 	$pdf->SetFont('Arial', 'B', 12);
