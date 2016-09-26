@@ -10,7 +10,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="detalle in datosLiquidacion">
+		<tr ng-repeat="detalle in payment.detail">
 			<td class="text-center">{{ detalle._id.code }}</td>
 			<td>{{ detalle.descripcion }}</td>
 			<td class="text-right">{{ detalle.cnt | numberEx : 2 }}</td>
@@ -21,8 +21,8 @@
 		</tr>
 		<tr>
 			<td colspan="4" class="text-right">Total</td>
-			<td class="text-right" ng-hide="tasaAgp">{{ datosLiquidacion.totalFinal | currency: ('PES' | formatCurrency) }}</td>
-			<td class="text-right" ng-show="tasaAgp">{{ datosLiquidacion.totalFinalAgp | currency: ('PES' | formatCurrency) }}</td>
+			<td class="text-right" ng-hide="tasaAgp">{{ payment.detail.totalFinal | currency: ('PES' | formatCurrency) }}</td>
+			<td class="text-right" ng-show="tasaAgp">{{ payment.detail.totalFinalAgp | currency: ('PES' | formatCurrency) }}</td>
 		</tr>
 		</tbody>
 	</table>
