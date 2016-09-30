@@ -326,7 +326,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/turnos.html",
 			controller: "turnosCtrl",
 			resolve: {
-				ratesMatches: initialLoadFactory.cargaMatchesRates
+				ratesMatches: initialLoadFactory.cargaMatchesRates,
+				estados: initialLoadFactory.cargaEstados
 			}
 		})
 		.state('changepass', {
