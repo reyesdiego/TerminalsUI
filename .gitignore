@@ -1,9 +1,7 @@
 .idea/
 .bowerrc
-includes/js/utils/*
 bower_components
 node_modules
-other
 build
-main/config.js
-main/configProd.js
+/main/config.js
+/main/configProd.js
