@@ -22,7 +22,7 @@
 					<br>
 					<span ng-repeat="contenedor in filteredDatos track by $index">
 						<div style="width: auto; float:left; text-align:center" ng-show="contenedor.contenedor.trim() != ''" >
-							<a href ng-click="detalleContenedor(contenedor)"><span title="{{ contenedor.fecha }}">{{ contenedor.contenedor }}</span></a><span ng-show="!$last"> -&nbsp</span></div>
+							<span class="clickeable" title="{{ contenedor.fecha }}" ng-click="detalleContenedor(contenedor)">{{ contenedor.contenedor }}</span><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
 				</div>
 			</div>

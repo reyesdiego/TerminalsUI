@@ -16,6 +16,15 @@ html, body {
     text-align: right;
 }
 
+.clickeable {
+    cursor: pointer;
+}
+
+.clickeable:hover {
+    color: red;
+    text-decoration: underline;
+}
+
 .back-container{
     position:absolute;
     top:0;
