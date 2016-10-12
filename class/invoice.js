@@ -283,6 +283,8 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             var precioEncontrado = false;
             var scope = this;
 
+            this.controlTarifas = [];
+
             if (this.detalle){
                 this.detalle.forEach(function(detalle){
                     detalle.items.forEach(function(item){
