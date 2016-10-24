@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus', 'Price', 'generalFunctions',
-	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus, Price, generalFunctions) {
+myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus', 'Price', 'generalFunctions', '$window',
+	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus, Price, generalFunctions, $window) {
 		'use strict';
 
 		//Array con los tipos de tarifas para establecer filtros
@@ -342,17 +342,23 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 			priceFactory.getMatchPricesCSV(alterModel, loginService.getFiltro(), function(data, status){
 				if (status == 'OK'){
-					var anchor = angular.element('<a/>');
-					anchor.css({display: 'none'}); // Make sure it's not visible
-					angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.attr({
-						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-						target: '_blank',
-						download: 'Asociacion_tarifario.csv'
-					})[0].click();
+					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+						var csvBlob = new Blob([data], {type: 'text/csv'});
+						$window.navigator.msSaveOrOpenBlob(csvBlob, 'Asociacion_tarifario.csv');
+					} else {
+						var anchor = angular.element('<a/>');
+						anchor.css({display: 'none'}); // Make sure it's not visible
+						angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.remove(); // Clean it up afterwards
+						anchor.attr({
+							href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+							target: '_blank',
+							download: 'Asociacion_tarifario.csv'
+						})[0].click();
+
+						anchor.remove(); // Clean it up afterwards
+					}
 				} else {
 					dialogs.error('Asociar', 'Se ha producido un error al descargar los datos.');
 				}

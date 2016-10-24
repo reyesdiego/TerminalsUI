@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', '$q', 'invoiceFactory', 'Payment',
-	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, $q, invoiceFactory, Payment){
+myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFactory', 'loginService', 'dialogs', 'generalFunctions', '$q', 'invoiceFactory', 'Payment', '$window',
+	function($rootScope, $scope, liquidacionesFactory, loginService, dialogs, generalFunctions, $q, invoiceFactory, Payment, $window){
 
 		$scope.tasaAgp = false;
 		$scope.byContainer = false;
@@ -277,17 +277,24 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			if ($scope.sinLiquidar.byContainer) alterModel.byContainer = true;
 			liquidacionesFactory.getNotPayedCsv(alterModel, function(data, status){
 				if (status == 'OK'){
-					var anchor = angular.element('<a/>');
-					anchor.css({display: 'none'}); // Make sure it's not visible
-					angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.attr({
-						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-						target: '_blank',
-						download: 'SinLiquidar.csv'
-					})[0].click();
+					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+						var csvBlob = new Blob([data], {type: 'text/csv'});
+						$window.navigator.msSaveOrOpenBlob(csvBlob, 'SinLiquidar.csv');
+					} else {
+						var anchor = angular.element('<a/>');
+						anchor.css({display: 'none'}); // Make sure it's not visible
+						angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.remove(); // Clean it up afterwards
+						anchor.attr({
+							href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+							target: '_blank',
+							download: 'SinLiquidar.csv'
+						})[0].click();
+
+						anchor.remove(); // Clean it up afterwards
+					}
+
 				} else {
 					dialogs.error('Liquidaciones', 'Se ha producido un error al descargar el listado de comprobantes sin liquidar.');
 				}

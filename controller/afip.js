@@ -2,8 +2,8 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', 'dialogs',
-	function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache, loginService, dialogs){
+myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', 'dialogs', '$window',
+	function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache, loginService, dialogs, $window){
 
 		$scope.fechaInicio = new Date();
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -347,17 +347,23 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			$scope.disableDown = true;
 			afipFactory.getCSV($scope.actualRegistro, $scope.model, function(data, status){
 				if (status == 'OK'){
-					var anchor = angular.element('<a/>');
-					anchor.css({display: 'none'}); // Make sure it's not visible
-					angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.attr({
-						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-						target: '_blank',
-						download: 'ReporteAFIP.csv'
-					})[0].click();
+					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+						var csvBlob = new Blob([data], {type: 'text/csv'});
+						$window.navigator.msSaveOrOpenBlob(csvBlob, 'ReporteAFIP.csv');
+					} else {
+						var anchor = angular.element('<a/>');
+						anchor.css({display: 'none'}); // Make sure it's not visible
+						angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.remove(); // Clean it up afterwards
+						anchor.attr({
+							href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+							target: '_blank',
+							download: 'ReporteAFIP.csv'
+						})[0].click();
+
+						anchor.remove(); // Clean it up afterwards
+					}
 				} else {
 					dialogs.error('AFIP', 'Se ha producio un error al exportar los datos a CSV.');
 				}

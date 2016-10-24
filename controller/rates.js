@@ -3,8 +3,8 @@
  */
 
 
-myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', 'loginService', 'downloadFactory', 'dialogs', '$filter',
-	function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache, loginService, downloadFactory, dialogs, $filter) {
+myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', 'loginService', 'downloadFactory', 'dialogs', '$filter', '$window',
+	function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache, loginService, downloadFactory, dialogs, $filter, $window) {
 
 		$scope.tasaAgp = false;
 
@@ -515,20 +515,24 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			downloadFactory.convertToPdf(data, 'reporteRatesPdf', function(data, status){
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
-					var fileURL = URL.createObjectURL(file);
 
-					var anchor = angular.element('<a/>');
-					anchor.css({display: 'none'}); // Make sure it's not visible
-					angular.element(document.body).append(anchor); // Attach to document
+					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+						$window.navigator.msSaveOrOpenBlob(file, nombreReporte);
+					} else {
+						var fileURL = URL.createObjectURL(file);
 
-					anchor.attr({
-						href: fileURL,
-						target: '_blank',
-						download: nombreReporte
-					})[0].click();
+						var anchor = angular.element('<a/>');
+						anchor.css({display: 'none'}); // Make sure it's not visible
+						angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.remove(); // Clean it up afterwards
-					//window.open(fileURL);
+						anchor.attr({
+							href: fileURL,
+							target: '_blank',
+							download: nombreReporte
+						})[0].click();
+
+						anchor.remove(); // Clean it up afterwards
+					}
 				} else {
 					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 				}

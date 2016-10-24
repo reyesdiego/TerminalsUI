@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache', 'generalFunctions', '$filter',
-	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions, $filter) {
+myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache', 'generalFunctions', '$filter', '$window',
+	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions, $filter, $window) {
 
 		'use strict';
 		//Array con los tipos de tarifas para establecer filtros
@@ -149,25 +149,29 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 				terminal: loginService.getFiltro(),
 				pricelist: $scope.filteredPrices
 			};
-			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC');
+			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.pdf';
 			downloadFactory.convertToPdf(data, 'pricelistToPdf', function(data, status){
 				$scope.procesando = false;
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
-					var fileURL = URL.createObjectURL(file);
 
-					var anchor = angular.element('<a/>');
-					anchor.css({display: 'none'}); // Make sure it's not visible
-					angular.element(document.body).append(anchor); // Attach to document
+					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+						$window.navigator.msSaveOrOpenBlob(file, nombreReporte);
+					} else {
+						var fileURL = URL.createObjectURL(file);
 
-					anchor.attr({
-						href: fileURL,
-						target: '_blank',
-						download: nombreReporte
-					})[0].click();
+						var anchor = angular.element('<a/>');
+						anchor.css({display: 'none'}); // Make sure it's not visible
+						angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.remove(); // Clean it up afterwards
-					//window.open(fileURL);
+						anchor.attr({
+							href: fileURL,
+							target: '_blank',
+							download: nombreReporte
+						})[0].click();
+
+						anchor.remove(); // Clean it up afterwards
+					}
 				} else {
 					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 				}
@@ -178,27 +182,33 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			$scope.procesando = true;
 			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.csv';
 
-			var csvContent = "data:text/csv;charset=utf-8,";
-			csvContent += "Código|Descripción|Unidad|Tope";
+			var csvContent = "Código|Descripción|Unidad|Tope";
 
 			$scope.pricelist.forEach(function(price){
 				csvContent += "\n";
 				csvContent += price.code + "|" + price.description + "|" + price.unit + "|" + price.topPrices[0].price;
 			});
 
-			var encodedUri = encodeURI(csvContent);
+			if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+				var csvBlob = new Blob([csvContent], {type: 'text/csv'});
+				$window.navigator.msSaveOrOpenBlob(csvBlob, nombreReporte);
+			} else {
+				csvContent = "data:text/csv;charset=utf-8," + csvContent;
+				var encodedUri = encodeURI(csvContent);
 
-			var anchor = angular.element('<a/>');
-			anchor.css({display: 'none'}); // Make sure it's not visible
-			angular.element(document.body).append(anchor); // Attach to document
+				var anchor = angular.element('<a/>');
+				anchor.css({display: 'none'}); // Make sure it's not visible
+				angular.element(document.body).append(anchor); // Attach to document
 
-			anchor.attr({
-				href: encodedUri,
-				target: '_blank',
-				download: nombreReporte
-			})[0].click();
+				anchor.attr({
+					href: encodedUri,
+					target: '_blank',
+					download: nombreReporte
+				})[0].click();
 
-			anchor.remove(); // Clean it up afterwards
+				anchor.remove(); // Clean it up afterwards
+			}
+
 			$scope.procesando = false;
 
 		};

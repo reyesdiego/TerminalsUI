@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 17/08/2016.
  */
-myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', 'downloadFactory', 'APP_CONFIG', '$filter', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache, downloadFactory, APP_CONFIG, $filter){
+myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', 'downloadFactory', 'APP_CONFIG', '$filter', '$window', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache, downloadFactory, APP_CONFIG, $filter, $window){
     function Invoice(invoiceData){
         if (invoiceData){
             this.setData(invoiceData);
@@ -394,20 +394,25 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             downloadFactory.convertToPdf(imprimirComprobante, 'invoiceToPdf', function(data, status){
                 if (status == 'OK'){
                     var file = new Blob([data], {type: 'application/pdf'});
-                    var fileURL = URL.createObjectURL(file);
 
-                    var anchor = angular.element('<a/>');
-                    anchor.css({display: 'none'}); // Make sure it's not visible
-                    angular.element(document.body).append(anchor); // Attach to document
+                    if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+                        $window.navigator.msSaveOrOpenBlob(file, nombreReporte);
+                    } else {
+                        var fileURL = URL.createObjectURL(file);
 
-                    anchor.attr({
-                        href: fileURL,
-                        target: '_blank',
-                        download: nombreReporte
-                    })[0].click();
+                        var anchor = angular.element('<a/>');
+                        anchor.css({display: 'none'}); // Make sure it's not visible
+                        angular.element(document.body).append(anchor); // Attach to document
 
-                    anchor.remove(); // Clean it up afterwards
-                    //window.open(fileURL);
+                        anchor.attr({
+                            href: fileURL,
+                            target: '_blank',
+                            download: nombreReporte
+                        })[0].click();
+
+                        anchor.remove(); // Clean it up afterwards
+                    }
+
                     deferred.resolve();
                 } else {
                     deferred.reject();

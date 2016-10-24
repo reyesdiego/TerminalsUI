@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 21/08/15.
  */
-myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'generalCache', 'downloadFactory',
-	function($scope, controlPanelFactory, dialogs, loginService, generalCache, downloadFactory){
+myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'generalCache', 'downloadFactory', '$window',
+	function($scope, controlPanelFactory, dialogs, loginService, generalCache, downloadFactory, $window){
 
 		$scope.ranking = true;
 
@@ -185,20 +185,25 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			downloadFactory.convertToPdf(data, 'reporteEmpresasPdf', function(data, status){
 				if (status == 'OK'){
 					var file = new Blob([data], {type: 'application/pdf'});
-					var fileURL = URL.createObjectURL(file);
 
-					var anchor = angular.element('<a/>');
-					anchor.css({display: 'none'}); // Make sure it's not visible
-					angular.element(document.body).append(anchor); // Attach to document
+					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+						$window.navigator.msSaveOrOpenBlob(file, nombreReporte);
+					} else {
+						var fileURL = URL.createObjectURL(file);
 
-					anchor.attr({
-						href: fileURL,
-						target: '_blank',
-						download: nombreReporte
-					})[0].click();
+						var anchor = angular.element('<a/>');
+						anchor.css({display: 'none'}); // Make sure it's not visible
+						angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.remove(); // Clean it up afterwards
-					//window.open(fileURL);
+						anchor.attr({
+							href: fileURL,
+							target: '_blank',
+							download: nombreReporte
+						})[0].click();
+
+						anchor.remove(); // Clean it up afterwards
+					}
+
 				} else {
 					dialogs.error('Reporte empresas', 'Se ha producido un error al exportar el reporte a PDF');
 				}
@@ -214,17 +219,23 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			}
 			controlPanelFactory.getFacturacionEmpresasCSV(alterModel, function(data, status){
 				if (status == 'OK'){
-					var anchor = angular.element('<a/>');
-					anchor.css({display: 'none'}); // Make sure it's not visible
-					angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.attr({
-						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-						target: '_blank',
-						download: 'Facturacion_empresas.csv'
-					})[0].click();
+					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
+						var csvBlob = new Blob([data], {type: 'text/csv'});
+						$window.navigator.msSaveOrOpenBlob(csvBlob, 'Facturacion_empresas.csv');
+					} else {
+						var anchor = angular.element('<a/>');
+						anchor.css({display: 'none'}); // Make sure it's not visible
+						angular.element(document.body).append(anchor); // Attach to document
 
-					anchor.remove(); // Clean it up afterwards
+						anchor.attr({
+							href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+							target: '_blank',
+							download: 'Facturacion_empresas.csv'
+						})[0].click();
+
+						anchor.remove(); // Clean it up afterwards
+					}
 				} else {
 					dialogs.error('Reporte empresas', 'Se ha producido un error al descargar el reporte.');
 				}
