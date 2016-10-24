@@ -171,14 +171,12 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		};
 
 		$scope.filtrado = function(filtro, contenido){
-			$scope.cargando = true;
 			$scope.model.currentPage = 1;
 			$scope.model[filtro] = contenido;
 			if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			//$scope.cargaDatos($scope.actualRegistro);
 		};
 
 		$scope.filtrarOrden = function(filtro){
