@@ -1,8 +1,8 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory',  'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
-	function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, gatesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
+myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactory', 'invoiceFactory', 'priceFactory', 'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
+	function ($rootScope, CacheFactory, controlPanelFactory, invoiceFactory, priceFactory, gatesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
 
 		var factory = {};
 
@@ -162,7 +162,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 			var deferred = $q.defer();
 			$rootScope.listaTerminales.forEach(function(terminal){
 				if (terminal != loginService.getFiltro()){
-					vouchersFactory.getVouchersType(terminal, function (data) {
+					invoiceFactory.getVouchersType(terminal, function (data) {
 						if (data.status == 'OK') {
 							generalCache.put('vouchers' + terminal, data.data);
 							data.data.forEach(function (dato) {
@@ -171,7 +171,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 						}
 					});
 				} else {
-					vouchersFactory.getVouchersType(terminal, function (data) {
+					invoiceFactory.getVouchersType(terminal, function (data) {
 						if (data.status == 'OK') {
 							generalCache.put('vouchers' + terminal, data.data);
 							data.data.forEach(function (dato) {
@@ -207,7 +207,7 @@ myapp.factory('cacheFactory', ['$rootScope', 'CacheFactory', 'controlPanelFactor
 
 		factory.cargaEstados = function(){
 			var deferred = $q.defer();
-			statesFactory.getStatesType(function (data) {
+			invoiceFactory.getStatesType(function (data) {
 				if (data.status == 'OK') {
 					var estados = data.data;
 					estados.forEach(function (estado) {

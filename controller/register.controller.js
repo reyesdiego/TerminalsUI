@@ -3,7 +3,7 @@
  */
 
 
-myapp.controller('registerCtrl', ['$scope', 'dialogs', 'userFactory', '$state', function ($scope, dialogs, userFactory, $state) {
+myapp.controller('registerCtrl', ['$scope', 'dialogs', 'authFactory', '$state', function ($scope, dialogs, authFactory, $state) {
 
 	$scope.nombre = '';
 	$scope.apellido = '';
@@ -68,7 +68,7 @@ myapp.controller('registerCtrl', ['$scope', 'dialogs', 'userFactory', '$state', 
 			role: $scope.role,
 			terminal: $scope.terminal
 		};
-		userFactory.newUser(formData, function(data){
+		authFactory.newUser(formData, function(data){
 			if (data.status == 'OK'){
 				var dl;
 				if (data.emailDeliver){

@@ -3,8 +3,8 @@
  */
 
 
-myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', 'loginService', 'downloadFactory', 'dialogs', '$filter', '$window',
-	function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache, loginService, downloadFactory, dialogs, $filter, $window) {
+myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', 'loginService', 'downloadFactory', 'dialogs', '$filter',
+	function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache, loginService, downloadFactory, dialogs, $filter) {
 
 		$scope.tasaAgp = false;
 
@@ -512,31 +512,11 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				]
 			};
 			var nombreReporte = 'Reporte_tasas.pdf';
-			downloadFactory.convertToPdf(data, 'reporteRatesPdf', function(data, status){
-				if (status == 'OK'){
-					var file = new Blob([data], {type: 'application/pdf'});
+			downloadFactory.convertToPdf(data, 'reporteRatesPdf', nombreReporte).then(function(){
 
-					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-						$window.navigator.msSaveOrOpenBlob(file, nombreReporte);
-					} else {
-						var fileURL = URL.createObjectURL(file);
-
-						var anchor = angular.element('<a/>');
-						anchor.css({display: 'none'}); // Make sure it's not visible
-						angular.element(document.body).append(anchor); // Attach to document
-
-						anchor.attr({
-							href: fileURL,
-							target: '_blank',
-							download: nombreReporte
-						})[0].click();
-
-						anchor.remove(); // Clean it up afterwards
-					}
-				} else {
-					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
-				}
-			})
+			}, function(){
+				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
+			});
 		};
 
 		if (loginService.getStatus()) $scope.cargaRates();

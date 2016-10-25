@@ -2,8 +2,8 @@
  * Created by artiom on 17/12/14.
  */
 
-myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'HTTPCanceler', 'APP_CONFIG',
-	function($http, loginService, formatService, $q, HTTPCanceler, APP_CONFIG){
+myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'HTTPCanceler', 'APP_CONFIG', 'downloadService',
+	function($http, loginService, formatService, $q, HTTPCanceler, APP_CONFIG, downloadService){
 
 		var factory = {};
 		var namespace = 'afip';
@@ -128,12 +128,13 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 				.then(function(response) {
 					var contentType = response.headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){
-						callback(response.data, 'OK');
+						downloadService.setDownloadCsv('ReporteAFIP.csv', response.data);
+						callback('OK');
 					} else {
-						callback(response.data, 'ERROR');
+						callback('ERROR');
 					}
 				}, function(response){
-					callback(response.data, 'ERROR');
+					callback('ERROR');
 				});
 		};
 

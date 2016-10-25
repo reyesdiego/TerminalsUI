@@ -1,7 +1,7 @@
 /**
  * Created by artiom on 24/06/15.
  */
-myapp.controller('validarUsuarioCtrl', ['$rootScope', '$scope', 'userFactory', 'dialogs', '$state', function($rootScope, $scope, userFactory, dialogs, $state) {
+myapp.controller('validarUsuarioCtrl', ['$rootScope', '$scope', 'authFactory', 'dialogs', '$state', function($rootScope, $scope, authFactory, dialogs, $state) {
 
 	$scope.datos = {
 		salt: $rootScope.salt
@@ -11,7 +11,7 @@ myapp.controller('validarUsuarioCtrl', ['$rootScope', '$scope', 'userFactory', '
 
 	$scope.validar = function(){
 		$scope.cargando = true;
-		userFactory.validateUser($scope.datos, function(data){
+		authFactory.validateUser($scope.datos, function(data){
 			$scope.cargando = false;
 			if (data.status == 'OK'){
 				var dl;

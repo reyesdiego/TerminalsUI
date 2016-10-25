@@ -2,21 +2,22 @@
  * Created by Artiom on 17/06/14.
  */
 
-myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', 'APP_CONFIG', function($http, dialogs, formatService, loginService, APP_CONFIG){
+myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', 'APP_CONFIG', 'downloadService', function($http, dialogs, formatService, loginService, APP_CONFIG, downloadService){
 	var factory = {};
 
-	factory.getTerminalesCSV = function(datos, callback) {
+	factory.getTerminalesCSV = function(datos, reportName, callback) {
 		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/byRates';
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 				.then(function(response){
 					var contentType = response.headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){
-						callback(response.data, 'OK');
+						downloadService.setDownloadCsv(reportName, response.data);
+						callback('OK');
 					} else {
-						callback(response.data, 'ERROR');
+						callback('ERROR');
 					}
 				}, function(response){
-					callback(response.data, 'ERROR');
+					callback('ERROR');
 				});
 	};
 

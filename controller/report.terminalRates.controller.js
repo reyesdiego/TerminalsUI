@@ -82,28 +82,10 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
         param.output = 'csv';
         nombreReporte += '.csv';
 
-        reportsFactory.getTerminalesCSV(param, function(data, status){
+        reportsFactory.getTerminalesCSV(param, nombreReporte, function(status){
             $scope.disableDown = false;
 
-            if (status == 'OK'){
-
-                if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-                    var csvBlob = new Blob([data], {type: 'text/csv'});
-                    $window.navigator.msSaveOrOpenBlob(csvBlob, nombreReporte);
-                } else {
-                    var anchor = angular.element('<a/>');
-                    anchor.css({display: 'none'}); // Make sure it's not visible
-                    angular.element(document.body).append(anchor); // Attach to document
-
-                    anchor.attr({
-                        href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-                        target: '_blank',
-                        download: nombreReporte
-                    })[0].click();
-
-                    anchor.remove(); // Clean it up afterwards
-                }
-            } else {
+            if (status != 'OK'){
                 dialogs.error('Reportes', 'Se ha producido un error al descargar los datos.');
             }
         })

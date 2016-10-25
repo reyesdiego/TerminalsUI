@@ -182,32 +182,11 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				]
 			};
 			var nombreReporte = 'Reporte_empresas.pdf';
-			downloadFactory.convertToPdf(data, 'reporteEmpresasPdf', function(data, status){
-				if (status == 'OK'){
-					var file = new Blob([data], {type: 'application/pdf'});
+			downloadFactory.convertToPdf(data, 'reporteEmpresasPdf', nombreReporte).then(function(){
 
-					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-						$window.navigator.msSaveOrOpenBlob(file, nombreReporte);
-					} else {
-						var fileURL = URL.createObjectURL(file);
-
-						var anchor = angular.element('<a/>');
-						anchor.css({display: 'none'}); // Make sure it's not visible
-						angular.element(document.body).append(anchor); // Attach to document
-
-						anchor.attr({
-							href: fileURL,
-							target: '_blank',
-							download: nombreReporte
-						})[0].click();
-
-						anchor.remove(); // Clean it up afterwards
-					}
-
-				} else {
-					dialogs.error('Reporte empresas', 'Se ha producido un error al exportar el reporte a PDF');
-				}
-			})
+			}, function(){
+				dialogs.error('Reporte empresas', 'Se ha producido un error al exportar el reporte a PDF');
+			});
 		};
 
 		$scope.descargarCsv = function(all){
@@ -217,26 +196,8 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				alterModel.clientes = [];
 				alterModel.top = '';
 			}
-			controlPanelFactory.getFacturacionEmpresasCSV(alterModel, function(data, status){
-				if (status == 'OK'){
-
-					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-						var csvBlob = new Blob([data], {type: 'text/csv'});
-						$window.navigator.msSaveOrOpenBlob(csvBlob, 'Facturacion_empresas.csv');
-					} else {
-						var anchor = angular.element('<a/>');
-						anchor.css({display: 'none'}); // Make sure it's not visible
-						angular.element(document.body).append(anchor); // Attach to document
-
-						anchor.attr({
-							href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-							target: '_blank',
-							download: 'Facturacion_empresas.csv'
-						})[0].click();
-
-						anchor.remove(); // Clean it up afterwards
-					}
-				} else {
+			controlPanelFactory.getFacturacionEmpresasCSV(alterModel, function(status){
+				if (status != 'OK'){
 					dialogs.error('Reporte empresas', 'Se ha producido un error al descargar el reporte.');
 				}
 			})

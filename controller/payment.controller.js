@@ -275,27 +275,8 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.descargarCSV = function(){
 			var alterModel = angular.copy($scope.sinLiquidar.model);
 			if ($scope.sinLiquidar.byContainer) alterModel.byContainer = true;
-			liquidacionesFactory.getNotPayedCsv(alterModel, function(data, status){
-				if (status == 'OK'){
-
-					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-						var csvBlob = new Blob([data], {type: 'text/csv'});
-						$window.navigator.msSaveOrOpenBlob(csvBlob, 'SinLiquidar.csv');
-					} else {
-						var anchor = angular.element('<a/>');
-						anchor.css({display: 'none'}); // Make sure it's not visible
-						angular.element(document.body).append(anchor); // Attach to document
-
-						anchor.attr({
-							href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-							target: '_blank',
-							download: 'SinLiquidar.csv'
-						})[0].click();
-
-						anchor.remove(); // Clean it up afterwards
-					}
-
-				} else {
+			liquidacionesFactory.getNotPayedCsv(alterModel, function(status){
+				if (status != 'OK'){
 					dialogs.error('Liquidaciones', 'Se ha producido un error al descargar el listado de comprobantes sin liquidar.');
 				}
 			})
@@ -313,13 +294,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.cargarPreLiquidaciones();
 			$scope.cargarLiquidaciones();
 		});
-
-		/*$scope.$on('cambioTerminal', function(){
-			$scope.sinLiquidar.verDetalle = false;
-			$scope.preLiquidacion.verDetalle = false;
-			$scope.liquidacion.verDetalle = false;
-			$scope.recargar();
-		});*/
 
 		$scope.recargar = function(){
 			$scope.preLiquidacion.verDetalle = false;

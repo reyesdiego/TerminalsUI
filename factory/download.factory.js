@@ -2,10 +2,11 @@
  * Created by artiom on 24/06/15.
  */
 
-myapp.factory('downloadFactory', ['$http', '$filter', function($http){
+myapp.factory('downloadFactory', ['$http', '$q', 'downloadService', function($http, $q, downloadService){
 	var factory = {};
 
-	factory.convertToPdf = function(data, route, callback){
+	factory.convertToPdf = function(data, route, reportName){
+		var deferred = $q.defer();
 		$http({
 			method: 'POST',
 			url: 'conversorPDF/' + route + '.php',
@@ -14,13 +15,15 @@ myapp.factory('downloadFactory', ['$http', '$filter', function($http){
 		}).then(function(response) {
 			var contentType = response.headers('Content-Type');
 			if (contentType.indexOf('application/pdf') >= 0){
-				callback(response.data, 'OK');
+				downloadService.setDownloadPdf(reportName, response.data);
+				deferred.resolve();
 			} else {
-				callback(response.data, 'ERROR');
+				deferred.reject();
 			}
 		}, function(response){
-			callback(response.data, 'ERROR')
+			deferred.reject();
 		});
+		return deferred.promise;
 	};
 
 	return factory;

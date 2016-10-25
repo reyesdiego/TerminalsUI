@@ -2,7 +2,7 @@
  * Created by Artiom on 11/03/14.
  */
 
-myapp.controller('changePassCtrl', ['$scope', 'userFactory', 'dialogs', '$state', function($scope, userFactory, dialogs, $state) {
+myapp.controller('changePassCtrl', ['$scope', 'authFactory', 'dialogs', '$state', function($scope, authFactory, dialogs, $state) {
 	'use strict';
 
 	$scope.changePass = function(){
@@ -19,7 +19,7 @@ myapp.controller('changePassCtrl', ['$scope', 'userFactory', 'dialogs', '$state'
 			"confirmPass": $scope.confirmPass
 		};
 
-		userFactory.cambiarContraseña(formData, function(data){
+		authFactory.cambiarContraseña(formData, function(data){
 			if (data.status === 'OK'){
 				$scope.codStatus = data.data;
 				var dl = dialogs.notify('Cambio de contraseña', $scope.codStatus);

@@ -343,26 +343,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 		$scope.descargarCSV = function(){
 			$scope.disableDown = true;
-			afipFactory.getCSV($scope.actualRegistro, $scope.model, function(data, status){
-				if (status == 'OK'){
-
-					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-						var csvBlob = new Blob([data], {type: 'text/csv'});
-						$window.navigator.msSaveOrOpenBlob(csvBlob, 'ReporteAFIP.csv');
-					} else {
-						var anchor = angular.element('<a/>');
-						anchor.css({display: 'none'}); // Make sure it's not visible
-						angular.element(document.body).append(anchor); // Attach to document
-
-						anchor.attr({
-							href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-							target: '_blank',
-							download: 'ReporteAFIP.csv'
-						})[0].click();
-
-						anchor.remove(); // Clean it up afterwards
-					}
-				} else {
+			afipFactory.getCSV($scope.actualRegistro, $scope.model, function(status){
+				if (status != 'OK'){
 					dialogs.error('AFIP', 'Se ha producio un error al exportar los datos a CSV.');
 				}
 				$scope.disableDown = false;

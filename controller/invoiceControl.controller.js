@@ -299,34 +299,12 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 				hasta: fechaFin,
 				hoy: new Date()
 			};
-			downloadFactory.convertToPdf(data, 'correlativeResultPdf', function(data, status){
-				if (status == 'OK'){
+			var nombreReporte = $scope.tipoComprob.abrev + '_faltantes_' + loginService.getFiltro() + '.pdf';
+			downloadFactory.convertToPdf(data, 'correlativeResultPdf', nombreReporte).then(function(){
 
-					var nombreReporte = $scope.tipoComprob.abrev + '_faltantes_' + loginService.getFiltro() + '.pdf';
-					var file = new Blob([data], {type: 'application/pdf'});
-
-					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-						$window.navigator.msSaveOrOpenBlob(file, nombreReporte);
-					} else {
-						var fileURL = URL.createObjectURL(file);
-
-						var anchor = angular.element('<a/>');
-						anchor.css({display: 'none'}); // Make sure it's not visible
-						angular.element(document.body).append(anchor); // Attach to document
-
-						anchor.attr({
-							href: fileURL,
-							target: '_blank',
-							download: nombreReporte
-						})[0].click();
-
-						anchor.remove(); // Clean it up afterwards
-					}
-
-				} else {
-					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
-				}
-			})
+			}, function(){
+				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
+			});
 		};
 
 		var controlCorrelatividad = function(){
@@ -715,20 +693,8 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 		$scope.descargarCSV = function(){
 			$scope.disableDown = true;
-			invoiceFactory.getCSV($scope.model, function(data, status){
-				if (status == 'OK'){
-					var anchor = angular.element('<a/>');
-					anchor.css({display: 'none'}); // Make sure it's not visible
-					angular.element(document.body).append(anchor); // Attach to document
-
-					anchor.attr({
-						href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-						target: '_blank',
-						download: 'Comprobantes_erroneos.csv'
-					})[0].click();
-
-					anchor.remove(); // Clean it up afterwards
-				} else {
+			invoiceFactory.getCSV($scope.model, 'Comprobantes_erroneos.csv', function(status){
+				if (status != 'OK'){
 					dialogs.error('Comprobantes', 'Se ha producido un error al exportar los datos a CSV.');
 				}
 				$scope.disableDown = false;

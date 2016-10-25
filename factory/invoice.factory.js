@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 17/08/2016.
  */
-myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'loginService', 'formatService', 'APP_CONFIG', function(Invoice, $http, $q, HTTPCanceler, loginService, formatService, APP_CONFIG){
+myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'loginService', 'formatService', 'APP_CONFIG', 'downloadService', function(Invoice, $http, $q, HTTPCanceler, loginService, formatService, APP_CONFIG, downloadService){
     var invoiceFactory = {
         namespace: 'invoices',
         retrieveInvoices: function(invoicesData){
@@ -161,18 +161,19 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                     if (response.status != -5) callback(response.data)
                 });
         },
-        getCSV: function(datos, callback){
+        getCSV: function(datos, reportName, callback){
             var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/down';
             $http.get(inserturl, { params: formatService.formatearDatos(datos)})
                 .then(function(response) {
                     var contentType = response.headers('Content-Type');
                     if (contentType.indexOf('text/csv') >= 0){
-                        callback(response.data, 'OK');
+                        downloadService.setDownloadCsv(reportName, response.data);
+                        callback('OK');
                     } else {
-                        callback(response.data, 'ERROR');
+                        callback('ERROR');
                     }
                 }, function(response){
-                    callback(response.data, 'ERROR');
+                    callback('ERROR');
                 });
         },
         //Se pasa la terminal al ser de caché
@@ -183,6 +184,24 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                     callback(response.data);
                 }, function(response) {
                     if (response.data == null) response.data = {status: 'ERROR'};
+                    callback(response.data);
+                });
+        },
+        getVouchersType: function(terminal, callback){
+            var inserturl = APP_CONFIG.SERVER_URL + '/voucherTypes/' + terminal;
+            $http.get(inserturl)
+                .then(function (response){
+                    callback(response.data);
+                }, function(response){
+                    callback(response.data);
+                });
+        },
+        getStatesType: function(callback){
+            var inserturl = APP_CONFIG.SERVER_URL + '/states';
+            $http.get(inserturl)
+                .then(function (response){
+                    callback(response.data);
+                }, function(response){
                     callback(response.data);
                 });
         },

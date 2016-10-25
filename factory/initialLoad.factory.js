@@ -4,8 +4,8 @@
 /**
  * Created by leo on 12/03/15.
  */
-myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory',  'containerFactory', 'invoiceFactory', 'vouchersFactory', 'priceFactory', 'statesFactory',  'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
-    function (CacheFactory, controlPanelFactory, containerFactory, invoiceFactory, vouchersFactory, priceFactory, statesFactory, gatesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
+myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory',  'containerFactory', 'invoiceFactory', 'priceFactory', 'gatesFactory', 'contenedoresCache', 'generalCache', 'vouchersArrayCache', 'unitTypesArrayCache', 'estadosArrayCache', 'afipFactory', 'afipCache', '$q', 'loginService',
+    function (CacheFactory, controlPanelFactory, containerFactory, invoiceFactory, priceFactory, gatesFactory, contenedoresCache, generalCache, vouchersArrayCache, unitTypesArrayCache, estadosArrayCache, afipFactory, afipCache, $q, loginService) {
 
         //Se encarga de asegurarse de que antes de cargar cada vista, esta tenga los datos necesarios para funcionar, si no están hace las llamadas y los guarda en caché
         //No devuelve datos.
@@ -120,7 +120,7 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory',  'co
                 deferred.resolve();
             } else {
                 //console.log('no hay vouchers');
-                vouchersFactory.getVouchersType(loginService.getFiltro(), function (data) {
+                invoiceFactory.getVouchersType(loginService.getFiltro(), function (data) {
                     if (data.status == 'OK') {
                         //console.log('cargamos vouchers');
                         generalCache.put('vouchers' + loginService.getFiltro(), data.data);
@@ -172,7 +172,7 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory',  'co
                 deferred.resolve();
             } else {
                 //console.log('no hay estados');
-                statesFactory.getStatesType(function (data) {
+                invoiceFactory.getStatesType(function (data) {
                     if (data.status == 'OK') {
                         //console.log('cargamos estados');
                         var estados = data.data;

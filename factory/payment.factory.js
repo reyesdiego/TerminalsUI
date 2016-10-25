@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'generalCache', 'APP_CONFIG', 'Payment',
-	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache, APP_CONFIG, Payment){
+myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'generalCache', 'APP_CONFIG', 'Payment', 'downloadService',
+	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache, APP_CONFIG, Payment, downloadService){
 
 		var liquidacionesFactory = {
 			namespace: 'liquidaciones',
@@ -20,12 +20,13 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 						.then(function(response){
 							var contentType = response.headers('Content-Type');
 							if (contentType.indexOf('text/csv') >= 0){
-								callback(response.data, 'OK');
+								downloadService.setDownloadCsv('SinLiquidar.csv', response.data);
+								callback('OK');
 							} else {
-								callback(response.data, 'ERROR');
+								callback('ERROR');
 							}
 						}, function(response){
-							callback(response.data, 'ERROR');
+							callback('ERROR');
 						});
 			},
 			getPriceDollar: function(callback){

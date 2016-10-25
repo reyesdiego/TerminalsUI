@@ -340,26 +340,8 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 				output: 'csv'
 			};
 
-			priceFactory.getMatchPricesCSV(alterModel, loginService.getFiltro(), function(data, status){
-				if (status == 'OK'){
-
-					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-						var csvBlob = new Blob([data], {type: 'text/csv'});
-						$window.navigator.msSaveOrOpenBlob(csvBlob, 'Asociacion_tarifario.csv');
-					} else {
-						var anchor = angular.element('<a/>');
-						anchor.css({display: 'none'}); // Make sure it's not visible
-						angular.element(document.body).append(anchor); // Attach to document
-
-						anchor.attr({
-							href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
-							target: '_blank',
-							download: 'Asociacion_tarifario.csv'
-						})[0].click();
-
-						anchor.remove(); // Clean it up afterwards
-					}
-				} else {
+			priceFactory.getMatchPricesCSV(alterModel, loginService.getFiltro(), function(status){
+				if (status != 'OK'){
 					dialogs.error('Asociar', 'Se ha producido un error al descargar los datos.');
 				}
 			})

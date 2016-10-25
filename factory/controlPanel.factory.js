@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 3/19/14.
  */
 
-myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 'errorFactory', 'generalCache', '$q', 'HTTPCanceler', 'APP_CONFIG',
-	function($http, formatService, loginService, errorFactory, generalCache, $q, HTTPCanceler, APP_CONFIG){
+myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 'errorFactory', 'generalCache', '$q', 'HTTPCanceler', 'APP_CONFIG', 'downloadService',
+	function($http, formatService, loginService, errorFactory, generalCache, $q, HTTPCanceler, APP_CONFIG, downloadService){
 		var factory = {};
 		var namespace = 'control';
 
@@ -207,12 +207,13 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 				.then(function(response){
 					var contentType = response.headers('Content-Type');
 					if (contentType.indexOf('text/csv') >= 0){
-						callback(response.data, 'OK');
+						downloadService.setDownloadCsv('Facturacion_empresas.csv', response.data);
+						callback('OK');
 					} else {
-						callback(response.data, 'ERROR');
+						callback('ERROR');
 					}
 				}, function(response){
-					callback(response.data, 'ERROR');
+					callback('ERROR');
 				});
 		};
 

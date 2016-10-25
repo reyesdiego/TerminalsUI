@@ -391,32 +391,10 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             imprimirComprobante.detalle.forEach(function(detalle){
                 detalle.buque.fecha = $filter('date')(detalle.buque.fecha, 'dd/MM/yyyy', 'UTC');
             });
-            downloadFactory.convertToPdf(imprimirComprobante, 'invoiceToPdf', function(data, status){
-                if (status == 'OK'){
-                    var file = new Blob([data], {type: 'application/pdf'});
-
-                    if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-                        $window.navigator.msSaveOrOpenBlob(file, nombreReporte);
-                    } else {
-                        var fileURL = URL.createObjectURL(file);
-
-                        var anchor = angular.element('<a/>');
-                        anchor.css({display: 'none'}); // Make sure it's not visible
-                        angular.element(document.body).append(anchor); // Attach to document
-
-                        anchor.attr({
-                            href: fileURL,
-                            target: '_blank',
-                            download: nombreReporte
-                        })[0].click();
-
-                        anchor.remove(); // Clean it up afterwards
-                    }
-
-                    deferred.resolve();
-                } else {
-                    deferred.reject();
-                }
+            downloadFactory.convertToPdf(imprimirComprobante, 'invoiceToPdf', nombreReporte).then(function(){
+                deferred.resolve();
+            }, function(){
+                deferred.reject();
             });
             return deferred.promise;
         }

@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price', 'APP_CONFIG', function($http, loginService, formatService, Price, APP_CONFIG){
+myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price', 'APP_CONFIG', 'downloadService', function($http, loginService, formatService, Price, APP_CONFIG, downloadService){
 	var priceFactory = {
 		retrievePrice: function(priceData){
 			var pricesArray = [];
@@ -49,12 +49,13 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 					.then(function(response){
 						var contentType = response.headers('Content-Type');
 						if (contentType.indexOf('text/csv') >= 0){
-							callback(response.data, 'OK');
+							downloadService.setDownloadCsv('Asociacion_tarifario.csv', response.data);
+							callback('OK');
 						} else {
-							callback(response.data, 'ERROR');
+							callback('ERROR');
 						}
 					}, function(response){
-						callback(response.data, 'ERROR');
+						callback('ERROR');
 					});
 		},
 		//Se pasa la terminal al ser un método de caché

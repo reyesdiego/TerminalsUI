@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache', 'generalFunctions', '$filter', '$window',
-	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions, $filter, $window) {
+myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache', 'generalFunctions', '$filter', 'downloadService',
+	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions, $filter, downloadService) {
 
 		'use strict';
 		//Array con los tipos de tarifas para establecer filtros
@@ -143,38 +143,27 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 				pricelist: $scope.filteredPrices
 			};
 			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.pdf';
-			downloadFactory.convertToPdf(data, 'pricelistToPdf', function(data, status){
+			downloadFactory.convertToPdf(data, 'pricelistToPdf', nombreReporte).then(function(){
 				$scope.procesando = false;
-				if (status == 'OK'){
-					var file = new Blob([data], {type: 'application/pdf'});
-
-					if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-						$window.navigator.msSaveOrOpenBlob(file, nombreReporte);
-					} else {
-						var fileURL = URL.createObjectURL(file);
-
-						var anchor = angular.element('<a/>');
-						anchor.css({display: 'none'}); // Make sure it's not visible
-						angular.element(document.body).append(anchor); // Attach to document
-
-						anchor.attr({
-							href: fileURL,
-							target: '_blank',
-							download: nombreReporte
-						})[0].click();
-
-						anchor.remove(); // Clean it up afterwards
-					}
-				} else {
-					dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
-				}
-			})
+			}, function(){
+				$scope.procesando = false;
+				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
+			});
 		};
 
 		$scope.exportarAExcel = function(){
 			$scope.procesando = true;
 			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.csv';
 
+			var csvContent = armarCsv();
+
+			downloadService.setDownloadCsv(nombreReporte, csvContent);
+
+			$scope.procesando = false;
+
+		};
+
+		function armarCsv (){
 			var csvContent = "Código|Descripción|Unidad|Tope";
 
 			$scope.pricelist.forEach(function(price){
@@ -182,38 +171,13 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 				csvContent += price.code + "|" + price.description + "|" + price.unit + "|" + price.topPrices[0].price;
 			});
 
-			if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-				var csvBlob = new Blob([csvContent], {type: 'text/csv'});
-				$window.navigator.msSaveOrOpenBlob(csvBlob, nombreReporte);
-			} else {
-				csvContent = "data:text/csv;charset=utf-8," + csvContent;
-				var encodedUri = encodeURI(csvContent);
-
-				var anchor = angular.element('<a/>');
-				anchor.css({display: 'none'}); // Make sure it's not visible
-				angular.element(document.body).append(anchor); // Attach to document
-
-				anchor.attr({
-					href: encodedUri,
-					target: '_blank',
-					download: nombreReporte
-				})[0].click();
-
-				anchor.remove(); // Clean it up afterwards
-			}
-
-			$scope.procesando = false;
-
-		};
+			return csvContent;
+		}
 
 		if (loginService.getStatus()) $scope.cargaPricelist();
 
 		$scope.$on('terminoLogin', function(){
 			$scope.cargaPricelist();
 		});
-
-		/*$scope.$on('cambioTerminal', function(){
-			$scope.cargaPricelist();
-		});*/
 
 	}]);
