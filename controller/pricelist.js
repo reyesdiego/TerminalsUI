@@ -80,7 +80,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 
 		$scope.actualizarPricelist = function(){
 			$scope.pricelistAgp = [];
-			priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function(data){
+			priceFactory.getMatchPrices(loginService.getFiltro(), $scope.tasas, function(data){
 				if (data.status == 'OK'){
 					$scope.hayError = false;
 					$scope.pricelist = data.data;
@@ -107,8 +107,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			$scope.pricelistTerminal = [];
 			$scope.servicios = [];
 			$scope.listaElegida = [];
-			//priceFactory.getPrice(loginService.getFiltro(), $scope.tasas, function (data) {
-			priceFactory.getMatchPrices({onlyRates: $scope.tasas}, loginService.getFiltro(), function(data){
+			priceFactory.getMatchPrices(loginService.getFiltro(), $scope.tasas, function(data){
 				if (data.status == 'OK'){
 					$scope.hayError = false;
 					$scope.pricelist = data.data;
@@ -136,12 +135,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 				}
 			});
 		};
-
-
-		/*$scope.showDetail = function(index){
-			var realIndex = ($scope.currentPage - 1) * $scope.itemsPerPage + index;
-			$scope.filteredPrices[realIndex].SHOW = !$scope.filteredPrices[realIndex].SHOW;
-		};*/
 
 		$scope.exportarAPdf = function(){
 			$scope.procesando = true;

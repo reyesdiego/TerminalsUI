@@ -19,11 +19,11 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 						callback(response.data, true);
 					});
 		},
-		getPrice: function(terminal, datos, callback) {
+		getPrice: function(terminal, tasas, callback) {
 			var inserturl = APP_CONFIG.SERVER_URL + '/prices/' + terminal;
-			if (datos){ inserturl = inserturl + '?onlyRates=true' }
+			var param = { onlyRates: tasas };
 			var factory = this;
-			$http.get(inserturl)
+			$http.get(inserturl, { params: formatService.formatearDatos(param) })
 					.then(function (response){
 						response.data.data = factory.retrievePrice(response.data.data);
 						callback(response.data);
@@ -31,10 +31,11 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 						callback(response.data);
 					});
 		},
-		getMatchPrices: function(datos, terminal, callback) {
+		getMatchPrices: function(terminal, tasas, callback) {
 			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/' + terminal;
+			var param = { onlyRates: tasas };
 			var factory = this;
-			$http.get(inserturl, { params: formatService.formatearDatos(datos) })
+			$http.get(inserturl, { params: formatService.formatearDatos(param) })
 					.then(function (response){
 						response.data.data = factory.retrievePrice(response.data.data);
 						callback(response.data);

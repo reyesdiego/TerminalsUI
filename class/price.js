@@ -61,8 +61,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             } else {
                 this.matches = [{
                     terminal: loginService.getInfo().terminal,
-                    match: [this.code], //TODO: guarda con esto
-                    //match: [],
+                    match: [],
                     _idPrice: this._id,
                     code: this.code
                 }];
