@@ -1,4 +1,4 @@
-<div class="container col-lg-offset-1 col-lg-10 col-md-12">
+<div class="container col-lg-12">
     <br>
     <accordion-min heading="Buscar por">
         <div class="col-lg-3 col-sm-6">
@@ -65,8 +65,8 @@
             </div>
         </div>
         <br>
-        <div class="table-responsive invoice-shadow">
-            <table class="table table-bordered table-striped table-hover">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover invoice-shadow">
                 <thead>
                 <tr>
                     <th class="col-lg-1 text-center">
@@ -84,7 +84,7 @@
                 <tr ng-repeat="tarifa in dataReporte | filter:search">
                     <td class="text-center">{{ tarifa.code }}</td>
                     <td>{{ tarifa.descripcion }}</td>
-                    <td class="text-right">U$S {{ tarifa.total | currency }}</td>
+                    <td class="text-right">{{ tarifa.total | currency: 'U$S ' }}</td>
                 </tr>
                 </tbody>
             </table>

@@ -104,17 +104,17 @@
                         <td>{{ tasa.code }}</td>
                         <td style="width: 200px">{{ tasa.descripcion }}</td>
                         <td class="text-right">{{ tasa.ton | number: 2 }}</td>
-                        <td class="text-right" ng-hide="tasaAgp">U$S {{ tasa.total | currency }}</td>
-                        <td class="text-right" ng-show="tasaAgp">U$S {{ tasa.totalAgp | currency }}</td>
-                        <td class="text-right" ng-hide="tasaAgp">$ {{ tasa.totalPeso | currency }}</td>
-                        <td class="text-right" ng-show="tasaAgp">$ {{ tasa.totalPesoAgp | currency }}</td>
+                        <td class="text-right" ng-hide="tasaAgp">{{ tasa.total | currency: 'U$S ' }}</td>
+                        <td class="text-right" ng-show="tasaAgp">{{ tasa.totalAgp | currency: 'U$S ' }}</td>
+                        <td class="text-right" ng-hide="tasaAgp">{{ tasa.totalPeso | currency: 'AR$ ' }}</td>
+                        <td class="text-right" ng-show="tasaAgp">{{ tasa.totalPesoAgp | currency: 'AR$ ' }}</td>
                     </tr>
                     <tr>
                         <td colspan="4" class="text-right"><strong>Total</strong></td>
-                        <td class="text-right" ng-hide="tasaAgp">U$S {{ total | currency }}</td>
-                        <td class="text-right" ng-show="tasaAgp">U$S {{ totalAgp | currency }}</td>
-                        <td class="text-right" ng-hide="tasaAgp">$ {{ totalPeso | currency }}</td>
-                        <td class="text-right" ng-show="tasaAgp">$ {{ totalPesoAgp | currency }}</td>
+                        <td class="text-right" ng-hide="tasaAgp">{{ total | currency: 'U$S ' }}</td>
+                        <td class="text-right" ng-show="tasaAgp">{{ totalAgp | currency: 'U$S ' }}</td>
+                        <td class="text-right" ng-hide="tasaAgp">{{ totalPeso | currency: 'AR$ ' }}</td>
+                        <td class="text-right" ng-show="tasaAgp">{{ totalPesoAgp | currency: 'AR$ ' }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -139,7 +139,7 @@
                     <tbody>
                     <tr>
                         <td class="text-right"><strong>Total</strong></td>
-                        <td ng-repeat="total in chartTotalesPorTerminal.data" class="text-right">$ {{ total[1] | currency }}</td>
+                        <td ng-repeat="total in chartTotalesPorTerminal.data" class="text-right">{{ total[1] | currency: 'AR$ ' }}</td>
                     </tr>
                     </tbody>
                 </table>

@@ -214,16 +214,16 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 					}
 				}
 			});
-			$scope.chartDetallePorTerminalPeriodo.title = 'Total de ' + $scope.detallarTerminal + ' para el período graficado:\n$ ' + $filter('currency')(totalDetallePeriodo);
+			$scope.chartDetallePorTerminalPeriodo.title = 'Total de ' + $scope.detallarTerminal + ' para el período graficado:\n' + $filter('currency')(totalDetallePeriodo, '$ ' );
 			switch ($scope.modelDetalle.tipo){
 				case 'date':
-					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para el día ' + $scope.detallarFecha + ':\n$ ' + $filter('currency')(totalDetalleFecha);
+					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para el día ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
 					break;
 				case 'month':
-					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para ' + $scope.detallarFecha + ':\n$ ' + $filter('currency')(totalDetalleFecha);
+					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
 					break;
 				case 'year':
-					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para el año ' + $scope.detallarFecha + ':\n$ ' + $filter('currency')(totalDetalleFecha);
+					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para el año ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
 					break;
 			}
 			$scope.verDetalleTerminal = true;
