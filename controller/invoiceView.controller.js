@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 30/03/15.
  */
-myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceFactory',
-	function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceFactory){
+myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceFactory', 'Invoice',
+	function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceFactory, Invoice){
 		$scope.inTrackContainer = $rootScope.inTrackContainer;
 
 		$scope.status = {
@@ -41,7 +41,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		});
 
 		$scope.$on('mostrarComprobante', function(event, comprobante){
-			$scope.mostrarDetalle(comprobante);
+			var invoice = new Invoice(comprobante);
+			$scope.mostrarDetalle(invoice);
 		});
 
 		$scope.$on('iniciarBusqueda', function(event, model){
