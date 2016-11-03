@@ -31,21 +31,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             this.tarifaAgp = false;
             this.servicio = false;
 
-            //********* El server todavia no está actualizado en produccion *********************
-            if (!angular.isDefined(this.topPrices[0].price || this.topPrices[0].price == null)){
-                this.orderPrice = 0;
-            } else {
-                this.orderPrice = this.topPrices[0].price;
-                this.orderCurrency = this.topPrices[0].currency;
-            }
-            this.nuevoTopPrice = {
-                currency: this.topPrices[0].currency,
-                price: this.orderPrice,
-                from: new Date()
-            };
-            //********** Esto se va cuando lo actualicen y queda lo de abajo ***********************
-
-            /*if (!angular.isDefined(this.price || this.price == null)){
+            if (!angular.isDefined(this.price || this.price == null)){
                 this.orderPrice = 0;
             } else {
                 this.orderPrice = this.price;
@@ -55,7 +41,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                 currency: this.currency,
                 price: this.orderPrice,
                 from: new Date()
-            };*/
+            };
             if (this.tieneMatch()){
                 this.matches[0]._idPrice = this._id;
             } else {
@@ -186,8 +172,8 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
         saveMatchPrices: function(){
             var deferred = $q.defer();
             var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/matchprice';
-            //$http.post(inserturl, this.matches[0]) -------------- proxima actualizacion
-            $http.post(inserturl, this.matches)
+            $http.post(inserturl, this.matches[0])
+            //$http.post(inserturl, this.matches)
                 .then(function (response) {
                     deferred.resolve(response.data);
                 }, function(response) {
