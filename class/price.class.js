@@ -173,7 +173,6 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             var deferred = $q.defer();
             var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/matchprice';
             $http.post(inserturl, this.matches[0])
-            //$http.post(inserturl, this.matches)
                 .then(function (response) {
                     deferred.resolve(response.data);
                 }, function(response) {
