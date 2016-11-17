@@ -106,7 +106,8 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             this.matches[0].match = matches;
         },
         tieneMatch: function(){
-            return (angular.isDefined(this.matches) && this.matches != null && this.matches.length > 0 && this.matches[0].match.length > 0 && this.matches[0].match[0] != null);
+            return (angular.isDefined(this.matches) && this.matches != null && this.matches.length > 0
+                        && this.matches[0].match != null && this.matches[0].match.length > 0 && this.matches[0].match[0] != null);
         },
         saveChanges: function(){
             if (this._id){
