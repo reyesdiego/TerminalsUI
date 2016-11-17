@@ -55,15 +55,17 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             if (this.terminal == 'AGP'){
                 this.tarifaAgp = true;
             } else {
-                if (this.matches[0].match.length >= 1){
+                if (angular.isDefined(this.matches[0].match)  && this.matches[0].match != null && this.matches[0].match.length >= 1){
                     var tarifa = this;
                     var tarifaPropia = false;
-                    this.matches[0].match.forEach(function(unMatch){
+                    this.matches[0].match.forEach(unMatch => {
                         if (unMatch == tarifa.code){
                             tarifaPropia = true;
                         }
                     });
                     tarifaPropia ? this.tarifaTerminal = true : this.servicio = true;
+                } else {
+                    this.servicio = true;
                 }
             }
             if (angular.isDefined(this.unit) && this.unit != null && angular.isDefined(unitTypesArrayCache.get(this.unit))){
