@@ -159,6 +159,15 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             $http.put(inserturl, this)
                 .then(function(response) {
                     if (response.data.status == 'OK'){
+                        if (loginService.getType() == 'terminal'){
+                            var encontrado = false;
+                            scope.matches[0].match.forEach(function(match){
+                                encontrado = (match.text == scope.code);
+                            });
+                            if (!encontrado){
+                                scope.matches[0].match.push(scope.code)
+                            }
+                        }
                         scope.saveMatchPrices().then(function(response){
                             deferred.resolve(response);
                         }, function(error){
