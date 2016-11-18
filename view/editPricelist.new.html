@@ -27,10 +27,7 @@
                     <div class="form-group">
                         <label for="inputUnidad" class="col-lg-3 control-label"><span class="glyphicon"></span> Unidad</label>
                         <div class="input-group col-lg-8">
-                            <select class="form-control" id="inputUnidad" ng-model="newPrice.idUnit" ng-required="true" placeholder="Seleccione unidad de medida" ng-disabled="!enableEdition()">
-                                <option ng-repeat="unit in unidadesTarifas" value="{{ unit._id }}" ng-selected="unit._id == newPrice.idUnit">{{ unit.description }}</option>
-                            </select>
-                            <!--<input type="text" class="form-control" ng-model="newPrice.unit" id="trip" placeholder="" ng-required="true" toupper>-->
+                            <select class="form-control" id="inputUnidad" ng-model="newPrice.idUnit" ng-required="true" placeholder="Seleccione unidad de medida" ng-disabled="!enableEdition()" ng-options="unit._id as unit.description for unit in unidadesTarifas" ng-selected="unit._id == newPrice.idUnit"></select>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="eraseField('idUnit')" ng-disabled="!enableEdition()"><i class="glyphicon glyphicon-remove" ng-disabled="!enableEdition()"></i></button>
                         </span>
