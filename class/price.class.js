@@ -58,7 +58,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                 if (angular.isDefined(this.matches[0].match)  && this.matches[0].match != null && this.matches[0].match.length >= 1){
                     var tarifa = this;
                     var tarifaPropia = false;
-                    this.matches[0].match.forEach(unMatch => {
+                    this.matches[0].match.forEach(function(unMatch){
                         if (unMatch == tarifa.code){
                             tarifaPropia = true;
                         }
