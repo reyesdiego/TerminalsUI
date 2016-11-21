@@ -13,11 +13,11 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		//Variables para control de fechas
 		$scope.maxDateD = new Date();
 		$scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-		$scope.logoTerminal = $rootScope.logoTerminal;
+		$scope.logoTerminal = loginService.logoTerminal;
 
 		$scope.comprobantesVistos = [];
 
-		$scope.acceso = $rootScope.esUsuario;
+		$scope.acceso = loginService.getType();
 
 		// Puntos de Ventas
 		$scope.todosLosPuntosDeVentas = [];
@@ -198,8 +198,11 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		};
 
 		$scope.trackContainer = function(contenedor){
-			$window.localStorage.setItem('trackContainer', contenedor);
+			/*$window.localStorage.setItem('trackContainer', contenedor);
 			var url = $state.href('trackContainer');
+			$window.open(url,'_blank');*/
+
+			var url = $state.href('container', {container: contenedor});
 			$window.open(url,'_blank');
 		};
 
@@ -218,7 +221,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
 
 		$scope.$on('terminoLogin', function(){
-			$scope.acceso = $rootScope.esUsuario;
+			$scope.acceso = loginService.getType();
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
 				$scope.loadingState = true;
 				cargaTodosLosPuntosDeVentas();

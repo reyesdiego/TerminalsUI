@@ -2,8 +2,8 @@
  * Created by artiom on 08/04/15.
  */
 
-myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 'generalCache', '$state', 'loginService', 'Container',
-	function($rootScope, $scope, containerFactory, generalCache, $state, loginService, Container){
+myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 'generalCache', '$state', 'loginService', 'Container', '$stateParams',
+	function($rootScope, $scope, containerFactory, generalCache, $state, loginService, Container, $stateParams){
 		////// Para containers /////////////
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -386,5 +386,12 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			containerFactory.cancelRequest();
 			//Agregar las que falten
 		});
+
+		if ($stateParams.container){
+			console.log('esta el contenedor');
+			$scope.model.contenedor = $stateParams.container;
+			$scope.contenedorElegido = new Container({contenedor: $scope.model.contenedor});
+			$scope.filtrar();
+		}
 
 	}]);

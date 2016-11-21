@@ -339,7 +339,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			}
 		})
 		.state('container',{
-			url: "/contenedor",
+			url: "/contenedor?container",
+			params: {
+				container: null
+			},
 			templateUrl: "view/container.html",
 			controller: "buqueViajeCtrl",
 			resolve: {
