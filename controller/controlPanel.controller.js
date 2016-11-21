@@ -224,12 +224,16 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 				}
 				switch (datosDia.terminal){
 					case "BACTSSA":
+					case "BACTSSA_OLD":
 						contarTerminal = 1;
 						break;
 					case "TERMINAL4":
+					case "TERMINAL4_OLD":
 						contarTerminal = 2;
 						break;
 					case "TRP":
+					case "TRP_OLD":
+					case "TRP_X":
 						contarTerminal = 3;
 						break;
 				}
@@ -237,7 +241,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					fila[contarTerminal] = datosDia.total;
 					acum += datosDia.total;
 				} else {
-					fila[contarTerminal] = datosDia.cnt;
+					fila[contarTerminal] += datosDia.cnt;
 					acum += datosDia.cnt;
 				}
 			});
@@ -313,15 +317,15 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 				}
 			}
 			datosGrafico.forEach(function(datosDia){
-				switch (datosDia._id.terminal){
+				switch (datosDia.terminal){
 					case "BACTSSA":
-						matAux[datosDia._id.hour+1][1] = datosDia.cnt;
+						matAux[datosDia.hour+1][1] = datosDia.cnt;
 						break;
 					case "TERMINAL4":
-						matAux[datosDia._id.hour+1][2] = datosDia.cnt;
+						matAux[datosDia.hour+1][2] = datosDia.cnt;
 						break;
 					case "TRP":
-						matAux[datosDia._id.hour+1][3] = datosDia.cnt;
+						matAux[datosDia.hour+1][3] = datosDia.cnt;
 						break;
 				}
 			});
@@ -475,6 +479,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.traerDatosTurnos = function(){
+
 			$scope.isOpenTurnos = false;
 			$scope.cantTurnos.error = false;
 			$scope.cantTurnos.loading = true;
