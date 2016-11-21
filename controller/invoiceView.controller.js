@@ -3,7 +3,6 @@
  */
 myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceFactory', 'Invoice',
 	function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceFactory, Invoice){
-		$scope.inTrackContainer = $rootScope.inTrackContainer;
 
 		$scope.status = {
 			open: true
@@ -198,10 +197,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		};
 
 		$scope.trackContainer = function(contenedor){
-			/*$window.localStorage.setItem('trackContainer', contenedor);
-			var url = $state.href('trackContainer');
-			$window.open(url,'_blank');*/
-
 			var url = $state.href('container', {container: contenedor});
 			$window.open(url,'_blank');
 		};
@@ -231,12 +226,12 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		$scope.verPdf = function(){
 			$scope.disablePdf = true;
 			$scope.verDetalle.verPdf()
-				.then(function(){
-					$scope.disablePdf = false;
-				}, function(){
-					dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
-					$scope.disablePdf = false;
-				});
+					.then(function(){
+						$scope.disablePdf = false;
+					}, function(){
+						dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
+						$scope.disablePdf = false;
+					});
 		};
 
 		$scope.$on('logout', function(){
