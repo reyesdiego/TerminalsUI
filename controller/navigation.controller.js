@@ -17,14 +17,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		$scope.notificacionesMáximasPantalla = 4;
 		$scope.iniciarChequeo = true;
 
-		$rootScope.esUsuario = '';
-		$rootScope.terminal = '';
-		$scope.acceso = '';
-		$scope.grupo = '';
-		$rootScope.filtroTerminal = '';
-
 		$scope.dataTerminal = loginService;
-		//$scope.grupo = '';
 
 		$scope.cerrarMenu = function(){
 			if (!$scope.isCollapsed) $scope.isCollapsed = true;
@@ -48,7 +41,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 
 		$scope.setearTerminal = function(terminal){
 			if (loginService.getFiltro() != terminal){
-				//$rootScope.setEstiloTerminal(terminal);
 				loginService.setFiltro(terminal);
 				$state.reload();
 			}
