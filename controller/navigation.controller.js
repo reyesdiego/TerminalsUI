@@ -23,19 +23,43 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		$scope.grupo = '';
 		$rootScope.filtroTerminal = '';
 
+		$scope.dataTerminal = loginService;
+		//$scope.grupo = '';
+
 		$scope.cerrarMenu = function(){
 			if (!$scope.isCollapsed) $scope.isCollapsed = true;
 		};
 
 		$scope.irA = function(){
-			if (!$rootScope.cargandoCache) {
-				if (loginService.getStatus()){
-					$state.transitionTo($state.current.name);
-					$state.reload();
-				} else {
-					$state.transitionTo('login');
-				}
+			if (loginService.getStatus()){
+				$state.reload();
+			} else {
+				$state.transitionTo('login');
 			}
+		};
+
+		$scope.switchMoneda = function(){
+			if ($rootScope.moneda == 'PES'){
+				$rootScope.moneda = 'DOL';
+			} else if ($rootScope.moneda == 'DOL'){
+				$rootScope.moneda = 'PES';
+			}
+		};
+
+		$scope.setearTerminal = function(terminal){
+			if (loginService.getFiltro() != terminal){
+				//$rootScope.setEstiloTerminal(terminal);
+				loginService.setFiltro(terminal);
+				$state.reload();
+			}
+		};
+
+		$scope.tieneAcceso = function(aguja){
+			return generalFunctions.in_array(aguja, loginService.getAcceso());
+		};
+
+		$scope.imprimirVista = function(){
+			window.print();
 		};
 
 		if (loginService.getStatus()){
@@ -63,29 +87,6 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 			$scope.terminal = $rootScope.terminal;
 			$scope.grupo = $rootScope.grupo;
 		});
-
-		$scope.switchMoneda = function(){
-			if ($rootScope.moneda == 'PES'){
-				$rootScope.moneda = 'DOL';
-			} else if ($rootScope.moneda == 'DOL'){
-				$rootScope.moneda = 'PES';
-			}
-		};
-
-		$scope.setearTerminal = function(terminal){
-			if ($rootScope.filtroTerminal != terminal){
-				$rootScope.setEstiloTerminal(terminal);
-				$state.reload();
-			}
-		};
-
-		$scope.tieneAcceso = function(aguja){
-			return generalFunctions.in_array(aguja, $scope.rutas);
-		};
-
-		$scope.imprimirVista = function(){
-			window.print();
-		};
 
 		$scope.procesarNotificacion = function(ruta, template, titulo, terminal){
 			var clase = 'cg-notify-' + terminal;
