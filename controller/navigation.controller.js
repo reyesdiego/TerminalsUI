@@ -54,31 +54,31 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 			window.print();
 		};
 
-		if (loginService.getStatus()){
-			$rootScope.esUsuario = loginService.getType();
-			$rootScope.terminal = loginService.getInfo();
-			$rootScope.grupo = loginService.getGroup();
+		/*if (loginService.getStatus()){
+			//$rootScope.esUsuario = loginService.getType();
+			//$rootScope.terminal = loginService.getInfo();
+			//$rootScope.grupo = loginService.getGroup();
 			//Esta carga se realiza en el caso de haber actualizado la página
 			if (loginService.getType() == 'agp'){
 				$rootScope.filtroTerminal = loginService.getFiltro();
 			}
-		}
+		}*/
 
-		$scope.$on('terminoLogin', function(){
-			$rootScope.esUsuario = loginService.getType();
-			$rootScope.terminal = loginService.getInfo();
-			$rootScope.grupo = loginService.getGroup();
+		/*$scope.$on('terminoLogin', function(){
+			//$rootScope.esUsuario = loginService.getType();
+			//$rootScope.terminal = loginService.getInfo();
+			//$rootScope.grupo = loginService.getGroup();
 			//Esta carga se realiza en el caso de haber actualizado la página
 			if (loginService.getType() == 'agp'){
 				$rootScope.filtroTerminal = loginService.getFiltro();
 			}
-		});
+		});*/
 
-		$scope.$watch(function(){
+		/*$scope.$watch(function(){
 			$scope.acceso = $rootScope.esUsuario;
 			$scope.terminal = $rootScope.terminal;
 			$scope.grupo = $rootScope.grupo;
-		});
+		});*/
 
 		$scope.procesarNotificacion = function(ruta, template, titulo, terminal){
 			var clase = 'cg-notify-' + terminal;

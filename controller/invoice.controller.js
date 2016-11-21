@@ -2,7 +2,9 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', function($rootScope, $scope, invoiceFactory){
+myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', function($rootScope, $scope, invoiceFactory, loginService){
+
+	$scope.dataTerminal = loginService;
 
 	$scope.fechaInicio = new Date();
 	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);

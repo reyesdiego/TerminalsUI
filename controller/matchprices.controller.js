@@ -2,9 +2,11 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus', 'Price', 'generalFunctions', '$window',
-	function($rootScope, $scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus, Price, generalFunctions, $window) {
+myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus', 'Price', 'generalFunctions',
+	function($scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus, Price, generalFunctions) {
 		'use strict';
+
+		$scope.dataTerminal = loginService;
 
 		//Array con los tipos de tarifas para establecer filtros
 		$scope.tiposTarifas = [
@@ -46,8 +48,6 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.unidad = "CONTAINER";
 		$scope.moneda = "PES";
 
-		$scope.acceso = loginService.getType();
-
 		$scope.flagEditando = false;
 		$scope.codigosConMatch = [];
 		$scope.tasas = false;
@@ -59,8 +59,8 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		$scope.preciosHistoricos = [];
 
 		$scope.puedeEditar = function(){
-			if ($scope.acceso == 'agp'){
-				return generalFunctions.in_array('modificarTarifario', $rootScope.rutas);
+			if ($scope.dataTerminal.getType() == 'agp'){
+				return generalFunctions.in_array('modificarTarifario', $scope.dataTerminal.getAcceso());
 			}
 		};
 
@@ -220,7 +220,7 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 
 		$scope.enableEdition = function(){
 			if ($scope.flagEditando){
-				if ($scope.acceso == 'terminal'){
+				if ($scope.dataTerminal.getType() == 'terminal'){
 					return $scope.newPrice.terminal == loginService.getFiltro();
 				} else {
 					return true;
@@ -350,8 +350,8 @@ myapp.controller('matchPricesCtrl', ['$rootScope', '$scope', 'priceFactory', '$t
 		if (loginService.getStatus()) $scope.prepararDatos();
 
 		$scope.$on('terminoLogin', function(){
-			$scope.acceso = $rootScope.esUsuario;
-			$scope.nombre = loginService.getFiltro();
+			//$scope.acceso = $rootScope.esUsuario;
+			//$scope.nombre = loginService.getFiltro();
 			$scope.prepararDatos();
 		});
 

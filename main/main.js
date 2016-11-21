@@ -602,11 +602,11 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.socket.connect();
 
-		//$rootScope.appointmentNotify = 0;
-		//$rootScope.gateNotify = 0;
-		//$rootScope.invoiceNotify = 0;
+		$rootScope.appointmentNotify = 0;
+		$rootScope.gateNotify = 0;
+		$rootScope.invoiceNotify = 0;
 
-		//$rootScope.verNotificaciones = true;
+		$rootScope.verNotificaciones = true;
 
 		$rootScope.loadingNewView = false;
 

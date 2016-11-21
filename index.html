@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" ng-href="css/{{ terminalEstilo }}.css">
+	<link rel="stylesheet" ng-href="css/{{ dataTerminal.terminalEstilo }}.css">
 	<link rel="stylesheet" href="css/terminalColor.css" title="TERMINALES">
 	<!-- build:css css/aditional-min.css -->
 	<link rel="stylesheet" href="css/app.css">
@@ -178,21 +178,21 @@
 					</ul>
 				</li>
 				<li ng-if="dataTerminal.getType()!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" uib-dropdown>
-					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="notifications.notifyCount.invoice==0" class="burbuja {{ invoiceAnimar }}">{{ notifications.notifyCount.invoice }}</span></a>
+					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="invoiceNotify==0" class="burbuja {{ invoiceAnimar }}">{{ invoiceNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('invoices')" ng-click="cerrarMenu()"><a ui-sref="invoices">Ver</a></li>
 						<li ng-if="tieneAcceso('cfacturas')" ng-click="cerrarMenu()"><a ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
 				<li class="hidden-sm" ng-if="dataTerminal.getType()!='' && (tieneAcceso('gates') || tieneAcceso('cgates'))" uib-dropdown>
-					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Gates<b class="caret"></b><span ng-hide="notifications.notifyCount.gate==0" class="burbuja {{ gateAnimar }}">{{ notifications.notifyCount.gate }}</span></a>
+					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('gates')" ng-click="cerrarMenu()"><a ui-sref="gates">Ver</a></li>
 						<li ng-if="tieneAcceso('cgates')" ng-click="cerrarMenu()"><a ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
 				<li class="hidden-sm" ng-if="dataTerminal.getType()!='' && (tieneAcceso('turnos') || tieneAcceso('agenda') || tieneAcceso('cturnos'))" uib-dropdown>
-					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="notifications.notifyCount.appointment==0" class="burbuja {{ appointmentAnimar }}">{{ notifications.notifyCount.appointment }}</span></a>
+					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('turnos')" ng-click="cerrarMenu()"><a ui-sref="turnos">Ver</a></li>
 						<li ng-if="tieneAcceso('cturnos')" ng-click="cerrarMenu()"><a ui-sref="cturnos">Sin notificar</a></li>

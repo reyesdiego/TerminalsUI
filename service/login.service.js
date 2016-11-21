@@ -66,7 +66,6 @@ myapp.service('loginService', ['generalFunctions', '$cookies', '$http', function
 		} else {
 			return [];
 		}
-
 	};
 
 	this.setInfo = function (value) {
