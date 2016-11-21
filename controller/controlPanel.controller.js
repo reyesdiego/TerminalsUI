@@ -317,16 +317,30 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 				}
 			}
 			datosGrafico.forEach(function(datosDia){
-				switch (datosDia.terminal){
-					case "BACTSSA":
-						matAux[datosDia.hour+1][1] = datosDia.cnt;
-						break;
-					case "TERMINAL4":
-						matAux[datosDia.hour+1][2] = datosDia.cnt;
-						break;
-					case "TRP":
-						matAux[datosDia.hour+1][3] = datosDia.cnt;
-						break;
+				if (datosDia._id){
+					switch (datosDia._id.terminal){
+						case "BACTSSA":
+							matAux[datosDia._id.hour+1][1] = datosDia.cnt;
+							break;
+						case "TERMINAL4":
+							matAux[datosDia._id.hour+1][2] = datosDia.cnt;
+							break;
+						case "TRP":
+							matAux[datosDia._id.hour+1][3] = datosDia.cnt;
+							break;
+					}
+				} else {
+					switch (datosDia.terminal){
+						case "BACTSSA":
+							matAux[datosDia.hour+1][1] = datosDia.cnt;
+							break;
+						case "TERMINAL4":
+							matAux[datosDia.hour+1][2] = datosDia.cnt;
+							break;
+						case "TRP":
+							matAux[datosDia.hour+1][3] = datosDia.cnt;
+							break;
+					}
 				}
 			});
 			for (var e = 0; e <= 23; e++){
