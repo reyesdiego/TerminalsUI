@@ -598,28 +598,19 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 	function($rootScope, $state, loginService, authFactory, dialogs, $injector, $cookies, appSocket, $http, generalFunctions){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
 		$rootScope.pageTitle = 'Administración General de Puertos S.E.';
-		$rootScope.inTrackContainer = false;
 		$rootScope.socket = appSocket;
 
 		$rootScope.socket.connect();
 
-		$rootScope.listaTerminales = ['BACTSSA', 'TERMINAL4', 'TRP'];
-		$rootScope.terminalEstilo = 'bootstrap.cerulean';
+		//$rootScope.appointmentNotify = 0;
+		//$rootScope.gateNotify = 0;
+		//$rootScope.invoiceNotify = 0;
 
-		$rootScope.appointmentNotify = 0;
-		$rootScope.gateNotify = 0;
-		$rootScope.invoiceNotify = 0;
-
-		$rootScope.logoTerminal = 'images/logo_bactssa.png';
-
-		$rootScope.verNotificaciones = true;
-
-		$rootScope.cambioTerminal = false;
-		$rootScope.cargarCache = false;
-		$rootScope.primerRuteo = false;
-		$rootScope.cargandoCache = false;
+		//$rootScope.verNotificaciones = true;
 
 		$rootScope.loadingNewView = false;
+
+		$rootScope.dataTerminal = loginService;
 
 		$rootScope.ordenarPor = function(filtro){
 			if ($rootScope.predicate == filtro){
@@ -631,36 +622,14 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.cambioMoneda = true;
 		$rootScope.cambioTerminal = true;
 
-		$rootScope.setEstiloTerminal = function(terminal){
-			if ($rootScope.filtroTerminal != terminal){
-				$rootScope.filtroTerminal = terminal;
-				$cookies.put('themeTerminal', terminal);
-				loginService.setFiltro(terminal);
-				switch (terminal){
-					case 'BACTSSA':
-						$rootScope.terminalEstilo = 'bootstrap.cerulean';
-						$rootScope.logoTerminal = 'images/logo_bactssa.png';
-						break;
-					case 'TERMINAL4':
-						$rootScope.terminalEstilo = 'bootstrap.united';
-						$rootScope.logoTerminal = 'images/logo_terminal4.png';
-						break;
-					case 'TRP':
-						$rootScope.terminalEstilo = 'bootstrap.flaty';
-						$rootScope.logoTerminal = 'images/logo_trp.png';
-						break;
-				}
-			}
-		};
+		/*$rootScope.setEstiloTerminal = function(terminal){
+		 if ($rootScope.dataTerminal.getFiltro() != terminal){
+		 $cookies.put('themeTerminal', terminal);
+		 loginService.setFiltro(terminal);
+		 }
+		 };*/
 
-		if (loginService.getStatus()){
-			$http.defaults.headers.common.token = loginService.getToken();
-			$rootScope.rutas = loginService.getAcceso();
-			$rootScope.setEstiloTerminal(loginService.getFiltro());
-			$rootScope.esUsuario = loginService.getType();
-			$rootScope.terminal = loginService.getInfo();
-			$rootScope.grupo = loginService.getGroup();
-		}
+		if (loginService.getStatus()) loginService.setHeaders();
 
 		$rootScope.mensajeResultado = {
 			titulo: 'Comprobantes',
@@ -695,17 +664,15 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.appointmentNotify = 0;
 			$rootScope.invoiceNotify = 0;
 			$rootScope.gateNotify = 0;
-			$rootScope.esUsuario = '';
 			$rootScope.$broadcast('logout');
 			$state.transitionTo('login');
-			$rootScope.setEstiloTerminal('BACTSSA');
-			$rootScope.filtroTerminal = '';
+			//$rootScope.setEstiloTerminal('BACTSSA');
 		};
 
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
 			$rootScope.inTrackContainer = to.name == 'trackContainer';
-			$rootScope.setEstiloTerminal($cookies.get('themeTerminal'));
+			loginService.setFiltro($cookies.get('themeTerminal'));
 			$rootScope.loadingNewView = false;
 		});
 
