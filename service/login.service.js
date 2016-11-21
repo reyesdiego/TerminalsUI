@@ -47,15 +47,30 @@ myapp.service('loginService', ['generalFunctions', '$cookies', '$http', function
 	this.setAcceso = function(rutas) {
 
 		if (generalFunctions.in_array('cfacturas', rutas)){
-			rutas = [...rutas, ...['cfacturas.tasas', 'cfacturas.correlatividad', 'cfacturas.codigos', 'cfacturas.revisar', 'cfacturas.erroneos', 'cfacturas.reenviar']];
+			rutas.push(['cfacturas.tasas', 'cfacturas.correlatividad', 'cfacturas.codigos', 'cfacturas.revisar', 'cfacturas.erroneos', 'cfacturas.reenviar']);
+			//rutas = [...rutas, ...['cfacturas.tasas', 'cfacturas.correlatividad', 'cfacturas.codigos', 'cfacturas.revisar', 'cfacturas.erroneos', 'cfacturas.reenviar']];
+			/*rutas.push('cfacturas.tasas');
+			rutas.push('cfacturas.correlatividad');
+			rutas.push('cfacturas.codigos');
+			rutas.push('cfacturas.revisar');
+			rutas.push('cfacturas.erroneos');
+			rutas.push('cfacturas.reenviar');*/
 		}
 		if (generalFunctions.in_array('reports', rutas)){
-			rutas = [...rutas, ...['reports.tasas', 'reports.tarifas', 'reports.empresas', 'reports.terminales']];
+			rutas.push(['reports.tasas', 'reports.tarifas', 'reports.empresas', 'reports.terminales']);
+			//rutas = [...rutas, ...['reports.tasas', 'reports.tarifas', 'reports.empresas', 'reports.terminales']];
+			/*rutas.push('reports.tasas');
+			rutas.push('reports.tarifas');
+			rutas.push('reports.empresas');
+			rutas.push('reports.terminales');*/
 		}
 		if (generalFunctions.in_array('cgates', rutas)){
-			rutas = [...rutas, ...['cgates.gates', 'cgates.invoices', 'cgates.appointments']];
+			rutas.push(['cgates.gates', 'cgates.invoices', 'cgates.appointments']);
+			//rutas = [...rutas, ...['cgates.gates', 'cgates.invoices', 'cgates.appointments']];
+			/*rutas.push('cgates.gates');
+			rutas.push('cgates.invoices');
+			rutas.push('cgates.appointments');*/
 		}
-		rutas.push('trackContainer');
 
 		sessionStorage.acceso = JSON.stringify(rutas);
 	};

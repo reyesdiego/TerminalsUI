@@ -388,7 +388,6 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 		});
 
 		if ($stateParams.container){
-			console.log('esta el contenedor');
 			$scope.model.contenedor = $stateParams.container;
 			$scope.contenedorElegido = new Container({contenedor: $scope.model.contenedor});
 			$scope.filtrar();

@@ -4,6 +4,8 @@
 myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceFactory', 'Invoice',
 	function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceFactory, Invoice){
 
+		$scope.dataTerminal = loginService;
+
 		$scope.status = {
 			open: true
 		};
@@ -216,7 +218,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
 
 		$scope.$on('terminoLogin', function(){
-			$scope.acceso = loginService.getType();
+			//$scope.acceso = loginService.getType();
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
 				$scope.loadingState = true;
 				cargaTodosLosPuntosDeVentas();

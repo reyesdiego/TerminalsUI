@@ -2,7 +2,7 @@
  * Created by artiom on 13/05/15.
  */
 
-myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', '$filter', 'generalFunctions', function($scope, $rootScope, ctrlUsersFactory, dialogs, $q, loginService, $filter, generalFunctions){
+myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'loginService', '$filter', 'generalFunctions', function($scope, ctrlUsersFactory, dialogs, $q, loginService, $filter, generalFunctions){
 
 	$scope.permiso = false;
 	$scope.panelMensaje = {
@@ -179,7 +179,7 @@ myapp.controller('accessControlCtrl', ['$scope','$rootScope', 'ctrlUsersFactory'
 			if (data.status == 'OK') {
 				if (loginService.getInfo()._id == $scope.usuarioElegido._id){
 					loginService.setAcceso(tareas);
-					angular.copy(tareas, $rootScope.rutas);
+					angular.copy(tareas, loginService.getAcceso());
 				}
 				$scope.usuarios.forEach(function(usuario){
 					if (usuario._id == $scope.usuarioElegido._id) angular.copy(tareas, usuario.acceso)
