@@ -43,8 +43,8 @@
 				<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 			</tr>
 			</thead>
-			<tbody>
-			<tr ng-hide="payment.byContainer" ng-repeat="invoice in payment.invoices.data" ng-class="{comprobanteReenviar: (invoice.interfazEstado. _id == 'R' || invoice.interfazEstado. _id == 'T')}" class="fila-animada">
+			<tbody ng-hide="payment.byContainer">
+			<tr ng-repeat="invoice in payment.invoices.data" ng-class="{comprobanteReenviar: (invoice.interfazEstado. _id == 'R' || invoice.interfazEstado. _id == 'T')}" class="fila-animada">
 				<td class="text-center" style="width: 9%; font-size: 9pt">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
 				<td class="text-center" style="width: 6%; font-size: 9pt"><span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
 				<td class="text-left" style="width: 12%; font-size: 9pt">{{ invoice.buque }}</td>
@@ -70,8 +70,8 @@
 				<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			</tr>
 			</tbody>
-			<tbody>
-			<tr ng-show="payment.byContainer" ng-repeat="invoice in payment.invoicesByContainer.data">
+			<tbody ng-show="payment.byContainer">
+			<tr ng-repeat="invoice in payment.invoicesByContainer.data" class="fila-animada">
 				<td class="text-center" style="width: 9%; font-size: 9pt">{{ invoice.emision | date: 'dd/MM/yy' }}</td>
 				<td class="text-center" style="width: 6%; font-size: 9pt"><span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
 				<td class="text-left" style="width: 12%; font-size: 9pt">{{ invoice.buque }}</td>
