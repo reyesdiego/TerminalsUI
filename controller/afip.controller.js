@@ -8,6 +8,7 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		$scope.fechaInicio = new Date();
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
+		$scope.dataTerminal = loginService;
 		var rutasUsuario = loginService.getAcceso().sort();
 		$scope.afectacion = 'afip';
 		$scope.detalle = 'afip';

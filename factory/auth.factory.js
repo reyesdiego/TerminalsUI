@@ -60,7 +60,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 						$http.defaults.headers.common.token = loginService.getToken();
 
 						//****************************************
-						if (generalFunctions.in_array('cfacturas', data.acceso)){
+						/*if (generalFunctions.in_array('cfacturas', data.acceso)){
 							data.acceso.push('cfacturas.tasas');
 							data.acceso.push('cfacturas.correlatividad');
 							data.acceso.push('cfacturas.codigos');
@@ -79,16 +79,17 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 							data.acceso.push('cgates.invoices');
 							data.acceso.push('cgates.appointments');
 						}
-						data.acceso.push('trackContainer');
+						data.acceso.push('trackContainer');*/
 						//****************************************
+
 
 						loginService.setAcceso(data.acceso);
 
 						//$rootScope.rutas = data.acceso;
 
-						$rootScope.esUsuario = loginService.getType();
-						$rootScope.terminal = loginService.getInfo();
-						$rootScope.grupo = loginService.getGroup();
+						//$rootScope.esUsuario = loginService.getType();
+						//$rootScope.terminal = loginService.getInfo();
+						//$rootScope.grupo = loginService.getGroup();
 
 						//Si el rol es terminal, queda como filtro de si misma para las consultas
 						//De lo contrario, dejo a BACTSSA como filtro por default
@@ -97,7 +98,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 						} else {
 							var filtro = angular.isDefined($cookies.get('themeTerminal')) ? $cookies.get('themeTerminal') : 'BACTSSA';
 							loginService.setFiltro(filtro);
-							$rootScope.filtroTerminal = filtro;
+							/*$rootScope.filtroTerminal = filtro;
 							switch (filtro){
 								case 'BACTSSA':
 									$rootScope.terminalEstilo = 'bootstrap.cerulean';
@@ -111,7 +112,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 									$rootScope.terminalEstilo = 'bootstrap.flaty';
 									$rootScope.logoTerminal = 'images/logo_trp.png';
 									break;
-							}
+							}*/
 						}
 
 						// Carga la cache si el usuario no tenía el acceso por cookies
