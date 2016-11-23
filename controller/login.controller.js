@@ -28,13 +28,13 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$scope.porcentaje = 0;
 
 		if (loginService.getStatus()){
-			if (!angular.isDefined($rootScope.rutas)){
+			/*if (!angular.isDefined($rootScope.rutas)){
 				$rootScope.rutas = loginService.getAcceso();
-			}
-			if (generalFunctions.in_array('tarifario', $rootScope.rutas)){
+			}*/
+			if (generalFunctions.in_array('tarifario', loginService.getAcceso())){
 				$state.transitionTo('tarifario');
 			} else {
-				$state.transitionTo($rootScope.rutas[0])
+				$state.transitionTo(loginService.getAcceso()[0])
 			}
 		}
 
@@ -59,7 +59,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		});
 
 		var cerrarSesion = function(tipo){
-			$rootScope.cargandoCache = false;
+			//$rootScope.cargandoCache = false;
 			if (tipo == 'normal'){
 				$scope.mostrarMensaje = $scope.msg[5];
 			} else {
@@ -68,8 +68,8 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 				$scope.mostrarMensaje = $scope.msg[4];
 			}
 			authFactory.logout();
-			$rootScope.esUsuario = '';
-			$rootScope.filtroTerminal = '';
+			//$rootScope.esUsuario = '';
+			//$rootScope.filtroTerminal = '';
 			volver();
 		};
 
@@ -95,11 +95,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 			authFactory.userEnter($scope.email, $scope.password, $scope.sesion)
 					.then(function(result) {
 								$rootScope.socket.emit('login', result.user);
-								$rootScope.cargandoCache = false;
-								if (generalFunctions.in_array('tarifario', $rootScope.rutas)) {
+								//$rootScope.cargandoCache = false;
+								if (generalFunctions.in_array('tarifario', loginService.getAcceso())) {
 									$state.transitionTo('tarifario');
 								} else {
-									$state.transitionTo($rootScope.rutas[0])
+									$state.transitionTo(loginService.getAcceso()[0])
 								}
 							},
 							function(error){
@@ -115,7 +115,7 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					cerrarSesion('normal');
 				});
 			} else if (error.code == 'ACC-0003') {
-				$rootScope.cargandoCache = false;
+				//$rootScope.cargandoCache = false;
 				$state.transitionTo('validar');
 			} else if (error.code == 'ACC-0001' || error.code == 'ACC-0002' || error.code == 'ACC-0004') {
 				errdlg = dialogs.error("Error de acceso", error.message);
@@ -126,11 +126,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 				if ($scope.progreso > 10){
 					var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
 					dlg.result.then(function(){
-								$rootScope.cargandoCache = false;
-								if (generalFunctions.in_array('tarifario', $rootScope.rutas)){
+								//$rootScope.cargandoCache = false;
+								if (generalFunctions.in_array('tarifario', loginService.getAcceso())){
 									$state.transitionTo('tarifario');
 								} else {
-									$state.transitionTo($rootScope.rutas[0])
+									$state.transitionTo(loginService.getAcceso()[0])
 								}
 							},
 							function(){

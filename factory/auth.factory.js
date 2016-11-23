@@ -84,7 +84,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 
 						loginService.setAcceso(data.acceso);
 
-						$rootScope.rutas = data.acceso;
+						//$rootScope.rutas = data.acceso;
 
 						$rootScope.esUsuario = loginService.getType();
 						$rootScope.terminal = loginService.getInfo();

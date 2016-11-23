@@ -2,13 +2,13 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', 'dialogs', '$window',
-	function($scope, $rootScope, afipFactory, $state, generalFunctions, afipCache, loginService, dialogs, $window){
+myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', 'dialogs',
+	function($scope, afipFactory, $state, generalFunctions, afipCache, loginService, dialogs){
 
 		$scope.fechaInicio = new Date();
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
-		$rootScope.rutas.sort();
+		var rutasUsuario = loginService.getAcceso().sort();
 		$scope.afectacion = 'afip';
 		$scope.detalle = 'afip';
 		$scope.solicitud = 'afip';
@@ -19,8 +19,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 
 		$scope.sumariaDetalle = {};
 
-		if (generalFunctions.in_array('afip.afectacion', $rootScope.rutas)){
-			$rootScope.rutas.forEach(function(ruta){
+		if (generalFunctions.in_array('afip.afectacion', rutasUsuario)){
+			rutasUsuario.forEach(function(ruta){
 				if (ruta.indexOf('afip.afectacion.') >= 0 && $scope.afectacion == 'afip') {
 					$scope.afectacion = ruta;
 					if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
@@ -28,8 +28,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (generalFunctions.in_array('afip.detalle', $rootScope.rutas)){
-			$rootScope.rutas.forEach(function(ruta){
+		if (generalFunctions.in_array('afip.detalle', rutasUsuario)){
+			rutasUsuario.forEach(function(ruta){
 				if (ruta.indexOf('afip.detalle.') >= 0 && $scope.detalle == 'afip') {
 					$scope.detalle = ruta;
 					if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
@@ -37,8 +37,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (generalFunctions.in_array('afip.solicitud', $rootScope.rutas)){
-			$rootScope.rutas.forEach(function(ruta){
+		if (generalFunctions.in_array('afip.solicitud', rutasUsuario)){
+			rutasUsuario.forEach(function(ruta){
 				if (ruta.indexOf('afip.solicitud.') >= 0 && $scope.solicitud == 'afip') {
 					$scope.solicitud = ruta;
 					if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
@@ -46,8 +46,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (generalFunctions.in_array('afip.sumatorias', $rootScope.rutas)){
-			$rootScope.rutas.forEach(function(ruta){
+		if (generalFunctions.in_array('afip.sumatorias', rutasUsuario)){
+			rutasUsuario.forEach(function(ruta){
 				if (ruta.indexOf('afip.sumatorias.') >= 0 && $scope.sumatoria == 'afip') {
 					$scope.sumatoria = ruta;
 					if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
@@ -55,8 +55,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (generalFunctions.in_array('afip.removido', $rootScope.rutas)){
-			$rootScope.rutas.forEach(function(ruta){
+		if (generalFunctions.in_array('afip.removido', rutasUsuario)){
+			rutasUsuario.forEach(function(ruta){
 				if (ruta.indexOf('afip.removido.') >= 0 && $scope.removido == 'afip') {
 					$scope.removido = ruta;
 					if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
@@ -64,8 +64,8 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 			})
 		}
 
-		if (generalFunctions.in_array('afip.transbordos', $rootScope.rutas)){
-			$rootScope.rutas.forEach(function(ruta){
+		if (generalFunctions.in_array('afip.transbordos', rutasUsuario)){
+			rutasUsuario.forEach(function(ruta){
 				if (ruta.indexOf('afip.transbordos.') >= 0 && $scope.removido == 'afip') {
 					$scope.transbordos = ruta;
 					if ($scope.actualRegistro == '') $scope.actualRegistro = ruta;
@@ -74,12 +74,12 @@ myapp.controller('afipCtrl',['$scope', '$rootScope', 'afipFactory', '$state', 'g
 		}
 
 		$scope.tabs = [
-			{ heading: 'Afectación',	uisref: $scope.afectacion,	mostrar: generalFunctions.in_array('afip.afectacion', $rootScope.rutas) },
-			{ heading: 'Detallada',		uisref: $scope.detalle,		mostrar: generalFunctions.in_array('afip.detalle', $rootScope.rutas) },
-			{ heading: 'Solicitud',		uisref: $scope.solicitud,	mostrar: generalFunctions.in_array('afip.solicitud', $rootScope.rutas) },
-			{ heading: 'Sumarias',		uisref: $scope.sumatoria,	mostrar: generalFunctions.in_array('afip.sumatorias', $rootScope.rutas) },
-			{ heading: 'Removido',		uisref: $scope.removido,	mostrar: generalFunctions.in_array('afip.removido', $rootScope.rutas) },
-			{ heading: 'Transbordos', 	uisref: $scope.transbordos, mostrar: generalFunctions.in_array('afip.transbordos', $rootScope.rutas) }
+			{ heading: 'Afectación',	uisref: $scope.afectacion,	mostrar: generalFunctions.in_array('afip.afectacion', rutasUsuario) },
+			{ heading: 'Detallada',		uisref: $scope.detalle,		mostrar: generalFunctions.in_array('afip.detalle', rutasUsuario) },
+			{ heading: 'Solicitud',		uisref: $scope.solicitud,	mostrar: generalFunctions.in_array('afip.solicitud', rutasUsuario) },
+			{ heading: 'Sumarias',		uisref: $scope.sumatoria,	mostrar: generalFunctions.in_array('afip.sumatorias', rutasUsuario) },
+			{ heading: 'Removido',		uisref: $scope.removido,	mostrar: generalFunctions.in_array('afip.removido', rutasUsuario) },
+			{ heading: 'Transbordos', 	uisref: $scope.transbordos, mostrar: generalFunctions.in_array('afip.transbordos', rutasUsuario) }
 		];
 
 		$scope.model = {
