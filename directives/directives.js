@@ -529,7 +529,7 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 				tipo: 'panel-info'
 			};
 			scope.cargando = false;
-			scope.byContainer = false;
+			//scope.byContainer = false;
 			scope.itemsPerPage = 15;
 			scope.currentPage = 1;
 			scope.mostrarResultado = false;
@@ -554,7 +554,7 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 			}
 
 			scope.changeView = function(){
-				scope.byContainer ? scope.totalCount = scope.payment.invoicesByContainer.totalCount : scope.totalCount = scope.payment.invoices.totalCount;
+				scope.payment.byContainer ? scope.totalCount = scope.payment.invoicesByContainer.totalCount : scope.totalCount = scope.payment.invoices.totalCount;
 			};
 
 			scope.cambioPagina = function(){

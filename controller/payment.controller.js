@@ -243,7 +243,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 							$scope.recargar();
 							$scope.preLiquidacion.cargando = false;
 						}, function(response){
-							console.log(response);
+							//console.log(response);
 							dialogs.error('Liquidaciones', 'Se ha producido un error al intentar borrar la pre-liquidación.');
 							$scope.preLiquidacion.cargando = false;
 						});
@@ -274,7 +274,9 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 
 		$scope.descargarCSV = function(){
 			var alterModel = angular.copy($scope.sinLiquidar.model);
-			if ($scope.sinLiquidar.byContainer) alterModel.byContainer = true;
+			if ($scope.sinLiquidarPayment.byContainer) {
+				alterModel.byContainer = true;
+			}
 			liquidacionesFactory.getNotPayedCsv(alterModel, function(status){
 				if (status != 'OK'){
 					dialogs.error('Liquidaciones', 'Se ha producido un error al descargar el listado de comprobantes sin liquidar.');

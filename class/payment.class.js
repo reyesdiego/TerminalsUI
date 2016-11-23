@@ -14,6 +14,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 		};
 		this.detail = [];
 		this.reload = false;
+		this.byContainer = false;
 		if (searchParams)
 			this.searchParams = searchParams;
 		if (paymentData)
