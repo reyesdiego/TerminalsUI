@@ -90,7 +90,7 @@
 						<td style="width: 64%">{{ price.description }}</td>
 						<td style="width: 12%">{{ price.unit}}</td>
 						<td style="text-align: right; width: 14%" >
-							<span ng-show="!(price.price > 0)" class="glyphicon glyphicon-warning-sign text-danger"> Sin definir</span> <span ng-show="price.price > 0">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
+							<span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
 						</td>
 					</tr>
 					</tbody>

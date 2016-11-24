@@ -76,7 +76,7 @@
                             </td>
                             <td class="col-lg-1 text-right">
                                 <!--<span>{{ price.topPrices[price.topPrices.length-1].price | currency: (price.topPrices[price.topPrices.length-1].currency | formatCurrency) }}</span>-->
-                                <span>{{ price.price | currency: (price.currency | formatCurrency) }}</span>
+                                <span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2" style="text-align: right">
 								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="dataTerminal.getType()=='terminal'">
@@ -110,7 +110,7 @@
                             </td>
                             <td class="col-lg-2 text-right">
                                 <!--<span>{{ price.topPrices[0].price | currency: (price.topPrices[0].currency | formatCurrency) }}</span>-->
-                                <span>{{ price.price | currency: (price.currency | formatCurrency) }}</span>
+                                <span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2 anchoFijoImpresion" style="text-align: right">
 								<span ng-repeat="codigo in price.matches[0].match track by $index">
