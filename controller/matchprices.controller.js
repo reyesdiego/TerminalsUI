@@ -70,13 +70,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		$scope.unidadesTarifas = generalCache.get('unitTypes');
 
-		$scope.dateOptions = [{
-			minDate: new Date('01/01/2013')
-		}];
-		/*$scope.newDateOptions = {
-			minDate: new Date('01/01/2013')
-		};*/
-
 		$scope.openFechaTarifa = false;
 		$scope.openDate = function($event) {
 			$event.preventDefault();
@@ -181,21 +174,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			$state.transitionTo('modificarTarifario');
 		};
 
-		//Agrega el top price a una tarifa
-		//$scope.addTopPrice = function(){
-			//console.log('hola');
-			//$scope.dateOptions.push({ minDate: $scope.newTopPrice.from});
-			//$scope.newDateOptions.minDate = $scope.newTopPrice.from;
-			//$scope.newPrice.addTopPrice($scope.newTopPrice);
-			//$scope.newPrice.addTopPrice();
-			/*$scope.newTopPrice = {
-				from: new Date(),
-				currency: 'DOL',
-				price: ''
-			};
-			focus('focusMe');*/
-		//};
-
 		//Guarda los cambios realizados sobre una tarifa
 		$scope.savePrice = function(){
 			var dlg = null;
@@ -243,16 +221,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			tarifa.getTopPrices()
 					.then(function(){
 						$scope.newPrice = tarifa;
-						$scope.newPrice.topPrices.forEach(function(price){
-							price.from = new Date(price.from);
-						});
-						/*$scope.newDateOptions.minDate = $scope.newPrice.topPrices[$scope.newPrice.topPrices.length-1].from;
-						for (var i = 1; i < $scope.newPrice.topPrices.length; i++){
-							var dateOptions = {
-								minDate: $scope.newPrice.topPrices[i-1].from
-							};
-							$scope.dateOptions.push(dateOptions);
-						}*/
 						$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
 						$scope.abrirNuevoConcepto('editar');
 					}, function(error){
@@ -308,25 +276,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 							dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
 						});
 			})
-		};
-
-		$scope.sacarTopPrice = function(index){
-			$scope.newPrice.removeTopPrice(index);
-			$scope.dateOptions = [{
-				minDate: new Date('01/01/2013')
-			}];
-			/*if ($scope.newPrice.topPrices.length > 0){
-				$scope.newDateOptions.minDate = $scope.newPrice.topPrices[$scope.newPrice.topPrices.length-1].from;
-			} else {
-				$scope.newDateOptions.minDate = new Date('01/01/2013');
-			}*/
-
-			for (var i = 1; i < $scope.newPrice.topPrices.length; i++){
-				var dateOptions = {
-					minDate: $scope.newPrice.topPrices[i-1].from
-				};
-				$scope.dateOptions.push(dateOptions);
-			}
 		};
 
 		//Borra el valor de un campo de la nueva tarifa

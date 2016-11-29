@@ -103,11 +103,6 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             return deferred.promise;
         },
         addTopPrice: function(){
-            /*topPrice.price = parseFloat(topPrice.price);
-            if (topPrice.from != '' && topPrice.currency != '' && topPrice.price > 0){
-                this.topPrices.push(topPrice);
-            }*/
-
             var newPrice = {
                 from: new Date(),
                 currency: 'DOL',
