@@ -74,6 +74,17 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             }
             this.mostrarDetalle = false;
         },
+        checkTopPricesDates: function(){
+            if (this.topPrices.length > 0){
+                this.topPrices[0].dateOptions = {};
+                for (var i = 1; i < this.topPrices.length; i++){
+                    this.topPrices[i-1].dateOptions.maxDate = new Date(this.topPrices[i-1].from);
+                    this.topPrices[i].dateOptions = {
+                        minDate: new Date(this.topPrices[i-1].from.getFullYear(), this.topPrices[i-1].from.getMonth(), this.topPrices[i-1].from.getDate()+1)
+                    }
+                }
+            }
+        },
         getTopPrices: function(){
             var deferred = $q.defer();
             var inserturl = APP_CONFIG.SERVER_URL + '/prices/' + this._id + '/' + loginService.getFiltro();
@@ -81,6 +92,10 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             $http.get(inserturl)
                 .then(function(response){
                     scope.topPrices = response.data.data.topPrices;
+                    for (var i = 0; i < scope.topPrices.length; i++){
+                        scope.topPrices[i].from = new Date(scope.topPrices[i].from)
+                    }
+                    scope.checkTopPricesDates();
                     deferred.resolve();
                 }, function(response){
                     deferred.reject(response.data);
@@ -110,16 +125,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
         },
         removeTopPrice: function(index){
             this.topPrices.splice(index, 1);
-            if (this.topPrices.length > 0){
-                this.topPrices[0].dateOptions = {};
-                for (var i = 1; i < this.topPrices.length; i++){
-                    this.topPrices[i-1].dateOptions.maxDate = new Date(this.topPrices[i-1].from);
-                    this.topPrices[i].dateOptions = {
-                        minDate: new Date(this.topPrices[i-1].from.getFullYear(), this.topPrices[i-1].from.getMonth(), this.topPrices[i-1].from.getDate()+1)
-                    }
-                }
-            }
-
+            this.checkTopPricesDates();
         },
         detalleOnOff: function(){
             this.mostrarDetalle = !this.mostrarDetalle;
