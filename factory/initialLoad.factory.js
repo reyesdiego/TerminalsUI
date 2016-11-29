@@ -255,7 +255,7 @@ myapp.factory('initialLoadFactory', ['CacheFactory', 'controlPanelFactory',  'co
                 deferred.resolve();
             } else {
                 //console.log('no hay rates');
-                priceFactory.getMatchPrices({onlyRates: true}, loginService.getFiltro(), function (data) {
+                priceFactory.getMatchPrices(loginService.getFiltro(), true,  function (data) {
                     if (data.status == 'OK') {
                         //console.log('cargamos rates');
                         var tasasCargasTerminal = [];
