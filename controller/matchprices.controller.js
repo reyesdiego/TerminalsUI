@@ -45,7 +45,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		$scope.search = "";
 
 		$scope.esRequerido = true;
-		$scope.unidad = "CONTAINER";
 		$scope.moneda = "PES";
 
 		$scope.flagEditando = false;
@@ -74,9 +73,9 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		$scope.dateOptions = [{
 			minDate: new Date('01/01/2013')
 		}];
-		$scope.newDateOptions = {
+		/*$scope.newDateOptions = {
 			minDate: new Date('01/01/2013')
-		};
+		};*/
 
 		$scope.openFechaTarifa = false;
 		$scope.openDate = function($event) {
@@ -247,13 +246,13 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 						$scope.newPrice.topPrices.forEach(function(price){
 							price.from = new Date(price.from);
 						});
-						$scope.newDateOptions.minDate = $scope.newPrice.topPrices[$scope.newPrice.topPrices.length-1].from;
+						/*$scope.newDateOptions.minDate = $scope.newPrice.topPrices[$scope.newPrice.topPrices.length-1].from;
 						for (var i = 1; i < $scope.newPrice.topPrices.length; i++){
 							var dateOptions = {
 								minDate: $scope.newPrice.topPrices[i-1].from
 							};
 							$scope.dateOptions.push(dateOptions);
-						}
+						}*/
 						$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
 						$scope.abrirNuevoConcepto('editar');
 					}, function(error){
@@ -316,11 +315,11 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			$scope.dateOptions = [{
 				minDate: new Date('01/01/2013')
 			}];
-			if ($scope.newPrice.topPrices.length > 0){
+			/*if ($scope.newPrice.topPrices.length > 0){
 				$scope.newDateOptions.minDate = $scope.newPrice.topPrices[$scope.newPrice.topPrices.length-1].from;
 			} else {
 				$scope.newDateOptions.minDate = new Date('01/01/2013');
-			}
+			}*/
 
 			for (var i = 1; i < $scope.newPrice.topPrices.length; i++){
 				var dateOptions = {

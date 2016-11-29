@@ -98,10 +98,26 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                 currency: 'DOL',
                 price: ''
             };
+            /*if (this.topPrices.length > 0){
+                newPrice.dateOptions = {
+                    minDate: new Date(this.topPrices[this.topPrices.length-1].from)
+                };
+                this.topPrices[this.topPrices.length-1].dateOptions.maxDate = new Date(this.topPrices[this.topPrices.length-1].from)
+            }*/
             this.topPrices.push(newPrice);
         },
         removeTopPrice: function(index){
             this.topPrices.splice(index, 1);
+            /*if (this.topPrices.length > 0){
+                this.topPrices[0].dateOptions = {};
+                for (var i = 1; i < this.topPrices.length; i++){
+                    this.topPrices[i-1].dateOptions.maxDate = new Date(this.topPrices[i-1].from);
+                    this.topPrices[i].dateOptions = {
+                        minDate: new Date(this.topPrices[i-1].from)
+                    }
+                }
+            }*/
+
         },
         detalleOnOff: function(){
             this.mostrarDetalle = !this.mostrarDetalle;
