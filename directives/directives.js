@@ -650,7 +650,7 @@ myapp.directive('reporteEmpresasSearch', function(){
 	}
 });
 
-myapp.directive('focusOn', [function() {
+/*myapp.directive('focusOn', [function() {
 	return function(scope, elem, attr) {
 		scope.$on('focusOn', function(e, name) {
 			if(name === attr.focusOn) {
@@ -658,12 +658,12 @@ myapp.directive('focusOn', [function() {
 			}
 		});
 	};
-}]);
+}]);*/
 
-myapp.factory('focus', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
+/*myapp.factory('focus', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
 	return function(name) {
 		$timeout(function (){
 			$rootScope.$broadcast('focusOn', name);
 		});
 	}
-}]);
+}]);*/

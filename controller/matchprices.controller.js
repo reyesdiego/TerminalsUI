@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'focus', 'Price', 'generalFunctions',
-	function($scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, focus, Price, generalFunctions) {
+myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'Price', 'generalFunctions',
+	function($scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, Price, generalFunctions) {
 		'use strict';
 
 		$scope.dataTerminal = loginService;
