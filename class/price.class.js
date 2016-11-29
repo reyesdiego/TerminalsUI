@@ -100,7 +100,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                 dateOptions: ''
             };
             if (this.topPrices.length > 0){
-                newPrice.from.setDate(this.topPrices[this.topPrices.length-1].from.getDate()+1);
+                newPrice.from = new Date(this.topPrices[this.topPrices.length-1].from.getFullYear(), this.topPrices[this.topPrices.length-1].from.getMonth(), this.topPrices[this.topPrices.length-1].from.getDate()+1);
                 newPrice.dateOptions = {
                     minDate: newPrice.from
                 };
