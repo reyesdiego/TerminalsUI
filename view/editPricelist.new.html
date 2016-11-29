@@ -61,7 +61,7 @@
                                 <tr ng-repeat="price in newPrice.topPrices track by $index">
                                     <td class="col-lg-4 text-center">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="price.from" is-open="openFechaTarifa" ng-disabled="!enableEdition()" ng-required="true" clear-text="Borrar" close-text="Listo" current-text="Hoy" style="background-color: #ffffff" readonly tabindex="1"/>
+                                            <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" datepicker-options="price.dateOptions" ng-model="price.from" is-open="openFechaTarifa" ng-disabled="!enableEdition()" ng-required="true" clear-text="Borrar" close-text="Listo" current-text="Hoy" style="background-color: #ffffff" readonly tabindex="1"/>
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" ng-click="openDate($event); openFechaTarifa = !openFechaTarifa;" ng-disabled="!enableEdition()" tabindex="-1"><i class="glyphicon glyphicon-calendar"></i></button></span>
                                         </div>

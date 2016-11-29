@@ -96,11 +96,13 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
             var newPrice = {
                 from: new Date(),
                 currency: 'DOL',
-                price: ''
+                price: '',
+                dateOptions: ''
             };
             if (this.topPrices.length > 0){
+                newPrice.from.setDate(this.topPrices[this.topPrices.length-1].from.getDate()+1);
                 newPrice.dateOptions = {
-                    minDate: new Date(this.topPrices[this.topPrices.length-1].from)
+                    minDate: newPrice.from
                 };
                 this.topPrices[this.topPrices.length-1].dateOptions.maxDate = new Date(this.topPrices[this.topPrices.length-1].from)
             }
@@ -113,7 +115,7 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                 for (var i = 1; i < this.topPrices.length; i++){
                     this.topPrices[i-1].dateOptions.maxDate = new Date(this.topPrices[i-1].from);
                     this.topPrices[i].dateOptions = {
-                        minDate: new Date(this.topPrices[i-1].from)
+                        minDate: new Date(this.topPrices[i-1].from.getFullYear(), this.topPrices[i-1].from.getMonth(), this.topPrices[i-1].from.getDate()+1)
                     }
                 }
             }
