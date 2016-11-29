@@ -16,22 +16,11 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			{nombre: 'Con match', active: false}
 		];
 
-		$scope.newTopPrice = {
-			from: new Date(),
-			currency: 'DOL',
-			price: ''
-		};
-
 		$scope.newPrice = new Price();
 
 		$scope.newMatches = {
 			array: []
 		};
-
-		$scope.nombre = loginService.getFiltro();
-
-		$scope.flagGuardado = true;
-		$scope.flagCambios = false;
 
 		$scope.pricelist = [];
 		$scope.filteredPrices = [];
@@ -40,12 +29,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		$scope.servicios = [];
 		$scope.listaSeleccionada = [];
 
-		$scope.codigoVacio = true;
-
 		$scope.search = "";
-
-		$scope.esRequerido = true;
-		$scope.moneda = "PES";
 
 		$scope.flagEditando = false;
 		$scope.codigosConMatch = [];
@@ -54,8 +38,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		$scope.tipoFiltro = 'AGP';
 
 		$scope.propiosTerminal = [];
-
-		$scope.preciosHistoricos = [];
 
 		$scope.puedeEditar = function(){
 			if ($scope.dataTerminal.getType() == 'agp'){
@@ -163,7 +145,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		};
 
 		$scope.abrirNuevoConcepto = function(tipo){
-			$scope.esRequerido = true;
 			if (!(tipo == 'editar')){
 				$scope.newPrice = new Price();
 				$scope.newMatches = {
