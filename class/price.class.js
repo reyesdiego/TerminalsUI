@@ -87,11 +87,18 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                 });
             return deferred.promise;
         },
-        addTopPrice: function(topPrice){
-            topPrice.price = parseFloat(topPrice.price);
+        addTopPrice: function(){
+            /*topPrice.price = parseFloat(topPrice.price);
             if (topPrice.from != '' && topPrice.currency != '' && topPrice.price > 0){
                 this.topPrices.push(topPrice);
-            }
+            }*/
+
+            var newPrice = {
+                from: new Date(),
+                currency: 'DOL',
+                price: ''
+            };
+            this.topPrices.push(newPrice);
         },
         removeTopPrice: function(index){
             this.topPrices.splice(index, 1);
@@ -112,6 +119,17 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                         && this.matches[0].match != null && this.matches[0].match.length > 0 && this.matches[0].match[0] != null);
         },
         saveChanges: function(){
+            if (loginService.getType() == 'terminal' && this.tarifaTerminal){
+                var encontrado = false;
+                var scope = this;
+                this.matches[0].match.forEach(function(match){
+                    if (match == scope.code) encontrado = true;
+                });
+                if (!encontrado){
+                    this.matches[0].match.push(this.code)
+                }
+            }
+            this.matches[0].code = this.code;
             if (this._id){
                return this.updatePriceChanges();
             } else {
@@ -120,13 +138,14 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
         },
         addNewPrice: function(){
             var deferred = $q.defer();
+            //console.log(this);
             var inserturl = APP_CONFIG.SERVER_URL + '/prices/price';
             var scope = this;
             $http.post(inserturl, this)
                 .then(function(response) {
                     if (response.data.status == 'OK'){
                         scope.matches[0]._idPrice = response.data.data._id;
-                        if (loginService.getType() == 'terminal'){
+                        /*if (loginService.getType() == 'terminal'){
                             var encontrado = false;
                             scope.matches[0].match.forEach(function(match){
                                 if (match == scope.code) encontrado = true;
@@ -140,7 +159,8 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                                 deferred.resolve(response);
                             }, function(error){
                                 deferred.reject(error);
-                            })
+                            })*/
+                        deferred.resolve(response);
                     } else {
                         deferred.reject(response.data)
                     }
@@ -155,11 +175,11 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                 unPrecio.from = formatService.formatearFechaISOString(unPrecio.from);
             });
             var inserturl = APP_CONFIG.SERVER_URL + '/prices/price/' + this._id;
-            var scope = this;
+            //var scope = this;
             $http.put(inserturl, this)
                 .then(function(response) {
                     if (response.data.status == 'OK'){
-                        if (loginService.getType() == 'terminal' && scope.tarifaTerminal){
+                        /*if (loginService.getType() == 'terminal' && scope.tarifaTerminal){
                             var encontrado = false;
                             scope.matches[0].match.forEach(function(match){
                                 if (match == scope.code) encontrado = true;
@@ -173,7 +193,8 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                             deferred.resolve(response);
                         }, function(error){
                             deferred.reject(error)
-                        })
+                        })*/
+                        deferred.resolve(response);
                     } else {
                         deferred.reject(response.data);
                     }

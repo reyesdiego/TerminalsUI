@@ -183,17 +183,19 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		};
 
 		//Agrega el top price a una tarifa
-		$scope.addTopPrice = function(){
-			$scope.dateOptions.push({ minDate: $scope.newTopPrice.from});
-			$scope.newDateOptions.minDate = $scope.newTopPrice.from;
-			$scope.newPrice.addTopPrice($scope.newTopPrice);
-			$scope.newTopPrice = {
+		//$scope.addTopPrice = function(){
+			//console.log('hola');
+			//$scope.dateOptions.push({ minDate: $scope.newTopPrice.from});
+			//$scope.newDateOptions.minDate = $scope.newTopPrice.from;
+			//$scope.newPrice.addTopPrice($scope.newTopPrice);
+			//$scope.newPrice.addTopPrice();
+			/*$scope.newTopPrice = {
 				from: new Date(),
 				currency: 'DOL',
 				price: ''
 			};
-			focus('focusMe');
-		};
+			focus('focusMe');*/
+		//};
 
 		//Guarda los cambios realizados sobre una tarifa
 		$scope.savePrice = function(){
