@@ -140,7 +140,6 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                         && this.matches[0].match != null && this.matches[0].match.length > 0 && this.matches[0].match[0] != null);
         },
         saveChanges: function(){
-            console.log(this);
             if (loginService.getType() == 'terminal' && this.tarifaTerminal){
                 var encontrado = false;
                 var scope = this;
