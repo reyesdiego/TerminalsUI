@@ -21,7 +21,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		$scope.acceso = loginService.getType();
 
 		// Puntos de Ventas
-		$scope.todosLosPuntosDeVentas = [];
+		$scope.todosLosPuntosDeVentas = [
+			{'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true}
+		];
 
 		$scope.mostrarResultado = false;
 		$scope.verDetalle = {};
@@ -118,47 +120,22 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			pto.active = true;
 			$scope.model['nroPtoVenta'] = pto.punto;
 			$scope.$emit('cambioFiltro', $scope.model);
-			//$scope.filtrado('nroPtoVenta', pto.punto);
 		};
 
 		// Funciones de Puntos de Venta
 		var cargaPuntosDeVenta = function(){
-			if ($scope.todosLosPuntosDeVentas.length > 0){
-				invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
-					if (data.status == 'OK'){
-						$scope.todosLosPuntosDeVentas.forEach(function(puntosVenta){
-							puntosVenta.hide = data.data.indexOf(puntosVenta.punto, 0) < 0;
-							if ($scope.model != undefined && puntosVenta.punto == $scope.model.nroPtoVenta && puntosVenta.hide){
-								$scope.model.nroPtoVenta = '';
-								$scope.todosLosPuntosDeVentas[0].active = true;
-							}
-						});
-						$scope.todosLosPuntosDeVentas[0].hide = false;
-						$scope.currentPage = 1;
-						$scope.$emit('cambioFiltro', $scope.model);
-					} else {
-						dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta');
-					}
-				});
-			} else {
-				cargaTodosLosPuntosDeVentas();
-			}
-		};
-
-		var cargaTodosLosPuntosDeVentas = function(){
-			invoiceFactory.getCashbox($scope.$id, '', function(data){
+			invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 				if (data.status == 'OK'){
-					var dato = {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true, 'hide': false};
-					$scope.todosLosPuntosDeVentas.push(dato);
 					data.data.forEach(function(punto){
-						dato = {'heading': punto, 'punto': punto, 'active': false, 'hide': true};
+						var dato = {'heading': punto, 'punto': punto, 'active': false};
 						$scope.todosLosPuntosDeVentas.push(dato);
 					});
-					cargaPuntosDeVenta();
+					$scope.currentPage = 1;
+					$scope.$emit('cambioFiltro', $scope.model);
 				} else {
 					dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta');
 				}
-			})
+			});
 		};
 
 		$scope.mostrarDetalle = function(comprobante){
@@ -215,13 +192,12 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			return datos;
 		}
 
-		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaTodosLosPuntosDeVentas();
+		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaPuntosDeVenta();
 
 		$scope.$on('terminoLogin', function(){
-			//$scope.acceso = loginService.getType();
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
 				$scope.loadingState = true;
-				cargaTodosLosPuntosDeVentas();
+				cargaPuntosDeVenta();
 			}
 		});
 
