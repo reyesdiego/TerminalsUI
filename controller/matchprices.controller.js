@@ -147,6 +147,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		$scope.abrirNuevoConcepto = function(tipo){
 			if (!(tipo == 'editar')){
 				$scope.newPrice = new Price();
+				if (loginService.getType() == 'terminal') $scope.newPrice.tarifaTerminal = true;
 				$scope.newMatches = {
 					array: []
 				};
