@@ -248,8 +248,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 						.then(function(response){
 							if (response.status == 'OK'){
 								dialogs.notify("Eliminar","La tarifa ha sido eliminada");
-								$scope.prepararDatos();
-								$state.transitionTo('matches');
+								$scope.volver();
 							} else {
 								dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
 							}
@@ -262,6 +261,11 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		//Borra el valor de un campo de la nueva tarifa
 		$scope.eraseField = function(field){
 			$scope.newPrice[field] = ''
+		};
+
+		$scope.volver = function(){
+			$scope.prepararDatos();
+			$state.transitionTo('matches');
 		};
 
 		//Descarga CSV

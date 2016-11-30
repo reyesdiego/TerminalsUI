@@ -97,7 +97,7 @@
                 <div class="form-group col-lg-12 text-right">
                     <button type="submit" class="btn btn-primary" tabindex="1" ng-disabled="newPrice.topPrices.length == 0"><i class="glyphicon glyphicon-save"></i> Guardar</button>
                     <button type="button" class="btn btn-danger" ng-show="flagEditando" ng-click="eliminarTarifa()" ng-disabled="!enableEdition()" tabindex="1"><i class="glyphicon glyphicon-remove"></i> Eliminar</button>
-                    <button type="button" class="btn btn-default" ui-sref="matches" tabindex="1"><i class="glyphicon glyphicon-remove-circle"></i> Volver</button>
+                    <button type="button" class="btn btn-default" ng-click="volver()" tabindex="1"><i class="glyphicon glyphicon-remove-circle"></i> Volver</button>
                 </div>
             </fieldset>
         </form>
