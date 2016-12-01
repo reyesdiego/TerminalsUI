@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'loginService', 'unitTypesArrayCache', 'downloadFactory', 'dialogs', 'generalCache', 'generalFunctions', '$filter', 'downloadService',
-	function($rootScope, $scope, priceFactory, loginService, unitTypesArrayCache, downloadFactory, dialogs, generalCache, generalFunctions, $filter, downloadService) {
+myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'downloadFactory', 'dialogs', '$filter', 'downloadService',
+	function($scope, priceFactory, loginService, downloadFactory, dialogs, $filter, downloadService) {
 
 		'use strict';
 		//Array con los tipos de tarifas para establecer filtros
@@ -13,28 +13,7 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			{nombre: 'Propios', active: false}
 		];
 
-		$scope.datePopUp = {
-			opened: false,
-			format: 'dd/MM/yyyy',
-			options: {
-				formatYear: 'yyyy',
-				startingDay: 1
-			}
-		};
-
-		$scope.newPrice = {
-			code: '',
-			description: '',
-			idUnit: '',
-			topPrices: [{
-				currency: '',
-				from: new Date(),
-				price: 0
-			}]
-		};
-
 		// Variable para almacenar la info principal que trae del factory
-		//$scope.unidadesTarifas = generalCache.get('unitTypes');
 		$scope.pricelist = [];
 		$scope.filteredPrices = [];
 		$scope.userPricelist = [];
@@ -50,10 +29,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 		$scope.procesando = false;
 
 		$scope.fechaVigencia = new Date();
-
-		$scope.openDate = function(e){
-			generalFunctions.openDate(e);
-		};
 
 		$scope.cambiarTarifas = function(tipoTarifa){
 			$scope.tiposTarifas.forEach(function(unaTarifa){
@@ -77,30 +52,6 @@ myapp.controller('pricelistCtrl', ['$rootScope', '$scope', 'priceFactory', 'logi
 			$scope.hayError = true;
 			$scope.mensajeResultado = mensaje;
 		});
-
-		$scope.actualizarPricelist = function(){
-			$scope.pricelistAgp = [];
-			priceFactory.getMatchPrices(loginService.getFiltro(), $scope.tasas, function(data){
-				if (data.status == 'OK'){
-					$scope.hayError = false;
-					$scope.pricelist = data.data;
-					$scope.pricelist.forEach(function(tarifa){
-						if (tarifa.tarifaAgp) $scope.pricelistAgp.push(tarifa);
-					});
-					$scope.listaElegida = angular.copy($scope.pricelistAgp);
-					$scope.totalItems = $scope.listaElegida.length;
-					$scope.userPricelist = angular.copy($scope.pricelistAgp);
-
-				} else {
-					$scope.hayError = true;
-					$scope.mensajeResultado = {
-						titulo: 'Tarifario',
-						mensaje: 'Se ha producido un error al cargar los datos del tarifario.',
-						tipo: 'panel-danger'
-					};
-				}
-			})
-		};
 
 		$scope.cargaPricelist = function(){
 			$scope.pricelistAgp = [];
