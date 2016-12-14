@@ -124,6 +124,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 
 		// Funciones de Puntos de Venta
 		var cargaPuntosDeVenta = function(){
+			$scope.todosLosPuntosDeVentas = [
+				{'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true}
+			];
 			invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 				if (data.status == 'OK'){
 					data.data.forEach(function(punto){
