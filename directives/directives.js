@@ -553,6 +553,16 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 				})
 			}
 
+			scope.filter = function(filtro, contenido){
+				if (filtro == 'date'){
+					scope.model.fechaInicio = new Date(contenido);
+					scope.model.fechaFin = new Date(contenido);
+				} else {
+					scope.model[filtro] = contenido;
+				}
+				scope.$emit('iniciarBusqueda', scope.model);
+			};
+
 			scope.changeView = function(){
 				scope.payment.byContainer ? scope.totalCount = scope.payment.invoicesByContainer.totalCount : scope.totalCount = scope.payment.invoices.totalCount;
 			};
