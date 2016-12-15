@@ -24,6 +24,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 				'fechaInicio': $scope.fechaInicio,
 				'fechaFin': $scope.fechaFin,
 				'liquidacion': '',
+				'contenedor': '',
 				'itemsPerPage': 15,
 				'razonSocial': '',
 				'filtroOrden': 'fecha.emision',
