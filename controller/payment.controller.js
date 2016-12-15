@@ -69,7 +69,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.ocultarFiltrosComprobantes = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'fechaInicio']
 
 		$scope.liquidacion = {
-			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial'],
+			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'contenedor'],
 			panelMensaje: {
 				titulo: 'Liquidaciones',
 				mensaje: 'No se encontraron liquidaciones realizadas para los filtros seleccionados.',
