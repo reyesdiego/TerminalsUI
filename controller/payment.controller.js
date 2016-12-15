@@ -39,7 +39,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.sinLiquidarPayment = new Payment($scope.sinLiquidar.model);
 
 		$scope.preLiquidacion = {
-			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'buque', 'byContainer'],
+			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'buque', 'byContainer', 'contenedor'],
 			panelMensaje: {
 				titulo: 'Liquidaciones',
 				mensaje: 'No se encontraron pre-liquidaciones realizadas para los filtros seleccionados.',
