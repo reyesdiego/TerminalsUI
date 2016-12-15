@@ -24,6 +24,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		$scope.todosLosPuntosDeVentas = [
 			{'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true}
 		];
+		$scope.indexActive = 0;
 
 		$scope.mostrarResultado = false;
 		$scope.verDetalle = {};
@@ -101,6 +102,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			if (filtro == 'nroPtoVenta'){
 				$scope.$emit('cambioFiltro', $scope.model);
 			} else {
+				$scope.model.nroPtoVenta = '';
+				$scope.indexActive = 0;
 				cargaPuntosDeVenta();
 			}
 		};
@@ -116,21 +119,26 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		};
 
 		$scope.cambiaPtoVenta = function (pto) {
-			$scope.todosLosPuntosDeVentas.forEach(function (ptos) { ptos.active = false; });
-			pto.active = true;
+			//$scope.todosLosPuntosDeVentas.forEach(function (ptos) { ptos.active = false; });
+			$scope.indexActive = pto.index;
 			$scope.model['nroPtoVenta'] = pto.punto;
 			$scope.$emit('cambioFiltro', $scope.model);
 		};
 
 		// Funciones de Puntos de Venta
 		var cargaPuntosDeVenta = function(){
+			var i = 0;
 			$scope.todosLosPuntosDeVentas = [
-				{'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true}
+				{'heading': 'Todos los Puntos de Ventas', 'punto': '', 'index': 0}
 			];
 			invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 				if (data.status == 'OK'){
 					data.data.forEach(function(punto){
-						var dato = {'heading': punto, 'punto': punto, 'active': false};
+						i++;
+						var dato = {'heading': punto, 'punto': punto, 'index': i };
+						if ($scope.model['nroPtoVenta'] == punto){
+							$scope.indexActive = i;
+						}
 						$scope.todosLosPuntosDeVentas.push(dato);
 					});
 					$scope.currentPage = 1;
