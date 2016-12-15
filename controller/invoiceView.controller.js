@@ -136,9 +136,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 					data.data.forEach(function(punto){
 						i++;
 						var dato = {'heading': punto, 'punto': punto, 'index': i };
-						if ($scope.model['nroPtoVenta'] == punto){
+						/*if ($scope.model['nroPtoVenta'] == punto){
 							$scope.indexActive = i;
-						}
+						}*/
 						$scope.todosLosPuntosDeVentas.push(dato);
 					});
 					$scope.currentPage = 1;
