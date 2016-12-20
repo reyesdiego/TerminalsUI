@@ -185,8 +185,10 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             var data = {
                 resend: resendStatus
             };
-            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/invoice/' + loginService.getFiltro() + '/' + this._id;
-            $http.put(inserturl, data)
+            //var inserturl = APP_CONFIG.SERVER_URL + '/invoices/invoice/' + loginService.getFiltro() + '/' + this._id;
+            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/setResend/' + this._id;
+            var comprobante = this;
+            $http.put(inserturl, data, { params: data })
                 .then(function(response){
                     if (response.data.status == 'OK'){
                         comprobante.resend = resendStatus;
@@ -224,7 +226,6 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                         }
                     }
                 });
-                dataTrack = [];
                 modalInstance.result.then(function (dataComment) {
                     var logInvoice = {
                         title: dataComment.title,
@@ -238,11 +239,11 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                         llamadas.push(scope.addComment(dataComment, logInvoice));
                     }
                     if (dataComment.setResend){
-                        llamadas.push(scope.setResend(dataComment.resend));
+                        llamadas.push(scope.setResend(dataComment.resend ? '1' : '0'));
                     }
                     $q.all(llamadas)
                         .then(function(){
-                            deferred.resolve(comprobante);
+                            deferred.resolve(scope);
                         }, function(error){
                             //console.log(error);
                             deferred.reject(error);
