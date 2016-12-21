@@ -186,6 +186,14 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			}
 		};
 
+		$scope.trackInvoice = function(invoice){
+			invoice.trackInvoice().then(function(data){
+				cargaPuntosDeVenta();
+			}, function(error){
+				dialogs.error('Error', error.message);
+			});
+		};
+
 		$scope.trackContainer = function(contenedor){
 			var url = $state.href('container', {container: contenedor});
 			$window.open(url,'_blank');
