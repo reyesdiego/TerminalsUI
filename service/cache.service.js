@@ -332,11 +332,6 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         if (response.data.status == 'OK') {
                             //console.log('cargamos unidades');
                             this.cache.put('unitTypes', response.data.data);
-                            let unitTypesArray = [];
-                            for (let unitType of response.data.data){
-                                unitTypesArray[unitType._id] = unitType.description;
-                            }
-                            this.cache.put('unitTypesArray', unitTypesArray);
                             deferred.resolve();
                         } else {
                             //console.log('error unidades');
@@ -353,10 +348,9 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             }
 
             get unitTypesArray(){
-                let unitTypesArray = {};
-                for (let unit in this.cache.get('unitTypes')){
-                    console.log(unit);
-                    unitTypesArray[unit.unit] = unit;
+                let unitTypesArray = [];
+                for (let unitType of this.cache.get('unitTypes')){
+                    unitTypesArray[unitType._id] = unitType.description;
                 }
                 return unitTypesArray;
             }
