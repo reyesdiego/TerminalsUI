@@ -70,7 +70,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                     this.servicio = true;
                 }
             }
-            var unitTypesArray = cacheService.cache.get('unitTypesArray');
+            var unitTypesArray = cacheService.unitTypesArray;
             if (angular.isDefined(this.unit) && this.unit != null && angular.isDefined(unitTypesArray[this.unit])){
                 this.idUnit = this.unit;
                 this.unit = unitTypesArray[this.unit];

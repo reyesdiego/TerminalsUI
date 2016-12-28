@@ -352,6 +352,15 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                 return deferred.promise;
             }
 
+            get unitTypesArray(){
+                let unitTypesArray = {};
+                for (let unit in this.cache.get('unitTypes')){
+                    console.log(unit);
+                    unitTypesArray[unit.unit] = unit;
+                }
+                return unitTypesArray;
+            }
+
             cargaEstados(){
                 //console.log('estados');
                 const deferred = $q.defer();
