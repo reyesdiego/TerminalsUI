@@ -53,6 +53,17 @@ module.exports = function(grunt) {
 				dest: 'build/css/terminalColor.css'
 			}
 		},
+		babel: {
+			options: {
+				sourceMap: true,
+				presets: ['es2015']
+			},
+			dist: {
+				files: {
+					'build/js/app.js': 'build/js/app.js'
+				}
+			}
+		},
 		uglify: {
 			js: {
 				files: {
@@ -195,6 +206,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-processhtml');
 	grunt.loadNpmTasks('grunt-mkdir');
 	grunt.loadNpmTasks('grunt-chmod');
+	grunt.loadNpmTasks('grunt-babel');
 
 	// Default task(s).
 	grunt.registerTask('default', [
@@ -205,6 +217,7 @@ module.exports = function(grunt) {
 		'cssmin:terminal4',
 		'cssmin:trp',
 		'cssmin:terminales',
+		'babel',
 		'uglify:js',
 		'processhtml:dist',
 		'copy:main',
