@@ -172,8 +172,9 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                     deferred.resolve(this.cache.get(`buques${loginService.getFiltro()}`));
                 } else {
                     //console.log('no hay buques');
-                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.getFiltro()}/shipTrips`;
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.getFiltro()}/ships`;
                     $http.get(inserturl).then((response) => {
+                        console.log(response);
                         if (response.data.status == 'OK') {
                             //console.log('cargamos buques');
                             this.cache.put(`buques${loginService.getFiltro()}`, response.data.data);
@@ -185,6 +186,33 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         }
                     }, (response) => {
                         this.cache.put(`buques${loginService.getFiltro()}`, []);
+                        deferred.resolve([]);
+                    });
+                }
+                return deferred.promise;
+            }
+
+            cargaBuqueViajes(){
+                //console.log('buques');
+                const deferred = $q.defer();
+                if (this.cache.get(`buquesviaje${loginService.getFiltro()}`)){
+                    //console.log('hay buques');
+                    deferred.resolve(this.cache.get(`buquesviaje${loginService.getFiltro()}`));
+                } else {
+                    //console.log('no hay buques');
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.getFiltro()}/shipTrips`;
+                    $http.get(inserturl).then((response) => {
+                        if (response.data.status == 'OK') {
+                            //console.log('cargamos buques');
+                            this.cache.put(`buquesviaje${loginService.getFiltro()}`, response.data.data);
+                            deferred.resolve(response.data.data);
+                        } else {
+                            //console.log('error buques');
+                            this.cache.put(`buquesviaje${loginService.getFiltro()}`, []);
+                            deferred.resolve([]);
+                        }
+                    }, (response) => {
+                        this.cache.put(`buquesviaje${loginService.getFiltro()}`, []);
                         deferred.resolve([]);
                     });
                 }

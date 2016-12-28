@@ -130,7 +130,7 @@ myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunction
 			}
 			$scope.filtrado('estado', contenido);
 		};
-		$scope.buqueSelected = function(item, model, label, event){
+		/*$scope.buqueSelected = function(item, model, label, event){
 			var i = 0;
 			if (model != ''){
 				$scope.mostrarViajes = true;
@@ -146,7 +146,7 @@ myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunction
 			} else {
 				$scope.mostrarViajes = false;
 			}
-		};
+		};*/
 
 		$scope.definidoStatus = function(turno){
 			return angular.isDefined(turno.email);

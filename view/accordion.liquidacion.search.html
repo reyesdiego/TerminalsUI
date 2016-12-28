@@ -17,7 +17,7 @@
 	</div>
 	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
 		<div class="input-group">
-			<input type="text" ng-model="model.buqueNombre" uib-typeahead="buque.buque for buque in listaBuques | filter:$viewValue | limitTo:15" class="form-control" placeholder="Buque" toupper typeahead-on-select="buqueSelected($item, $model, $label, $event)" typeahead-editable="false"/>
+			<input type="text" ng-model="model.buqueNombre" uib-typeahead="buque for buque in listaBuques | filter:$viewValue | limitTo:15" class="form-control" placeholder="Buque" toupper typeahead-editable="false"/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('buqueNombre', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>

@@ -364,7 +364,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 			templateUrl: "view/buque.viaje.html",
 			resolve: {
 				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
-				buques: function(){ return initialLoadFactory.cargaBuques() },
+				buques: function(){ return initialLoadFactory.cargaBuqueViajes() },
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
