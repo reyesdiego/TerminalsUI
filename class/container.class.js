@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 25/08/2016.
  */
-myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'generalCache', 'loginService', 'formatService', function($http, $q, APP_CONFIG, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, generalCache, loginService, formatService){
+myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'cacheService', 'loginService', 'formatService', function($http, $q, APP_CONFIG, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, cacheService, loginService, formatService){
 
     function Container(containerData){
         if (containerData)
@@ -113,7 +113,7 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             return deferred.promise;
         },
         putDescriptionRates: function(data){
-            var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
+            var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
             data.total = 0;
             data.data.forEach(function(detalle){
                 detalle._id.descripcion = (descripciones[detalle._id.id]) ? descripciones[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';

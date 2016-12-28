@@ -2,8 +2,8 @@
  * Created by artiom on 08/04/15.
  */
 
-myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 'generalCache', '$state', 'loginService', 'Container', '$stateParams',
-	function($rootScope, $scope, containerFactory, generalCache, $state, loginService, Container, $stateParams){
+myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 'cacheService', '$state', 'loginService', 'Container', '$stateParams',
+	function($rootScope, $scope, containerFactory, cacheService, $state, loginService, Container, $stateParams){
 		////// Para containers /////////////
 		$scope.model = {
 			'nroPtoVenta': '',
@@ -86,7 +86,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			mensaje: 'No se encontraron datos de sumarias de A.F.I.P relacionados.'
 		};
 
-		$scope.buques = generalCache.get('buques' + loginService.getFiltro());
+		$scope.buques = cacheService.cache.get('buques' + loginService.getFiltro());
 		$scope.buqueElegido = {
 			viajes:[]
 		};

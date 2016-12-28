@@ -3,8 +3,8 @@
  */
 
 
-myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'generalCache', 'colorTerminalesCache', 'loginService', 'downloadFactory', 'dialogs', '$filter',
-	function ($rootScope, $scope, invoiceFactory, generalFunctions, generalCache, colorTerminalesCache, loginService, downloadFactory, dialogs, $filter) {
+myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'cacheService', 'loginService', 'downloadFactory', 'dialogs', '$filter',
+	function ($rootScope, $scope, invoiceFactory, generalFunctions, cacheService, loginService, downloadFactory, dialogs, $filter) {
 
 		$scope.tasaAgp = false;
 
@@ -89,12 +89,12 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		};
 
 		$scope.barColors = {
-			"bactssa": colorTerminalesCache.get('Bactssa'),
-			"terminal4": colorTerminalesCache.get('Terminal4'),
-			"trp": colorTerminalesCache.get('Trp')
+			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
+			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
+			"trp": cacheService.colorTerminalesCache.get('Trp')
 		};
 
-		$scope.allRates = generalCache.get('allRates');
+		$scope.allRates = cacheService.matchesCache.get('allRates');
 
 		$scope.configPanel = {
 			tipo: 'panel-info',

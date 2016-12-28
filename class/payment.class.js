@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 29/08/2016.
  */
-myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatService', 'invoiceFactory', 'generalCache', function($http, $q, APP_CONFIG, loginService, formatService, invoiceFactory, generalCache){
+myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatService', 'invoiceFactory', 'cacheService', function($http, $q, APP_CONFIG, loginService, formatService, invoiceFactory, cacheService){
 
 	function Payment(searchParams, paymentData){
 		this.invoices = {
@@ -24,7 +24,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 
 	Payment.prototype = {
 		setData: function(paymentData){
-			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
+			var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
 			angular.extend(this, paymentData);
 			this.detail.forEach(function(detail){
 				detail.desc = descripciones[detail._id];
@@ -32,7 +32,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 			this.verDetalle = false;
 		},
 		setRatesDescription: function(detallesLiquidacion){
-			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
+			var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
 			var totalFinal = 0;
 			var totalFinalAgp = 0;
 			detallesLiquidacion.forEach(function(detalle){

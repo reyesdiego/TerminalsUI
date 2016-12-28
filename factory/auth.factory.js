@@ -2,8 +2,8 @@
  * Created by leo on 18/07/14.
  */
 
-myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope', '$q', 'initialLoadFactory', '$http', 'generalFunctions', 'APP_CONFIG',
-	function($state, $cookies, loginService, $rootScope, $q, initialLoadFactory, $http, generalFunctions, APP_CONFIG){
+myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope', '$q', '$http', 'generalFunctions', 'APP_CONFIG',
+	function($state, $cookies, loginService, $rootScope, $q, $http, generalFunctions, APP_CONFIG){
 		var factory = {};
 
 		factory.userEnter = function(user, pass, useCookies){
@@ -158,7 +158,6 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 			$cookies.remove('restoreSesion');
 			$cookies.remove('username');
 			$cookies.remove('password');
-			initialLoadFactory.limpiaCache();
 			loginService.unsetLogin();
 		};
 

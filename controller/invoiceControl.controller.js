@@ -181,8 +181,8 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 
 }]);
 
-myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'vouchersArrayCache', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs', 'generalFunctions', '$window',
-	function($rootScope, $scope, invoiceFactory, vouchersArrayCache, correlativeSocket, loginService, downloadFactory, dialogs, generalFunctions, $window) {
+myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'cacheService', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs', 'generalFunctions',
+	function($rootScope, $scope, invoiceFactory, cacheService, correlativeSocket, loginService, downloadFactory, dialogs, generalFunctions) {
 
 		var socketIoRegister = '';
 
@@ -308,6 +308,8 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		};
 
 		var controlCorrelatividad = function(){
+			var vouchersArray = cacheService.vouchersArray;
+
 			$scope.arrayCargados = [];
 			$scope.leerData = true;
 			$scope.totalFaltantes = 0;
@@ -315,7 +317,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			$scope.deshabilitarBuscar = true;
 			$scope.loadingCorrelatividad = true;
 			$scope.puntosDeVenta = [];
-			$scope.tipoComprob = vouchersArrayCache.get($scope.model.codTipoComprob);
+			$scope.tipoComprob = vouchersArray[$scope.model.codTipoComprob];
 			$scope.mostrarBotonImprimir = false;
 
 			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {

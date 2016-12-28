@@ -2,9 +2,9 @@
  * Created by kolesnikov-a on 10/05/2016.
  */
 
-myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginService', 'generalCache', 'dialogs', '$window', function($scope, reportsFactory, loginService, generalCache, dialogs, $window){
+myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginService', 'cacheService', 'dialogs', function($scope, reportsFactory, loginService, cacheService, dialogs){
 
-    $scope.descripciones = generalCache.get('descripciones' + loginService.getFiltro());
+    $scope.descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
 
     $scope.model = {
         tipo: 'year',
@@ -61,13 +61,6 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
             }
         });
     };
-
-    /*$scope.$on('cambioTerminal', function(){
-        $scope.descripciones = generalCache.get('descripciones' + loginService.getFiltro());
-        if ($scope.dataReporte.length > 0){
-            $scope.cargarReporte();
-        }
-    });*/
 
     $scope.descargarCSV = function(){
         $scope.disableDown = true;

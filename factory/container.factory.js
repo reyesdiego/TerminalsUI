@@ -1,8 +1,8 @@
 /**
  * Created by Diego Reyes on 3/19/14.
  */
-myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'estadosArrayCache', 'generalCache', 'generalFunctions', '$q', 'HTTPCanceler', 'APP_CONFIG', 'Container',
-	function($http, loginService, formatService, estadosArrayCache, generalCache, generalFunctions, $q, HTTPCanceler, APP_CONFIG, Container){
+myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'cacheService', 'generalFunctions', '$q', 'HTTPCanceler', 'APP_CONFIG', 'Container',
+	function($http, loginService, formatService, cacheService, generalFunctions, $q, HTTPCanceler, APP_CONFIG, Container){
 		var containerFactory = {
 			namespace: 'container',
 			retrieveContainers: function(containersData){
@@ -73,17 +73,6 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'es
 						}, function(response) {
 							if (response.data == null) response.data = { status: 'ERROR'};
 							if (response.status != -5) callback(response.data)
-						});
-			},
-			//Al ser un método de caché se le pasa la terminal
-			getShipTrips: function(terminal, callback){
-				var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + terminal + '/shipTrips';
-				$http.get(inserturl)
-						.then(function(response){
-							callback(response.data);
-						}, function(response){
-							if(response.data == null) response.data = {status: 'ERROR'};
-							callback(response.data);
 						});
 			},
 			getShipContainers: function(datos, callback){

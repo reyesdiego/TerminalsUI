@@ -58,29 +58,8 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 				});
 		};
 
-		factory.getTrains = function(terminal, callback){
-			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + terminal + '/trains';
-			$http.get(inserturl)
-				.then(function(response){
-					response.data.data = formatTrains(response.data.data);
-					callback(response.data);
-				}, function(response){
-					if (response.data == null) response.data = {status: 'ERROR'};
-					callback(response.data);
-				});
-		};
-
 		function formatTrains (trains){
-			var listaTransformada = [];
-			trains.forEach(function(train){
-				if (train != null){
-					var trenJson = {
-						tren: train
-					};
-					listaTransformada.push(trenJson);
-				}
-			});
-			return listaTransformada;
+
 		}
 
 		factory.cancelRequest = function(request){
