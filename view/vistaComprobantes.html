@@ -33,7 +33,7 @@
 		<div ng-hide="datosInvoices.length == 0">
 			<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong> Mostrando del {{ currentPage * model.itemsPerPage - (model.itemsPerPage - 1) }} al {{ mostrarTope() }} (página {{ currentPage }})</strong></span></h5>
 
-			<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs" ng-if="mostrarPtosVenta">
 				<li ng-repeat="punto in todosLosPuntosDeVentas" ng-click="cambiaPtoVenta(punto)" ng-class="indexActive == punto.index ? 'active' : ''"><a href >{{ punto.heading }}</a></li>
 			</ul>
 

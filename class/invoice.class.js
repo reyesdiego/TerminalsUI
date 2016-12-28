@@ -43,10 +43,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
                 'user': 'agp'
             };
             if (this.estado){
-                console.log(cacheService.cache.get('estados'));
-                //console.log(cacheService.cache.get('estadosArray'));
                 var estadosArray = cacheService.estadosArray;
-                console.log(estadosArray);
                 if (this.estado.group == loginService.getGroup() || this.estado.group === 'ALL'){
                     this.interfazEstado = (estadosArray[this.estado.state]) ? estadosArray[this.estado.state] : estadosArray['Y'];
                 } else {

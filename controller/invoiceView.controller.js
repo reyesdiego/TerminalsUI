@@ -4,6 +4,7 @@
 myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceFactory', 'Invoice',
 	function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceFactory, Invoice){
 
+		//console.log($scope.mostrarPtosVenta);
 		$scope.dataTerminal = loginService;
 
 		$scope.status = {
@@ -102,9 +103,14 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			if (filtro == 'nroPtoVenta'){
 				$scope.$emit('cambioFiltro', $scope.model);
 			} else {
-				$scope.model.nroPtoVenta = '';
-				$scope.indexActive = 0;
-				cargaPuntosDeVenta();
+				if ($scope.mostrarPtosVenta){
+					$scope.model.nroPtoVenta = '';
+					$scope.indexActive = 0;
+					cargaPuntosDeVenta();
+				} else {
+					$scope.$emit('cambioFiltro', $scope.model);
+				}
+
 			}
 		};
 
@@ -211,7 +217,13 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			return datos;
 		}
 
-		if (loginService.getStatus() && ($scope.mostrarPtosVenta || $scope.controlCodigos)) cargaPuntosDeVenta();
+		if (loginService.getStatus()){
+			if ($scope.mostrarPtosVenta){
+				cargaPuntosDeVenta()
+			} else {
+				$scope.$emit('cambioFiltro', $scope.model);
+			}
+		};
 
 		$scope.$on('terminoLogin', function(){
 			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
