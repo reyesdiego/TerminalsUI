@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 21/08/15.
  */
-myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'generalCache', 'downloadFactory', '$window',
-	function($scope, controlPanelFactory, dialogs, loginService, generalCache, downloadFactory, $window){
+myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'cacheService', 'downloadFactory',
+	function($scope, controlPanelFactory, dialogs, loginService, cacheService, downloadFactory){
 
 		$scope.ranking = true;
 
@@ -48,7 +48,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			return ($scope.selected === index) ? "selected" : "";
 		};
 
-		$scope.listaClientes = generalCache.get('clientes' + loginService.getFiltro());
+		$scope.listaClientes = cacheService.cache.get('clientes' + loginService.getFiltro());
 
 		$scope.cargando = false;
 
@@ -154,18 +154,6 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				controlPanelFactory.getFacturacionEmpresas(datos, tratarResultado)
 			}
 		};
-
-		/*$scope.$on('cambioTerminal', function(){
-			$scope.searchClient = '';
-			$scope.listaClientes = generalCache.get('clientes' + loginService.getFiltro());
-			$scope.resultados = [];
-			$scope.mensajeResultado = {
-				titulo: 'Reporte empresas',
-				mensaje: 'Seleccione una razón social para realizar la búsqueda.',
-				tipo: 'panel-info'
-			};
-			$scope.model.clients = [];
-		});*/
 
 		$scope.descargarPdf = function(){
 			var data = {

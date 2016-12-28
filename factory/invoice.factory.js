@@ -176,35 +176,6 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                     callback('ERROR');
                 });
         },
-        //Se pasa la terminal al ser de caché
-        getDescriptionItem: function(terminal, callback){
-            var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/matches/' + terminal;
-            $http.get(inserturl)
-                .then(function(response) {
-                    callback(response.data);
-                }, function(response) {
-                    if (response.data == null) response.data = {status: 'ERROR'};
-                    callback(response.data);
-                });
-        },
-        getVouchersType: function(terminal, callback){
-            var inserturl = APP_CONFIG.SERVER_URL + '/voucherTypes/' + terminal;
-            $http.get(inserturl)
-                .then(function (response){
-                    callback(response.data);
-                }, function(response){
-                    callback(response.data);
-                });
-        },
-        getStatesType: function(callback){
-            var inserturl = APP_CONFIG.SERVER_URL + '/states';
-            $http.get(inserturl)
-                .then(function (response){
-                    callback(response.data);
-                }, function(response){
-                    callback(response.data);
-                });
-        },
         cancelRequest: function(request){
             HTTPCanceler.cancel(this.namespace, request);
         }

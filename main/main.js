@@ -156,9 +156,9 @@ myapp.config(['$provide', '$httpProvider', function($provide, $httpProvider){
 
 }]);
 
-myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFactoryProvider', function ($stateProvider, $urlRouterProvider, $provide, initialLoadFactoryProvider) {
+myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceProvider', function ($stateProvider, $urlRouterProvider, $provide, cacheServiceProvider) {
 
-	var initialLoadFactory = initialLoadFactoryProvider.$get();
+	const initialLoadFactory = cacheServiceProvider.$get();
 
 	$provide.decorator("$exceptionHandler", ['$delegate', '$injector', function($delegate, $injector){
 		return function(exception, cause){
@@ -192,7 +192,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/pricelist.html",
 			controller: "pricelistCtrl",
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades
+				unitTypes: function(){
+					return initialLoadFactory.cargaUnidades()
+				}
 			}
 		})
 		.state('invoices', {
@@ -200,15 +202,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/invoices.html",
 			controller: "invoicesCtrl",
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades,
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
-				vouchers: initialLoadFactory.cargaVouchers,
-				estados: initialLoadFactory.cargaEstados,
-				matches: initialLoadFactory.cargaMatchesArray,
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				descripciones: initialLoadFactory.cargaDescripciones
+				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
+				estados: function(){ return initialLoadFactory.cargaEstados() },
+				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
 		.state('matches', {
@@ -216,7 +218,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/pricelistEdit.html",
 			controller: 'matchPricesCtrl',
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() }
 			}
 		})
 		.state('control', {
@@ -224,8 +226,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/control.html",
 			controller: "controlCtrl",
 			resolve: {
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				descripciones: initialLoadFactory.cargaDescripciones
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
 		.state('cfacturas', {
@@ -233,15 +235,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/controlComprobantes.html",
 			controller: 'controlComprobantesCtrl',
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades,
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
-				vouchers: initialLoadFactory.cargaVouchers,
-				estados: initialLoadFactory.cargaEstados,
-				matches: initialLoadFactory.cargaMatchesArray,
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				descripciones: initialLoadFactory.cargaDescripciones
+				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
+				estados: function(){ return initialLoadFactory.cargaEstados() },
+				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			},
 			redirectTo: 'cfacturas.tasas'
 		})
@@ -277,15 +279,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/gates.html",
 			controller: "gatesCtrl",
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades,
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
-				vouchers: initialLoadFactory.cargaVouchers,
-				estados: initialLoadFactory.cargaEstados,
-				matches: initialLoadFactory.cargaMatchesArray,
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				descripciones: initialLoadFactory.cargaDescripciones
+				vouchers: function(){ initialLoadFactory.cargaVouchers() },
+				estados: function(){ return initialLoadFactory.cargaEstados() },
+				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
 		.state('cgates', {
@@ -293,15 +295,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: 'view/gates.control.html',
 			controller: 'controlGatesCtrl',
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades,
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
-				vouchers: initialLoadFactory.cargaVouchers,
-				estados: initialLoadFactory.cargaEstados,
-				matches: initialLoadFactory.cargaMatchesArray,
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				descripciones: initialLoadFactory.cargaDescripciones
+				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
+				estados: function(){ return initialLoadFactory.cargaEstados() },
+				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			},
 			redirectTo: 'cgates.gates'
 		})
@@ -326,8 +328,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/turnos.html",
 			controller: "turnosCtrl",
 			resolve: {
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				estados: initialLoadFactory.cargaEstados
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				estados: function(){ return initialLoadFactory.cargaEstados() }
 			}
 		})
 		.state('changepass', {
@@ -335,7 +337,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/newpass.html",
 			controller: "changePassCtrl",
 			resolve: {
-				ratesMatches: initialLoadFactory.cargaMatchesRates
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 			}
 		})
 		.state('container',{
@@ -346,30 +348,30 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/container.html",
 			controller: "buqueViajeCtrl",
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades,
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
-				vouchers: initialLoadFactory.cargaVouchers,
-				estados: initialLoadFactory.cargaEstados,
-				matches: initialLoadFactory.cargaMatchesArray,
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				descripciones: initialLoadFactory.cargaDescripciones
+				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
+				estados: function(){ return initialLoadFactory.cargaEstados() },
+				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
 		.state('buque',{
 			url: "/buqueViaje",
 			templateUrl: "view/buque.viaje.html",
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades,
-				buques: initialLoadFactory.cargaBuques,
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
+				buques: function(){ return initialLoadFactory.cargaBuques() },
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
-				vouchers: initialLoadFactory.cargaVouchers,
-				estados: initialLoadFactory.cargaEstados,
-				matches: initialLoadFactory.cargaMatchesArray,
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				descripciones: initialLoadFactory.cargaDescripciones
+				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
+				estados: function(){ return initialLoadFactory.cargaEstados() },
+				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
 		.state('forbidden', {
@@ -387,11 +389,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				templateUrl: 'view/reportes.tasas.html',
 				controller: 'ratesCtrl',
 				resolve: {
-					unitTypes: initialLoadFactory.cargaUnidades,
-					descripciones: initialLoadFactory.cargaDescripciones,
-					ratesMatches: initialLoadFactory.cargaMatchesRates,
-					allRates: initialLoadFactory.cargaAllRates,
-					estados: initialLoadFactory.cargaEstados
+					unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
+					descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+					ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+					allRates: function(){ return initialLoadFactory.cargaAllRates() },
+					estados: function(){ return initialLoadFactory.cargaEstados() }
 				}
 			})
 			.state('reports.tarifas', {
@@ -399,7 +401,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				templateUrl: 'view/reportes.tarifas.html',
 				controller: 'reporteTarifasCtrl',
 				resolve: {
-					ratesMatches: initialLoadFactory.cargaMatchesRates
+					ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 				}
 			})
 			.state('reports.empresas', {
@@ -407,10 +409,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				templateUrl: 'view/reportes.empresas.html',
 				controller: 'facturacionPorEmpresaCtrl',
 				resolve: {
-					clientes: initialLoadFactory.cargaClientes,
-					descripciones: initialLoadFactory.cargaDescripciones,
-					ratesMatches: initialLoadFactory.cargaMatchesRates,
-					estados: initialLoadFactory.cargaEstados
+					clientes: function(){ return initialLoadFactory.cargaClientes() },
+					descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+					ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+					estados: function(){ return initialLoadFactory.cargaEstados() }
 				}
 			})
 			.state('reports.terminales', {
@@ -418,8 +420,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 				templateUrl: 'view/reportes.terminales.html',
 				controller: 'tarifasTerminalesCtrl',
 				resolve: {
-					descripciones: initialLoadFactory.cargaDescripciones,
-					ratesMatches: initialLoadFactory.cargaMatchesRates
+					descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+					ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 				}
 			})
 		.state('afip', {
@@ -427,10 +429,10 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/afip.html",
 			controller: "afipCtrl",
 			resolve: {
-				sumImpoBuques: initialLoadFactory.cargaSumariaImpoBuques,
-				sumExpoBuques: initialLoadFactory.cargaSumariaExpoBuques,
-				solicitudBuques: initialLoadFactory.cargaSolicitudBuques,
-				afectacionBuques: initialLoadFactory.cargaAfectacionBuques
+				sumImpoBuques: function(){ return initialLoadFactory.cargaSumariaImpoBuques() },
+				sumExpoBuques: function(){ return initialLoadFactory.cargaSumariaExpoBuques() },
+				solicitudBuques: function(){ return initialLoadFactory.cargaSolicitudBuques() },
+				afectacionBuques: function(){ return initialLoadFactory.cargaAfectacionBuques() }
 			}
 		})
 		.state('afip.afectacion.afectacion1', {
@@ -541,7 +543,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: 'view/turnosEncolados.html',
 			controller: "queuedMailsCtrl",
 			resolve: {
-				ratesMatches: initialLoadFactory.cargaMatchesRates
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 			}
 		})
 		.state('validar', {
@@ -554,15 +556,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'initialLoadFa
 			templateUrl: "view/liquidaciones.html",
 			controller: "liquidacionesCtrl",
 			resolve: {
-				unitTypes: initialLoadFactory.cargaUnidades,
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
-				vouchers: initialLoadFactory.cargaVouchers,
-				estados: initialLoadFactory.cargaEstados,
-				matches: initialLoadFactory.cargaMatchesArray,
-				ratesMatches: initialLoadFactory.cargaMatchesRates,
-				descripciones: initialLoadFactory.cargaDescripciones
+				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
+				estados: function(){ return initialLoadFactory.cargaEstados() },
+				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
 		.state('modificarTarifario', {

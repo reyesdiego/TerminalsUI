@@ -193,50 +193,6 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 				});
 		};
 
-		factory.getSumariaImpoBuques = function (callback) {
-			var inserturl = APP_CONFIG.SERVER_URL + '/afip/registro1_sumimpomani/buques';
-			$http.get(inserturl)
-				.then(function (response) {
-					callback(response.data, false);
-				}, function (response) {
-					callback(response.data, true);
-				})
-
-		};
-
-		factory.getSumariaExpoBuques = function (callback) {
-			var inserturl = APP_CONFIG.SERVER_URL + '/afip/registro1_sumexpomane/buques';
-			$http.get(inserturl)
-				.then(function (response) {
-					callback(response.data, false);
-				}, function (response) {
-					callback(response.data, true);
-				})
-
-		};
-
-		factory.getAfectacionBuques = function (callback) {
-			var inserturl = APP_CONFIG.SERVER_URL + '/afip/registro1_afectacion/buques';
-			$http.get(inserturl)
-				.then(function (response) {
-					callback(response.data, false);
-				}, function (response) {
-					callback(response.data, true);
-				})
-
-		};
-
-		factory.getSolicitudBuques = function(callback){
-			var inserturl = APP_CONFIG.SERVER_URL + '/afip/registro1_solicitud/buques';
-			$http.get(inserturl)
-				.then(function(response){
-					callback(response.data, false);
-				}, function(response){
-					callback(response.data, true)
-				});
-
-		};
-
 		factory.getManifiestoDetalle = function(manifiesto, callback){
 			//var insertUrl = APP_CONFIG.SERVER_URL + '/alguna ruta';
 			var rutaMockeada = '/TerminalsUI/mocks/manifiestoDetalle.json';

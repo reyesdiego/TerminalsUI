@@ -103,13 +103,14 @@ myapp.filter('numero', [function() {
 	}
 }]);
 
-myapp.filter('nombreComprobante', ['vouchersArrayCache', function(vouchersArrayCache) {
+myapp.filter('nombreComprobante', ['cacheService', function(cacheService) {
 	return (function(numero, abrev) {
-		if (angular.isDefined(numero) && angular.isDefined(vouchersArrayCache.get(numero))) {
+		var vouchersArray = cacheService.vouchersArray;
+		if (angular.isDefined(numero) && angular.isDefined(vouchersArray[numero])) {
 			if (abrev){
-				return vouchersArrayCache.get(numero).abrev;
+				return vouchersArray[numero].abrev;
 			} else {
-				return vouchersArrayCache.get(numero).desc;
+				return vouchersArray[numero].desc;
 			}
 		} else {
 			return 'Error de comprobante';

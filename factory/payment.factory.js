@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 13/07/15.
  */
-myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'generalCache', 'APP_CONFIG', 'Payment', 'downloadService',
-	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, generalCache, APP_CONFIG, Payment, downloadService){
+myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService', 'invoiceFactory', '$q', 'HTTPCanceler', 'cacheService', 'APP_CONFIG', 'Payment', 'downloadService',
+	function($http, loginService, formatService, invoiceFactory, $q, HTTPCanceler, cacheService, APP_CONFIG, Payment, downloadService){
 
 		var liquidacionesFactory = {
 			namespace: 'liquidaciones',
@@ -147,7 +147,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 						});
 			},
 			setDescriptionTasas: function(detallesLiquidacion){
-				var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
+				var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
 				var totalFinal = 0;
 				var totalFinalAgp = 0;
 				detallesLiquidacion.forEach(function(detalle){

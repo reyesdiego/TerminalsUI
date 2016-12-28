@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 23/08/2016.
  */
-myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', 'loginService', 'APP_CONFIG', function($http, unitTypesArrayCache, $q, formatService, loginService, APP_CONFIG){
+myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginService', 'APP_CONFIG', function($http, cacheService, $q, formatService, loginService, APP_CONFIG){
     function Price(priceData){
         if (priceData){
             this.setData(priceData);
@@ -70,9 +70,10 @@ myapp.factory('Price', ['$http', 'unitTypesArrayCache', '$q', 'formatService', '
                     this.servicio = true;
                 }
             }
-            if (angular.isDefined(this.unit) && this.unit != null && angular.isDefined(unitTypesArrayCache.get(this.unit))){
+            var unitTypesArray = cacheService.cache.get('unitTypesArray');
+            if (angular.isDefined(this.unit) && this.unit != null && angular.isDefined(unitTypesArray[this.unit])){
                 this.idUnit = this.unit;
-                this.unit = unitTypesArrayCache.get(this.unit);
+                this.unit = unitTypesArray[this.unit];
             }
             this.mostrarDetalle = false;
         },

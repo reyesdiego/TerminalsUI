@@ -2,8 +2,8 @@
  * Created by artiom on 02/10/14.
  */
 
-myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'colorTerminalesCache', 'downloadFactory',
-	function($scope, reportsFactory, priceFactory, dialogs, loginService, colorTerminalesCache, downloadFactory) {
+myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'cacheService', 'downloadFactory',
+	function($scope, reportsFactory, priceFactory, dialogs, loginService, cacheService, downloadFactory) {
 
 		$scope.search = '';
 		$scope.selectedList = [];
@@ -180,9 +180,9 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.barColors = {
-			"bactssa": colorTerminalesCache.get('Bactssa'),
-			"terminal4": colorTerminalesCache.get('Terminal4'),
-			"trp": colorTerminalesCache.get('Trp')
+			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
+			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
+			"trp": cacheService.colorTerminalesCache.get('Trp')
 		};
 
 		$scope.hasta = new Date();

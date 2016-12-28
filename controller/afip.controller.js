@@ -2,8 +2,8 @@
  * Created by artiom on 19/12/14.
  */
 
-myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunctions', 'afipCache', 'loginService', 'dialogs',
-	function($scope, afipFactory, $state, generalFunctions, afipCache, loginService, dialogs){
+myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunctions', 'cacheService', 'loginService', 'dialogs',
+	function($scope, afipFactory, $state, generalFunctions, cacheService, loginService, dialogs){
 
 		$scope.fechaInicio = new Date();
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -138,18 +138,18 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 					$scope.tabs[0].active = true;
 					break;
 				case 'afip.afectacion.afectacion1':
-					$scope.listaBuques = afipCache.get('AfectacionBuques');
+					$scope.listaBuques = cacheService.afipCache.get('AfectacionBuques');
 					break;
 				case 'afip.solicitud.solicitud1':
-					$scope.listaBuques = afipCache.get('SolicitudBuques');
+					$scope.listaBuques = cacheService.afipCache.get('SolicitudBuques');
 					break;
 				case 'afip.sumatorias.impo1':
 				case 'afip.transbordos.impo':
-					$scope.listaBuques = afipCache.get('SumImpoBuques');
+					$scope.listaBuques = cacheService.afipCache.get('SumImpoBuques');
 					break;
 				case 'afip.sumatorias.expo1':
 				case 'afip.transbordos.expo':
-					$scope.listaBuques = afipCache.get('SumExpoBuques');
+					$scope.listaBuques = cacheService.afipCache.get('SumExpoBuques');
 					break;
 			}
 		});

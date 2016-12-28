@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 17/08/2016.
  */
-myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'loginService', '$uibModal', 'estadosArrayCache', 'downloadFactory', 'APP_CONFIG', '$filter', '$window', function($http, $q, formatService, generalCache, loginService, $uibModal, estadosArrayCache, downloadFactory, APP_CONFIG, $filter, $window){
+myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'loginService', '$uibModal', 'downloadFactory', 'APP_CONFIG', '$filter', '$window', function($http, $q, formatService, cacheService, loginService, $uibModal, downloadFactory, APP_CONFIG, $filter, $window){
     function Invoice(invoiceData){
         if (invoiceData){
             this.setData(invoiceData);
@@ -12,14 +12,8 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
         setData: function(invoiceData){
             angular.extend(this, invoiceData);
             if (this.detalle){
-                var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
-                /******************** ASQUEROSO ***********************/
-                var cacheUnidades = generalCache.get('unitTypes');
-                var unidadesTarifas = [];
-                for (var i = 0, len = cacheUnidades.length; i < len; i++) {
-                    unidadesTarifas[cacheUnidades[i]._id] = cacheUnidades[i].description;
-                }
-                /*********************************************************/
+                var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+                var unidadesTarifas = cacheService.cache.get('unitTypesArray');
                 this.detalle.forEach(function(contenedor){
                     contenedor.items.forEach(function(item){
                         item.descripcion = (descripciones[item.id]) ? descripciones[item.id] : 'No se halló la descripción, verifique que el código esté asociado';
@@ -49,8 +43,12 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
                 'user': 'agp'
             };
             if (this.estado){
+                console.log(cacheService.cache.get('estados'));
+                //console.log(cacheService.cache.get('estadosArray'));
+                var estadosArray = cacheService.estadosArray;
+                console.log(estadosArray);
                 if (this.estado.group == loginService.getGroup() || this.estado.group === 'ALL'){
-                    this.interfazEstado = (estadosArrayCache.get(this.estado.state)) ? estadosArrayCache.get(this.estado.state) : estadosArrayCache.get('Y');
+                    this.interfazEstado = (estadosArray[this.estado.state]) ? estadosArray[this.estado.state] : estadosArray['Y'];
                 } else {
                     this.estado = estadoDefault;
                     this.interfazEstado = {
@@ -203,7 +201,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             return deferred.promise;
         },
         trackInvoice: function(){
-            var estadosComprobantes = generalCache.get('estados');
+            var estadosComprobantes = cacheService.cache.get('estados');
             var scope = this;
             var deferred = $q.defer();
             this.getTrack().then(function(){
@@ -266,14 +264,8 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'generalCache', 'login
             return deferred.promise;
         },
         controlarTarifas: function(){
-            /***************** ASQUEROSO ***********************************/
-            var matchesTerminal = generalCache.get('matches' + loginService.getFiltro());
-            var lookup = {};
-            for (var i = 0, len = matchesTerminal.length; i < len; i++) {
-                lookup[matchesTerminal[i].code] = matchesTerminal[i];
-            }
-            /*****************************************************************/
-            var tasaCargasTerminal = generalCache.get('ratesMatches' + loginService.getFiltro());
+            var lookup = cacheService.matchesArray;
+            var tasaCargasTerminal = cacheService.matchesCache.get('ratesMatches' + loginService.getFiltro());
 
             var valorTomado;
             var tarifaError;

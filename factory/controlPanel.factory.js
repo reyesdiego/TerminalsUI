@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 3/19/14.
  */
 
-myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 'errorFactory', 'generalCache', '$q', 'HTTPCanceler', 'APP_CONFIG', 'downloadService',
-	function($http, formatService, loginService, errorFactory, generalCache, $q, HTTPCanceler, APP_CONFIG, downloadService){
+myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 'errorFactory', '$q', 'HTTPCanceler', 'APP_CONFIG', 'downloadService',
+	function($http, formatService, loginService, errorFactory, $q, HTTPCanceler, APP_CONFIG, downloadService){
 		var factory = {};
 		var namespace = 'control';
 
@@ -59,26 +59,6 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 					if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorTasas', 'Error al cargar total de facturado por tasa a las cargas.');
 				});
 		};
-
-		/*factory.getTasasContenedor = function(datos, ruta, callback){
-			var defer = $q.defer();
-			var canceler = HTTPCanceler.get(defer, namespace, 'getTasasContenedor');
-			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/rates/' + loginService.getFiltro() + '/' + datos.contenedor + '/' + datos.currency;
-			var queryString = {};
-			if (ruta == 'buque') queryString = {
-				buqueNombre: datos.buqueNombre,
-				viaje: datos.viaje
-			};
-			if (datos.contenedor != undefined && datos.contenedor != ''){
-				$http.get(inserturl, { params: formatService.formatearDatos(queryString), timeout: canceler.promise})
-					.then(function (response){
-						response.data = ponerDescripcionYTasas(response.data);
-						callback(response.data);
-					}, function(response){
-						if (response.status != -5) callback(response.data);
-					});
-			}
-		};*/
 
 		factory.getFacturasMeses = function(datos, callback){
 			var defer = $q.defer();
@@ -158,18 +138,6 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			HTTPCanceler.cancel(namespace);
 		};
 
-		//Método de caché - No hace falta cancelarlo - Se pasa la terminal
-		factory.getClients = function(terminal, callback){
-			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + terminal + '/clients';
-			$http.get(inserturl)
-				.then(function (response){
-					callback(response.data);
-				}, function(response){
-					if (response.data == null) response.data = {status: 'ERROR'};
-					callback(response.data);
-				});
-		};
-
 		//Método de caché - No hace falta cancelarlo
 		factory.getShips = function(callback){
 			var inserturl = APP_CONFIG.SERVER_URL + '/invoices/'+loginService.getFiltro()+'/ships';
@@ -216,17 +184,6 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 					callback('ERROR');
 				});
 		};
-
-		function ponerDescripcionYTasas(data) {
-			var datos = data;
-			var descripciones = generalCache.get('descripciones' + loginService.getFiltro());
-			datos.totalTasas = 0;
-			data.data.forEach(function(detalle){
-				detalle._id.descripcion = (descripciones[detalle._id.id]) ? descripciones[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';
-				datos.totalTasas += detalle.total;
-			});
-			return datos;
-		}
 
 		return factory;
 	}]);

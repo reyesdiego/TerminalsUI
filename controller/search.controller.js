@@ -2,8 +2,8 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCache', 'generalFunctions', '$sce', 'dialogs', 'loginService', '$filter', 'initialLoadFactory', 'invoiceFactory',
-	function($scope, generalCache, contenedoresCache, generalFunctions, $sce, dialogs, loginService, $filter, initialLoadFactory, invoiceFactory){
+myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunctions', '$sce', 'dialogs', 'loginService', '$filter', 'invoiceFactory',
+	function($scope, cacheService, generalFunctions, $sce, dialogs, loginService, $filter, invoiceFactory){
 
 		$scope.status = {
 			open: true
@@ -30,30 +30,26 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 		$scope.listaRazonSocial = [];
 		$scope.listaTrenes = [];
 
-		initialLoadFactory.cargaBuques().then(function(data){
+		cacheService.cargaBuques().then(function(data){
 			$scope.listaBuques = data;
 		});
 
-		initialLoadFactory.cargaClientes().then(function(data){
+		cacheService.cargaClientes().then(function(data){
 			$scope.listaRazonSocial = data;
 		});
 
-		initialLoadFactory.cargaTrenes().then(function(data){
+		cacheService.cargaTrenes().then(function(data){
 			$scope.listaTrenes = data;
 		});
 
-		/*$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
-		$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
-		$scope.listaTrenes = generalCache.get('trenes' + loginService.getFiltro());*/
-
-		$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
+		$scope.vouchers = cacheService.cache.get('vouchers' + loginService.getFiltro());
 		$scope.itemsPerPageData = [
 			{ value: 10, description: '10 items por página', ticked: false},
 			{ value: 15, description: '15 items por página', ticked: true},
 			{ value: 20, description: '20 items por página', ticked: false},
 			{ value: 50, description: '50 items por página', ticked: false}
 		];
-		$scope.estadosComprobantes = $filter('filter')(generalCache.get('estados'), $scope.filtroEstados);
+		$scope.estadosComprobantes = $filter('filter')(cacheService.cache.get('estados'), $scope.filtroEstados);
 		$scope.estadosComprobantes.forEach(function(unEstado){
 			unEstado.ticked = false;
 		});
@@ -293,13 +289,5 @@ myapp.controller("searchController", ['$scope', 'generalCache', 'contenedoresCac
 			$scope.$broadcast('checkAutoComplete');
 			$scope.$emit('iniciarBusqueda', $scope.model);
 		};
-
-		/*$scope.$on('cambioTerminal', function(){
-			$scope.detallesGates = false;
-			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
-			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
-			$scope.vouchers = generalCache.get('vouchers' + loginService.getFiltro());
-			$scope.listaTrenes = generalCache.get('trenes' + loginService.getFiltro());
-		});*/
 
 	}]);

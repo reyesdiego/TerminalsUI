@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'generalCache', 'initialLoadFactory', '$state', 'Price', 'generalFunctions',
-	function($scope, priceFactory, $timeout, dialogs, loginService, $filter, generalCache, initialLoadFactory, $state, Price, generalFunctions) {
+myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'cacheService', '$state', 'Price', 'generalFunctions',
+	function($scope, priceFactory, $timeout, dialogs, loginService, $filter, cacheService, $state, Price, generalFunctions) {
 		'use strict';
 
 		$scope.dataTerminal = loginService;
@@ -50,7 +50,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		$scope.newFrom = new Date();
 		$scope.newCurrency = 'DOL';
 
-		$scope.unidadesTarifas = generalCache.get('unitTypes');
+		$scope.unidadesTarifas = cacheService.cache.get('unitTypes');
 
 		$scope.openFechaTarifa = false;
 		$scope.openDate = function($event) {
@@ -168,7 +168,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 					}));
 					$scope.newPrice.saveChanges()
 							.then(function(){
-								initialLoadFactory.actualizarMatchesArray(loginService.getFiltro());
+								cacheService.actualizarMatchesArray(loginService.getFiltro());
 								dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
 								$scope.prepararDatos();
 								$state.transitionTo('matches');
