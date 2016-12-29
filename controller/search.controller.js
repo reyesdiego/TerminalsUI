@@ -165,7 +165,7 @@ myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunction
 			if (filtro == 'razonSocial'){
 				$scope.model[filtro] = filtrarCaracteresInvalidos(contenido);
 			}
-			if (filtro == 'buqueNombre'){
+			/*if (filtro == 'buqueNombre'){
 				if (contenido != ''){
 					var i = 0;
 					$scope.listaBuques.forEach(function(buque){
@@ -184,7 +184,7 @@ myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunction
 					$scope.model.viaje = '';
 					$scope.mostrarViajes = false;
 				}
-			}
+			}*/
 			/*if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);

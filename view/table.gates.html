@@ -31,10 +31,10 @@
 					</tr>
 					<tr ng-repeat="gate in datosGates" class="fila-animada">
 						<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-						<td><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO' || gate.buque == ''" ng-click="filtrado('buqueNombre', gate.buque)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
+						<td><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO' || gate.buque == '' || gate.buque == null" ng-click="filtrado('buqueNombre', gate.buque); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
 						<td>{{ gate.viaje }}</td>
 						<td>
-							<a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO' || gate.contenedor == ''" ng-click="filtrado('contenedor', gate.contenedor)">
+							<a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO' || gate.contenedor == ''" ng-click="filtrado('contenedor', gate.contenedor); cargaPorFiltros()">
 								<span class="glyphicon glyphicon-search"></span>
 							</a>
 							<span ng-show="gate.carga == 'LL'" class="text-success" title="Contenedor con carga">{{ gate.contenedor }}</span>
@@ -42,8 +42,8 @@
 							<span ng-hide="gate.carga == 'VA' || gate.carga == 'LL'">{{ gate.contenedor }}</span>
 						</td>
 						<td>{{ gate.largo }}</td>
-						<td ng-show="noVoyEnTrenVoyEnCamion(gate.patenteCamion)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('patenteCamion', 0) >= 0" ng-click="filtrado('patenteCamion', gate.patenteCamion)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.patenteCamion }}</td>
-						<td ng-show="noVoyEnTrenVoyEnCamion(gate.tren)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('tren', 0) >= 0" ng-click="filtrado('tren', gate.tren)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.tren }} <i class="icon ion-android-train"></i> </td>
+						<td ng-show="noVoyEnTrenVoyEnCamion(gate.patenteCamion)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('patenteCamion', 0) >= 0" ng-click="filtrado('patenteCamion', gate.patenteCamion); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.patenteCamion }}</td>
+						<td ng-show="noVoyEnTrenVoyEnCamion(gate.tren)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('tren', 0) >= 0" ng-click="filtrado('tren', gate.tren); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.tren }} <i class="icon ion-android-train"></i> </td>
 						<td class="text-center"><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
 						<td class="text-center">{{ gate.mov }}</td>
 						<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>

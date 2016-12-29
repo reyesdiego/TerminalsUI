@@ -309,11 +309,15 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             }
 
             get vouchersArray(){
-                let vouchersArray = [];
-                for (let voucher of this.cache.get(`vouchers${loginService.getFiltro()}`)){
-                    vouchersArray[voucher._id] = {desc: voucher.description, abrev: voucher.abbrev}
+                if (this.cache.get(`vouchers${loginService.getFiltro()}`)){
+                    let vouchersArray = [];
+                    for (let voucher of this.cache.get(`vouchers${loginService.getFiltro()}`)){
+                        vouchersArray[voucher._id] = {desc: voucher.description, abrev: voucher.abbrev}
+                    }
+                    return vouchersArray;
+                } else {
+                    return [];
                 }
-                return vouchersArray;
             }
 
             cargaUnidades(){
