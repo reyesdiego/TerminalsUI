@@ -14,11 +14,7 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
 
         class cacheService {
             constructor(){
-                //console.log('constructor!');
                 if (!CacheFactory.get('generalCache')){
-                    //console.log('no existe');
-                    //console.log('la creamos');
-                    this.probando = 'hola puto';
                     this.cache = CacheFactory.createCache('generalCache', {
                         maxAge: 7 *24 * 60 * 60 * 1000, // 1 week
                         deleteOnExpire: 'aggressive',
@@ -181,11 +177,9 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                             deferred.resolve(response.data.data);
                         } else {
                             //console.log('error buques');
-                            this.cache.put(`buques${loginService.getFiltro()}`, []);
                             deferred.resolve([]);
                         }
                     }, (response) => {
-                        this.cache.put(`buques${loginService.getFiltro()}`, []);
                         deferred.resolve([]);
                     });
                 }
@@ -208,11 +202,9 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                             deferred.resolve(response.data.data);
                         } else {
                             //console.log('error buques');
-                            this.cache.put(`buquesviaje${loginService.getFiltro()}`, []);
                             deferred.resolve([]);
                         }
                     }, (response) => {
-                        this.cache.put(`buquesviaje${loginService.getFiltro()}`, []);
                         deferred.resolve([]);
                     });
                 }
@@ -240,11 +232,9 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                                 deferred.resolve(clientes);
                             } else {
                                 //console.log('error clientes');
-                                this.cache.put(`clientes${loginService.getFiltro()}`, []);
                                 deferred.resolve([]);
                             }
                         }, (response) => {
-                            this.cache.put(`clientes${loginService.getFiltro()}`, []);
                             deferred.resolve([]);
                         });
                 }
@@ -267,12 +257,10 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                             deferred.resolve();
                         } else {
                             //console.log('error descripciones');
-                            this.cache.put(`descripciones${loginService.getFiltro()}`, []);
                             deferred.resolve();
                         }
                     }, (response) => {
                         //console.log('error descripciones');
-                        this.cache.put(`descripciones${loginService.getFiltro()}`, []);
                         deferred.resolve();
                     });
                 }
@@ -295,12 +283,10 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                             deferred.resolve();
                         } else {
                             //console.log('error vouchers');
-                            this.cache.put(`vouchers${loginService.getFiltro()}`, []);
                             deferred.resolve();
                         }
                     }, (response) => {
                         //console.log('error vouchers');
-                        this.cache.put(`vouchers${loginService.getFiltro()}`, []);
                         deferred.resolve();
                     });
 
@@ -339,12 +325,10 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                             deferred.resolve();
                         } else {
                             //console.log('error unidades');
-                            this.cache.put('unitTypes', []);
                             deferred.resolve();
                         }
                     }, (response) => {
                         //console.log('error al carga unidades, pero deberia pasar igual');
-                        this.cache.put('unitTypes', []);
                         deferred.resolve();
                     });
                 }
@@ -402,12 +386,10 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                             deferred.resolve();
                         } else {
                             //console.log('error estados');
-                            this.cache.put('estados', []);
                             deferred.resolve();
                         }
                     }, (response) => {
                         //console.log('error estados');
-                        this.cache.put('estados', []);
                         deferred.resolve();
                     });
                 }
@@ -449,12 +431,10 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                             deferred.resolve();
                         } else {
                             //console.log('error matches');
-                            this.matchesCache.put(`matches${loginService.getFiltro()}`, []);
                             deferred.resolve();
                         }
                     }, response => {
                         //console.log('error matches');
-                        this.matchesCache.put(`matches${loginService.getFiltro()}`, []);
                         deferred.resolve();
                     });
                 }
@@ -492,12 +472,10 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                             deferred.resolve();
                         } else {
                             //console.log('error rates');
-                            this.matchesCache.put(`ratesMatches${loginService.getFiltro()}`, []);
                             deferred.resolve();
                         }
                     }, (response) => {
                         //console.log('error rates');
-                        this.matchesCache.put(`ratesMatches${loginService.getFiltro()}`, []);
                         deferred.resolve();
                     });
 
@@ -518,7 +496,6 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         this.matchesCache.put('allRates', response.data);
                         deferred.resolve();
                     }, (response) => {
-                        this.matchesCache.put('allRates', []);
                         deferred.resolve()
                     });
                 }
@@ -535,7 +512,6 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         this.afipCache.put('SumImpoBuques', response.data.data);
                         deferred.resolve();
                     }, (response) => {
-                        this.afipCache.put('SumImpoBuques', []);
                         deferred.resolve();
                     });
                 }
@@ -552,7 +528,6 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         this.afipCache.put('SumExpoBuques', response.data.data);
                         deferred.resolve();
                     }, (response) => {
-                        this.afipCache.put('SumExpoBuques', []);
                         deferred.resolve();
                     });
                 }
@@ -569,7 +544,6 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         this.afipCache.put('AfectacionBuques', response.data.data);
                         deferred.resolve();
                     }, (response) => {
-                        this.afipCache.put('AfectacionBuques', []);
                         deferred.resolve();
                     });
                 }
@@ -586,7 +560,6 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         this.afipCache.put('SolicitudBuques', response.data.data);
                         deferred.resolve();
                     }, (response) => {
-                        this.afipCache.put('SolicitudBuques', []);
                         deferred.resolve();
                     });
                 }
