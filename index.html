@@ -233,12 +233,12 @@
 						<li class="visible-sm" ng-click="cerrarMenu()"><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
 						<li class="visible-sm" ng-click="cerrarMenu()"><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
 						<li class="visible-sm" ng-click="cerrarMenu()"><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
-						<li class="visible-sm divider"></li>
+						<!--<li class="visible-sm divider"></li>
 						<li class="visible-sm dropdown-header">Cambiar moneda</li>
-						<li class="visible-sm" ng-click="cerrarMenu()"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
+						<li class="visible-sm" ng-click="cerrarMenu()"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>-->
 					</ul>
 				</li>
-				<li class="hidden-sm" ng-if="dataTerminal.getType()!='' && cambioMoneda"><a href ng-click="switchMoneda();" ng-click="cerrarMenu()">{{ moneda | formatCurrency}}</a></li>
+				<!--<li class="hidden-sm" ng-if="dataTerminal.getType()!='' && cambioMoneda"><a href ng-click="switchMoneda();" ng-click="cerrarMenu()">{{ moneda | formatCurrency}}</a></li>-->
 				<li ng-if="dataTerminal.getType()!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
 				<li ng-if="dataTerminal.getType()!=''" uib-dropdown>
 					<a href data-toggle="dropdown" uib-dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ dataTerminal.getInfo().user }}<b class="caret"></b></a>

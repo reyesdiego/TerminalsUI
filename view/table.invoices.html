@@ -23,8 +23,7 @@
 			<td class="text-right" style="width: 17%">
 				<span class="text-danger glyphicon glyphicon-exclamation-sign" ng-show="invoice.controlTarifas.length > 0" uib-popover="Error en tarifas" popover-trigger="mouseenter"></span>
 				<span class="text-warning glyphicon glyphicon-question-sign" ng-show="invoice.noMatch" uib-popover="Códigos sin asociar" popover-trigger="mouseenter"></span>
-				<span ng-hide="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8">{{ invoice.importe.total | conversionMoneda: invoice | currency: (moneda | formatCurrency) }}</span>
-				<span ng-show="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8" style="color: #ff0000"> -{{ invoice.importe.total | conversionMoneda: invoice | currency: (moneda | formatCurrency) }}</span>
+				<span ng-class="invoice.total < 0 ? 'text-danger' : ''"><span ng-show="invoice.total < 0">- </span>{{ invoice.importe.total | currency: (invoice.codMoneda | formatCurrency) }}</span>
 			</td>
 			<td ng-hide="inTrackContainer" class="hidden-print text-center" style="width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			<td style="width: 14%" class="hidden-print text-left">
@@ -46,8 +45,7 @@
 			<td class="text-right" style="width: 17%">
 				<span class="text-danger glyphicon glyphicon-exclamation-sign" ng-show="invoice.controlTarifas.length > 0" uib-popover="Error en tarifas" popover-trigger="mouseenter"></span>
 				<span class="text-warning glyphicon glyphicon-question-sign" ng-show="invoice.noMatch" uib-popover="Códigos sin asociar" popover-trigger="mouseenter"></span>
-				<span ng-hide="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8">{{ invoice.importe.total | conversionMoneda: invoice | currency: (moneda | formatCurrency) }}</span>
-				<span ng-show="invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8" style="color: #ff0000">- {{ invoice.importe.total | conversionMoneda: invoice | currency: (moneda | formatCurrency) }}</span>
+				<span ng-class="invoice.total < 0 ? 'text-danger' : ''"><span ng-show="invoice.total < 0">- </span>{{ invoice.importe.total | currency: (invoice.codMoneda | formatCurrency) }}</span>
 			<td class="hidden-print text-center" style="width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		</tbody>
