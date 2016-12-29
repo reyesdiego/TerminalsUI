@@ -3,39 +3,39 @@
  */
 myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatService', 'invoiceFactory', 'cacheService', function($http, $q, APP_CONFIG, loginService, formatService, invoiceFactory, cacheService){
 
-	function Payment(searchParams, paymentData){
-		this.invoices = {
-			data: [],
-			totalCount: 0
-		};
-		this.invoicesByContainer = {
-			data: [],
-			totalCount: 0
-		};
-		this.detail = [];
-		this.reload = false;
-		this.byContainer = false;
-		if (searchParams)
-			this.searchParams = searchParams;
-		if (paymentData)
-			this.setData(paymentData);
+	class Payment {
+		constructor(searchParams, paymentData){
+			this.invoices = {
+				data: [],
+				totalCount: 0
+			};
+			this.invoicesByContainer = {
+				data: [],
+				totalCount: 0
+			};
+			this.detail = [];
+			this.reload = false;
+			this.byContainer = false;
+			if (searchParams)
+				this.searchParams = searchParams;
+			if (paymentData)
+				this.setData(paymentData);
+		}
 
-	}
-
-	Payment.prototype = {
-		setData: function(paymentData){
-			var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+		setData(paymentData){
+			const descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
 			angular.extend(this, paymentData);
-			this.detail.forEach(function(detail){
+			this.detail.forEach((detail) => {
 				detail.desc = descripciones[detail._id];
 			});
 			this.verDetalle = false;
-		},
-		setRatesDescription: function(detallesLiquidacion){
-			var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
-			var totalFinal = 0;
-			var totalFinalAgp = 0;
-			detallesLiquidacion.forEach(function(detalle){
+		}
+
+		setRatesDescription(detallesLiquidacion){
+			const descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+			let totalFinal = 0;
+			let totalFinalAgp = 0;
+			detallesLiquidacion.forEach((detalle) => {
 				detalle.descripcion = descripciones[detalle._id.code];
 				totalFinal += detalle.totalPeso;
 				totalFinalAgp += detalle.totalPesoAgp;
@@ -43,54 +43,53 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 			detallesLiquidacion.totalFinal = totalFinal;
 			detallesLiquidacion.totalFinalAgp = totalFinalAgp;
 			return detallesLiquidacion;
-		},
-		getPrePaymentDetail: function(callback){
-			var inserturl = APP_CONFIG.SERVER_URL + '/paying/getPrePayment/' + loginService.getFiltro();
-			var params = {};
-			var scope = this;
+		}
+
+		getPrePaymentDetail(callback){
+			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/getPrePayment/${loginService.getFiltro()}`;
+			let params = {};
 
 			if (this._id){
 				params = { paymentId: this._id }
 			} else {
 				params = formatService.formatearDatos(this.searchParams)
 			}
-			$http.get(inserturl, { params: params})
-					.then(function(response){
-						scope.detail = scope.setRatesDescription(response.data.data);
-						callback(true, null);
-					}, function(err){
-						callback(false, err);
-					});
-		},
-		getInvoices: function(page, callback){
-			var llamadas = [];
+			$http.get(inserturl, { params: params}).then((response) => {
+				this.detail = this.setRatesDescription(response.data.data);
+				callback(true, null);
+			}).catch((err) => {
+				callback(false, err);
+			});
+		}
+
+		getInvoices(page, callback){
+			let llamadas = [];
 			llamadas.push(this.getInvoicesGrouped(page));
 			llamadas.push(this.getInvoicesNotGrouped(page));
-			$q.all(llamadas)
-					.then(function(){
-						callback(true);
-					}, function(){
-						callback(false)
-					})
-		},
-		getInvoicesNotGrouped: function(page){
-			var deferred = $q.defer();
-			var scope = this;
+			$q.all(llamadas).then(() => {
+				callback(true);
+			}).catch(() => {
+				callback(false)
+			})
+		}
+
+		getInvoicesNotGrouped(page){
+			const deferred = $q.defer();
 			if (this._id){
-				invoiceFactory.getComprobantesLiquidados(page, this._id, this.searchParams, function(data){
+				invoiceFactory.getComprobantesLiquidados(page, this._id, this.searchParams, (data) => {
 					if (data.status == 'OK'){
-						scope.invoices.data = data.data;
-						scope.invoices.totalCount = data.totalCount;
+						this.invoices.data = data.data;
+						this.invoices.totalCount = data.totalCount;
 						deferred.resolve();
 					} else {
 						deferred.reject();
 					}
 				});
 			} else {
-				invoiceFactory.getComprobantesLiquidar(page, this.searchParams, function(data){
+				invoiceFactory.getComprobantesLiquidar(page, this.searchParams, (data) => {
 					if (data.status == 'OK'){
-						scope.invoices.data = data.data;
-						scope.invoices.totalCount = data.totalCount;
+						this.invoices.data = data.data;
+						this.invoices.totalCount = data.totalCount;
 						deferred.resolve();
 					} else {
 						deferred.reject();
@@ -98,27 +97,27 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 				});
 			}
 			return deferred.promise;
-		},
-		getInvoicesGrouped: function(page){
-			var deferred = $q.defer();
-			var alterModel = angular.copy(this.searchParams);
-			var scope = this;
+		}
+
+		getInvoicesGrouped(page){
+			const deferred = $q.defer();
+			let alterModel = angular.copy(this.searchParams);
 			alterModel.byContainer = true;
 			if (this._id){
-				invoiceFactory.getComprobantesLiquidados(page, this._id, alterModel, function(data){
+				invoiceFactory.getComprobantesLiquidados(page, this._id, alterModel, (data) => {
 					if (data.status == 'OK'){
-						scope.invoicesByContainer.data = data.data;
-						scope.invoicesByContainer.totalCount = data.totalCount;
+						this.invoicesByContainer.data = data.data;
+						this.invoicesByContainer.totalCount = data.totalCount;
 						deferred.resolve();
 					} else {
 						deferred.reject();
 					}
 				});
 			} else {
-				invoiceFactory.getComprobantesLiquidar(page, alterModel, function(data){
+				invoiceFactory.getComprobantesLiquidar(page, alterModel, (data) => {
 					if (data.status == 'OK'){
-						scope.invoicesByContainer.data = data.data;
-						scope.invoicesByContainer.totalCount = data.totalCount;
+						this.invoicesByContainer.data = data.data;
+						this.invoicesByContainer.totalCount = data.totalCount;
 						deferred.resolve();
 					} else {
 						deferred.reject();
@@ -126,23 +125,27 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 				});
 			}
 			return deferred.promise;
-		},
-		addToPrePayment: function(prePayment){
-			var inserturl = APP_CONFIG.SERVER_URL + '/paying/addToPrePayment/' + loginService.getFiltro();
-			var liquidacion = {
+		}
+
+		addToPrePayment(prePayment){
+			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/addToPrePayment/${loginService.getFiltro()}`;
+			const liquidacion = {
 				paymentId: prePayment
 			};
 			return $http.put(inserturl, liquidacion,{ params: formatService.formatearDatos(this.searchParams) })
-		},
-		deletePayment: function(){
-			var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayment/' + this._id;
+		}
+
+		deletePayment(){
+			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/prePayment/${this._id}`;
 			return $http.delete(inserturl)
-		},
-		setPayment: function(){
-			var inserturl = APP_CONFIG.SERVER_URL + '/paying/payment';
+		}
+
+		setPayment(){
+			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/payment`;
 			return $http.put(inserturl, {terminal: loginService.getFiltro(), preNumber: this.preNumber})
 		}
-	};
+
+	}
 
 	return Payment;
 

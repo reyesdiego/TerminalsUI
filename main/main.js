@@ -245,7 +245,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
 				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			},
-			redirectTo: 'cfacturas.tasas'
+			redirectTo: 'cfacturas.correlatividad'
 		})
 			.state('cfacturas.tasas', {
 				url: '/tasas',

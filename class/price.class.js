@@ -2,17 +2,17 @@
  * Created by kolesnikov-a on 23/08/2016.
  */
 myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginService', 'APP_CONFIG', function($http, cacheService, $q, formatService, loginService, APP_CONFIG){
-    function Price(priceData){
-        if (priceData){
-            this.setData(priceData);
-        } else {
-            this.newPrice()
+
+    class Price {
+        constructor(priceData){
+            if (priceData){
+                this.setData(priceData);
+            } else {
+                this.newPrice()
+            }
         }
 
-    };
-
-    Price.prototype = {
-        newPrice: function(){
+        newPrice(){
             this.code = '';
             this.unit = '';
             this.topPrices = [];
@@ -23,8 +23,9 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 _idPrice: '',
                 code: ''
             }]
-        },
-        setData: function(priceData){
+        }
+
+        setData(priceData){
             angular.extend(this, priceData);
 
             this.code_old = this.code;
@@ -33,7 +34,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             this.tarifaAgp = false;
             this.servicio = false;
 
-            if (!angular.isDefined(this.price || this.price == null)){
+            if (!angular.isDefined(this.price) || this.price == null){
                 this.orderPrice = 0;
             } else {
                 this.orderPrice = this.price;
@@ -58,10 +59,9 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 this.tarifaAgp = true;
             } else {
                 if (angular.isDefined(this.matches[0].match)  && this.matches[0].match != null && this.matches[0].match.length >= 1){
-                    var tarifa = this;
-                    var tarifaPropia = false;
-                    this.matches[0].match.forEach(function(unMatch){
-                        if (unMatch == tarifa.code){
+                    let tarifaPropia = false;
+                    this.matches[0].match.forEach((unMatch) => {
+                        if (unMatch == this.code){
                             tarifaPropia = true;
                         }
                     });
@@ -70,43 +70,44 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                     this.servicio = true;
                 }
             }
-            var unitTypesArray = cacheService.unitTypesArray;
+            const unitTypesArray = cacheService.unitTypesArray;
             if (angular.isDefined(this.unit) && this.unit != null && angular.isDefined(unitTypesArray[this.unit])){
                 this.idUnit = this.unit;
                 this.unit = unitTypesArray[this.unit];
             }
             this.mostrarDetalle = false;
-        },
-        checkTopPricesDates: function(){
+        }
+
+        checkTopPricesDates(){
             if (this.topPrices.length > 0){
                 this.topPrices[0].dateOptions = {};
-                for (var i = 1; i < this.topPrices.length; i++){
+                for (let i = 1; i < this.topPrices.length; i++){
                     this.topPrices[i-1].dateOptions.maxDate = new Date(this.topPrices[i-1].from);
                     this.topPrices[i].dateOptions = {
                         minDate: new Date(this.topPrices[i-1].from.getFullYear(), this.topPrices[i-1].from.getMonth(), this.topPrices[i-1].from.getDate()+1)
                     }
                 }
             }
-        },
-        getTopPrices: function(){
-            var deferred = $q.defer();
-            var inserturl = APP_CONFIG.SERVER_URL + '/prices/' + this._id + '/' + loginService.getFiltro();
-            var scope = this;
-            $http.get(inserturl)
-                .then(function(response){
-                    scope.topPrices = response.data.data.topPrices;
-                    for (var i = 0; i < scope.topPrices.length; i++){
-                        scope.topPrices[i].from = new Date(scope.topPrices[i].from)
-                    }
-                    scope.checkTopPricesDates();
-                    deferred.resolve();
-                }, function(response){
-                    deferred.reject(response.data);
-                });
+        }
+
+        getTopPrices(){
+            const deferred = $q.defer();
+            const inserturl = `${APP_CONFIG.SERVER_URL}/prices/${this._id}/${loginService.getFiltro()}`;
+            $http.get(inserturl).then((response) => {
+                this.topPrices = response.data.data.topPrices;
+                for (let i = 0; i < this.topPrices.length; i++){
+                    this.topPrices[i].from = new Date(this.topPrices[i].from)
+                }
+                this.checkTopPricesDates();
+                deferred.resolve();
+            }).catch((response) => {
+                deferred.reject(response.data);
+            });
             return deferred.promise;
-        },
-        addTopPrice: function(){
-            var newPrice = {
+        }
+
+        addTopPrice(){
+            let newPrice = {
                 from: new Date(),
                 currency: 'DOL',
                 price: '',
@@ -120,32 +121,37 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 this.topPrices[this.topPrices.length-1].dateOptions.maxDate = new Date(this.topPrices[this.topPrices.length-1].from)
             }
             this.topPrices.push(newPrice);
-        },
-        removeTopPrice: function(index){
+        }
+
+        removeTopPrice(index){
             this.topPrices.splice(index, 1);
             this.checkTopPricesDates();
-        },
-        detalleOnOff: function(){
+        }
+
+        detalleOnOff(){
             this.mostrarDetalle = !this.mostrarDetalle;
-        },
-        getMatches: function(){
+        }
+
+        getMatches(){
             if (this.tieneMatch()) {
                 return this.matches[0].match;
             }
-        },
-        setMatches: function(matches){
+        }
+
+        setMatches(matches){
             this.matches[0].match = matches;
-        },
-        tieneMatch: function(){
+        }
+
+        tieneMatch(){
             return (angular.isDefined(this.matches) && this.matches != null && this.matches.length > 0
-                        && this.matches[0].match != null && this.matches[0].match.length > 0 && this.matches[0].match[0] != null);
-        },
-        saveChanges: function(){
+            && this.matches[0].match != null && this.matches[0].match.length > 0 && this.matches[0].match[0] != null);
+        }
+
+        saveChanges(){
             if (loginService.getType() == 'terminal' && this.tarifaTerminal){
-                var encontrado = false;
-                var scope = this;
+                let encontrado = false;
                 this.matches[0].match.forEach(function(match){
-                    if (match == scope.code) encontrado = true;
+                    if (match == this.code) encontrado = true;
                 });
                 if (!encontrado){
                     this.matches[0].match.push(this.code)
@@ -153,100 +159,69 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             }
             this.matches[0].code = this.code;
             if (this._id){
-               return this.updatePriceChanges();
+                return this.updatePriceChanges();
             } else {
                 return this.addNewPrice();
             }
-        },
-        addNewPrice: function(){
-            var deferred = $q.defer();
-            //console.log(this);
-            var inserturl = APP_CONFIG.SERVER_URL + '/prices/price';
-            var scope = this;
-            $http.post(inserturl, this)
-                .then(function(response) {
-                    if (response.data.status == 'OK'){
-                        scope.matches[0]._idPrice = response.data.data._id;
-                        /*if (loginService.getType() == 'terminal'){
-                            var encontrado = false;
-                            scope.matches[0].match.forEach(function(match){
-                                if (match == scope.code) encontrado = true;
-                            });
-                            if (!encontrado){
-                                scope.matches[0].match.push(scope.code)
-                            }
-                        }
-                        scope.saveMatchPrices()
-                            .then(function(response){
-                                deferred.resolve(response);
-                            }, function(error){
-                                deferred.reject(error);
-                            })*/
-                        deferred.resolve(response);
-                    } else {
-                        deferred.reject(response.data)
-                    }
-                }, function(response) {
-                    deferred.reject(response.data);
-                });
-            return deferred.promise;
-        },
-        updatePriceChanges: function(){
-            var deferred = $q.defer();
-            this.topPrices.forEach(function(unPrecio){
-                unPrecio.from = formatService.formatearFechaISOString(unPrecio.from);
+        }
+
+        addNewPrice(){
+            const deferred = $q.defer();
+            const inserturl = `${APP_CONFIG.SERVER_URL}/prices/price`;
+            $http.post(inserturl, this).then((response) => {
+                if (response.data.status == 'OK'){
+                    this.matches[0]._idPrice = response.data.data._id;
+                    deferred.resolve(response);
+                } else {
+                    deferred.reject(response.data)
+                }
+            }).catch((response) => {
+                deferred.reject(response.data);
             });
-            var inserturl = APP_CONFIG.SERVER_URL + '/prices/price/' + this._id;
-            //var scope = this;
-            $http.put(inserturl, this)
-                .then(function(response) {
-                    if (response.data.status == 'OK'){
-                        /*if (loginService.getType() == 'terminal' && scope.tarifaTerminal){
-                            var encontrado = false;
-                            scope.matches[0].match.forEach(function(match){
-                                if (match == scope.code) encontrado = true;
-                            });
-                            if (!encontrado){
-                                scope.matches[0].match.push(scope.code)
-                            }
-                            scope.matches[0].code = scope.code;
-                        }
-                        scope.saveMatchPrices().then(function(response){
-                            deferred.resolve(response);
-                        }, function(error){
-                            deferred.reject(error)
-                        })*/
-                        deferred.resolve(response);
-                    } else {
-                        deferred.reject(response.data);
-                    }
-                }, function(response) {
-                    deferred.reject(response.data);
-                });
-            return deferred.promise;
-        },
-        saveMatchPrices: function(){
-            var deferred = $q.defer();
-            var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/matchprice';
-            $http.post(inserturl, this.matches[0])
-                .then(function (response) {
-                    deferred.resolve(response.data);
-                }, function(response) {
-                    deferred.reject(response.data);
-                });
-            return deferred.promise;
-        },
-        removePrice: function(){
-            var deferred = $q.defer();
-            var inserturl = APP_CONFIG.SERVER_URL + '/prices/price/' + this._id;
-            $http.delete(inserturl)
-                .then(function(response) {
-                    deferred.resolve(response.data);
-                }, function(response) {
-                    deferred.reject(response.data);
-                });
             return deferred.promise;
         }
-    };
+
+        updatePriceChanges(){
+            const deferred = $q.defer();
+            this.topPrices.forEach((unPrecio) => {
+                unPrecio.from = formatService.formatearFechaISOString(unPrecio.from);
+            });
+            const inserturl = `${APP_CONFIG.SERVER_URL}/prices/price/${this._id}`;
+            $http.put(inserturl, this).then((response) => {
+                if (response.data.status == 'OK'){
+                    deferred.resolve(response);
+                } else {
+                    deferred.reject(response.data);
+                }
+            }).catch((response) => {
+                deferred.reject(response.data);
+            });
+            return deferred.promise;
+        }
+
+        saveMatchPrices(){
+            const deferred = $q.defer();
+            const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/matchprice`;
+            $http.post(inserturl, this.matches[0]).then((response) => {
+                deferred.resolve(response.data);
+            }).catch((response) => {
+                deferred.reject(response.data);
+            });
+            return deferred.promise;
+        }
+
+        removePrice(){
+            const deferred = $q.defer();
+            const inserturl = `${APP_CONFIG.SERVER_URL}/prices/price/${this._id}`;
+            $http.delete(inserturl).then((response) => {
+                deferred.resolve(response.data);
+            }).catch((response) => {
+                deferred.reject(response.data);
+            });
+            return deferred.promise;
+        }
+
+    }
+
     return Price;
 }]);

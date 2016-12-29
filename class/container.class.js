@@ -3,13 +3,13 @@
  */
 myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'cacheService', 'loginService', 'formatService', function($http, $q, APP_CONFIG, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, cacheService, loginService, formatService){
 
-    function Container(containerData){
-        if (containerData)
-            this.setData(containerData);
-    }
+    class Container{
+        constructor(containerData){
+            if (containerData)
+                this.setData(containerData);
+        }
 
-    Container.prototype = {
-        setData: function(containerData){
+        setData(containerData){
             angular.extend(this, containerData);
             if (!this.ship) this.ship = '';
             if (!this.trip) this.trip = '';
@@ -32,60 +32,57 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 total: 0
             };
             this.afipData = [];
-        },
-        getDetail: function(){
+        }
 
-        },
-        getInvoices: function(scopeId, page){
-            var deferred = $q.defer();
-            var searchParams = {
+        getInvoices(scopeId, page){
+            const deferred = $q.defer();
+            const searchParams = {
                 buqueNombre: this.ship,
                 viaje: this.trip,
                 contenedor: this.contenedor
             };
-            var scope = this;
-            invoiceFactory.getInvoices(scopeId, searchParams, page, function(invoices){
+            invoiceFactory.getInvoices(scopeId, searchParams, page, (invoices) => {
                 if (invoices.status == 'OK'){
-                    scope.invoices.data = invoices.data;
-                    scope.invoices.total = invoices.totalCount;
+                    this.invoices.data = invoices.data;
+                    this.invoices.total = invoices.totalCount;
                     deferred.resolve();
                 } else {
                     deferred.reject();
                 }
             });
             return deferred.promise;
-        },
-        getAppointments: function(page){
-            var deferred = $q.defer();
-            var searchParams = {
+        }
+
+        getAppointments(page){
+            const deferred = $q.defer();
+            const searchParams = {
                 buqueNombre: this.ship,
                 viaje: this.trip,
                 contenedor: this.contenedor
             };
-            var scope = this;
-            turnosFactory.getTurnos(searchParams, page, function(appointments){
+            turnosFactory.getTurnos(searchParams, page, (appointments) => {
                 if (appointments.status === "OK"){
-                    scope.appointments.data = appointments.data;
-                    scope.appointments.total = appointments.totalCount;
+                    this.appointments.data = appointments.data;
+                    this.appointments.total = appointments.totalCount;
                     deferred.resolve();
                 } else {
                     deferred.reject();
                 }
             });
             return deferred.promise;
-        },
-        getGates: function(page){
-            var deferred = $q.defer();
-            var searchParams = {
+        }
+
+        getGates(page){
+            const deferred = $q.defer();
+            const searchParams = {
                 buqueNombre: this.ship,
                 viaje: this.trip,
                 contenedor: this.contenedor
             };
-            var scope = this;
-            gatesFactory.getGate(searchParams, page, function (gates) {
+            gatesFactory.getGate(searchParams, page, (gates) => {
                 if (gates.status === "OK") {
-                    scope.gates.data = gates.data;
-                    scope.gates.total = gates.totalCount;
+                    this.gates.data = gates.data;
+                    this.gates.total = gates.totalCount;
                     //$scope.gatesTiempoConsulta = (data.time / 1000).toFixed(2);
                     deferred.resolve();
                 } else {
@@ -93,62 +90,64 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 }
             });
             return deferred.promise;
-        },
-        getRates: function(stateName, currency){
-            var deferred = $q.defer();
-            var scope = this;
-            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/rates/' + loginService.getFiltro() + '/' + this.contenedor + '/' + currency;
-            var queryString = {};
+        }
+
+        getRates(stateName, currency){
+            const deferred = $q.defer();
+            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${loginService.getFiltro()}/${this.contenedor}/${currency}`;
+            let queryString = {};
             if (stateName == 'buque') queryString = {
                 buqueNombre: this.ship,
                 viaje: this.trip
             };
-            $http.get(inserturl, { params: formatService.formatearDatos(queryString)})
-                .then(function (response){
-                        scope.rates = scope.putDescriptionRates(response.data);
-                        deferred.resolve();
-                    }, function(response){
-                        deferred.reject(response.data);
-                    });
+            $http.get(inserturl, { params: formatService.formatearDatos(queryString)}).then((response) => {
+                this.rates = this.putDescriptionRates(response.data);
+                deferred.resolve();
+            }).catch((response) => {
+                deferred.reject(response.data);
+            });
             return deferred.promise;
-        },
-        putDescriptionRates: function(data){
-            var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+        }
+
+        putDescriptionRates(data){
+            const descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
             data.total = 0;
-            data.data.forEach(function(detalle){
+            data.data.forEach((detalle) => {
                 detalle._id.descripcion = (descripciones[detalle._id.id]) ? descripciones[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';
                 data.total += detalle.total;
             });
             return data
-        },
-        getAfipData: function(){
+        }
+
+        getAfipData(){
             this.afipData = [];
-            var deferred = $q.defer();
-            var llamadas = [];
-            var scope = this;
+            const deferred = $q.defer();
+            let llamadas = [];
             llamadas.push(this.getSumariaImpo());
             llamadas.push(this.getSumariaExpo());
-            $q.all(llamadas).then(function(response){
-                response.forEach(function(result){
-                    result.data.data.forEach(function(registro){
-                        scope.afipData.push(registro)
+            $q.all(llamadas).then((response) => {
+                response.forEach((result) => {
+                    result.data.data.forEach((registro) => {
+                        this.afipData.push(registro)
                     });
                 });
                 deferred.resolve();
-            }, function(response){
+            }).catch((response) => {
                 deferred.reject(response);
             });
             return deferred.promise;
-        },
-        getSumariaImpo: function(){
-            var inserturl = APP_CONFIG.SERVER_URL + '/afip/sumariaImpo/' + this.contenedor;
+        }
+
+        getSumariaImpo(){
+            const inserturl = `${APP_CONFIG.SERVER_URL}/afip/sumariaImpo/${this.contenedor}`;
             return $http.get(inserturl);
-        },
-        getSumariaExpo: function(){
-            var inserturl = APP_CONFIG.SERVER_URL + '/afip/sumariaExpo/' + this.contenedor;
+        }
+
+        getSumariaExpo(){
+            const inserturl = `${APP_CONFIG.SERVER_URL}/afip/sumariaExpo/${this.contenedor}`;
             return $http.get(inserturl)
         }
-    };
+    }
 
     return Container;
 
