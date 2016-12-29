@@ -118,7 +118,6 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 			var csvContent = "Código|Descripción|Unidad|Tope";
 
 			$scope.pricelist.forEach(function(price){
-				console.log(price);
 				csvContent += "\n";
 				csvContent += price.code + "|" + price.description + "|" + price.unit + "|" + price.price;
 			});
