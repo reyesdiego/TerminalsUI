@@ -41,7 +41,7 @@
 							<span ng-show="gate.carga == 'VA'" class="text-danger" title="Contenedor vacío">{{ gate.contenedor }}</span>
 							<span ng-hide="gate.carga == 'VA' || gate.carga == 'LL'">{{ gate.contenedor }}</span>
 						</td>
-						<td>{{ gate.medida }}</td>
+						<td>{{ gate.largo }}</td>
 						<td ng-show="noVoyEnTrenVoyEnCamion(gate.patenteCamion)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('patenteCamion', 0) >= 0" ng-click="filtrado('patenteCamion', gate.patenteCamion)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.patenteCamion }}</td>
 						<td ng-show="noVoyEnTrenVoyEnCamion(gate.tren)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('tren', 0) >= 0" ng-click="filtrado('tren', gate.tren)"><span class="glyphicon glyphicon-search"></span></a> {{ gate.tren }} <i class="icon ion-android-train"></i> </td>
 						<td class="text-center"><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
