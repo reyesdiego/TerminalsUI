@@ -1,8 +1,8 @@
 /**
  * Created by kolesnikov-a on 21/02/14.
  */
-myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'formatService', 'generalFunctions', 'colorTerminalesCache', 'loginService',
-	function ($rootScope, $scope, controlPanelFactory, formatService, generalFunctions, colorTerminalesCache, loginService){
+myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'formatService', 'generalFunctions', 'cacheService', 'loginService',
+	function ($rootScope, $scope, controlPanelFactory, formatService, generalFunctions, cacheService, loginService){
 
 		const maxDate = new Date();
 
@@ -42,9 +42,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.barColors = {
-			"bactssa": colorTerminalesCache.get('Bactssa'),
-			"terminal4": colorTerminalesCache.get('Terminal4'),
-			"trp": colorTerminalesCache.get('Trp')
+			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
+			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
+			"trp": cacheService.colorTerminalesCache.get('Trp')
 		};
 
 		$scope.radioModel = 'Gates';
@@ -562,10 +562,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.traerDatosGates();
 			$scope.traerDatosTurnos();
 			$scope.traerDatosGatesTurnosDia();
-		});
-
-		$scope.$on('$destroy', function(){
-			controlPanelFactory.cancelRequest();
 		});
 
 	}]);

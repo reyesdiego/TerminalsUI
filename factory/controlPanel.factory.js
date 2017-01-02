@@ -13,7 +13,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 			getByDay(dia){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getByDay');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getByDay');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/counts`;
 				$http.get(inserturl, { params: formatService.formatearDatos(dia), timeout: canceler.promise }).then((response) => {
 					if (response.statusText === 'OK'){
@@ -36,7 +36,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 			getFacturasMeses(datos){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getFacturasMeses');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getFacturasMeses');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/countsByMonth`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					defer.resolve(response.data);
@@ -48,7 +48,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 			getGatesMeses(datos){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getGatesMeses');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getGatesMeses');
 				const inserturl = APP_CONFIG.SERVER_URL + '/gates/ByMonth';
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					defer.resolve(response.data.data);
@@ -60,7 +60,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 			getTurnosMeses(datos){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getTurnosMeses');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getTurnosMeses');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/ByMonth`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					defer.resolve(response.data);
@@ -73,7 +73,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 			//A partir de la fecha pasada, devuelve la facturación por día, de la fecha y 4 fechas hacia atrás
 			getFacturadoPorDia(datos){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getFacturadoPorDia');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getFacturadoPorDia');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/countsByDate`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					defer.resolve(response.data);
@@ -85,7 +85,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 			getGatesDia(datos){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getGatesDia');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getGatesDia');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/gates/ByHour`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					defer.resolve(response.data.data)
@@ -97,7 +97,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 
 			getTurnosDia(datos){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getTurnosDia');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getTurnosDia');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/ByHour`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					defer.resolve(response.data);

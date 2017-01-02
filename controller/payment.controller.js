@@ -19,7 +19,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		});*/
 
 		$scope.sinLiquidar = {
-			ocultarFiltros: ['liquidacion'],
+			ocultarFiltros: ['liquidacion', 'preliquidacion'],
 			model: {
 				'fechaInicio': $scope.fechaInicio,
 				'fechaFin': $scope.fechaFin,
