@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 3/19/14.
  */
 
-myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 'errorFactory', '$q', 'HTTPCanceler', 'APP_CONFIG', 'downloadService',
-	function($http, formatService, loginService, errorFactory, $q, HTTPCanceler, APP_CONFIG, downloadService){
+myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', '$q', 'HTTPCanceler', 'APP_CONFIG', 'downloadService',
+	function($http, formatService, loginService, $q, HTTPCanceler, APP_CONFIG, downloadService){
 
 		class controlPanelFactory {
 
@@ -27,11 +27,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 						response.data.invoicesCount = invoicesCount;
 						response.data.totalCount = totalCount;
 					}
-					//callback(response.data);
 					defer.resolve(response.data);
 				}).catch((response) => {
 					defer.reject(response);
-					//if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorGetByDay', 'Error al cargar el conteo diario de comprobantes.');
 				});
 				return defer.promise;
 			}
@@ -41,11 +39,9 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 				const canceler = HTTPCanceler.get(defer, namespace, 'getFacturasMeses');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/countsByMonth`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
-					//callback(response.data);
 					defer.resolve(response.data);
 				}).catch((response) => {
 					defer.reject(response);
-					//if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorFacturasMeses', 'Error al cargar gráfico de facturado por mes.');
 				});
 				return defer.promise;
 			}
@@ -58,7 +54,6 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 					defer.resolve(response.data.data);
 				}).catch((response) => {
 					defer.reject(response);
-					//if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'gatesMeses', 'Error al cargar gráfico de cantidad de Gates por mes.');
 				});
 				return defer.promise;
 			}
@@ -71,7 +66,6 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 					defer.resolve(response.data);
 				}).catch((response) => {
 					defer.reject(response);
-					//if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'turnosMeses', 'Error al cargar gráfico de cantidad de turnos por mes.');
 				});
 				return defer.promise;
 			}
@@ -85,7 +79,6 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 					defer.resolve(response.data);
 				}).catch((response) => {
 					defer.reject(response);
-					//if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorFacturadoPorDia', 'Error al cargar monto facturado por día.');
 				});
 				return defer.promise;
 			}
@@ -98,7 +91,6 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 					defer.resolve(response.data.data)
 				}).catch((response) => {
 					defer.reject(response);
-					//if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de gates por día.');
 				});
 				return defer.promise;
 			}
@@ -111,7 +103,6 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 					defer.resolve(response.data);
 				}).catch((response) => {
 					defer.reject(response);
-					//if (response.status != -5) errorFactory.raiseError(response.data, inserturl, 'errorGatesTurnosDia', 'Error al cargar gráfico de turnos por día.');
 				});
 				return defer.promise;
 			}

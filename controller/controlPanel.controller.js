@@ -389,26 +389,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			}
 		});
 
-		$scope.$on('gatesMeses', function(event, error){
-
-		});
-
-		$scope.$on('turnosMeses', function(event, error){
-
-		});
-
-		$scope.$on('errorFacturadoPorDia', function(event, error){
-
-		});
-
-		$scope.$on('errorFacturasMeses', function(event, error){
-
-		});
-
-		$scope.$on('errorGatesTurnosDia', function(event, error){
-
-		});
-
 		$scope.selectRow = function (index) {
 			$scope.selected = index;
 		};
