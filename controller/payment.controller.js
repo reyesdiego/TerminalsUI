@@ -39,7 +39,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.sinLiquidarPayment = new Payment($scope.sinLiquidar.model);
 
 		$scope.preLiquidacion = {
-			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'buque', 'byContainer', 'contenedor'],
+			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'buque', 'byContainer', 'contenedor', 'liquidacion'],
 			panelMensaje: {
 				titulo: 'Liquidaciones',
 				mensaje: 'No se encontraron pre-liquidaciones realizadas para los filtros seleccionados.',
@@ -48,7 +48,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			model: {
 				'fechaInicio': $scope.fechaInicio,
 				'fechaFin': $scope.fechaFin,
-				'liquidacion': '',
+				'numero': '',
 				'itemsPerPage': 15,
 				'filtroOrden': 'fecha.emision',
 				'filtroOrdenAnterior': '',
@@ -69,7 +69,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.ocultarFiltrosComprobantes = ['nroPtoVenta', 'nroComprobante', 'codTipoComprob', 'nroPtoVenta', 'documentoCliente', 'contenedor', 'codigo', 'razonSocial', 'estado', 'buque', 'viaje', 'btnBuscar', 'fechaInicio']
 
 		$scope.liquidacion = {
-			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'contenedor'],
+			ocultarFiltros: ['nroComprobante', 'codTipoComprob', 'razonSocial', 'contenedor', 'buque', 'preliquidacion'],
 			panelMensaje: {
 				titulo: 'Liquidaciones',
 				mensaje: 'No se encontraron liquidaciones realizadas para los filtros seleccionados.',
@@ -78,7 +78,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			model: {
 				'fechaInicio': $scope.fechaInicio,
 				'fechaFin': $scope.fechaFin,
-				'liquidacion': '',
+				'numero': '',
 				'itemsPerPage': 15,
 				'filtroOrden': 'fecha.emision',
 				'filtroOrdenAnterior': '',
@@ -137,6 +137,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.cargarPreLiquidaciones = function(){
 			$scope.page.skip = ($scope.preLiquidacion.currentPage - 1) * $scope.itemsPerPage;
 			$scope.preLiquidacion.cargando = true;
+			console.log($scope.preLiquidacion.model);
 			liquidacionesFactory.getPrePayments($scope.page, $scope.preLiquidacion.model, function(data){
 				if (data.status == 'OK'){
 					$scope.preLiquidacion.datos = data.data;
