@@ -4,7 +4,7 @@
 myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'formatService', 'generalFunctions', 'colorTerminalesCache', 'loginService',
 	function ($rootScope, $scope, controlPanelFactory, formatService, generalFunctions, colorTerminalesCache, loginService){
 
-		var fecha = formatService.formatearFechaISOString(new Date());
+		const maxDate = new Date();
 
 		$scope.tipoFiltro = 'cantidad';
 
@@ -14,7 +14,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			if(angular.equals(evt.keyCode,13))
 				$scope.filtrar();
 		};
-		$scope.maxDate = new Date();
 
 		$scope.datepickerNormal = {
 			formatYear: 'yyyy',
@@ -34,19 +33,12 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			minMode: 'month',
 			datepickerMode: 'month',
 			showWeeks: false,
-			maxDate: new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 1), '01' )
+			maxDate: new Date(maxDate.getFullYear(), (maxDate.getMonth() + 1), '01' )
 		};
 
 		$scope.datepickerGatesTurnos = {
 			showWeeks: false,
-			maxDate: new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 2), 0 )
-		};
-
-		$scope.control = {
-			"invoicesCount": 0,
-			"totalCount": 0,
-			"ratesCount": 0,
-			"ratesTotal": 0
+			maxDate: new Date(maxDate.getFullYear(), (maxDate.getMonth() + 2), 0 )
 		};
 
 		$scope.barColors = {
@@ -145,21 +137,11 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		// Fecha (dia y hora)
 		$scope.desde = new Date();
-		$scope.desdeTasas = new Date();
 		$scope.mesDesde = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth()), '01' );
 		$scope.mesDesdeGates = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth()), '01' );
 		$scope.mesDesdeTurnos = new Date($scope.desde.getFullYear(), ($scope.desde.getMonth()), '01' );
 		$scope.diaGatesTurnos = new Date();
 		$scope.diaGatesTurnosFin = new Date();
-		$scope.maxDate = new Date();
-		$scope.maxDateTurnos = new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 1), '01' );
-		$scope.maxDateGatesTurnos = new Date($scope.maxDate.getFullYear(), ($scope.maxDate.getMonth() + 2), 0 );
-
-		//Flag para mostrar los tabs con los resultados una vez recibidos los datos
-		$scope.terminoCarga = false;
-
-		$scope.control.ratesCount = 0;
-		$scope.control.ratesTotal = 0;
 
 		$scope.facturadoDia = {
 			loading: false,
@@ -408,43 +390,23 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		});
 
 		$scope.$on('gatesMeses', function(event, error){
-			$scope.cantGates = {
-				loading: false,
-				error: true,
-				mensaje: error
-			};
+
 		});
 
 		$scope.$on('turnosMeses', function(event, error){
-			$scope.cantTurnos = {
-				loading: false,
-				error: true,
-				mensaje: error
-			};
+
 		});
 
 		$scope.$on('errorFacturadoPorDia', function(event, error){
-			$scope.facturadoDia = {
-				loading: false,
-				error: true,
-				mensaje: error
-			};
+
 		});
 
 		$scope.$on('errorFacturasMeses', function(event, error){
-			$scope.facturadoMes = {
-				loading: false,
-				error: true,
-				mensaje: error
-			};
+
 		});
 
 		$scope.$on('errorGatesTurnosDia', function(event, error){
-			$scope.gatesTurnos = {
-				loading: false,
-				error: true,
-				mensaje: error
-			};
+
 		});
 
 		$scope.selectRow = function (index) {
@@ -452,27 +414,38 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		$scope.traerTotales = function(){
-			controlPanelFactory.getByDay({ fecha: $scope.desde }, function(data){
-				$scope.control.invoicesCount = data.invoicesCount;
+			const fecha = new Date();
+			controlPanelFactory.getByDay({ fecha: $scope.desde }).then(data => {
 				$scope.fecha = fecha;
 				$scope.comprobantesCantidad = data.data;
+			}).catch(error => {
+				//TODO ver que hacer aca
 			});
 		};
 
 		$scope.traerDatosFacturadoMes = function(){
-			var datos = {
+			const datos = {
 				fecha: $scope.mesDesde
 			};
 			$scope.facturadoMes.error = false;
 			$scope.facturadoMes.loading = true;
 			$scope.isOpenMonth = false;
-			controlPanelFactory.getFacturasMeses(datos, function(graf){
+			controlPanelFactory.getFacturasMeses(datos).then((graf) => {
 				if (graf){
 					$scope.chartFacturas.data = prepararDatosMes(graf.data, true);
 					$scope.facturadoMes.loading = false;
 				} else {
 					$scope.facturadoMes.error = true;
 					$scope.facturadoMes.loading = false;
+				}
+			}).catch(error => {
+				console.log(error);
+				if (error.status != -5){
+					$scope.facturadoMes = {
+						loading: false,
+						error: true,
+						mensaje: error.data
+					};
 				}
 			});
 		};
@@ -481,7 +454,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.isOpenGates = false;
 			$scope.cantGates.error = false;
 			$scope.cantGates.loading = true;
-			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}, function(graf){
+			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}).then((graf) => {
 				if (graf){
 					$scope.chartGates.data = prepararDatosMes(graf, false);
 					$scope.cantGates.loading = false;
@@ -489,15 +462,22 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					$scope.cantGates.error = true;
 					$scope.cantGates.loading = false;
 				}
+			}).catch(error => {
+				if (error.status != -5){
+					$scope.cantGates = {
+						loading: false,
+						error: true,
+						mensaje: error.data
+					};
+				}
 			});
 		};
 
 		$scope.traerDatosTurnos = function(){
-
 			$scope.isOpenTurnos = false;
 			$scope.cantTurnos.error = false;
 			$scope.cantTurnos.loading = true;
-			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }, function(graf){
+			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }).then((graf) => {
 				if (graf){
 					$scope.cantTurnos.loading = false;
 					$scope.chartTurnos.data = prepararDatosMes(graf, false);
@@ -505,17 +485,25 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					$scope.cantTurnos.error = true;
 					$scope.cantTurnos.loading = false;
 				}
+			}).catch(error => {
+				if (error.status != -5){
+					$scope.cantTurnos = {
+						loading: false,
+						error: true,
+						mensaje: error.data
+					};
+				}
 			});
 		};
 
 		$scope.traerDatosFacturadoDia = function(){
-			var datos = {
+			const datos = {
 				fecha: $scope.desde
 			};
 			$scope.traerTotales();
 			$scope.facturadoDia.error = false;
 			$scope.facturadoDia.loading = true;
-			controlPanelFactory.getFacturadoPorDia(datos, function(graf){
+			controlPanelFactory.getFacturadoPorDia(datos).then((graf) => {
 				if (graf){
 					$scope.chartFacturado.data = prepararDatosFacturadoDia(graf.data);
 					$scope.facturadoDia.loading = false;
@@ -523,10 +511,19 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					$scope.facturadoDia.error = true;
 					$scope.facturadoDia.loading = false;
 				}
+			}).catch(error => {
+				if (error.status != -5){
+					$scope.facturadoDia = {
+						loading: false,
+						error: true,
+						mensaje: error.data
+					};
+				}
 			});
 		};
 
 		$scope.traerDatosGatesTurnosDia = function(){
+			let promise = null;
 			$scope.isOpenDayGatesTurnos = false;
 			$scope.isOpenDayGatesTurnosFin = false;
 
@@ -535,30 +532,40 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 			$scope.diaGatesTurnos.setHours(0, 0, 0);
 			$scope.diaGatesTurnosFin.setHours(0, 0, 0);
+
+			const params = {
+				fechaInicio: $scope.diaGatesTurnos,
+				fechaFin: $scope.diaGatesTurnosFin,
+				fechaConGMT: true
+			};
+
 			if ($scope.radioModel == 'Gates'){
-				controlPanelFactory.getGatesDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
-					if (graf) {
-						$scope.gatesTurnos.loading = false;
-						$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
+				promise = controlPanelFactory.getGatesDia(params);
+			} else if ($scope.radioModel == 'Turnos'){
+				promise = controlPanelFactory.getTurnosDia(params);
+			}
+			promise.then((graf) => {
+				if (graf){
+					$scope.gatesTurnos.loading = false;
+					$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
+					if ($scope.radioModel == 'Gates'){
 						$scope.labelPorHora = 'Gates por hora'
 					} else {
-						$scope.gatesTurnos.error = true;
-						$scope.gatesTurnos.loading = false;
-					}
-				});
-			}
-			else if ($scope.radioModel == 'Turnos'){
-				controlPanelFactory.getTurnosDia({ fechaInicio: $scope.diaGatesTurnos, fechaFin: $scope.diaGatesTurnosFin, fechaConGMT: true }, function(graf){
-					if (graf){
-						$scope.gatesTurnos.loading = false;
-						$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
 						$scope.labelPorHora = 'Turnos por hora'
-					} else {
-						$scope.gatesTurnos.error = true;
-						$scope.gatesTurnos.loading = false;
 					}
-				});
-			}
+				} else {
+					$scope.gatesTurnos.error = true;
+					$scope.gatesTurnos.loading = false;
+				}
+			}).catch(error => {
+				if (error.status != -5){
+					$scope.gatesTurnos = {
+						loading: false,
+						error: true,
+						mensaje: error.data
+					};
+				}
+			});
 		};
 
 		if (loginService.getStatus()){
