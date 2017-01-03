@@ -595,6 +595,7 @@ myapp.directive('tablePreLiquidacion', function(){
 		scope: {
 			cargando:			'=',
 			datosPagos:			'=',
+			pagoSelected:		'=',
 			panelMensaje:		'=',
 			detalle:			'&'
 		},

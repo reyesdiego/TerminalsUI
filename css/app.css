@@ -58,6 +58,10 @@ html, body {
     box-shadow: 10px 10px 8px 0px rgba(0,0,0,1);
 }
 
+.pago-elegido {
+    background-color: rgba(29, 180, 255, 0.45) !important;
+}
+
 .vertical-center {
 
     height: 60vh !important; /* You might also want to use
