@@ -3,44 +3,43 @@
  */
 
 myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', 'APP_CONFIG', 'downloadService', function($http, dialogs, formatService, loginService, APP_CONFIG, downloadService){
-	var factory = {};
 
-	factory.getTerminalesCSV = function(datos, reportName, callback) {
-		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.filterTerminal + '/byRates';
-		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
-				.then(function(response){
-					var contentType = response.headers('Content-Type');
-					if (contentType.indexOf('text/csv') >= 0){
-						downloadService.setDownloadCsv(reportName, response.data);
-						callback('OK');
-					} else {
-						callback('ERROR');
-					}
-				}, function(response){
+	class reportsFactory {
+
+		getTerminalesCSV(datos, reportName, callback) {
+			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/byRates`;
+			$http.get(inserturl, { params: formatService.formatearDatos(datos) }).then((response) => {
+				const contentType = response.headers('Content-Type');
+				if (contentType.indexOf('text/csv') >= 0){
+					downloadService.setDownloadCsv(reportName, response.data);
+					callback('OK');
+				} else {
 					callback('ERROR');
-				});
-	};
-
-	factory.getReporteTerminales = function(param, callback){
-		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.filterTerminal + '/byRates';
-		$http.get(inserturl, {params: formatService.formatearDatos(param)})
-				.then(function(response){
-					callback(response.data);
-				}, function(response){
-					callback(response.data);
-				});
-	};
-
-	factory.getReporteTarifas = function(fecha, tarifas, callback){
-		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/byRates?fechaInicio=' + formatService.formatearFechaISOString(fecha.fechaInicio) + '&fechaFin=' + formatService.formatearFechaISOString(fecha.fechaFin);
-		$http.post(inserturl, tarifas)
-			.then(function (response) {
-				callback(response.data);
-			}, function(response) {
-				dialogs.error('Error', 'Error al añadir el Match en la base');
-				//TODO ver que pasa aca
+				}
+			}).catch((response) => {
+				callback('ERROR');
 			});
-	};
+		}
 
-	return factory;
+		getReporteTerminales(param, callback){
+			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/byRates`;
+			$http.get(inserturl, {params: formatService.formatearDatos(param)}).then((response) => {
+				callback(response.data);
+			}).catch((response) => {
+				callback(response.data);
+			});
+		}
+
+		getReporteTarifas(fecha, tarifas, callback){
+			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byRates`;
+			$http.post(inserturl, tarifas, {params: formatService.formatearDatos(fecha)}).then((response) => {
+				callback(response.data);
+			}).catch((response) => {
+				callback(response.data);
+			});
+		}
+
+	}
+
+	return new reportsFactory();
 }]);
