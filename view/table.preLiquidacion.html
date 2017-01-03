@@ -12,6 +12,7 @@
 		<tr class="text-center">
 			<th class="text-right">Pre - Liquidación</th>
 			<th class="text-center">Fecha</th>
+			<th class="text-center">Usuario</th>
 			<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 		</tr>
 		</thead>
@@ -19,6 +20,7 @@
 		<tr ng-repeat="pago in datosPagos" class="fila-animada">
 			<td class="text-right">{{ pago.preNumber }}</td>
 			<td class="text-center">{{ pago.date | date: 'dd/MM/yyyy' }}</td>
+			<td class="text-right">{{ pago.account.user }}</td>
 			<td class="text-center"><a href ng-click="detalle({pago: pago})"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		</tbody>

@@ -61,10 +61,10 @@
 				</table-sin-liquidar>
 				<div class="row">
 					<div class="col-lg-6 text-left">
-						<button class="btn btn-primary" ng-click="anexarComprobantes()" ng-disabled="!preLiquidacion.verDetalle">Anexar a pre-liquidación {{ preLiquidacion.selected.preNumber }}</button>
+						<button class="btn btn-info" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Descargar CSV</button>
 					</div>
 					<div class="col-lg-6 text-right">
-						<button class="btn btn-info" ng-click="descargarCSV()"><span class="glyphicon glyphicon-download"></span> Descargar CSV</button>
+						<button class="btn btn-primary" ng-click="anexarComprobantes()" ng-disabled="!preLiquidacion.verDetalle">Anexar a pre-liquidación {{ preLiquidacion.selected.preNumber }}</button>
 					</div>
 				</div>
 			</div>
@@ -102,11 +102,12 @@
 							tasa-agp="preLiquidacion.tasaAgp"
 							ng-if="preLiquidacion.verDetalle">
 					</table-sin-liquidar>
+					<div class="col-lg-12 text-right">
+						<br>
+						<button class="btn btn-danger" ng-click="eliminarPreLiquidacion()" ng-disabled="!preLiquidacion.verDetalle">Eliminar</button>
+						<button class="btn btn-primary" ng-click="liquidar()" ng-disabled="!preLiquidacion.verDetalle">Liquidar</button>
+					</div>
 				</accordion-min>
-				<div class="col-lg-12 text-right">
-					<button class="btn btn-danger" ng-click="eliminarPreLiquidacion()" ng-disabled="!preLiquidacion.verDetalle">Eliminar</button>
-					<button class="btn btn-primary" ng-click="liquidar()" ng-disabled="!preLiquidacion.verDetalle">Liquidar</button>
-				</div>
 			</div>
 
 		</uib-tab>
