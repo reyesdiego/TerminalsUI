@@ -162,7 +162,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 		});
 	};
 
-	if (loginService.getStatus()){
+	if (loginService.isLoggedIn){
 		if ($scope.viewsStates.tasas.used){
 			$scope.model = $scope.viewsStates.tasas.model;
 			$scope.resultado = $scope.viewsStates.tasas.resultado;
@@ -287,14 +287,14 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 				fechaFin = new Date();
 			}
 			var data = {
-				terminal: loginService.getFiltro(),
+				terminal: loginService.filterTerminal,
 				resultado: $scope.puntosDeVenta,
 				titulo: $scope.tipoComprob.desc + " faltantes " + $scope.totalFaltantes,
 				desde: fechaInicio,
 				hasta: fechaFin,
 				hoy: new Date()
 			};
-			var nombreReporte = $scope.tipoComprob.abrev + '_faltantes_' + loginService.getFiltro() + '.pdf';
+			var nombreReporte = $scope.tipoComprob.abrev + '_faltantes_' + loginService.filterTerminal + '.pdf';
 			downloadFactory.convertToPdf(data, 'correlativeResultPdf', nombreReporte).then(function(){
 
 			}, function(){
@@ -358,7 +358,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			}
 		});
 
-		if (loginService.getStatus()) traerPuntosDeVenta();
+		if (loginService.isLoggedIn) traerPuntosDeVenta();
 
 		$scope.$on('$destroy', function(){
 			correlativeSocket.disconnect();

@@ -154,41 +154,41 @@
 
 		<div class="navbar-collapse collapse" aria-expanded="false" uib-collapse="isCollapsed">
 			<ul class="nav navbar-nav navbar-left">
-				<li ng-if="dataTerminal.getType()=='agp' && cambioTerminal" class="hidden-sm" uib-dropdown>
-					<a href data-toggle="dropdown" uib-dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ dataTerminal.getFiltro() }}<b class="caret"></b></a>
+				<li ng-if="dataTerminal.type=='agp' && cambioTerminal" class="hidden-sm" uib-dropdown>
+					<a href data-toggle="dropdown" uib-dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ dataTerminal.filterTerminal }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('BACTSSA');"><span ng-show="dataTerminal.getFiltro() == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
-						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('TERMINAL4');"><span ng-show="dataTerminal.getFiltro() == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
-						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('TRP');"><span ng-show="dataTerminal.getFiltro() == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('BACTSSA');"><span ng-show="dataTerminal.filterTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('TERMINAL4');"><span ng-show="dataTerminal.filterTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('TRP');"><span ng-show="dataTerminal.filterTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
 						<li class="visible-lg divider"></li>
 						<li ng-click="cerrarMenu()"><a href ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"></span> <span ng-show="verNotificaciones">Deshabilitar</span> <span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"></span> <span ng-show="!verNotificaciones">Habilitar</span> Notificaciones</a></li>
 					</ul>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-if="dataTerminal.getType()==''" ng-click="cerrarMenu()"><a ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
-				<li ng-if="dataTerminal.getType()!='' && (tieneAcceso('tarifario') || tieneAcceso('matches'))" uib-dropdown>
+				<li ng-if="dataTerminal.type==''" ng-click="cerrarMenu()"><a ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
+				<li ng-if="dataTerminal.type!='' && (tieneAcceso('tarifario') || tieneAcceso('matches'))" uib-dropdown>
 					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Tarifas<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('tarifario')" ng-click="cerrarMenu()"><a ui-sref="tarifario">Tarifario</a></li>
 						<li ng-if="tieneAcceso('matches')" ng-click="cerrarMenu()"><a ui-sref="matches">Editar</a></li>
 					</ul>
 				</li>
-				<li ng-if="dataTerminal.getType()!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" uib-dropdown>
+				<li ng-if="dataTerminal.type!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" uib-dropdown>
 					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="invoiceNotify==0" class="burbuja {{ invoiceAnimar }}">{{ invoiceNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('invoices')" ng-click="cerrarMenu()"><a ui-sref="invoices">Ver</a></li>
 						<li ng-if="tieneAcceso('cfacturas')" ng-click="cerrarMenu()"><a ui-sref="cfacturas">Control</a></li>
 					</ul>
 				</li>
-				<li class="hidden-sm" ng-if="dataTerminal.getType()!='' && (tieneAcceso('gates') || tieneAcceso('cgates'))" uib-dropdown>
+				<li class="hidden-sm" ng-if="dataTerminal.type!='' && (tieneAcceso('gates') || tieneAcceso('cgates'))" uib-dropdown>
 					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('gates')" ng-click="cerrarMenu()"><a ui-sref="gates">Ver</a></li>
 						<li ng-if="tieneAcceso('cgates')" ng-click="cerrarMenu()"><a ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
-				<li class="hidden-sm" ng-if="dataTerminal.getType()!='' && (tieneAcceso('turnos') || tieneAcceso('agenda') || tieneAcceso('cturnos'))" uib-dropdown>
+				<li class="hidden-sm" ng-if="dataTerminal.type!='' && (tieneAcceso('turnos') || tieneAcceso('agenda') || tieneAcceso('cturnos'))" uib-dropdown>
 					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('turnos')" ng-click="cerrarMenu()"><a ui-sref="turnos">Ver</a></li>
@@ -196,7 +196,7 @@
 						<li ng-if="tieneAcceso('mturnos')" ng-click="cerrarMenu()"><a ui-sref="mturnos">Control</a></li>
 					</ul>
 				</li>
-				<li class="visible-sm" ng-if="dataTerminal.getType()!='' && (tieneAcceso('turnos') || tieneAcceso('agenda')) || tieneAcceso('cturnos') || (tieneAcceso('gates') || tieneAcceso('cgates'))" uib-dropdown>
+				<li class="visible-sm" ng-if="dataTerminal.type!='' && (tieneAcceso('turnos') || tieneAcceso('agenda')) || tieneAcceso('cturnos') || (tieneAcceso('gates') || tieneAcceso('cgates'))" uib-dropdown>
 					<a href data-ng-hide="dropdown" uib-dropdown-toggle>Gates/Turnos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="visible-sm dropdown-header">Gates</li>
@@ -208,7 +208,7 @@
 						<li ng-if="tieneAcceso('cturnos')" ng-click="cerrarMenu()"><a ui-sref="cturnos">Sin notificar</a></li>
 					</ul>
 				</li>
-				<li ng-if="dataTerminal.getType() != '' && (tieneAcceso('liquidaciones') || tieneAcceso('control') || tieneAcceso('reports') || tieneAcceso('container') || tieneAcceso('buque') || tieneAcceso('afip') || tieneAcceso('users') || tieneAcceso('access'))" uib-dropdown>
+				<li ng-if="dataTerminal.type != '' && (tieneAcceso('liquidaciones') || tieneAcceso('control') || tieneAcceso('reports') || tieneAcceso('container') || tieneAcceso('buque') || tieneAcceso('afip') || tieneAcceso('users') || tieneAcceso('access'))" uib-dropdown>
 					<a href data-toggle="dropdown" uib-dropdown-toggle>Administrar<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-header" ng-show="tieneAcceso('control') || tieneAcceso('reports')">Gráficos</li>
@@ -238,9 +238,9 @@
 					</ul>
 				</li>
 				<!--<li class="hidden-sm" ng-if="dataTerminal.getType()!='' && cambioMoneda"><a href ng-click="switchMoneda();" ng-click="cerrarMenu()">{{ moneda | formatCurrency}}</a></li>-->
-				<li ng-if="dataTerminal.getType()!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
-				<li ng-if="dataTerminal.getType()!=''" uib-dropdown>
-					<a href data-toggle="dropdown" uib-dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ dataTerminal.getInfo().user }}<b class="caret"></b></a>
+				<li ng-if="dataTerminal.type!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
+				<li ng-if="dataTerminal.type!=''" uib-dropdown>
+					<a href data-toggle="dropdown" uib-dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ dataTerminal.info.user }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li ng-click="salir(); isCollapsed = !isCollapsed"><a href ><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
 					</ul>

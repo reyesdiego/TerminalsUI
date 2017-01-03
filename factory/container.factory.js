@@ -25,7 +25,7 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'ca
 			getMissingGates(datos, page, callback){
 				const defer = $q.defer();
 				const canceler = HTTPCanceler.get(defer, this.namespace, 'getMissingGates');
-				const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.getFiltro()}/missingGates/${page.skip}/${page.limit}`;
+				const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.filterTerminal}/missingGates/${page.skip}/${page.limit}`;
 				$http.get(inserturl, {params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.retrieveContainers(response.data.data);
 					callback(response.data);
@@ -38,7 +38,7 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'ca
 				this.cancelRequest('gatesSinTurnos');
 				const defer = $q.defer();
 				const canceler = HTTPCanceler.get(defer, this.namespace, 'gatesSinTurnos');
-				const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.getFiltro()}/missingAppointments`;
+				const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.filterTerminal}/missingAppointments`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.retrieveContainers(response.data.data.map((container) => {
 						return {contenedor: container.c, fecha: container.g}
@@ -53,7 +53,7 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'ca
 				this.cancelRequest('missingAppointments');
 				const defer = $q.defer();
 				const canceler = HTTPCanceler.get(defer, this.namespace, 'missingAppointments');
-				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/${loginService.getFiltro()}/missingAppointments`;
+				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/${loginService.filterTerminal}/missingAppointments`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.retrieveContainers(response.data.data.map((container) => {
 						return {contenedor: container.c, fecha: container.f}
@@ -68,7 +68,7 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'ca
 				this.cancelRequest('containersSinTasaCargas');
 				const defer = $q.defer();
 				const canceler = HTTPCanceler.get(defer, this.namespace, 'containersSinTasaCargas');
-				const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/containersNoRates/${loginService.getFiltro()}`;
+				const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/containersNoRates/${loginService.filterTerminal}`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.retrieveContainers(response.data.data.map((container) => {
 						return {contenedor: container}
@@ -84,7 +84,7 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'ca
 				this.cancelRequest('shipContainers');
 				const defer = $q.defer();
 				const canceler = HTTPCanceler.get(defer, this.namespace, 'shipContainers');
-				const inserturl = `${APP_CONFIG.SERVER_URL }/invoices/${loginService.getFiltro()}/shipContainers`;
+				const inserturl = `${APP_CONFIG.SERVER_URL }/invoices/${loginService.filterTerminal}/shipContainers`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					let formatData = [];
 					response.data.data.forEach((dataContainer) => {

@@ -25,7 +25,7 @@ describe('inicio de la aplicación', function(){
 	});
 
 	it('al iniciar por primera vez no debe haber usuario logueado', function(){
-		expect(loginService.getStatus()).toBeFalsy();
+		expect(loginService.isLoggedIn).toBeFalsy();
 	});
 
 	it('prueba el ruteo de la aplicación', inject(['$state', '$rootScope', '$location', function($state, $rootScope, $location){

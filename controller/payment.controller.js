@@ -285,7 +285,7 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			})
 		};
 
-		if (loginService.getStatus()) {
+		if (loginService.isLoggedIn) {
 			$scope.cargarSinLiquidar();
 			$scope.cargarPreLiquidaciones();
 			$scope.cargarLiquidaciones();

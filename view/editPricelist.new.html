@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-lg-6">
                     <legend>Códigos asociados</legend>
-                    <tags-input ng-model="newMatches.array" min-length="1" placeholder="Agregue un código" on-tag-adding="checkMatch($tag)" on-tag-added="setMatches($tag)" ng-disabled="dataTerminal.getType() == 'agp'" tabindex="1"></tags-input>
+                    <tags-input ng-model="newMatches.array" min-length="1" placeholder="Agregue un código" on-tag-adding="checkMatch($tag)" on-tag-added="setMatches($tag)" ng-disabled="dataTerminal.type == 'agp'" tabindex="1"></tags-input>
                 </div>
                 <div class="col-lg-6">
                     <div>

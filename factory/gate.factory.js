@@ -11,7 +11,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			factory.cancelRequest('getGates');
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getGates');
-			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.filterTerminal + '/' + page.skip + '/' + page.limit;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function(response){
 					callback(response.data);
@@ -49,7 +49,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			var defer = $q.defer();
 			var canceler = HTTPCanceler.get(defer, namespace, 'getMissingInvoices');
 			//var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingInvoices/' + page.skip + '/' + page.limit;
-			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingInvoices';
+			var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.filterTerminal + '/missingInvoices';
 			$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 				.then(function (response){
 					callback(response.data);

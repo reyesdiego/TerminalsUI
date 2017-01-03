@@ -4,8 +4,8 @@
 			<br>
 			<ul class="nav nav-pills nav-stacked">
 				<li><b>Transbordos</b></li>
-				<li ng-class="{selectedOption: 'afip.transbordos.impo' == actualRegistro}" ng-show="in_array('afip.transbordos.impo', dataTerminal.getAcceso())"><a ui-sref="afip.transbordos.impo" ng-click="cargaDatos('afip.transbordos.impo')">Impo</a></li>
-				<li ng-class="{selectedOption: 'afip.transbordos.expo' == actualRegistro}" ng-show="in_array('afip.transbordos.expo', dataTerminal.getAcceso())"><a ui-sref="afip.transbordos.expo" ng-click="cargaDatos('afip.transbordos.expo')">Expo</a></li>
+				<li ng-class="{selectedOption: 'afip.transbordos.impo' == actualRegistro}" ng-show="in_array('afip.transbordos.impo', dataTerminal.acceso)"><a ui-sref="afip.transbordos.impo" ng-click="cargaDatos('afip.transbordos.impo')">Impo</a></li>
+				<li ng-class="{selectedOption: 'afip.transbordos.expo' == actualRegistro}" ng-show="in_array('afip.transbordos.expo', dataTerminal.acceso)"><a ui-sref="afip.transbordos.expo" ng-click="cargaDatos('afip.transbordos.expo')">Expo</a></li>
 			</ul>
 		</div>
 		<div class="col-md-10">

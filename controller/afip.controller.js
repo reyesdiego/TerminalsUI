@@ -9,7 +9,7 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 
 		$scope.dataTerminal = loginService;
-		var rutasUsuario = loginService.getAcceso().sort();
+		var rutasUsuario = loginService.acceso.sort();
 		$scope.afectacion = 'afip';
 		$scope.detalle = 'afip';
 		$scope.solicitud = 'afip';
@@ -356,7 +356,7 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 			return generalFunctions.in_array(aguja, pajar);
 		};
 
-		if (loginService.getStatus()) $scope.cargaDatos($scope.actualRegistro);
+		if (loginService.isLoggedIn) $scope.cargaDatos($scope.actualRegistro);
 
 	}]);
 

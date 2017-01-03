@@ -13,18 +13,18 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 					if (useCookies){
 						$cookies.put('username', user);
 						$cookies.put('password', pass);
-						$cookies.put('themeTerminal', loginService.getFiltro());
+						$cookies.put('themeTerminal', loginService.filterTerminal);
 					}
 					$cookies.put('isLogged', 'true');
 					$cookies.put('restoreSesion', useCookies);
 					deferred.resolve(data);
 				},
 				function(error){
-					if (loginService.getStatus()){
+					if (loginService.isLoggedIn){
 						if (useCookies){
 							$cookies.put('username', user);
 							$cookies.put('password', pass);
-							$cookies.put('themeTerminal', loginService.getFiltro());
+							$cookies.put('themeTerminal', loginService.filterTerminal);
 						}
 						$cookies.put('isLogged', 'true');
 						$cookies.put('restoreSesion', useCookies);
@@ -51,87 +51,25 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 					data = data.data;
 
 					if (data.acceso.length > 0){
-						loginService.setInfo(data);
-						loginService.setStatus(true);
-						loginService.setType(data.role);
-						loginService.setGroup(data.group);
-						loginService.setToken(data.token.token);
+						loginService.info = data;
+						loginService.isLoggedIn = true;
+						loginService.type = data.role;
+						loginService.group = data.group;
+						loginService.token = data.token.token;
 
-						$http.defaults.headers.common.token = loginService.getToken();
+						$http.defaults.headers.common.token = loginService.token;
 
-						//****************************************
-						/*if (generalFunctions.in_array('cfacturas', data.acceso)){
-							data.acceso.push('cfacturas.tasas');
-							data.acceso.push('cfacturas.correlatividad');
-							data.acceso.push('cfacturas.codigos');
-							data.acceso.push('cfacturas.revisar');
-							data.acceso.push('cfacturas.erroneos');
-							data.acceso.push('cfacturas.reenviar');
-						}
-						if (generalFunctions.in_array('reports', data.acceso)){
-							data.acceso.push('reports.tasas');
-							data.acceso.push('reports.tarifas');
-							data.acceso.push('reports.empresas');
-							data.acceso.push('reports.terminales');
-						}
-						if (generalFunctions.in_array('cgates', data.acceso)){
-							data.acceso.push('cgates.gates');
-							data.acceso.push('cgates.invoices');
-							data.acceso.push('cgates.appointments');
-						}
-						data.acceso.push('trackContainer');*/
-						//****************************************
-
-
-						loginService.setAcceso(data.acceso);
-
-						//$rootScope.rutas = data.acceso;
-
-						//$rootScope.esUsuario = loginService.getType();
-						//$rootScope.terminal = loginService.getInfo();
-						//$rootScope.grupo = loginService.getGroup();
+						loginService.acceso = data.acceso;
 
 						//Si el rol es terminal, queda como filtro de si misma para las consultas
 						//De lo contrario, dejo a BACTSSA como filtro por default
 						if (data.role == 'terminal') {
-							loginService.setFiltro(data.terminal);
+							loginService.filterTerminal = data.terminal;
 						} else {
 							var filtro = angular.isDefined($cookies.get('themeTerminal')) ? $cookies.get('themeTerminal') : 'BACTSSA';
-							loginService.setFiltro(filtro);
-							/*$rootScope.filtroTerminal = filtro;
-							switch (filtro){
-								case 'BACTSSA':
-									$rootScope.terminalEstilo = 'bootstrap.cerulean';
-									$rootScope.logoTerminal = 'images/logo_bactssa.png';
-									break;
-								case 'TERMINAL4':
-									$rootScope.terminalEstilo = 'bootstrap.united';
-									$rootScope.logoTerminal = 'images/logo_terminal4.png';
-									break;
-								case 'TRP':
-									$rootScope.terminalEstilo = 'bootstrap.flaty';
-									$rootScope.logoTerminal = 'images/logo_trp.png';
-									break;
-							}*/
+							loginService.filterTerminal = filtro;
 						}
 
-						// Carga la cache si el usuario no tenía el acceso por cookies
-						/*var restoreSesion = $cookies.get('restoreSesion') === 'true';
-						if (!restoreSesion){
-							cacheFactory.cargaCache()
-								.then(function(){
-									deferred.resolve(data);
-								},
-								function(){
-									var cacheError = {
-										code: 'DAT-0010',
-										message: 'Se ha producido un error en la carga de la caché.'
-									};
-									deferred.reject(cacheError);
-								});
-						} else {
-							deferred.resolve(data);
-						}*/
 						deferred.resolve(data);
 					} else {
 						var myError = {

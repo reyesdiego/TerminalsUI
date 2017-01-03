@@ -15,7 +15,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				return paymentsArray;
 			},
 			getNotPayedCsv: function(datos, callback){
-				var inserturl = APP_CONFIG.SERVER_URL + '/paying/notPayed/' + loginService.getFiltro() +'/download';
+				var inserturl = APP_CONFIG.SERVER_URL + '/paying/notPayed/' + loginService.filterTerminal +'/download';
 				$http.get(inserturl, { params: formatService.formatearDatos(datos)})
 						.then(function(response){
 							var contentType = response.headers('Content-Type');
@@ -88,7 +88,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				this.cancelRequest('preliquidaciones');
 				var defer = $q.defer();
 				var canceler = HTTPCanceler.get(defer, this.namespace, 'preliquidaciones');
-				var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+				var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayments/' + loginService.filterTerminal + '/' + page.skip + '/' + page.limit;
 				var factory = this;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 						.then(function(response){
@@ -102,7 +102,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 				this.cancelRequest('liquidaciones');
 				var defer = $q.defer();
 				var canceler = HTTPCanceler.get(defer, this.namespace, 'liquidaciones');
-				var inserturl = APP_CONFIG.SERVER_URL + '/paying/payments/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+				var inserturl = APP_CONFIG.SERVER_URL + '/paying/payments/' + loginService.filterTerminal + '/' + page.skip + '/' + page.limit;
 				var factory = this;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
 						.then(function(response){
@@ -115,7 +115,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			//No se debería poder cancelar
 			setPrePayment: function(callback){
 				var inserturl = APP_CONFIG.SERVER_URL + '/paying/prePayment';
-				$http.post(inserturl, { terminal: loginService.getFiltro() })
+				$http.post(inserturl, { terminal: loginService.filterTerminal })
 						.then(function(response){
 							callback(response.data);
 						}, function(response){
@@ -130,7 +130,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 			getPrePayment: function(datos, callback){
 				console.log('acá en get prePayment');
 				console.log(datos);
-				var inserturl = APP_CONFIG.SERVER_URL + '/paying/getPrePayment/' + loginService.getFiltro();
+				var inserturl = APP_CONFIG.SERVER_URL + '/paying/getPrePayment/' + loginService.filterTerminal;
 				var factory = this;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos)})
 						.then(function(response){
@@ -147,7 +147,7 @@ myapp.factory('liquidacionesFactory', ['$http', 'loginService', 'formatService',
 						});
 			},
 			setDescriptionTasas: function(detallesLiquidacion){
-				var descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+				var descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
 				var totalFinal = 0;
 				var totalFinalAgp = 0;
 				detallesLiquidacion.forEach(function(detalle){

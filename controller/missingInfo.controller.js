@@ -218,7 +218,7 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 			$scope.$broadcast('detalleContenedor', contenedor);
 		};
 
-		if (loginService.getStatus() && $scope.savedState == null) cargaDatos();
+		if (loginService.isLoggedIn && $scope.savedState == null) cargaDatos();
 
 		/*$scope.$on('cambioTerminal', function(){
 			cargaDatos();

@@ -27,14 +27,11 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 		$scope.mostrarMensaje = $scope.msg[0];
 		$scope.porcentaje = 0;
 
-		if (loginService.getStatus()){
-			/*if (!angular.isDefined($rootScope.rutas)){
-				$rootScope.rutas = loginService.getAcceso();
-			}*/
-			if (generalFunctions.in_array('tarifario', loginService.getAcceso())){
+		if (loginService.isLoggedIn){
+			if (generalFunctions.in_array('tarifario', loginService.acceso)){
 				$state.transitionTo('tarifario');
 			} else {
-				$state.transitionTo(loginService.getAcceso()[0])
+				$state.transitionTo(loginService.acceso[0])
 			}
 		}
 
@@ -96,10 +93,10 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					.then(function(result) {
 								$rootScope.socket.emit('login', result.user);
 								//$rootScope.cargandoCache = false;
-								if (generalFunctions.in_array('tarifario', loginService.getAcceso())) {
+								if (generalFunctions.in_array('tarifario', loginService.acceso)) {
 									$state.transitionTo('tarifario');
 								} else {
-									$state.transitionTo(loginService.getAcceso()[0])
+									$state.transitionTo(loginService.acceso[0])
 								}
 							},
 							function(error){
@@ -127,10 +124,10 @@ myapp.controller('loginCtrl', ['$rootScope', '$scope', '$state', 'loginService',
 					var dlg = dialogs.confirm('Error', 'Se producido un error al cargar los datos, puede que alguna funcionalidad de la aplicación no esté disponible. ¿Desea ingresar a la aplicación de todos modos?');
 					dlg.result.then(function(){
 								//$rootScope.cargandoCache = false;
-								if (generalFunctions.in_array('tarifario', loginService.getAcceso())){
+								if (generalFunctions.in_array('tarifario', loginService.acceso)){
 									$state.transitionTo('tarifario');
 								} else {
-									$state.transitionTo(loginService.getAcceso()[0])
+									$state.transitionTo(loginService.acceso[0])
 								}
 							},
 							function(){

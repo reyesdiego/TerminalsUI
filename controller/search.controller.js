@@ -42,7 +42,7 @@ myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunction
 			$scope.listaTrenes = data;
 		});
 
-		$scope.vouchers = cacheService.cache.get('vouchers' + loginService.getFiltro());
+		$scope.vouchers = cacheService.cache.get('vouchers' + loginService.filterTerminal);
 		$scope.itemsPerPageData = [
 			{ value: 10, description: '10 items por página', ticked: false},
 			{ value: 15, description: '15 items por página', ticked: true},

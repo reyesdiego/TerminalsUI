@@ -24,7 +24,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		};
 
 		$scope.irA = function(){
-			if (loginService.getStatus()){
+			if (loginService.isLoggedIn){
 				$state.reload();
 			} else {
 				$state.transitionTo('login');
@@ -40,14 +40,14 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		};
 
 		$scope.setearTerminal = function(terminal){
-			if (loginService.getFiltro() != terminal){
-				loginService.setFiltro(terminal);
+			if (loginService.filterTerminal != terminal){
+				loginService.filterTerminal = terminal;
 				$state.reload();
 			}
 		};
 
 		$scope.tieneAcceso = function(aguja){
-			return generalFunctions.in_array(aguja, loginService.getAcceso());
+			return generalFunctions.in_array(aguja, loginService.acceso);
 		};
 
 		$scope.imprimirVista = function(){
@@ -93,19 +93,19 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		};
 
 		$scope.$on('socket:appointment', function (ev, data) {
-			if (loginService.getStatus()){
+			if (loginService.isLoggedIn){
 				if (data.status === 'OK') {
 					var turno = data.data;
 					var nuevoTurnoTemplate;
-					if (turno.terminal == loginService.getFiltro()){
+					if (turno.terminal == loginService.filterTerminal){
 						nuevoTurnoTemplate = '<span><strong>Tipo:</strong> <a href ng-click="notificacionDetalle(\'mov\', \'' + turno.mov + "')\">" + turno.mov + "</a> - <strong>Fecha:</strong> <a href ng-click=\"notificacionDetalle('fechaTurno', {inicio:'" + turno.inicio + "', fin:'" + turno.fin + "'})\">" + $filter('date')(turno.inicio,'dd/MM/yyyy','-0300' ) + "</a><br>De " + $filter('date')(turno.inicio, 'HH:mm', '-0300') + " a " + $filter('date')(turno.fin, 'HH:mm', '-0300') + "<br><strong>Buque:</strong> <a href ng-click=\"notificacionDetalle('buqueNombre', '" + turno.buque + "')\">" + turno.buque + "</a> - <strong>Viaje:</strong> " + turno.viaje + "<br><strong>Contenedor:</strong> <a href ng-click=\"notificacionDetalle('contenedor','" + turno.contenedor + "')\">" + turno.contenedor + '</a><br><a href ng-click="notificacionDetalle(\'turno\', {inicio:\'' + turno.inicio + '\', fin: \'' + turno.fin + '\', mov: \'' + turno.mov + '\', buque: \'' + turno.buque + '\', contenedor: \'' + turno.contenedor + '\'})">Ver turno</a></span>';
 					} else {
 						nuevoTurnoTemplate = '<span><a href ng-click="setearTerminal(\'' + turno.terminal + '\')"><strong>Tipo:</strong> ' + turno.mov + " - <strong>Fecha:</strong> " + $filter('date')(turno.inicio,'dd/MM/yyyy','-0300' ) + "<br>De " + $filter('date')(turno.inicio, 'HH:mm', '-0300') + " a " + $filter('date')(turno.fin, 'HH:mm', '-0300') + "<br><strong>Buque:</strong> " + turno.buque + " - <strong>Viaje:</strong> " + turno.viaje + "<br><strong>Contenedor:</strong> " + turno.contenedor + '</a>';
 					}
-					if (loginService.getType() == 'agp'){
+					if (loginService.type == 'agp'){
 						$scope.procesarNotificacion('turnos', nuevoTurnoTemplate, 'Nuevo Turno ' + turno.terminal, turno.terminal);
 					} else {
-						if (turno.terminal == loginService.getFiltro()){
+						if (turno.terminal == loginService.filterTerminal){
 							$scope.procesarNotificacion('turnos', nuevoTurnoTemplate, 'Nuevo Turno', turno.terminal);
 						}
 					}
@@ -114,11 +114,11 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		});
 
 		$scope.$on('socket:gate', function (ev, data) {
-			if (loginService.getStatus()){
+			if (loginService.isLoggedIn){
 				if (data.status === 'OK') {
 					var gate = data.data;
 					var nuevoGateTemplate;
-					if (gate.terminal == loginService.getFiltro()){
+					if (gate.terminal == loginService.filterTerminal){
 						if (gate.mov != 'PASO'){
 							nuevoGateTemplate = '<span><strong>Tipo: </strong>' + gate.mov + ' - <strong>Fecha: </strong>' + $filter('date')(gate.gateTimestamp, 'dd/MM/yyyy HH:mm', '-0300') + '<br><strong>Buque: </strong><a href ng-click="notificacionDetalle(\'buqueNombre\', \'' + gate.buque + '\')">' + gate.buque + '</a> - <strong>Viaje: </strong>' + gate.viaje + '<br><strong>Contenedor: </strong><a href ng-click="notificacionDetalle(\'contenedor\', \'' + gate.contenedor + '\')">' + gate.contenedor + '</a><br><a href ng-click="notificacionDetalle(\'gate\', {fecha: \'' + gate.gateTimestamp + '\', buque: \'' + gate.buque + '\', contenedor: \'' + gate.contenedor + '\'})">Ver gate</a>';
 						} else {
@@ -131,10 +131,10 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 							nuevoGateTemplate = '<span><a href ng-click="setearTerminal(\'' + gate.terminal + '\')"><strong>Tipo: </strong>' + gate.mov + ' - <strong>Fecha: </strong>' + $filter('date')(gate.gateTimestamp, 'dd/MM/yyyy HH:mm', '-0300');
 						}
 					}
-					if (loginService.getType() == 'agp'){
+					if (loginService.type == 'agp'){
 						$scope.procesarNotificacion('gates', nuevoGateTemplate, 'Nuevo Gate ' + gate.terminal, gate.terminal);
 					} else {
-						if (gate.terminal == loginService.getFiltro()){
+						if (gate.terminal == loginService.filterTerminal){
 							$scope.procesarNotificacion('gates', nuevoGateTemplate, 'Nuevo Gate', gate.terminal);
 						}
 					}
@@ -143,21 +143,21 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		});
 
 		$scope.$on('socket:invoice', function (ev, data) {
-			if (loginService.getStatus()){
-				if (loginService.getType() == 'agp' || (loginService.getType == 'terminal' && loginService.getFiltro() == data.data.terminal)){
+			if (loginService.isLoggedIn){
+				if (loginService.type == 'agp' || (loginService.type == 'terminal' && loginService.filterTerminal == data.data.terminal)){
 					var comprobante = data.data;
 					var nuevoComprobanteTemplate;
-					if (comprobante.terminal == loginService.getFiltro()){
+					if (comprobante.terminal == loginService.filterTerminal){
 						nuevoComprobanteTemplate = '<span>Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob, false) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.emision, 'dd/MM/yyyy', 'UTC') + '<br><a href ng-click="mostrarComprobante(\'' + comprobante._id + '\')">Ver comprobante</a></span>';
 						//nuevoComprobanteTemplate = '<span>Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob, false) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante), $filter('formatCurrency')($rootScope.moneda)) + '<br><a href ng-click="mostrarComprobante(\'' + comprobante._id + '\')">Ver comprobante</a></span>';
 					} else {
 						nuevoComprobanteTemplate = '<span><a href ng-click="setearTerminal(\'' + comprobante.terminal + '\')">Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob, false) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.emision, 'dd/MM/yyyy', 'UTC') + '</a>';
 						//nuevoComprobanteTemplate = '<span><a href ng-click="setearTerminal(\'' + comprobante.terminal + '\')">Tipo: ' + $filter('nombreComprobante')(comprobante.codTipoComprob, false) + ' - Número: ' + comprobante.nroComprob + '<br>Razón social: ' + comprobante.razon + '<br>Emisión: ' + $filter('date')(comprobante.emision, 'dd/MM/yyyy', 'UTC') + '<br>Importe: ' + $filter('currency')($filter('conversionMoneda')(comprobante.importe.total, comprobante), $filter('formatCurrency')($rootScope.moneda)) + '</a>';
 					}
-					if (loginService.getType() == 'agp'){
+					if (loginService.type == 'agp'){
 						$scope.procesarNotificacion('invoices', nuevoComprobanteTemplate, 'Nuevo Comprobante ' + comprobante.terminal, comprobante.terminal);
 					} else {
-						if (comprobante.terminal == loginService.getFiltro()){
+						if (comprobante.terminal == loginService.filterTerminal){
 							$scope.procesarNotificacion('invoices', nuevoComprobanteTemplate, 'Nuevo Comprobante', comprobante.terminal);
 						}
 					}

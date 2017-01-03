@@ -86,7 +86,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			mensaje: 'No se encontraron datos de sumarias de A.F.I.P relacionados.'
 		};
 
-		$scope.buques = cacheService.cache.get('buquesviaje' + loginService.getFiltro());
+		$scope.buques = cacheService.cache.get('buquesviaje' + loginService.filterTerminal);
 		$scope.buqueElegido = {
 			viajes:[]
 		};

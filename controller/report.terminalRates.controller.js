@@ -4,7 +4,7 @@
 
 myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginService', 'cacheService', 'dialogs', function($scope, reportsFactory, loginService, cacheService, dialogs){
 
-    $scope.descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+    $scope.descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
 
     $scope.model = {
         tipo: 'year',
@@ -67,7 +67,7 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
         var param = {
             year: $scope.model.fecha.getFullYear()
         };
-        var nombreReporte = 'Tarifas_terminales_' + loginService.getFiltro() + '_' + param.year;
+        var nombreReporte = 'Tarifas_terminales_' + loginService.filterTerminal + '_' + param.year;
         if ($scope.model.tipo == 'month'){
             param.month = $scope.model.fecha.getMonth() + 1;
             nombreReporte += '_' + param.month;

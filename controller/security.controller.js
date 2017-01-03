@@ -177,9 +177,9 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 		var rutasUsuario = {acceso: tareas};
 		ctrlUsersFactory.setAccess($scope.usuarioElegido._id, rutasUsuario, function(data){
 			if (data.status == 'OK') {
-				if (loginService.getInfo()._id == $scope.usuarioElegido._id){
-					loginService.setAcceso(tareas);
-					angular.copy(tareas, loginService.getAcceso());
+				if (loginService.info._id == $scope.usuarioElegido._id){
+					loginService.acceso = tareas;
+					angular.copy(tareas, loginService.acceso);
 				}
 				$scope.usuarios.forEach(function(usuario){
 					if (usuario._id == $scope.usuarioElegido._id) angular.copy(tareas, usuario.acceso)

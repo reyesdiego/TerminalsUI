@@ -23,7 +23,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 		}
 
 		setData(paymentData){
-			const descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+			const descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
 			angular.extend(this, paymentData);
 			this.detail.forEach((detail) => {
 				detail.desc = descripciones[detail._id];
@@ -32,7 +32,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 		}
 
 		setRatesDescription(detallesLiquidacion){
-			const descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+			const descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
 			let totalFinal = 0;
 			let totalFinalAgp = 0;
 			detallesLiquidacion.forEach((detalle) => {
@@ -46,7 +46,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 		}
 
 		getPrePaymentDetail(callback){
-			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/getPrePayment/${loginService.getFiltro()}`;
+			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/getPrePayment/${loginService.filterTerminal}`;
 			let params = {};
 
 			if (this._id){
@@ -128,7 +128,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 		}
 
 		addToPrePayment(prePayment){
-			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/addToPrePayment/${loginService.getFiltro()}`;
+			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/addToPrePayment/${loginService.filterTerminal}`;
 			const liquidacion = {
 				paymentId: prePayment
 			};
@@ -142,7 +142,7 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 
 		setPayment(){
 			const inserturl = `${APP_CONFIG.SERVER_URL}/paying/payment`;
-			return $http.put(inserturl, {terminal: loginService.getFiltro(), preNumber: this.preNumber})
+			return $http.put(inserturl, {terminal: loginService.filterTerminal, preNumber: this.preNumber})
 		}
 
 	}

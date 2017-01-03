@@ -40,8 +40,8 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		$scope.propiosTerminal = [];
 
 		$scope.puedeEditar = function(){
-			if ($scope.dataTerminal.getType() == 'agp'){
-				return generalFunctions.in_array('modificarTarifario', $scope.dataTerminal.getAcceso());
+			if ($scope.dataTerminal.type == 'agp'){
+				return generalFunctions.in_array('modificarTarifario', $scope.dataTerminal.acceso);
 			}
 		};
 
@@ -71,7 +71,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		});
 
 		$scope.prepararDatos = function(){
-			priceFactory.getMatchPrices(loginService.getFiltro(), $scope.tasas, function (data) {
+			priceFactory.getMatchPrices(loginService.filterTerminal, $scope.tasas, function (data) {
 				if (data.status == 'OK'){
 					$scope.pricelist = data.data;
 					$scope.pricelistAgp = [];
@@ -147,7 +147,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		$scope.abrirNuevoConcepto = function(tipo){
 			if (!(tipo == 'editar')){
 				$scope.newPrice = new Price();
-				if (loginService.getType() == 'terminal') $scope.newPrice.tarifaTerminal = true;
+				if (loginService.type == 'terminal') $scope.newPrice.tarifaTerminal = true;
 				$scope.newMatches = {
 					array: []
 				};
@@ -168,7 +168,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 					}));
 					$scope.newPrice.saveChanges()
 							.then(function(){
-								cacheService.actualizarMatchesArray(loginService.getFiltro());
+								cacheService.actualizarMatchesArray(loginService.filterTerminal);
 								dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
 								$scope.prepararDatos();
 								$state.transitionTo('matches');
@@ -181,8 +181,8 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		$scope.enableEdition = function(){
 			if ($scope.flagEditando){
-				if ($scope.dataTerminal.getType() == 'terminal'){
-					return $scope.newPrice.terminal == loginService.getFiltro();
+				if ($scope.dataTerminal.type == 'terminal'){
+					return $scope.newPrice.terminal == loginService.filterTerminal;
 				} else {
 					return true;
 				}
@@ -276,13 +276,13 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				output: 'csv'
 			};
 
-			priceFactory.getMatchPricesCSV(alterModel, loginService.getFiltro(), function(status){
+			priceFactory.getMatchPricesCSV(alterModel, loginService.filterTerminal, function(status){
 				if (status != 'OK'){
 					dialogs.error('Asociar', 'Se ha producido un error al descargar los datos.');
 				}
 			})
 		};
 
-		if (loginService.getStatus()) $scope.prepararDatos();
+		if (loginService.isLoggedIn) $scope.prepararDatos();
 
 	}]);

@@ -624,14 +624,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.cambioMoneda = true;
 		$rootScope.cambioTerminal = true;
 
-		/*$rootScope.setEstiloTerminal = function(terminal){
-		 if ($rootScope.dataTerminal.getFiltro() != terminal){
-		 $cookies.put('themeTerminal', terminal);
-		 loginService.setFiltro(terminal);
-		 }
-		 };*/
-
-		if (loginService.getStatus()) loginService.setHeaders();
+		if (loginService.isLoggedIn) loginService.setHeaders();
 
 		$rootScope.mensajeResultado = {
 			titulo: 'Comprobantes',
@@ -661,7 +654,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 		$rootScope.page = { skip:0, limit: $rootScope.itemsPerPage };
 
 		$rootScope.salir = function(){
-			if (loginService.getStatus()) $rootScope.socket.emit('logoff', loginService.getInfo().user);
+			if (loginService.isLoggedIn) $rootScope.socket.emit('logoff', loginService.info.user);
 			authFactory.logout();
 			$rootScope.appointmentNotify = 0;
 			$rootScope.invoiceNotify = 0;
@@ -674,7 +667,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from) {
 			$rootScope.inTrackContainer = to.name == 'trackContainer';
-			loginService.setFiltro($cookies.get('themeTerminal'));
+			loginService.filterTerminal = $cookies.get('themeTerminal');
 			$rootScope.loadingNewView = false;
 		});
 
@@ -688,7 +681,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion < 10){
 				dialogs.error('Error de navegador', 'La aplicación no es compatible con su versión de navegador. Los navegadores compatibles son Mozilla Firefox, Google Chrome y las versiones de IE mayores a 8.');
 			}
-			if (!loginService.getStatus() && $cookies.get('restoreSesion') === 'true'){
+			if (!loginService.isLoggedIn && $cookies.get('restoreSesion') === 'true'){
 				event.preventDefault();
 				authFactory.login().then(function(data){
 					$rootScope.socket.emit('login', data.user);
@@ -712,9 +705,9 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.cambioMoneda = !(generalFunctions.in_array(toState.name, $rootScope.rutasSinMoneda) || toState.name.indexOf('afip') != -1);
 			$rootScope.cambioTerminal = !(generalFunctions.in_array(toState.name, $rootScope.rutasSinTerminal) || toState.name.indexOf('afip') != -1);
 			if (!generalFunctions.in_array(toState.name, $rootScope.rutasComunes)){
-				if (loginService.getStatus()){
+				if (loginService.isLoggedIn){
 					if ($cookies.get('isLogged') === 'true'){
-						if(!generalFunctions.in_array(toState.name, loginService.getAcceso())){
+						if(!generalFunctions.in_array(toState.name, loginService.acceso)){
 							$rootScope.usuarioNoAutorizado(event);
 						}
 					} else {

@@ -21,19 +21,19 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         storageMode: 'localStorage',
                         onExpire: (key, value) => {
                             switch (key){
-                                case `trenes${loginService.getFiltro()}`:
+                                case `trenes${loginService.filterTerminal}`:
                                     this.cargaTrenes();
                                     break;
-                                case `buques${loginService.getFiltro()}`:
+                                case `buques${loginService.filterTerminal}`:
                                     this.cargaBuques();
                                     break;
-                                case `clientes${loginService.getFiltro()}`:
+                                case `clientes${loginService.filterTerminal}`:
                                     this.cargaClientes();
                                     break;
-                                case `descripciones${loginService.getFiltro()}`:
+                                case `descripciones${loginService.filterTerminal}`:
                                     this.cargaDescripciones();
                                     break;
-                                case `vouchers${loginService.getFiltro()}`:
+                                case `vouchers${loginService.filterTerminal}`:
                                     this.cargaVouchers();
                                     break;
                                 case `unitTypes`:
@@ -57,10 +57,10 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                         storageMode: 'localStorage',
                         onExpire: (key, value) => {
                             switch (key){
-                                case `matches${loginService.getFiltro()}`:
+                                case `matches${loginService.filterTerminal}`:
                                     this.cargaMatchesArray();
                                     break;
-                                case `ratesMatches${loginService.getFiltro()}`:
+                                case `ratesMatches${loginService.filterTerminal}`:
                                     this.cargaMatchesRates();
                                     break;
                                 case `allRates`:
@@ -130,12 +130,12 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
 
             cargaTrenes(){
                 const deferred = $q.defer();
-                if (this.cache.get(`trenes${loginService.getFiltro()}`)){
+                if (this.cache.get(`trenes${loginService.filterTerminal}`)){
                     //console.log('hay trenes');
-                    deferred.resolve(this.cache.get(`trenes${loginService.getFiltro()}`));
+                    deferred.resolve(this.cache.get(`trenes${loginService.filterTerminal}`));
                 } else {
                     //console.log('no hay trenes');
-                    const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.getFiltro()}/trains`;
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.filterTerminal}/trains`;
                     $http.get(inserturl).then((response) => {
                         if (response.data.status == 'OK'){
                             //console.log('cargamos trenes');
@@ -145,15 +145,15 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                                     listaTransformada.push({ tren: tren });
                                 }
                             }
-                            this.cache.put(`trenes${loginService.getFiltro()}`, listaTransformada);
+                            this.cache.put(`trenes${loginService.filterTerminal}`, listaTransformada);
                             deferred.resolve(listaTransformada);
                         } else {
                             //console.log('error trenes');
-                            this.cache.put(`trenes${loginService.getFiltro()}`, []);
+                            this.cache.put(`trenes${loginService.filterTerminal}`, []);
                             deferred.resolve([])
                         }
                     }, (response) => {
-                        this.cache.put(`trenes${loginService.getFiltro()}`, []);
+                        this.cache.put(`trenes${loginService.filterTerminal}`, []);
                         deferred.resolve([])
                     });
                 }
@@ -163,17 +163,17 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             cargaBuques(){
                 //console.log('buques');
                 const deferred = $q.defer();
-                if (this.cache.get(`buques${loginService.getFiltro()}`)){
+                if (this.cache.get(`buques${loginService.filterTerminal}`)){
                     //console.log('hay buques');
-                    deferred.resolve(this.cache.get(`buques${loginService.getFiltro()}`));
+                    deferred.resolve(this.cache.get(`buques${loginService.filterTerminal}`));
                 } else {
                     //console.log('no hay buques');
-                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.getFiltro()}/ships`;
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/ships`;
                     $http.get(inserturl).then((response) => {
                         console.log(response);
                         if (response.data.status == 'OK') {
                             //console.log('cargamos buques');
-                            this.cache.put(`buques${loginService.getFiltro()}`, response.data.data);
+                            this.cache.put(`buques${loginService.filterTerminal}`, response.data.data);
                             deferred.resolve(response.data.data);
                         } else {
                             //console.log('error buques');
@@ -189,16 +189,16 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             cargaBuqueViajes(){
                 //console.log('buques');
                 const deferred = $q.defer();
-                if (this.cache.get(`buquesviaje${loginService.getFiltro()}`)){
+                if (this.cache.get(`buquesviaje${loginService.filterTerminal}`)){
                     //console.log('hay buques');
-                    deferred.resolve(this.cache.get(`buquesviaje${loginService.getFiltro()}`));
+                    deferred.resolve(this.cache.get(`buquesviaje${loginService.filterTerminal}`));
                 } else {
                     //console.log('no hay buques');
-                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.getFiltro()}/shipTrips`;
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/shipTrips`;
                     $http.get(inserturl).then((response) => {
                         if (response.data.status == 'OK') {
                             //console.log('cargamos buques');
-                            this.cache.put(`buquesviaje${loginService.getFiltro()}`, response.data.data);
+                            this.cache.put(`buquesviaje${loginService.filterTerminal}`, response.data.data);
                             deferred.resolve(response.data.data);
                         } else {
                             //console.log('error buques');
@@ -214,12 +214,12 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             cargaClientes(){
                 //console.log('clientes' + loginService.getFiltro());
                 const deferred = $q.defer();
-                if (this.cache.get(`clientes${loginService.getFiltro()}`)){
+                if (this.cache.get(`clientes${loginService.filterTerminal}`)){
                     //console.log('hay clientes');
-                    deferred.resolve(this.cache.get(`clientes${loginService.getFiltro()}`));
+                    deferred.resolve(this.cache.get(`clientes${loginService.filterTerminal}`));
                 } else {
                     //console.log('no hay clientes');
-                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.getFiltro()}/clients`;
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/clients`;
                     $http.get(inserturl).then((response) => {
                             if (response.data.status == 'OK') {
                                 //console.log('cargamos clientes');
@@ -228,7 +228,7 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                                 for (let nombreCliente of response.data.data){
                                     clientes.push({id: i++, nombre: nombreCliente});
                                 }
-                                this.cache.put(`clientes${loginService.getFiltro()}`, clientes);
+                                this.cache.put(`clientes${loginService.filterTerminal}`, clientes);
                                 deferred.resolve(clientes);
                             } else {
                                 //console.log('error clientes');
@@ -244,16 +244,16 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             cargaDescripciones(){
                 //console.log('descripciones');
                 const deferred = $q.defer();
-                if (this.cache.get(`descripciones${loginService.getFiltro()}`)){
+                if (this.cache.get(`descripciones${loginService.filterTerminal}`)){
                     //console.log('hay descripciones');
                     deferred.resolve();
                 } else {
                     //console.log('no hay descripciones');
-                    var inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/matches/${loginService.getFiltro()}`;
+                    var inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/matches/${loginService.filterTerminal}`;
                     $http.get(inserturl).then((response) => {
                         if (response.data.status == 'OK') {
                             //console.log('cargamos descripciones');
-                            this.cache.put(`descripciones${loginService.getFiltro()}`, response.data.data);
+                            this.cache.put(`descripciones${loginService.filterTerminal}`, response.data.data);
                             deferred.resolve();
                         } else {
                             //console.log('error descripciones');
@@ -270,16 +270,16 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             cargaVouchers(){
                 //console.log('vouchers');
                 const deferred = $q.defer();
-                if (this.cache.get(`vouchers${loginService.getFiltro()}`)){
+                if (this.cache.get(`vouchers${loginService.filterTerminal}`)){
                     //console.log('hay vouchers');
                     deferred.resolve();
                 } else {
                     //console.log('no hay vouchers');
-                    const inserturl = `${APP_CONFIG.SERVER_URL}/voucherTypes/${loginService.getFiltro()}`;
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/voucherTypes/${loginService.filterTerminal}`;
                     $http.get(inserturl).then((response) => {
                         if (response.data.status == 'OK') {
                             //console.log('cargamos vouchers');
-                            this.cache.put(`vouchers${loginService.getFiltro()}`, response.data.data);
+                            this.cache.put(`vouchers${loginService.filterTerminal}`, response.data.data);
                             deferred.resolve();
                         } else {
                             //console.log('error vouchers');
@@ -295,9 +295,9 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             }
 
             get vouchersArray(){
-                if (this.cache.get(`vouchers${loginService.getFiltro()}`)){
+                if (this.cache.get(`vouchers${loginService.filterTerminal}`)){
                     let vouchersArray = [];
-                    for (let voucher of this.cache.get(`vouchers${loginService.getFiltro()}`)){
+                    for (let voucher of this.cache.get(`vouchers${loginService.filterTerminal}`)){
                         vouchersArray[voucher._id] = {desc: voucher.description, abrev: voucher.abbrev}
                     }
                     return vouchersArray;
@@ -418,16 +418,16 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             cargaMatchesArray(){
                 //console.log('matches');
                 const deferred = $q.defer();
-                if (this.matchesCache.get(`matches${loginService.getFiltro()}`)){
+                if (this.matchesCache.get(`matches${loginService.filterTerminal}`)){
                     ////console.log('hay matches');
                     deferred.resolve();
                 } else {
                     //console.log('no hay matches');
-                    const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/price/${loginService.getFiltro()}`;
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/price/${loginService.filterTerminal}`;
                     $http.get(inserturl).then((response) => {
                         if (response.data.status == 'OK'){
                             //console.log('cargamos matches');
-                            this.matchesCache.put(`matches${loginService.getFiltro()}`, response.data.data);
+                            this.matchesCache.put(`matches${loginService.filterTerminal}`, response.data.data);
                             deferred.resolve();
                         } else {
                             //console.log('error matches');
@@ -443,7 +443,7 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
 
             get matchesArray(){
                 let matchesArray = {};
-                for (let match of this.matchesCache.get(`matches${loginService.getFiltro()}`)){
+                for (let match of this.matchesCache.get(`matches${loginService.filterTerminal}`)){
                     matchesArray[match.code] = match;
                 }
                 return matchesArray;
@@ -452,12 +452,12 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             cargaMatchesRates(){
                 //console.log('rates');
                 const deferred = $q.defer();
-                if (this.matchesCache.get(`ratesMatches${loginService.getFiltro()}`)){
+                if (this.matchesCache.get(`ratesMatches${loginService.filterTerminal}`)){
                     //console.log('hay rates');
                     deferred.resolve();
                 } else {
                     //console.log('no hay rates');
-                    const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/${loginService.getFiltro()}`;
+                    const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/${loginService.filterTerminal}`;
                     const param = { onlyRates: true };
                     $http.get(inserturl, { params: param }).then((response) => {
                         if (response.data.status == 'OK') {
@@ -468,7 +468,7 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                                     tasasCargasTerminal.push(tasaCargas.matches[0].match[0])
                                 }
                             }
-                            this.matchesCache.put(`ratesMatches${loginService.getFiltro()}`, tasasCargasTerminal);
+                            this.matchesCache.put(`ratesMatches${loginService.filterTerminal}`, tasasCargasTerminal);
                             deferred.resolve();
                         } else {
                             //console.log('error rates');

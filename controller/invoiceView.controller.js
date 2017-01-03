@@ -19,7 +19,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 
 		$scope.comprobantesVistos = [];
 
-		$scope.acceso = loginService.getType();
+		$scope.acceso = loginService.type;
 
 		// Puntos de Ventas
 		$scope.todosLosPuntosDeVentas = [
@@ -217,7 +217,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			return datos;
 		}
 
-		if (loginService.getStatus()){
+		if (loginService.isLoggedIn){
 			if ($scope.mostrarPtosVenta){
 				cargaPuntosDeVenta()
 			} else {

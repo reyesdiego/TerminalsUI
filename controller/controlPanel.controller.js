@@ -548,7 +548,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			});
 		};
 
-		if (loginService.getStatus()){
+		if (loginService.isLoggedIn){
 			$scope.traerDatosFacturadoMes();
 			$scope.traerDatosFacturadoDia();
 			$scope.traerDatosGates();

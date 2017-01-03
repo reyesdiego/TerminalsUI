@@ -50,7 +50,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 					});
 		},
 		noMatches: function (data, callback){
-			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/noMatches/' + loginService.getFiltro();
+			var inserturl = APP_CONFIG.SERVER_URL + '/matchPrices/noMatches/' + loginService.filterTerminal;
 			$http.get(inserturl, { params: formatService.formatearDatos(data) })
 					.then(function (response){
 						callback(response.data);

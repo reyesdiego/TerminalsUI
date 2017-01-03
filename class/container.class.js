@@ -94,7 +94,7 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
 
         getRates(stateName, currency){
             const deferred = $q.defer();
-            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${loginService.getFiltro()}/${this.contenedor}/${currency}`;
+            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${loginService.filterTerminal}/${this.contenedor}/${currency}`;
             let queryString = {};
             if (stateName == 'buque') queryString = {
                 buqueNombre: this.ship,
@@ -110,7 +110,7 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
         }
 
         putDescriptionRates(data){
-            const descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+            const descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
             data.total = 0;
             data.data.forEach((detalle) => {
                 detalle._id.descripcion = (descripciones[detalle._id.id]) ? descripciones[detalle._id.id] : 'No se halló la descripción, verifique que el código esté asociado';

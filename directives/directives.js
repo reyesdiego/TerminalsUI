@@ -133,15 +133,6 @@ myapp.directive('accordionInvoicesSearch', function(){
 			ocultarFiltros:		'='
 		},
 		controller: 'searchController'
-		/*link: function ($scope) {
-			$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
-			$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
-
-			$scope.$on('cambioTerminal', function(){
-				$scope.listaRazonSocial = generalCache.get('clientes' + loginService.getFiltro());
-				$scope.listaBuques = generalCache.get('buques' + loginService.getFiltro());
-			});
-		}*/
 	}
 });
 
@@ -166,7 +157,7 @@ myapp.directive('detalleComprobante', ['dialogs', 'loginService', function(dialo
 			moneda:				'='
 		},
 		link: function($scope){
-			$scope.acceso = loginService.getType();
+			$scope.acceso = loginService.type;
 			$scope.comprobantesControlados = [];
 
 			$scope.ocultarResultado = function(){

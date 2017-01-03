@@ -15,7 +15,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
         getInvoices: function(idLlamada, datos, page, callback) {
             this.cancelRequest(idLlamada);
             var canceler = HTTPCanceler.get($q.defer(), this.namespace, idLlamada);
-            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.filterTerminal + '/' + page.skip + '/' + page.limit;
             var factory = this;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function(response){
@@ -29,7 +29,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
         getInvoicesNoMatches: function(datos, page, callback){
             this.cancelRequest('invoicesNoMatches');
             var canceler = HTTPCanceler.get($q.defer(), this.namespace, 'invoicesNoMatches');
-            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/noMatches/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/noMatches/' + loginService.filterTerminal + '/' + page.skip + '/' + page.limit;
             var factory = this;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function (response) {
@@ -53,7 +53,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             } else {
                 canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidar');
             }
-            var inserturl = APP_CONFIG.SERVER_URL + '/paying/notPayed/' + loginService.getFiltro() + '/' + page.skip + '/' + page.limit;
+            var inserturl = APP_CONFIG.SERVER_URL + '/paying/notPayed/' + loginService.filterTerminal + '/' + page.skip + '/' + page.limit;
             var factory = this;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function(response){
@@ -84,7 +84,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                 canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidados');
             }
             var factory = this;
-            var inserturl = APP_CONFIG.SERVER_URL + '/paying/payed/' + loginService.getFiltro() + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
+            var inserturl = APP_CONFIG.SERVER_URL + '/paying/payed/' + loginService.filterTerminal + '/' + liquidacion + '/' + page.skip + '/' + page.limit;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function(response){
                     response.data.data = factory.retrieveInvoices(response.data.data);
@@ -106,7 +106,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             this.cancelRequest('correlative');
             var defer = $q.defer();
             var canceler = HTTPCanceler.get(defer, this.namespace, 'correlative');
-            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/correlative/' + loginService.getFiltro();
+            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/correlative/' + loginService.filterTerminal;
             var param = formatService.formatearDatos(datos);
             param.x = socketIoRegister;
             $http.get(inserturl, { params: param, timeout: canceler.promise })
@@ -120,7 +120,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             this.cancelRequest(idLlamada);
             var defer = $q.defer();
             var canceler = HTTPCanceler.get(defer, this.namespace, idLlamada);
-            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/cashbox/' + loginService.getFiltro();
+            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/cashbox/' + loginService.filterTerminal;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise })
                 .then(function(response){
                     if (response.data == null){
@@ -162,7 +162,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                 });
         },
         getCSV: function(datos, reportName, callback){
-            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/down';
+            var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.filterTerminal + '/down';
             $http.get(inserturl, { params: formatService.formatearDatos(datos)})
                 .then(function(response) {
                     var contentType = response.headers('Content-Type');

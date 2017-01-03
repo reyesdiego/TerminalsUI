@@ -70,7 +70,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			});
 		}
 
-		if (loginService.getStatus()){
+		if (loginService.isLoggedIn){
 			traerDatos();
 		}
 

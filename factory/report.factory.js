@@ -6,7 +6,7 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 	var factory = {};
 
 	factory.getTerminalesCSV = function(datos, reportName, callback) {
-		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/byRates';
+		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.filterTerminal + '/byRates';
 		$http.get(inserturl, { params: formatService.formatearDatos(datos) })
 				.then(function(response){
 					var contentType = response.headers('Content-Type');
@@ -22,7 +22,7 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 	};
 
 	factory.getReporteTerminales = function(param, callback){
-		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.getFiltro() + '/byRates';
+		var inserturl = APP_CONFIG.SERVER_URL + '/invoices/' + loginService.filterTerminal + '/byRates';
 		$http.get(inserturl, {params: formatService.formatearDatos(param)})
 				.then(function(response){
 					callback(response.data);

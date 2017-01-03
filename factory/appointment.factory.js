@@ -26,7 +26,7 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 				this.cancelRequest('getTurnos');
 				const defer = $q.defer();
 				const canceler = HTTPCanceler.get(defer, this.namespace, 'getTurnos');
-				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/${loginService.getFiltro()}/${page.skip}/${page.limit}`;
+				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.retrieveAppointments(response.data.data);
 					callback(response.data);

@@ -48,7 +48,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			return ($scope.selected === index) ? "selected" : "";
 		};
 
-		$scope.listaClientes = cacheService.cache.get('clientes' + loginService.getFiltro());
+		$scope.listaClientes = cacheService.cache.get('clientes' + loginService.filterTerminal);
 
 		$scope.cargando = false;
 
@@ -145,7 +145,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 
 		var cargarReporte = function(){
 			$scope.cargando = true;
-			$scope.model.terminal = loginService.getFiltro();
+			$scope.model.terminal = loginService.filterTerminal;
 			var datos = angular.copy($scope.model);
 			if ($scope.ranking){
 				controlPanelFactory.getTopFacturacionEmpresas(datos, tratarResultado)
@@ -163,7 +163,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				hoy: new Date(),
 				resultados: $scope.resultados,
 				totalTerminal: $scope.totalTerminal,
-				terminal: loginService.getFiltro(),
+				terminal: loginService.filterTerminal,
 				charts: [
 					{filename: $scope.chartReporteEmpresas.id, image: $scope.chartReporteEmpresas.image, h: $scope.chartReporteEmpresas.height, w: $scope.chartReporteEmpresas.width},
 					{filename: $scope.chartPorcentaje.id, image: $scope.chartPorcentaje.image, h: $scope.chartPorcentaje.height, w: $scope.chartPorcentaje.width}

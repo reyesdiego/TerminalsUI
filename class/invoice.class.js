@@ -11,7 +11,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
         setData(invoiceData){
             angular.extend(this, invoiceData);
             if (this.detalle){
-                const descripciones = cacheService.cache.get('descripciones' + loginService.getFiltro());
+                const descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
                 const unidadesTarifas = cacheService.unitTypesArray;
                 this.detalle.forEach((contenedor) => {
                     contenedor.items.forEach((item) => {
@@ -38,13 +38,13 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
 
         setInterface(){
             const estadoDefault = {
-                'gruop': loginService.getGroup(),
+                'gruop': loginService.group,
                 'state': 'Y',
                 'user': 'agp'
             };
             if (this.estado){
                 const estadosArray = cacheService.estadosArray;
-                if (this.estado.group == loginService.getGroup() || this.estado.group === 'ALL'){
+                if (this.estado.group == loginService.group || this.estado.group === 'ALL'){
                     this.interfazEstado = (estadosArray[this.estado.state]) ? estadosArray[this.estado.state] : estadosArray['Y'];
                 } else {
                     this.estado = estadoDefault;
@@ -96,7 +96,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
             $http.get(inserturl).then((response) => {
                 let comentariosFiltrados = [];
                 response.data.data.forEach((comentario) => {
-                    if (comentario.group == loginService.getGroup() || comentario.group === 'ALL'){
+                    if (comentario.group == loginService.group || comentario.group === 'ALL'){
                         comentario.fecha = formatService.formatearFechaISOString(comentario.registrado_en);
                         comentariosFiltrados.push(comentario);
                     }
@@ -119,7 +119,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
 
         updateState(newState){
             const deferred = $q.defer();
-            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/setState/${loginService.getFiltro()}/${this._id}`;
+            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/setState/${loginService.filterTerminal}/${this._id}`;
             const data = { estado: newState };
             $http.put(inserturl,  data).then((response) => {
                 deferred.resolve(response.data);
@@ -152,8 +152,8 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
                     this.estado = {
                         _id: this._id,
                         estado: dataComment.newState,
-                        grupo: loginService.getGroup(),
-                        user: loginService.getInfo().user
+                        grupo: loginService.group,
+                        user: loginService.info.user
                     };
                     this.setInterface();
                     deferred.resolve();
@@ -173,7 +173,6 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
             const data = {
                 resend: resendStatus
             };
-            //var inserturl = APP_CONFIG.SERVER_URL + '/invoices/invoice/' + loginService.getFiltro() + '/' + this._id;
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/setResend/${this._id}`;
             $http.put(inserturl, data, { params: data }).then((response) => {
                 if (response.data.status == 'OK'){
@@ -253,7 +252,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
 
         controlarTarifas(){
             const lookup = cacheService.matchesArray;
-            const tasaCargasTerminal = cacheService.matchesCache.get('ratesMatches' + loginService.getFiltro());
+            const tasaCargasTerminal = cacheService.matchesCache.get('ratesMatches' + loginService.filterTerminal);
 
             let valorTomado;
             let tarifaError;
@@ -362,7 +361,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
             //$scope.disablePdf = true;
             const deferred = $q.defer();
             const imprimirComprobante = {};
-            const nombreReporte = `${$filter('nombreComprobante')(this.codTipoComprob, true)}${this.nroComprob}_${loginService.getFiltro()}.pdf`;
+            const nombreReporte = `${$filter('nombreComprobante')(this.codTipoComprob, true)}${this.nroComprob}_${loginService.filterTerminal}.pdf`;
             angular.copy(this, imprimirComprobante);
             imprimirComprobante.codTipoComprob = $filter('nombreComprobante')(imprimirComprobante.codTipoComprob, false);
             imprimirComprobante.fecha.emision = $filter('date')(imprimirComprobante.fecha.emision, 'dd/MM/yyyy', 'UTC');

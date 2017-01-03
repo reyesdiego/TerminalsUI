@@ -58,7 +58,7 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 			$scope.pricelistTerminal = [];
 			$scope.servicios = [];
 			$scope.listaElegida = [];
-			priceFactory.getMatchPrices(loginService.getFiltro(), $scope.tasas, function(data){
+			priceFactory.getMatchPrices(loginService.filterTerminal, $scope.tasas, function(data){
 				if (data.status == 'OK'){
 					$scope.hayError = false;
 					$scope.pricelist = data.data;
@@ -90,7 +90,7 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 		$scope.exportarAPdf = function(){
 			$scope.procesando = true;
 			var data = {
-				terminal: loginService.getFiltro(),
+				terminal: loginService.filterTerminal,
 				pricelist: $scope.filteredPrices
 			};
 			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.pdf';
@@ -125,6 +125,6 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 			return csvContent;
 		}
 
-		if (loginService.getStatus()) $scope.cargaPricelist();
+		if (loginService.isLoggedIn) $scope.cargaPricelist();
 
 	}]);

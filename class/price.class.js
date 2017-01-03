@@ -16,9 +16,9 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             this.code = '';
             this.unit = '';
             this.topPrices = [];
-            this.terminal = loginService.getInfo().terminal;
+            this.terminal = loginService.info.terminal;
             this.matches = [{
-                terminal: loginService.getInfo().terminal,
+                terminal: loginService.info.terminal,
                 match: [],
                 _idPrice: '',
                 code: ''
@@ -49,7 +49,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 this.matches[0]._idPrice = this._id;
             } else {
                 this.matches = [{
-                    terminal: loginService.getInfo().terminal,
+                    terminal: loginService.info.terminal,
                     match: [],
                     _idPrice: this._id,
                     code: this.code
@@ -92,7 +92,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
 
         getTopPrices(){
             const deferred = $q.defer();
-            const inserturl = `${APP_CONFIG.SERVER_URL}/prices/${this._id}/${loginService.getFiltro()}`;
+            const inserturl = `${APP_CONFIG.SERVER_URL}/prices/${this._id}/${loginService.filterTerminal}`;
             $http.get(inserturl).then((response) => {
                 this.topPrices = response.data.data.topPrices;
                 for (let i = 0; i < this.topPrices.length; i++){
@@ -148,7 +148,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         }
 
         saveChanges(){
-            if (loginService.getType() == 'terminal' && this.tarifaTerminal){
+            if (loginService.type == 'terminal' && this.tarifaTerminal){
                 let encontrado = false;
                 this.matches[0].match.forEach(function(match){
                     if (match == this.code) encontrado = true;

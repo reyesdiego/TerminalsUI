@@ -103,6 +103,6 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 		});
 	};
 
-	if (loginService.getStatus()) $scope.cargaGates();
+	if (loginService.isLoggedIn) $scope.cargaGates();
 
 }]);

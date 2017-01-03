@@ -519,6 +519,6 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			});
 		};
 
-		if (loginService.getStatus()) $scope.cargaRates();
+		if (loginService.isLoggedIn) $scope.cargaRates();
 
 	}]);

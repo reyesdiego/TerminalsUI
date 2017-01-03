@@ -21,14 +21,14 @@ myapp.factory('appSocket', ['socketFactory', 'loginService', 'APP_CONFIG', funct
 				mySocket.forward('loggedIn');
 				mySocket.forward('loggedOff');
 
-				if (loginService.getStatus()) {
-					this.emit('login', loginService.getInfo().user);
+				if (loginService.isLoggedIn) {
+					this.emit('login', loginService.info.user);
 				}
 			});
 
 			mySocket.on('reconnect', function () {
-				if (loginService.getStatus()) {
-					this.emit('login', loginService.getInfo().user);
+				if (loginService.isLoggedIn) {
+					this.emit('login', loginService.info.user);
 				}
 			});
 

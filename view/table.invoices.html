@@ -9,11 +9,11 @@
 			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fecha.emision" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Importe Total" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="importe.total" filtro-orden="importeOrden"></encabezado-tabla-ordenado></th>
 			<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
-			<th ng-show="dataTerminal.getType()=='agp'" class="col-lg-1 hidden-print text-center">Estado</th>
-			<th ng-show="dataTerminal.getType()=='agp'" class="text-center hidden-print">TC</th>
+			<th ng-show="dataTerminal.type=='agp'" class="col-lg-1 hidden-print text-center">Estado</th>
+			<th ng-show="dataTerminal.type=='agp'" class="text-center hidden-print">TC</th>
 		</tr>
 		</thead>
-		<tbody ng-show="dataTerminal.getType() == 'agp'">
+		<tbody ng-show="dataTerminal.type == 'agp'">
 		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }" class="fila-animada">
 			<td class="text-right" style="width: 9%"><span ng-show="invoice.resend == 1" title="Comprobante marcado para reenviar" class="glyphicon glyphicon-warning-sign text-danger"></span> {{ invoice.nroPtoVenta }}</td>
 			<td style="width: 7%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
@@ -35,7 +35,7 @@
 			<td style="width: 3%" class="hidden-print text-center"><span class="glyphicon glyphicon-check {{ invoice.interfazLiquidada }}" ng-show="invoice.tieneTasa"></span><span class="glyphicon glyphicon-remove {{ invoice.interfazLiquidada }}" ng-hide="invoice.tieneTasa"></span> </td>
 		</tr>
 		</tbody>
-		<tbody ng-show="dataTerminal.getType() == 'terminal'">
+		<tbody ng-show="dataTerminal.type == 'terminal'">
 		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }" class="fila-animada">
 			<td class="text-right" style="width: 10%">{{ invoice.nroPtoVenta }}</td>
 			<td style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
