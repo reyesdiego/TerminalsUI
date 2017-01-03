@@ -127,8 +127,4 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 
 		if (loginService.getStatus()) $scope.cargaPricelist();
 
-		$scope.$on('terminoLogin', function(){
-			$scope.cargaPricelist();
-		});
-
 	}]);

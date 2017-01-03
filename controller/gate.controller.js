@@ -105,16 +105,4 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 
 	if (loginService.getStatus()) $scope.cargaGates();
 
-	$scope.$on('terminoLogin', function(){
-		$scope.cargaGates();
-	});
-
-	/*$scope.$on('cambioTerminal', function(){
-		$scope.cargaGates();
-	});*/
-
-	/*$scope.$on('$destroy', function(){
-		gatesFactory.cancelRequest();
-	});*/
-
 }]);

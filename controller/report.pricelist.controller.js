@@ -74,10 +74,6 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			traerDatos();
 		}
 
-		$scope.$on('terminoLogin', function(){
-			traerDatos();
-		});
-
 		$scope.recargarPricelist = function(){
 			var pos;
 			//$scope.agregarQuitarTodo(false);

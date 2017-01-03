@@ -521,8 +521,4 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 		if (loginService.getStatus()) $scope.cargaRates();
 
-		$scope.$on('terminoLogin', function(){
-			$scope.cargaRates();
-		});
-
 	}]);

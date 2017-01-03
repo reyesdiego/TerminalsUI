@@ -692,7 +692,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 				event.preventDefault();
 				authFactory.login().then(function(data){
 					$rootScope.socket.emit('login', data.user);
-					$rootScope.$broadcast('terminoLogin');
+					//$rootScope.$broadcast('terminoLogin');
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');
 					} else {

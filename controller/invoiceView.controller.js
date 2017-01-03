@@ -225,13 +225,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			}
 		};
 
-		$scope.$on('terminoLogin', function(){
-			if ($scope.mostrarPtosVenta || $scope.controlCodigos){
-				$scope.loadingState = true;
-				cargaPuntosDeVenta();
-			}
-		});
-
 		$scope.verPdf = function(){
 			$scope.disablePdf = true;
 			$scope.verDetalle.verPdf()

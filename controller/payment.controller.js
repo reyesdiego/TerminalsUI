@@ -137,7 +137,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 		$scope.cargarPreLiquidaciones = function(){
 			$scope.page.skip = ($scope.preLiquidacion.currentPage - 1) * $scope.itemsPerPage;
 			$scope.preLiquidacion.cargando = true;
-			console.log($scope.preLiquidacion.model);
 			liquidacionesFactory.getPrePayments($scope.page, $scope.preLiquidacion.model, function(data){
 				if (data.status == 'OK'){
 					$scope.preLiquidacion.datos = data.data;
@@ -291,13 +290,6 @@ myapp.controller('liquidacionesCtrl', ['$rootScope', '$scope', 'liquidacionesFac
 			$scope.cargarPreLiquidaciones();
 			$scope.cargarLiquidaciones();
 		}
-
-		$scope.$on('terminoLogin', function(){
-			$scope.acceso = $rootScope.esUsuario;
-			$scope.cargarSinLiquidar();
-			$scope.cargarPreLiquidaciones();
-			$scope.cargarLiquidaciones();
-		});
 
 		$scope.recargar = function(){
 			$scope.preLiquidacion.verDetalle = false;

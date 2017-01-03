@@ -358,9 +358,5 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 
 		if (loginService.getStatus()) $scope.cargaDatos($scope.actualRegistro);
 
-		$scope.$on('terminoLogin', function(){
-			$scope.cargaDatos($scope.actualRegistro);
-		});
-
 	}]);
 

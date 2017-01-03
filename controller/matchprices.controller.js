@@ -285,10 +285,4 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		if (loginService.getStatus()) $scope.prepararDatos();
 
-		$scope.$on('terminoLogin', function(){
-			//$scope.acceso = $rootScope.esUsuario;
-			//$scope.nombre = loginService.getFiltro();
-			$scope.prepararDatos();
-		});
-
 	}]);

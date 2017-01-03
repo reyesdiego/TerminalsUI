@@ -174,11 +174,6 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 		}
 	}
 
-
-	$scope.$on('terminoLogin', function(){
-		controlTasaCargas();
-	});
-
 }]);
 
 myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'cacheService', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs', 'generalFunctions',
@@ -364,10 +359,6 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		});
 
 		if (loginService.getStatus()) traerPuntosDeVenta();
-
-		$scope.$on('terminoLogin', function(){
-			traerPuntosDeVenta();
-		});
 
 		$scope.$on('$destroy', function(){
 			correlativeSocket.disconnect();

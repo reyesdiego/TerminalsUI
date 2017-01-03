@@ -220,11 +220,6 @@ myapp.controller('missingInfo', ['$rootScope', '$scope', 'gatesFactory', 'loginS
 
 		if (loginService.getStatus() && $scope.savedState == null) cargaDatos();
 
-		$scope.$on('terminoLogin', function(){
-			$scope.acceso = $rootScope.esUsuario;
-			cargaDatos();
-		});
-
 		/*$scope.$on('cambioTerminal', function(){
 			cargaDatos();
 		});*/
