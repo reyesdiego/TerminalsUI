@@ -71,7 +71,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		});
 
 		$scope.prepararDatos = function(){
-			priceFactory.getMatchPrices(loginService.filterTerminal, $scope.tasas, function (data) {
+			priceFactory.getMatchPrices($scope.tasas, function (data) {
 				if (data.status == 'OK'){
 					$scope.pricelist = data.data;
 					$scope.pricelistAgp = [];
@@ -276,7 +276,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				output: 'csv'
 			};
 
-			priceFactory.getMatchPricesCSV(alterModel, loginService.filterTerminal, function(status){
+			priceFactory.getMatchPricesCSV(alterModel, function(status){
 				if (status != 'OK'){
 					dialogs.error('Asociar', 'Se ha producido un error al descargar los datos.');
 				}

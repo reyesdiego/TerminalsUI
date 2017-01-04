@@ -173,164 +173,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			mensaje: ''
 		};
 
-		var prepararDatosMes = function(datosGrafico, traerTotal){
-			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
-			var base = [
-				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
-			];
-			//Para cambiar entre columnas
-			var contarTerminal = 1;
-			//Para cargar promedio
-			var acum = 0;
-			var meses = ["01","02","03","04","05","06","07","08","09","10","11", "12"];
-			//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
-			//ordenados por fecha, y siguiendo el orden de terminales "BACTSSA", "Terminal 4", "TRP"???????
-			var flagPrimero = true;
-			var fechaAnterior;
-			var fila = ['', 0, 0, 0, 0, ''];
-			datosGrafico.forEach(function(datosDia){
-				if (flagPrimero){
-					flagPrimero = false;
-					fila[0] = meses[datosDia.month - 1] + '/' + datosDia.year;
-					fechaAnterior = datosDia.month;
-				}
-				if (fechaAnterior != datosDia.month){
-					//Al llegar a la tercer terminal cargo el promedio de ese día, meto la fila en la matriz y reseteo las columnas
-					fila[4] = acum/3;
-					base.push(fila.slice());
-					//Meto la fila en la matriz y vuelvo a empezar
-					fila = ['', 0, 0, 0, 0, ''];
-					acum = 0;
-					fechaAnterior = datosDia.month;
-					fila[0] = meses[datosDia.month - 1] + '/' + datosDia.year;
-				}
-				switch (datosDia.terminal){
-					case "BACTSSA":
-					case "BACTSSA_OLD":
-						contarTerminal = 1;
-						break;
-					case "TERMINAL4":
-					case "TERMINAL4_OLD":
-						contarTerminal = 2;
-						break;
-					case "TRP":
-					case "TRP_OLD":
-					case "TRP_X":
-						contarTerminal = 3;
-						break;
-				}
-				if (traerTotal){
-					fila[contarTerminal] = datosDia.total;
-					acum += datosDia.total;
-				} else {
-					fila[contarTerminal] += datosDia.cnt;
-					acum += datosDia.cnt;
-				}
-			});
-			fila[4] = acum/3;
-			base.push(fila.slice());
-			//Finalmente devuelvo la matriz generada con los datos para su asignación
-			return base;
-		};
-
-		var prepararDatosFacturadoDia = function(datosGrafico){
-			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
-			var base = [
-				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
-			];
-			//Para cambiar entre columnas
-			var contarTerminal = 1;
-			//Para cargar promedio
-			var acum = 0;
-			var fila = ['', 0, 0, 0, 0, ''];
-			var flagPrimero = true;
-			var fechaAnterior;
-			//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
-			//ordenados por fecha
-			datosGrafico.forEach(function(datosDia){
-				if (flagPrimero){
-					//Primera iteración, cargo el día y lo establezco como fecha para comparar
-					fila[0] = datosDia.date.substr(0, 10).replace(/-/g, '/');
-					fechaAnterior = datosDia.date;
-					//fila[0] = datosDia._id.day + '/' + datosDia._id.month + '/' + datosDia._id.year;
-					//fechaAnterior = datosDia._id.day;
-					flagPrimero = false;
-				}
-				if (fechaAnterior != datosDia.date){
-					//Al haber un cambio en la fecha cargo el promedio de ese día, avanzo una fila y reseteo las columnas
-					fila[4] = acum/3;
-					base.push(fila.slice());
-					//Meto la fila en la matriz y vuelvo a empezar
-					fila = ['', 0, 0, 0, 0, ''];
-					fila[0] = datosDia.date.substr(0, 10).replace(/-/g, '/');
-					fechaAnterior = datosDia.date;
-					acum = 0;
-				}
-				switch (datosDia.terminal){
-					case "BACTSSA":
-						contarTerminal = 1;
-						break;
-					case "TERMINAL4":
-						contarTerminal = 2;
-						break;
-					case "TRP":
-						contarTerminal = 3;
-						break;
-				}
-				fila[contarTerminal] = datosDia.total;
-				acum += datosDia.total;
-			});
-			//Meto la última fila generada
-			fila[4] = acum/3;
-			base.push(fila.slice());
-			//Finalmente devuelvo la matriz generada con los datos para su asignación
-			return base;
-		};
-
-		var prepararDatosGatesTurnosDia = function(datosGrafico){
-			var matAux = [];
-			matAux[0] = ['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ];
-			for (var i = 0; i <= 23; i++){
-				if (i<10){
-					matAux[i+1] = ['0' + i, 0, 0, 0, 0, ''];
-				}
-				else {
-					matAux[i+1] = [i, 0, 0, 0, 0, ''];
-				}
-			}
-			datosGrafico.forEach(function(datosDia){
-				if (datosDia._id){
-					switch (datosDia._id.terminal){
-						case "BACTSSA":
-							matAux[datosDia._id.hour+1][1] = datosDia.cnt;
-							break;
-						case "TERMINAL4":
-							matAux[datosDia._id.hour+1][2] = datosDia.cnt;
-							break;
-						case "TRP":
-							matAux[datosDia._id.hour+1][3] = datosDia.cnt;
-							break;
-					}
-				} else {
-					switch (datosDia.terminal){
-						case "BACTSSA":
-							matAux[datosDia.hour+1][1] = datosDia.cnt;
-							break;
-						case "TERMINAL4":
-							matAux[datosDia.hour+1][2] = datosDia.cnt;
-							break;
-						case "TRP":
-							matAux[datosDia.hour+1][3] = datosDia.cnt;
-							break;
-					}
-				}
-			});
-			for (var e = 0; e <= 23; e++){
-				matAux[e+1][4] = (matAux[e+1][1] + matAux[e+1][2] + matAux[e+1][3]) / 3;
-			}
-			return matAux;
-		};
-
 		$scope.$on('socket:invoice', function (ev, data) {
 			if (data.status === 'OK') {
 				var fecha1 = formatService.formatearFechaISOString($scope.desde);
@@ -412,7 +254,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.isOpenMonth = false;
 			controlPanelFactory.getFacturasMeses(datos).then((graf) => {
 				if (graf){
-					$scope.chartFacturas.data = prepararDatosMes(graf.data, true);
+					$scope.chartFacturas.data = graf.data;
 					$scope.facturadoMes.loading = false;
 				} else {
 					$scope.facturadoMes.error = true;
@@ -436,7 +278,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.cantGates.loading = true;
 			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}).then((graf) => {
 				if (graf){
-					$scope.chartGates.data = prepararDatosMes(graf, false);
+					$scope.chartGates.data = graf.data;
 					$scope.cantGates.loading = false;
 				} else {
 					$scope.cantGates.error = true;
@@ -460,7 +302,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }).then((graf) => {
 				if (graf){
 					$scope.cantTurnos.loading = false;
-					$scope.chartTurnos.data = prepararDatosMes(graf, false);
+					$scope.chartTurnos.data = graf;
 				} else {
 					$scope.cantTurnos.error = true;
 					$scope.cantTurnos.loading = false;
@@ -485,7 +327,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.facturadoDia.loading = true;
 			controlPanelFactory.getFacturadoPorDia(datos).then((graf) => {
 				if (graf){
-					$scope.chartFacturado.data = prepararDatosFacturadoDia(graf.data);
+					$scope.chartFacturado.data = graf.data;
 					$scope.facturadoDia.loading = false;
 				} else {
 					$scope.facturadoDia.error = true;
@@ -527,7 +369,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			promise.then((graf) => {
 				if (graf){
 					$scope.gatesTurnos.loading = false;
-					$scope.chartDiaGatesTurnos.data = prepararDatosGatesTurnosDia(graf);
+					$scope.chartDiaGatesTurnos.data = graf;
 					if ($scope.radioModel == 'Gates'){
 						$scope.labelPorHora = 'Gates por hora'
 					} else {

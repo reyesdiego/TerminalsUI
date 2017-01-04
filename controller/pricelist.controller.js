@@ -58,7 +58,7 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 			$scope.pricelistTerminal = [];
 			$scope.servicios = [];
 			$scope.listaElegida = [];
-			priceFactory.getMatchPrices(loginService.filterTerminal, $scope.tasas, function(data){
+			priceFactory.getMatchPrices($scope.tasas, function(data){
 				if (data.status == 'OK'){
 					$scope.hayError = false;
 					$scope.pricelist = data.data;
