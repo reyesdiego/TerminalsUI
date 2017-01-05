@@ -11,13 +11,13 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 			}
 
 			cancelRequest(request){
-				HTTPCanceler.cancel(namespace, request);
+				HTTPCanceler.cancel(this.namespace, request);
 			}
 
 			getGate(datos, page, callback){
 				this.cancelRequest('getGates');
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getGates');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getGates');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					callback(response.data);
@@ -28,7 +28,7 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
 
 			getMissingInvoices(datos, page, callback){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace, 'getMissingInvoices');
+				const canceler = HTTPCanceler.get(defer, this.namespace, 'getMissingInvoices');
 				//var inserturl = APP_CONFIG.SERVER_URL + '/gates/' + loginService.getFiltro() + '/missingInvoices/' + page.skip + '/' + page.limit;
 				const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.filterTerminal}/missingInvoices`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
