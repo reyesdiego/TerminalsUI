@@ -20,7 +20,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 
 				const inserturl = `${APP_CONFIG.SERVER_URL}/login`;
 				$http.post(inserturl, usuario).then((response) => {
-					data = response.data.data;
+					let data = response.data.data;
 
 					if (data.acceso.length > 0){
 						loginService.info = data;
