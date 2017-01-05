@@ -438,7 +438,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				}
 				filaEncontrada = false;
 			});
-			for (i = 1;i<$scope.chartReporteTarifas.data.length;i++){
+			for (let i = 1;i<$scope.chartReporteTarifas.data.length;i++){
 				$scope.chartReporteTarifas.data[i][8] = $scope.chartReporteTarifas.data[i][8]/7
 			}
 		};
