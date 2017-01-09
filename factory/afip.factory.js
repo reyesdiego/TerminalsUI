@@ -144,7 +144,7 @@ myapp.factory('afipFactory', ['$http', 'loginService', 'formatService', '$q', 'H
 
 			getRegistroAfip(ruta, filtros, callback){
 				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, namespace);
+				const canceler = HTTPCanceler.get(defer, this.namespace);
 				const inserturl = `${APP_CONFIG.SERVER_URL}/afip/${ruta}`;
 				$http.get(inserturl, { params: formatService.formatearDatos(filtros), timeout: canceler.promise }).then((response) => {
 					callback(response.data);
