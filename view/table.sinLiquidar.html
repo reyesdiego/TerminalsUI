@@ -40,7 +40,7 @@
 				<th class="text-right"><encabezado-tabla-ordenado titulo="Cot." filtrar-orden="ordenar(filtro)" oculta-filtros="ocultarFiltros" model="payment.searchParams" filtro="cotiMoneda" filtro-orden="cotiMonedaOrden"></encabezado-tabla-ordenado></th>
 				<th ng-hide="tasaAgp" class="text-right">Importe</th>
 				<th ng-show="tasaAgp" class="text-right">Importe</th>
-				<!--<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>-->
+				<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 			</tr>
 			</thead>
 			<tbody ng-hide="payment.byContainer">
@@ -67,7 +67,7 @@
 				<td ng-show="tasaAgp" class="text-right" style="width: 12%; font-size: 9pt">
 					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasaAgp | currency: ('PES' | formatCurrency)}}</span>
 				</td>
-				<!--<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>-->
+				<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			</tr>
 			</tbody>
 			<tbody ng-show="payment.byContainer">
@@ -95,7 +95,7 @@
 				<td ng-show="tasaAgp" class="text-right" style="width: 12%; font-size: 9pt">
 					<span ng-style="{ 'color': (invoice.codTipoComprob == 3 || invoice.codTipoComprob == 8) ? '#ff0000' : '#000000' }">{{ invoice.totalTasaAgp | currency: ('PES' | formatCurrency) }}</span>
 				</td>
-				<!--<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>-->
+				<td class="text-center" style="width: 4%; font-size: 9pt"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			</tr>
 			</tbody>
 		</table>
