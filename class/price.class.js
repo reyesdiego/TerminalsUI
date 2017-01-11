@@ -150,7 +150,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         saveChanges(){
             if (loginService.type == 'terminal' && this.tarifaTerminal){
                 let encontrado = false;
-                this.matches[0].match.forEach(function(match){
+                this.matches[0].match.forEach(match => {
                     if (match == this.code) encontrado = true;
                 });
                 if (!encontrado){
