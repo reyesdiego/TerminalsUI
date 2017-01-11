@@ -25,8 +25,25 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
             if (!this.controlTarifas) this.controlTarifas = [];
             if (!this.tarifasSinMatch) this.tarifasSinMatch = [];
             if (!this.interfazLiquidada) this.interfazLiquidada = '';
-            if (!this.tieneTasa) this.tieneTasa = false;
+            if (!this.title) this.title = '';
+            if (!this.tienePayment) this.tienePayment = false;
             if (!this.noMatch) this.noMatch = false;
+
+            if (angular.isDefined(this.payment) && this.payment != null){
+                if (angular.isDefined(this.payment.number) && this.payment.number !== null) {
+                    this.tienePayment = true;
+                    this.interfazLiquidada = 'text-success';
+                    this.title = 'Liquidación #' + this.payment.number;
+                } else if (angular.isDefined(this.payment.preNumber) && this.payment.preNumber !== null) {
+                    this.tienePayment = true;
+                    this.interfazLiquidada = 'text-warning';
+                    this.title = 'Pre Liquidación #' + this.payment.preNumber;
+                } else {
+                    this.interfazLiquidada = 'text-danger';
+                }
+            } else {
+                this.interfazLiquidada = 'text-danger';
+            }
 
             this.setInterface();
             if (!this.resend || this.resend == null){
@@ -281,16 +298,6 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
                                 valorTomado = (item.impUnit * this.cotiMoneda).toFixed(2);
                             }
                             if (tasaCargasTerminal.indexOf(item.id) >= 0){
-                                this.tieneTasa = true;
-                                if (angular.isDefined(this.payment) && this.payment != null){
-                                    if (angular.isDefined(this.payment.number)){
-                                        this.interfazLiquidada = 'text-success';
-                                    } else {
-                                        this.interfazLiquidada = 'text-warning';
-                                    }
-                                } else {
-                                    this.interfazLiquidada = 'text-danger';
-                                }
                                 if (precioEncontrado){
                                     if (valorTomado != precioALaFecha){
                                         tarifaError = {

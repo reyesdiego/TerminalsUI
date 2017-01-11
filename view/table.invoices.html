@@ -10,7 +10,7 @@
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Importe Total" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="importe.total" filtro-orden="importeOrden"></encabezado-tabla-ordenado></th>
 			<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 			<th ng-show="dataTerminal.type=='agp'" class="col-lg-1 hidden-print text-center">Estado</th>
-			<th ng-show="dataTerminal.type=='agp'" class="text-center hidden-print">TC</th>
+			<th ng-show="dataTerminal.type=='agp'" class="text-center hidden-print" title="Liquidación">Lq</th>
 		</tr>
 		</thead>
 		<tbody ng-show="dataTerminal.type == 'agp'">
@@ -32,7 +32,7 @@
 			<!--<td style="width: 3%" class="hidden-print text-center">
 				<a href ng-click="invoice.trackInvoice()"><span class="glyphicon glyphicon-edit"></span></a>
 			</td>-->
-			<td style="width: 3%" class="hidden-print text-center"><span class="glyphicon glyphicon-check {{ invoice.interfazLiquidada }}" ng-show="invoice.tieneTasa"></span><span class="glyphicon glyphicon-remove {{ invoice.interfazLiquidada }}" ng-hide="invoice.tieneTasa"></span> </td>
+			<td style="width: 3%" class="hidden-print text-center" title="{{invoice.title}}"><span class="glyphicon glyphicon-check {{ invoice.interfazLiquidada }}" ng-show="invoice.tienePayment"></span><span class="glyphicon glyphicon-remove {{ invoice.interfazLiquidada }}" ng-hide="invoice.tienePayment"></span> </td>
 		</tr>
 		</tbody>
 		<tbody ng-show="dataTerminal.type == 'terminal'">
