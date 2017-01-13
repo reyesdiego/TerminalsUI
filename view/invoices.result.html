@@ -61,9 +61,9 @@
 						<span ng-show="contenedor.buque.fecha != '' && contenedor.buque.viaje != null"> - Fecha: {{ contenedor.buque.fecha | date: 'dd/MM/yyyy':'UTC'}}</span>
 					</td>
 				</tr>
-				<tr style="text-align: right" ng-repeat="item in contenedor.items">
+				<tr style="text-align: right; font-weight:{{(item.rate !== null)?'bold':'normal'}}" ng-repeat="item in contenedor.items">
 					<td><a href class="hidden-print" ng-click="filtrado('code', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
-					<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="verDetalle.existeDescripcion(item)"></span> <text-pop text="{{ item.descripcion }}" max="190"></text-pop></td>
+					<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="verDetalle.existeDescripcion(item)"></span> <text-pop text="{{ item.description }}" max="190"></text-pop></td>
 					<td>{{ item.cnt }}</td>
 					<td>{{ item.impUnit | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 					<td>{{ item.uniMed }}</td>
@@ -72,27 +72,27 @@
 				</tbody>
 				<tfoot class="text-right">
 				<tr>
-					<td colspan="2">Subtotal</td>
+					<td colspan="2"><strong>Subtotal</strong></td>
 					<td colspan="4">{{ verDetalle.importe.subtotal | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 				</tr>
 				<tr>
-					<td colspan="2">IVA</td>
+					<td colspan="2"><strong>IVA</strong></td>
 					<td colspan="4">{{ verDetalle.importe.iva | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 				</tr>
 				<tr>
-					<td colspan="2">Otros Tributos</td>
+					<td colspan="2"><strong>Otros Tributos</strong></td>
 					<td colspan="4">{{ verDetalle.importe.otrosTributos | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 				</tr>
 				<tr>
-					<td colspan="2">Total</td>
+					<td colspan="2"><strong>Total</strong></td>
 					<td colspan="4">{{ verDetalle.importe.total | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 				</tr>
 				<tr class="text-center">
 					<td colspan="6">
-						<span>Monto Gravado {{ verDetalle.importe.gravado | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
-						<span>Monto No Gravado {{ verDetalle.importe.noGravado | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
-						<span>Exento {{ verDetalle.importe.exento | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
-						<span><b>Cotizaci&oacute;n Moneda U$s1 = {{ verDetalle.cotiMoneda | currency: $ }}</b></span>
+						<span><strong>Monto Gravado</strong> {{ verDetalle.importe.gravado | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
+						<span><strong>Monto No Gravado</strong> {{ verDetalle.importe.noGravado | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
+						<span><strong>Exento</strong> {{ verDetalle.importe.exento | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
+						<span><strong>Cotizaci&oacute;n Moneda</strong> U$s1 = {{ verDetalle.cotiMoneda | currency: $ }}</span>
 					</td>
 				</tr>
 				<tr class="text-center">

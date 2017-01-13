@@ -8,14 +8,18 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
                 this.setData(invoiceData);
         }
 
+        /**
+         * Para MongoDB no va a devolver la "description" por ahora.
+         * */
         setData(invoiceData){
             angular.extend(this, invoiceData);
             if (this.detalle){
-                const descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
+                //const descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
                 const unidadesTarifas = cacheService.unitTypesArray;
                 this.detalle.forEach((contenedor) => {
                     contenedor.items.forEach((item) => {
-                        item.descripcion = (descripciones[item.id]) ? descripciones[item.id] : 'No se halló la descripción, verifique que el código esté asociado';
+                        //item.descripcion = (descripciones[item.id]) ? descripciones[item.id] : 'No se halló la descripción, verifique que el código esté asociado';
+                        item.description = (item.description) ? item.description : 'No se halló la descripción, verifique que el código esté asociado';
                         if (angular.isDefined(unidadesTarifas[item.uniMed]))
                             item.uniMed = unidadesTarifas[item.uniMed];
                     });
@@ -88,7 +92,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
         }
 
         existeDescripcion(item){
-            return item.descripcion != 'No se halló la descripción, verifique que el código esté asociado';
+            return item.description != 'No se halló la descripción, verifique que el código esté asociado';
         }
 
         loadById(){
