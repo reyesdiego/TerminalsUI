@@ -196,8 +196,6 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 			invoice.trackInvoice().then(function(data){
 				//cargaPuntosDeVenta();
 			}, function(error){
-				console.log('eeror en track invoice');
-				console.log(error);
 				dialogs.error('Error', error.message);
 			});
 		};

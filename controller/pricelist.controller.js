@@ -89,9 +89,13 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 
 		$scope.exportarAPdf = function(){
 			$scope.procesando = true;
+			var pricesData = angular.copy($scope.pricelist);
+			pricesData.forEach(function(aPrice){
+				aPrice.tipo = aPrice.tipoTarifa;
+			});
 			var data = {
 				terminal: loginService.filterTerminal,
-				pricelist: $scope.filteredPrices
+				pricelist: pricesData
 			};
 			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.pdf';
 			downloadFactory.convertToPdf(data, 'pricelistToPdf', nombreReporte).then(function(){
@@ -115,11 +119,11 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 		};
 
 		function armarCsv (){
-			var csvContent = "Código|Descripción|Unidad|Tope";
+			var csvContent = "Tipo|Código|Descripción|Unidad|Tope";
 
 			$scope.pricelist.forEach(function(price){
 				csvContent += "\n";
-				csvContent += price.code + "|" + price.description + "|" + price.unit + "|" + price.price;
+				csvContent += price.tipoTarifa + "|" + price.code + "|" + price.description + "|" + price.unit + "|" + price.price;
 			});
 
 			return csvContent;

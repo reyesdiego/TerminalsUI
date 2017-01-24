@@ -221,6 +221,12 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             return deferred.promise;
         }
 
+        get tipoTarifa(){
+            if (this.tarifaAgp) return 'A';
+            if (this.servicio) return 'S';
+            if (this.tarifaTerminal) return 'P';
+        }
+
     }
 
     return Price;

@@ -41,7 +41,8 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 		{ description: 'Nueva tarifa', habilitar: false, valor: 'price', mostrar: ''},
 		//{ description: 'Baja del servicio', habilitar: false}
 		{ description: 'Enviar mail a cliente por nuevo turno', habilitar: false, valor: 'emailAppointmentToApp', mostrar: 'terminal'},
-		{ description: 'Último comprobante', habilitar: false, valor: 'lastInvoice', mostrar: 'Diego Reyes'}
+		//{ description: 'Último comprobante', habilitar: false, valor: 'lastInvoice', mostrar: 'Diego Reyes'}
+		{ description: 'Errores en turnos', habilitar: false, valor: 'appointmentError', mostrar: 'terminal'}
 	];
 
 	ctrlUsersFactory.getUsers(function(data){
@@ -157,10 +158,8 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 	};
 
 	var setearUsuario = function(usuario){
-		console.log('hola');
 		if (angular.isDefined($scope.usuarioElegido)) $scope.usuarioElegido.elegido = '';
 		$scope.usuarioElegido = usuario;
-		console.log(usuario);
 		usuario.elegido = 'bg-info';
 		angular.copy(usuario.acceso, $scope.rutasUsuarioOriginal);
 		angular.copy(usuario.emailToApp, $scope.notificacionesUsuarioOriginal);
@@ -220,7 +219,6 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 		$scope.notificaciones.forEach(function(notif){
 			if (notif.habilitar) notificacionesUsuario[notif.valor] = notif.habilitar;
 		});
-		console.log($scope.notificacionesUsuarioOriginal);
 		if (!tareasUsuario.equals($scope.rutasUsuarioOriginal) || !(notificacionesUsuario == $scope.notificacionesUsuarioOriginal)){
 			var dlg = dialogs.confirm("Control de acceso", "¿Desea guardar los cambios efectuados para el usuario " + $scope.usuarioElegido.full_name + "?");
 			dlg.result.then(function(){

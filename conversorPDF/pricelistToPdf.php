@@ -122,8 +122,9 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 12);
 
-$pdf->Cell(20, 8, utf8_decode("Código"), 1, 0, "R");
-$pdf->Cell(110, 8, utf8_decode("Tarifa"), 1, 0, "C");
+$pdf->Cell(15, 8, "Tipo", 1, 0, "C");
+$pdf->Cell(20, 8, utf8_decode("Código"), 1, 0, "C");
+$pdf->Cell(95, 8, utf8_decode("Tarifa"), 1, 0, "C");
 $pdf->Cell(25, 8, "Unidad", 1, 0, "C");
 $pdf->Cell(35, 8, "Tope", 1, 0, "C");
 $pdf->Ln();
@@ -133,21 +134,22 @@ foreach ($data['pricelist'] as $price) {
 
 	//Calculate the height of the row
 	$nb=0;
-	$nb=$pdf->NbLines(110, $price['description']);
+	$nb=$pdf->NbLines(95, $price['description']);
 	$h=5*$nb;
 	//Issue a page break first if needed
 	$pdf->CheckPageBreak($h);
 
-	$pdf->setX(30);
+	$pdf->setX(45);
 
 	$x=$pdf->GetX();
 	$y=$pdf->GetY();
 
-	$pdf->MultiCell(110, 5, utf8_decode($price['description']), 1, "L");
+	$pdf->MultiCell(95, 5, utf8_decode($price['description']), 1, "L");
 
 	$h = $pdf->getY();
 
 	$pdf->setXY(10, $y);
+	$pdf->Cell(15, $h - $y, $price['tipo'], 1, 0, "L");
 	$pdf->Cell(20, $h - $y, $price['code'], 1, 0, "L");
 	$pdf->setX(140);
 	if (isset($price['unit'])){
