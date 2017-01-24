@@ -59,7 +59,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
 
         setInterface(){
             const estadoDefault = {
-                'gruop': loginService.group,
+                'group': loginService.group,
                 'state': 'Y',
                 'user': 'agp'
             };
@@ -116,17 +116,26 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
             const inserturl = `${APP_CONFIG.SERVER_URL}/comments/${this._id}`;
             $http.get(inserturl).then((response) => {
                 let comentariosFiltrados = [];
+                let lastComment = null;
                 response.data.data.forEach((comentario) => {
                     if (comentario.group == loginService.group || comentario.group === 'ALL'){
                         comentario.fecha = formatService.formatearFechaISOString(comentario.registrado_en);
+                        if (lastComment == null){
+                            lastComment = comentario;
+                        } else if(comentario.fecha > lastComment.fecha){
+                            lastComment = comentario;
+                        }
                         comentariosFiltrados.push(comentario);
                     }
                 });
+                comentariosFiltrados.sort((a, b) => {
+                    return (a.fecha > b.fecha);
+                });
                 if (comentariosFiltrados.length > 0){
                     this.estado = {
-                        state: comentariosFiltrados[comentariosFiltrados.length-1].state,
-                        gruop: comentariosFiltrados[comentariosFiltrados.length-1].group,
-                        user: comentariosFiltrados[comentariosFiltrados.length-1].user
+                        state: lastComment.state,
+                        group: lastComment.group,
+                        user: lastComment.user
                     };
                     this.setInterface();
                 }
@@ -138,11 +147,33 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
             return deferred.promise;
         }
 
-        updateState(newState){
+        updateState(dataComment){
             const deferred = $q.defer();
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/setState/${loginService.filterTerminal}/${this._id}`;
-            const data = { estado: newState };
+            const data = { estado: dataComment.newState._id };
             $http.put(inserturl,  data).then((response) => {
+                this.interfazEstado = dataComment.newState;
+                switch (dataComment.newState.type){
+                    case 'WARN':
+                        this.interfazEstado.btnEstado = 'text-warning';
+                        break;
+                    case 'OK':
+                        this.interfazEstado.btnEstado = 'text-success';
+                        break;
+                    case 'ERROR':
+                        this.interfazEstado.btnEstado = 'text-danger';
+                        break;
+                    case 'UNKNOWN':
+                        this.interfazEstado.btnEstado = 'text-info';
+                        break;
+                }
+                this.estado = {
+                    _id: this._id,
+                    state: dataComment.newState._id,
+                    group: loginService.group,
+                    user: loginService.info.user
+                };
+                this.setInterface();
                 deferred.resolve(response.data);
             }).catch((response) => {
                 deferred.reject(response.data);
@@ -150,33 +181,11 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
             return deferred.promise;
         }
 
-        addComment(dataComment, newComment){
+        addComment(newComment){
             const deferred = $q.defer();
             const inserturl = `${APP_CONFIG.SERVER_URL}/comments/comment`;
             $http.post(inserturl, newComment).then((response) => {
                 if (response.data.status == 'OK'){
-                    this.interfazEstado = dataComment.newState;
-                    switch (dataComment.newState.type){
-                        case 'WARN':
-                            this.interfazEstado.btnEstado = 'text-warning';
-                            break;
-                        case 'OK':
-                            this.interfazEstado.btnEstado = 'text-success';
-                            break;
-                        case 'ERROR':
-                            this.interfazEstado.btnEstado = 'text-danger';
-                            break;
-                        case 'UNKNOWN':
-                            this.interfazEstado.btnEstado = 'text-info';
-                            break;
-                    }
-                    this.estado = {
-                        _id: this._id,
-                        estado: dataComment.newState,
-                        grupo: loginService.group,
-                        user: loginService.info.user
-                    };
-                    this.setInterface();
                     deferred.resolve();
                 } else {
                     const message = 'Se ha producido un error al agregar el comentario en el comprobante.';
@@ -241,8 +250,8 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
                     };
                     let llamadas = [];
                     if (dataComment.setState){
-                        llamadas.push(this.updateState(dataComment.newState._id));
-                        llamadas.push(this.addComment(dataComment, logInvoice));
+                        llamadas.push(this.updateState(dataComment));
+                        llamadas.push(this.addComment(logInvoice));
                     }
                     if (dataComment.setResend){
                         llamadas.push(this.setResend(dataComment.resend ? '1' : '0'));

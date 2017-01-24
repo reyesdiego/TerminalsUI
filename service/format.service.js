@@ -46,13 +46,17 @@
 				fecha = new Date(fecha);
 				var fechaAux = this.formatearFecha(fecha) + 'T';
 				if(fecha.getHours() < 10){
-					fechaAux = fechaAux + '0';
+					fechaAux += '0';
 				}
-				fechaAux = fechaAux + (fecha.getHours()) + ':';
+				fechaAux += fecha.getHours() + ':';
 				if(fecha.getMinutes() < 10){
-					fechaAux = fechaAux + '0';
+					fechaAux += '0';
 				}
-				fechaAux = fechaAux + fecha.getMinutes() + ':00.000-03:00';
+				fechaAux += fecha.getMinutes() + ':';
+				if(fecha.getSeconds() < 10){
+					fechaAux += '0';
+				}
+				fechaAux += fecha.getSeconds() + '.000-03:00';
 				return fechaAux;
 			}else
 				return null;

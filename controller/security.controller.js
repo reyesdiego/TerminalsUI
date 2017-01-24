@@ -157,8 +157,10 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 	};
 
 	var setearUsuario = function(usuario){
+		console.log('hola');
 		if (angular.isDefined($scope.usuarioElegido)) $scope.usuarioElegido.elegido = '';
 		$scope.usuarioElegido = usuario;
+		console.log(usuario);
 		usuario.elegido = 'bg-info';
 		angular.copy(usuario.acceso, $scope.rutasUsuarioOriginal);
 		angular.copy(usuario.emailToApp, $scope.notificacionesUsuarioOriginal);
@@ -211,14 +213,15 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 	$scope.guardar = function(){
 		var deferred = $q.defer();
 		var tareasUsuario = [];
-		var notificacionesUsuario = [];
+		var notificacionesUsuario = {};
 		$scope.tareas.forEach(function(unaTarea){
 			if (unaTarea.acceso) tareasUsuario.push(unaTarea.route);
 		});
 		$scope.notificaciones.forEach(function(notif){
-			if (notif.habilitar) notificacionesUsuario.push(notif.valor);
+			if (notif.habilitar) notificacionesUsuario[notif.valor] = notif.habilitar;
 		});
-		if (!tareasUsuario.equals($scope.rutasUsuarioOriginal) || !notificacionesUsuario.equals($scope.notificacionesUsuarioOriginal)){
+		console.log($scope.notificacionesUsuarioOriginal);
+		if (!tareasUsuario.equals($scope.rutasUsuarioOriginal) || !(notificacionesUsuario == $scope.notificacionesUsuarioOriginal)){
 			var dlg = dialogs.confirm("Control de acceso", "¿Desea guardar los cambios efectuados para el usuario " + $scope.usuarioElegido.full_name + "?");
 			dlg.result.then(function(){
 				var guardar = [];
