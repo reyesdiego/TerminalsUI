@@ -2,13 +2,23 @@
  * Created by leo on 02/02/15.
  */
 
-myapp.factory('ctrlUsersFactory', ['$http', 'APP_CONFIG', function($http, APP_CONFIG){
+myapp.factory('ctrlUsersFactory', ['$http', 'APP_CONFIG', 'User', function($http, APP_CONFIG, User){
 
 	class ctrlUsersFactory {
+
+		retrieveUsers(usersData){
+			let usersArray = [];
+			for (let user of usersData){
+				usersArray.push(new User(user));
+			}
+			return usersArray;
+		}
 
 		getUsers(callback){
 			const inserturl = `${APP_CONFIG.SERVER_URL}/agp/accounts`;
 			$http.get(inserturl).then((response) => {
+				response.data.data = this.retrieveUsers(response.data.data);
+				console.log(response.data.data);
 				callback(response.data);
 			}).catch((response) => {
 				callback(response.data);
@@ -36,24 +46,6 @@ myapp.factory('ctrlUsersFactory', ['$http', 'APP_CONFIG', function($http, APP_CO
 		getRoutes(callback){
 			const inserturl = `${APP_CONFIG.SERVER_URL}/tasks`;
 			$http.get(inserturl).then((response) => {
-				callback(response.data);
-			}).catch((response) => {
-				callback(response.data);
-			});
-		}
-
-		setAccess(id, acceso, callback){
-			const inserturl = `${APP_CONFIG.SERVER_URL}/agp/account/${id}/tasks`;
-			$http.put(inserturl, acceso).then((response) => {
-				callback(response.data);
-			}).catch((response) => {
-				callback(response.data);
-			});
-		}
-
-		setNotifications(id, notif, callback){
-			const inserturl = `${APP_CONFIG.SERVER_URL}/agp/account/${id}/emailToApp`;
-			$http.put(inserturl, notif).then((response) => {
 				callback(response.data);
 			}).catch((response) => {
 				callback(response.data);

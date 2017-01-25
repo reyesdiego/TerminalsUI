@@ -21,10 +21,10 @@
 			<button type="button" class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-save"></span> Guardar</button>
 		</div>
 		<div class="row col-lg-9" ng-show="permiso">
-			<uib-tabset justified="true" class="hidden-print" ng-show="!loadingState">
-				<uib-tab heading="Tareas generales" ng-click="cambioModo('tareas')" active="tabTareas.active"></uib-tab>
-				<uib-tab heading="Tareas AGP" ng-show="usuarioElegido.role == 'agp'" ng-click="cambioModo('agp')"></uib-tab>
-				<uib-tab heading="Notificaciones" ng-click="cambioModo('notificaciones')"></uib-tab>
+			<uib-tabset justified="true" class="hidden-print" ng-show="!loadingState" active="activeTab">
+				<uib-tab heading="Tareas generales" ng-click="cambioModo('tareas', 0)"></uib-tab>
+				<uib-tab heading="Tareas AGP" ng-show="usuarioElegido.role == 'agp'" ng-click="cambioModo('agp', 1)"></uib-tab>
+				<uib-tab heading="Notificaciones" ng-click="cambioModo('notificaciones', 2)"></uib-tab>
 			</uib-tabset>
 			<br>
 			<div class="col-lg-12" ng-show="tareas.length == 0 && !loadingState && modo != 'notificaciones'">

@@ -32,9 +32,7 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 
 	$scope.modo = 'tareas';
 
-	$scope.tabTareas = {
-		active: true
-	};
+	$scope.activeTab = 0;
 
 	$scope.notificaciones = [
 		//{ description: 'Nuevo usuario', habilitar: false},
@@ -63,8 +61,9 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 		}
 	});
 
-	$scope.cambioModo = function(modo){
+	$scope.cambioModo = function(modo, tab){
 		$scope.modo = modo;
+		$scope.activeTab = tab
 	};
 
 	$scope.chequearRuta = function(ruta){
@@ -146,9 +145,6 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 	$scope.userSelected = function(usuario){
 		if (angular.isDefined($scope.usuarioElegido) && $scope.usuarioElegido.full_name != usuario.full_name){
 			$scope.guardar().then(function(){
-				setearUsuario(usuario);
-			},
-			function(){
 				$scope.usuarioElegido.elegido = '';
 				setearUsuario(usuario);
 			});
@@ -167,101 +163,45 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 			tarea.acceso = generalFunctions.in_array(tarea.route, usuario.acceso);
 		});
 		$scope.notificaciones.forEach(function(notif){
-			notif.habilitar = generalFunctions.in_array(notif.valor, usuario.emailToApp);
+			//notif.habilitar = generalFunctions.in_array(notif.valor, usuario.emailToApp);
+			notif.habilitar = usuario.emailToApp[notif.valor]
 		});
-		$scope.modo = 'tareas';
-		$scope.tabTareas.active = true;
-	};
-
-	var guardarTareas = function(tareas){
-		var deferred = $q.defer();
-		var rutasUsuario = {acceso: tareas};
-		ctrlUsersFactory.setAccess($scope.usuarioElegido._id, rutasUsuario, function(data){
-			if (data.status == 'OK') {
-				if (loginService.info._id == $scope.usuarioElegido._id){
-					loginService.acceso = tareas;
-					angular.copy(tareas, loginService.acceso);
-				}
-				$scope.usuarios.forEach(function(usuario){
-					if (usuario._id == $scope.usuarioElegido._id) angular.copy(tareas, usuario.acceso)
-				});
-				deferred.resolve({ status: 'OK' });
-			} else {
-				deferred.resolve({ status: 'ERROR', data: 'Se ha producido un error al intentar guardar las tareas del usuario.' });
-			}
-		});
-		return deferred.promise;
-	};
-
-	var guardarNotificaciones = function(notificaciones){
-		var deferred = $q.defer();
-		var notifUsuario = { emailToApp: notificaciones };
-		ctrlUsersFactory.setNotifications($scope.usuarioElegido._id, notifUsuario, function(data){
-			if (data.status == 'OK'){
-				$scope.usuarios.forEach(function(usuario) {
-					if (usuario._id == $scope.usuarioElegido._id) angular.copy(notificaciones, usuario.emailToApp)
-				});
-				deferred.resolve({ status: 'OK' });
-			} else {
-				deferred.resolve({ status: 'ERROR', data: 'Se ha producido un error al intentar guardar las notificaciones del usuario.' });
-			}
-		});
-		return deferred.promise;
+		$scope.usuarioElegido.resetData();
+		$scope.cambioModo('tareas', 0);
 	};
 
 	$scope.guardar = function(){
 		var deferred = $q.defer();
-		var tareasUsuario = [];
-		var notificacionesUsuario = {};
 		$scope.tareas.forEach(function(unaTarea){
-			if (unaTarea.acceso) tareasUsuario.push(unaTarea.route);
+			if (unaTarea.acceso) $scope.usuarioElegido.tareasNuevas.push(unaTarea.route);
 		});
 		$scope.notificaciones.forEach(function(notif){
-			if (notif.habilitar) notificacionesUsuario[notif.valor] = notif.habilitar;
+			if (notif.habilitar) $scope.usuarioElegido.notificacionesNuevas[notif.valor] = notif.habilitar;
 		});
-		if (!tareasUsuario.equals($scope.rutasUsuarioOriginal) || !(notificacionesUsuario == $scope.notificacionesUsuarioOriginal)){
+		if ($scope.usuarioElegido.tieneCambiosTareas || $scope.usuarioElegido.tieneCambiosNotificaciones){
 			var dlg = dialogs.confirm("Control de acceso", "¿Desea guardar los cambios efectuados para el usuario " + $scope.usuarioElegido.full_name + "?");
 			dlg.result.then(function(){
-				var guardar = [];
-				if (!tareasUsuario.equals($scope.rutasUsuarioOriginal)) guardar.push(guardarTareas(tareasUsuario));
-				if (!notificacionesUsuario.equals($scope.notificacionesUsuarioOriginal)) guardar.push(guardarNotificaciones(notificacionesUsuario));
-				$q.all(guardar)
-					.then(function(values){
-						var contar = 0;
-						var errorMsg = [];
-						values.forEach(function(result){
-							if (result.status == 'OK'){
-								contar++
-							} else {
-								errorMsg.push(result.data);
-							}
-						});
-						if (contar == values.length){
-							dialogs.notify('Control de acceso', 'La configuración para el usuario ' + $scope.usuarioElegido.full_name + ' se ha guardado correctamente');
-							$scope.usuarioElegido.elegido = '';
-							$scope.usuarioElegido = undefined;
-							$scope.tareas.forEach(function(tarea){
-								tarea.acceso = false;
-							});
-							$scope.notificaciones.forEach(function(notif){
-								notif.habilitar = false;
-							});
-							$scope.modo = 'tareas';
-							$scope.tabTareas.active = true;
-							deferred.resolve();
-						} else {
-							errorMsg.forEach(function(error){
-								dialogs.error('Control de acceso', error + ' Inténtelo nuevamente más tarde');
-							});
-							deferred.reject();
-						}
-					})
-			},
-			function(){
-				deferred.reject();
-			})
+				$scope.usuarioElegido.guardar().then(function(){
+					dialogs.notify('Control de acceso', 'La configuración para el usuario ' + $scope.usuarioElegido.full_name + ' se ha guardado correctamente.');
+					$scope.usuarioElegido = undefined;
+					$scope.tareas.forEach(function(tarea){
+						tarea.acceso = false;
+					});
+					$scope.notificaciones.forEach(function(notif){
+						notif.habilitar = false;
+					});
+					$scope.modo = 'tareas';
+					$scope.tabTareas.active = true;
+					deferred.resolve();
+				}).catch(function(error){
+					dialogs.error('Control de acceso', error + ' Inténtelo nuevamente más tarde.');
+					deferred.reject();
+				});
+			}).catch(function(error){
+				deferred.resolve();
+			});
 		} else {
-			deferred.resolve();
+			deferred.resolve()
 		}
 		return deferred.promise;
 	};
