@@ -18,7 +18,6 @@ myapp.factory('ctrlUsersFactory', ['$http', 'APP_CONFIG', 'User', function($http
 			const inserturl = `${APP_CONFIG.SERVER_URL}/agp/accounts`;
 			$http.get(inserturl).then((response) => {
 				response.data.data = this.retrieveUsers(response.data.data);
-				console.log(response.data.data);
 				callback(response.data);
 			}).catch((response) => {
 				callback(response.data);
