@@ -181,7 +181,7 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 		if ($scope.usuarioElegido.tieneCambiosTareas || $scope.usuarioElegido.tieneCambiosNotificaciones){
 			var dlg = dialogs.confirm("Control de acceso", "¿Desea guardar los cambios efectuados para el usuario " + $scope.usuarioElegido.full_name + "?");
 			dlg.result.then(function(){
-				$scope.usuarioElegido.guardar().then(function(){
+				$scope.usuarioElegido.guardarTareasNotificaciones().then(function(){
 					dialogs.notify('Control de acceso', 'La configuración para el usuario ' + $scope.usuarioElegido.full_name + ' se ha guardado correctamente.');
 					$scope.usuarioElegido = undefined;
 					$scope.tareas.forEach(function(tarea){

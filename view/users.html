@@ -26,16 +26,16 @@
 						</tr>
 						</thead>
 						<tbody style="font-size: 12px">
-						<tr ng-repeat="dato in datosUsers" class="{{ dato.claseFila }}" ng-init="dato.guardar=false">
-							<td>{{ dato.full_name }}</td>
-							<td>{{ dato.user }}</td>
-							<td>{{ dato.email }}</td>
-							<td>{{ dato.terminal }}</td>
-							<td>{{ dato.date_created | date: 'dd/MM/yy HH:mm' }}</td>
-							<td>{{ dato.token.date_created | date: 'dd/MM/yy HH:mm' }}</td>
-							<td class="{{ ultimaConexion(dato.lastLogin) }}"><strong>{{ dato.lastLogin | date: 'dd/MM/yy HH:mm'}}</strong></td>
-                            <td class="text-center"><span class="glyphicon" ng-class="dato.online ? 'glyphicon-ok-circle usuarioActivo' : 'glyphicon-ban-circle usuarioInactivo'"></span> </td>
-							<td class="text-center disabled"><input type="checkbox" ng-model="dato.status" ng-change="cambiaUsuario(dato)" ng-disabled="!estaDefinido(dato.token.date_created)"></td>
+						<tr ng-repeat="user in datosUsers" class="{{ user.estadoClass }}" ng-init="user.guardar=false">
+							<td>{{ user.full_name }}</td>
+							<td>{{ user.user }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.terminal }}</td>
+							<td>{{ user.date_created | date: 'dd/MM/yy HH:mm' }}</td>
+							<td>{{ user.token.date_created | date: 'dd/MM/yy HH:mm' }}</td>
+							<td class="{{ user.ultimaConexionClass }}"><strong>{{ user.lastLogin | date: 'dd/MM/yy HH:mm'}}</strong></td>
+                            <td class="text-center"><span class="glyphicon" ng-class="user.online ? 'glyphicon-ok-circle usuarioActivo' : 'glyphicon-ban-circle usuarioInactivo'"></span> </td>
+							<td class="text-center disabled"><input type="checkbox" ng-model="user.status" ng-change="cambiaUsuario(user)" ng-disabled="!user.habilitado"></td>
 						</tr>
 						</tbody>
 					</table>

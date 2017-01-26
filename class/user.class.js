@@ -59,7 +59,7 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($ht
 			return deferred.promise;
 		}
 
-		guardar(){
+		guardarTareasNotificaciones(){
 			const deferred = $q.defer();
 			let datosGuardar = [];
 
@@ -83,10 +83,30 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($ht
 					deferred.reject(errorMessage)
 				}
 			}).catch((error) => {
-				deferred.reject(error.mmesage);
+				deferred.reject(error.message);
 			});
 
 			return deferred.promise;
+		}
+
+		guardarEstado(){
+			const deferred = $q.defer();
+			let estado = '';
+			this.status ? estado = 'enable' : estado = 'disable';
+			const inserturl = `${APP_CONFIG.SERVER_URL}/agp/account/${this._id}/${estado}`;
+			$http.put(inserturl).then((response) => {
+				if (response.data.status == 'OK'){
+					this.guardar = false;
+					deferred.resolve();
+				} else {
+					deferred.reject();
+				}
+			}).catch((response) => {
+				//callback(response.data);
+				deferred.reject();
+			});
+			return deferred.promise;
+
 		}
 
 		get tieneCambiosTareas(){
@@ -101,6 +121,36 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($ht
 				}
 			}
 			return hayCambios;
+		}
+
+		get ultimaConexionClass(){
+			let ultimaConex = new Date(this.lastLogin);
+			let fechaActual = new Date();
+			ultimaConex.setHours(0, 0, 0, 0);
+			fechaActual.setHours(0, 0, 0, 0);
+			let claseColor = '';
+			if (parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) <= 2) {
+				claseColor = 'usuarioActivo';
+			} else if (parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) > 2 && parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) <= 5) {
+				claseColor = 'usuarioRegular';
+			} else {
+				claseColor = 'usuarioInactivo';
+			}
+			return claseColor;
+		}
+
+		get habilitado(){
+			return angular.isDefined(this.token) && angular.isDefined(this.token.date_created) && this.token.date_created != '';
+		}
+
+		get estadoClass(){
+			if (this.status){
+				return 'success';
+			} else if (this.habilitado){
+				return 'danger';
+			} else {
+				return 'warning';
+			}
 		}
 
 	}

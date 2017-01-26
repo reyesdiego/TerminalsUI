@@ -30,62 +30,27 @@ myapp.controller('usersCtrl', ['$rootScope', '$scope', 'ctrlUsersFactory', 'dial
 		$scope.permiso = false;
 	});
 
-	$scope.ultimaConexion = function (fecha) {
-		var ultimaConex = new Date(fecha);
-		var fechaActual = new Date();
-		ultimaConex.setHours(0, 0, 0, 0);
-		fechaActual.setHours(0, 0, 0, 0);
-		var claseColor = '';
-		if (parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) <= 2) {
-			claseColor = 'usuarioActivo';
-		} else if (parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) > 2 && parseInt(Math.abs(fechaActual.getTime() - ultimaConex.getTime()) / (24 * 60 * 60 * 1000), 10) <= 5) {
-			claseColor = 'usuarioRegular';
-		} else {
-			claseColor = 'usuarioInactivo';
-		}
-		return claseColor;
-	};
-
 	$scope.cargaUsuarios = function () {
 		$scope.cargando = true;
 		ctrlUsersFactory.getUsers(function(data) {
 			if (data.status === 'OK'){
 				$scope.permiso = true;
 				$scope.datosUsers = data.data;
-				$scope.datosUsers.forEach(function(user){
-					if (user.status){
-						user.claseFila = 'success';
-					} else if (angular.isDefined(user.token) && user.token != null){
-						user.claseFila = 'danger';
-					} else {
-						user.claseFila = 'warning';
-					}
-				})
 			}
 			$scope.cargando = false;
 		});
-	};
-
-	$scope.convertirIdAFecha = function(id) {
-		return generalFunctions.idToDate(id);
-	};
-
-	$scope.estaDefinido = function(data) {
-		return angular.isDefined(data) && data != '';
 	};
 
 	$scope.cambiaUsuario = function(usuario) {
 		if (usuario.status && usuario.acceso.length == 0) {
 			var dlg = dialogs.confirm("Control de usuario", "El usuario " + usuario.full_name + " no tiene ningún acceso definido. ¿Desea habilitarlo de todas formas?");
 			dlg.result.then(function(){
-				usuario.claseFila = 'success';
 				usuario.guardar = !usuario.guardar;
 			},
 			function(){
 				usuario.status = false;
 			})
 		} else {
-			usuario.claseFila = 'danger';
 			usuario.guardar = !usuario.guardar;
 		}
 	};
@@ -104,37 +69,11 @@ myapp.controller('usersCtrl', ['$rootScope', '$scope', 'ctrlUsersFactory', 'dial
 		}
 	};
 
-	$scope.guardarCambiosUsuario = function(usuario){
-		var deferred = $q.defer();
-		if (usuario.status) {
-			ctrlUsersFactory.userEnabled(usuario._id, function(data) {
-				if (data.status == 'OK'){
-					usuario.claseFila = 'success';
-					deferred.resolve(data);
-				} else {
-					deferred.reject(data);
-				}
-				usuario.guardar = false;
-			})
-		} else {
-			ctrlUsersFactory.userDisabled(usuario._id, function(data) {
-				if (data.status == 'OK'){
-					usuario.claseFila = 'danger';
-					deferred.resolve(data);
-				} else {
-					deferred.reject(data);
-				}
-				usuario.guardar = false;
-			})
-		}
-		return deferred.promise;
-	};
-
 	$scope.guardar = function(){
 		var llamadas = [];
 		$scope.datosUsers.forEach(function(user){
 			if (user.guardar){
-				llamadas.push($scope.guardarCambiosUsuario(user));
+				llamadas.push(user.guardarEstado());
 			}
 		});
 		$q.all(llamadas)
