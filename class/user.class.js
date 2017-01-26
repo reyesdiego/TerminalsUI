@@ -23,9 +23,18 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($ht
 			angular.extend(this, userData);
 			this.resetData();
 			if (!this.acceso) this.acceso = [];
-			if (!this.emailToApp.price) this.emailToApp.price = false;
-			if (!this.emailToApp.emailAppointmentToApp) this.emailToApp.emailAppointmentToApp = false;
-			if (!this.emailToApp.appointmentError) this.emailToApp.appointmentError = false;
+			if (!this.emailToApp) {
+				this.emailToApp = {
+					price: false,
+					emailAppointmentToApp: false,
+					appointmentError: false
+				}
+			} else {
+				if (!this.emailToApp.price) this.emailToApp.price = false;
+				if (!this.emailToApp.emailAppointmentToApp) this.emailToApp.emailAppointmentToApp = false;
+				if (!this.emailToApp.appointmentError) this.emailToApp.appointmentError = false;
+			}
+
 		}
 
 
@@ -34,7 +43,6 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($ht
 			const inserturl = `${APP_CONFIG.SERVER_URL}/agp/account/${this._id}/tasks`;
 			$http.put(inserturl, this.tareasNuevas).then((response) => {
 				this.acceso = this.tareasNuevas;
-				this.tareasNuevas = [];
 				deferred.resolve(response.data);
 			}).catch((response) => {
 				deferred.reject(response.data)
@@ -45,13 +53,11 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($ht
 		guardarNotificaciones(){
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/agp/account/${this._id}/emailToApp`;
-			$http.put(inserturl, this.notificacionesNuevas).then((response) => {
+			const saveData = {
+				emailToApp: this.notificacionesNuevas
+			};
+			$http.put(inserturl, saveData).then((response) => {
 				this.emailToApp = this.notificacionesNuevas;
-				this.notificacionesNuevas = {
-					price: false,
-					emailAppointmentToApp: false,
-					appointmentError: false
-				};
 				deferred.resolve(response.data);
 			}).catch((response) => {
 				deferred.reject(response.data);
@@ -77,7 +83,7 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($ht
 					}
 				});
 				if (contar == values.length){
-					this.elegido = '';
+					this.resetData();
 					deferred.resolve();
 				} else {
 					deferred.reject(errorMessage)

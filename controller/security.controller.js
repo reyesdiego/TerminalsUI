@@ -183,24 +183,26 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 			dlg.result.then(function(){
 				$scope.usuarioElegido.guardarTareasNotificaciones().then(function(){
 					dialogs.notify('Control de acceso', 'La configuración para el usuario ' + $scope.usuarioElegido.full_name + ' se ha guardado correctamente.');
-					$scope.usuarioElegido = undefined;
-					$scope.tareas.forEach(function(tarea){
+					//$scope.usuarioElegido = undefined;
+					/*$scope.tareas.forEach(function(tarea){
 						tarea.acceso = false;
 					});
 					$scope.notificaciones.forEach(function(notif){
 						notif.habilitar = false;
-					});
-					$scope.modo = 'tareas';
-					$scope.tabTareas.active = true;
+					});*/
+					//$scope.modo = 'tareas';
+					//$scope.cambioModo('tareas', 0);
 					deferred.resolve();
 				}).catch(function(error){
 					dialogs.error('Control de acceso', error + ' Inténtelo nuevamente más tarde.');
 					deferred.reject();
 				});
 			}).catch(function(error){
+				$scope.usuarioElegido.resetData();
 				deferred.resolve();
 			});
 		} else {
+			$scope.usuarioElegido.resetData();
 			deferred.resolve()
 		}
 		return deferred.promise;
