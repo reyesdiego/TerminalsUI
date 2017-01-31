@@ -54,11 +54,11 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 					// ACC-0003 no entro al correo
 					// ACC-0004 no habilitado en el sistema
 					if (response.data.code == 'ACC-0003'){
-						$rootScope.salt = data.data.salt;
+						$rootScope.salt = response.data.data.salt;
 						$rootScope.rutasComunes.push('validar');
-						deferred.reject(data);
+						deferred.reject(response.data);
 					} else {
-						deferred.reject(data);
+						deferred.reject(response.data);
 					}
 				});
 				return deferred.promise;
