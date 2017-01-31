@@ -2,27 +2,28 @@
  * Created by Artiom on 11/03/14.
  */
 
-myapp.controller('changePassCtrl', ['$scope', 'authFactory', 'dialogs', '$state', function($scope, authFactory, dialogs, $state) {
+myapp.controller('changePassCtrl', ['authFactory', 'dialogs', '$state', function(authFactory, dialogs, $state) {
 	'use strict';
+	const vm = this;
 
-	$scope.changePass = function(){
+	vm.changePass = function(){
 
-		if ($scope.newPass != $scope.confirmPass){
+		if (vm.newPass != vm.confirmPass){
 			dialogs.notify('Cambiar contraseña', 'Las contraseñas no coinciden');
 			return;
 		}
 
 		var formData = {
-			"email": $scope.email,
-			"password": $scope.password,
-			"newPass": $scope.newPass,
-			"confirmPass": $scope.confirmPass
+			"email": vm.email,
+			"password": vm.password,
+			"newPass": vm.newPass,
+			"confirmPass": vm.confirmPass
 		};
 
 		authFactory.cambiarContraseña(formData, function(data){
 			if (data.status === 'OK'){
-				$scope.codStatus = data.data;
-				var dl = dialogs.notify('Cambio de contraseña', $scope.codStatus);
+				vm.codStatus = data.data;
+				var dl = dialogs.notify('Cambio de contraseña', vm.codStatus);
 				dl.result.then(function(){
 					$state.transitionTo('login');
 				})

@@ -52,30 +52,6 @@
 						</a></th>
 					</tr>
 					</thead>
-					<!-- Por ahora queda esto -->
-					<!--<tbody ng-repeat="price in filteredPrices = (listaElegida | filter:search | orderBy: predicate : reverse) | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage track by $index">
-					<tr style="height:60px" class="hidden-print clickableRow" ng-click="price.detalleOnOff()">
-						<td style="width: 10%">{{ price.code }}</td>
-						<td style="width: 64%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)"uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
-						<td style="width: 12%">{{ price.unit}}</td>
-						<td style="text-align: right; width: 14%">
-							<span ng-show="!(price.topPrices[price.topPrices.length-1].price > 0)" class="glyphicon glyphicon-warning-sign text-danger"> Sin definir</span> <span ng-show="price.topPrices[price.topPrices.length-1].price > 0">{{ price.topPrices[price.topPrices.length-1].price | currency: (price.topPrices[price.topPrices.length-1].currency | formatCurrency) }}</span>
-						</td>
-					</tr>
-					<tr ng-repeat="top in price.topPrices" ng-show="price.mostrarDetalle">
-						<td colspan="3" class="text-right">Vigencia: {{ top.from | date: 'dd/MM/yyyy HH:mm' }}</td>
-						<td class="text-right">{{ top.price | currency: (top.currency | formatCurrency) }}</td>
-					</tr>
-					<tr style="height:60px" class="visible-print" ng-repeat="price in pricelist | filter:search | orderBy: predicate : reverse">
-						<td style="width: 10%">{{ price.code }}</td>
-						<td style="width: 64%">{{ price.description }}</td>
-						<td style="width: 12%">{{ price.unit}}</td>
-						<td style="text-align: right; width: 14%" >
-							<span ng-show="!(price.topPrices[price.topPrices.length-1].price > 0)" class="glyphicon glyphicon-warning-sign text-danger"> Sin definir</span> <span ng-show="price.topPrices[price.topPrices.length-1].price > 0">{{ price.topPrices[price.topPrices.length-1].price | currency: (price.topPrices[price.topPrices.length-1].currency | formatCurrency) }}</span>
-						</td>
-					</tr>
-					</tbody>-->
-					<!-- Esto va despues de que se actualice el servidor -->
 					<tbody>
 					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 						<td style="width: 10%">{{ price.code }}</td>
@@ -98,7 +74,7 @@
 			</div>
 			<div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
 			<div class="col-lg-2" uib-dropdown is-open="status.isopen">
-				<button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disable="procesando">
+				<button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="procesando">
 					<span ng-show="!procesando"><span class="glyphicon glyphicon-list"></span> Exportar <span class="caret"></span></span>
 					<span ng-show="procesando"><img src="images/loadingChico.gif" height="20" width="20"> Procesando</span>
 				</button>

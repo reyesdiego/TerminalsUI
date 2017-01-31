@@ -180,7 +180,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		.state('login', {
 			url: "/login",
 			templateUrl: "view/login.html",
-			controller: "loginCtrl"
+			controller: "loginCtrl as vmLogin"
 		})
 		.state('register', {
 			url: "/registro",
@@ -335,7 +335,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		.state('changepass', {
 			url: "/cambiarpass",
 			templateUrl: "view/newpass.html",
-			controller: "changePassCtrl",
+			controller: "changePassCtrl as newPassVm",
 			resolve: {
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 			}
