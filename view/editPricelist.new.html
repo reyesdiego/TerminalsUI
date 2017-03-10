@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <label for="inputUnidad" class="col-lg-3 control-label"><span class="glyphicon"></span> Unidad</label>
                         <div class="input-group col-lg-8">
-                            <select class="form-control" id="inputUnidad" ng-model="newPrice.idUnit" ng-required="true" placeholder="Seleccione unidad de medida" ng-disabled="!enableEdition()" ng-options="unit._id as unit.description for unit in unidadesTarifas" ng-selected="unit._id == newPrice.idUnit" tabindex="1"></select>
+                            <select class="form-control" id="inputUnidad" ng-model="newPrice.idUnit" ng-required="true" placeholder="Seleccione unidad de medida" ng-disabled="!enableEdition()" ng-options="unit._id as unit.description for unit in unidadesTarifas" ng-selected="unit._id == newPrice.idUnit" tabindex="1" ng-required="true"></select>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="eraseField('idUnit')" ng-disabled="!enableEdition()" tabindex="-1"><i class="glyphicon glyphicon-remove" ng-disabled="!enableEdition()"></i></button>
                         </span>
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="form-group col-lg-12 text-right">
-                    <button type="submit" class="btn btn-primary" tabindex="1" ng-disabled="newPrice.topPrices.length == 0"><i class="glyphicon glyphicon-save"></i> Guardar</button>
+                    <button type="submit" class="btn btn-primary" tabindex="1" ng-disabled="newPrice.topPrices.length == 0 || newPrice.idUnit == ''"><i class="glyphicon glyphicon-save"></i> Guardar</button>
                     <button type="button" class="btn btn-danger" ng-show="flagEditando" ng-click="eliminarTarifa()" ng-disabled="!enableEdition()" tabindex="1"><i class="glyphicon glyphicon-remove"></i> Eliminar</button>
                     <button type="button" class="btn btn-default" ng-click="volver()" tabindex="1"><i class="glyphicon glyphicon-remove-circle"></i> Volver</button>
                 </div>

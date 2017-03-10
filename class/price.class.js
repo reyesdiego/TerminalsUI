@@ -15,6 +15,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         newPrice(){
             this.code = '';
             this.unit = '';
+            this.idUnit = '';
             this.topPrices = [];
             this.terminal = loginService.info.terminal;
             this.matches = [{
