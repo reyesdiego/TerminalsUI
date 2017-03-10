@@ -410,7 +410,7 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                 const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/price/${terminal}`;
                 $http.get(inserturl).then((response) => {
                     if (response.data.status == 'OK'){
-                        this.matchesCache.put(`matches${terminal}`, data.data);
+                        this.matchesCache.put(`matches${terminal}`, response.data.data);
                     }
                 });
             }

@@ -16,6 +16,11 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			{nombre: 'Con match', active: false}
 		];
 
+		$scope.medidas = [
+			{ value: 20, description: '20 pies' },
+			{ value: 40, description: '40 pies' }
+		];
+
 		$scope.newPrice = new Price();
 
 		$scope.newMatches = {
