@@ -223,7 +223,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 				const canceler = HTTPCanceler.get(defer, this.namespace, 'getTurnosMeses');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/ByMonth`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
-					response.data = this.prepararDatosMes(response.data, false);
+					response.data.data = this.prepararDatosMes(response.data.data, false);
 					defer.resolve(response.data);
 				}).catch((response) => {
 					defer.reject(response);

@@ -147,7 +147,7 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 							options.tooltip = {trigger: 'selection'};
 							var label, value;
 							data.removeRows(0, data.getNumberOfRows());
-							angular.forEach($scope.chartObject.data, function(row) {
+							$scope.chartObject.data.forEach(function(row) {
 								label = row[0];
 								value = parseFloat(row[1], 10);
 								if (!isNaN(value)) {

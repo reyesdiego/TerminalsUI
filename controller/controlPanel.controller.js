@@ -277,7 +277,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.cantGates.error = false;
 			$scope.cantGates.loading = true;
 			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}).then((graf) => {
-				if (graf){
+				if (graf.status == 'OK'){
 					$scope.chartGates.data = graf.data;
 					$scope.cantGates.loading = false;
 				} else {
@@ -300,9 +300,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.cantTurnos.error = false;
 			$scope.cantTurnos.loading = true;
 			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }).then((graf) => {
-				if (graf){
+				if (graf.status == 'OK'){
 					$scope.cantTurnos.loading = false;
-					$scope.chartTurnos.data = graf;
+					$scope.chartTurnos.data = graf.data;
 				} else {
 					$scope.cantTurnos.error = true;
 					$scope.cantTurnos.loading = false;
