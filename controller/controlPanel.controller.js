@@ -367,9 +367,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 				promise = controlPanelFactory.getTurnosDia(params);
 			}
 			promise.then((graf) => {
-				if (graf){
+				if (graf.status == 'OK'){
 					$scope.gatesTurnos.loading = false;
-					$scope.chartDiaGatesTurnos.data = graf;
+					$scope.chartDiaGatesTurnos.data = graf.data;
 					if ($scope.radioModel == 'Gates'){
 						$scope.labelPorHora = 'Gates por hora'
 					} else {

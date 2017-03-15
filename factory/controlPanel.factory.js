@@ -251,7 +251,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 				const inserturl = `${APP_CONFIG.SERVER_URL}/gates/ByHour`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.prepararDatosGatesTurnosDia(response.data.data);
-					defer.resolve(response.data.data);
+					defer.resolve(response.data);
 				}).catch((response) => {
 					defer.reject(response);
 				});
@@ -263,7 +263,7 @@ myapp.factory('controlPanelFactory', ['$http', 'formatService', 'loginService', 
 				const canceler = HTTPCanceler.get(defer, this.namespace, 'getTurnosDia');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/ByHour`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
-					response.data = this.prepararDatosGatesTurnosDia(response.data);
+					response.data.data = this.prepararDatosGatesTurnosDia(response.data.data);
 					defer.resolve(response.data);
 				}).catch((response) => {
 					defer.reject(response);
