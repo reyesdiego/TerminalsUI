@@ -68,6 +68,9 @@
 		<div class="col-lg-4">
 			<h4 class="text-left">Facturado diario</h4>
 			<div class="table-responsive">
+				<div class="col-lg-4" ng-show="facturadoDia.loading" style="position: absolute; left: 30%; top: 30%">
+					<img class="media-object center-block" src="images/loading.gif">
+				</div>
 				<column-chart
 					data="chartFacturado.data"
 					options="chartFacturado.options"></column-chart>
@@ -82,10 +85,7 @@
 		</div>
 	</div>
 
-	<div class="row">
-		<!--<div class="col-lg-4" ng-show="facturadoMes.loading">
-			<img class="media-object center-block" src="images/loading.gif">
-		</div>-->
+	<div class="row col-lg-12">
 		<div class="col-lg-4" ng-hide="facturadoMes.error">
 			<h4 class="text-left">Facturado mensual</h4>
 			<p class="input-group">
@@ -94,7 +94,10 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenMonth" datepicker-options="datepickerMonth" ng-model="mesDesde" ng-change="traerDatosFacturadoMes()" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div class="table-responsive">
+			<div class="table-responsive" style="height: 320px">
+				<div class="col-lg-4" ng-show="facturadoMes.loading" style="position: absolute; left: 30%; top: 30%">
+					<img class="media-object center-block" src="images/loading.gif">
+				</div>
 				<column-chart
 					data="chartFacturas.data"
 					options="chartFacturas.options"></column-chart>
@@ -108,10 +111,7 @@
 			</div>
 		</div>
 
-		<!--<div class="col-lg-4" ng-show="cantGates.loading">
-			<img class="media-object center-block" src="images/loading.gif">
-		</div>-->
-		<div class="col-lg-4" ng-hide="cantGates.eror">
+		<div class="col-lg-4" ng-hide="cantGates.error">
 			<h4 class="text-left">Gates mensuales</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -119,7 +119,10 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenGates" datepicker-options="datepickerMonth" ng-change="traerDatosGates()" ng-model="mesDesdeGates" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div class="table-responsive">
+			<div class="table-responsive" style="height: 320px">
+				<div class="col-lg-4" ng-show="cantGates.loading" style="position: absolute; left: 30%; top: 30%">
+					<img class="media-object center-block" src="images/loading.gif">
+				</div>
 				<column-chart
 					data="chartGates.data"
 					options="chartGates.options"></column-chart>
@@ -133,9 +136,6 @@
 			</div>
 		</div>
 
-		<!--<div class="col-lg-4" ng-show="cantTurnos.loading">
-			<img class="media-object center-block" src="images/loading.gif">
-		</div>-->
 		<div class="col-lg-4" ng-hide="cantTurnos.error">
 			<h4 class="text-left">Turnos mensuales</h4>
 			<p class="input-group">
@@ -144,7 +144,10 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenTurnos" datepicker-options="datepickerMonthTurnos" ng-change="traerDatosTurnos()" ng-model="mesDesdeTurnos" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div class="table-responsive">
+			<div class="table-responsive" style="height: 320px">
+				<div class="col-lg-4" ng-show="cantTurnos.loading" style="position: absolute; left: 30%; top: 30%">
+					<img class="media-object center-block" src="images/loading.gif">
+				</div>
 				<column-chart
 					data="chartTurnos.data"
 					options="chartTurnos.options"></column-chart>
@@ -191,15 +194,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-offset-1 col-lg-10 col-md-12 table-responsive">
+			<div class="col-lg-offset-1 col-lg-10 col-md-12 table-responsive" style="height: 320px">
+				<div class="col-lg-4" ng-show="gatesTurnos.loading" style="position: absolute; left: 30%; top: 30%">
+					<img class="media-object center-block" src="images/loading.gif">
+				</div>
 				<column-chart
 					data="chartDiaGatesTurnos.data"
 					options="chartDiaGatesTurnos.options"></column-chart>
-				<!--<dynamic-chart
-						chart-object="chartDiaGatesTurnos"
-						select="selectRow(selectedRowIndexFacturado)"
-						colors="barColors">
-				</dynamic-chart>-->
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="gatesTurnos.error">

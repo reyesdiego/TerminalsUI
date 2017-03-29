@@ -19,7 +19,7 @@ myapp.directive('pieChart', ['chartLoader', function(chartLoader){
 			scope.options.backgroundColor = {'fill': 'transparent'};
 			scope.options.legend = { position: 'top', maxLines: 3 };
 			scope.options.bar = { groupWidth: '75%' };
-			scope.options.chartArea = { left: '10%' };
+			scope.options.chartArea = { left: '10%', width: '90%' };
 			scope.options.tooltip = {trigger: 'both'};
 			scope.options.slices = {};
 

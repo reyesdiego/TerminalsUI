@@ -104,18 +104,18 @@ foreach($data['totales'] as $total){
 }
 $pdf->Ln();
 
-$h = getChartHeigth($data['charts'][0], 230);
+$h = getChartHeigth($data['charts'][0], 180);
 $pdf->CheckPageBreak($h);
 
-$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 5, 230);
+$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 5, 180);
 
 $pdf->SetY($pdf->GetY() + 5 + $h);
 
-$h = getChartHeigth($data['charts'][1], 120);
+$h = getChartHeigth($data['charts'][1], 90);
 $pdf->CheckPageBreak($h);
 
-$pdf->Image(".temp/2" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 2, 120);
-$pdf->Image(".temp/3" . $id . ".jpg", 110, $pdf->GetY() + 2, 120);
+$pdf->Image(".temp/2" . $id . ".jpg", $pdf->GetX(), $pdf->GetY() + 2, 90);
+$pdf->Image(".temp/3" . $id . ".jpg", 110, $pdf->GetY() + 2, 90);
 
 borrar_archivos_graficos($data['charts'], $id);
 

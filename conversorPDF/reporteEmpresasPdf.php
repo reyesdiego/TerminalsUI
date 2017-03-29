@@ -107,11 +107,11 @@ $pdf->Cell(135, 5, utf8_decode('Total facturado por la terminal en el período')
 $pdf->Cell(55, 5, "$ " . number_format($data['totalTerminal'], 2), 1, 0, "R");
 $pdf->Ln();
 
-$h = getChartHeigth($data['charts'][0], 120);
+$h = getChartHeigth($data['charts'][0], 90);
 $pdf->CheckPageBreak($h);
 
-$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX() + 5, $pdf->GetY() + 2, 120);
-$pdf->Image(".temp/2" . $id . ".jpg", 110, $pdf->GetY() + 8, 120);
+$pdf->Image(".temp/1" . $id . ".jpg", $pdf->GetX() + 5, $pdf->GetY() + 2, 90);
+$pdf->Image(".temp/2" . $id . ".jpg", 110, $pdf->GetY() + 8, 90);
 
 borrar_archivos_graficos($data['charts'], $id);
 

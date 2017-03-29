@@ -9,7 +9,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		$scope.chartReporteEmpresas = {
 			options: {
 				title: 'Totales por empresa',
-				width: 750,
+				width: 700,
 				height: 500,
 				columns: 1,
 				currency: true,
@@ -28,7 +28,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		$scope.chartPorcentaje = {
 			options: {
 				title: 'Porcentajes respecto del total',
-				width: 750,
+				width: 700,
 				height: 500,
 				currency: true,
 				stacked: false,
