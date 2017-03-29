@@ -161,7 +161,7 @@ foreach ($data['detalle'] as $detalle) {
 
 		//Calculate the height of the row
 		$nb=0;
-		$nb=$pdf->NbLines(80, $item['descripcion']);
+		$nb=$pdf->NbLines(80, $item['description']);
 		$h=5*$nb;
 		//Issue a page break first if needed
 		$pdf->CheckPageBreak($h);
@@ -171,8 +171,8 @@ foreach ($data['detalle'] as $detalle) {
 		$x=$pdf->GetX();
 		$y=$pdf->GetY();
 
-		$item['descripcion'] = str_replace('–', '-', $item['descripcion']);
-		$pdf->MultiCell(80, 5, utf8_decode($item['descripcion']), 1, "L");
+		$item['description'] = str_replace('–', '-', $item['description']);
+		$pdf->MultiCell(80, 5, utf8_decode($item['description']), 1, "L");
 
 		$h = $pdf->getY();
 

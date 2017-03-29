@@ -44,9 +44,9 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 					chart = new google.visualization.ColumnChart($elm[0]);
 					break;
 				case 'pie':
-					data = new google.visualization.DataTable();
-					data.addColumn('string', 'Label');
-					data.addColumn('number', 'Value');
+					//data = new google.visualization.DataTable();
+					//data.addColumn('string', 'Label');
+					//data.addColumn('number', 'Value');
 					chart = new google.visualization.PieChart($elm[0]);
 					break;
 			}
@@ -135,39 +135,44 @@ myapp.directive('dynamicChart', ['$timeout', function($timeout){
 					$timeout(function () {
 						draw.triggered = false;
 						options.title = $scope.chartObject.title;
-						/*switch ($scope.chartObject.money){
+						switch ($scope.chartObject.money){
 							case 'PES':
 								prefijo = 'AR$ ';
 								break;
 							case 'DOL':
 								prefijo = 'US$ ';
 								break;
-						}*/
-						if ($scope.chartObject.type == 'pie'){
+						}
+						/*if ($scope.chartObject.type == 'pie'){
 							options.tooltip = {trigger: 'selection'};
 							var label, value;
 							data.removeRows(0, data.getNumberOfRows());
 							$scope.chartObject.data.forEach(function(row) {
+								console.log(typeof row[0]);
+								console.log(typeof row[1]);
 								label = row[0];
 								value = parseFloat(row[1], 10);
 								if (!isNaN(value)) {
 									data.addRow([row[0], value]);
 								}
 							});
-						}
+							console.log($scope.chartObject.data);
+						}*/
+						data = new google.visualization.arrayToDataTable($scope.chartObject.data);
 						if (!angular.equals($scope.colors, undefined)){
 							options.colors = [$scope.colors.bactssa, $scope.colors.terminal4, $scope.colors.trp, 'green'];
 						}
 						if (!angular.equals($scope.chartObject.stacked, undefined)){
 							options.series = $scope.chartObject.series;
 						}
-						if ($scope.chartObject.type == 'column'){
-							data = new google.visualization.arrayToDataTable($scope.chartObject.data);
-						}
+						//if ($scope.chartObject.type == 'column'){
+						//}
 						if ($scope.chartObject.currency){
 							options.vAxis= {format:prefijo + '###,###,###.##'};
-							var formatter = new google.visualization.NumberFormat(
-								{prefix: prefijo, negativeColor: 'red', negativeParens: true});
+							var formatter = new google.visualization.NumberFormat({
+								prefix: prefijo,
+								negativeColor: 'red',
+								negativeParens: true});
 							formatter.format(data, 1);
 							if (!$scope.chartObject.stacked){
 								for (var i=2; i<=$scope.chartObject.columns; i++)

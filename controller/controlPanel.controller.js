@@ -41,7 +41,7 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			maxDate: new Date(maxDate.getFullYear(), (maxDate.getMonth() + 2), 0 )
 		};
 
-		$scope.barColors = {
+		const barColors = {
 			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
 			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
 			"trp": cacheService.colorTerminalesCache.get('Trp')
@@ -50,82 +50,95 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		$scope.radioModel = 'Gates';
 
 		$scope.chartFacturas = {
-			width: 450,
-			height: 320,
-			series: {3: {type: "line"}},
-			type: 'column',
-			currency: true,
-			stacked: false,
-			is3D: false,
-			money: 'PES',
-			columns: 4,
+			options: {
+				width: 450,
+				height: 320,
+				series: {3: {type: "line"}},
+				currency: true,
+				stacked: false,
+				is3D: false,
+				colors: [barColors.bactssa, barColors.terminal4, barColors.trp, 'green'],
+				money: 'PES',
+				columns: 4,
+				id: 2,
+				image: null
+			},
 			data: [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 			],
-			id: 2,
-			image: null
 		};
 
 		$scope.chartGates = {
-			width: 450,
-			height: 320,
-			series: {3: {type: "line"}},
-			type: 'column',
-			currency: false,
-			stacked: false,
-			is3D: false,
+			options: {
+				width: 450,
+				height: 320,
+				series: {3: {type: "line"}},
+				currency: false,
+				stacked: false,
+				is3D: false,
+				colors: [barColors.bactssa, barColors.terminal4, barColors.trp, 'green'],
+				id: 3,
+				image: null
+			},
 			data: [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 			],
-			id: 3,
-			image: null
+
 		};
 
 		$scope.chartTurnos = {
-			width: 450,
-			height: 320,
-			series: {3: {type: "line"}},
-			type: 'column',
-			currency: false,
-			stacked: false,
-			is3D: false,
+			options: {
+				width: 450,
+				height: 320,
+				series: {3: {type: "line"}},
+				currency: false,
+				stacked: false,
+				is3D: false,
+				colors: [barColors.bactssa, barColors.terminal4, barColors.trp, 'green'],
+				id: 4,
+				image: null
+			},
 			data: [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 			],
-			id: 4,
-			image: null
+
 		};
 
 		$scope.chartFacturado = {
-			width: 460,
-			height: 320,
-			series: {3: {type: "line"}},
-			type: 'column',
-			currency: true,
-			stacked: false,
-			is3D: false,
-			money: 'PES',
-			columns: 4,
+			options: {
+				width: 460,
+				height: 320,
+				series: {3: {type: "line"}},
+				currency: true,
+				stacked: false,
+				is3D: false,
+				colors: [barColors.bactssa, barColors.terminal4, barColors.trp, 'green'],
+				money: 'PES',
+				columns: 4,
+				id: 1,
+				image: null,
+			},
 			data: [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 			],
-			id: 1,
-			image: null
 		};
 
 		$scope.chartDiaGatesTurnos = {
-			width: 1200,
-			height: 350,
-			series: {3: {type: "line"}},
-			type: 'column',
-			currency: false,
-			stacked: false,
-			is3D: false,
+			options: {
+				width: 1200,
+				height: 350,
+				series: {3: {type: "line"}},
+				currency: false,
+				stacked: false,
+				is3D: false,
+				colors: [barColors.bactssa, barColors.terminal4, barColors.trp, 'green'],
+				id: 5,
+				image: null
+			},
 			data: [
 				['Terminales', 'BACTSSA', 'Terminal 4', 'TRP', 'Promedio', { role: 'annotation'} ]
 			],
-			id: 5,
-			image: null
+
 		};
 
 		$scope.isOpenMonth = false;
@@ -231,7 +244,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			}
 		});
 
-		$scope.selectRow = function (index) {
+		$scope.selectRow = (index) => {
+			console.log('selec row ' + index);
 			$scope.selected = index;
 		};
 
@@ -254,11 +268,11 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.isOpenMonth = false;
 			controlPanelFactory.getFacturasMeses(datos).then((graf) => {
 				if (graf){
+					$scope.facturadoMes.loading = false;
 					$scope.chartFacturas.data = graf.data;
-					$scope.facturadoMes.loading = false;
 				} else {
-					$scope.facturadoMes.error = true;
 					$scope.facturadoMes.loading = false;
+					$scope.facturadoMes.error = true;
 				}
 			}).catch(error => {
 				console.log(error);
@@ -278,11 +292,13 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.cantGates.loading = true;
 			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}).then((graf) => {
 				if (graf.status == 'OK'){
+					$scope.cantGates.loading = false;
 					$scope.chartGates.data = graf.data;
-					$scope.cantGates.loading = false;
+
 				} else {
-					$scope.cantGates.error = true;
 					$scope.cantGates.loading = false;
+					$scope.cantGates.error = true;
+
 				}
 			}).catch(error => {
 				if (error.status != -5){
@@ -304,8 +320,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					$scope.cantTurnos.loading = false;
 					$scope.chartTurnos.data = graf.data;
 				} else {
-					$scope.cantTurnos.error = true;
 					$scope.cantTurnos.loading = false;
+					$scope.cantTurnos.error = true;
 				}
 			}).catch(error => {
 				if (error.status != -5){
@@ -327,8 +343,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.facturadoDia.loading = true;
 			controlPanelFactory.getFacturadoPorDia(datos).then((graf) => {
 				if (graf){
-					$scope.chartFacturado.data = graf.data;
 					$scope.facturadoDia.loading = false;
+					$scope.chartFacturado.data = graf.data;
 				} else {
 					$scope.facturadoDia.error = true;
 					$scope.facturadoDia.loading = false;

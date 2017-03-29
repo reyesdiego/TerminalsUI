@@ -62,17 +62,15 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4" ng-show="facturadoDia.loading">
+		<!--<div class="col-lg-4" ng-show="facturadoDia.loading">
 			<img class="media-object center-block" src="images/loading.gif">
-		</div>
-		<div class="col-lg-4" ng-hide="facturadoDia.loading || facturadoDia.error">
+		</div>-->
+		<div class="col-lg-4">
 			<h4 class="text-left">Facturado diario</h4>
 			<div class="table-responsive">
-				<dynamic-chart
-						chart-object="chartFacturado"
-						select="selectRow(selectedRowIndexFacturado)"
-						colors="barColors">
-				</dynamic-chart>
+				<column-chart
+					data="chartFacturado.data"
+					options="chartFacturado.options"></column-chart>
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="facturadoDia.error">
@@ -85,10 +83,10 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-4" ng-show="facturadoMes.loading">
+		<!--<div class="col-lg-4" ng-show="facturadoMes.loading">
 			<img class="media-object center-block" src="images/loading.gif">
-		</div>
-		<div class="col-lg-4" ng-hide="facturadoMes.loading || facturadoMes.error">
+		</div>-->
+		<div class="col-lg-4" ng-hide="facturadoMes.error">
 			<h4 class="text-left">Facturado mensual</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -97,11 +95,9 @@
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenMonth" datepicker-options="datepickerMonth" ng-model="mesDesde" ng-change="traerDatosFacturadoMes()" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
 			<div class="table-responsive">
-				<dynamic-chart
-						chart-object="chartFacturas"
-						select="selectRow(selectedRowIndexFacturas)"
-						colors="barColors">
-				</dynamic-chart>
+				<column-chart
+					data="chartFacturas.data"
+					options="chartFacturas.options"></column-chart>
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="facturadoMes.error">
@@ -112,10 +108,10 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4" ng-show="cantGates.loading">
+		<!--<div class="col-lg-4" ng-show="cantGates.loading">
 			<img class="media-object center-block" src="images/loading.gif">
-		</div>
-		<div class="col-lg-4" ng-hide="cantGates.loading || cantGates.error">
+		</div>-->
+		<div class="col-lg-4" ng-hide="cantGates.eror">
 			<h4 class="text-left">Gates mensuales</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -124,11 +120,9 @@
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenGates" datepicker-options="datepickerMonth" ng-change="traerDatosGates()" ng-model="mesDesdeGates" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
 			<div class="table-responsive">
-				<dynamic-chart
-						chart-object="chartGates"
-						select="selectRow(selectedRowIndexGates)"
-						colors="barColors">
-				</dynamic-chart>
+				<column-chart
+					data="chartGates.data"
+					options="chartGates.options"></column-chart>
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="cantGates.error">
@@ -139,10 +133,10 @@
 			</div>
 		</div>
 
-		<div class="col-lg-4" ng-show="cantTurnos.loading">
+		<!--<div class="col-lg-4" ng-show="cantTurnos.loading">
 			<img class="media-object center-block" src="images/loading.gif">
-		</div>
-		<div class="col-lg-4" ng-hide="cantTurnos.loading || cantTurnos.error">
+		</div>-->
+		<div class="col-lg-4" ng-hide="cantTurnos.error">
 			<h4 class="text-left">Turnos mensuales</h4>
 			<p class="input-group">
 				<span class="input-group-btn">
@@ -151,11 +145,9 @@
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenTurnos" datepicker-options="datepickerMonthTurnos" ng-change="traerDatosTurnos()" ng-model="mesDesdeTurnos" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
 			<div class="table-responsive">
-				<dynamic-chart
-						chart-object="chartTurnos"
-						select="selectRow(selectedRowIndexTurnos)"
-						colors="barColors">
-				</dynamic-chart>
+				<column-chart
+					data="chartTurnos.data"
+					options="chartTurnos.options"></column-chart>
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="cantTurnos.error">
@@ -168,10 +160,10 @@
 	</div>
 
 	<div class="row col-lg-12">
-		<div ng-show="gatesTurnos.loading">
+		<!--<div ng-show="gatesTurnos.loading">
 			<img class="media-object center-block" src="images/loading.gif">
-		</div>
-		<div ng-hide="gatesTurnos.loading || gatesTurnos.error">
+		</div>-->
+		<div ng-hide="gatesTurnos.error">
 			<h4 class="text-left">{{ labelPorHora }}</h4>
 			<div class="row col-lg-6 col-lg-offset-2">
 				<div class="form-group col-lg-6">
@@ -200,11 +192,14 @@
 				</div>
 			</div>
 			<div class="col-lg-offset-1 col-lg-10 col-md-12 table-responsive">
-				<dynamic-chart
+				<column-chart
+					data="chartDiaGatesTurnos.data"
+					options="chartDiaGatesTurnos.options"></column-chart>
+				<!--<dynamic-chart
 						chart-object="chartDiaGatesTurnos"
 						select="selectRow(selectedRowIndexFacturado)"
 						colors="barColors">
-				</dynamic-chart>
+				</dynamic-chart>-->
 			</div>
 		</div>
 		<div class="col-lg-4" ng-show="gatesTurnos.error">

@@ -7,38 +7,40 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		$scope.ranking = true;
 
 		$scope.chartReporteEmpresas = {
-			title: 'Totales por empresa',
-			width: 750,
-			height: 500,
-			type: 'column',
-			columns: 1,
-			currency: true,
-			stacked: false,
-			is3D: false,
-			money: 'PES',
+			options: {
+				title: 'Totales por empresa',
+				width: 750,
+				height: 500,
+				columns: 1,
+				currency: true,
+				stacked: false,
+				is3D: false,
+				money: 'PES',
+				id: 1,
+				image: null
+			},
 			data: [
 				['Empresas', 'algo'],
 				['hola', 2526]
-			],
-			id: 1,
-			image: null
+			]
 		};
 
 		$scope.chartPorcentaje = {
-			title: 'Porcentajes respecto del total',
-			width: 750,
-			height: 500,
-			type: 'pie',
-			currency: true,
-			stacked: false,
-			is3D: true,
-			money: 'PES',
+			options: {
+				title: 'Porcentajes respecto del total',
+				width: 750,
+				height: 500,
+				currency: true,
+				stacked: false,
+				is3D: true,
+				money: 'PES',
+				id: 2,
+				image: null
+			},
 			data: [
 				['Empresas', 'algo'],
 				['hola', 2526]
-			],
-			id: 2,
-			image: null
+			]
 		};
 
 		$scope.selectRow = function (index) {
@@ -58,7 +60,9 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			var baseTotales = [
 				['Empresas', 'Total']
 			];
-			var basePorcentaje = [];
+			var basePorcentaje = [
+				['Empresas', 'Total']
+			];
 			var total = 0;
 			$scope.resultados.forEach(function(cliente){
 				total += cliente.total;
@@ -165,8 +169,8 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 				totalTerminal: $scope.totalTerminal,
 				terminal: loginService.filterTerminal,
 				charts: [
-					{filename: $scope.chartReporteEmpresas.id, image: $scope.chartReporteEmpresas.image, h: $scope.chartReporteEmpresas.height, w: $scope.chartReporteEmpresas.width},
-					{filename: $scope.chartPorcentaje.id, image: $scope.chartPorcentaje.image, h: $scope.chartPorcentaje.height, w: $scope.chartPorcentaje.width}
+					{filename: $scope.chartReporteEmpresas.options.id, image: $scope.chartReporteEmpresas.options.image, h: $scope.chartReporteEmpresas.options.height, w: $scope.chartReporteEmpresas.options.width},
+					{filename: $scope.chartPorcentaje.options.id, image: $scope.chartPorcentaje.options.image, h: $scope.chartPorcentaje.options.height, w: $scope.chartPorcentaje.options.width}
 				]
 			};
 			var nombreReporte = 'Reporte_empresas.pdf';

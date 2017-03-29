@@ -5,6 +5,12 @@
 myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'cacheService', 'downloadFactory',
 	function($scope, reportsFactory, priceFactory, dialogs, loginService, cacheService, downloadFactory) {
 
+		const barColors = {
+			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
+			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
+			"trp": cacheService.colorTerminalesCache.get('Trp')
+		};
+
 		$scope.search = '';
 		$scope.selectedList = [];
 		$scope.pricelist = [];
@@ -46,25 +52,25 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.totales = [0, 0, 0, 0];
 
-		$scope.$on('errorDatos', function(){
+		$scope.$on('errorDatos', () => {
 			$scope.errorTarifario = true;
 		});
 
-		$scope.$on('cambioPagina', function(event, data){
+		$scope.$on('cambioPagina', (event, data) => {
 			$scope.currentPage = data;
 		});
 
 		function traerDatos () {
-			priceFactory.getPricelistAgp(false, function (data) {
+			priceFactory.getPricelistAgp(false, (data) => {
 				$scope.pricelist = data.data;
-				$scope.pricelist.forEach(function (price) {
+				$scope.pricelist.forEach((price) => {
 					price.graficar = false;
 				});
 				$scope.selectedList = $scope.pricelist;
 			});
-			priceFactory.getPricelistAgp(true, function (data) {
+			priceFactory.getPricelistAgp(true, (data) => {
 				$scope.pricelistTasas = data.data;
-				$scope.pricelistTasas.forEach(function (price) {
+				$scope.pricelistTasas.forEach((price) => {
 					price.graficar = false;
 				});
 			});
@@ -74,19 +80,19 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			traerDatos();
 		}
 
-		$scope.recargarPricelist = function(){
-			var pos;
+		$scope.recargarPricelist = () => {
+			let pos;
 			//$scope.agregarQuitarTodo(false);
-			$scope.selectedList.forEach(function(price){
+			$scope.selectedList.forEach((price) => {
 				if ($scope.tasas){
-					pos = $scope.pricelistTasas.map(function(e) {
+					pos = $scope.pricelistTasas.map((e) => {
 						return e._id
 					}).indexOf(price._id);
 					if (pos != -1){
 						$scope.pricelistTasas[pos].graficar = price.graficar;
 					}
 				} else {
-					pos = $scope.pricelist.map(function(e) {
+					pos = $scope.pricelist.map((e) => {
 						return e._id
 					}).indexOf(price._id);
 					if (pos != -1){
@@ -101,8 +107,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			}
 		};
 
-		$scope.agregarGrafico = function(precio){
-			var i = $scope.tarifasGraficar.data.indexOf(precio.code);
+		$scope.agregarGrafico = (precio) => {
+			let i = $scope.tarifasGraficar.data.indexOf(precio.code);
 			if (precio.graficar){
 				if (i == -1){
 					$scope.tarifasGraficar.data.push(precio.code);
@@ -114,8 +120,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			}
 		};
 
-		$scope.agregarQuitarTodo = function(onOff){
-			$scope.filteredPrices.forEach(function(precio){
+		$scope.agregarQuitarTodo = (onOff) => {
+			$scope.filteredPrices.forEach((precio) => {
 				precio.graficar = onOff;
 				$scope.agregarGrafico(precio);
 			});
@@ -124,61 +130,56 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		$scope.mostrarGrafico = false;
 
 		$scope.chartReporteTarifas = {
-			title: 'Códigos de tarifas',
-			width: 1400,
-			height: 600,
-			type: 'column',
-			columns: 1,
-			currency: true,
-			stacked: false,
-			is3D: true,
-			money: 'DOL',
+			options: {
+				title: 'Códigos de tarifas',
+				width: 1400,
+				height: 600,
+				columns: 1,
+				currency: true,
+				stacked: false,
+				is3D: true,
+				money: 'DOL',
+				id: 1,
+				image: null
+			},
 			data: [
-				['Codigos', 'algo'],
-				['hola', 2526]
+				['Tarifa', 'Total']
 			],
-			id: 1,
-			image: null
 		};
 
 		$scope.chartTotalesPorTarifa = {
-			title: 'Totales por tarifas',
-			width: 700,
-			height: 600,
-			type: 'pie',
-			currency: true,
-			stacked: false,
-			is3D: true,
-			money: 'DOL',
+			options: {
+				title: 'Totales por tarifas',
+				width: 700,
+				height: 600,
+				currency: true,
+				stacked: false,
+				is3D: true,
+				money: 'DOL',
+				id: 2,
+				image: null
+			},
 			data: [
-				['Codigos', 0],
-				['hola', 2526]
+				['Codigos', 'Total']
 			],
-			id: 2,
-			image: null
 		};
 
 		$scope.chartTotalesPorTerminal = {
-			title: 'Totales por terminal',
-			width: 700,
-			height: 600,
-			type: 'pie',
-			currency: true,
-			stacked: false,
-			is3D: true,
-			money: 'DOL',
+			options: {
+				title: 'Totales por terminal',
+				width: 700,
+				height: 600,
+				currency: true,
+				stacked: false,
+				is3D: true,
+				money: 'DOL',
+				colors: [barColors.bactssa, barColors.terminal4, barColors.trp],
+				id: 3,
+				image: null
+			},
 			data: [
-				['Codigos', 0],
-				['hola', 2526]
+				['Codigos', 'Total']
 			],
-			id: 3,
-			image: null
-		};
-
-		$scope.barColors = {
-			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
-			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
-			"trp": cacheService.colorTerminalesCache.get('Trp')
 		};
 
 		$scope.hasta = new Date();
@@ -187,14 +188,16 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		$scope.isCollapsedDesde = false;
 		$scope.isCollapsedHasta = false;
 
-		$scope.selectRow = function (index) {
+		$scope.selectRow = (index, id) => {
+			console.log(index);
+			console.log(id);
 			$scope.selected = index;
 		};
-		$scope.rowClass = function (index) {
+		$scope.rowClass = (index) => {
 			return ($scope.selected === index) ? "selected" : "";
 		};
 
-		$scope.armarGraficoTarifas = function () {
+		$scope.armarGraficoTarifas = () => {
 			$scope.totales = [0, 0, 0, 0];
 
 			$scope.loadingReporteTarifas = true;
@@ -204,13 +207,13 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				$scope.mostrarGrafico = false;
 				$scope.loadingReporteTarifas = false;
 			} else {
-				var base = [
+				let base = [
 					['Códigos']
 				];
-				var nuevaLinea = [];
-				var contarTerminales = 0;
-				var terminales = [];
-				var fecha={
+				let nuevaLinea = [];
+				let contarTerminales = 0;
+				let terminales = [];
+				let fecha={
 					'fechaInicio': $scope.desde,
 					'fechaFin': $scope.hasta
 				};
@@ -218,9 +221,9 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 					if (data.status == 'OK'){
 						contarTerminales = data.data.length; //Determino cuantas terminales arrojaron resultados
 						if (contarTerminales != 0){
-							var totalesTerminal = [];
-							var nuevaLineaTerminal = ['terminal', 0];
-							data.data.forEach(function(resultado){ //Coloco las terminales en el array del gráfico
+							let totalesTerminal = [];
+							let nuevaLineaTerminal = ['terminal', 0];
+							data.data.forEach((resultado) => { //Coloco las terminales en el array del gráfico
 								nuevaLinea.push(resultado.terminal);
 								nuevaLineaTerminal[0] = resultado.terminal;
 								base.push(nuevaLinea.slice());
@@ -228,15 +231,15 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 								terminales.push(resultado.terminal);
 								nuevaLinea = [];
 							});
-							var i = 1;
-							var totalesTarifas = [];
-							var nuevaLineaTarifas = [];
+							let i = 1;
+							let totalesTarifas = [];
+							let nuevaLineaTarifas = [];
 							$scope.tarifasElegidas = $scope.tablaGrafico.data.length;
 							$scope.tablaGrafico.terminales = terminales;
-							$scope.tablaGrafico.data.forEach(function(tarifa){
-								var total = 0;
-								var code = tarifa.code;
-								var tarifaEsta = false;
+							$scope.tablaGrafico.data.forEach((tarifa) => {
+								let total = 0;
+								let code = tarifa.code;
+								let tarifaEsta = false;
 								nuevaLineaTarifas.push(code);
 								tarifa.conteo = [];
 								tarifa.porcentaje = [];
@@ -257,7 +260,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 										base[i].push(0);
 										tarifa.conteo.push(0);
 									} else {
-										var j;
+										let j;
 										for (j = 0; j<contarTerminales; j++){
 											tarifa.conteo.push(0);
 										}
@@ -270,21 +273,23 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 								tarifa.conteo.push(total);
 								$scope.totales[contarTerminales] += total;
 								for (i=0; i<=contarTerminales-1; i++){
-									var cuenta = (tarifa.conteo[i]*100)/tarifa.conteo[contarTerminales];
+									let cuenta = (tarifa.conteo[i]*100)/tarifa.conteo[contarTerminales];
 									tarifa.porcentaje.push(cuenta);
 								}
 								nuevaLineaTarifas.push(total);
 								totalesTarifas.push(nuevaLineaTarifas.slice());
 								nuevaLineaTarifas = [];
 							});
-							totalesTerminal.sort(function(a, b){
-								var terminalA = a[0].toLowerCase(), terminalB = b[0].toLowerCase();
+							totalesTerminal.sort((a, b) => {
+								let terminalA = a[0].toLowerCase(), terminalB = b[0].toLowerCase();
 								if (terminalA < terminalB) //sort string ascending
 									return -1;
 								if (terminalA > terminalB)
 									return 1;
 								return 0; //default return value (no sorting)
 							});
+							totalesTerminal.unshift(['Terminal', 'Total']);
+							totalesTarifas.unshift(['Código', 'Total']);
 							$scope.chartReporteTarifas.columns = base[0].length - 1;
 							$scope.chartTotalesPorTerminal.data = totalesTerminal;
 							$scope.chartTotalesPorTarifa.data = totalesTarifas;
@@ -301,8 +306,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			}
 		};
 
-		$scope.descargarPdf = function(){
-			var data = {
+		$scope.descargarPdf = () => {
+			const data = {
 				id: $scope.$id,
 				desde: $scope.desde,
 				hasta: $scope.hasta,
@@ -310,15 +315,15 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				tabla: $scope.tablaGrafico,
 				totales: $scope.totales,
 				charts: [
-					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image, h: $scope.chartReporteTarifas.height, w: $scope.chartReporteTarifas.width},
-					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image, h: $scope.chartTotalesPorTerminal.height, w: $scope.chartTotalesPorTerminal.width},
-					{filename: $scope.chartTotalesPorTarifa.id, image: $scope.chartTotalesPorTarifa.image, h: $scope.chartTotalesPorTarifa.height, w: $scope.chartTotalesPorTarifa.width}
+					{filename: $scope.chartReporteTarifas.options.id, image: $scope.chartReporteTarifas.options.image, h: $scope.chartReporteTarifas.options.height, w: $scope.chartReporteTarifas.options.width},
+					{filename: $scope.chartTotalesPorTerminal.options.id, image: $scope.chartTotalesPorTerminal.options.image, h: $scope.chartTotalesPorTerminal.options.height, w: $scope.chartTotalesPorTerminal.options.width},
+					{filename: $scope.chartTotalesPorTarifa.options.id, image: $scope.chartTotalesPorTarifa.options.image, h: $scope.chartTotalesPorTarifa.options.height, w: $scope.chartTotalesPorTarifa.options.width}
 				]
 			};
-			var nombreReporte = 'Reporte_tarifas.pdf';
-			downloadFactory.convertToPdf(data, 'reporteTarifasPdf', nombreReporte).then(function(){
+			const nombreReporte = 'Reporte_tarifas.pdf';
+			downloadFactory.convertToPdf(data, 'reporteTarifasPdf', nombreReporte).then(() => {
 
-			}, function(){
+			}).catch(() => {
 				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 			});
 		}

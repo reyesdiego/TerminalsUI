@@ -69,18 +69,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12" ng-hide="cargando || resultados.length == 0">
+        <div class="col-lg-12" ng-if="!cargando && resultados.length > 0">
             <div class="col-lg-6 table-responsive">
-                <dynamic-chart
+                <column-chart
+                    data="chartReporteEmpresas.data"
+                    options="chartReporteEmpresas.options"
+                    click="selectRow(selectedRow, id)"></column-chart>
+                <!--<dynamic-chart
                         chart-object="chartReporteEmpresas"
                         select="selectRow(selectedRowIndexReporteEmpresas)">
-                </dynamic-chart>
+                </dynamic-chart>-->
             </div>
             <div class="col-lg-6 table-responsive">
-                <dynamic-chart
+                <pie-chart
+                    data="chartPorcentaje.data"
+                    options="chartPorcentaje.options"
+                    click="selectRow(selectedRow, id)"></pie-chart>
+                <!--<dynamic-chart
                         chart-object="chartPorcentaje"
                         select="selectRow(selectedRowIndexPorcentaje)">
-                </dynamic-chart>
+                </dynamic-chart>-->
             </div>
         </div>
         <div class="col-lg-12 text-right" ng-hide="cargando || resultados.length == 0">

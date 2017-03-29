@@ -114,28 +114,39 @@
         </table>
     </div>
 
-    <div class="row" ng-show="mostrarGrafico && !errorTarifario">
+    <div class="row" ng-if="mostrarGrafico && !errorTarifario">
         <div class="col-lg-12 text-center table-responsive">
-            <dynamic-chart
+            <column-chart
+                data="chartReporteTarifas.data"
+                options="chartReporteTarifas.options"
+                click="selectRow(selectedRow, id)"></column-chart>
+            <!--<dynamic-chart
                     chart-object="chartReporteTarifas"
                     select="selectRow(selectedRowIndexReporteTarifas)">
-            </dynamic-chart>
+            </dynamic-chart>-->
         </div>
     </div>
 
-    <div class="row" ng-show="mostrarGrafico && !errorTarifario">
+    <div class="row" ng-if="mostrarGrafico && !errorTarifario">
         <div class="col-lg-6 text-center table-responsive">
-            <dynamic-chart
+            <pie-chart
+                data="chartTotalesPorTarifa.data"
+                options="chartTotalesPorTarifa.options"
+                click="selectRow(selectedRow, id)"></pie-chart>
+            <!--<dynamic-chart
                     chart-object="chartTotalesPorTarifa"
                     select="selectRow(selectedRowIndexTotalesTarifas)">
-            </dynamic-chart>
+            </dynamic-chart>-->
         </div>
         <div class="col-lg-6 text-center table-responsive">
-            <dynamic-chart
+            <pie-chart
+                data="chartTotalesPorTerminal.data"
+                options="chartTotalesPorTerminal.options"></pie-chart>
+            <!--<dynamic-chart
                     chart-object="chartTotalesPorTerminal"
                     select="selectRow(selectedRowIndexTotalesTerminal)"
                     colors="barColors">
-            </dynamic-chart>
+            </dynamic-chart>-->
         </div>
     </div>
 

@@ -57,7 +57,7 @@
 	<!-- /build -->
 	<script src="js/socket.io.min.js"></script>
 	<!-- Google charts -->
-	<script src="js/jsapi.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!-- App Script -->
 	<!-- build:js js/app-min.js -->
 	<script src="main/main.js"></script>
@@ -75,6 +75,7 @@
 	<script src="service/login.service.js"></script>
 	<script src="service/httpCanceler.service.js"></script>
 	<script src="service/download.service.js"></script>
+	<script src="service/chart.service.js"></script>
 	<!-- Factories -->
 	<script src="factory/afip.factory.js"></script>
 	<script src="factory/auth.factory.js"></script>
@@ -129,7 +130,9 @@
 	<!-- Directives -->
 	<script src="directives/directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
-	<script src="directives/chartDirectives.js"></script>
+	<!--<script src="directives/chartDirectives.js"></script>-->
+	<script src="directives/columnChart.directive.js"></script>
+	<script src="directives/pieChart.directive.js"></script>
 	<!-- /build -->
 	<!-- Style Switcher -->
 	<script src="js/linq.min.js"></script>

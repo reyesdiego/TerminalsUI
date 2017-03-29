@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 21/02/14.
  */
 
-google.load("visualization", "1", {packages:["corechart"]});
+//google.charts.load('current', {'packages':['corechart'], 'language': 'es'});
 
 Array.prototype.equals = function (array) {
 	// if the other array is a falsy value, return

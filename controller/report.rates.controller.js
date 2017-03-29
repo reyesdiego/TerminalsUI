@@ -6,6 +6,12 @@
 myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'cacheService', 'loginService', 'downloadFactory', 'dialogs', '$filter',
 	function ($rootScope, $scope, invoiceFactory, generalFunctions, cacheService, loginService, downloadFactory, dialogs, $filter) {
 
+		const barColors = {
+			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
+			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
+			"trp": cacheService.colorTerminalesCache.get('Trp')
+		};
+
 		$scope.tasaAgp = false;
 
 		$rootScope.predicate = 'terminal';
@@ -25,73 +31,74 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 		$scope.chartReporteTarifas = {
-			title: "Detalle por tarifas",
-			width: 1400,
-			height: 600,
-			series: {7: {type: "line"}},
-			type: 'column',
-			columns: 8,
-			currency: true,
-			stacked: false,
-			is3D: false,
-			money: 'PES',
+			options: {
+				title: "Detalle por tarifas",
+				width: 1400,
+				height: 600,
+				series: {7: {type: "line"}},
+				columns: 8,
+				currency: true,
+				stacked: false,
+				is3D: false,
+				money: 'PES',
+				id: 1,
+				image: null
+			},
 			data: [
 				['Fecha', '1465', '1466', '1467', 'NAGPI', 'NAGPE', 'TASAI', 'TASAE', 'Promedio']
-			],
-			id: 1,
-			image: null
+			]
 		};
 
 		$scope.chartTotalesPorTerminal = {
-			title: "Totales por terminal",
-			width: 500,
-			height: 500,
-			type: 'pie',
-			currency: true,
-			stacked: false,
-			is3D: true,
-			money: 'PES',
+			options: {
+				title: "Totales por terminal",
+				width: 500,
+				height: 500,
+				currency: true,
+				stacked: false,
+				is3D: true,
+				colors: [barColors.bactssa, barColors.terminal4, barColors.trp],
+				money: 'PES',
+				id: 2,
+				image: null
+			},
 			data: [
-				['BACTSSA', 0],
-				['TERMINAL 4', 0],
-				['TRP', 0]
-			],
-			id: 2,
-			image: null
+				['Terminal', 'Total']
+			]
 		};
 
 		$scope.chartDetallePorTerminalFecha = {
-			title: "",
-			width: 700,
-			height: 500,
-			type: 'pie',
-			currency: true,
-			stacked: false,
-			is3D: true,
-			money: 'PES',
-			data: [],
-			id: 3,
-			image: null
+			options: {
+				title: "",
+				width: 700,
+				height: 500,
+				currency: true,
+				stacked: false,
+				is3D: true,
+				money: 'PES',
+				id: 3,
+				image: null
+			},
+			data: [
+				['saludo', 'numero']
+			]
 		};
 
 		$scope.chartDetallePorTerminalPeriodo = {
-			title: "",
-			width: 700,
-			height: 500,
-			type: 'pie',
-			currency: true,
-			stacked: false,
-			is3D: true,
-			money: 'PES',
-			data: [],
-			id: 4,
-			image: null
-		};
-
-		$scope.barColors = {
-			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
-			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
-			"trp": cacheService.colorTerminalesCache.get('Trp')
+			options: {
+				title: "",
+				width: 700,
+				height: 500,
+				currency: true,
+				stacked: false,
+				is3D: true,
+				money: 'PES',
+				id: 4,
+				image: null
+			},
+			data: [
+				['saludo', 'numero']
+			]
 		};
 
 		$scope.allRates = cacheService.matchesCache.get('allRates');
@@ -126,7 +133,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.mostrarGrafico = false;
 		$scope.verDetalleTerminal = false;
 
-		var obtenerDescripcionFecha = function(datosDia){
+		function obtenerDescripcionFecha(datosDia){
 			switch ($scope.modelDetalle.tipo){
 				case 'date':
 					return $filter('date')(datosDia.date, 'dd/MM/yyyy');
@@ -140,16 +147,18 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			}
 		};
 
-		var detallar = function(){
+		function detallar(){
 			$scope.verDetalleTerminal = false;
 			switch ($scope.detallarTerminal){
 				case 'BACTSSA':
 					$scope.chartDetallePorTerminalFecha.data = [
+						['Tarifa', 'Total'],
 						['1465', 0],
 						['1466', 0],
 						['1467', 0]
 					];
 					$scope.chartDetallePorTerminalPeriodo.data = [
+						['Tarifa', 'Total'],
 						['1465', 0],
 						['1466', 0],
 						['1467', 0]
@@ -157,44 +166,48 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 					break;
 				case 'TERMINAL4':
 					$scope.chartDetallePorTerminalFecha.data = [
+						['Tarifa', 'Total'],
 						['NAGPI', 0],
 						['NAGPE', 0]
 					];
 					$scope.chartDetallePorTerminalPeriodo.data = [
+						['Tarifa', 'Total'],
 						['NAGPI', 0],
 						['NAGPE', 0]
 					];
 					break;
 				case 'TRP':
 					$scope.chartDetallePorTerminalFecha.data = [
+						['Tarifa', 'Total'],
 						['TASAI', 0],
 						['TASAE', 0]
 					];
 					$scope.chartDetallePorTerminalPeriodo.data = [
+						['Tarifa', 'Total'],
 						['TASAI', 0],
 						['TASAE', 0]
 					];
 					break;
 			}
-			var row;
-			var ponerFecha;
-			var totalDetallePeriodo = 0, totalDetalleFecha = 0;
-			$scope.detalleRates.forEach(function(datosDia){
+			let row;
+			let ponerFecha;
+			let totalDetallePeriodo = 0, totalDetalleFecha = 0;
+			$scope.detalleRates.forEach((datosDia) => {
 				if (datosDia.terminal == $scope.detallarTerminal){
 					ponerFecha = obtenerDescripcionFecha(datosDia);
 					switch (datosDia.code){
 						case '1465':
 						case 'NAGPI':
 						case 'TASAI':
-							row = 0;
+							row = 1;
 							break;
 						case '1466':
 						case 'NAGPE':
 						case 'TASAE':
-							row = 1;
+							row = 2;
 							break;
 						case '1467':
-							row = 2;
+							row = 3;
 					}
 					if ($scope.tasaAgp){
 						$scope.chartDetallePorTerminalPeriodo.data[row][1] += datosDia.totalPesoAgp;
@@ -214,27 +227,27 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 					}
 				}
 			});
-			$scope.chartDetallePorTerminalPeriodo.title = 'Total de ' + $scope.detallarTerminal + ' para el período graficado:\n' + $filter('currency')(totalDetallePeriodo, '$ ' );
+			$scope.chartDetallePorTerminalPeriodo.options.title = 'Total de ' + $scope.detallarTerminal + ' para el período graficado:\n' + $filter('currency')(totalDetallePeriodo, '$ ' );
 			switch ($scope.modelDetalle.tipo){
 				case 'date':
-					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para el día ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
+					$scope.chartDetallePorTerminalFecha.options.title = 'Total de ' + $scope.detallarTerminal + ' para el día ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
 					break;
 				case 'month':
-					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
+					$scope.chartDetallePorTerminalFecha.options.title = 'Total de ' + $scope.detallarTerminal + ' para ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
 					break;
 				case 'year':
-					$scope.chartDetallePorTerminalFecha.title = 'Total de ' + $scope.detallarTerminal + ' para el año ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
+					$scope.chartDetallePorTerminalFecha.options.title = 'Total de ' + $scope.detallarTerminal + ' para el año ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
 					break;
 			}
 			$scope.verDetalleTerminal = true;
-		};
+		}
 
 		$scope.detallarTerminal = '';
 		$scope.detallarFecha = '';
 
-		$scope.selectRow = function (index, id) {
+		$scope.selectRow = (index, id) => {
 			if (angular.isDefined(index) && id == 1 && index.column < 8){
-				var rate = $scope.chartReporteTarifas.data[0][index.column];
+				let rate = $scope.chartReporteTarifas.data[0][index.column];
 				switch (rate){
 					case '1465':
 					case '1466':
@@ -265,7 +278,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 							break;
 					}
 				}
-				detallar();
+				$scope.$apply(detallar());
 			}
 		};
 
@@ -295,30 +308,31 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			});
 		};
 
-		var armarGrafico = function(){
+		function armarGrafico(){
 
 			$scope.total = 0;
 			$scope.totalAgp = 0;
 			$scope.totalPeso = 0;
 			$scope.totalPesoAgp = 0;
 
-			var base = [
+			let base = [
+				['Terminal', 'Total'],
 				['BACTSSA', 0],
 				['TERMINAL 4', 0],
 				['TRP', 0]
 			];
 
-			var row;
-			$scope.rates.forEach(function(tasa){
+			let row;
+			$scope.rates.forEach((tasa) => {
 				switch (tasa.terminal){
 					case 'BACTSSA':
-						row = 1;
-						break;
-					case 'TERMINAL4':
 						row = 2;
 						break;
-					case 'TRP':
+					case 'TERMINAL4':
 						row = 3;
+						break;
+					case 'TRP':
+						row = 4;
 						break;
 				}
 				if ($scope.tasaAgp){
@@ -335,26 +349,26 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			$scope.chartTotalesPorTerminal.data = base;
 		};
 
-		$scope.openDate = function(event){
+		$scope.openDate = (event) => {
 			generalFunctions.openDate(event);
 		};
 
-		$scope.hitEnter = function(evt){
+		$scope.hitEnter = (evt) => {
 			if(angular.equals(evt.keyCode,13))
 				$scope.filtrar();
 		};
 
-		$scope.$on('errorInesperado', function(e, mensaje){
+		$scope.$on('errorInesperado', (e, mensaje) => {
 			$scope.cargando = false;
 			$scope.rates = [];
 			$scope.configPanel = mensaje;
 		});
 
-		var ponerDescripcion = function(codigo){
+		function ponerDescripcion(codigo){
 			return $scope.allRates[codigo];
 		};
 
-		$scope.cambioTasa = function(){
+		$scope.cambioTasa = () => {
 			$scope.tasaAgp = !$scope.tasaAgp;
 			armarGrafico();
 			armarGraficoDetalle();
@@ -363,21 +377,21 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			}
 		};
 
-		var armarGraficoDetalle = function(){
+		function armarGraficoDetalle(){
 			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 			$scope.chartReporteTarifas.data = [
 				['Fecha', '1465', '1466', '1467', 'NAGPI', 'NAGPE', 'TASAI', 'TASAE', 'Promedio']
 			];
 			//Para cambiar entre columnas
-			var lugarFila = 1;
+			let lugarFila = 1;
 			//Para cargar promedio
 			//var acum = 0;
-			var fila = ['', 0, 0, 0, 0, 0, 0, 0, 0];
-			var filaEncontrada = false;
-			var ponerFecha;
+			let fila = ['', 0, 0, 0, 0, 0, 0, 0, 0];
+			let filaEncontrada = false;
+			let ponerFecha;
 			//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
 			//ordenados por fecha
-			$scope.detalleRates.forEach(function(datosDia){
+			$scope.detalleRates.forEach((datosDia) => {
 				switch ($scope.modelDetalle.tipo){
 					case 'date':
 						ponerFecha = $filter('date')(datosDia.date, 'dd/MM/yyyy');
@@ -412,7 +426,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 						lugarFila = 7;
 						break;
 				}
-				$scope.chartReporteTarifas.data.forEach(function(unaFila){
+				$scope.chartReporteTarifas.data.forEach((unaFila) => {
 					if (unaFila[0] == ponerFecha){
 						filaEncontrada = true;
 						if ($scope.tasaAgp){
@@ -441,9 +455,9 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			for (let i = 1;i<$scope.chartReporteTarifas.data.length;i++){
 				$scope.chartReporteTarifas.data[i][8] = $scope.chartReporteTarifas.data[i][8]/7
 			}
-		};
+		}
 
-		$scope.cargaRates = function () {
+		$scope.cargaRates = () =>{
 			$scope.verDetalleTerminal = false;
 			switch ($scope.modelDetalle.tipo){
 				case 'date': //diario
@@ -463,6 +477,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			if (!angular.isDefined($scope.model['fechaInicio'])) $scope.model.fechaInicio = $scope.fechaInicio;
 			$scope.total = 0;
 			$scope.chartTotalesPorTerminal.data = [
+				['Terminal', 'Totales'],
 				['BACTSSA', 0],
 				['TERMINAL 4', 0],
 				['TRP', 0]
@@ -473,10 +488,10 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				titulo: 'Tasas a las cargas',
 				mensaje: 'No se han encontrado datos para los filtros seleccionados.'
 			};
-			invoiceFactory.getRatesInvoices($scope.model, function (data) {
+			invoiceFactory.getRatesInvoices($scope.model, (data) => {
 				if (data.status === "OK") {
 					$scope.rates = data.data;
-					$scope.rates.forEach(function(rate){
+					$scope.rates.forEach((rate) => {
 						rate.descripcion = ponerDescripcion(rate.code);
 					});
 					if (data.data.length > 0){
@@ -494,8 +509,8 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			});
 		};
 
-		$scope.descargarPdf = function(){
-			var data = {
+		$scope.descargarPdf = () => {
+			let data = {
 				id: $scope.$id,
 				rates: $scope.rates,
 				tasaAgp: $scope.tasaAgp,
@@ -505,16 +520,16 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				detalle: $scope.verDetalleTerminal,
 				totales: $scope.chartTotalesPorTerminal.data,
 				charts: [
-					{filename: $scope.chartReporteTarifas.id, image: $scope.chartReporteTarifas.image, h: $scope.chartReporteTarifas.height, w: $scope.chartReporteTarifas.width},
-					{filename: $scope.chartTotalesPorTerminal.id, image: $scope.chartTotalesPorTerminal.image, h: $scope.chartTotalesPorTerminal.height, w: $scope.chartTotalesPorTerminal.width},
-					{filename: $scope.chartDetallePorTerminalFecha.id, image: $scope.chartDetallePorTerminalFecha.image, h: $scope.chartDetallePorTerminalFecha.height, w: $scope.chartDetallePorTerminalFecha.width},
-					{filename: $scope.chartDetallePorTerminalPeriodo.id, image: $scope.chartDetallePorTerminalPeriodo.image, h: $scope.chartDetallePorTerminalPeriodo.height, w: $scope.chartDetallePorTerminalPeriodo.width}
+					{filename: $scope.chartReporteTarifas.options.id, image: $scope.chartReporteTarifas.options.image, h: $scope.chartReporteTarifas.options.height, w: $scope.chartReporteTarifas.options.width},
+					{filename: $scope.chartTotalesPorTerminal.options.id, image: $scope.chartTotalesPorTerminal.options.image, h: $scope.chartTotalesPorTerminal.options.height, w: $scope.chartTotalesPorTerminal.options.width},
+					{filename: $scope.chartDetallePorTerminalFecha.options.id, image: $scope.chartDetallePorTerminalFecha.options.image, h: $scope.chartDetallePorTerminalFecha.options.height, w: $scope.chartDetallePorTerminalFecha.options.width},
+					{filename: $scope.chartDetallePorTerminalPeriodo.options.id, image: $scope.chartDetallePorTerminalPeriodo.options.image, h: $scope.chartDetallePorTerminalPeriodo.options.height, w: $scope.chartDetallePorTerminalPeriodo.options.width}
 				]
 			};
-			var nombreReporte = 'Reporte_tasas.pdf';
-			downloadFactory.convertToPdf(data, 'reporteRatesPdf', nombreReporte).then(function(){
+			let nombreReporte = 'Reporte_tasas.pdf';
+			downloadFactory.convertToPdf(data, 'reporteRatesPdf', nombreReporte).then(() => {
 
-			}, function(){
+			}).catch(() => {
 				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 			});
 		};
