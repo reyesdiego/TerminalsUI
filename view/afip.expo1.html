@@ -124,9 +124,9 @@
 						<td>{{ registro.FECHAREGISTRO | date: 'dd/MM/yyyy':'UTC'}}</td>
 						<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy':'UTC'}}</td>
 						<td>{{ registro.TRANSPORTEVACIO }}</td>
-						<td><text-pop text="registro.PAISPROCEDENCIA" max="15"></text-pop></td>
+						<td><text-pop text="{{ registro.PAISPROCEDENCIA }}" max="15"></text-pop></td>
 						<td><text-pop text="{{ registro.TRANSPORTISTA }}" max="16"></text-pop></td>
-						<td><text-pop text="registro.PAISTRANSPORTISTA" max="15"></text-pop> </td>
+						<td><text-pop text="{{ registro.PAISTRANSPORTISTA }}" max="15"></text-pop> </td>
 						<td><text-pop text="{{ registro.COMENTARIO }}" max="16"></text-pop></td>
 						<td>{{ registro.IMPO_EXPO }}</td>
 						<td>{{ registro.DESCONSOLIDADO }}</td>
