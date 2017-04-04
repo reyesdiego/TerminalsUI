@@ -19,7 +19,15 @@
 				                  match-class="highlight"
 				                  limit-results="0"
 				                  auto-match="true"></angucomplete-alt>-->
-				<h5 ng-repeat="buque in buques" class="{{ buque.elegido }}"><a href ng-click="buqueSelected(buque)">{{ buque.buque }} <span class="glyphicon glyphicon-certificate" ng-show="buque.both"></span></a></h5>
+				<div class="form-group">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="buscarBuque" placeholder="Buscar buque..." toupper>
+						<div class="input-group-btn">
+							<button class="btn btn-default" ng-click="buscarBuque = ''"><i class="glyphicon glyphicon-remove"></i></button>
+						</div>
+					</div>
+				</div>
+				<h5 ng-repeat="buque in buques | filter: buscarBuque" class="{{ buque.elegido }}"><a href ng-click="buqueSelected(buque)">{{ buque.buque }} <span class="glyphicon glyphicon-certificate" ng-show="buque.both"></span></a></h5>
 			</div>
 		</div>
 		<h6><span class="glyphicon glyphicon-certificate"></span> - Contiene datos de la AFIP</h6>
