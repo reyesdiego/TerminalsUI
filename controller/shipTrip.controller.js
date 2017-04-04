@@ -227,7 +227,11 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 					$scope.datosContainers = data.data;
 					$scope.totalItems = $scope.datosContainers.length;
 					if ($scope.totalItems == 0){
-						$scope.panelMensaje.mensaje = 'No se encontraron contenedores para los filtros seleccionados';
+						$scope.panelMensaje.mensaje = {
+							titulo: 'Buque-Viaje',
+							mensaje: 'No se encontraron contenedores para los filtros seleccionados',
+							tipo: 'panel-info'
+						};
 					}
 				} else {
 					$scope.panelMensaje = {
@@ -242,7 +246,11 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 				if (data.status == "OK"){
 					$scope.totalSinRates = data.totalCount;
 					if ($scope.totalSinRates == 0){
-						$scope.panelContainerNoRates.mensaje = 'No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados';
+						$scope.panelContainerNoRates.mensaje = {
+							titulo: 'Buque-Viaje',
+							mensaje: 'No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados',
+							tipo: 'panel-info'
+						};
 					}
 					$scope.containersSinRates = data.data;
 				} else {
