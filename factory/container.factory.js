@@ -89,14 +89,11 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'ca
 					let formatData = [];
 					response.data.data.forEach((dataContainer) => {
 						let newContainer = {
-							contenedor: dataContainer.contenedor.contenedor,
-							toneladas: dataContainer.contenedor.toneladas,
+							contenedor: dataContainer.contenedor,
+							toneladas: dataContainer.toneladas,
 							ship: datos.buqueNombre,
 							trip: datos.viaje,
-							gates:{
-								data: dataContainer.gates,
-								total: dataContainer.gates.length
-							}
+							gatesCnt: dataContainer.gatesCnt
 						};
 						formatData.push(newContainer);
 					});
