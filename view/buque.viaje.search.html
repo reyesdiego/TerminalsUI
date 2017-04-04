@@ -56,19 +56,26 @@
 					<!--<div ng-show="totalSinRates == 0">No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados</div>-->
 					<span>{{ panelContainerNoRates.mensaje }}</span>
 				</div-panel>
-				<div-panel ng-hide="totalSinRates == 0" config-panel="{tipo: 'panel-info', titulo: 'Contenedores sin Tasa a las Cargas ' + totalSinRates}">
-					<!--<div ng-show="totalSinRates == 0">No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados</div>-->
-					<div style="max-height: 200px; max-width: 100%; overflow: auto" ng-hide="totalSinRates == 0">
-						<div class="input-group col-lg-12 hidden-print">
-							<input type="text" class="form-control" ng-model="search" placeholder="Filtrar resultados" toupper>
-							<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+				<div ng-hide="totalSinRates == 0" class="panel panel-info">
+					<div class="panel-heading">
+						<div class="panel-title">
+							<span>Sin Tasa a las Cargas</span><span class="pull-right">Contenedores <span class="badge">{{ totalSinRates }}</span></span>
 						</div>
-						<br>
-					<span ng-repeat="container in containersSinRates | filter: search">
+					</div>
+					<div class="panel-body">
+						<!--<div ng-show="totalSinRates == 0">No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados</div>-->
+						<div style="max-height: 200px; max-width: 100%; overflow: auto" ng-hide="totalSinRates == 0">
+							<div class="input-group col-lg-12 hidden-print">
+								<input type="text" class="form-control" ng-model="search" placeholder="Filtrar resultados" toupper>
+								<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+							</div>
+							<br>
+							<span ng-repeat="container in containersSinRates | filter: search">
 						<div style="width: auto; float:left; text-align:center" ng-show="container.contenedor != ''" ><a href ng-class="{mark: (model.contenedor == container.contenedor)}" ng-click="verDetalles(container)"> {{ container.contenedor }}</a><span ng-show="!$last"> -&nbsp</span></div>
 					</span>
+						</div>
 					</div>
-				</div-panel>
+				</div>
 			</div>
 		</div-cargando>
 	</div>

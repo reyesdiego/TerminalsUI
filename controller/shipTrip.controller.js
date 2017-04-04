@@ -77,7 +77,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 		$scope.totalSinRates = 0;
 		$scope.panelContainerNoRates = {
 			tipo: 'panel-info',
-			titulo: 'Contenedores sin Tasa a las Cargas',
+			titulo: 'Sin Tasa a las Cargas',
 			mensaje: 'Seleccione un buque para realizar la búsqueda'
 		};
 		$scope.sumariaConfigPanel = {
@@ -227,7 +227,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 					$scope.datosContainers = data.data;
 					$scope.totalItems = $scope.datosContainers.length;
 					if ($scope.totalItems == 0){
-						$scope.panelMensaje.mensaje = {
+						$scope.panelMensaje = {
 							titulo: 'Buque-Viaje',
 							mensaje: 'No se encontraron contenedores para los filtros seleccionados',
 							tipo: 'panel-info'
@@ -246,8 +246,8 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 				if (data.status == "OK"){
 					$scope.totalSinRates = data.totalCount;
 					if ($scope.totalSinRates == 0){
-						$scope.panelContainerNoRates.mensaje = {
-							titulo: 'Buque-Viaje',
+						$scope.panelContainerNoRates = {
+							titulo: 'Sin Tasa a las cargas',
 							mensaje: 'No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados',
 							tipo: 'panel-info'
 						};
