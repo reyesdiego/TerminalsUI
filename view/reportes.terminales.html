@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-6" ng-show="model.tipo == 'month'">
+        <div class="col-lg-3 col-sm-6" ng-show="model.tipo == 'month'">
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Mes</span>
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-6" ng-show="model.tipo == 'year'">
+        <div class="col-lg-3 col-sm-6" ng-show="model.tipo == 'year'">
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Año</span>
@@ -34,7 +34,12 @@
                 </div>
             </div>
         </div>
-        <div class="form-group col-lg-4 col-md-4 col-sm-6">
+        <div class="form-group col-lg-3 col-sm-6">
+            <div class="input-group checkbox checkBoxContainer">
+                <label><input type="checkbox" ng-model="model.tarifa" ng-true-value="'agp'" ng-false-value="''">Por Tarifa Asociada AGP</label>
+            </div>
+        </div>
+        <div class="form-group col-lg-3 col-md-4 col-sm-6">
             <div class="input-group">
                 <button class="btn btn-primary" ng-click="cargarReporte();"><span class="glyphicon glyphicon-search"></span> Cargar</button>
             </div>
@@ -83,7 +88,7 @@
                 <tbody>
                 <tr ng-repeat="tarifa in dataReporte | filter:search">
                     <td class="text-center">{{ tarifa.code }}</td>
-                    <td>{{ tarifa.descripcion }}</td>
+                    <td>{{ tarifa.description }}</td>
                     <td class="text-right">{{ tarifa.total | currency: 'U$S ' }}</td>
                 </tr>
                 </tbody>

@@ -420,7 +420,6 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				templateUrl: 'view/reportes.terminales.html',
 				controller: 'tarifasTerminalesCtrl',
 				resolve: {
-					descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
 					ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 				}
 			})
