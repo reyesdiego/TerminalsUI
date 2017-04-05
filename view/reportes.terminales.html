@@ -36,7 +36,7 @@
         </div>
         <div class="form-group col-lg-3 col-sm-6">
             <div class="input-group checkbox checkBoxContainer">
-                <label><input type="checkbox" ng-model="model.tarifa" ng-true-value="'agp'" ng-false-value="''">Por Tarifa Asociada AGP</label>
+                <label><input type="checkbox" ng-model="model.tarifa" ng-true-value="'agp'" ng-false-value="''">Tarifas Asociadas a AGP</label>
             </div>
         </div>
         <div class="form-group col-lg-3 col-md-4 col-sm-6">
@@ -89,7 +89,7 @@
                 <tr ng-repeat="tarifa in dataReporte | filter:search">
                     <td class="text-center">{{ tarifa.code }}</td>
                     <td>{{ tarifa.description }}</td>
-                    <td class="text-right">{{ tarifa.total | currency: 'U$S ' }}</td>
+                    <td class="text-right">{{ tarifa.total | currency: 'AR$ ' }}</td>
                 </tr>
                 </tbody>
             </table>
