@@ -46,6 +46,12 @@ myapp.directive('columnChart', ['chartLoader', function(chartLoader){
 					}
 				}, true);
 
+				scope.$watch('options', () => {
+					if (scope.data.length > 1){
+						chartCtrl.drawChart(scope.data, scope.options);
+					}
+				}, true);
+
 			})
 		}
 	}

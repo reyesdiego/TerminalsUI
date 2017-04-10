@@ -12,6 +12,17 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			"trp": cacheService.colorTerminalesCache.get('Trp')
 		};
 
+		const tarifasTerminal = {
+			1465: 'BACTSSA',
+			1466: 'BACTSSA',
+			1467: 'BACTSSA',
+			NAGPE: 'TERMINAL4',
+			NAGPI: 'TERMINAL4',
+			TASAI: 'TRP',
+			TASAE: 'TRP',
+			TASAE2: 'TRP'
+		};
+
 		$scope.tasaAgp = false;
 
 		$rootScope.predicate = 'terminal';
@@ -35,8 +46,8 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				title: "Detalle por tarifas",
 				width: 1400,
 				height: 600,
-				series: {7: {type: "line"}},
-				columns: 8,
+				series: {},
+				//columns: 8,
 				currency: true,
 				stacked: false,
 				is3D: false,
@@ -180,12 +191,14 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 					$scope.chartDetallePorTerminalFecha.data = [
 						['Tarifa', 'Total'],
 						['TASAI', 0],
-						['TASAE', 0]
+						['TASAE', 0],
+						['TASAE2', 0]
 					];
 					$scope.chartDetallePorTerminalPeriodo.data = [
 						['Tarifa', 'Total'],
 						['TASAI', 0],
-						['TASAE', 0]
+						['TASAE', 0],
+						['TASAE2', 0]
 					];
 					break;
 			}
@@ -193,39 +206,42 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			let ponerFecha;
 			let totalDetallePeriodo = 0, totalDetalleFecha = 0;
 			$scope.detalleRates.forEach((datosDia) => {
-				if (datosDia.terminal == $scope.detallarTerminal){
-					ponerFecha = obtenerDescripcionFecha(datosDia);
-					switch (datosDia.code){
-						case '1465':
-						case 'NAGPI':
-						case 'TASAI':
-							row = 1;
-							break;
-						case '1466':
-						case 'NAGPE':
-						case 'TASAE':
-							row = 2;
-							break;
-						case '1467':
-							row = 3;
-					}
-					if ($scope.tasaAgp){
-						$scope.chartDetallePorTerminalPeriodo.data[row][1] += datosDia.totalPesoAgp;
-						totalDetallePeriodo += datosDia.totalPesoAgp;
-					} else {
-						$scope.chartDetallePorTerminalPeriodo.data[row][1] += datosDia.totalPeso;
-						totalDetallePeriodo += datosDia.totalPeso;
-					}
-					if ($scope.detallarFecha == ponerFecha){
+				ponerFecha = obtenerDescripcionFecha(datosDia);
+				datosDia.codes.forEach((datosCode) => {
+					if (tarifasTerminal[datosCode.code] == $scope.detallarTerminal){
+						switch (datosCode.code){
+							case '1465':
+							case 'NAGPI':
+							case 'TASAI':
+								row = 1;
+								break;
+							case '1466':
+							case 'NAGPE':
+							case 'TASAE':
+								row = 2;
+								break;
+							case '1467':
+							case 'TASAE2':
+								row = 3;
+						}
 						if ($scope.tasaAgp){
-							$scope.chartDetallePorTerminalFecha.data[row][1] += datosDia.totalPesoAgp;
-							totalDetalleFecha += datosDia.totalPesoAgp;
+							$scope.chartDetallePorTerminalPeriodo.data[row][1] += datosCode.totalPesoAgp;
+							totalDetallePeriodo += datosCode.totalPesoAgp;
 						} else {
-							$scope.chartDetallePorTerminalFecha.data[row][1] += datosDia.totalPeso;
-							totalDetalleFecha += datosDia.totalPeso;
+							$scope.chartDetallePorTerminalPeriodo.data[row][1] += datosCode.totalPeso;
+							totalDetallePeriodo += datosCode.totalPeso;
+						}
+						if ($scope.detallarFecha == ponerFecha){
+							if ($scope.tasaAgp){
+								$scope.chartDetallePorTerminalFecha.data[row][1] += datosCode.totalPesoAgp;
+								totalDetalleFecha += datosCode.totalPesoAgp;
+							} else {
+								$scope.chartDetallePorTerminalFecha.data[row][1] += datosCode.totalPeso;
+								totalDetalleFecha += datosCode.totalPeso;
+							}
 						}
 					}
-				}
+				});
 			});
 			$scope.chartDetallePorTerminalPeriodo.options.title = 'Total de ' + $scope.detallarTerminal + ' para el período graficado:\n' + $filter('currency')(totalDetallePeriodo, '$ ' );
 			switch ($scope.modelDetalle.tipo){
@@ -246,7 +262,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.detallarFecha = '';
 
 		$scope.selectRow = (index, id) => {
-			if (angular.isDefined(index) && id == 1 && index.column < 8){
+			if (angular.isDefined(index) && id == 1 && index.column < $scope.chartReporteTarifas.data[0].length-1){
 				let rate = $scope.chartReporteTarifas.data[0][index.column];
 				switch (rate){
 					case '1465':
@@ -285,21 +301,26 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.actualizarDetalle = function(){
 			$scope.mostrarGrafico = false;
 			$scope.verDetalleTerminal = false;
+			let params = {
+				tipo: $scope.modelDetalle.tipo,
+				fechaInicio: new Date($scope.model.fechaInicio),
+				fechaFin: new Date($scope.model.fechaInicio)
+			};
 			switch ($scope.modelDetalle.tipo){
 				case 'date':
-					//$scope.modelDetalle.fechaInicio = new Date($scope.modelDetalle.fechaFin.getFullYear(), $scope.modelDetalle.fechaFin.getMonth(), $scope.modelDetalle.fechaFin.getDate() - $scope.modelDetalle.contarHaciaAtras);
-					$scope.modelDetalle.fechaFin.setDate($scope.modelDetalle.fechaInicio.getDate() + 1);
+					params.fechaInicio = new Date(params.fechaFin.getFullYear(), params.fechaFin.getMonth(), params.fechaFin.getDate() - $scope.modelDetalle.contarHaciaAtras);
+					params.fechaFin.setDate(params.fechaFin.getDate() + 1);
 					break;
 				case 'month':
-					$scope.modelDetalle.fechaInicio = new Date($scope.modelDetalle.fechaFin.getFullYear(), $scope.modelDetalle.fechaFin.getMonth() - $scope.modelDetalle.contarHaciaAtras, $scope.modelDetalle.fechaFin.getDate());
-					$scope.modelDetalle.fechaFin.setMonth($scope.modelDetalle.fechaFin.getMonth() + 1);
+					params.fechaInicio = new Date(params.fechaFin.getFullYear(), params.fechaFin.getMonth() - $scope.modelDetalle.contarHaciaAtras, params.fechaFin.getDate());
+					params.fechaFin.setMonth(params.fechaFin.getMonth() + 1);
 					break;
 				case 'year':
-					$scope.modelDetalle.fechaInicio = new Date($scope.modelDetalle.fechaFin.getFullYear() - $scope.modelDetalle.contarHaciaAtras, $scope.modelDetalle.fechaFin.getMonth(), $scope.modelDetalle.fechaFin.getDate());
-					$scope.modelDetalle.fechaFin.setFullYear($scope.modelDetalle.fechaFin.getFullYear() + 1);
+					params.fechaInicio = new Date(params.fechaFin.getFullYear() - $scope.modelDetalle.contarHaciaAtras, params.fechaFin.getMonth(), params.fechaFin.getDate());
+					params.fechaFin.setFullYear(params.fechaFin.getFullYear() + 1);
 					break;
 			}
-			invoiceFactory.getDetailRates($scope.modelDetalle, function(data){
+			invoiceFactory.getDetailRates(params, function(data){
 				if (data.status == 'OK'){
 					$scope.detalleRates = data.data;
 					armarGraficoDetalle();
@@ -369,6 +390,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		};
 
 		$scope.cambioTasa = () => {
+			//TODO hay que volver a llamar al metodo agregar como query tasaAgp=1
 			$scope.tasaAgp = !$scope.tasaAgp;
 			armarGrafico();
 			armarGraficoDetalle();
@@ -380,80 +402,63 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		function armarGraficoDetalle(){
 			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
 			$scope.chartReporteTarifas.data = [
-				['Fecha', '1465', '1466', '1467', 'NAGPI', 'NAGPE', 'TASAI', 'TASAE', 'Promedio']
+				['Fecha']
 			];
+			let filaMayor;
+			let cantTarifas = 0;
+			let indice = 0;
+			$scope.detalleRates.forEach((datosDia) => {
+				if (datosDia.codes.length > cantTarifas) {
+					cantTarifas = datosDia.codes.length;
+					filaMayor = indice;
+				}
+				indice++;
+			});
+			$scope.detalleRates[filaMayor].codes.forEach((datosCode) => {
+				$scope.chartReporteTarifas.data[0].push(datosCode.code);
+			});
+			$scope.chartReporteTarifas.data[0].push('Promedio');
+			$scope.chartReporteTarifas.options.series[$scope.chartReporteTarifas.data[0].length-2] = {type: 'line'};
 			//Para cambiar entre columnas
 			let lugarFila = 1;
 			//Para cargar promedio
 			//var acum = 0;
-			let fila = ['', 0, 0, 0, 0, 0, 0, 0, 0];
+			let fila = new Array(cantTarifas+2);
+			for (let i = 0; i < fila.length; i++){
+				fila[i] = 0;
+			}
 			let filaEncontrada = false;
 			let ponerFecha;
-			//Los datos vienen en objetos que incluyen la fecha, la terminal, y la suma facturada(cnt)
-			//ordenados por fecha
+			//Los datos vienen agrupados por fecha (date), un array con los códigos y las propiedades pertinentes
+			//ordenados por fecha (?)
 			$scope.detalleRates.forEach((datosDia) => {
 				switch ($scope.modelDetalle.tipo){
 					case 'date':
 						ponerFecha = $filter('date')(datosDia.date, 'dd/MM/yyyy');
 						break;
 					case 'month':
-						ponerFecha = ($scope.meses[datosDia.month-1] + ' del ' + datosDia.year);
+						//ponerFecha = ($scope.meses[datosDia.month-1] + ' del ' + datosDia.year);
+						ponerFecha = $filter('date')(datosDia.date, 'MM/yyyy');
 						break;
 					case 'year':
 						ponerFecha = $filter('date')(datosDia.date, 'yyyy');
 						break;
 				}
-				switch (datosDia.code){
-					case "1465":
-						lugarFila = 1;
-						break;
-					case "1466":
-						lugarFila = 2;
-						break;
-					case "1467":
-						lugarFila = 3;
-						break;
-					case "NAGPI":
-						lugarFila = 4;
-						break;
-					case "NAGPE":
-						lugarFila = 5;
-						break;
-					case "TASAI":
-						lugarFila = 6;
-						break;
-					case "TASAE":
-						lugarFila = 7;
-						break;
-				}
-				$scope.chartReporteTarifas.data.forEach((unaFila) => {
-					if (unaFila[0] == ponerFecha){
-						filaEncontrada = true;
-						if ($scope.tasaAgp){
-							unaFila[lugarFila] += datosDia.totalPesoAgp;
-							unaFila[8] += datosDia.totalPesoAgp;
-						} else {
-							unaFila[lugarFila] += datosDia.totalPeso;
-							unaFila[8] += datosDia.totalPeso;
-						}
+				fila[0] = ponerFecha;
+				datosDia.codes.forEach((datosCode) => {
+					lugarFila = $scope.chartReporteTarifas.data[0].indexOf(datosCode.code);
+					if ($scope.tasaAgp){
+						fila[lugarFila] += datosCode.totalPesoAgp;
+						fila[fila.length-1] += datosCode.totalPesoAgp;
+					} else {
+						fila[lugarFila] += datosCode.totalPeso;
+						fila[fila.length-1] += datosCode.totalPeso;
 					}
 				});
-				if (!filaEncontrada){
-					fila = ['', 0, 0, 0, 0, 0, 0, 0, 0];
-					fila[0] = ponerFecha;
-					if ($scope.tasaAgp){
-						fila[lugarFila] += datosDia.totalPesoAgp;
-						fila[8] += datosDia.totalPesoAgp;
-					} else {
-						fila[lugarFila] += datosDia.totalPeso;
-						fila[8] += datosDia.totalPeso;
-					}
-					$scope.chartReporteTarifas.data.push(fila.slice());
-				}
-				filaEncontrada = false;
+				$scope.chartReporteTarifas.data.push(fila.slice());
 			});
 			for (let i = 1;i<$scope.chartReporteTarifas.data.length;i++){
-				$scope.chartReporteTarifas.data[i][8] = $scope.chartReporteTarifas.data[i][8]/7
+				$scope.chartReporteTarifas.data[i][$scope.chartReporteTarifas.data[i].length-1] = $scope.chartReporteTarifas.data[i][$scope.chartReporteTarifas.data[i].length-1]/($scope.chartReporteTarifas.data[i].length-2)
 			}
 		}
 

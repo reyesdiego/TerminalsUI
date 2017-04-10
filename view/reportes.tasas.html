@@ -170,7 +170,7 @@
                             click="selectRow(selectedRow, id)"></column-chart>
                 </div>
             </div>
-            <div class="row col-lg-12" ng-show="verDetalleTerminal">
+            <div class="row col-lg-12" ng-if="verDetalleTerminal">
                 <div class="col-lg-6 col-md-12">
                     <pie-chart
                             data="chartDetallePorTerminalFecha.data"
