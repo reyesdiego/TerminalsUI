@@ -344,7 +344,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			];
 
 			let row;
-			$scope.rates.forEach((tasa) => {
+			$scope.rates[0].codes.forEach((tasa) => {
 				switch (tasa.terminal){
 					case 'BACTSSA':
 						row = 2;
@@ -358,13 +358,13 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				}
 				if ($scope.tasaAgp){
 					base[row - 1][1] += tasa.totalPesoAgp;
+					$scope.totalAgp += tasa.totalAgp;
+					$scope.totalPesoAgp += tasa.totalPesoAgp;
 				} else {
 					base[row - 1][1] += tasa.totalPeso;
+					$scope.total += tasa.total;
+					$scope.totalPeso += tasa.totalPeso;
 				}
-				$scope.total += tasa.total;
-				$scope.totalAgp += tasa.totalAgp;
-				$scope.totalPeso += tasa.totalPeso;
-				$scope.totalPesoAgp += tasa.totalPesoAgp;
 
 			});
 			$scope.chartTotalesPorTerminal.data = base;
@@ -496,7 +496,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			invoiceFactory.getRatesInvoices($scope.model, (data) => {
 				if (data.status === "OK") {
 					$scope.rates = data.data;
-					$scope.rates.forEach((rate) => {
+					$scope.rates[0].codes.forEach((rate) => {
 						rate.descripcion = ponerDescripcion(rate.code);
 					});
 					if (data.data.length > 0){

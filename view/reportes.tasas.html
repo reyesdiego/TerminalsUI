@@ -54,7 +54,7 @@
     </accordion-min>
 
     <div class="col-lg-12">
-        <div ng-hide="cargando || rates.length > 0" class="panel {{ configPanel.tipo }}">
+        <div ng-hide="cargando || rates[0].codes.length > 0" class="panel {{ configPanel.tipo }}">
             <div class="panel-heading">
                 <h3 class="panel-title">{{ configPanel.titulo }}</h3>
             </div>
@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <div ng-if="!cargando && rates.length">
+        <div ng-if="!cargando && rates[0].codes.length">
             <div class="checkbox col-lg-8 col-md-12">
                 <input type="checkbox" ng-click="cambioTasa()"> Usar tasa AGP
             </div>
@@ -106,7 +106,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="tasa in rates | orderBy : predicate : reverse">
+                    <tr ng-repeat="tasa in rates[0].codes | orderBy : predicate : reverse">
                         <td>{{ tasa.terminal }}</td>
                         <td>{{ tasa.code }}</td>
                         <td style="width: 200px">{{ tasa.descripcion }}</td>
