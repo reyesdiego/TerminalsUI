@@ -40,7 +40,7 @@ myapp.service('chartLoader', ['$q', function($q){
 					negativeColor: 'red',
 					negativeParens: true});
 				formatter.format(chartData, 1);
-				if (options.stacked){
+				if (!options.stacked){
 					for (let i=2; i<=options.columns; i++)
 						formatter.format(chartData, i);
 				}

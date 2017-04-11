@@ -129,12 +129,13 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.detalleRates = {};
 
 		$scope.model = {
+			'period': 'date',
 			'fechaInicio': $scope.fechaInicio,
 			'fechaFin': $scope.fechaFin
 		};
 
 		$scope.modelDetalle = {
-			tipo: 'date',
+			//tipo: 'date',
 			contarHaciaAtras: 0,
 			fechaInicio: new Date(),
 			fechaFin: new Date()
@@ -145,7 +146,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.verDetalleTerminal = false;
 
 		function obtenerDescripcionFecha(datosDia){
-			switch ($scope.modelDetalle.tipo){
+			switch ($scope.model.period){
 				case 'date':
 					return $filter('date')(datosDia.date, 'dd/MM/yyyy');
 					break;
@@ -244,7 +245,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				});
 			});
 			$scope.chartDetallePorTerminalPeriodo.options.title = 'Total de ' + $scope.detallarTerminal + ' para el período graficado:\n' + $filter('currency')(totalDetallePeriodo, '$ ' );
-			switch ($scope.modelDetalle.tipo){
+			switch ($scope.model.period){
 				case 'date':
 					$scope.chartDetallePorTerminalFecha.options.title = 'Total de ' + $scope.detallarTerminal + ' para el día ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
 					break;
@@ -282,7 +283,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				if (angular.isDefined(index.row)){
 					$scope.detallarFecha = $scope.chartReporteTarifas.data[index.row + 1][0];
 				} else {
-					switch ($scope.modelDetalle.tipo){
+					switch ($scope.model.period){
 						case 'date':
 							$scope.detallarFecha = $filter('date')($scope.modelDetalle.fechaFin, 'dd/MM/yyyy');
 							break;
@@ -302,11 +303,11 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			$scope.mostrarGrafico = false;
 			$scope.verDetalleTerminal = false;
 			let params = {
-				tipo: $scope.modelDetalle.tipo,
+				period: $scope.model.period,
 				fechaInicio: new Date($scope.model.fechaInicio),
 				fechaFin: new Date($scope.model.fechaInicio)
 			};
-			switch ($scope.modelDetalle.tipo){
+			switch ($scope.model.period){
 				case 'date':
 					params.fechaInicio = new Date(params.fechaFin.getFullYear(), params.fechaFin.getMonth(), params.fechaFin.getDate() - $scope.modelDetalle.contarHaciaAtras);
 					params.fechaFin.setDate(params.fechaFin.getDate() + 1);
@@ -424,15 +425,15 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			//Para cargar promedio
 			//var acum = 0;
 			let fila = new Array(cantTarifas+2);
-			for (let i = 0; i < fila.length; i++){
-				fila[i] = 0;
-			}
 			let filaEncontrada = false;
 			let ponerFecha;
 			//Los datos vienen agrupados por fecha (date), un array con los códigos y las propiedades pertinentes
 			//ordenados por fecha (?)
 			$scope.detalleRates.forEach((datosDia) => {
-				switch ($scope.modelDetalle.tipo){
+				for (let i = 0; i < fila.length; i++){
+					fila[i] = 0;
+				}
+				switch ($scope.model.period){
 					case 'date':
 						ponerFecha = $filter('date')(datosDia.date, 'dd/MM/yyyy');
 						break;
@@ -460,11 +461,12 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			for (let i = 1;i<$scope.chartReporteTarifas.data.length;i++){
 				$scope.chartReporteTarifas.data[i][$scope.chartReporteTarifas.data[i].length-1] = $scope.chartReporteTarifas.data[i][$scope.chartReporteTarifas.data[i].length-1]/($scope.chartReporteTarifas.data[i].length-2)
 			}
+			$scope.chartReporteTarifas.options.columns = $scope.chartReporteTarifas.data[0].length-1;
 		}
 
 		$scope.cargaRates = () =>{
 			$scope.verDetalleTerminal = false;
-			switch ($scope.modelDetalle.tipo){
+			switch ($scope.model.period){
 				case 'date': //diario
 					$scope.model.fechaFin = new Date($scope.model.fechaInicio.getTime() + 24 * 60 * 60 * 1000);
 					break;
@@ -519,7 +521,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				id: $scope.$id,
 				rates: $scope.rates,
 				tasaAgp: $scope.tasaAgp,
-				tipo: $scope.modelDetalle.tipo,
+				tipo: $scope.model.period,
 				fecha: $scope.model.fechaInicio,
 				hoy: new Date(),
 				detalle: $scope.verDetalleTerminal,

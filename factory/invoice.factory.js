@@ -156,8 +156,12 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             this.cancelRequest('ratesDetail');
             const defer = $q.defer();
             const canceler = HTTPCanceler.get(defer, this.namespace, 'ratesDetail');
-            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${datos.tipo}`;
-            $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
+            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${datos.period}`;
+            let params = {
+                fechaInicio: datos.fechaInicio,
+                fechaFin: datos.fechaFin
+            };
+            $http.get(inserturl, { params: formatService.formatearDatos(params), timeout: canceler.promise }).then((response) => {
                 callback(response.data);
             }).catch((response) => {
                 if (response.status != -5) callback(response.data)

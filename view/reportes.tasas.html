@@ -5,7 +5,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Tipo</span>
-                    <select class="form-control" ng-model="modelDetalle.tipo">
+                    <select class="form-control" ng-model="model.period">
                         <option value="date" ng-selected="true">Diario</option>
                         <option value="month">Mensual</option>
                         <option value="year">Anual</option>
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-12" ng-show="modelDetalle.tipo == 'date'">
+        <div class="col-lg-4 col-sm-12" ng-show="model.period == 'date'">
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Día</span>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-12" ng-show="modelDetalle.tipo == 'month'">
+        <div class="col-lg-4 col-sm-12" ng-show="model.period == 'month'">
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Mes</span>
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-6" ng-show="modelDetalle.tipo == 'year'">
+        <div class="col-lg-4 col-sm-6" ng-show="model.period == 'year'">
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Año</span>
@@ -145,16 +145,16 @@
                     <tbody>
                     <tr>
                         <td class="text-right"><strong>Total</strong></td>
-                        <td ng-repeat="total in chartTotalesPorTerminal.data" class="text-right">{{ total[1] | currency: 'AR$ ' }}</td>
+                        <td ng-if="!$first" ng-repeat="total in chartTotalesPorTerminal.data" class="text-right">{{ total[1] | currency: 'AR$ ' }}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="col-lg-12" ng-show="mostrarGrafico">
 					<span>
-						<strong ng-show="modelDetalle.tipo == 'date'">Días hacia atrás:</strong>
-						<strong ng-show="modelDetalle.tipo == 'month'">Meses hacia atrás:</strong>
-						<strong ng-show="modelDetalle.tipo == 'year'">Años hacia atrás:</strong>
+						<strong ng-show="model.period == 'date'">Días hacia atrás:</strong>
+						<strong ng-show="model.period == 'month'">Meses hacia atrás:</strong>
+						<strong ng-show="model.period == 'year'">Años hacia atrás:</strong>
 						<input class="text-right" type="number" min="0" step="1" ng-model="modelDetalle.contarHaciaAtras">
 						<button class="btn btn-primary" ng-click="actualizarDetalle()">Actualizar</button>
 					</span>
