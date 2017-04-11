@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-12" ng-show="model.period == 'date'">
+        <div class="col-lg-4 col-sm-12" ng-if="model.period == 'date'">
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Día</span>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-12" ng-show="model.period == 'month'">
+        <div class="col-lg-4 col-sm-12" ng-if="model.period == 'month'">
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Mes</span>
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-6" ng-show="model.period == 'year'">
+        <div class="col-lg-4 col-sm-6" ng-if="model.period == 'year'">
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon">Año</span>
@@ -65,7 +65,7 @@
 
         <div ng-if="!cargando && rates[0].codes.length">
             <div class="checkbox col-lg-8 col-md-12">
-                <input type="checkbox" ng-click="cambioTasa()"> Usar tasa AGP
+                <input type="checkbox" ng-model="model.tasaAgp" ng-true-value="1" ng-false-value="0" ng-click="cargaRates()"> Usar tasa AGP
             </div>
             <div class="table-responsive col-lg-8 col-md-12">
                 <table class="invoice-shadow table table-striped table-bordered table-hover">
@@ -168,20 +168,6 @@
                             data="chartReporteTarifas.data"
                             options="chartReporteTarifas.options"
                             click="selectRow(selectedRow, id)"></column-chart>
-                </div>
-            </div>
-            <div class="row col-lg-12" ng-if="verDetalleTerminal">
-                <div class="col-lg-6 col-md-12">
-                    <pie-chart
-                            data="chartDetallePorTerminalFecha.data"
-                            options="chartDetallePorTerminalFecha.options"
-                            click="selectRow(selectedRow, id)"></pie-chart>
-                </div>
-                <div class="col-lg-6 col-md-12">
-                    <pie-chart
-                            data="chartDetallePorTerminalPeriodo.data"
-                            options="chartDetallePorTerminalPeriodo.options"
-                            click="selectRow(selectedRow, id)"></pie-chart>
                 </div>
             </div>
             <div class="row col-lg-12 text-right" ng-show="mostrarGrafico">

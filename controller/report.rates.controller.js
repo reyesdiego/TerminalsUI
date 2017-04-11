@@ -12,19 +12,6 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			"trp": cacheService.colorTerminalesCache.get('Trp')
 		};
 
-		const tarifasTerminal = {
-			1465: 'BACTSSA',
-			1466: 'BACTSSA',
-			1467: 'BACTSSA',
-			NAGPE: 'TERMINAL4',
-			NAGPI: 'TERMINAL4',
-			TASAI: 'TRP',
-			TASAE: 'TRP',
-			TASAE2: 'TRP'
-		};
-
-		$scope.tasaAgp = false;
-
 		$rootScope.predicate = 'terminal';
 
 		$scope.tarifasElegidas = 1;
@@ -78,42 +65,6 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			]
 		};
 
-		$scope.chartDetallePorTerminalFecha = {
-			options: {
-				title: "",
-				width: 700,
-				height: 500,
-				currency: true,
-				stacked: false,
-				is3D: true,
-				money: 'PES',
-				id: 3,
-				image: null
-			},
-			data: [
-				['saludo', 'numero']
-			]
-		};
-
-		$scope.chartDetallePorTerminalPeriodo = {
-			options: {
-				title: "",
-				width: 700,
-				height: 500,
-				currency: true,
-				stacked: false,
-				is3D: true,
-				money: 'PES',
-				id: 4,
-				image: null
-			},
-			data: [
-				['saludo', 'numero']
-			]
-		};
-
-		$scope.allRates = cacheService.matchesCache.get('allRates');
-
 		$scope.configPanel = {
 			tipo: 'panel-info',
 			titulo: 'Tasas a las cargas',
@@ -130,6 +81,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 		$scope.model = {
 			'period': 'date',
+			'tasaAgp': 0,
 			'fechaInicio': $scope.fechaInicio,
 			'fechaFin': $scope.fechaFin
 		};
@@ -143,165 +95,16 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 
 		$scope.cargando = false;
 		$scope.mostrarGrafico = false;
-		$scope.verDetalleTerminal = false;
-
-		function obtenerDescripcionFecha(datosDia){
-			switch ($scope.model.period){
-				case 'date':
-					return $filter('date')(datosDia.date, 'dd/MM/yyyy');
-					break;
-				case 'month':
-					return ($scope.meses[datosDia.month-1] + ' del ' + datosDia.year);
-					break;
-				case 'year':
-					return $filter('date')(datosDia.date, 'yyyy');
-					break;
-			}
-		};
-
-		function detallar(){
-			$scope.verDetalleTerminal = false;
-			switch ($scope.detallarTerminal){
-				case 'BACTSSA':
-					$scope.chartDetallePorTerminalFecha.data = [
-						['Tarifa', 'Total'],
-						['1465', 0],
-						['1466', 0],
-						['1467', 0]
-					];
-					$scope.chartDetallePorTerminalPeriodo.data = [
-						['Tarifa', 'Total'],
-						['1465', 0],
-						['1466', 0],
-						['1467', 0]
-					];
-					break;
-				case 'TERMINAL4':
-					$scope.chartDetallePorTerminalFecha.data = [
-						['Tarifa', 'Total'],
-						['NAGPI', 0],
-						['NAGPE', 0]
-					];
-					$scope.chartDetallePorTerminalPeriodo.data = [
-						['Tarifa', 'Total'],
-						['NAGPI', 0],
-						['NAGPE', 0]
-					];
-					break;
-				case 'TRP':
-					$scope.chartDetallePorTerminalFecha.data = [
-						['Tarifa', 'Total'],
-						['TASAI', 0],
-						['TASAE', 0],
-						['TASAE2', 0]
-					];
-					$scope.chartDetallePorTerminalPeriodo.data = [
-						['Tarifa', 'Total'],
-						['TASAI', 0],
-						['TASAE', 0],
-						['TASAE2', 0]
-					];
-					break;
-			}
-			let row;
-			let ponerFecha;
-			let totalDetallePeriodo = 0, totalDetalleFecha = 0;
-			$scope.detalleRates.forEach((datosDia) => {
-				ponerFecha = obtenerDescripcionFecha(datosDia);
-				datosDia.codes.forEach((datosCode) => {
-					if (tarifasTerminal[datosCode.code] == $scope.detallarTerminal){
-						switch (datosCode.code){
-							case '1465':
-							case 'NAGPI':
-							case 'TASAI':
-								row = 1;
-								break;
-							case '1466':
-							case 'NAGPE':
-							case 'TASAE':
-								row = 2;
-								break;
-							case '1467':
-							case 'TASAE2':
-								row = 3;
-						}
-						if ($scope.tasaAgp){
-							$scope.chartDetallePorTerminalPeriodo.data[row][1] += datosCode.totalPesoAgp;
-							totalDetallePeriodo += datosCode.totalPesoAgp;
-						} else {
-							$scope.chartDetallePorTerminalPeriodo.data[row][1] += datosCode.totalPeso;
-							totalDetallePeriodo += datosCode.totalPeso;
-						}
-						if ($scope.detallarFecha == ponerFecha){
-							if ($scope.tasaAgp){
-								$scope.chartDetallePorTerminalFecha.data[row][1] += datosCode.totalPesoAgp;
-								totalDetalleFecha += datosCode.totalPesoAgp;
-							} else {
-								$scope.chartDetallePorTerminalFecha.data[row][1] += datosCode.totalPeso;
-								totalDetalleFecha += datosCode.totalPeso;
-							}
-						}
-					}
-				});
-			});
-			$scope.chartDetallePorTerminalPeriodo.options.title = 'Total de ' + $scope.detallarTerminal + ' para el período graficado:\n' + $filter('currency')(totalDetallePeriodo, '$ ' );
-			switch ($scope.model.period){
-				case 'date':
-					$scope.chartDetallePorTerminalFecha.options.title = 'Total de ' + $scope.detallarTerminal + ' para el día ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
-					break;
-				case 'month':
-					$scope.chartDetallePorTerminalFecha.options.title = 'Total de ' + $scope.detallarTerminal + ' para ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
-					break;
-				case 'year':
-					$scope.chartDetallePorTerminalFecha.options.title = 'Total de ' + $scope.detallarTerminal + ' para el año ' + $scope.detallarFecha + ':\n' + $filter('currency')(totalDetalleFecha, '$ ');
-					break;
-			}
-			$scope.verDetalleTerminal = true;
-		}
 
 		$scope.detallarTerminal = '';
 		$scope.detallarFecha = '';
 
 		$scope.selectRow = (index, id) => {
-			if (angular.isDefined(index) && id == 1 && index.column < $scope.chartReporteTarifas.data[0].length-1){
-				let rate = $scope.chartReporteTarifas.data[0][index.column];
-				switch (rate){
-					case '1465':
-					case '1466':
-					case '1467':
-						$scope.detallarTerminal = 'BACTSSA';
-						break;
-					case 'NAGPI':
-					case 'NAGPE':
-						$scope.detallarTerminal = 'TERMINAL4';
-						break;
-					case 'TASAI':
-					case 'TASAE':
-						$scope.detallarTerminal = 'TRP';
-						break;
-				}
-				if (angular.isDefined(index.row)){
-					$scope.detallarFecha = $scope.chartReporteTarifas.data[index.row + 1][0];
-				} else {
-					switch ($scope.model.period){
-						case 'date':
-							$scope.detallarFecha = $filter('date')($scope.modelDetalle.fechaFin, 'dd/MM/yyyy');
-							break;
-						case 'month':
-							$scope.detallarFecha = $scope.meses[$scope.modelDetalle.fechaFin.getMonth()] + ' del ' + $scope.modelDetalle.fechaFin.getFullYear();
-							break;
-						case 'year':
-							$scope.detallarFecha = $filter('date')($scope.modelDetalle.fechaFin, 'yyyy');
-							break;
-					}
-				}
-				$scope.$apply(detallar());
-			}
+
 		};
 
 		$scope.actualizarDetalle = function(){
 			$scope.mostrarGrafico = false;
-			$scope.verDetalleTerminal = false;
 			let params = {
 				period: $scope.model.period,
 				fechaInicio: new Date($scope.model.fechaInicio),
@@ -357,7 +160,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 						row = 4;
 						break;
 				}
-				if ($scope.tasaAgp){
+				if ($scope.model.tasaAgp){
 					base[row - 1][1] += tasa.totalPesoAgp;
 					$scope.totalAgp += tasa.totalAgp;
 					$scope.totalPesoAgp += tasa.totalPesoAgp;
@@ -375,30 +178,11 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			generalFunctions.openDate(event);
 		};
 
-		$scope.hitEnter = (evt) => {
-			if(angular.equals(evt.keyCode,13))
-				$scope.filtrar();
-		};
-
 		$scope.$on('errorInesperado', (e, mensaje) => {
 			$scope.cargando = false;
 			$scope.rates = [];
 			$scope.configPanel = mensaje;
 		});
-
-		function ponerDescripcion(codigo){
-			return $scope.allRates[codigo];
-		};
-
-		$scope.cambioTasa = () => {
-			//TODO hay que volver a llamar al metodo agregar como query tasaAgp=1
-			$scope.tasaAgp = !$scope.tasaAgp;
-			armarGrafico();
-			armarGraficoDetalle();
-			if ($scope.verDetalleTerminal){
-				detallar();
-			}
-		};
 
 		function armarGraficoDetalle(){
 			//Matriz base de los datos del gráfico, ver alternativa al hardcodeo de los nombres de las terminales
@@ -442,13 +226,13 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 						ponerFecha = $filter('date')(datosDia.date, 'MM/yyyy');
 						break;
 					case 'year':
-						ponerFecha = $filter('date')(datosDia.date, 'yyyy');
+						ponerFecha = datosDia.date;
 						break;
 				}
 				fila[0] = ponerFecha;
 				datosDia.codes.forEach((datosCode) => {
 					lugarFila = $scope.chartReporteTarifas.data[0].indexOf(datosCode.code);
-					if ($scope.tasaAgp){
+					if ($scope.model.tasaAgp){
 						fila[lugarFila] += datosCode.totalPesoAgp;
 						fila[fila.length-1] += datosCode.totalPesoAgp;
 					} else {
@@ -465,7 +249,6 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		}
 
 		$scope.cargaRates = () =>{
-			$scope.verDetalleTerminal = false;
 			switch ($scope.model.period){
 				case 'date': //diario
 					$scope.model.fechaFin = new Date($scope.model.fechaInicio.getTime() + 24 * 60 * 60 * 1000);
@@ -498,9 +281,6 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			invoiceFactory.getRatesInvoices($scope.model, (data) => {
 				if (data.status === "OK") {
 					$scope.rates = data.data;
-					$scope.rates[0].codes.forEach((rate) => {
-						rate.descripcion = ponerDescripcion(rate.code);
-					});
 					if (data.data.length > 0){
 						armarGrafico();
 					}
@@ -513,18 +293,17 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				}
 				$scope.cargando = false;
 				$scope.actualizarDetalle();
-			});
+			})
 		};
 
 		$scope.descargarPdf = () => {
 			let data = {
 				id: $scope.$id,
 				rates: $scope.rates,
-				tasaAgp: $scope.tasaAgp,
+				tasaAgp: $scope.model.tasaAgp,
 				tipo: $scope.model.period,
 				fecha: $scope.model.fechaInicio,
 				hoy: new Date(),
-				detalle: $scope.verDetalleTerminal,
 				totales: $scope.chartTotalesPorTerminal.data,
 				charts: [
 					{filename: $scope.chartReporteTarifas.options.id, image: $scope.chartReporteTarifas.options.image, h: $scope.chartReporteTarifas.options.height, w: $scope.chartReporteTarifas.options.width},
@@ -540,6 +319,10 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 			});
 		};
+
+		$scope.$watch('model.period', () => {
+			if ($scope.model.period == 'date') $scope.model.fechaInicio = new Date();
+		});
 
 		if (loginService.isLoggedIn) $scope.cargaRates();
 
