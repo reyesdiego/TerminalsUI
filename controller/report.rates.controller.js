@@ -51,7 +51,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			options: {
 				title: "Totales por terminal",
 				width: 500,
-				height: 500,
+				height: 400,
 				currency: true,
 				stacked: false,
 				is3D: true,
@@ -107,6 +107,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			$scope.mostrarGrafico = false;
 			let params = {
 				period: $scope.model.period,
+				tasaAgp: $scope.model.tasaAgp,
 				fechaInicio: new Date($scope.model.fechaInicio),
 				fechaFin: new Date($scope.model.fechaInicio)
 			};
@@ -203,7 +204,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				$scope.chartReporteTarifas.data[0].push(datosCode.code);
 			});
 			$scope.chartReporteTarifas.data[0].push('Promedio');
-			$scope.chartReporteTarifas.options.series[$scope.chartReporteTarifas.data[0].length-2] = {type: 'line'};
+			$scope.chartReporteTarifas.options.series[$scope.chartReporteTarifas.data[0].length-1] = {type: 'line'};
 			//Para cambiar entre columnas
 			let lugarFila = 1;
 			//Para cargar promedio
