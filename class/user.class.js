@@ -37,11 +37,13 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($ht
 
 		}
 
-
 		guardarTareas(){
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/agp/account/${this._id}/tasks`;
-			$http.put(inserturl, this.tareasNuevas).then((response) => {
+			const data = {
+				acceso: this.tareasNuevas
+			};
+			$http.put(inserturl, data).then((response) => {
 				this.acceso = this.tareasNuevas;
 				deferred.resolve(response.data);
 			}).catch((response) => {
