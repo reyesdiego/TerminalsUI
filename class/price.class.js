@@ -49,6 +49,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             };
             if (this.tieneMatch()){
                 this.matches[0]._idPrice = this._id;
+                this.matches[0].terminal = loginService.filterTerminal;
             } else {
                 this.matches = [{
                     terminal: loginService.info.terminal,
