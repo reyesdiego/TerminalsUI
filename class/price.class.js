@@ -52,7 +52,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 this.matches[0].terminal = loginService.filterTerminal;
             } else {
                 this.matches = [{
-                    terminal: loginService.info.terminal,
+                    terminal: loginService.filterTerminal,
                     match: [],
                     _idPrice: this._id,
                     code: this.code
