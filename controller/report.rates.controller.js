@@ -190,6 +190,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 			$scope.chartReporteTarifas.data = [
 				['Fecha']
 			];
+			let series = {};
 			let filaMayor;
 			let cantTarifas = 0;
 			let indice = 0;
@@ -204,7 +205,8 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				$scope.chartReporteTarifas.data[0].push(datosCode.code);
 			});
 			$scope.chartReporteTarifas.data[0].push('Promedio');
-			$scope.chartReporteTarifas.options.series[$scope.chartReporteTarifas.data[0].length-1] = {type: 'line'};
+			series[$scope.chartReporteTarifas.data[0].length-2] = {type: 'line'};
+			$scope.chartReporteTarifas.options.series = series;
 			//Para cambiar entre columnas
 			let lugarFila = 1;
 			//Para cargar promedio
@@ -308,9 +310,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				totales: $scope.chartTotalesPorTerminal.data,
 				charts: [
 					{filename: $scope.chartReporteTarifas.options.id, image: $scope.chartReporteTarifas.options.image, h: $scope.chartReporteTarifas.options.height, w: $scope.chartReporteTarifas.options.width},
-					{filename: $scope.chartTotalesPorTerminal.options.id, image: $scope.chartTotalesPorTerminal.options.image, h: $scope.chartTotalesPorTerminal.options.height, w: $scope.chartTotalesPorTerminal.options.width},
-					{filename: $scope.chartDetallePorTerminalFecha.options.id, image: $scope.chartDetallePorTerminalFecha.options.image, h: $scope.chartDetallePorTerminalFecha.options.height, w: $scope.chartDetallePorTerminalFecha.options.width},
-					{filename: $scope.chartDetallePorTerminalPeriodo.options.id, image: $scope.chartDetallePorTerminalPeriodo.options.image, h: $scope.chartDetallePorTerminalPeriodo.options.height, w: $scope.chartDetallePorTerminalPeriodo.options.width}
+					{filename: $scope.chartTotalesPorTerminal.options.id, image: $scope.chartTotalesPorTerminal.options.image, h: $scope.chartTotalesPorTerminal.options.height, w: $scope.chartTotalesPorTerminal.options.width}
 				]
 			};
 			let nombreReporte = 'Reporte_tasas.pdf';
