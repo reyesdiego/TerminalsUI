@@ -32,17 +32,19 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             })
         }
 
-        getInvoicesNoMatches(datos, page, callback){
+        getInvoicesNoMatches(datos, page){
+            const deferred = $q.defer();
             this.cancelRequest('invoicesNoMatches');
             const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'invoicesNoMatches');
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/noMatches/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
                 if (response.data.data == null) response.data.data = [];
                 response.data.data = this.retrieveInvoices(response.data.data);
-                callback(response.data);
+                deferred.resolve(response.data);
             }).catch((response) => {
-                if (response.status != -5) callback(response.data);
+                if (response.status != -5) deferred.reject(response.data);
             });
+            return deferred.promise;
         }
 
         getComprobantesLiquidar(page, datos, callback){

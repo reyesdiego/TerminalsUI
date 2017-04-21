@@ -314,9 +314,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				]
 			};
 			let nombreReporte = 'Reporte_tasas.pdf';
-			downloadFactory.convertToPdf(data, 'reporteRatesPdf', nombreReporte).then(() => {
-
-			}).catch(() => {
+			downloadFactory.convertToPdf(data, 'reporteRatesPdf', nombreReporte).then().catch(() => {
 				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 			});
 		};

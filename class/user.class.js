@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 24/01/2017.
  */
-myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'loginService', function($http, $q, APP_CONFIG, loginService){
+myapp.factory('User', ['$http', '$q', 'APP_CONFIG', function($http, $q, APP_CONFIG){
 
 	class User {
 

@@ -30,7 +30,7 @@ myapp.controller('controlComprobantesCtrl', ['$scope', function($scope){
 		}
 	};
 
-	$scope.$on('updateView', function(ev, view, model, data1, data2, data3){
+	$scope.$on('updateView', (ev, view, model, data1, data2, data3) => {
 		switch (view){
 			case 'tasas':
 				$scope.viewsStates[view].model = model;
@@ -47,8 +47,8 @@ myapp.controller('controlComprobantesCtrl', ['$scope', function($scope){
 		}
 	});
 
-	$scope.$on('$stateChangeSuccess', function (ev, to) {
-		for (var i = 0; i < $scope.tabs.length; i++){
+	$scope.$on('$stateChangeSuccess', (ev, to) => {
+		for (let i = 0; i < $scope.tabs.length; i++){
 			if (to.name == $scope.tabs[i].ref) $scope.active = i;
 		}
 	});
@@ -96,11 +96,11 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 	$scope.loadingTasaCargas = true;
 	$scope.hayError = false;
 
-	$scope.$on('iniciarBusqueda', function(event, data){
+	$scope.$on('iniciarBusqueda', (event, data) =>{
 		controlTasaCargas()
 	});
 
-	$scope.$on('errorSinTasaCargas', function(event, error){
+	$scope.$on('errorSinTasaCargas', (event, error) => {
 		$scope.mensajeResultado = {
 			titulo: 'Error',
 			mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
@@ -109,7 +109,7 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 		$scope.loadingTasaCargas = false;
 	});
 
-	$scope.$on('errorInesperado', function(e, mensaje){
+	$scope.$on('errorInesperado', (e, mensaje) => {
 		$scope.hayError = true;
 		$scope.loadingTasaCargas = false;
 		$scope.totalContenedores = 0;
@@ -134,14 +134,14 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 		$scope.$broadcast('detalleContenedor', contenedor);
 	};
 
-	var controlTasaCargas = function(){
+	function controlTasaCargas(){
 		/*Acá control de tasa a las cargas*/
 		$scope.hayError = false;
 		$scope.loadingTasaCargas = true;
 		$scope.mostrarDetalle = false;
 		$scope.model.contenedor = '';
 		$scope.resultado = [];
-		for (var elemento in $scope.model){
+		for (let elemento in $scope.model){
 			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 		}
 		$scope.$broadcast('checkAutoComplete');
@@ -179,9 +179,9 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'cacheService', 'correlativeSocket', 'loginService', 'downloadFactory', 'dialogs', 'generalFunctions',
 	function($rootScope, $scope, invoiceFactory, cacheService, correlativeSocket, loginService, downloadFactory, dialogs, generalFunctions) {
 
-		var socketIoRegister = '';
+		let socketIoRegister = '';
 
-		correlativeSocket.emit('newUser', function (sess){
+		correlativeSocket.emit('newUser', (sess) => {
 			socketIoRegister = sess;
 			correlativeSocket.forward('correlative_' + sess, $scope);
 		});
@@ -205,10 +205,10 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			'fechaFin': $scope.hasta
 		};
 
-		var traerPuntosDeVenta = function(){
+		function traerPuntosDeVenta(){
 			invoiceFactory.getCashbox($scope.$id, {}, function(data){
 				if (data.status == 'OK'){
-					var i;
+					let i;
 					$scope.terminalSellPoints = data.data;
 					//$scope.model.codTipoComprob = '1';
 					$scope.model.nroPtoVenta = $scope.terminalSellPoints[0];
@@ -233,7 +233,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		$scope.mostrarBotonImprimir = false;
 		$scope.puntosDeVenta = [];
 
-		$scope.$on('iniciarBusqueda', function(event, data){
+		$scope.$on('iniciarBusqueda', (event, data) => {
 			if ($scope.model.codTipoComprob == 0){
 				$scope.mostrarBotonImprimir = false;
 				$scope.totalFaltantes = 0;
@@ -248,7 +248,7 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			}
 		});
 
-		$scope.$on('errorInesperado', function(e, mensaje){
+		$scope.$on('errorInesperado', (e, mensaje) => {
 			$scope.loadingCorrelatividad = false;
 			$scope.pantalla.titulo = mensaje.titulo;
 			$scope.pantalla.tipo = mensaje.tipo;
@@ -256,9 +256,9 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			$scope.pantalla.puntosDeVenta = [];
 		});
 
-		var generarInterfaz = function(punto){
+		function generarInterfaz(punto){
 			$scope.loadingCorrelatividad = false;
-			var pantalla = {
+			let pantalla = {
 				mensajeCorrelativo: '',
 				tipo: '',
 				titulo: '',
@@ -278,15 +278,15 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 		};
 
 		$scope.imprimirPdf = function(){
-			var fechaInicio = $scope.model.fechaInicio;
-			var fechaFin = $scope.model.fechaFin;
+			let fechaInicio = $scope.model.fechaInicio;
+			let fechaFin = $scope.model.fechaFin;
 			if ($scope.model.fechaInicio == ''){
 				fechaInicio = new Date(2013, 0, 1);
 			}
 			if ($scope.model.fechaFin == ''){
 				fechaFin = new Date();
 			}
-			var data = {
+			const data = {
 				terminal: loginService.filterTerminal,
 				resultado: $scope.puntosDeVenta,
 				titulo: $scope.tipoComprob.desc + " faltantes " + $scope.totalFaltantes,
@@ -294,16 +294,14 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 				hasta: fechaFin,
 				hoy: new Date()
 			};
-			var nombreReporte = $scope.tipoComprob.abrev + '_faltantes_' + loginService.filterTerminal + '.pdf';
-			downloadFactory.convertToPdf(data, 'correlativeResultPdf', nombreReporte).then(function(){
-
-			}, function(){
+			const nombreReporte = $scope.tipoComprob.abrev + '_faltantes_' + loginService.filterTerminal + '.pdf';
+			downloadFactory.convertToPdf(data, 'correlativeResultPdf', nombreReporte).then().catch(() => {
 				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 			});
 		};
 
-		var controlCorrelatividad = function(){
-			var vouchersArray = cacheService.vouchersArray;
+		function controlCorrelatividad(){
+			const vouchersArray = cacheService.vouchersArray;
 
 			$scope.arrayCargados = [];
 			$scope.leerData = true;
@@ -420,28 +418,41 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceFactory', fun
 		tipo: 'panel-info'
 	};
 
-	$scope.$on('errorInesperado', function(){
+	$scope.$on('errorInesperado', () => {
 		$scope.loadingControlCodigos = false;
 		$scope.comprobantesRotos = [];
 	});
 
-	$scope.$on('cambioPagina', function(event, data){
+	$scope.$on('cambioPagina', (event, data) => {
 		$scope.currentPageCodigos = data;
 		pageChangedCodigos();
 	});
 
-	$scope.$on('cambioFiltro', function(event, data){
+	$scope.$on('cambioFiltro', (event, data) => {
 		$scope.currentPageCodigos = 1;
 		$scope.model = data;
 		controlDeCodigos();
 	});
 
-	$scope.$on('cambioOrden', function(event, data){
+	$scope.$on('cambioOrden', (event, data) => {
 		controlDeCodigos();
 	});
 
-	var controlDeCodigos = function(){
-		var alterModel = {
+	function getInvoices(){
+		invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos).then((invoicesNoMatches) => {
+			$scope.comprobantesRotos = invoicesNoMatches.data;
+			$scope.totalItems = invoicesNoMatches.totalCount;
+		}).catch((error) => {
+			$scope.mensajeResultado = {
+				titulo: 'Error',
+				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+				tipo: 'panel-danger'
+			};
+		}).finally(() => $scope.loadingControlCodigos = false);
+	}
+
+	function controlDeCodigos(){
+		const alterModel = {
 			fechaInicio:	$scope.model.fechaInicio,
 			fechaFin:		$scope.model.fechaFin
 		};
@@ -449,53 +460,26 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceFactory', fun
 		$scope.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 		$scope.pageCodigos.limit = $scope.model.itemsPerPage;
-		priceFactory.noMatches(alterModel, function(dataNoMatches){
-			if (dataNoMatches.status == 'OK'){
-				$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
-				$scope.codigosSinAsociar.codigos = dataNoMatches.data;
-			} else {
-				//dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos.');
-				$scope.mensajeResultado = {
-					titulo: 'Error',
-					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-					tipo: 'panel-danger'
-				};
-				$scope.loadingControlCodigos = false;
-			}
-		});
-		invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(invoicesNoMatches){
-			if (invoicesNoMatches.status == 'OK'){
-				$scope.comprobantesRotos = invoicesNoMatches.data;
-				$scope.totalItems = invoicesNoMatches.totalCount;
-			} else {
-				$scope.mensajeResultado = {
-					titulo: 'Error',
-					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-					tipo: 'panel-danger'
-				};
-			}
-			$scope.loadingControlCodigos = false;
-		});
+		priceFactory.noMatches(alterModel).then((dataNoMatches) => {
+			$scope.codigosSinAsociar.total = dataNoMatches.totalCount;
+			$scope.codigosSinAsociar.codigos = dataNoMatches.data;
+		}).catch((error) => {
+			//dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos.');
+			$scope.mensajeResultado = {
+				titulo: 'Error',
+				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+				tipo: 'panel-danger'
+			};
+		}).finally(() => $scope.loadingControlCodigos = false);
+		getInvoices();
 	};
 
-	var pageChangedCodigos = function(){
+	function pageChangedCodigos(){
 		$scope.loadingControlCodigos = true;
 		$scope.comprobantesRotos = [];
 		$scope.pageCodigos.skip = (($scope.currentPageCodigos - 1) * $scope.model.itemsPerPage);
 		$scope.pageCodigos.limit = $scope.model.itemsPerPage;
-		invoiceFactory.getInvoicesNoMatches($scope.model, $scope.pageCodigos, function(data){
-			if (data.status == 'OK'){
-				$scope.comprobantesRotos = data.data;
-				$scope.totalItems = data.totalCount;
-			} else {
-				$scope.mensajeResultado = {
-					titulo: 'Error',
-					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-					tipo: 'panel-danger'
-				};
-			}
-			$scope.loadingControlCodigos = false;
-		});
+		getInvoices();
 	};
 
 	$scope.$on('$destroy', function(){
@@ -518,7 +502,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 		$scope.disableDown = false;
 
-		var misEstados = $scope.estado.split(',');
+		const misEstados = $scope.estado.split(',');
 
 		if (misEstados.length == 1){
 			$scope.ocultarFiltros = ['nroPtoVenta', 'estado'];
@@ -563,7 +547,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 		$scope.recargar = true;
 
-		var checkEstado = function(){
+		function checkEstado(){
 			if ($scope.estado == 'E') {
 				$scope.model.resend = 1;
 			} else {
@@ -573,35 +557,35 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			}
 		};
 
-		$scope.$on('actualizarListado', function(event, data){
+		$scope.$on('actualizarListado', (event, data) => {
 			if ($scope.estado != data){
 				$scope.currentPage = 1;
 				traerComprobantes();
 			}
 		});
 
-		$scope.$on('cambioPagina', function(event, data){
+		$scope.$on('cambioPagina', (event, data) => {
 			$scope.currentPage = data;
 			traerComprobantes();
 		});
 
-		$scope.$on('cambioFiltro', function(){
+		$scope.$on('cambioFiltro', () => {
 			$scope.recargar = false;
 			$scope.currentPage = 1;
 			traerComprobantes();
 		});
 
-		$scope.$on('cambioOrden', function(event, data){
+		$scope.$on('cambioOrden', (event, data) => {
 			traerComprobantes();
 		});
 
-		$scope.$on('errorInesperado', function(e, mensaje){
+		$scope.$on('errorInesperado', (e, mensaje) => {
 			$scope.loadingState = false;
 			$scope.comprobantes = [];
 			$scope.mensajeResultado = mensaje;
 		});
 
-		var traerComprobantes = function(){
+		function traerComprobantes(){
 			checkEstado();
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.page.limit = $scope.model.itemsPerPage;
@@ -624,7 +608,7 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 
 		$scope.descargarCSV = function(){
 			$scope.disableDown = true;
-			invoiceFactory.getCSV($scope.model, 'Comprobantes_erroneos.csv', function(status){
+			invoiceFactory.getCSV($scope.model, 'Comprobantes_erroneos.csv', (status) => {
 				if (status != 'OK'){
 					dialogs.error('Comprobantes', 'Se ha producido un error al exportar los datos a CSV.');
 				}

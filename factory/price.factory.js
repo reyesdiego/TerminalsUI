@@ -1,9 +1,17 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price', 'APP_CONFIG', 'downloadService', function($http, loginService, formatService, Price, APP_CONFIG, downloadService){
+myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price', 'APP_CONFIG', 'downloadService', '$q', 'HTTPCanceler', function($http, loginService, formatService, Price, APP_CONFIG, downloadService, $q, HTTPCanceler){
 
 	class priceFactory {
+
+		constructor(){
+			this.namespace = 'prices';
+		}
+
+		cancelRequest(request){
+			HTTPCanceler.cancel(this.namespace, request);
+		}
 
 		retrievePrice(priceData){
 			let pricesArray = [];
@@ -50,13 +58,17 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			});
 		}
 
-		noMatches(data, callback){
+		noMatches(data){
+			const deferred = $q.defer();
+			this.cancelRequest('matchpricesNoMatches');
+			const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'matchpricesNoMatches');
 			const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/noMatches/${loginService.filterTerminal}`;
-			$http.get(inserturl, { params: formatService.formatearDatos(data) }).then((response) => {
-				callback(response.data);
+			$http.get(inserturl, { params: formatService.formatearDatos(data), timeout: canceler.promise }).then((response) => {
+				deferred.resolve(response.data);
 			}).catch((response) => {
-				callback(response.data);
+				if (response.status != -5) deferred.reject(response.data);
 			});
+			return deferred.promise;
 		}
 	}
 

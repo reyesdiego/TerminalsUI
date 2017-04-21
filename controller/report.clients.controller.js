@@ -56,23 +56,23 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 
 		$scope.totalTerminal = 0;
 
-		var armarGrafico = function(){
-			var baseTotales = [
+		function armarGrafico(){
+			let baseTotales = [
 				['Empresas', 'Total']
 			];
-			var basePorcentaje = [
+			let basePorcentaje = [
 				['Empresas', 'Total']
 			];
-			var total = 0;
+			let total = 0;
 			$scope.resultados.forEach(function(cliente){
 				total += cliente.total;
-				var nuevaLinea = [];
+				let nuevaLinea = [];
 				nuevaLinea.push(cliente.razon);
 				nuevaLinea.push(cliente.total);
 				baseTotales.push(angular.copy(nuevaLinea));
 				basePorcentaje.push(angular.copy(nuevaLinea));
 			});
-			var otros = $scope.totalTerminal - total;
+			let otros = $scope.totalTerminal - total;
 			if (otros < 0) otros = 0;
 			basePorcentaje.push(['Otros', otros]);
 			$scope.chartReporteEmpresas.data = baseTotales;
@@ -80,7 +80,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		};
 
 		$scope.clientSelected = function(cliente){
-			var i = $scope.model.clients.indexOf(cliente.nombre);
+			let i = $scope.model.clients.indexOf(cliente.nombre);
 			if (i == -1){
 				$scope.model.clients.push(cliente.nombre);
 				$scope.ranking = false;
@@ -90,7 +90,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		};
 
 		$scope.quitarCliente = function(cliente){
-			var i = $scope.model.clients.indexOf(cliente);
+			let i = $scope.model.clients.indexOf(cliente);
 			$scope.model.clients.splice(i, 1);
 			if ($scope.model.clients.length == 0) $scope.ranking = true;
 		};
@@ -124,7 +124,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			cargarReporte();
 		});
 
-		var tratarResultado = function(data){
+		function tratarResultado(data){
 			if (data.status == 'OK'){
 				$scope.resultados = data.data;
 				$scope.totalTerminal = data.total;
@@ -147,10 +147,10 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			$scope.cargando = false;
 		};
 
-		var cargarReporte = function(){
+		function cargarReporte(){
 			$scope.cargando = true;
 			$scope.model.terminal = loginService.filterTerminal;
-			var datos = angular.copy($scope.model);
+			let datos = angular.copy($scope.model);
 			if ($scope.ranking){
 				controlPanelFactory.getTopFacturacionEmpresas(datos, tratarResultado)
 			} else {
@@ -160,7 +160,7 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		};
 
 		$scope.descargarPdf = function(){
-			var data = {
+			const data = {
 				id: $scope.$id,
 				desde: $scope.model.fechaInicio,
 				hasta: $scope.model.fechaFin,
@@ -173,22 +173,20 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 					{filename: $scope.chartPorcentaje.options.id, image: $scope.chartPorcentaje.options.image, h: $scope.chartPorcentaje.options.height, w: $scope.chartPorcentaje.options.width}
 				]
 			};
-			var nombreReporte = 'Reporte_empresas.pdf';
-			downloadFactory.convertToPdf(data, 'reporteEmpresasPdf', nombreReporte).then(function(){
-
-			}, function(){
+			const nombreReporte = 'Reporte_empresas.pdf';
+			downloadFactory.convertToPdf(data, 'reporteEmpresasPdf', nombreReporte).then().catch(() => {
 				dialogs.error('Reporte empresas', 'Se ha producido un error al exportar el reporte a PDF');
 			});
 		};
 
 		$scope.descargarCsv = function(all){
-			var alterModel = angular.copy($scope.model);
+			let alterModel = angular.copy($scope.model);
 			alterModel.output = 'csv';
 			if (all){
 				alterModel.clientes = [];
 				alterModel.top = '';
 			}
-			controlPanelFactory.getFacturacionEmpresasCSV(alterModel, function(status){
+			controlPanelFactory.getFacturacionEmpresasCSV(alterModel, (status) => {
 				if (status != 'OK'){
 					dialogs.error('Reporte empresas', 'Se ha producido un error al descargar el reporte.');
 				}

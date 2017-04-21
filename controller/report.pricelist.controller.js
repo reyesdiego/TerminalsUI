@@ -321,9 +321,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				]
 			};
 			const nombreReporte = 'Reporte_tarifas.pdf';
-			downloadFactory.convertToPdf(data, 'reporteTarifasPdf', nombreReporte).then(() => {
-
-			}).catch(() => {
+			downloadFactory.convertToPdf(data, 'reporteTarifasPdf', nombreReporte).then().catch(() => {
 				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
 			});
 		}
