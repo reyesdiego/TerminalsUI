@@ -20,16 +20,18 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             return invoicesArray;
         }
 
-        getInvoices(idLlamada, datos, page, callback){
+        getInvoices(idLlamada, datos, page){
+            const deferred = $q.defer();
             this.cancelRequest(idLlamada);
             const canceler = HTTPCanceler.get($q.defer(), this.namespace, idLlamada);
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
             $http.get(inserturl, {params: formatService.formatearDatos(datos), timeout: canceler.promise}).then((response) => {
                 response.data.data = this.retrieveInvoices(response.data.data);
-                callback(response.data);
+                deferred.resolve(response.data);
             }).catch((response) => {
-                if (response.status != -5) callback(response.data);
-            })
+                if (response.status != -5) deferred.reject(response.data);
+            });
+            return deferred.promise;
         }
 
         getInvoicesNoMatches(datos, page){

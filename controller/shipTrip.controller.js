@@ -283,7 +283,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			$scope.filtrar();
 		};
 
-		var cargaComprobantes = function(){
+		function cargaComprobantes(){
 			$scope.loadingInvoices = true;
 			$scope.mensajeResultado = {
 				titulo: 'Comprobantes',
@@ -292,19 +292,16 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			};
 			$scope.pageComprobantes.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-			$scope.contenedorElegido.getInvoices($scope.$id, $scope.pageComprobantes).then(function(){
-				$scope.loadingInvoices = false;
-			}, function(){
+			$scope.contenedorElegido.getInvoices($scope.$id, $scope.pageComprobantes).then().catch(() => {
 				$scope.mensajeResultado = {
 					titulo: 'Comprobantes',
 					mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
 					tipo: 'panel-danger'
 				};
-				$scope.loadingInvoices = false;
-			});
+			}).finally(() => $scope.loadingInvoices = false);
 		};
 
-		var cargaTasasCargas = function(){
+		function cargaTasasCargas(){
 			if (angular.isDefined($scope.model.contenedor) && $scope.model.contenedor != ''){
 				$scope.loadingTasas = true;
 				$scope.configPanelTasas = {

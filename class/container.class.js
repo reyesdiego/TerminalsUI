@@ -41,14 +41,12 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 viaje: this.trip,
                 contenedor: this.contenedor
             };
-            invoiceFactory.getInvoices(scopeId, searchParams, page, (invoices) => {
-                if (invoices.status == 'OK'){
-                    this.invoices.data = invoices.data;
-                    this.invoices.total = invoices.totalCount;
-                    deferred.resolve();
-                } else {
-                    deferred.reject();
-                }
+            invoiceFactory.getInvoices(scopeId, searchParams, page).then((invoices) => {
+				this.invoices.data = invoices.data;
+				this.invoices.total = invoices.totalCount;
+				deferred.resolve();
+			}).catch((error) => {
+				deferred.reject();
             });
             return deferred.promise;
         }

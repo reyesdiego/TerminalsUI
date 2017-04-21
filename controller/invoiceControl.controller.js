@@ -590,20 +590,17 @@ myapp.controller('comprobantesPorEstadoCtrl', ['$rootScope', '$scope', 'invoiceF
 			$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.page.limit = $scope.model.itemsPerPage;
 			$scope.loadingState = true;
-			invoiceFactory.getInvoices($scope.$id, $scope.model, $scope.page, function(invoiceError){
-				if (invoiceError.status == 'OK'){
-					$scope.comprobantes = invoiceError.data;
-					$scope.totalItems = invoiceError.totalCount;
-				} else {
-					$scope.mensajeResultado = {
-						titulo: 'Error',
-						mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-						tipo: 'panel-danger'
-					};
-					$scope.comprobantes = [];
-				}
-				$scope.loadingState = false;
-			})
+			invoiceFactory.getInvoices($scope.$id, $scope.model, $scope.page).then((invoiceError) => {
+				$scope.comprobantes = invoiceError.data;
+				$scope.totalItems = invoiceError.totalCount;
+			}).catch((error) => {
+				$scope.mensajeResultado = {
+					titulo: 'Error',
+					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+					tipo: 'panel-danger'
+				};
+				$scope.comprobantes = [];
+			}).finally(() => $scope.loadingState = false);
 		};
 
 		$scope.descargarCSV = function(){

@@ -63,21 +63,17 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'log
 		$scope.page.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 		$scope.page.limit = $scope.model.itemsPerPage;
 		$scope.invoices = [];
-		invoiceFactory.getInvoices($scope.$id, $scope.model, $scope.page, function(data){
-			if(data.status === 'OK'){
-				$scope.invoices = data.data;
-				$scope.totalItems = data.totalCount;
-				$scope.cargando = false;
-			} else {
-				$scope.mensajeResultado = {
-					titulo: 'Error',
-					mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
-					tipo: 'panel-danger'
-				};
-				$scope.invoices = [];
-				$scope.cargando = false;
-			}
-		});
+		invoiceFactory.getInvoices($scope.$id, $scope.model, $scope.page).then((data) => {
+			$scope.invoices = data.data;
+			$scope.totalItems = data.totalCount;
+		}).catch((error) => {
+			$scope.mensajeResultado = {
+				titulo: 'Error',
+				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+				tipo: 'panel-danger'
+			};
+			$scope.invoices = [];
+		}).finally(() => $scope.cargando = false);
 	};
 
 }]);
