@@ -15,11 +15,15 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 
 		// Variable para almacenar la info principal que trae del factory
 		$scope.pricelist = [];
+
+		//Lista que finalmente se muestra en la tabla
 		$scope.filteredPrices = [];
-		$scope.userPricelist = [];
-		$scope.pricelistAgp = [];
-		$scope.servicios = [];
-		$scope.pricelistTerminal = [];
+
+		let pricelistAgp = [];
+		let servicios = [];
+		let pricelistTerminal = [];
+
+		//Lista que contiene todos los datos
 		$scope.listaElegida = [];
 		$scope.tasas = false;
 		$scope.itemsPerPage = 10;
@@ -28,18 +32,18 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 
 		$scope.procesando = false;
 
-		$scope.fechaVigencia = new Date();
+		//$scope.fechaVigencia = new Date();
 
 		$scope.cambiarTarifas = function(tipoTarifa){
 			$scope.tiposTarifas.forEach(function(unaTarifa){
 				unaTarifa.active = (unaTarifa.nombre == tipoTarifa.nombre);
 			});
 			if (tipoTarifa.nombre == 'AGP'){
-				$scope.listaElegida = angular.copy($scope.pricelistAgp);
+				$scope.listaElegida = angular.copy(pricelistAgp);
 			} else if (tipoTarifa.nombre == 'Servicios'){
-				$scope.listaElegida = angular.copy($scope.servicios);
+				$scope.listaElegida = angular.copy(servicios);
 			} else {
-				$scope.listaElegida = angular.copy($scope.pricelistTerminal);
+				$scope.listaElegida = angular.copy(pricelistTerminal);
 			}
 			$scope.totalItems = $scope.listaElegida.length
 		};
@@ -54,74 +58,61 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 		});
 
 		$scope.cargaPricelist = function(){
-			$scope.pricelistAgp = [];
-			$scope.pricelistTerminal = [];
-			$scope.servicios = [];
+			pricelistAgp = [];
+			pricelistTerminal = [];
+			servicios = [];
+
 			$scope.listaElegida = [];
-			priceFactory.getMatchPrices($scope.tasas, function(data){
-				if (data.status == 'OK'){
-					$scope.hayError = false;
-					$scope.pricelist = data.data;
-					$scope.pricelist.forEach(function(tarifa){
-						if (tarifa.tarifaAgp){
-							$scope.pricelistAgp.push(tarifa);
-						}
-						if (tarifa.tarifaTerminal){
-							$scope.pricelistTerminal.push(tarifa)
-						}
-						if (tarifa.servicio){
-							$scope.servicios.push(tarifa)
-						}
-					});
-					$scope.listaElegida = angular.copy($scope.pricelistAgp);
-					$scope.totalItems = $scope.listaElegida.length;
-					$scope.userPricelist = angular.copy($scope.pricelistAgp);
-				} else {
-					$scope.hayError = true;
-					$scope.mensajeResultado = {
-						titulo: 'Tarifario',
-						mensaje: 'Se ha producido un error al cargar los datos del tarifario.',
-						tipo: 'panel-danger'
-					};
-				}
+			priceFactory.getMatchPrices($scope.tasas).then((data) => {
+				$scope.hayError = false;
+				$scope.pricelist = data.data;
+				$scope.pricelist.forEach((tarifa) => {
+					if (tarifa.tarifaAgp) pricelistAgp.push(tarifa);
+					if (tarifa.tarifaTerminal) pricelistTerminal.push(tarifa);
+					if (tarifa.servicio) servicios.push(tarifa);
+				});
+				$scope.listaElegida = angular.copy(pricelistAgp);
+				$scope.totalItems = $scope.listaElegida.length;
+			}).catch((error) => {
+				$scope.hayError = true;
+				$scope.mensajeResultado = {
+					titulo: 'Tarifario',
+					mensaje: 'Se ha producido un error al cargar los datos del tarifario.',
+					tipo: 'panel-danger'
+				};
 			});
 		};
 
 		$scope.exportarAPdf = function(){
 			$scope.procesando = true;
-			var pricesData = angular.copy($scope.pricelist);
-			pricesData.forEach(function(aPrice){
+			let pricesData = angular.copy($scope.pricelist);
+			pricesData.forEach((aPrice) => {
 				aPrice.tipo = aPrice.tipoTarifa;
 			});
-			var data = {
+			const data = {
 				terminal: loginService.filterTerminal,
 				pricelist: pricesData
 			};
-			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.pdf';
-			downloadFactory.convertToPdf(data, 'pricelistToPdf', nombreReporte).then(function(){
-				$scope.procesando = false;
-			}, function(){
-				$scope.procesando = false;
+			const nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.pdf';
+			downloadFactory.convertToPdf(data, 'pricelistToPdf', nombreReporte).then().catch(() => {
 				dialogs.error('Tarifario', 'Se ha producido un error al intentar exportar el tarifario a PDF');
+			}).finally(() => {
+				$scope.procesando = false;
 			});
 		};
 
 		$scope.exportarAExcel = function(){
 			$scope.procesando = true;
-			var nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.csv';
-
-			var csvContent = armarCsv();
-
+			const nombreReporte = 'Tarifario' + $filter('date')(new Date(), 'ddMMyyyy', 'UTC') + '.csv';
+			const csvContent = armarCsv();
 			downloadService.setDownloadCsv(nombreReporte, csvContent);
-
 			$scope.procesando = false;
-
 		};
 
 		function armarCsv (){
-			var csvContent = "Tipo|Código|Descripción|Unidad|Tope";
+			let csvContent = "Tipo|Código|Descripción|Unidad|Tope";
 
-			$scope.pricelist.forEach(function(price){
+			$scope.pricelist.forEach((price) => {
 				csvContent += "\n";
 				csvContent += price.tipoTarifa + "|" + price.code + "|" + price.description + "|" + price.unit + "|" + price.price;
 			});

@@ -32,15 +32,21 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			});
 		}
 
-		getMatchPrices(tasas, callback) {
+		getMatchPrices(tasas) {
+			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/${loginService.filterTerminal}`;
 			const param = { onlyRates: tasas };
 			$http.get(inserturl, { params: formatService.formatearDatos(param) }).then((response) => {
-				response.data.data = this.retrievePrice(response.data.data);
-				callback(response.data);
+				if (response.data.status == 'OK'){
+					response.data.data = this.retrievePrice(response.data.data);
+					deferred.resolve(response.data);
+				} else {
+					deferred.reject(response.data);
+				}
 			}).catch((response) => {
-				callback(response.data);
+				deferred.reject(response.data);
 			});
+			return deferred.promise;
 		}
 
 		getMatchPricesCSV(datos, callback) {

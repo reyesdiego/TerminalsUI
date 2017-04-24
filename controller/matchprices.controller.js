@@ -27,22 +27,23 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			array: []
 		};
 
-		$scope.pricelist = [];
 		$scope.filteredPrices = [];
-		$scope.pricelistAgp = [];
-		$scope.matchesTerminal = [];
-		$scope.servicios = [];
 		$scope.listaSeleccionada = [];
+		let pricelist = [];
+
+		let pricelistAgp = [];
+		let servicios = [];
+		let propiosTerminal = [];
+		let codigosConMatch = [];
+
+		let matchesTerminal = [];
 
 		$scope.search = "";
 
 		$scope.flagEditando = false;
-		$scope.codigosConMatch = [];
 		$scope.tasas = false;
 
-		$scope.tipoFiltro = 'AGP';
-
-		$scope.propiosTerminal = [];
+		let tipoFiltro = 'AGP';
 
 		$scope.puedeEditar = function(){
 			if ($scope.dataTerminal.type == 'agp'){
@@ -72,71 +73,63 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			$scope.hayError = true;
 			$scope.mensajeResultado = mensaje;
 			$scope.totalItems = 0;
-			$scope.pricelist = [];
+			pricelist = [];
 		});
 
 		$scope.prepararDatos = function(){
-			priceFactory.getMatchPrices($scope.tasas, function (data) {
-				if (data.status == 'OK'){
-					$scope.pricelist = data.data;
-					$scope.pricelistAgp = [];
-					$scope.servicios = [];
-					$scope.codigosConMatch = [];
-					$scope.propiosTerminal = [];
-					$scope.matchesTerminal = [];
-					//Cargo todos los códigos ya asociados de la terminal para control
-					$scope.pricelist.forEach(function(price){
-						$scope.matchesTerminal.push(price.code);
-						if (price.tarifaAgp){
-							$scope.pricelistAgp.push(price);
-						}
-						if (price.tarifaTerminal){
-							$scope.propiosTerminal.push(price)
-						}
-						if (price.servicio){
-							$scope.servicios.push(price)
-						}
-						if (price.tieneMatch()){
-							$scope.codigosConMatch.push(price);
-							$scope.matchesTerminal.push(price.getMatches());
-						}
-					});
-					switch ($scope.tipoFiltro){
-						case 'AGP':
-							$scope.listaSeleccionada = $scope.pricelistAgp;
-							break;
-						case 'Servicios':
-							$scope.listaSeleccionada = $scope.servicios;
-							break;
-						case 'Propios':
-							$scope.listaSeleccionada = $scope.propiosTerminal;
-							break;
-						case 'Con match':
-							$scope.listaSeleccionada = $scope.codigosConMatch;
-							break;
+			priceFactory.getMatchPrices($scope.tasas).then((data) => {
+				pricelist = data.data;
+				pricelistAgp = [];
+				servicios = [];
+				codigosConMatch = [];
+				propiosTerminal = [];
+				matchesTerminal = [];
+				//Cargo todos los códigos ya asociados de la terminal para control
+				pricelist.forEach((price) => {
+					matchesTerminal.push(price.code);
+					if (price.tarifaAgp) pricelistAgp.push(price);
+					if (price.tarifaTerminal) propiosTerminal.push(price);
+					if (price.servicio) servicios.push(price);
+					if (price.tieneMatch()){
+						codigosConMatch.push(price);
+						matchesTerminal.push(price.getMatches());
 					}
-					$scope.totalItems = $scope.pricelist.length;
-				} else {
-					dialogs.error('Asociar', 'Se ha producido un error al cargar los datos de códigos asociados. ' + data.data);
-					$scope.pricelist = [];
-					$scope.totalItems = 0;
+				});
+				switch (tipoFiltro){
+					case 'AGP':
+						$scope.listaSeleccionada = pricelistAgp;
+						break;
+					case 'Servicios':
+						$scope.listaSeleccionada = servicios;
+						break;
+					case 'Propios':
+						$scope.listaSeleccionada = propiosTerminal;
+						break;
+					case 'Con match':
+						$scope.listaSeleccionada = codigosConMatch;
+						break;
 				}
+				$scope.totalItems = $scope.listaSeleccionada.length;
+			}).catch((error) => {
+				dialogs.error('Asociar', 'Se ha producido un error al cargar los datos de códigos asociados. ' + error.data);
+				pricelist = [];
+				$scope.totalItems = 0;
 			});
 		};
 
 		$scope.cambiarTarifas = function(tipoTarifa){
-			$scope.tipoFiltro = tipoTarifa.nombre;
-			$scope.tiposTarifas.forEach(function(unaTarifa){
+			tipoFiltro = tipoTarifa.nombre;
+			$scope.tiposTarifas.forEach((unaTarifa) => {
 				unaTarifa.active = (unaTarifa.nombre == tipoTarifa.nombre);
 			});
 			if (tipoTarifa.nombre == 'AGP'){
-				$scope.listaSeleccionada = angular.copy($scope.pricelistAgp);
+				$scope.listaSeleccionada = angular.copy(pricelistAgp);
 			} else if (tipoTarifa.nombre == 'Servicios'){
-				$scope.listaSeleccionada = angular.copy($scope.servicios);
+				$scope.listaSeleccionada = angular.copy(servicios);
 			} else if (tipoTarifa.nombre == 'Propios') {
-				$scope.listaSeleccionada = angular.copy($scope.propiosTerminal);
+				$scope.listaSeleccionada = angular.copy(propiosTerminal);
 			} else {
-				$scope.listaSeleccionada = angular.copy($scope.codigosConMatch);
+				$scope.listaSeleccionada = angular.copy(codigosConMatch);
 			}
 			$scope.totalItems = $scope.listaSeleccionada.length
 		};
@@ -146,7 +139,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			//TODO chequear si es posible que asignen a una tarifa, su mismo código como asociado
 			matchCode.text = matchCode.text.toUpperCase();
 			//return (!$scope.matchesTerminal.contains(matchCode.text))
-			return !generalFunctions.in_array(matchCode.text, $scope.matchesTerminal);
+			return !generalFunctions.in_array(matchCode.text, matchesTerminal);
 		};
 
 		$scope.abrirNuevoConcepto = function(tipo){
@@ -163,23 +156,21 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		//Guarda los cambios realizados sobre una tarifa
 		$scope.savePrice = function(){
-			var dlg = null;
 			if (verificarEditado()){
-				dlg = dialogs.confirm('Guardar', 'Se guardarán todos los cambios realizados sobre la tarifa, ¿confirma la operación?');
-				dlg.result.then(function(){
+				const dlg = dialogs.confirm('Guardar', 'Se guardarán todos los cambios realizados sobre la tarifa, ¿confirma la operación?');
+				dlg.result.then(() => {
 					$scope.newPrice.unit = String($scope.newPrice.idUnit);
-					$scope.newPrice.setMatches($scope.newMatches.array.map(function(matchCode){
+					$scope.newPrice.setMatches($scope.newMatches.array.map((matchCode) => {
 						return matchCode.text;
 					}));
-					$scope.newPrice.saveChanges()
-							.then(function(){
-								cacheService.actualizarMatchesArray(loginService.filterTerminal);
-								dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
-								$scope.prepararDatos();
-								$state.transitionTo('matches');
-							}, function(){
-								dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
-							});
+					$scope.newPrice.saveChanges().then(() => {
+						cacheService.actualizarMatchesArray(loginService.filterTerminal);
+						dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
+						$scope.prepararDatos();
+						$state.transitionTo('matches');
+					}).catch(() => {
+						dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
+					});
 				});
 			}
 		};
@@ -199,37 +190,36 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		//Carga la tarifa completa antes de poder editarla
 		$scope.editarTarifa = function(tarifa){
 
-			var indice = 0;
-			$scope.pricelist.forEach(function(price){
+			let indice = 0;
+			pricelist.forEach((price) => {
 				if (price.code == tarifa.code) $scope.posicionTarifa = indice;
 				indice++;
 			});
 
-			tarifa.getTopPrices()
-					.then(function(){
-						$scope.newPrice = tarifa;
-						$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
-						$scope.abrirNuevoConcepto('editar');
-					}, function(error){
-						console.log(error);
-						dialogs.error('Error', 'Se ha producido un error al cargar los datos de la tarifa.');
-					});
+			tarifa.getTopPrices().then(() => {
+				$scope.newPrice = tarifa;
+				$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
+				$scope.abrirNuevoConcepto('editar');
+			}).catch((error) => {
+				console.log(error);
+				dialogs.error('Error', 'Se ha producido un error al cargar los datos de la tarifa.');
+			});
 
 		};
 
 		//Verifica que al modificar un código no coincida con otro ya existente
-		var verificarEditado = function(){
-			var flagCodigo = false;
+		function verificarEditado(){
+			let flagCodigo = false;
 
 			//Comparo que con los cambios hechos, no coincida el código con otra tarifa de la lista
-			var listaSinCodigo = $scope.pricelist.slice();
+			let listaSinCodigo = pricelist.slice();
 			if ($scope.flagEditando) listaSinCodigo.splice($scope.posicionTarifa, 1);
-			listaSinCodigo.forEach(function(tarifa){
+			listaSinCodigo.forEach((tarifa) => {
 				if ($scope.newPrice.code == tarifa.code){
 					flagCodigo = true;
 				}
 				if (tarifa.matches != null && tarifa.matches.length > 0){
-					tarifa.matches[0].match.forEach(function(codigo){
+					tarifa.matches[0].match.forEach((codigo) => {
 						if (codigo == $scope.newPrice.code){
 							flagCodigo = true;
 						}
@@ -248,19 +238,18 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		//Elimina una tarifa
 		$scope.eliminarTarifa = function(){
-			var dlg = dialogs.confirm('Eliminar', 'Se eliminará la tarifa, ¿confirma la operación?');
-			dlg.result.then(function(){
-				$scope.newPrice.removePrice()
-						.then(function(response){
-							if (response.status == 'OK'){
-								dialogs.notify("Eliminar","La tarifa ha sido eliminada");
-								$scope.volver();
-							} else {
-								dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
-							}
-						}, function(response){
-							dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
-						});
+			const dlg = dialogs.confirm('Eliminar', 'Se eliminará la tarifa, ¿confirma la operación?');
+			dlg.result.then(() => {
+				$scope.newPrice.removePrice().then((response) => {
+					if (response.status == 'OK'){
+						dialogs.notify("Eliminar","La tarifa ha sido eliminada");
+						$scope.volver();
+					} else {
+						dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
+					}
+				}).catch((response) => {
+					dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
+				});
 			})
 		};
 
@@ -276,7 +265,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		//Descarga CSV
 		$scope.descargarCSV = function(){
-			var alterModel = {
+			const alterModel = {
 				onlyRates: $scope.tasas,
 				output: 'csv'
 			};
