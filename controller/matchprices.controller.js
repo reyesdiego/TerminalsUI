@@ -270,7 +270,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				output: 'csv'
 			};
 
-			priceFactory.getMatchPricesCSV(alterModel, function(status){
+			priceFactory.getMatchPricesCSV(alterModel, (status) => {
 				if (status != 'OK'){
 					dialogs.error('Asociar', 'Se ha producido un error al descargar los datos.');
 				}

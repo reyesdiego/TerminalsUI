@@ -22,6 +22,9 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 		}
 
 		getPricelistAgp() {
+			//Solo se utiliza para el reporte de tarifas, el parámetro es para que filtre y traiga únicamente las tasas a las cargas.
+			//Dado que el controlador requiere las 2 listas simultáneamente, se realizan ambas llamadas con distintos parámetros
+			//Y luegos se devuelven los datos organizados.
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/prices/agp`;
 			const param = { onlyRates: true };
