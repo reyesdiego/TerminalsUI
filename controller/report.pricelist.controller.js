@@ -61,18 +61,18 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		});
 
 		function traerDatos () {
-			priceFactory.getPricelistAgp(false, (data) => {
-				$scope.pricelist = data.data;
+			priceFactory.getPricelistAgp().then((response) => {
+				$scope.pricelist = response.pricelist;
+				$scope.pricelistTasas = response.pricelistTasas;
 				$scope.pricelist.forEach((price) => {
 					price.graficar = false;
 				});
-				$scope.selectedList = $scope.pricelist;
-			});
-			priceFactory.getPricelistAgp(true, (data) => {
-				$scope.pricelistTasas = data.data;
 				$scope.pricelistTasas.forEach((price) => {
 					price.graficar = false;
 				});
+				$scope.selectedList = $scope.pricelist;
+			}).catch((error) => {
+				console.log(error);
 			});
 		}
 

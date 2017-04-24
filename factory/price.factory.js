@@ -21,15 +21,35 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			return pricesArray;
 		}
 
-		getPricelistAgp(tasas, callback) {
+		getPricelistAgp() {
+			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/prices/agp`;
-			const param = { onlyRates: tasas };
-			$http.get(inserturl, { params: formatService.formatearDatos(param) }).then((response) => {
-				response.data.data = this.retrievePrice(response.data.data);
-				callback(response.data);
+			const param = { onlyRates: true };
+
+			let requests = [];
+			requests.push($http.get(inserturl));
+			requests.push($http.get(inserturl, { params: formatService.formatearDatos(param) }));
+			$q.all(requests).then((responses) => {
+				let responseData = {
+					pricelist: [],
+					pricelistTasas: []
+				};
+				let countControl = 0;
+				//El que solo trae las tasas tiene un totalCount menor que el otro, me baso en eso para saber cual es cual
+				responses.forEach((response) => {
+					if (response.data.totalCount > countControl){
+						countControl = response.data.totalCount;
+						if (responseData.pricelist.length > 0) responseData.pricelistTasas = angular.copy(responseData.pricelist);
+						responseData.pricelist = this.retrievePrice(response.data.data);
+					} else {
+						responseData.pricelistTasas = this.retrievePrice(response.data.data);
+					}
+				});
+				deferred.resolve(responseData);
 			}).catch((response) => {
-				callback(response.data);
+				deferred.reject(response.data);
 			});
+			return deferred.promise;
 		}
 
 		getMatchPrices(tasas) {
