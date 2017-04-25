@@ -59,13 +59,9 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 contenedor: this.contenedor
             };
             turnosFactory.getTurnos(searchParams, page).then((appointments) => {
-				if (appointments.status === "OK"){
-					this.appointments.data = appointments.data;
-					this.appointments.total = appointments.totalCount;
-					deferred.resolve();
-				} else {
-				    deferred.reject();
-				}
+				this.appointments.data = appointments.data;
+				this.appointments.total = appointments.totalCount;
+				deferred.resolve();
 			}).catch(() => {
 				deferred.reject();
             });
@@ -79,16 +75,12 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 viaje: this.trip,
                 contenedor: this.contenedor
             };
-            gatesFactory.getGate(searchParams, page, (gates) => {
-                if (gates.status === "OK") {
-                    this.gates.data = gates.data;
-                    this.gates.total = gates.totalCount;
-                    //$scope.gatesTiempoConsulta = (data.time / 1000).toFixed(2);
-                    deferred.resolve();
-                } else {
-                    deferred.reject();
-                }
-            });
+            gatesFactory.getGate(searchParams, page).then((gates) => {
+				this.gates.data = gates.data;
+				this.gates.total = gates.totalCount;
+				//$scope.gatesTiempoConsulta = (data.time / 1000).toFixed(2);
+				deferred.resolve();
+			}).catch(() => deferred.reject());
             return deferred.promise;
         }
 

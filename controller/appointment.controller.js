@@ -85,16 +85,8 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 			mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 		};
 		turnosFactory.getTurnos($scope.model, $scope.page).then((data) => {
-			if (data.status == 'OK'){
-				$scope.turnos = data.data;
-				$scope.totalItems = data.totalCount;
-			} else {
-				$scope.configPanel = {
-					tipo: 'panel-danger',
-					titulo: 'Turnos',
-					mensaje: 'Se ha producido un error al cargar los turnos.'
-				};
-			}
+			$scope.turnos = data.data;
+			$scope.totalItems = data.totalCount;
 		}).catch((error) => {
 			$scope.configPanel = {
 				tipo: 'panel-danger',
