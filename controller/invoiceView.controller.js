@@ -46,7 +46,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		});
 
 		$scope.$on('mostrarComprobante', function(event, comprobante){
-			var invoice = new Invoice(comprobante);
+			const invoice = new Invoice(comprobante);
 			$scope.mostrarDetalle(invoice);
 		});
 
@@ -97,7 +97,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 				$scope.model.fechaFin = new Date($scope.model.fechaInicio);
 				$scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
 			}
-			for (var elemento in $scope.model){
+			for (let elemento in $scope.model){
 				if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 			}
 			if (filtro == 'nroPtoVenta'){
@@ -132,16 +132,16 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		};
 
 		// Funciones de Puntos de Venta
-		var cargaPuntosDeVenta = function(){
-			var i = 0;
+		function cargaPuntosDeVenta(){
+			let i = 0;
 			$scope.todosLosPuntosDeVentas = [
 				{'heading': 'Todos los Puntos de Ventas', 'punto': '', 'index': 0}
 			];
 			invoiceFactory.getCashbox($scope.$id, cargaDatosSinPtoVenta(), function(data){
 				if (data.status == 'OK'){
-					data.data.forEach(function(punto){
+					data.data.forEach((punto) => {
 						i++;
-						var dato = {'heading': punto, 'punto': punto, 'index': i };
+						let dato = {'heading': punto, 'punto': punto, 'index': i };
 						/*if ($scope.model['nroPtoVenta'] == punto){
 							$scope.indexActive = i;
 						}*/
@@ -161,15 +161,13 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 				$scope.comprobantesVistos.push(comprobante);
 				comprobante.controlled = true;
 			}
-			comprobante.mostrarDetalle().then(function(){
+			comprobante.mostrarDetalle().then(() => {
 				comprobante.controlarTarifas();
 				$scope.verDetalle = comprobante;
 				$scope.mostrarResultado = true;
-				$scope.loadingState = false;
-			}, function(error){
+			}).catch((error) => {
 				dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos del comprobante. ' + error.data.message);
-				$scope.loadingState = false;
-			})
+			}).finally(() => $scope.loadingState = false)
 		};
 
 		$scope.devolverEstado = function(estado){
@@ -193,25 +191,23 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		};
 
 		$scope.trackInvoice = function(invoice){
-			invoice.trackInvoice().then(function(data){
-				//cargaPuntosDeVenta();
-			}, function(error){
+			invoice.trackInvoice().then().catch((error) => {
 				dialogs.error('Error', error.message);
 			});
 		};
 
 		$scope.trackContainer = function(contenedor){
-			var url = $state.href('container', {container: contenedor});
+			const url = $state.href('container', {container: contenedor});
 			$window.open(url,'_blank');
 		};
 
 		$scope.mostrarTope = function(){
-			var max = $scope.currentPage * 10;
+			const max = $scope.currentPage * 10;
 			return max > $scope.totalItems ? $scope.totalItems : max;
 		};
 
 		function cargaDatosSinPtoVenta(){
-			var datos = {};
+			let datos = {};
 			angular.copy($scope.model, datos); //|| { nroPtoVenta : '' };
 			datos.nroPtoVenta = '';
 			return datos;
@@ -227,13 +223,9 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 
 		$scope.verPdf = function(){
 			$scope.disablePdf = true;
-			$scope.verDetalle.verPdf()
-					.then(function(){
-						$scope.disablePdf = false;
-					}, function(){
-						dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
-						$scope.disablePdf = false;
-					});
+			$scope.verDetalle.verPdf().then().catch(() => {
+				dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
+			}).finally(() => $scope.disablePdf = false);
 		};
 
 		$scope.$on('logout', function(){

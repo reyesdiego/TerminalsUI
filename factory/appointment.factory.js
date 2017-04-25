@@ -24,15 +24,17 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 
 			getTurnos(datos, page, callback){
 				this.cancelRequest('getTurnos');
-				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, this.namespace, 'getTurnos');
+				const deferred = $q.defer();
+				const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'getTurnos');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.retrieveAppointments(response.data.data);
-					callback(response.data);
+					//callback(response.data);
+					deferred.resolve(response.data);
 				}).catch((response) => {
-					if (response.status != -5 ) callback(response.data);
+					if (response.status != -5 ) deferred.reject(response.data);
 				});
+				return deferred.promise;
 			}
 
 			getQueuedMails(datos, page, callback){

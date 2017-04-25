@@ -166,13 +166,9 @@ myapp.directive('detalleComprobante', ['dialogs', 'loginService', function(dialo
 
 			$scope.verPdf = function(){
 				$scope.disablePdf = true;
-				$scope.verDetalle.verPdf()
-					.then(function(){
-						$scope.disablePdf = false;
-					}, function(){
-						dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
-						$scope.disablePdf = false;
-					});
+				$scope.verDetalle.verPdf().then().catch(() => {
+					dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
+				}).finally(() => $scope.disablePdf = false);
 			};
 		}
 	}
@@ -526,22 +522,18 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 			scope.mostrarResultado = false;
 
 			function loadInvoices(){
-				var page = {
+				const page = {
 					skip: (scope.currentPage - 1) * scope.itemsPerPage,
 					limit: scope.itemsPerPage
 				};
 				scope.cargando = true;
-				scope.payment.getInvoices(page, function(success, err){
-					scope.cargando = false;
-					if (!success) {
-						console.log(err);
-						scope.panelMensaje = {
-							titulo: 'Liquidaciones',
-							mensaje: 'Se produjo un error al cargar los comprobantes.',
-							tipo: 'panel-danger'
-						};
-					}
-				})
+				scope.payment.getInvoices(page).then().catch(() => {
+					scope.panelMensaje = {
+						titulo: 'Liquidaciones',
+						mensaje: 'Se produjo un error al cargar los comprobantes.',
+						tipo: 'panel-danger'
+					};
+				}).finally(() => scope.cargando = false);
 			}
 
 			scope.filter = function(filtro, contenido){
@@ -564,19 +556,16 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 
 			scope.mostrarDetalle = function(invoice){
 				scope.cargando = true;
-				invoice.mostrarDetalle()
-					.then(function(){
-						//scope.model.invoiceSelected = invoice;
-						//$scope.sinLiquidar.comprobantes = response.datosInvoices;
-						//$scope.commentsInvoice = response.commentsInvoice;
-						scope.verDetalle = invoice;
-						scope.mostrarResultado = true;
-						scope.cargando = false;
-					}, function(error){
-						console.log(error);
-						dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los datos del comprobante. ' + error.data.message);
-						scope.cargando = false;
-					});
+				invoice.mostrarDetalle().then(() => {
+					//scope.model.invoiceSelected = invoice;
+					//$scope.sinLiquidar.comprobantes = response.datosInvoices;
+					//$scope.commentsInvoice = response.commentsInvoice;
+					scope.verDetalle = invoice;
+					scope.mostrarResultado = true;
+				}).catch((error) => {
+					//console.log(error);
+					dialogs.error('Liquidaciones', 'Se ha producido un error al cargar los datos del comprobante. ' + error.data.message);
+				}).finally(() => scope.cargando = false);
 			};
 
 			scope.ordenar = function(filtro){

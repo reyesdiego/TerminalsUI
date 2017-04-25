@@ -58,14 +58,16 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 viaje: this.trip,
                 contenedor: this.contenedor
             };
-            turnosFactory.getTurnos(searchParams, page, (appointments) => {
-                if (appointments.status === "OK"){
-                    this.appointments.data = appointments.data;
-                    this.appointments.total = appointments.totalCount;
-                    deferred.resolve();
-                } else {
-                    deferred.reject();
-                }
+            turnosFactory.getTurnos(searchParams, page).then((appointments) => {
+				if (appointments.status === "OK"){
+					this.appointments.data = appointments.data;
+					this.appointments.total = appointments.totalCount;
+					deferred.resolve();
+				} else {
+				    deferred.reject();
+				}
+			}).catch(() => {
+				deferred.reject();
             });
             return deferred.promise;
         }

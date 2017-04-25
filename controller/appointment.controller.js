@@ -84,8 +84,8 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 			titulo: 'Turnos',
 			mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 		};
-		turnosFactory.getTurnos($scope.model, $scope.page, function(data){
-			if (data.status === "OK"){
+		turnosFactory.getTurnos($scope.model, $scope.page).then((data) => {
+			if (data.status == 'OK'){
 				$scope.turnos = data.data;
 				$scope.totalItems = data.totalCount;
 			} else {
@@ -95,8 +95,13 @@ myapp.controller('turnosCtrl', ['$scope', 'turnosFactory', 'loginService', funct
 					mensaje: 'Se ha producido un error al cargar los turnos.'
 				};
 			}
-			$scope.cargando = false;
-		});
+		}).catch((error) => {
+			$scope.configPanel = {
+				tipo: 'panel-danger',
+				titulo: 'Turnos',
+				mensaje: 'Se ha producido un error al cargar los turnos.'
+			};
+		}).finally(() => $scope.cargando = false);
 	};
 
 	// Carga los turnos del día hasta la hora del usuario

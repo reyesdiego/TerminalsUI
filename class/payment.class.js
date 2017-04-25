@@ -62,15 +62,17 @@ myapp.factory('Payment', ['$http', '$q', 'APP_CONFIG', 'loginService', 'formatSe
 			});
 		}
 
-		getInvoices(page, callback){
+		getInvoices(page){
+			const deferred = $q.defer();
 			let llamadas = [];
 			llamadas.push(this.getInvoicesGrouped(page));
 			llamadas.push(this.getInvoicesNotGrouped(page));
 			$q.all(llamadas).then(() => {
-				callback(true);
+				deferred.resolve();
 			}).catch(() => {
-				callback(false)
-			})
+				deferred.reject();
+			});
+			return deferred.promise;
 		}
 
 		getInvoicesNotGrouped(page){
