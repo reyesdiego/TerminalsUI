@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 13/03/2017.
  */
-myapp.directive('pieChart', ['chartLoader', function(chartLoader){
+myapp.directive('pieChart', ['chartLoader', '$window', function(chartLoader, $window){
 	return {
 		restrict: 'E',
 		scope: {
@@ -68,6 +68,12 @@ myapp.directive('pieChart', ['chartLoader', function(chartLoader){
 						pieChart.drawChart(scope.data, scope.options);
 					}
 				}, true);
+
+				angular.element($window).on('resize', () => {
+					scope.$apply(() => {
+						pieChart.drawChart(scope.data, scope.options);
+					})
+				})
 
 			})
 		}

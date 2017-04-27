@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 14/03/2017.
  */
-myapp.directive('columnChart', ['chartLoader', function(chartLoader){
+myapp.directive('columnChart', ['chartLoader', '$window', function(chartLoader, $window){
 	return {
 		restrict: 'E',
 		scope: {
@@ -51,6 +51,12 @@ myapp.directive('columnChart', ['chartLoader', function(chartLoader){
 						chartCtrl.drawChart(scope.data, scope.options);
 					}
 				}, true);
+
+				angular.element($window).on('resize', () => {
+					scope.$apply(() => {
+						chartCtrl.drawChart(scope.data, scope.options);
+					})
+				})
 
 			})
 		}

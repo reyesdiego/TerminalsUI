@@ -6,7 +6,7 @@
 
 	<div class="row">
 		<br>
-		<div class="col-lg-8">
+		<div class="col-lg-8 col-md-12">
 			<h4 ng-show="tipoFiltro=='cantidad'" class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
 			<h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: {{ comprobantesCantidad.totalCount | currency }}</h4>
 			<div class="rowcol-lg-12">
@@ -67,11 +67,12 @@
 		</div>-->
 		<div class="col-lg-4">
 			<h4 class="text-left">Facturado diario</h4>
-			<div class="table-responsive">
+			<div class="table-responsive col-xs-12">
 				<div class="col-lg-4" ng-show="facturadoDia.loading" style="position: absolute; left: 30%; top: 30%">
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
 				<column-chart
+					class="chart col-xs-12"
 					data="chartFacturado.data"
 					options="chartFacturado.options"></column-chart>
 			</div>
@@ -94,11 +95,12 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenMonth" datepicker-options="datepickerMonth" ng-model="mesDesde" ng-change="traerDatosFacturadoMes()" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div class="table-responsive" style="height: 320px">
+			<div class="table-responsive col-xs-12">
 				<div class="col-lg-4" ng-show="facturadoMes.loading" style="position: absolute; left: 30%; top: 30%">
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
 				<column-chart
+					class="chart col-xs-12"
 					data="chartFacturas.data"
 					options="chartFacturas.options"></column-chart>
 			</div>
@@ -119,11 +121,12 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenGates" datepicker-options="datepickerMonth" ng-change="traerDatosGates()" ng-model="mesDesdeGates" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div class="table-responsive" style="height: 320px">
+			<div class="table-responsive col-xs-12">
 				<div class="col-lg-4" ng-show="cantGates.loading" style="position: absolute; left: 30%; top: 30%">
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
 				<column-chart
+					class="chart col-xs-12"
 					data="chartGates.data"
 					options="chartGates.options"></column-chart>
 			</div>
@@ -144,11 +147,12 @@
 				</span>
 				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenTurnos" datepicker-options="datepickerMonthTurnos" ng-change="traerDatosTurnos()" ng-model="mesDesdeTurnos" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
 			</p>
-			<div class="table-responsive" style="height: 320px">
+			<div class="table-responsive col-xs-12">
 				<div class="col-lg-4" ng-show="cantTurnos.loading" style="position: absolute; left: 30%; top: 30%">
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
 				<column-chart
+					class="chart col-xs-12"
 					data="chartTurnos.data"
 					options="chartTurnos.options"></column-chart>
 			</div>
@@ -194,11 +198,12 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-offset-1 col-lg-10 col-md-12 table-responsive" style="height: 320px">
+			<div class="col-lg-offset-1 col-lg-10 col-md-12 table-responsive">
 				<div class="col-lg-4" ng-show="gatesTurnos.loading" style="position: absolute; left: 30%; top: 30%">
 					<img class="media-object center-block" src="images/loading.gif">
 				</div>
 				<column-chart
+					class="chart col-xs-12"
 					data="chartDiaGatesTurnos.data"
 					options="chartDiaGatesTurnos.options"></column-chart>
 			</div>

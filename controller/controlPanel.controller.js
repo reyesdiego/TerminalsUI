@@ -51,8 +51,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.chartFacturas = {
 			options: {
-				width: 450,
-				height: 320,
+				width: '100%',
+				height: '100%',
 				series: {3: {type: "line"}},
 				currency: true,
 				stacked: false,
@@ -70,8 +70,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.chartGates = {
 			options: {
-				width: 450,
-				height: 320,
+				width: '100%',
+				height: '100%',
 				series: {3: {type: "line"}},
 				currency: false,
 				stacked: false,
@@ -88,8 +88,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.chartTurnos = {
 			options: {
-				width: 450,
-				height: 320,
+				width: '100%',
+				height: '100%',
 				series: {3: {type: "line"}},
 				currency: false,
 				stacked: false,
@@ -106,8 +106,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.chartFacturado = {
 			options: {
-				width: 460,
-				height: 320,
+				width: '100%',
+				height: '100%',
 				series: {3: {type: "line"}},
 				currency: true,
 				stacked: false,
@@ -125,8 +125,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.chartDiaGatesTurnos = {
 			options: {
-				width: 1200,
-				height: 350,
+				width: '100%',
+				height: '100%',
 				series: {3: {type: "line"}},
 				currency: false,
 				stacked: false,

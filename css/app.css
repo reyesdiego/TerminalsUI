@@ -104,6 +104,11 @@ html, body {
     justify-content : center;
 }
 
+.chart {
+    width: 100%;
+    min-height: 350px;
+}
+
 @media print{
     .anchoFijoImpresion{
         max-width: 200px !important;

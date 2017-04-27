@@ -31,8 +31,8 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.chartReporteTarifas = {
 			options: {
 				title: "Detalle por tarifas",
-				width: 1400,
-				height: 600,
+				width: '100%',
+				height: 500,
 				series: {},
 				//columns: 8,
 				currency: true,
@@ -50,7 +50,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 		$scope.chartTotalesPorTerminal = {
 			options: {
 				title: "Totales por terminal",
-				width: 500,
+				width: '100%',
 				height: 400,
 				currency: true,
 				stacked: false,
