@@ -60,7 +60,7 @@ myapp.directive('accordionInvoicesSearch', function(){
 myapp.directive('invoicesResult', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/comprobantes/invoices.result.html'
+		templateUrl:	'view/comprobantes/comprobantes.detalle.html'
 	}
 });
 

@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 					'main/main.js',
 					'main/configProd.js',
 					'class/*',
-					'controller/*',
+					'controller/**/*',
 					'directives/*',
 					'factory/*',
 					'filter/*',
