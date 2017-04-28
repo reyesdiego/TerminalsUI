@@ -2,7 +2,7 @@
  * Created by leo on 02/02/15.
  */
 
-myapp.controller('usersCtrl', ['$rootScope', '$scope', 'ctrlUsersFactory', 'dialogs', '$q', 'generalFunctions', function($rootScope, $scope, ctrlUsersFactory, dialogs, $q, generalFunctions) {
+myapp.controller('usersCtrl', ['$rootScope', '$scope', 'ctrlUsersFactory', 'dialogs', '$q', '$state', function($rootScope, $scope, ctrlUsersFactory, dialogs, $q, $state) {
 
 	$scope.$on('socket:loggedIn', function(event, data){
 		$scope.datosUsers.forEach(function(user){
@@ -67,6 +67,10 @@ myapp.controller('usersCtrl', ['$rootScope', '$scope', 'ctrlUsersFactory', 'dial
 		} else {
 			return true;
 		}
+	};
+
+	$scope.actualizar = function(){
+		$state.reload();
 	};
 
 	$scope.guardar = function(){

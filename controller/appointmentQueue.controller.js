@@ -15,7 +15,7 @@ myapp.controller('queuedMailsCtrl', ['$scope', 'turnosFactory', 'loginService', 
 		mensaje: 'No se han encontrado turnos para los filtros seleccionados.'
 	};
 
-	$scope.ocultarFiltros = ['fechaInicio', 'buque', 'viaje', 'mov'];
+	$scope.ocultarFiltros = ['fechaInicio', 'buque', 'viaje', 'mov', 'patenteCamion', 'tren', 'carga', 'ontime', 'onlyTrains', 'size'];
 
 	// Fecha (dia y hora)
 	$scope.model = {

@@ -169,7 +169,7 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['view/*'],
+						src: ['view/**/*'],
 						dest: 'build'
 					},
 					{

@@ -58,7 +58,7 @@ myapp.controller('loginCtrl', ['$state', 'loginService', 'authFactory', 'dialogs
 
 		vm.resetPassword = () => {
 			const modalInstance = $uibModal.open({
-				templateUrl: 'view/resetPassword.dialog.html',
+				templateUrl: 'view/login/resetPassword.dialog.html',
 				controller: 'resetPasswordDialogCtrl',
 				backdrop: 'static'
 			});

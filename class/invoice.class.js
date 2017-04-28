@@ -223,7 +223,7 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
             const deferred = $q.defer();
             this.getTrack().then(() => {
                 let modalInstance = $uibModal.open({
-                    templateUrl: 'view/trackingInvoice.html',
+                    templateUrl: 'view/comprobantes/trackingInvoice.html',
                     controller: 'trackingInvoiceCtrl',
                     backdrop: 'static',
                     resolve: {
