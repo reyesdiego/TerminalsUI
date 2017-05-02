@@ -299,7 +299,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 							dialogs.notify("Totales por tarifa", "No se encontraron datos para las fechas y tarifas seleccionadas.");
 						}
 					} else {
-						dialogs.error("Totales por tarifa", `Se produjo un error al cargar los datos.\n${data.meesage}`)
+						dialogs.error("Totales por tarifa", `Se produjo un error al cargar los datos.\n${data.message}`)
 					}
 					$scope.loadingReporteTarifas = false;
 				});
