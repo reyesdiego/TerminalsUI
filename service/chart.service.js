@@ -60,8 +60,12 @@ myapp.service('chartLoader', ['$q', function($q){
 				ctx.fillStyle = 'white';
 				ctx.fillRect(0, 0, canvas.width, canvas.height);
 				ctx.drawImage(img, 0, 0);
-				dataURL = canvas.toDataURL('image/jpeg');
-				deferred.resolve(dataURL);
+				const response = {
+					data: canvas.toDataURL('image/jpeg'),
+					h: img.height,
+					w: img.width
+				};
+				deferred.resolve(response);
 				canvas = null;
 			};
 			img.src = this.chart.getImageURI();

@@ -309,8 +309,8 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				hoy: new Date(),
 				totales: $scope.chartTotalesPorTerminal.data,
 				charts: [
-					{filename: $scope.chartReporteTarifas.options.id, image: $scope.chartReporteTarifas.options.image, h: $scope.chartReporteTarifas.options.height, w: $scope.chartReporteTarifas.options.width},
-					{filename: $scope.chartTotalesPorTerminal.options.id, image: $scope.chartTotalesPorTerminal.options.image, h: $scope.chartTotalesPorTerminal.options.height, w: $scope.chartTotalesPorTerminal.options.width}
+					{filename: $scope.chartReporteTarifas.options.id, image: $scope.chartReporteTarifas.options.image.data, h: $scope.chartReporteTarifas.options.image.h, w: $scope.chartReporteTarifas.options.image.w},
+					{filename: $scope.chartTotalesPorTerminal.options.id, image: $scope.chartTotalesPorTerminal.options.image.data, h: $scope.chartTotalesPorTerminal.options.image.h, w: $scope.chartTotalesPorTerminal.options.image.w}
 				]
 			};
 			let nombreReporte = 'Reporte_tasas.pdf';

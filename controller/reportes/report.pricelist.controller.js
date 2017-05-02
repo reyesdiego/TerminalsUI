@@ -315,9 +315,9 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				tabla: $scope.tablaGrafico,
 				totales: $scope.totales,
 				charts: [
-					{filename: $scope.chartReporteTarifas.options.id, image: $scope.chartReporteTarifas.options.image, h: $scope.chartReporteTarifas.options.height, w: $scope.chartReporteTarifas.options.width},
-					{filename: $scope.chartTotalesPorTerminal.options.id, image: $scope.chartTotalesPorTerminal.options.image, h: $scope.chartTotalesPorTerminal.options.height, w: $scope.chartTotalesPorTerminal.options.width},
-					{filename: $scope.chartTotalesPorTarifa.options.id, image: $scope.chartTotalesPorTarifa.options.image, h: $scope.chartTotalesPorTarifa.options.height, w: $scope.chartTotalesPorTarifa.options.width}
+					{filename: $scope.chartReporteTarifas.options.id, image: $scope.chartReporteTarifas.options.image.data, h: $scope.chartReporteTarifas.options.image.h, w: $scope.chartReporteTarifas.options.image.w},
+					{filename: $scope.chartTotalesPorTerminal.options.id, image: $scope.chartTotalesPorTerminal.options.image.data, h: $scope.chartTotalesPorTerminal.options.image.h, w: $scope.chartTotalesPorTerminal.options.image.w},
+					{filename: $scope.chartTotalesPorTarifa.options.id, image: $scope.chartTotalesPorTarifa.options.image.data, h: $scope.chartTotalesPorTarifa.options.image.h, w: $scope.chartTotalesPorTarifa.options.image.w}
 				]
 			};
 			const nombreReporte = 'Reporte_tarifas.pdf';
