@@ -17,6 +17,7 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                 if (!CacheFactory.get('generalCache')){
                     this.cache = CacheFactory.createCache('generalCache', {
                         maxAge: 7 *24 * 60 * 60 * 1000, // 1 week
+                        //maxAge: 60, // 1 min
                         deleteOnExpire: 'aggressive',
                         storageMode: 'localStorage',
                         onExpire: (key, value) => {
@@ -170,7 +171,6 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                     //console.log('no hay buques');
                     const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/ships`;
                     $http.get(inserturl).then((response) => {
-                        console.log(response);
                         if (response.data.status == 'OK') {
                             //console.log('cargamos buques');
                             this.cache.put(`buques${loginService.filterTerminal}`, response.data.data);

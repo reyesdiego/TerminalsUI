@@ -39,14 +39,14 @@
 					</thead>
 					<tbody>
 					<tr style="font-size: 8pt" ng-show="tipoFiltro=='cantidad'" ng-repeat="comprobante in comprobantesCantidad">
-						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
+						<td class="text-left">{{ comprobante.description }}</td>
 						<td class="text-right">{{ comprobante.BACTSSA.cnt[0] | numero }} ({{ comprobante.BACTSSA.cnt[1] | numero | number:2 }} %)</td>
 						<td class="text-right">{{ comprobante.TERMINAL4.cnt[0] | numero }} ({{ comprobante.TERMINAL4.cnt[1] | numero | number:2 }} %)</td>
 						<td class="text-right">{{ comprobante.TRP.cnt[0] | numero }} ({{ comprobante.TRP.cnt[1] | numero | number:2 }} %)</td>
 						<td class="text-right"><b>{{ comprobante.cnt }}</b></td>
 					</tr>
 					<tr style="font-size: 8pt" ng-show="tipoFiltro=='total'" ng-repeat="comprobante in comprobantesCantidad">
-						<td class="text-left">{{ comprobante.codTipoComprob | nombreComprobante : false }}</td>
+						<td class="text-left">{{ comprobante.description }}</td>
 						<td class="text-right">{{ comprobante.BACTSSA.total[0] | numero | currency }} ({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)</td>
 						<td class="text-right">{{ comprobante.TERMINAL4.total[0] | numero | currency }} ({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)</td>
 						<td class="text-right">{{ comprobante.TRP.total[0] | numero | currency }} ({{ comprobante.TRP.total[1] | numero | number:2 }} %)</td>
