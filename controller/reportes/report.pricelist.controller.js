@@ -60,8 +60,13 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			$scope.currentPage = data;
 		});
 
+		$scope.searchPrice = function(value, index, array){
+			return value.code.toUpperCase().search($scope.search) > -1 || value.description.toUpperCase().search($scope.search) > -1 || value.largo == $scope.search;
+		};
+
 		function traerDatos () {
 			priceFactory.getPricelistAgp().then((response) => {
+				console.log(response);
 				$scope.pricelist = response.pricelist;
 				$scope.pricelistTasas = response.pricelistTasas;
 				$scope.pricelist.forEach((price) => {

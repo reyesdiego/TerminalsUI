@@ -7,7 +7,7 @@
 	<div class="row hidden-print" ng-hide="hayError">
 		<div class="col-lg-12">
 			<div class="input-group">
-				<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
+				<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción, medida o tarifa" toupper>
 				<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 			</div>
 			<div class="checkbox">
@@ -58,7 +58,7 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter: searchPrice) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 						<td style="width: 10%">{{ price.code }}</td>
 						<td style="width: 54%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
 						<td style="width: 12%">{{ price.unit}}</td>

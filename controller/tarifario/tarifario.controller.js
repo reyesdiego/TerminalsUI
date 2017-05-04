@@ -33,6 +33,11 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 		$scope.procesando = false;
 
 		//$scope.fechaVigencia = new Date();
+		$scope.search = '';
+
+		$scope.searchPrice = function(value, index, array){
+			return value.code.toUpperCase().search($scope.search) > -1 || value.description.toUpperCase().search($scope.search) > -1 || value.largo == $scope.search || value.price.toString().search($scope.search) > -1
+		};
 
 		$scope.cambiarTarifas = function(tipoTarifa){
 			$scope.tiposTarifas.forEach(function(unaTarifa){

@@ -38,7 +38,7 @@
 
     <div class="row hidden-print col-lg-12" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
         <div class="input-group col-lg-12">
-            <input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
+            <input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o medida" toupper>
             <span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
         </div>
         <br>
@@ -62,13 +62,15 @@
                 <tr>
                     <th><span class="glyphicon glyphicon-bookmark"></span> Código</th>
                     <th><span class="glyphicon glyphicon-credit-card"></span> Tarifa</th>
+                    <th class="text-right"><span class="glyphicon glyphicon-chevron-right"></span> Medida</th>
                     <th class="text-center"><span class="glyphicon glyphicon-check"></span> Seleccionar</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr style="height:60px" ng-repeat="price in filteredPrices = (selectedList | filter:search) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+                <tr style="height:60px" ng-repeat="price in filteredPrices = (selectedList | filter: searchPrice) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
                     <td class="col-lg-1">{{ price.code }}</td>
-                    <td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+                    <td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+                    <td class="col-lg-1 text-right">{{ price.largo }}</td>
                     <td class="col-lg-2 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="price.graficar" ng-click="agregarGrafico(price)"></td>
                 </tr>
                 </tbody>
