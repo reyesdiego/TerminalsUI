@@ -35,20 +35,25 @@
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'code' && reverse"></span>
 							<span class="glyphicon glyphicon-bookmark"></span> Código
 						</a></th>
-						<th style="width: 54%"><a href="" ng-click="ordenarPor('description')">
+						<th style="width: 52%"><a href="" ng-click="ordenarPor('description')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'description' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'description' && reverse"></span>
 							<span class="glyphicon glyphicon-credit-card"></span> Tarifa
 						</a></th>
-						<th style="width: 12%"><a href="" ng-click="ordenarPor('unit')">
+						<th style="width: 10%"><a href="" ng-click="ordenarPor('unit')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'unit' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'unit' && reverse"></span>
 							<span class="glyphicon glyphicon-tag"></span> Unidad
 						</a></th>
-						<th class="text-right" style="width: 10%"><a href="" ng-click="ordenarPor('largo')">
+						<th class="text-right" style="width: 7%"><a href="" ng-click="ordenarPor('largo')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'largo' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'largo' && reverse"></span>
 							<span class="glyphicon glyphicon-chevron-right"></span> Medida
+						</a></th>
+						<th class="text-right" style="width: 7%"><a href="" ng-click="ordenarPor('norma')">
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'largo' && !reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'largo' && reverse"></span>
+							<span class="glyphicon glyphicon-chevron-right"></span> Tipo
 						</a></th>
 						<th class="text-right" style="width: 14%"><a href="" ng-click="ordenarPor('orderPrice')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'orderPrice' && !reverse"></span>
@@ -59,20 +64,22 @@
 					</thead>
 					<tbody>
 					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter: searchPrice) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
-						<td style="width: 10%">{{ price.code }}</td>
-						<td style="width: 54%">{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
-						<td style="width: 12%">{{ price.unit}}</td>
-						<td class="text-right" style="width: 10%">{{ price.largo }}</td>
-						<td class="text-right" style="width: 14%">
+						<td>{{ price.code }}</td>
+						<td>{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+						<td>{{ price.unit}}</td>
+						<td class="text-right" >{{ price.largo }}</td>
+						<td class="text-right" >{{ price.norma }}</td>
+						<td class="text-right" >
 							<span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
 						</td>
 					</tr>
 					<tr style="height:60px" class="visible-print" ng-repeat="price in pricelist | filter:search | orderBy: predicate : reverse">
-						<td style="width: 10%">{{ price.code }}</td>
-						<td style="width: 54%">{{ price.description }}</td>
-						<td style="width: 12%">{{ price.unit}}</td>
-						<td class="text-right" style="width: 10%">{{ price.largo }}</td>
-						<td class="text-right" style="width: 14%" >
+						<td>{{ price.code }}</td>
+						<td>{{ price.description }}</td>
+						<td>{{ price.unit}}</td>
+						<td class="text-right">{{ price.largo }}</td>
+						<td class="text-right">{{ price.norma }}</td>
+						<td class="text-right">
 							<span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
 						</td>
 					</tr>
