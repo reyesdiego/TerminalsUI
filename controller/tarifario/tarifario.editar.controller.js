@@ -20,6 +20,10 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			{ value: 20, description: '20 pies' },
 			{ value: 40, description: '40 pies' }
 		];
+		$scope.normas = [
+			{ value: 'FN', description: 'Fuera de Norma' },
+			{ value: 'RF', description: 'Reefer' }
+		];
 
 		$scope.newPrice = new Price();
 
@@ -42,6 +46,8 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		$scope.flagEditando = false;
 		$scope.tasas = false;
+		$scope.medida = false;
+		$scope.norma = false;
 
 		let tipoFiltro = 'AGP';
 
@@ -77,7 +83,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		});
 
 		$scope.prepararDatos = function(){
-			priceFactory.getMatchPrices($scope.tasas).then((data) => {
+			priceFactory.getMatchPrices($scope.tasas, $scope.medida, $scope.norma).then((data) => {
 				pricelist = data.data;
 				pricelistAgp = [];
 				servicios = [];

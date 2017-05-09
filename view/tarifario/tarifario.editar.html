@@ -16,7 +16,13 @@
                 </div>
                 <div class="checkbox col-lg-6 left">
                     <label>
-                        <input type="checkbox" ng-model="tasas" ng-change="prepararDatos()">Sólo tasa a las cargas
+                        <input type="checkbox" ng-model="tasas" ng-change="prepararDatos()">Tasa a las cargas
+                    </label>
+                    <label>
+                        &nbsp;<input type="checkbox" ng-model="medida" ng-change="prepararDatos()">Con medida
+                    </label>
+                    <label>
+                        &nbsp;<input type="checkbox" ng-model="norma" ng-change="prepararDatos()">Fuera de norma
                     </label>
                 </div>
             </div>
@@ -52,6 +58,16 @@
                                 <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'description' && reverse"></span>
                                 <span class="glyphicon glyphicon-credit-card"></span> Tarifa
                             </a></th>
+                            <th class="text-right" ><a href="" ng-click="ordenarPor('largo')">
+                                <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'largo' && !reverse"></span>
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'largo' && reverse"></span>
+                                <span class="glyphicon glyphicon-chevron-right"></span> Medida
+                            </a></th>
+                            <th class="text-right" ><a href="" ng-click="ordenarPor('norma')">
+                                <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'largo' && !reverse"></span>
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'largo' && reverse"></span>
+                                <span class="glyphicon glyphicon-chevron-right"></span> Tipo
+                            </a></th>
                             <!-- Por ahora va este hasta que actualicen el server en producccion -->
                             <!--<th><a href="" ng-click="ordenarPor('topPrices[0].price')">
                                 <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'topPrices[0].price' && !reverse"></span>
@@ -73,6 +89,12 @@
                             </td>
                             <td class="col-lg-5">
                                 <span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
+                            </td>
+                            <td class="col-lg-1">
+                                <span>{{ price.largo }}</span>
+                            </td>
+                            <td class="col-lg-1">
+                                <span>{{ price.norma }}</span>
                             </td>
                             <td class="col-lg-1 text-right">
                                 <!--<span>{{ price.topPrices[price.topPrices.length-1].price | currency: (price.topPrices[price.topPrices.length-1].currency | formatCurrency) }}</span>-->
