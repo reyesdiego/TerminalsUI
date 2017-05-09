@@ -26,6 +26,8 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 		//Lista que contiene todos los datos
 		$scope.listaElegida = [];
 		$scope.tasas = false;
+		$scope.medida = false;
+		$scope.norma = false;
 		$scope.itemsPerPage = 10;
 		$scope.hayError = false;
 		$scope.disableSave = false;
@@ -68,7 +70,7 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 			servicios = [];
 
 			$scope.listaElegida = [];
-			priceFactory.getMatchPrices($scope.tasas).then((data) => {
+			priceFactory.getMatchPrices($scope.tasas, $scope.medida, $scope.norma).then((data) => {
 				$scope.hayError = false;
 				$scope.pricelist = data.data;
 				$scope.pricelist.forEach((tarifa) => {

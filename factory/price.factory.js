@@ -55,10 +55,14 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			return deferred.promise;
 		}
 
-		getMatchPrices(tasas) {
+		getMatchPrices(tasas, medida, norma) {
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/${loginService.filterTerminal}`;
-			const param = { onlyRates: tasas };
+			const param = {
+				onlyRates: tasas,
+				onlyMedida: medida,
+				onlyNorma: norma
+			};
 			$http.get(inserturl, { params: formatService.formatearDatos(param) }).then((response) => {
 				if (response.data.status == 'OK'){
 					response.data.data = this.retrievePrice(response.data.data);
