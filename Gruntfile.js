@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 					'css/animate.css',
 					'css/ionicons.css',
 					'js/angular-notify/angular-notify.css',
-					'js/pivottable/pivot.css',
+					'css/pivot.css',
 					'bower_components/ng-tags-input/ng-tags-input.css'
 				],
 				dest: 'build/css/aditional.css'
