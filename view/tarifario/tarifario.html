@@ -12,7 +12,17 @@
 			</div>
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" ng-model="tasas" ng-change="cargaPricelist()" ng-disabled="!tiposTarifas[0].active">Sólo tasa a las cargas
+					<input type="checkbox" ng-model="tasas" ng-change="cargaPricelist()" ng-disabled="!tiposTarifas[0].active">Tasa a las cargas
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="medida" ng-change="cargaPricelist()" ng-disabled="!tiposTarifas[0].active">Con medida
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="norma" ng-change="cargaPricelist()" ng-disabled="!tiposTarifas[0].active">Fuera de norma
 				</label>
 			</div>
 		</div>
