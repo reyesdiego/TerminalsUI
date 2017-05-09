@@ -4,7 +4,7 @@
 
 //google.charts.load('current', {'packages':['corechart'], 'language': 'es'});
 
-Array.prototype.equals = function (array) {
+/*Array.prototype.equals = function (array) {
 	// if the other array is a falsy value, return
 	if (!array)
 		return false;
@@ -29,7 +29,7 @@ Array.prototype.equals = function (array) {
 		}
 	}
 	return true;
-};
+};*/
 
 var myapp = angular.module('myapp', ['ui.router', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngSanitize', 'ngCookies', 'multi-select', 'angular-cache', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
 
@@ -80,6 +80,10 @@ myapp.constant('uiDatetimePickerConfig', {
 	saveAs: false,
 	readAs: false
 });
+
+myapp.config(['$qProvider', function ($qProvider) {
+	$qProvider.errorOnUnhandledRejections(false);
+}]);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
 

@@ -8,8 +8,10 @@
 	<meta charset="utf-8">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" ng-href="css/{{ dataTerminal.terminalEstilo }}.css">
+	<!-- build:css css/terminalColor.min.css -->
 	<link rel="stylesheet" href="css/terminalColor.css" title="TERMINALES">
-	<!-- build:css css/aditional-min.css -->
+	<!-- /build -->
+	<!-- build:css css/aditional.min.css -->
 	<link rel="stylesheet" href="css/app.css">
 	<link rel="stylesheet" href="css/dialogs.css">
 	<link rel="stylesheet" href="css/angular-multi-select.css">
@@ -19,8 +21,16 @@
 	<link rel="stylesheet" href="js/angular-notify/angular-notify.css">
 	<link rel="stylesheet" href="css/ionicons.css">
 	<link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css">
+	<link rel="stylesheet" href="css/pivot.css">
 	<!-- /build -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser-polyfill.min.js"></script>
+	<!-- JQuery -->
+	<!-- build:js bower_components/jquery/dist/jquery.min.js -->
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<!-- /build -->
+	<!-- build:js bower_components/jquery-ui/jquery-ui.min.js -->
+	<script src="bower_components/jquery-ui/jquery-ui.js"></script>
+	<!-- /build -->
 	<!-- Angular y modulos -->
 	<!-- build:js bower_components/angular/angular.min.js -->
 	<script src="bower_components/angular/angular.js"></script>
@@ -56,11 +66,16 @@
 	<!-- build:js bower_components/ng-tags-input/ng-tags-input.min.js -->
 	<script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
 	<!-- /build -->
+	<!-- build:js js/pivottable.min.js -->
+	<script src="js/pivottable/pivot.js"></script>
+	<script src="js/pivottable/pivot.es.js"></script>
+	<script src="js/pivottable/gchart_renderers.js"></script>
+	<!-- /build -->
 	<script src="js/socket.io.min.js"></script>
 	<!-- Google charts -->
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!-- App Script -->
-	<!-- build:js js/app-min.js -->
+	<!-- build:js js/app.min.js -->
 	<script src="main/main.js"></script>
 	<script src="main/config.js"></script>
 	<!-- Classes -->
@@ -77,6 +92,7 @@
 	<script src="service/httpCanceler.service.js"></script>
 	<script src="service/download.service.js"></script>
 	<script src="service/chart.service.js"></script>
+	<script src="service/dialogs/dialogs.js"></script>
 	<!-- Factories -->
 	<script src="factory/afip.factory.js"></script>
 	<script src="factory/auth.factory.js"></script>
@@ -97,7 +113,6 @@
 	<!-- Controles Angular-->
 	<script src="controller/comprobantes/comprobantes.control.controller.js"></script>
 	<script src="controller/reportes/controlPanel.controller.js"></script>
-	<script src="controller/dialogs.js"></script>
 	<script src="controller/gates/gates.controller.js"></script>
 	<script src="controller/comprobantes/comprobantes.controller.js"></script>
 	<script src="controller/login/login.controller.js"></script>
@@ -128,6 +143,7 @@
 	<script src="controller/contenedores/container.sumaria.controller.js"></script>
 	<script src="controller/reportes/report.terminalRates.controller.js"></script>
 	<script src="controller/gates/gates.control.controller.js"></script>
+	<script src="controller/turnos/turnos.patentes.modal.controller.js"></script>
 	<!-- Directives -->
 	<script src="directives/general.directives.js"></script>
 	<script src="directives/afip.directives.js"></script>
@@ -138,6 +154,7 @@
 	<script src="directives/reportes.directives.js"></script>
 	<script src="directives/turnos.directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
+	<script src="directives/ngPivot.directive.js"></script>
 	<!-- /build -->
 	<!-- Style Switcher -->
 	<script src="js/linq.min.js"></script>

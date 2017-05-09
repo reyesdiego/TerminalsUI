@@ -171,7 +171,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 					}).catch(() => {
 						dialogs.error('Asociar', 'Se ha producido un error al intentar guardar los cambios.');
 					});
-				});
+				}).catch();
 			}
 		};
 
@@ -250,7 +250,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				}).catch((response) => {
 					dialogs.error('Asociar', 'Se ha producido un error al intentar eliminar la tarifa. ' + response.data);
 				});
-			})
+			}).catch();
 		};
 
 		//Borra el valor de un campo de la nueva tarifa

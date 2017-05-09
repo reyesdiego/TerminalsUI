@@ -12,13 +12,13 @@ module.exports = function(grunt) {
 					'css/animate.css',
 					'css/ionicons.css',
 					'js/angular-notify/angular-notify.css',
+					'js/pivottable/pivot.css',
 					'bower_components/ng-tags-input/ng-tags-input.css'
 				],
 				dest: 'build/css/aditional.css'
 			},
 			js : {
 				src : [
-					'js/angular-notify/angular-notify.js',
 					'main/main.js',
 					'main/configProd.js',
 					'class/*',
@@ -26,15 +26,23 @@ module.exports = function(grunt) {
 					'directives/*',
 					'factory/*',
 					'filter/*',
-					'service/*'
+					'service/**/*.js'
 				],
 				dest : 'build/js/app.js'
+			},
+			pivottable: {
+				src: [
+					'js/pivottable/pivot.js',
+					'js/pivottable/pivot.es.js',
+					'js/pivottable/gchart_renderers.js'
+				],
+				dest: 'build/js/pivottable.js'
 			}
 		},
 		cssmin: {
 			css: {
 				src: 'build/css/aditional.css',
-				dest: 'build/css/aditional-min.css'
+				dest: 'build/css/aditional.min.css'
 			},
 			bactssa: {
 				src: 'css/bootstrap.cerulean.css',
@@ -50,7 +58,7 @@ module.exports = function(grunt) {
 			},
 			terminales: {
 				src: 'css/terminalColor.css',
-				dest: 'build/css/terminalColor.css'
+				dest: 'build/css/terminalColor.min.css'
 			}
 		},
 		babel: {
@@ -60,15 +68,17 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-					'build/js/app.js': 'build/js/app.js'
+					'build/js/app.js': 'build/js/app.js',
+					'build/js/pivottable.js': 'build/js/pivottable.js'
 				}
 			}
 		},
 		uglify: {
 			js: {
 				files: {
-					'build/js/app-min.js' : ['build/js/app.js'],
-					'js/angular-notify/angular-notify.min.js' : ['js/angular-notify/angular-notify.js']
+					'build/js/app.min.js' : ['build/js/app.js'],
+					'js/angular-notify/angular-notify.min.js' : ['js/angular-notify/angular-notify.js'],
+					'build/js/pivottable.min.js': ['build/js/pivottable.js']
 				}
 			}
 		},
@@ -82,6 +92,16 @@ module.exports = function(grunt) {
 		copy: {
 			main: {
 				files: [
+					{
+						expand: true,
+						src: ['bower_components/jquery/dist/*.min.*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['bower_components/jquery-ui/*'],
+						dest: 'build'
+					},
 					{
 						expand: true,
 						src: ['bower_components/angular/*.min.*'],
@@ -164,12 +184,17 @@ module.exports = function(grunt) {
 					},
 					{
 						expand: true,
-						src: ['js/**'],
+						src: ['js/angular-notify/*.js', 'js/angular-locale_es-ar.js', 'js/html5.js', 'js/linq.min.js', 'js/moment-with-locales.min.js', 'js/socket.io.min.js'],
 						dest: 'build'
 					},
 					{
 						expand: true,
 						src: ['view/**/*'],
+						dest: 'build'
+					},
+					{
+						expand: true,
+						src: ['service/dialogs/*.html'],
 						dest: 'build'
 					},
 					{
@@ -212,6 +237,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', [
 		'concat:css',
 		'concat:js',
+		'concat:pivottable',
 		'cssmin:css',
 		'cssmin:bactssa',
 		'cssmin:terminal4',

@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 25/08/2016.
  */
-myapp.factory('Appointment', ['$http', '$q', 'APP_CONFIG', function($http, $q, APP_CONFIG){
+myapp.factory('Appointment', ['$http', '$q', 'APP_CONFIG', '$uibModal', function($http, $q, APP_CONFIG, $uibModal){
 
     class Appointment {
         constructor(appointmentData){
@@ -18,8 +18,25 @@ myapp.factory('Appointment', ['$http', '$q', 'APP_CONFIG', function($http, $q, A
                 deferred.reject(response.data);
             });
             return deferred.promise;
-        }
-    }
+		}
+
+		editarPatente(){
+			let modalInstance = $uibModal.open({
+				templateUrl: 'view/turnos/turnos.patente.modal.html',
+				controller: 'turnosPatenteCtrl as vmModal',
+				backdrop: 'static',
+				resolve: {
+					turno: () => {
+						return this;
+					}
+				}
+			});
+			modalInstance.result.then((dataComment) => {
+
+			}).catch()
+
+		}
+	}
 
     return Appointment;
 

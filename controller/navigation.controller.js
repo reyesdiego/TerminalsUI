@@ -14,7 +14,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		});
 
 		$scope.colaNotificaciones = [];
-		$scope.notificacionesMáximasPantalla = 4;
+		$scope.notificacionesMaximasPantalla = 4;
 		$scope.iniciarChequeo = true;
 
 		$scope.dataTerminal = loginService;
@@ -68,7 +68,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 						$rootScope.invoiceNotify++;
 				}
 			} else if($rootScope.verNotificaciones) {
-				if ($scope.notificacionesMáximasPantalla > 0){
+				if ($scope.notificacionesMaximasPantalla > 0){
 					notify({
 						messageTemplate: template,
 						title: titulo,
@@ -76,7 +76,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 						onClose: $scope.liberarNotificacion,
 						scope: $scope
 					});
-					$scope.notificacionesMáximasPantalla--;
+					$scope.notificacionesMaximasPantalla--;
 				} else {
 					var notificacion = {
 						messageTemplate: template,
@@ -208,14 +208,14 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 		};
 
 		$scope.liberarNotificacion = function(){
-			$scope.notificacionesMáximasPantalla++
+			$scope.notificacionesMaximasPantalla++
 		};
 
 		$scope.chequearNotificaciones = function(){
 			$timeout(function(){
 				if ($scope.colaNotificaciones.length > 0){
 					var ponerNotificaciones = $scope.colaNotificaciones.length;
-					if (ponerNotificaciones > $scope.notificacionesMáximasPantalla) ponerNotificaciones = $scope.notificacionesMáximasPantalla;
+					if (ponerNotificaciones > $scope.notificacionesMaximasPantalla) ponerNotificaciones = $scope.notificacionesMaximasPantalla;
 					for (var i = 0; i < ponerNotificaciones; i++){
 						var template = $scope.colaNotificaciones[i];
 						notify({
@@ -225,7 +225,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 							onClose: $scope.liberarNotificacion,
 							scope: $scope
 						});
-						$scope.notificacionesMáximasPantalla--;
+						$scope.notificacionesMaximasPantalla--;
 					}
 					$scope.colaNotificaciones.splice(0, ponerNotificaciones);
 				}

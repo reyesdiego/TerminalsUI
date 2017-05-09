@@ -79,11 +79,12 @@
     </div>
 
     <div class="row hidden-print" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
         </div>
-        <div class="col-lg-2 text-right" style="margin-top: 20px">
-            <button class="btn btn-primary" ng-click="armarGraficoTarifas()"><span class="glyphicon glyphicon-asterisk"></span> Cargar gráfico</button>
+        <div class="col-lg-4 text-right" style="margin-top: 20px">
+            <button class="btn btn-primary" ng-click="armarGraficoTarifas(true)"><span class="glyphicon glyphicon-asterisk"></span> Reporte dinámico</button>
+            <button class="btn btn-default" ng-click="armarGraficoTarifas(false)"><span class="glyphicon glyphicon-asterisk"></span> Reporte estático</button>
         </div>
     </div>
 
@@ -91,7 +92,18 @@
         <h3>Del {{ desde | date: 'dd/MM/yyyy' }} al {{ hasta | date: 'dd/MM/yyyy' }}</h3>
     </div>
 
-    <div class="row table-responsive col-lg-12" ng-show="mostrarGrafico && !loadingReporteTarifas && !errorTarifario">
+    <div class="row table-responsive col-lg-12" ng-if="tarifasAgrupadas && mostrarGrafico && !loadingReporteTarifas && !errorTarifario">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Reporte de tarifas agrupadas</h3>
+            </div>
+            <div class="panel-body">
+                <ng-pivot data="tablePivot.data" options="tablePivot.options"></ng-pivot>
+            </div>
+        </div>
+    </div>
+
+    <div class="row table-responsive col-lg-12" ng-if="!tarifasAgrupadas && mostrarGrafico && !loadingReporteTarifas && !errorTarifario">
         <table class="invoice-shadow table table-striped table-bordered table-hover">
             <thead>
             <tr>
@@ -116,7 +128,7 @@
         </table>
     </div>
 
-    <div class="row" ng-if="mostrarGrafico && !errorTarifario">
+    <div class="row" ng-if="mostrarGrafico && !errorTarifario && !tarifasAgrupadas">
         <div class="col-lg-12 text-center table-responsive">
             <column-chart
                 class="chart col-xs-12"
@@ -126,36 +138,27 @@
         </div>
     </div>
 
-    <div class="row" ng-if="mostrarGrafico && !errorTarifario">
+    <div class="row" ng-if="mostrarGrafico && !errorTarifario && !tarifasAgrupadas">
         <div class="col-lg-6 text-center table-responsive">
             <pie-chart
                 class="chart col-xs-12"
                 data="chartTotalesPorTarifa.data"
                 options="chartTotalesPorTarifa.options"
                 click="selectRow(selectedRow, id)"></pie-chart>
-            <!--<dynamic-chart
-                    chart-object="chartTotalesPorTarifa"
-                    select="selectRow(selectedRowIndexTotalesTarifas)">
-            </dynamic-chart>-->
         </div>
         <div class="col-lg-6 text-center table-responsive">
             <pie-chart
                 class="chart col-xs-12"
                 data="chartTotalesPorTerminal.data"
                 options="chartTotalesPorTerminal.options"></pie-chart>
-            <!--<dynamic-chart
-                    chart-object="chartTotalesPorTerminal"
-                    select="selectRow(selectedRowIndexTotalesTerminal)"
-                    colors="barColors">
-            </dynamic-chart>-->
         </div>
     </div>
 
-    <div class="row hidden-print" ng-show="mostrarGrafico && !errorTarifario">
+    <div class="row hidden-print" ng-if="mostrarGrafico && !errorTarifario">
         <div class="col-lg-6 text-right">
-            <button class="btn btn-primary" ng-click="mostrarGrafico = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+            <button class="btn btn-primary" ng-click="volver()"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6" ng-show="!tarifasAgrupadas">
             <button class="btn btn-success" ng-click="descargarPdf()"><span class="glyphicon glyphicon-download"></span> Descargar PDF</button>
         </div>
     </div>

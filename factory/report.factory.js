@@ -2,7 +2,7 @@
  * Created by Artiom on 17/06/14.
  */
 
-myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', 'APP_CONFIG', 'downloadService', function($http, dialogs, formatService, loginService, APP_CONFIG, downloadService){
+myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', 'APP_CONFIG', 'downloadService', '$q', function($http, dialogs, formatService, loginService, APP_CONFIG, downloadService, $q){
 
 	class reportsFactory {
 
@@ -37,6 +37,17 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 			}).catch((response) => {
 				callback(response.data);
 			});
+		}
+
+		getReporteTarifasPivot(fecha, tarifas){
+			const deferred = $q.defer();
+			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byRates/pivot`;
+			$http.post(inserturl, tarifas, {params: formatService.formatearDatos(fecha)}).then((response) => {
+				deferred.resolve(response.data);
+			}).catch((response) => {
+				deferred.reject(response.data)
+			});
+			return deferred.promise;
 		}
 
 	}

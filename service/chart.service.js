@@ -75,7 +75,7 @@ myapp.service('chartLoader', ['$q', function($q){
 	}
 
 	// Load the Visualization API and the corechart package.
-	google.charts.load('current', {'packages':['corechart'], 'language': 'es'});
+	google.charts.load('current', {'packages':['corechart', 'charteditor'], 'language': 'es'});
 	// Set a callback to run when the Google Visualization API is loaded.
 	google.charts.setOnLoadCallback(() => {
 		deferred.resolve(Chart)

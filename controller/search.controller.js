@@ -2,8 +2,10 @@
  * Created by artiom on 12/03/15.
  */
 
-myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunctions', '$sce', 'dialogs', 'loginService', '$filter', 'invoiceFactory',
-	function($scope, cacheService, generalFunctions, $sce, dialogs, loginService, $filter, invoiceFactory){
+myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunctions', '$sce', 'dialogs', 'loginService', '$filter', 'invoiceFactory', '$uibModal',
+	function($scope, cacheService, generalFunctions, $sce, dialogs, loginService, $filter, invoiceFactory, $uibModal){
+
+		$scope.dataTerminal = loginService;
 
 		$scope.status = {
 			open: true
