@@ -6,6 +6,21 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 	function($scope, priceFactory, loginService, downloadFactory, dialogs, $filter, downloadService) {
 
 		'use strict';
+		function setPricelist(){
+			let lista = 'AGP';
+			$scope.tiposTarifas.forEach((tipoTarifa) => {
+				if (tipoTarifa.active) lista = tipoTarifa.nombre;
+			});
+			if (lista == 'AGP'){
+				$scope.listaElegida = angular.copy(pricelistAgp);
+			} else if (lista == 'Servicios'){
+				$scope.listaElegida = angular.copy(servicios);
+			} else {
+				$scope.listaElegida = angular.copy(pricelistTerminal);
+			}
+			$scope.totalItems = $scope.listaElegida.length
+		}
+
 		//Array con los tipos de tarifas para establecer filtros
 		$scope.tiposTarifas = [
 			{nombre: 'AGP', active: true},
@@ -78,8 +93,9 @@ myapp.controller('pricelistCtrl', ['$scope', 'priceFactory', 'loginService', 'do
 					if (tarifa.tarifaTerminal) pricelistTerminal.push(tarifa);
 					if (tarifa.servicio) servicios.push(tarifa);
 				});
-				$scope.listaElegida = angular.copy(pricelistAgp);
-				$scope.totalItems = $scope.listaElegida.length;
+				//$scope.listaElegida = angular.copy(pricelistAgp);
+				//$scope.totalItems = $scope.listaElegida.length;
+				setPricelist();
 			}).catch((error) => {
 				$scope.hayError = true;
 				$scope.mensajeResultado = {
