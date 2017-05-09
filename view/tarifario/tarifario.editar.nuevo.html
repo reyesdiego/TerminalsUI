@@ -42,6 +42,15 @@
                         </span>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="inputNorma" class="col-lg-3 control-label"><span class="glyphicon"></span> Tipo</label>
+                        <div class="input-group col-lg-8">
+                            <select class="form-control" id="inputNorma" ng-model="newPrice.norma" placeholder="Seleccione un tipo" ng-disabled="!enableEdition()" ng-selected="norma.value == newPrice.largo" ng-options="norma.value as norma.description for norma in normas" tabindex="1" ng-required="true"></select>
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="eraseField('norma')" ng-disabled="!enableEdition()" tabindex="-1"><i class="glyphicon glyphicon-remove" ng-disabled="!enableEdition()"></i></button>
+                        </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     <legend>Códigos asociados</legend>
