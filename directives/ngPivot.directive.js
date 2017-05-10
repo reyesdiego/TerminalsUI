@@ -10,25 +10,25 @@ myapp.directive('ngPivot', ['chartLoader', '$window', function(chartLoader, $win
 		restrict: 'E',
 		link: function(scope, element, attrs) {
 
-			let firstRender = true;
 			// Build Pivot
 			function render(){
-				if (firstRender){
-					chartLoader.then(() => {
-						scope.options.renderers = $.extend($.pivotUtilities.locales.es.renderers, $.pivotUtilities.gchart_renderers);
-					}).catch(() => {
-						scope.options.renderers = $.pivotUtilities.locales.es.renderers;
-					}).finally(() => {
-						firstRender = false;
-						if(scope.data.length > 0){
-							element.pivotUI(scope.data, scope.options, true, 'es');
-						}
-					})
-				} else {
+
+				chartLoader.then(() => {
+					scope.options.renderers = $.extend($.pivotUtilities.locales.es.renderers, $.pivotUtilities.gchart_renderers);
+				}).catch(() => {
+					scope.options.renderers = $.pivotUtilities.locales.es.renderers;
+				}).finally(() => {
 					if(scope.data.length > 0){
 						element.pivotUI(scope.data, scope.options, true, 'es');
+
+						const renderer = angular.element("select.pvtRenderer").on('change', () => {
+							scope.$apply(() => {
+								scope.options.rendererName = renderer.val()
+							});
+						})
 					}
-				}
+				})
+
 			}
 
 			// Data binding
@@ -41,7 +41,7 @@ myapp.directive('ngPivot', ['chartLoader', '$window', function(chartLoader, $win
 				scope.$apply(() => {
 					render();
 				})
-			})
+			});
 
 		}
 	}
