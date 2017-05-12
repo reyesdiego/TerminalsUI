@@ -24,7 +24,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 		getPricelistAgp() {
 			//Solo se utiliza para el reporte de tarifas, el parámetro es para que filtre y traiga únicamente las tasas a las cargas.
 			//Dado que el controlador requiere las 2 listas simultáneamente, se realizan ambas llamadas con distintos parámetros
-			//Y luegos se devuelven los datos organizados.
+			//Y luego se devuelven los datos organizados.
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/prices/agp`;
 			const param = { onlyRates: true };
@@ -55,7 +55,20 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			return deferred.promise;
 		}
 
+		getPricelistTerminal(terminal){
+			const deferred = $q.defer();
+			const inserturl = `${APP_CONFIG.SERVER_URL}/matchprices/${terminal}`;
+			$http.get(inserturl).then((response) => {
+				response.data.data = this.retrievePrice(response.data.data);
+				deferred.resolve(response.data);
+			}).catch((error) => {
+				deferred.reject(error.data);
+			});
+			return deferred.promise;
+		}
+
 		getMatchPrices(tasas, medida, norma) {
+			//Trae el tarifario completo de la terminal correspondiente, se usa en las vistas de tarifario y de editar tarifario
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/${loginService.filterTerminal}`;
 			const param = {

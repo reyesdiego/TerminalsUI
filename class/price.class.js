@@ -5,6 +5,9 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
 
     class Price {
         constructor(priceData){
+            //Propiedad para reporte de tarifas;
+            this.graficar = false;
+            //*******************************
             if (priceData){
                 this.setData(priceData);
             } else {

@@ -13,6 +13,13 @@ myapp.directive('reporteEmpresasSearch', function(){
 	}
 });
 
+myapp.directive('reporteTarifasSearch', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'view/reportes/accordion.reporte.tarifas.html'
+	}
+});
+
 myapp.directive('columnChart', ['chartLoader', '$window', function(chartLoader, $window){
 	return {
 		restrict: 'E',

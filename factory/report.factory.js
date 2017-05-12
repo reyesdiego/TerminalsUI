@@ -43,7 +43,11 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byRates/pivot`;
 			$http.post(inserturl, tarifas, {params: formatService.formatearDatos(fecha)}).then((response) => {
-				deferred.resolve(response.data);
+				if (response.data.status == 'OK'){
+					deferred.resolve(response.data);
+				} else {
+					deferred.reject(response.data);
+				}
 			}).catch((response) => {
 				deferred.reject(response.data)
 			});

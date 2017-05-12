@@ -11,21 +11,32 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			"trp": cacheService.colorTerminalesCache.get('Trp')
 		};
 
+		//Array con las terminales
+		$scope.tabsTerminales = [
+			{nombre: 'AGP', active: true},
+			{nombre: 'BACTSSA', active: false},
+			{nombre: 'TERMINAL4', active: false},
+			{nombre: 'TRP', active: false}
+		];
+
 		$scope.tarifasAgrupadas = true;
+
+		function getPivotTableFields(){
+			return {
+				"Terminal": (item) => {return item.terminal;},
+				"Cantidad": (item) => {return item.cantidad;},
+				"Total": (item) => {return item.total;},
+				"Tipo": (item) => {return item.norma;},
+				"Medida": (item) => {return item.largo;},
+				"Año": (item) => {return item.anio},
+				"Mes": (item) => {return item.mes}
+			}
+		}
 
 		$scope.tablePivot = {
 			data: [],
 			options: {
-				derivedAttributes: {
-					"Terminal": (item) => {return item.terminal;},
-					"Tarifa": (item) => {return item.code;},
-					"Cantidad": (item) => {return item.cantidad;},
-					"Total": (item) => {return item.total;},
-					"Tipo": (item) => {return item.norma;},
-					"Medida": (item) => {return item.largo;},
-					"Año": (item) => {return item.anio},
-					"Mes": (item) => {return item.mes}
-				},
+				derivedAttributes: getPivotTableFields(),
 				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes"],
 				rows: ["Terminal"],
 				cols: ["Medida"],
@@ -41,8 +52,6 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.search = '';
 		$scope.selectedList = [];
-		$scope.pricelist = [];
-		$scope.pricelistTasas = [];
 		$scope.filteredPrices = [];
 
 		$scope.datepickerOptions = {
@@ -66,10 +75,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.filteredPrices = [];
-		$scope.tarifasGraficar = {
-			"field": "code",
-			"data": []
-		};
+		$scope.tarifasGraficar = [];
 
 		$scope.tablaGrafico = {
 			"terminales": [],
@@ -92,21 +98,63 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			return value.code.toUpperCase().search($scope.search) > -1 || value.description.toUpperCase().search($scope.search) > -1 || value.largo == $scope.search;
 		};
 
+		$scope.cambiarListaTarifas = function(terminal){
+			$scope.tabsTerminales.forEach((unTab) => {
+				unTab.active = (unTab.nombre == terminal.nombre);
+			});
+			if (terminal.nombre == 'AGP'){
+				$scope.selectedList = pricelistAgp;
+			} else if (terminal.nombre == 'BACTSSA'){
+				$scope.selectedList = pricelistBactssa;
+			} else if (terminal.nombre == 'TERMINAL4'){
+				$scope.selectedList = pricelistTerminal4;
+			} else {
+				$scope.selectedList = pricelistTrp;
+			}
+			$scope.totalItems = $scope.selectedList.length
+		};
+
+		let pricelistAgp = [];
+		let pricelistAgpTasas = [];
+		let pricelistBactssa = [];
+		let pricelistTerminal4 = [];
+		let pricelistTrp = [];
+
 		function traerDatos () {
 			priceFactory.getPricelistAgp().then((response) => {
 				//console.log(response);
-				$scope.pricelist = response.pricelist;
-				$scope.pricelistTasas = response.pricelistTasas;
-				$scope.pricelist.forEach((price) => {
-					price.graficar = false;
-				});
-				$scope.pricelistTasas.forEach((price) => {
-					price.graficar = false;
-				});
-				$scope.selectedList = $scope.pricelist;
+				pricelistAgp = response.pricelist;
+				pricelistAgpTasas = response.pricelistTasas;
+				$scope.selectedList = pricelistAgp;
 			}).catch((error) => {
 				$scope.errorTarifario = true;
 			});
+
+			priceFactory.getPricelistTerminal('BACTSSA').then((response) => {
+				pricelistBactssa = filterTerminalPrices(response.data);
+			}).catch((error) => {
+				$scope.errorTarifario = true;
+			});
+
+			priceFactory.getPricelistTerminal('TERMINAL4').then((response) => {
+				pricelistTerminal4 = filterTerminalPrices(response.data);
+			}).catch((error) => {
+				$scope.errorTarifario = true;
+			});
+
+			priceFactory.getPricelistTerminal('TRP').then((response) => {
+				pricelistTrp = filterTerminalPrices(response.data);
+			}).catch((error) => {
+				$scope.errorTarifario = true;
+			});
+		}
+
+		function filterTerminalPrices(prices){
+			let filteredList = [];
+			prices.forEach((price) => {
+				if (price.tipoTarifa != 'A') filteredList.push(price);
+			});
+			return filteredList
 		}
 
 		if (loginService.isLoggedIn){
@@ -118,37 +166,37 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			//$scope.agregarQuitarTodo(false);
 			$scope.selectedList.forEach((price) => {
 				if ($scope.tasas){
-					pos = $scope.pricelistTasas.map((e) => {
+					pos = pricelistAgpTasas.map((e) => {
 						return e._id
 					}).indexOf(price._id);
 					if (pos != -1){
-						$scope.pricelistTasas[pos].graficar = price.graficar;
+						pricelistAgpTasas[pos].graficar = price.graficar;
 					}
 				} else {
-					pos = $scope.pricelist.map((e) => {
+					pos = pricelistAgp.map((e) => {
 						return e._id
 					}).indexOf(price._id);
 					if (pos != -1){
-						$scope.pricelist[pos].graficar = price.graficar;
+						pricelistAgp[pos].graficar = price.graficar;
 					}
 				}
 			});
 			if ($scope.tasas){
-				$scope.selectedList = $scope.pricelistTasas;
+				$scope.selectedList = pricelistAgpTasas;
 			} else {
-				$scope.selectedList = $scope.pricelist;
+				$scope.selectedList = pricelistAgp;
 			}
 		};
 
 		$scope.agregarGrafico = (precio) => {
-			let i = $scope.tarifasGraficar.data.indexOf(precio.code);
+			let i = $scope.tarifasGraficar.indexOf(precio.code);
 			if (precio.graficar){
 				if (i == -1){
-					$scope.tarifasGraficar.data.push(precio.code);
+					$scope.tarifasGraficar.push(precio.code);
 					$scope.tablaGrafico.data.push(precio);
 				}
 			} else {
-				$scope.tarifasGraficar.data.splice(i, 1);
+				$scope.tarifasGraficar.splice(i, 1);
 				$scope.tablaGrafico.data.splice(i, 1);
 			}
 		};
@@ -215,8 +263,13 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			],
 		};
 
-		$scope.hasta = new Date();
-		$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
+		$scope.model = {
+			fechaInicio: new Date(new Date().getFullYear(), new Date().getMonth()),
+			fechaFin: new Date()
+		};
+
+		//$scope.hasta = new Date();
+		//$scope.desde = new Date($scope.hasta.getFullYear(), $scope.hasta.getMonth());
 
 		$scope.isCollapsedDesde = false;
 		$scope.isCollapsedHasta = false;
@@ -236,25 +289,27 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.armarGraficoTarifas = (dinamico) => {
 			$scope.loadingReporteTarifas = true;
-			const fecha={
-				'fechaInicio': $scope.desde,
-				'fechaFin': $scope.hasta
-			};
 			if (dinamico){
 				$scope.tarifasAgrupadas = true;
-				reportsFactory.getReporteTarifasPivot(fecha, $scope.tarifasGraficar).then((data) => {
+				if ($scope.tarifasGraficar.length <= 0){
+					$scope.tablePivot.options.derivedAttributes = getPivotTableFields();
+				} else {
+					$scope.tablePivot.options.derivedAttributes.Tarifa = (item) => {return item.code};
+				}
+				reportsFactory.getReporteTarifasPivot($scope.model, $scope.tarifasGraficar).then((data) => {
 					$scope.tablePivot.data = data.data;
+					$scope.mostrarGrafico = true;
 				}).catch((err) => {
 					dialogs.error('Reporte Tarifas', err.message);
+					$scope.mostrarGrafico = false;
 				}).finally(() => {
 					$scope.loadingReporteTarifas = false;
-					$scope.mostrarGrafico = true;
 				});
 			} else {
 				$scope.tarifasAgrupadas = false;
 				$scope.totales = [0, 0, 0, 0];
 
-				if ($scope.tarifasGraficar.data.length <= 0){
+				if ($scope.tarifasGraficar.length <= 0){
 					dialogs.notify("Totales por tarifa", "No se ha seleccionado ninguna tarifa para graficar.");
 					$scope.mostrarGrafico = false;
 					$scope.loadingReporteTarifas = false;
@@ -265,7 +320,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 					let contarTerminales = 0;
 					let terminales = [];
 
-					reportsFactory.getReporteTarifas(fecha, $scope.tarifasGraficar, function(data){
+					reportsFactory.getReporteTarifas($scope.model, $scope.tarifasGraficar, function(data){
 						if (data.status == 'OK'){
 							contarTerminales = data.data.length; //Determino cuantas terminales arrojaron resultados
 							if (contarTerminales != 0){
@@ -354,8 +409,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			});
 			const data = {
 				id: $scope.$id,
-				desde: $scope.desde,
-				hasta: $scope.hasta,
+				desde: $scope.model.fechaInicio,
+				hasta: $scope.model.fechaFin,
 				hoy: new Date(),
 				tabla: tablaReducida,
 				totales: $scope.totales,
