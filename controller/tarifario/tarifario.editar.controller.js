@@ -204,7 +204,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 			tarifa.getTopPrices().then(() => {
 				$scope.newPrice = tarifa;
-				$scope.newMatches.array = angular.copy(tarifa.matches[0].match);
+				$scope.newMatches.array = angular.copy(tarifa.matches.match);
 				$scope.abrirNuevoConcepto('editar');
 			}).catch((error) => {
 				console.log(error);
@@ -224,9 +224,9 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				if ($scope.newPrice.code == tarifa.code){
 					flagCodigo = true;
 				}
-				if (tarifa.matches != null && tarifa.matches.length > 0){
-					tarifa.matches[0].match.forEach((codigo) => {
-						if (codigo == $scope.newPrice.code){
+				if (tarifa.matches != null){
+					tarifa.matches.match.forEach((codigo) => {
+						if (codigo.code == $scope.newPrice.code){
 							flagCodigo = true;
 						}
 					})

@@ -22,12 +22,12 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             this.largo = '';
             this.topPrices = [];
             this.terminal = loginService.info.terminal;
-            this.matches = [{
+            this.matches = {
                 terminal: loginService.info.terminal,
                 match: [],
                 _idPrice: '',
                 code: ''
-            }]
+            }
         }
 
         setData(priceData){
@@ -51,23 +51,23 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 from: new Date()
             };
             if (this.tieneMatch()){
-                this.matches[0]._idPrice = this._id;
-                this.matches[0].terminal = loginService.filterTerminal;
+                this.matches._idPrice = this._id;
+                this.matches.terminal = loginService.filterTerminal;
             } else {
-                this.matches = [{
+                this.matches = {
                     terminal: loginService.filterTerminal,
                     match: [],
                     _idPrice: this._id,
                     code: this.code
-                }];
+                };
             }
             if (this.terminal == 'AGP'){
                 this.tarifaAgp = true;
             } else {
-                if (angular.isDefined(this.matches[0].match)  && this.matches[0].match != null && this.matches[0].match.length >= 1){
+                if (angular.isDefined(this.matches.match)  && this.matches.match != null && this.matches.match.length >= 1){
                     let tarifaPropia = false;
-                    this.matches[0].match.forEach((unMatch) => {
-                        if (unMatch == this.code){
+                    this.matches.match.forEach((unMatch) => {
+                        if (unMatch.code == this.code){
                             tarifaPropia = true;
                         }
                     });
@@ -140,30 +140,30 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
 
         getMatches(){
             if (this.tieneMatch()) {
-                return this.matches[0].match;
+                return this.matches.match;
             }
         }
 
         setMatches(matches){
-            this.matches[0].match = matches;
+            this.matches.match = matches;
         }
 
         tieneMatch(){
-            return (angular.isDefined(this.matches) && this.matches != null && this.matches.length > 0
-            && this.matches[0].match != null && this.matches[0].match.length > 0 && this.matches[0].match[0] != null);
+            return (angular.isDefined(this.matches) && this.matches != null
+            && this.matches.match != null && this.matches.match.length > 0 && this.matches.match[0] != null);
         }
 
         saveChanges(){
             if (loginService.type == 'terminal' && this.tarifaTerminal){
                 let encontrado = false;
-                this.matches[0].match.forEach(match => {
-                    if (match == this.code) encontrado = true;
+                this.matches.match.forEach(match => {
+                    if (match.code == this.code) encontrado = true;
                 });
                 if (!encontrado){
-                    this.matches[0].match.push(this.code)
+                    this.matches.match.push({code: this.code})
                 }
             }
-            this.matches[0].code = this.code;
+            this.matches.code = this.code;
             if (this._id){
                 return this.updatePriceChanges();
             } else {
@@ -176,7 +176,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             const inserturl = `${APP_CONFIG.SERVER_URL}/prices/price`;
             $http.post(inserturl, this).then((response) => {
                 if (response.data.status == 'OK'){
-                    this.matches[0]._idPrice = response.data.data._id;
+                    this.matches._idPrice = response.data.data._id;
                     deferred.resolve(response);
                 } else {
                     deferred.reject(response.data)
@@ -208,7 +208,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         saveMatchPrices(){
             const deferred = $q.defer();
             const inserturl = `${APP_CONFIG.SERVER_URL}/matchPrices/matchprice`;
-            $http.post(inserturl, this.matches[0]).then((response) => {
+            $http.post(inserturl, this.matches).then((response) => {
                 deferred.resolve(response.data);
             }).catch((response) => {
                 deferred.reject(response.data);

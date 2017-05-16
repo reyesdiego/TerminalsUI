@@ -101,12 +101,12 @@
                                 <span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2" style="text-align: right">
-								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="dataTerminal.type=='terminal'">
-									{{ codigo }}
+								<span ng-repeat="codigo in price.matches.match track by $index" ng-show="dataTerminal.type=='terminal'">
+									{{ codigo.code }}
 									<span ng-show="!$last">, </span>
 								</span>
-								<span ng-repeat="codigo in price.matches[0].match track by $index" ng-show="dataTerminal.type=='agp'">
-									<span>{{ codigo }}</span>
+								<span ng-repeat="codigo in price.matches.match track by $index" ng-show="dataTerminal.type=='agp'">
+									<span>{{ codigo.code }}</span>
 									<span ng-show="!$last">, </span>
 								</span>
                             </td>
@@ -135,8 +135,8 @@
                                 <span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2 anchoFijoImpresion" style="text-align: right">
-								<span ng-repeat="codigo in price.matches[0].match track by $index">
-									<span>{{ codigo }}</span>
+								<span ng-repeat="codigo in price.matches.match track by $index">
+									<span>{{ codigo.code }}</span>
 									<span ng-show="!$last">, </span>
 								</span>
                             </td>
