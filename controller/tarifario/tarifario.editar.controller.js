@@ -98,7 +98,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 					if (price.servicio) servicios.push(price);
 					if (price.tieneMatch()){
 						codigosConMatch.push(price);
-						matchesTerminal.push(price.getMatches());
+						matchesTerminal = matchesTerminal.concat(price.getMatches());
 					}
 				});
 				switch (tipoFiltro){
@@ -143,9 +143,20 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 		//Verifica que un codigo no se encuentre ya asociado antes de agregarlo
 		$scope.checkMatch = function(matchCode){
 			//TODO chequear si es posible que asignen a una tarifa, su mismo código como asociado
-			matchCode.text = matchCode.text.toUpperCase();
+			matchCode.code = matchCode.code.toUpperCase();
 			//return (!$scope.matchesTerminal.contains(matchCode.text))
-			return !generalFunctions.in_array(matchCode.text, matchesTerminal);
+			return !generalFunctions.in_array(matchCode.code, matchesTerminal);
+		};
+
+		$scope.matchAdded = function(matchCode){
+			matchesTerminal.push(matchCode.code);
+			$scope.newPrice.matchAdded(matchCode);
+		};
+
+		$scope.matchRemoved = function(matchCode){
+			const index = matchesTerminal.indexOf(matchCode.code);
+			matchesTerminal.splice(index, 1);
+			$scope.newPrice.matchRemoved(matchCode);
 		};
 
 		$scope.abrirNuevoConcepto = function(tipo){
@@ -166,9 +177,9 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				const dlg = dialogs.confirm('Guardar', 'Se guardarán todos los cambios realizados sobre la tarifa, ¿confirma la operación?');
 				dlg.result.then(() => {
 					$scope.newPrice.unit = String($scope.newPrice.idUnit);
-					$scope.newPrice.setMatches($scope.newMatches.array.map((matchCode) => {
+					/*$scope.newPrice.setMatches($scope.newMatches.array.map((matchCode) => {
 						return matchCode.text;
-					}));
+					}));*/
 					$scope.newPrice.saveChanges().then(() => {
 						cacheService.actualizarMatchesArray(loginService.filterTerminal);
 						dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");

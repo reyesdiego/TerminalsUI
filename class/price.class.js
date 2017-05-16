@@ -8,6 +8,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             //Propiedad para reporte de tarifas;
             this.graficar = false;
             //*******************************
+			this.arrayMatches = [];
             if (priceData){
                 this.setData(priceData);
             } else {
@@ -27,7 +28,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 match: [],
                 _idPrice: '',
                 code: ''
-            }
+            };
         }
 
         setData(priceData){
@@ -61,6 +62,9 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                     code: this.code
                 };
             }
+            this.matches.match.forEach((matchCode) => {
+               this.arrayMatches.push(matchCode);
+            });
             if (this.terminal == 'AGP'){
                 this.tarifaAgp = true;
             } else {
@@ -139,8 +143,40 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         }
 
         getMatches(){
+            let codes = [];
             if (this.tieneMatch()) {
-                return this.matches.match;
+                this.matches.match.forEach((matchCode) => {
+                    codes.push(matchCode.code);
+                });
+                return codes;
+            }
+        }
+
+        matchAdded(match){
+            let found = false;
+            this.matches.match.forEach((matchCode) => {
+               if (matchCode.code == match.code){
+                   found = true;
+                   matchCode.delete = false;
+			   }
+            });
+            if (!found) this.matches.match.push({code: match.code});
+        }
+
+        matchRemoved(match){
+            let index = 0;
+            let count = 0;
+            let erase = false;
+            this.matches.match.forEach((matchCode) => {
+                if (matchCode.code == match.code){
+                    index = count;
+                    matchCode.delete = true;
+                    if (!matchCode.id) erase = true;
+				}
+				count++;
+            });
+            if (erase){
+                this.matches.match.splice(index, 1);
             }
         }
 
@@ -201,6 +237,10 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 }
             }).catch((response) => {
                 deferred.reject(response.data);
+            }).finally(() => {
+				this.topPrices.forEach((unPrecio) => {
+					unPrecio.from = new Date(unPrecio.from);
+				});
             });
             return deferred.promise;
         }
