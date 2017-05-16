@@ -27,10 +27,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		$scope.newPrice = new Price();
 
-		$scope.newMatches = {
-			array: []
-		};
-
 		$scope.filteredPrices = [];
 		$scope.listaSeleccionada = [];
 		let pricelist = [];
@@ -163,9 +159,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 			if (!(tipo == 'editar')){
 				$scope.newPrice = new Price();
 				if (loginService.type == 'terminal') $scope.newPrice.tarifaTerminal = true;
-				$scope.newMatches = {
-					array: []
-				};
 			}
 			$scope.flagEditando = (tipo == 'editar');
 			$state.transitionTo('modificarTarifario');
@@ -177,9 +170,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				const dlg = dialogs.confirm('Guardar', 'Se guardarán todos los cambios realizados sobre la tarifa, ¿confirma la operación?');
 				dlg.result.then(() => {
 					$scope.newPrice.unit = String($scope.newPrice.idUnit);
-					/*$scope.newPrice.setMatches($scope.newMatches.array.map((matchCode) => {
-						return matchCode.text;
-					}));*/
 					$scope.newPrice.saveChanges().then(() => {
 						cacheService.actualizarMatchesArray(loginService.filterTerminal);
 						dialogs.notify("Asociar","Los cambios se han guardado exitosamente.");
@@ -206,7 +196,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 		//Carga la tarifa completa antes de poder editarla
 		$scope.editarTarifa = function(tarifa){
-
 			let indice = 0;
 			pricelist.forEach((price) => {
 				if (price.code == tarifa.code) $scope.posicionTarifa = indice;
@@ -215,7 +204,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 
 			tarifa.getTopPrices().then(() => {
 				$scope.newPrice = tarifa;
-				$scope.newMatches.array = angular.copy(tarifa.matches.match);
 				$scope.abrirNuevoConcepto('editar');
 			}).catch((error) => {
 				console.log(error);
