@@ -187,7 +187,7 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				if ($scope.dataTerminal.type == 'terminal'){
 					return $scope.newPrice.terminal == loginService.filterTerminal;
 				} else {
-					return true;
+					return $scope.newPrice.tipoTarifa == 'A' || $scope.newPrice.tipoTarifa == 'S';
 				}
 			} else {
 				return true;
@@ -206,7 +206,6 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				$scope.newPrice = tarifa;
 				$scope.abrirNuevoConcepto('editar');
 			}).catch((error) => {
-				console.log(error);
 				dialogs.error('Error', 'Se ha producido un error al cargar los datos de la tarifa.');
 			});
 

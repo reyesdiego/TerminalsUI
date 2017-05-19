@@ -85,6 +85,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 this.idUnit = this.unit;
                 this.unit = unitTypesArray[this.unit];
             }
+
             this.mostrarDetalle = false;
         }
 
@@ -106,7 +107,8 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
             $http.get(inserturl).then((response) => {
                 this.topPrices = response.data.data.topPrices;
                 for (let i = 0; i < this.topPrices.length; i++){
-                    this.topPrices[i].from = new Date(this.topPrices[i].from)
+                    this.topPrices[i].from = new Date(this.topPrices[i].from);
+					this.topPrices[i].price = this.topPrices[i].price.toFixed(2);
                 }
                 this.checkTopPricesDates();
                 deferred.resolve();

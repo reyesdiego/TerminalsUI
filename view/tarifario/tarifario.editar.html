@@ -119,8 +119,7 @@
                                 </div>
                             </td>-->
                             <td class="col-lg-1 text-center">
-                                <button class="btn btn-primary" uib-popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)" ng-show="dataTerminal.type == 'terminal'"><span class="glyphicon glyphicon-edit"></span></button>
-                                <button class="btn btn-primary" uib-popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)" ng-show="dataTerminal.type == 'agp'" ng-disabled="!(price.terminal == 'AGP' && puedeEditar())"><span class="glyphicon glyphicon-edit"></span></button>
+                                <button class="btn btn-primary" uib-popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
                             </td>
                         </tr>
                         <tr class="visible-print" ng-repeat="price in listaSeleccionada | filter: search | orderBy : predicate : reverse">
