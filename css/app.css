@@ -109,6 +109,21 @@ html, body {
     min-height: 350px;
 }
 
+.tag-template div:first-child {
+    float: left;
+}
+
+.tag-template div:first-child img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+.tag-template div:last-child {
+    float: left;
+    margin-left: 5px;
+}
+
 @media print{
     .anchoFijoImpresion{
         max-width: 200px !important;

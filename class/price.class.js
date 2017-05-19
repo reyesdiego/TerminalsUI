@@ -190,6 +190,15 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         }
 
         saveChanges(){
+            this.matches.match.forEach((matchCode) => {
+                let matchCopy = this.arrayMatches.find((element) => {
+                    return element.code == matchCode.code;
+                });
+                if (matchCopy){
+                    matchCode.status = matchCopy.status;
+                    if (matchCode.status) matchCode.approvedBy = loginService.info.user;
+				}
+            });
             if (loginService.type == 'terminal' && this.tarifaTerminal){
                 let encontrado = false;
                 this.matches.match.forEach(match => {
@@ -224,10 +233,12 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         }
 
         updatePriceChanges(){
+
             const deferred = $q.defer();
             this.topPrices.forEach((unPrecio) => {
                 unPrecio.from = formatService.formatearFechaISOString(unPrecio.from);
             });
+
             const inserturl = `${APP_CONFIG.SERVER_URL}/prices/price/${this._id}`;
             $http.put(inserturl, this).then((response) => {
                 if (response.data.status == 'OK'){

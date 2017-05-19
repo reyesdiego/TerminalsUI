@@ -54,7 +54,29 @@
                 </div>
                 <div class="col-lg-6">
                     <legend>Códigos asociados</legend>
-                    <tags-input ng-model="newPrice.arrayMatches" display-property="code" min-length="1" placeholder="Agregue un código"  on-tag-adding="checkMatch($tag)" on-tag-added="matchAdded($tag)" on-tag-removed="matchRemoved($tag)" ng-disabled="dataTerminal.type == 'agp'" tabindex="1"></tags-input>
+                    <tags-input
+                            ng-model="newPrice.arrayMatches"
+                            display-property="code"
+                            min-length="1"
+                            placeholder="Agregue un código"
+                            on-tag-adding="checkMatch($tag)"
+                            on-tag-added="matchAdded($tag)"
+                            on-tag-removed="matchRemoved($tag)"
+                            ng-disabled="dataTerminal.type == 'agp'"
+                            template="match-template"
+                            tabindex="1"></tags-input>
+
+                    <script type="text/ng-template" id="match-template">
+                        <div class="tag-template" uib-tooltip="{{ data.status ? data.approvedBy ? 'Aprobado por: ' + data.approvedBy : 'Aprobado' : 'No aprobado'}}">
+                            <div ng-hide="dataTerminal.type == 'terminal'">
+                                <input type="checkbox" ng-model="data.status"/>
+                            </div>
+                            <div>
+                                <span>{{$getDisplayText()}}</span>
+                                <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+                            </div>
+                        </div>
+                    </script>
                 </div>
                 <div class="col-lg-6">
                     <div>
