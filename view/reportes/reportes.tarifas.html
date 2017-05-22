@@ -79,7 +79,7 @@
                 <tr style="height:60px" ng-repeat="price in filteredPrices = (selectedList | filter: searchPrice) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage" ng-class="price.graficar ? 'bg-info' : ''">
                     <td class="col-lg-1 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="price.graficar" ng-click="agregarGrafico(price)"></td>
                     <td class="col-lg-1">{{ price.code }}</td>
-                    <td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+                    <td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" uib-popover="{{ price.description }}" popover-trigger="'mouseenter'"> (...)</a></td>
                     <td class="col-lg-1 text-right">{{ price.largo }}</td>
                 </tr>
                 </tbody>
@@ -123,7 +123,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="tarifa in tablaGrafico.data" ng-if="tarifa.mostrar">
-                <td class="text-center"><a href uib-popover="{{ tarifa.description }}" popover-trigger="mouseenter">{{ tarifa.code }}</a></td>
+                <td class="text-center"><a href uib-popover="{{ tarifa.description }}" popover-trigger="'mouseenter'">{{ tarifa.code }}</a></td>
                 <td ng-repeat="cantidad in tarifa.conteo track by $index" class="text-center">
                     <span ng-show="cantidad==0">-</span>
                     <span ng-show="!$last && cantidad>0">U$S {{ cantidad | number:2 }} ({{ tarifa.porcentaje[$index] | number:2 }} %)</span>

@@ -71,7 +71,7 @@
 					<tbody>
 					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter: searchPrice) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
 						<td>{{ price.code }}</td>
-						<td>{{ price.description | maxLength : 210 }}<a href="" ng-show="(price.description.length > 210)" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a></td>
+						<td>{{ price.description | maxLength : 210 }}<a href ng-show="(price.description.length > 210)" uib-popover="{{ price.description }}" popover-trigger="'mouseenter'"> (...)</a></td>
 						<td>{{ price.unit}}</td>
 						<td class="text-right" >{{ price.largo }}</td>
 						<td class="text-right" >{{ price.norma }}</td>

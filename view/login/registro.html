@@ -38,7 +38,7 @@
 								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar correo electrónico" ng-required="true">
 							</div>
 							<div class="col-lg-1">
-								<a href="" uib-popover="La dirección ingresada no es válida" popover-trigger="mouseenter" ng-show="email != '' && !validEmail"><img src="images/error.png" height="32" width="32"></a>
+								<a href="" uib-popover="La dirección ingresada no es válida" popover-trigger="'mouseenter'" ng-show="email != '' && !validEmail"><img src="images/error.png" height="32" width="32"></a>
 								<img src="images/ok.png" height="32" width="32" ng-show="email != '' && validEmail">
 							</div>
 						</div>
@@ -48,7 +48,7 @@
 								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="confirmEmail" id="inputConfirmMail" placeholder="Ingresar correo electrónico" ng-required="true" onpaste="return false"/>
 							</div>
 							<div class="col-lg-1">
-								<a href="" uib-popover="La direcciones ingresadas no coinciden" popover-trigger="mouseenter" ng-show="confirmEmail != '' && email != confirmEmail"><img src="images/error.png" height="32" width="32"></a>
+								<a href="" uib-popover="La direcciones ingresadas no coinciden" popover-trigger="'mouseenter'" ng-show="confirmEmail != '' && email != confirmEmail"><img src="images/error.png" height="32" width="32"></a>
 								<img src="images/ok.png" height="32" width="32" ng-show="confirmEmail != '' && email == confirmEmail">
 							</div>
 						</div>
@@ -64,7 +64,7 @@
 								<input type="password" class="form-control" ng-model="confirmPassword" id="inputConfirmPassword" placeholder="Ingresar contraseña" ng-required="true" onpaste="return false"/>
 							</div>
 							<div class="col-lg-1">
-								<a href="" uib-popover="La contraseñas ingresadas no coinciden" popover-trigger="mouseenter" ng-show="confirmPassword != '' && password != confirmPassword"><img src="images/error.png" height="32" width="32"></a>
+								<a href="" uib-popover="La contraseñas ingresadas no coinciden" popover-trigger="'mouseenter'" ng-show="confirmPassword != '' && password != confirmPassword"><img src="images/error.png" height="32" width="32"></a>
 								<img src="images/ok.png" height="32" width="32" ng-show="confirmPassword != '' && password == confirmPassword">
 							</div>
 						</div>

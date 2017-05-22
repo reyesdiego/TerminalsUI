@@ -88,7 +88,7 @@
                                 <span>{{ price.code }}</span>
                             </td>
                             <td class="col-lg-5">
-                                <span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
+                                <span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" uib-popover="{{ price.description }}" popover-trigger="'mouseenter'"> (...)</a>
                             </td>
                             <td class="col-lg-1">
                                 <span>{{ price.largo }}</span>
@@ -119,7 +119,7 @@
                                 </div>
                             </td>-->
                             <td class="col-lg-1 text-center">
-                                <button class="btn btn-primary" uib-popover="Modificar tarifa" popover-trigger="mouseenter" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
+                                <button class="btn btn-primary" uib-popover="Modificar tarifa" popover-trigger="'mouseenter'" ng-click="editarTarifa(price)"><span class="glyphicon glyphicon-edit"></span></button>
                             </td>
                         </tr>
                         <tr class="visible-print" ng-repeat="price in listaSeleccionada | filter: search | orderBy : predicate : reverse">
@@ -127,7 +127,7 @@
                                 <span>{{ price.code }}</span>
                             </td>
                             <td class="col-lg-5">
-                                <span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" uib-popover="{{ price.description }}" popover-trigger="mouseenter"> (...)</a>
+                                <span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" uib-popover="{{ price.description }}" popover-trigger="'mouseenter'"> (...)</a>
                             </td>
                             <td class="col-lg-2 text-right">
                                 <!--<span>{{ price.topPrices[0].price | currency: (price.topPrices[0].currency | formatCurrency) }}</span>-->

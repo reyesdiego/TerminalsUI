@@ -129,7 +129,7 @@ myapp.directive('textPop', function() {
 		},
 		template:
 			'<span class="hidden-print">{{ text | maxLength : max }}' +
-			'	<a href ng-show="(text.length > max)" uib-popover="{{ text }}" popover-trigger="mouseenter"> (...)</a>' +
+			'	<a href ng-show="(text.length > max)" uib-popover="{{ text }}" popover-trigger="\'mouseenter\'"> (...)</a>' +
 			'</span>' +
 			'<span class="visible-print">{{ text }}</span>'
 	}

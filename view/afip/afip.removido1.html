@@ -83,8 +83,8 @@
 						<td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy'}}</td>
 						<td>{{ registro.FECHAREMO | date: 'dd/MM/yyyy'}}</td>
 						<td>{{ registro.IDENTIFICAMANI }}</td>
-						<td style="min-width: 150px">{{ registro.IMPORTADOR_EXPORTADOR | maxLength: 8}}<a href="" ng-show="(registro.IMPORTADOR_EXPORTADOR.length > 21)" popover="{{ registro.IMPORTADOR_EXPORTADOR }}" popover-trigger="mouseenter"> (...)</a></td>
-						<td style="min-width: 150px">{{ registro.NOMBREATA | maxLength: 8}}<a href="" ng-show="(registro.NOMBREATA.length > 21)" popover="{{ registro.NOMBREATA }}" popover-trigger="mouseenter"> (...)</a></td>
+						<td style="min-width: 150px">{{ registro.IMPORTADOR_EXPORTADOR | maxLength: 8}}<a href="" ng-show="(registro.IMPORTADOR_EXPORTADOR.length > 21)" popover="{{ registro.IMPORTADOR_EXPORTADOR }}" popover-trigger="'mouseenter'"> (...)</a></td>
+						<td style="min-width: 150px">{{ registro.NOMBREATA | maxLength: 8}}<a href="" ng-show="(registro.NOMBREATA.length > 21)" popover="{{ registro.NOMBREATA }}" popover-trigger="'mouseenter'"> (...)</a></td>
 						<td>{{ registro.PAISPROCEDENCIA }}</td>
 						<td>{{ registro.SITIO }}</td>
 						<td>{{ registro.SUMARIA }}</td>
