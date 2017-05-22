@@ -300,8 +300,9 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 					$scope.tablePivot.data = data.data;
 					$scope.mostrarGrafico = true;
 				}).catch((err) => {
-					dialogs.error('Reporte Tarifas', err.message);
+					$scope.loadingReporteTarifas = false;
 					$scope.mostrarGrafico = false;
+					dialogs.error('Reporte Tarifas', err.message);
 				}).finally(() => {
 					$scope.loadingReporteTarifas = false;
 				});
