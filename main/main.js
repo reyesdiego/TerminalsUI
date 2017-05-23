@@ -49,27 +49,36 @@ myapp.constant('uiDatetimePickerConfig', {
 		show: true,
 		now: {
 			show: true,
-			text: 'Ahora'
+			text: 'Ahora',
+			cls: 'btn-sm btn-success'
 		},
 		today: {
 			show: true,
-			text: 'Hoy'
+			text: 'Hoy',
+			cls: 'btn-sm btn-success'
 		},
 		clear: {
 			show: true,
-			text: 'Borrar'
+			text: 'Borrar',
+			cls: 'btn-sm btn-danger'
 		},
 		date: {
 			show: true,
-			text: 'Fecha'
+			text: 'Fecha',
+			cls: 'btn-sm btn-primary'
 		},
 		time: {
 			show: true,
-			text: 'Hora'
+			text: 'Hora',
+			cls: 'btn-sm btn-primary'
 		},
 		close: {
 			show: true,
-			text: 'Listo'
+			text: 'Listo',
+			cls: 'btn-sm btn-default'
+		},
+		cancel: {
+			show: false
 		}
 	},
 	closeOnDateSelection: true,
@@ -370,6 +379,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 			url: "/controlTurnos",
 			templateUrl: "view/turnos/turnos.control.html"
 		})
+		.state('consultaTurnos', {
+			url: '/consultaTurnos',
+			templateUrl: 'view/turnos/turnos.consulta.html',
+			controller: 'turnosConsultaCtrl as vmTurnos'
+		})
 		//===========================================================================\\
 		//******************************* REPORTES **********************************\\
 		//===========================================================================\\
@@ -668,7 +682,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.moneda = "DOL";
 
-		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register'];
+		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'consultaTurnos'];
 		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat', 'liquidaciones', 'trackContainer'];
 		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos', 'trackContainer'];
 		$rootScope.$state = $state;

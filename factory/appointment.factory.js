@@ -22,7 +22,20 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 				return appointmentsArray;
 			}
 
-			getTurnos(datos, page, callback){
+			consultarTurno(container){
+				const deferred = $q.defer();
+				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/container/${container}`;
+				$http.get(inserturl).then((response) => {
+					console.log(response);
+					deferred.resolve(response.data);
+				}).catch((error) => {
+					console.log(error);
+					deferred.reject(error.data);
+				});
+				return deferred.promise;
+			}
+
+			getTurnos(datos, page){
 				this.cancelRequest('getTurnos');
 				const deferred = $q.defer();
 				const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'getTurnos');
