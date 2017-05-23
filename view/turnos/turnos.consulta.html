@@ -5,25 +5,91 @@
     </div>
 
     <div class="col-lg-12">
-        <form ng-submit="vmTurnos.getTurno()">
-            <div class="form-group col-md-10">
-                <div class="input-group">
-                    <span class="input-group-addon"> Contenedor</span>
-                    <input type="text" class="form-control" ng-model="vmTurnos.containerSearch">
-                    <span class="input-group-btn">
-                    <button type="button" class="btn btn-default">
-                        <i class="glyphicon glyphicon-remove"></i>
-                    </button>
-                </span>
-                </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">Búsqueda</h4>
             </div>
-            <div class="form-group col-md-2">
-                <div class="input-group">
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
-                </div>
+            <div class="panel-body">
+                <form ng-submit="vmTurnos.getTurno()">
+                    <div class="form-group col-md-10 visible-lg visible-md">
+                        <div class="input-group">
+                            <span class="input-group-addon"> Contenedor</span>
+                            <input type="text" class="form-control" ng-model="vmTurnos.containerSearch" toupper>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="vmTurnos.containerSearch = ''">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-10 visible-xs visible-sm">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" ng-model="vmTurnos.containerSearch" placeholder="Contenedor" toupper>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-default" ng-click="vmTurnos.containerSearch = ''">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2 visible-md visible-lg">
+                        <div class="input-group center-block">
+                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-2 visible-xs visible-sm">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
+    </div>
 
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">Solicitud de turnos</h4>
+            </div>
+            <div class="panel-body">
+                <div class="visible-md visible-lg">
+                    <div class="col-lg-4">
+                        <img src="images/logo_bactssa.png" class="img-responsive center-block" style="width: 30%">
+                        <h3 class="text-center">Importación - Exportación - Vacíos</h3>
+                    </div>
+                    <div class="col-lg-4">
+                        <img src="images/logo_terminal4.png" class="img-responsive center-block" style="width: 50%">
+                        <h3 class="text-center">Importación - Exportación - Vacíos</h3>
+                    </div>
+                    <div class="col-lg-4">
+                        <img src="images/logo_trp.png" class="img-responsive center-block" style="width: 35%">
+                        <h3 class="text-center">Importación - Exportación - Vacíos</h3>
+                    </div>
+                </div>
+                <div class="visible-xs visible-sm">
+                    <div class="col-xs-12">
+                        <img src="images/logo_bactssa.png" class="img-responsive center-block" style="width: 100%">
+                        <h5 class="text-center">Importación - Exportación - Vacíos</h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <hr>
+                    </div>
+                    <div class="col-xs-12">
+                        <img src="images/logo_terminal4.png" class="img-responsive center-block" style="width: 100%">
+                        <h5 class="text-center">Importación - Exportación - Vacíos</h5>
+                    </div>
+                    <div class="col-xs-12">
+                        <hr>
+                    </div>
+                    <div class="col-xs-12">
+                        <img src="images/logo_trp.png" class="img-responsive center-block" style="width: 100%">
+                        <h5 class="text-center">Importación - Exportación - Vacíos</h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 </div>
