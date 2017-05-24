@@ -27,8 +27,16 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 				const inserturl = `${APP_CONFIG.SERVER_URL}/containerTurno/${container}`;
 				$http.get(inserturl).then((response) => {
 					if (response.data.status == 'OK'){
-						const turno = new Appointment(response.data.data);
-						deferred.resolve(turno);
+						console.log(response.data.data.length);
+						if (response.data.data.length > 0){
+							const turno = new Appointment(response.data.data);
+							deferred.resolve(turno);
+						} else {
+							const error = {
+								message: `No se ha encontrado ningún turno para el contenedor ${container}`
+							};
+							deferred.reject(error);
+						}
 					} else {
 						deferred.reject(response.data);
 					}
