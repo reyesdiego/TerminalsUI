@@ -33,7 +33,6 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 						deferred.reject(response.data);
 					}
 				}).catch((error) => {
-					console.log(error);
 					deferred.reject(error.data);
 				});
 				return deferred.promise;
@@ -46,7 +45,6 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.retrieveAppointments(response.data.data);
-					//callback(response.data);
 					deferred.resolve(response.data);
 				}).catch((response) => {
 					if (response.status != -5 ) deferred.reject(response.data);
