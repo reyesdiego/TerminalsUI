@@ -24,10 +24,14 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 
 			consultarTurno(container){
 				const deferred = $q.defer();
-				const inserturl = `${APP_CONFIG.SERVER_URL}/appointments/container/${container}`;
+				const inserturl = `${APP_CONFIG.SERVER_URL}/containerTurno/${container}`;
 				$http.get(inserturl).then((response) => {
-					console.log(response);
-					deferred.resolve(response.data);
+					if (response.data.status == 'OK'){
+						const turno = new Appointment(response.data.data);
+						deferred.resolve(turno);
+					} else {
+						deferred.reject(response.data);
+					}
 				}).catch((error) => {
 					console.log(error);
 					deferred.reject(error.data);
