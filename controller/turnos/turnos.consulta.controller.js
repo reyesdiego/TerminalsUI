@@ -4,7 +4,7 @@
 myapp.controller('turnosConsultaCtrl', ['turnosFactory', 'dialogs', function(turnosFactory, dialogs){
 
 	this.containerSearch = '';
-	this.turno = null;
+	this.turnos = [];
 
 	this.getTurno = () => {
 		this.turnos = [];

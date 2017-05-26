@@ -124,6 +124,15 @@ html, body {
     margin-left: 5px;
 }
 
+.text-middle {
+    vertical-align: middle !important;
+}
+
+.text-small {
+    font-size: 8pt;
+}
+
+
 @media print{
     .anchoFijoImpresion{
         max-width: 200px !important;

@@ -15,11 +15,7 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 			}
 
 			retrieveAppointments(appointmentsData){
-				let appointmentsArray = [];
-				appointmentsData.forEach((appointmentData) => {
-					appointmentsArray.push(new Appointment(appointmentData));
-				});
-				return appointmentsArray;
+				return appointmentsData.map(item => (new Appointment(item)));
 			}
 
 			consultarTurno(container){
@@ -28,7 +24,7 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 				$http.get(inserturl).then((response) => {
 					if (response.data.status == 'OK'){
 						if (response.data.data.length > 0){
-							const turnos = response.data.data.map(item => (new Appointment(item)));
+							const turnos = this.retrieveAppointments(response.data.data);
 							deferred.resolve(turnos);
 						} else {
 							const error = {

@@ -47,19 +47,28 @@
 
                 <div ng-if="vmTurnos.turnos.length>0" class="table-responsive">
                     <table class="table table-bordered" style="text-align: center">
+                        <thead>
                         <tr class="bg-primary">
-                            <th class="text-center">Terminal</th>
-                            <th class="text-center" colspan="3">Turno</th>
-                            <th class="text-center">Buque</th>
-                            <th class="text-center">Viaje</th>
-                            <th class="text-center">Contenedor</th>
-                            <th class="text-center">Transporte</th>
-                            <th class="text-center">Tipo</th>
-                            <th class="text-center">Alta</th>
-                            <th class="text-center">E-Mail</th>
-                            <th class="text-center" colspan="3">Verificación</th>
+                            <th class="text-center text-middle sm" rowspan="2">Terminal</th>
+                            <th class="text-center text-middle" colspan="3" rowspan="2">Turno</th>
+                            <th class="text-center text-middle" rowspan="2">Buque</th>
+                            <th class="text-center text-middle" rowspan="2">Viaje</th>
+                            <th class="text-center text-middle" rowspan="2">Contenedor</th>
+                            <th class="text-center text-middle" colspan="4">Transporte</th>
+                            <th class="text-center text-middle" rowspan="2">Tipo</th>
+                            <th class="text-center text-middle" rowspan="2">Alta</th>
+                            <th class="text-center text-middle" rowspan="2">E-Mail</th>
+                            <th class="text-center text-middle" colspan="3" rowspan="2">Verificación</th>
                         </tr>
-                        <tr ng-repeat="turno in vmTurnos.turnos">
+                        <tr class="bg-primary">
+                            <td class="text-center">Patente</td>
+                            <td class="text-center">Semi</td>
+                            <td class="text-center">DNI</td>
+                            <td class="text-center">Celular</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="turno in vmTurnos.turnos" class="text-small">
                             <td>{{ turno.terminal }}</td>
                             <td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
                             <td>{{ turno.inicio | date: 'HH:mm' }}</td>
@@ -67,7 +76,10 @@
                             <td>{{ turno.buque }}</td>
                             <td>{{ turno.viaje }}</td>
                             <td>{{ turno.contenedor }}</td>
-                            <td>Patente: {{ turno.transporte.camion }}</td>
+                            <td>{{ turno.transporte.camion }}</td>
+                            <td>{{ turno.transporte.semi }}</td>
+                            <td>{{ turno.transporte.dni }}</td>
+                            <td>{{ turno.transporte.celular }}</td>
                             <td>{{ turno.mov }}</td>
                             <td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
                             <td>{{ turno.email }}</td>
@@ -75,6 +87,7 @@
                             <td><span title="{{ turno.verifica_turno == 'MA'? 'Mañana' : 'Tarde' }}">{{ turno.verifica_turno | maxLength: 1 }}</span></td>
                             <td><span title="{{ turno.verifica_tipo }}">{{ turno.verifica_tipo | maxLength: 1 }}</span></td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
