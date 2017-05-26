@@ -7,9 +7,9 @@ myapp.controller('turnosConsultaCtrl', ['turnosFactory', 'dialogs', function(tur
 	this.turno = null;
 
 	this.getTurno = () => {
-		this.turno = null;
-		turnosFactory.consultarTurno(this.containerSearch).then((turno) => {
-			this.turno = turno;
+		this.turnos = [];
+		turnosFactory.consultarTurno(this.containerSearch).then((turnos) => {
+			this.turnos = turnos;
 		}).catch((error) => {
 			dialogs.error('Consulta de turnos', error.message);
 		});

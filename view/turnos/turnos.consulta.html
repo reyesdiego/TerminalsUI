@@ -45,7 +45,7 @@
                     </div>
                 </form>
 
-                <div ng-if="vmTurnos.turno" class="table-responsive">
+                <div ng-if="vmTurnos.turnos.length>0" class="table-responsive">
                     <table class="table table-bordered" style="text-align: center">
                         <tr class="bg-primary">
                             <th class="text-center">Terminal</th>
@@ -59,21 +59,21 @@
                             <th class="text-center">E-Mail</th>
                             <th class="text-center" colspan="3">Verificación</th>
                         </tr>
-                        <tr>
-                            <td>{{ vmTurnos.turno.terminal }}</td>
-                            <td>{{ vmTurnos.turno.inicio | date: 'dd/MM/yyyy' }}</td>
-                            <td>{{ vmTurnos.turno.inicio | date: 'HH:mm' }}</td>
-                            <td>{{ vmTurnos.turno.fin | date: 'HH:mm' }}</td>
-                            <td>{{ vmTurnos.turno.buque }}</td>
-                            <td>{{ vmTurnos.turno.viaje }}</td>
-                            <td>{{ vmTurnos.turno.contenedor }}</td>
-                            <td>Patente: {{ vmTurnos.turno.transporte.camion }}</td>
-                            <td>{{ vmTurnos.turno.mov }}</td>
-                            <td>{{ vmTurnos.turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
-                            <td>{{ vmTurnos.turno.email }}</td>
-                            <td>{{ vmTurnos.turno.verifica | date: 'dd/MM/yyyy' }}</td>
-                            <td><span title="{{ vmTurnos.turno.verifica_turno == 'MA'? 'Mañana' : 'Tarde' }}">{{ vmTurnos.turno.verifica_turno | maxLength: 1 }}</span></td>
-                            <td><span title="{{ vmTurnos.turno.verifica_tipo }}">{{ vmTurnos.turno.verifica_tipo | maxLength: 1 }}</span></td>
+                        <tr ng-repeat="turno in vmTurnos.turnos">
+                            <td>{{ turno.terminal }}</td>
+                            <td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ turno.inicio | date: 'HH:mm' }}</td>
+                            <td>{{ turno.fin | date: 'HH:mm' }}</td>
+                            <td>{{ turno.buque }}</td>
+                            <td>{{ turno.viaje }}</td>
+                            <td>{{ turno.contenedor }}</td>
+                            <td>Patente: {{ turno.transporte.camion }}</td>
+                            <td>{{ turno.mov }}</td>
+                            <td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
+                            <td>{{ turno.email }}</td>
+                            <td>{{ turno.verifica | date: 'dd/MM/yyyy HH:mm' }}</td>
+                            <td><span title="{{ turno.verifica_turno == 'MA'? 'Mañana' : 'Tarde' }}">{{ turno.verifica_turno | maxLength: 1 }}</span></td>
+                            <td><span title="{{ turno.verifica_tipo }}">{{ turno.verifica_tipo | maxLength: 1 }}</span></td>
                         </tr>
                     </table>
                 </div>
