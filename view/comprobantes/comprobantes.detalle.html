@@ -1,112 +1,113 @@
-<div class="row">
-	<div class="col-lg-12" style="text-align: center">
 
-			<table class="invoice-shadow table table-responsive table-striped table-bordered" style="text-align: center">
-				<thead>
-				<tr>
-					<td class="hidden-print" colspan="6" align="center">
-						<div class="col-lg-2" align="center">
-							<br>
-							<img ng-src="{{ logoTerminal }}" height="100" width="160">
-						</div>
-						<div class="col-lg-8" align="center">
-							<div><h3><strong>{{ verDetalle.codTipoComprob | nombreComprobante : false }}</strong></h3></div>
-							<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
-							<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
-							<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
-							<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</span></div>
-						</div>
-					</td>
-					<td class="visible-print" colspan="6" align="center">
+<div class="text-center">
+	<div class="table-responsive invoice-shadow">
+		<table class="table table-striped table-bordered text-center">
+			<thead>
+			<tr>
+				<td class="hidden-print" colspan="6" align="center">
+					<div class="col-lg-2" align="center">
+						<br>
+						<img ng-src="{{ logoTerminal }}" height="100" width="160">
+					</div>
+					<div class="col-lg-8" align="center">
 						<div><h3><strong>{{ verDetalle.codTipoComprob | nombreComprobante : false }}</strong></h3></div>
 						<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
 						<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
 						<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
 						<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" style="text-align: center">
-						<div><a href class="hidden-print" ng-click="filtrado('razonSocial', verDetalle.razon)" ng-hide="ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
-						<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy':'UTC' }}</span></div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" style="text-align: center">
-						<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy':'UTC' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy':'UTC' }}</span>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="6" style="text-align: center">
-						<span><strong>Detalle</strong></span>
-					</td>
-				</tr>
-				<tr>
-					<th style="text-align: right; width: 100px">Item</th>
-					<th style="text-align: left">Descripci&oacute;n</th>
-					<th style="text-align: right">Cantidad</th>
-					<th style="text-align: right; width: 120px">Precio Unitario</th>
-					<th style="text-align: right">Unidad</th>
-					<th style="text-align: right; width: 120px">Total</th>
-				</tr>
-				</thead>
-				<tbody ng-repeat="contenedor in verDetalle.detalle">
-				<tr>
-					<td colspan="6" style="text-align: left">
-						<a href class="hidden-print" ng-click="trackContainer(contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
-						<!--<a href class="hidden-print" ng-click="filtrado('contenedor', contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>-->
-						<!--<span ng-show="contenedor.buque.codigo != '' && contenedor.buque.viaje != null"> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>-->
-						<span ng-show="contenedor.buque.codigo != '' && contenedor.buque.viaje != null"> - Buque: {{ contenedor.buque.nombre }}</span>
-						<span ng-show="contenedor.buque.viaje != '' && contenedor.buque.viaje != null"> - Viaje: {{ contenedor.buque.viaje }}</span>
-						<span ng-show="contenedor.buque.fecha != '' && contenedor.buque.viaje != null"> - Fecha: {{ contenedor.buque.fecha | date: 'dd/MM/yyyy':'UTC'}}</span>
-					</td>
-				</tr>
-				<tr style="text-align: right; font-weight:{{(item.rate !== null)?'bold':'normal'}}" ng-repeat="item in contenedor.items">
-					<td><a href class="hidden-print" ng-click="filtrado('code', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
-					<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="verDetalle.existeDescripcion(item)"></span> <text-pop text="{{ item.description }}" max="190"></text-pop></td>
-					<td>{{ item.cnt }}</td>
-					<td>{{ item.impUnit | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
-					<td>{{ item.uniMed }}</td>
-					<td><span title="El total no se corresponde con el precio unitario cobrado." class="glyphicon glyphicon-exclamation-sign text-danger" ng-show="item.impTot - item.impUnit*item.cnt > 0.2 || item.impTot - item.impUnit*item.cnt < - 0.2"></span> {{ item.impTot | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
-				</tr>
-				</tbody>
-				<tfoot class="text-right">
-				<tr>
-					<td colspan="2"><strong>Subtotal</strong></td>
-					<td colspan="4">{{ verDetalle.importe.subtotal | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
-				</tr>
-				<tr>
-					<td colspan="2"><strong>IVA</strong></td>
-					<td colspan="4">{{ verDetalle.importe.iva | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
-				</tr>
-				<tr>
-					<td colspan="2"><strong>Otros Tributos</strong></td>
-					<td colspan="4">{{ verDetalle.importe.otrosTributos | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
-				</tr>
-				<tr>
-					<td colspan="2"><strong>Total</strong></td>
-					<td colspan="4">{{ verDetalle.importe.total | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
-				</tr>
-				<tr class="text-center">
-					<td colspan="6">
-						<span><strong>Monto Gravado</strong> {{ verDetalle.importe.gravado | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
-						<span><strong>Monto No Gravado</strong> {{ verDetalle.importe.noGravado | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
-						<span><strong>Exento</strong> {{ verDetalle.importe.exento | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
-						<span><strong>Cotizaci&oacute;n Moneda</strong> U$s1 = {{ verDetalle.cotiMoneda | currency: $ }}</span>
-					</td>
-				</tr>
-				<tr class="text-center">
-					<td colspan="6">
-						<span>Observaciones: {{ verDetalle.observa }}</span>
-					</td>
-				</tr>
-				</tfoot>
-			</table>
-
-		<p style="text-align: left">Transferido: {{ verDetalle.transferencia }}</p>
+					</div>
+				</td>
+				<td class="visible-print" colspan="6" align="center">
+					<div><h3><strong>{{ verDetalle.codTipoComprob | nombreComprobante : false }}</strong></h3></div>
+					<div><h4><strong>Número: {{ verDetalle.nroComprob }}</strong></h4></div>
+					<div><span>Terminal: {{ verDetalle.terminal}}</span></div>
+					<div><span>Punto de venta: {{ verDetalle.nroPtoVenta }}</span></div>
+					<div><span>Emisión: {{ verDetalle.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</span></div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="6" style="text-align: center">
+					<div><a href class="hidden-print" ng-click="filtrado('razonSocial', verDetalle.razon)" ng-hide="ocultarFiltros.indexOf('razonSocial') >= 0"><span class="glyphicon glyphicon-search"></span></a><span><strong> Raz&oacute;n Social:</strong> {{ verDetalle.razon }}</span></div>
+					<div><span>Documento cliente: {{ verDetalle.nroDoc }} - Vencimiento factura: {{ verDetalle.fecha.vcto | date: 'dd/MM/yyyy':'UTC' }}</span></div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="6" style="text-align: center">
+					<span>Desde: {{ verDetalle.fecha.desde | date: 'dd/MM/yyyy':'UTC' }} - Hasta: {{ verDetalle.fecha.hasta | date: 'dd/MM/yyyy':'UTC' }}</span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="6" style="text-align: center">
+					<span><strong>Detalle</strong></span>
+				</td>
+			</tr>
+			<tr>
+				<th style="text-align: right; width: 100px">Item</th>
+				<th style="text-align: left">Descripci&oacute;n</th>
+				<th style="text-align: right">Cantidad</th>
+				<th style="text-align: right; width: 120px">Precio Unitario</th>
+				<th style="text-align: right">Unidad</th>
+				<th style="text-align: right; width: 120px">Total</th>
+			</tr>
+			</thead>
+			<tbody ng-repeat="contenedor in verDetalle.detalle">
+			<tr>
+				<td colspan="6" style="text-align: left">
+					<a href class="hidden-print" ng-click="trackContainer(contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
+					<!--<a href class="hidden-print" ng-click="filtrado('contenedor', contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>-->
+					<!--<span ng-show="contenedor.buque.codigo != '' && contenedor.buque.viaje != null"> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>-->
+					<span ng-show="contenedor.buque.codigo != '' && contenedor.buque.viaje != null"> - Buque: {{ contenedor.buque.nombre }}</span>
+					<span ng-show="contenedor.buque.viaje != '' && contenedor.buque.viaje != null"> - Viaje: {{ contenedor.buque.viaje }}</span>
+					<span ng-show="contenedor.buque.fecha != '' && contenedor.buque.viaje != null"> - Fecha: {{ contenedor.buque.fecha | date: 'dd/MM/yyyy':'UTC'}}</span>
+				</td>
+			</tr>
+			<tr style="text-align: right; font-weight:{{(item.rate !== null)?'bold':'normal'}}" ng-repeat="item in contenedor.items">
+				<td><a href class="hidden-print" ng-click="filtrado('code', item.id)" ng-hide="ocultarFiltros.indexOf('codigo') >= 0"><span class="glyphicon glyphicon-search"></span></a> {{ item.id }}</td>
+				<td style="text-align: left"><span class="glyphicon glyphicon-warning-sign hidden-print" style="color: red" ng-hide="verDetalle.existeDescripcion(item)"></span> <text-pop text="{{ item.description }}" max="190"></text-pop></td>
+				<td>{{ item.cnt }}</td>
+				<td>{{ item.impUnit | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
+				<td>{{ item.uniMed }}</td>
+				<td><span title="El total no se corresponde con el precio unitario cobrado." class="glyphicon glyphicon-exclamation-sign text-danger" ng-show="item.impTot - item.impUnit*item.cnt > 0.2 || item.impTot - item.impUnit*item.cnt < - 0.2"></span> {{ item.impTot | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
+			</tr>
+			</tbody>
+			<tfoot class="text-right">
+			<tr>
+				<td colspan="2"><strong>Subtotal</strong></td>
+				<td colspan="4">{{ verDetalle.importe.subtotal | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"><strong>IVA</strong></td>
+				<td colspan="4">{{ verDetalle.importe.iva | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"><strong>Otros Tributos</strong></td>
+				<td colspan="4">{{ verDetalle.importe.otrosTributos | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
+			</tr>
+			<tr>
+				<td colspan="2"><strong>Total</strong></td>
+				<td colspan="4">{{ verDetalle.importe.total | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
+			</tr>
+			<tr class="text-center">
+				<td colspan="6">
+					<span><strong>Monto Gravado</strong> {{ verDetalle.importe.gravado | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
+					<span><strong>Monto No Gravado</strong> {{ verDetalle.importe.noGravado | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
+					<span><strong>Exento</strong> {{ verDetalle.importe.exento | currency: (verDetalle.codMoneda | formatCurrency) }} | </span>
+					<span><strong>Cotizaci&oacute;n Moneda</strong> U$s1 = {{ verDetalle.cotiMoneda | currency: $ }}</span>
+				</td>
+			</tr>
+			<tr class="text-center">
+				<td colspan="6">
+					<span>Observaciones: {{ verDetalle.observa }}</span>
+				</td>
+			</tr>
+			</tfoot>
+		</table>
 	</div>
+
+	<p style="text-align: left">Transferido: {{ verDetalle.transferencia }}</p>
 </div>
-<div class="row col-lg-12 center-block hidden-print" ng-show="verDetalle.controlTarifas.length > 0">
+
+<div class="center-block hidden-print" ng-show="verDetalle.controlTarifas.length > 0">
 	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error en tarifas' }">
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover table-striped" style="text-align: center">
@@ -133,7 +134,7 @@
 		</div>
 	</div-panel>
 </div>
-<div class="row col-lg-12 center-block hidden-print" ng-show="verDetalle.noMatch">
+<div class="col-lg-12 center-block hidden-print" ng-show="verDetalle.noMatch">
 	<div-panel config-panel="{ tipo: 'panel-warning', titulo: 'Control de tarifas' }">
 		<p>No se ha podido completar el control de tarifas, esto se produjo por alguna de las siguientes razones:</p>
 		<ul>
@@ -142,7 +143,7 @@
 		</ul>
 	</div-panel>
 </div>
-<div class="row col-lg-12 center-block hidden-print" ng-show="verDetalle.noMatch">
+<div class="center-block hidden-print" ng-show="verDetalle.noMatch">
 	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Tarifas sin controlar' }">
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover table-striped" style="text-align: center">
@@ -164,34 +165,59 @@
 		</div>
 	</div-panel>
 </div>
-<accordion-min heading="Comentarios del comprobante" ng-show="verDetalle.comments.length > 0">
-	<div class="table-responsive col-lg-12 center-block hidden-print-block">
-		<table class="table table-striped table-bordered table-hover">
-			<thead>
-			<tr>
-				<th class="text-center">Fecha</th>
-				<th>Usuario</th>
-				<th>Comentario</th>
-				<th>Estado</th>
-			</tr>
-			</thead>
-			<tbody>
-			<tr ng-repeat="comment in verDetalle.comments">
-				<td class="text-center">{{ comment.fecha | date: 'dd/MM/yyyy hh:mm':'UTC' }}</td>
-				<td>{{ comment.user }}</td>
-				<td>{{ comment.comment }}</td>
-				<td>{{ devolverEstado(comment.state) }}</td>
-			</tr>
-			</tbody>
-		</table>
+
+<div class="panel panel-default" ng-if="verDetalle.comments.length>0">
+	<div class="panel-heading">
+		<h3 class="panel-title">Comentarios del comprobante</h3>
 	</div>
-</accordion-min>
-<div class="row hidden-print">
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+				<tr>
+					<th class="text-center">Fecha</th>
+					<th>Usuario</th>
+					<th>Comentario</th>
+					<th>Estado</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="comment in verDetalle.comments">
+					<td class="text-center">{{ comment.fecha | date: 'dd/MM/yyyy hh:mm':'UTC' }}</td>
+					<td>{{ comment.user }}</td>
+					<td>{{ comment.comment }}</td>
+					<td>{{ devolverEstado(comment.state) }}</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="row hidden-print visible-md visible-lg">
 	<div class="col-lg-10 col-lg-offset-1" style="text-align: center">
 		<br>
 		<button class="btn btn-default" ng-click="ocultarResultado()"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
 		<button ng-show="acceso=='agp'" class="btn btn-primary" ng-click="verDetalle.trackInvoice()"><span class="glyphicon glyphicon-bookmark"></span> Cambiar estado</button>
 		<button class="btn btn-success" ng-click="verPdf()" ng-disabled="disablePdf"><span class="glyphicon glyphicon-download"></span> Ver PDF</button>
+	</div>
+</div>
+
+<div class="row hidden-print visible-xs visible-sm">
+	<div class="col-xs-3">
+		<div class="text-center">
+			<button class="btn btn-default btn-sm" ng-click="ocultarResultado()"><span class="glyphicon glyphicon-arrow-left"></span></button>
+		</div>
+	</div>
+	<div class="col-xs-6">
+		<div class="text-center">
+			<button ng-show="acceso=='agp'" class="btn btn-primary btn-sm" ng-click="verDetalle.trackInvoice()"><span class="glyphicon glyphicon-bookmark"></span> Cambiar estado</button>
+		</div>
+	</div>
+	<div class="col-xs-3">
+		<div class="text-center">
+			<button class="btn btn-success btn-sm" ng-click="verPdf()" ng-disabled="disablePdf"><span class="glyphicon glyphicon-download"></span> PDF</button>
+		</div>
 	</div>
 </div>
 <br>

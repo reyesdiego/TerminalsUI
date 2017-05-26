@@ -195,7 +195,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-if="dataTerminal.type==''" ng-click="cerrarMenu()"><a ui-sref="consultaTurnos"><span class="glyphicon glyphicon-calendar"></span> Consultar turnos</a></li>
 				<li ng-if="dataTerminal.type==''" uib-dropdown>
-					<a href uib-dropdown-toggle><span class="glyphicon glyphicon-user"></span> Usuarios</a>
+					<a href uib-dropdown-toggle><span class="glyphicon glyphicon-user"></span> Usuarios<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li ng-click="cerrarMenu()"><a href ui-sref="login"> Iniciar sesión</a></li>
 						<li ng-click="cerrarMenu()"><a href ui-sref="register"> Registrarse</a></li>
@@ -276,7 +276,7 @@
 				<li ng-if="dataTerminal.type!=''" uib-dropdown>
 					<a href uib-dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ dataTerminal.info.user }}<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li ng-click="salir(); isCollapsed = !isCollapsed"><a href ><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+						<li ng-click="salir(); cerrarMenu()"><a href ><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
 					</ul>
 				</li>
 			</ul>
