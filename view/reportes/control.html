@@ -65,7 +65,7 @@
 		<!--<div class="col-lg-4" ng-show="facturadoDia.loading">
 			<img class="media-object center-block" src="images/loading.gif">
 		</div>-->
-		<div class="col-lg-4">
+		<div class="col-lg-4" ng-hide="facturadoDia.error">
 			<h4 class="text-left">Facturado diario</h4>
 			<div class="table-responsive col-xs-12">
 				<div class="col-lg-4" ng-show="facturadoDia.loading" style="position: absolute; left: 30%; top: 30%">
@@ -79,8 +79,8 @@
 		</div>
 		<div class="col-lg-4" ng-show="facturadoDia.error">
 			<div class="alert alert-danger">
-				<strong>Error</strong> - No se han podido cargar los datos de los facturado por día.
-				<h6>{{ facturadoDia.mensaje }}</h6>
+				<strong>Error</strong>
+				<h6>No se han podido cargar los datos correspondientes a lo facturado por día. {{ facturadoDia.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosFacturadoDia()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
@@ -107,8 +107,8 @@
 		</div>
 		<div class="col-lg-4" ng-show="facturadoMes.error">
 			<div class="alert alert-danger">
-				<strong>Error</strong> - No se han podido cargar los datos de los facturado por mes.
-				<h6>{{ facturadoMes.mensaje }}</h6>
+				<strong>Error</strong>
+				<h6>No se han podido cargar los datos correspondientes a lo facturado por mes. {{ facturadoMes.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosFacturadoMes()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
@@ -133,8 +133,8 @@
 		</div>
 		<div class="col-lg-4" ng-show="cantGates.error">
 			<div class="alert alert-danger">
-				<strong>Error</strong> - No se han podido cargar los datos de los gates.
-				<h6>{{ cantGates.mensaje }}</h6>
+				<strong>Error</strong>
+				<h6>No se han podido cargar los datos de cantidad de gates registrados. {{ cantGates.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosGates()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
@@ -159,8 +159,8 @@
 		</div>
 		<div class="col-lg-4" ng-show="cantTurnos.error">
 			<div class="alert alert-danger">
-				<strong>Error</strong> - No se han podido cargar los datos de los turnos.
-				<h6>{{ cantTurnos.mensaje }}</h6>
+				<strong>Error</strong>
+				<h6>No se han podido cargar los datos de cantidad de turnos registrados. {{ cantTurnos.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosTurnos()">aquí</a> para reintentar.</span>
 			</div>
 		</div>
@@ -208,10 +208,10 @@
 					options="chartDiaGatesTurnos.options"></column-chart>
 			</div>
 		</div>
-		<div class="col-lg-4" ng-show="gatesTurnos.error">
+		<div class="col-lg-4 col-lg-offset-4" ng-show="gatesTurnos.error">
 			<div class="alert alert-danger">
-				<strong>Error</strong> - No se han podido cargar los datos de los turnos.
-				<h6>{{ gatesTurnos.mensaje }}</h6>
+				<strong>Error</strong>
+				<h6>No se han podido cargar los datos correspondientes a la cantidad de turnos/gates por hora. {{ gatesTurnos.mensaje }}</h6>
 				<span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
 			</div>
 		</div>

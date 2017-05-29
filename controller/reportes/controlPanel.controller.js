@@ -268,21 +268,19 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.isOpenMonth = false;
 			controlPanelFactory.getFacturasMeses(datos).then((graf) => {
 				if (graf){
-					$scope.facturadoMes.loading = false;
 					$scope.chartFacturas.data = graf.data;
 				} else {
-					$scope.facturadoMes.loading = false;
 					$scope.facturadoMes.error = true;
 				}
 			}).catch(error => {
-				console.log(error);
+				$scope.facturadoMes.error = true;
 				if (error.status != -5){
-					$scope.facturadoMes = {
-						loading: false,
-						error: true,
-						mensaje: error.data
-					};
+					$scope.facturadoMes.mensaje = error.data.msg;
+				} else {
+					$scope.facturadoMes.mensaje = error.data.message;
 				}
+			}).finally(() => {
+				$scope.facturadoMes.loading = false;
 			});
 		};
 
@@ -292,22 +290,19 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.cantGates.loading = true;
 			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}).then((graf) => {
 				if (graf.status == 'OK'){
-					$scope.cantGates.loading = false;
 					$scope.chartGates.data = graf.data;
-
 				} else {
-					$scope.cantGates.loading = false;
 					$scope.cantGates.error = true;
-
 				}
 			}).catch(error => {
+				$scope.cantGates.error = true;
 				if (error.status != -5){
-					$scope.cantGates = {
-						loading: false,
-						error: true,
-						mensaje: error.data
-					};
+					$scope.cantGates.mensaje = error.data.msg;
+				} else {
+					$scope.cantGates.mensaje = error.data.message;
 				}
+			}).finally(() => {
+				$scope.cantGates.loading = false;
 			});
 		};
 
@@ -317,20 +312,15 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.cantTurnos.loading = true;
 			controlPanelFactory.getTurnosMeses({ fecha: $scope.mesDesdeTurnos }).then((graf) => {
 				if (graf.status == 'OK'){
-					$scope.cantTurnos.loading = false;
 					$scope.chartTurnos.data = graf.data;
 				} else {
-					$scope.cantTurnos.loading = false;
 					$scope.cantTurnos.error = true;
 				}
 			}).catch(error => {
-				if (error.status != -5){
-					$scope.cantTurnos = {
-						loading: false,
-						error: true,
-						mensaje: error.data
-					};
-				}
+				$scope.cantTurnos.error = true;
+				$scope.cantTurnos.mensaje = error.data.message
+			}).finally(() => {
+				$scope.cantTurnos.loading = false;
 			});
 		};
 
@@ -343,20 +333,19 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.facturadoDia.loading = true;
 			controlPanelFactory.getFacturadoPorDia(datos).then((graf) => {
 				if (graf){
-					$scope.facturadoDia.loading = false;
 					$scope.chartFacturado.data = graf.data;
 				} else {
 					$scope.facturadoDia.error = true;
-					$scope.facturadoDia.loading = false;
 				}
 			}).catch(error => {
+				$scope.facturadoDia.error = true;
 				if (error.status != -5){
-					$scope.facturadoDia = {
-						loading: false,
-						error: true,
-						mensaje: error.data
-					};
+					$scope.facturadoDia.mensaje = error.data.msg;
+				} else {
+					$scope.facturadoDia.mensaje = error.data.message;
 				}
+			}).finally(() => {
+				$scope.facturadoDia.loading = false;
 			});
 		};
 
@@ -384,7 +373,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			}
 			promise.then((graf) => {
 				if (graf.status == 'OK'){
-					$scope.gatesTurnos.loading = false;
 					$scope.chartDiaGatesTurnos.data = graf.data;
 					if ($scope.radioModel == 'Gates'){
 						$scope.labelPorHora = 'Gates por hora'
@@ -393,16 +381,17 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 					}
 				} else {
 					$scope.gatesTurnos.error = true;
-					$scope.gatesTurnos.loading = false;
 				}
 			}).catch(error => {
+				console.log(error);
+				$scope.gatesTurnos.error = true;
 				if (error.status != -5){
-					$scope.gatesTurnos = {
-						loading: false,
-						error: true,
-						mensaje: error.data
-					};
+					$scope.gatesTurnos.mesnsaje = error.data.data.msg;
+				} else {
+					$scope.gatesTurnos.mesnsaje = error.data.message;
 				}
+			}).finally(() => {
+				$scope.gatesTurnos.loading = false;
 			});
 		};
 
