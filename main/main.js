@@ -4,7 +4,7 @@
 
 //google.charts.load('current', {'packages':['corechart'], 'language': 'es'});
 
-/*Array.prototype.equals = function (array) {
+Array.prototype.equivalente = function (array) {
 	// if the other array is a falsy value, return
 	if (!array)
 		return false;
@@ -29,7 +29,7 @@
 		}
 	}
 	return true;
-};*/
+};
 
 var myapp = angular.module('myapp', ['ui.router', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngSanitize', 'ngCookies', 'multi-select', 'angular-cache', 'cgNotify', 'btford.socket-io', 'ngAnimate', 'ngTagsInput']);
 

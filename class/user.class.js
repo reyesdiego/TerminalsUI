@@ -118,7 +118,7 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', function($http, $q, APP_CONF
 		}
 
 		get tieneCambiosTareas(){
-			return (!this.tareasNuevas.equals(this.acceso));
+			return (!this.tareasNuevas.equivalente(this.acceso));
 		}
 
 		get tieneCambiosNotificaciones(){
