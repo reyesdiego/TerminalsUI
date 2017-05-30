@@ -1,7 +1,8 @@
 /**
  * Created by kolesnikov-a on 23/08/2016.
  */
-myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginService', 'APP_CONFIG', function($http, cacheService, $q, formatService, loginService, APP_CONFIG){
+
+myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginService', 'APP_CONFIG', '$uibModal', function($http, cacheService, $q, formatService, loginService, APP_CONFIG, $uibModal){
 
     class Price {
         constructor(priceData){
@@ -278,6 +279,40 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 deferred.reject(response.data);
             });
             return deferred.promise;
+        }
+
+        getDetailMatch(matchCode){
+            const inserturl =  `${APP_CONFIG.SERVER_URL}/invoices/byCode/`;
+            const params = {
+                code: matchCode,
+                terminal: loginService.filterTerminal
+            };
+            $http.get(inserturl, { params: params }).then((response) => {
+				$uibModal.open({
+					templateUrl: 'view/tarifario/detalle.codigo.modal.html',
+                    controller: ['codigo', 'tarifasData', 'tipoMoneda', 'valorTarifa', function(codigo, tarifasData, tipoMoneda, valorTarifa){
+						this.valorTarifa = valorTarifa;
+						this.tipoMoneda = tipoMoneda;
+						this.registroTarifas = tarifasData;
+						this.codigo = codigo
+					}],
+                    controllerAs: 'vmModal',
+					resolve: {
+						codigo: () => {
+							return matchCode;
+						},
+                        tarifasData: () => {
+						    return response.data.data;
+                        },
+                        tipoMoneda: () => {
+						    return this.currency
+                        },
+                        valorTarifa: () => {
+						    return this.price
+                        }
+					}
+				});
+            });
         }
 
         get tipoTarifa(){

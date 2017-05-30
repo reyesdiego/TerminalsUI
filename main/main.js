@@ -4,6 +4,7 @@
 
 //google.charts.load('current', {'packages':['corechart'], 'language': 'es'});
 
+//TODO SACAR ESTO DE ACAAAAAAAAAAAAAAAAAAAAAAA
 Array.prototype.equivalente = function (array) {
 	// if the other array is a falsy value, return
 	if (!array)

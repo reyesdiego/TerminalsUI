@@ -1,0 +1,28 @@
+<div class="modal-header bg-info" style="border-radius: 5px">
+    <h3 class="modal-title">Código: {{ vmModal.codigo }}</h3>
+</div>
+<div class="modal-body">
+    <h4>Valor registrado de la tarifa: {{ vmModal.valorTarifa | currency: (vmModal.tipoMoneda | formatCurrency)}}</h4>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr class="bg-primary">
+                <th>Fecha</th>
+                <th>Valor</th>
+                <th>Cantidad veces</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="registro in vmModal.registroTarifas | orderBy: 'fecha'">
+                    <td>{{ registro.fecha | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{ registro.imp_unit | currency: (vmModal.tipoMoneda | formatCurrency) }}</td>
+                    <td>{{ registro.cnt }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <h5>Tarifas cobradas con este código y fechas de última utilización.</h5>
+</div>
