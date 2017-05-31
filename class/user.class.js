@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 24/01/2017.
  */
-myapp.factory('User', ['$http', '$q', 'APP_CONFIG', function($http, $q, APP_CONFIG){
+myapp.factory('User', ['$http', '$q', 'APP_CONFIG', 'generalFunctions', function($http, $q, APP_CONFIG, generalFunctions){
 
 	class User {
 
@@ -118,7 +118,7 @@ myapp.factory('User', ['$http', '$q', 'APP_CONFIG', function($http, $q, APP_CONF
 		}
 
 		get tieneCambiosTareas(){
-			return (!this.tareasNuevas.equivalente(this.acceso));
+			return (!generalFunctions.isEqualArray(this.tareasNuevas, this.acceso));
 		}
 
 		get tieneCambiosNotificaciones(){

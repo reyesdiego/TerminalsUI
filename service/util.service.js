@@ -52,4 +52,32 @@ myapp.service('generalFunctions', [function () {
 		}
 		return false;
 	}
+
+	this.isEqualArray = function(myArray, compareArray){
+		// if the other array is a falsy value, return
+		if (!compareArray)
+			return false;
+
+		// compare lengths - can save a lot of time
+		if (myArray.length != compareArray.length)
+			return false;
+
+		myArray.sort();
+		compareArray.sort();
+
+		for (var i = 0, l=myArray.length; i < l; i++) {
+			// Check if we have nested arrays
+			if (myArray[i] instanceof Array && compareArray[i] instanceof Array) {
+				// recurse into the nested arrays
+				if (!this.isEqualArray(myArray[i],compareArray[i]))
+					return false;
+			}
+			else if (myArray[i] != compareArray[i]) {
+				// Warning - two different object instances will never be equal: {x:20} != {x:20}
+				return false;
+			}
+		}
+		return true;
+	};
+
 }]);
