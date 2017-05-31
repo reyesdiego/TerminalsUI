@@ -4,7 +4,7 @@
 <div class="modal-body">
     <h4>Valor registrado de la tarifa: {{ vmModal.valorTarifa | currency: (vmModal.tipoMoneda | formatCurrency)}}</h4>
 
-    <div class="table-responsive">
+    <div class="table-responsive" style="overflow-y: scroll;overflow-x: hidden; height: 500px">
         <table class="table table-bordered">
             <thead>
             <tr class="bg-primary">
@@ -14,7 +14,7 @@
             </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="registro in vmModal.registroTarifas | orderBy: 'fecha'">
+                <tr ng-repeat="registro in vmModal.registroTarifas">
                     <td>{{ registro.fecha | date: 'dd/MM/yyyy'}}</td>
                     <td>{{ registro.imp_unit | currency: (vmModal.tipoMoneda | formatCurrency) }}</td>
                     <td>{{ registro.cnt }}</td>
