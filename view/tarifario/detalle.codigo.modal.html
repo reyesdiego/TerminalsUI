@@ -4,7 +4,7 @@
 <div class="modal-body">
     <h4>Valor registrado de la tarifa: {{ vmModal.valorTarifa | currency: (vmModal.tipoMoneda | formatCurrency)}}</h4>
 
-    <div class="table-responsive" style="overflow-y: scroll;overflow-x: hidden; height: 500px">
+    <div class="table-responsive fixed-height-table">
         <table class="table table-bordered">
             <thead>
             <tr class="bg-primary">

@@ -132,6 +132,15 @@ html, body {
     font-size: 8pt;
 }
 
+.fixed-height-table {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 500px;
+}
+
+.async-loading{
+    cursor: wait;
+}
 
 @media print{
     .anchoFijoImpresion{

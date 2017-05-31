@@ -101,8 +101,8 @@
                                 <span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2" style="text-align: right">
-								<span ng-repeat="codigo in price.matches.match track by $index" ng-class=" codigo.status ? 'text-success' : 'text-danger'">
-                                    <span ng-click="price.getDetailMatch(codigo.code)" style="cursor: pointer;">{{ codigo.code }}</span>
+								<span ng-repeat="codigo in price.matches.match track by $index">
+                                    <a href ng-click="price.getDetailMatch(codigo.code)" ng-class=" codigo.status ? 'text-success' : 'text-danger'"><i class="glyphicon ion-ios-information"></i> {{ codigo.code }}</a>
 									<span ng-show="!$last">, </span>
 								</span>
                             </td>

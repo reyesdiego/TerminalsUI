@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 23/08/2016.
  */
 
-myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginService', 'APP_CONFIG', '$uibModal', function($http, cacheService, $q, formatService, loginService, APP_CONFIG, $uibModal){
+myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginService', 'APP_CONFIG', '$uibModal', 'dialogs', function($http, cacheService, $q, formatService, loginService, APP_CONFIG, $uibModal, dialogs){
 
     class Price {
         constructor(priceData){
@@ -282,6 +282,8 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         }
 
         getDetailMatch(matchCode){
+            const body = angular.element(document).find('body');
+            body.addClass('async-loading');
             const inserturl =  `${APP_CONFIG.SERVER_URL}/invoices/byCode/`;
             const params = {
                 code: matchCode,
@@ -312,6 +314,10 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                         }
 					}
 				});
+            }).catch((response) => {
+                dialogs.error('Error', `Se produjo un error al cargar los usos del código seleccionado.\n${response.data.message}`);
+            }).finally(() => {
+                body.removeClass('async-loading');
             });
         }
 
