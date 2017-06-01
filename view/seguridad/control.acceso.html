@@ -15,7 +15,8 @@
 					<h3 class="panel-title">Usuarios</h3>
 				</div>
 				<div class="panel-body" style="max-height: 720px; overflow: scroll">
-					<h5 ng-repeat="usuario in usuarios"  ng-init="usuario.elegido = ''" class="{{ usuario.elegido }}"><a href ng-click="userSelected(usuario)">{{ usuario.full_name }} </a></h5>
+					<input type="text" placeholder="Buscar usuario..." ng-model="searchUser" class="form-control">
+					<h5 ng-repeat="usuario in usuarios | filter: searchUser"  ng-init="usuario.elegido = ''" class="{{ usuario.elegido }}"><a href ng-click="userSelected(usuario)">{{ usuario.full_name }} </a></h5>
 				</div>
 			</div>
 			<button type="button" class="btn btn-primary" ng-click="guardar()"><span class="glyphicon glyphicon-save"></span> Guardar</button>

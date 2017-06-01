@@ -11,6 +11,8 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 		mensaje: 'No posee permisos para requerir estos datos.'
 	};
 
+	$scope.searchUser = '';
+
 	$scope.$on('errorInesperado', function(e, mensaje){
 		$scope.cargaRutas = false;
 		$scope.panelMensaje = mensaje;
