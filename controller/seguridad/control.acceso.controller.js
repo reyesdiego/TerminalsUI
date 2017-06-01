@@ -69,13 +69,13 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 	};
 
 	$scope.chequearRuta = function(ruta){
-		var partesRuta = ruta.route.split('.');
+		const partesRuta = ruta.route.split('.');
 		if (!ruta.acceso){
 			quitarHijos(ruta);
 			quitarPadres(ruta.route);
 		} else {
 			if (partesRuta.length > 1){
-				var rutaPadre;
+				let rutaPadre;
 				rutaPadre = partesRuta[0];
 				if (partesRuta.length > 2){
 					rutaPadre += '.' + partesRuta[1];
@@ -86,54 +86,53 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 		}
 	};
 
-	var agregarPadres = function(ruta){
-		$scope.tareas.forEach(function(unaTarea){
+	function agregarPadres(ruta){
+		$scope.tareas.forEach((unaTarea) => {
 			if (unaTarea.route == ruta) unaTarea.acceso = true
 		});
 
-		var partesRuta = ruta.split('.');
+		const partesRuta = ruta.split('.');
 		if (partesRuta.length > 1){
-			var rutaPadre = partesRuta[0];
+			const rutaPadre = partesRuta[0];
 			agregarPadres(rutaPadre);
 		}
+	}
 
-	};
-
-	var quitarPadres = function(ruta){
-		var partesRuta = ruta.split('.');
+	function quitarPadres(ruta){
+		const partesRuta = ruta.split('.');
 		if (partesRuta.length > 1){
-			var rutaPadre;
+			let rutaPadre;
 			rutaPadre = partesRuta[0];
-			for (var i=1; i < partesRuta.length - 1; i++){
+			for (let i=1; i < partesRuta.length - 1; i++){
 				rutaPadre += '.' + partesRuta[1];
 			}
-			var hijosHabilitados = false;
-			$scope.tareas.forEach(function(unaTarea){
+			let hijosHabilitados = false;
+			$scope.tareas.forEach((unaTarea) => {
 				if (unaTarea.route.indexOf(rutaPadre + '.') >= 0 && unaTarea.acceso) hijosHabilitados = true;
 			});
 			if (!hijosHabilitados) {
-				$scope.tareas.forEach(function(unaTarea){
+				$scope.tareas.forEach((unaTarea) => {
 					if (unaTarea.route == rutaPadre) unaTarea.acceso = false;
 				})
 			}
 			quitarPadres(rutaPadre);
 		}
-	};
+	}
 
-	var quitarHijos = function(ruta){
-		$scope.tareas.forEach(function(unaTarea){
+	function quitarHijos(ruta){
+		$scope.tareas.forEach((unaTarea) => {
 			if (unaTarea.route.indexOf(ruta.route + '.') >= 0) unaTarea.acceso = false;
 		});
-	};
+	}
 
-	var agregarHijos = function(ruta){
-		var hijoHabilitado = false;
-		var rutaHija = '';
-		$scope.tareas.forEach(function(unaTarea){
+	function agregarHijos(ruta){
+		let hijoHabilitado = false;
+		let rutaHija = '';
+		$scope.tareas.forEach((unaTarea) => {
 			if (unaTarea.route.indexOf(ruta + '.') >= 0 && unaTarea.acceso) hijoHabilitado = true;
 		});
 		if (!hijoHabilitado){
-			$scope.tareas.forEach(function(unaTarea){
+			$scope.tareas.forEach((unaTarea) => {
 				if (unaTarea.route.indexOf(ruta + '.') >= 0 && !hijoHabilitado){
 					rutaHija = unaTarea.route;
 					unaTarea.acceso = true;
@@ -142,7 +141,7 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 			})
 		}
 		if (hijoHabilitado) agregarHijos(rutaHija);
-	};
+	}
 
 	$scope.userSelected = function(usuario){
 		if (angular.isDefined($scope.usuarioElegido) && $scope.usuarioElegido.full_name != usuario.full_name){
@@ -155,51 +154,42 @@ myapp.controller('accessControlCtrl', ['$scope', 'ctrlUsersFactory', 'dialogs', 
 		}
 	};
 
-	var setearUsuario = function(usuario){
+	function setearUsuario(usuario){
 		if (angular.isDefined($scope.usuarioElegido)) $scope.usuarioElegido.elegido = '';
 		$scope.usuarioElegido = usuario;
 		usuario.elegido = 'bg-info';
 		angular.copy(usuario.acceso, $scope.rutasUsuarioOriginal);
 		angular.copy(usuario.emailToApp, $scope.notificacionesUsuarioOriginal);
-		$scope.tareas.forEach(function(tarea){
+		$scope.tareas.forEach((tarea) => {
 			tarea.acceso = generalFunctions.in_array(tarea.route, usuario.acceso);
 		});
-		$scope.notificaciones.forEach(function(notif){
+		$scope.notificaciones.forEach((notif) => {
 			//notif.habilitar = generalFunctions.in_array(notif.valor, usuario.emailToApp);
 			notif.habilitar = usuario.emailToApp[notif.valor]
 		});
 		$scope.usuarioElegido.resetData();
 		$scope.cambioModo('tareas', 0);
-	};
+	}
 
 	$scope.guardar = function(){
-		var deferred = $q.defer();
-		$scope.tareas.forEach(function(unaTarea){
+		const deferred = $q.defer();
+		$scope.tareas.forEach((unaTarea) => {
 			if (unaTarea.acceso) $scope.usuarioElegido.tareasNuevas.push(unaTarea.route);
 		});
-		$scope.notificaciones.forEach(function(notif){
+		$scope.notificaciones.forEach((notif) => {
 			if (notif.habilitar) $scope.usuarioElegido.notificacionesNuevas[notif.valor] = notif.habilitar;
 		});
 		if ($scope.usuarioElegido.tieneCambiosTareas || $scope.usuarioElegido.tieneCambiosNotificaciones){
-			var dlg = dialogs.confirm("Control de acceso", "¿Desea guardar los cambios efectuados para el usuario " + $scope.usuarioElegido.full_name + "?");
-			dlg.result.then(function(){
-				$scope.usuarioElegido.guardarTareasNotificaciones().then(function(){
-					dialogs.notify('Control de acceso', 'La configuración para el usuario ' + $scope.usuarioElegido.full_name + ' se ha guardado correctamente.');
-					//$scope.usuarioElegido = undefined;
-					/*$scope.tareas.forEach(function(tarea){
-						tarea.acceso = false;
-					});
-					$scope.notificaciones.forEach(function(notif){
-						notif.habilitar = false;
-					});*/
-					//$scope.modo = 'tareas';
-					//$scope.cambioModo('tareas', 0);
+			const dlg = dialogs.confirm("Control de acceso", `¿Desea guardar los cambios efectuados para el usuario ${$scope.usuarioElegido.full_name}?`);
+			dlg.result.then(() => {
+				$scope.usuarioElegido.guardarTareasNotificaciones().then(() => {
+					dialogs.notify('Control de acceso', `La configuración para el usuario ${$scope.usuarioElegido.full_name} se ha guardado correctamente.'`);
 					deferred.resolve();
-				}).catch(function(error){
-					dialogs.error('Control de acceso', error + ' Inténtelo nuevamente más tarde.');
+				}).catch((error) => {
+					dialogs.error('Control de acceso', `${error} Inténtelo nuevamente más tarde.`);
 					deferred.reject();
 				});
-			}).catch(function(error){
+			}).catch(() => {
 				$scope.usuarioElegido.resetData();
 				deferred.resolve();
 			});
