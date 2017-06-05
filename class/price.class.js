@@ -64,7 +64,8 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 };
             }
             this.matches.match.forEach((matchCode) => {
-               this.arrayMatches.push(matchCode);
+                matchCode.loggedRole = loginService.type;
+                this.arrayMatches.push(matchCode);
             });
             if (this.terminal == 'AGP'){
                 this.tarifaAgp = true;

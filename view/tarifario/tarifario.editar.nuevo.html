@@ -68,7 +68,7 @@
 
                     <script type="text/ng-template" id="match-template">
                         <div class="tag-template" uib-tooltip="{{ data.status ? data.approvedBy ? 'Aprobado por: ' + data.approvedBy : 'Aprobado' : 'No aprobado'}}">
-                            <div ng-hide="dataTerminal.type == 'terminal'">
+                            <div ng-hide="data.loggedRole == 'terminal'">
                                 <input type="checkbox" ng-model="data.status"/>
                             </div>
                             <div>
