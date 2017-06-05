@@ -288,7 +288,8 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 			$scope.isOpenGates = false;
 			$scope.cantGates.error = false;
 			$scope.cantGates.loading = true;
-			controlPanelFactory.getGatesMeses({'fecha': $scope.mesDesdeGates}).then((graf) => {
+			const paramFecha = new Date($scope.mesDesdeGates.getFullYear(), $scope.mesDesdeGates.getMonth()+1, 1);
+			controlPanelFactory.getGatesMeses({'fecha': paramFecha}).then((graf) => {
 				if (graf.status == 'OK'){
 					$scope.chartGates.data = graf.data;
 				} else {
