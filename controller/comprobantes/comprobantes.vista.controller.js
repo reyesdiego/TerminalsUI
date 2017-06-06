@@ -41,11 +41,11 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 
 		$scope.disablePdf = false;
 
-		$scope.$on('borrarEstado', function(){
+		$scope.$on('borrarEstado', () => {
 			$scope.filtrado('estado', 'N');
 		});
 
-		$scope.$on('mostrarComprobante', function(event, comprobante){
+		$scope.$on('mostrarComprobante', (event, comprobante) => {
 			const invoice = new Invoice(comprobante);
 			$scope.mostrarDetalle(invoice);
 		});
@@ -153,21 +153,22 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 					dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta');
 				}
 			});
-		};
+		}
 
 		$scope.mostrarDetalle = function(comprobante){
 			$scope.loadingState = true;
-			if (!comprobante.controlled){
-				$scope.comprobantesVistos.push(comprobante);
-				comprobante.controlled = true;
-			}
+			let controlled = false;
 			comprobante.mostrarDetalle().then(() => {
 				comprobante.controlarTarifas();
+				if (!controlled) $scope.comprobantesVistos.push(comprobante);
 				$scope.verDetalle = comprobante;
 				$scope.mostrarResultado = true;
 			}).catch((error) => {
 				dialogs.error('Comprobantes', 'Se ha producido un error al cargar los datos del comprobante. ' + error.data.message);
-			}).finally(() => $scope.loadingState = false)
+			}).finally(() => $scope.loadingState = false);
+			$scope.comprobantesVistos.forEach(invoice => {
+				if (invoice._id == comprobante._id) controlled = true;
+			});
 		};
 
 		$scope.devolverEstado = function(estado){

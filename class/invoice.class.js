@@ -103,12 +103,31 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
                     this.setData(response.data.data);
                     deferred.resolve();
                 }).catch((response) => {
-                    deferred.reject(response);
+                    this.loadByNumber(deferred, response);
                 });
             } else {
                 deferred.resolve();
             }
             return deferred.promise;
+        }
+
+        loadByNumber(deferred, error){
+            const datos = {
+                nroComprobante: this.nroComprob
+            };
+			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/0/1`;
+			$http.get(inserturl, {params: formatService.formatearDatos(datos)}).then((response) => {
+			    this._id = response.data.data[0]._id;
+				const url = `${APP_CONFIG.SERVER_URL}/invoices/invoice/${this._id}`;
+				$http.get(url).then((invoice) => {
+					this.setData(invoice.data.data);
+					deferred.resolve();
+				}).catch((response) => {
+					deferred.reject(response)
+				});
+			}).catch((response) => {
+				deferred.reject(error);
+			});
         }
 
         getTrack(){

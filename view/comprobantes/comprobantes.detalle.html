@@ -107,8 +107,11 @@
 	<p style="text-align: left">Transferido: {{ verDetalle.transferencia }}</p>
 </div>
 
-<div class="center-block hidden-print" ng-show="verDetalle.controlTarifas.length > 0">
-	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Error en tarifas' }">
+<div class="panel panel-danger center-block hidden-print" ng-show="verDetalle.controlTarifas.length > 0">
+	<div class="panel-heading">
+		<h3 class="panel-title">Error en tarifas</h3>
+	</div>
+	<div class="panel-body">
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover table-striped" style="text-align: center">
 				<tr>
@@ -128,23 +131,30 @@
 					</td>
 					<td>{{ tarifaError.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
 					<td>{{ tarifaError.container }}</td>
-
 				</tr>
 			</table>
 		</div>
-	</div-panel>
+	</div>
 </div>
-<div class="col-lg-12 center-block hidden-print" ng-show="verDetalle.noMatch">
-	<div-panel config-panel="{ tipo: 'panel-warning', titulo: 'Control de tarifas' }">
+
+<div class="panel panel-warning center-block hidden-print" ng-show="verDetalle.noMatch">
+	<div class="panel-heading">
+		<h3 class="panel-title">Control de tarifas</h3>
+	</div>
+	<div class="panel-body">
 		<p>No se ha podido completar el control de tarifas, esto se produjo por alguna de las siguientes razones:</p>
 		<ul>
 			<li>Se hayaron tarifas sin asociar</li>
 			<li>No se tienen datos actualizados del tarifario, a la fecha de emisión del comprobante</li>
 		</ul>
-	</div-panel>
+	</div>
 </div>
-<div class="center-block hidden-print" ng-show="verDetalle.noMatch">
-	<div-panel config-panel="{ tipo: 'panel-danger', titulo: 'Tarifas sin controlar' }">
+
+<div class="panel panel-danger center-block hidden-print" ng-show="verDetalle.noMatch">
+	<div class="panel-heading">
+		<h3 class="panel-title">Tarifas sin controlar</h3>
+	</div>
+	<div class="panel-body">
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover table-striped" style="text-align: center">
 				<tr>
@@ -163,7 +173,7 @@
 				</tr>
 			</table>
 		</div>
-	</div-panel>
+	</div>
 </div>
 
 <div class="panel panel-default" ng-if="verDetalle.comments.length>0">
