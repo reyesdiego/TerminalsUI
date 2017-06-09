@@ -108,7 +108,10 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			fechaFin: $scope.fechaFin,
 			clients: [],
 			terminal: '',
-			top: 20
+			top: '20',
+			campo: 'total',
+			order: '-1',
+			normalOrder: true
 		};
 
 		$scope.resultados =  [];

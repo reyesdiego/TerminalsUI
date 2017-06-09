@@ -20,7 +20,13 @@
 			if (estaDefinido(array.rates) && array.rates == '1') array.rates = cacheService.matchesCache.get('ratesMatches' + loginService.filterTerminal).filter(Boolean);
 			if (estaDefinido(array.byContainer) && array.byContainer) array.byContainer = '1';
 			if (estaDefinido(array.onlyTrains) && array.onlyTrains) array.onlyTrains = '1';
-			if (estaDefinido(array.order)) array.order = '[{' + datos.order + '}]';
+			if (estaDefinido(array.order)){
+				if (datos.normalOrder){
+					array.order = datos.order;
+				} else {
+					array.order = '[{' + datos.order + '}]';
+				}
+			}
 			return array;
 		};
 
