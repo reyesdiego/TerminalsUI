@@ -155,6 +155,16 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			}
 		}
 
+		$scope.setOrder = function(order){
+			if ($scope.model.campo == order){
+				$scope.model.order = $scope.model.order == '-1' ? '1' : '-1';
+			} else {
+				$scope.model.campo = order;
+				$scope.model.order = '-1';
+			}
+			cargarReporte();
+		};
+
 		$scope.descargarPdf = function(){
 			const data = {
 				id: $scope.$id,

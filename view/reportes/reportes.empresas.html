@@ -44,11 +44,28 @@
                             <th>CUIT</th>
                             <th>Razón social</th>
                             <th class="text-right">Comp.</th>
-                            <th class="text-right">Mínimo</th>
-                            <th class="text-right">Promedio</th>
-                            <th class="text-right">Máxima</th>
+                            <th class="text-right"><a href ng-click="setOrder('min')">
+                                <span ng-show="model.campo == 'min' && model.order == '1'" class="glyphicon glyphicon-sort-by-attributes"></span>
+                                <span ng-show="model.campo == 'min' && model.order == '-1'" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                                 Mínimo
+                            </a>
+                            </th>
+                            <th class="text-right"><a href ng-click="setOrder('avg')">
+                                <span ng-show="model.campo == 'avg' && model.order == '1'" class="glyphicon glyphicon-sort-by-attributes"></span>
+                                <span ng-show="model.campo == 'avg' && model.order == '-1'" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                                 Promedio
+                            </a></th>
+                            <th class="text-right"><a href ng-click="setOrder('max')">
+                                <span ng-show="model.campo == 'max' && model.order == '1'" class="glyphicon glyphicon-sort-by-attributes"></span>
+                                <span ng-show="model.campo == 'max' && model.order == '-1'" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                                 Máxima
+                            </a></th>
                             <th class="text-right">Porcentaje</th>
-                            <th class="text-right">Total</th>
+                            <th class="text-right"><a href ng-click="setOrder('total')">
+                                <span ng-show="model.campo == 'total' && model.order == '1'" class="glyphicon glyphicon-sort-by-attributes"></span>
+                                <span ng-show="model.campo == 'total' && model.order == '-1'" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                                 Total
+                            </a></th>
                         </tr>
                         </thead>
                         <tbody>
