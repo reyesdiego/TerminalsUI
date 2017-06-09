@@ -11,6 +11,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			"trp": cacheService.colorTerminalesCache.get('Trp')
 		};
 
+		let listaAnterior;
+
 		//Array con las terminales
 		$scope.tabsTerminales = [
 			{nombre: 'AGP', active: true},
@@ -51,6 +53,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.search = '';
+		$scope.medida = '';
 		$scope.selectedList = [];
 		$scope.filteredPrices = [];
 
@@ -99,6 +102,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.cambiarListaTarifas = function(terminal){
+			$scope.tasas = false;
 			$scope.tabsTerminales.forEach((unTab) => {
 				unTab.active = (unTab.nombre == terminal.nombre);
 			});
@@ -111,7 +115,9 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			} else {
 				$scope.selectedList = pricelistTrp;
 			}
-			$scope.totalItems = $scope.selectedList.length
+			$scope.totalItems = $scope.selectedList.length;
+			listaAnterior = angular.copy($scope.selectedList);
+			$scope.filtrarMedida();
 		};
 
 		let pricelistAgp = [];
@@ -128,6 +134,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				$scope.selectedList = pricelistAgp;
 			}).catch((error) => {
 				$scope.errorTarifario = true;
+			}).finally(() => {
+				listaAnterior = angular.copy($scope.selectedList);
 			});
 
 			priceFactory.getPricelistTerminal('BACTSSA').then((response) => {
@@ -186,6 +194,18 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			} else {
 				$scope.selectedList = pricelistAgp;
 			}
+			listaAnterior = angular.copy($scope.selectedList);
+			$scope.filtrarMedida();
+		};
+
+		$scope.filtrarMedida = () => {
+			$scope.selectedList = angular.copy(listaAnterior);
+			if ($scope.medida){
+				$scope.selectedList = $scope.selectedList.filter((price) => {
+					return price.largo == $scope.medida;
+				})
+			}
+			$scope.totalItems = $scope.selectedList.length
 		};
 
 		$scope.agregarGrafico = (precio) => {

@@ -43,14 +43,20 @@
             <span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
         </div>
         <br>
-        <div class="checkbox col-lg-4">
-            <input type="checkbox" ng-model="tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas
+        <div class="col-lg-2">
+            <label class="checkbox"><input type="checkbox" ng-model="tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas</label>
         </div>
-        <div class="col-lg-5 text-right">
+        <div class="col-lg-2">
+            <label class="checkbox"><input type="checkbox" ng-model="medida" ng-true-value="20" ng-false-value="''" ng-change="filtrarMedida()">Contenedores de 20'</label>
+        </div>
+        <div class="col-lg-2">
+            <label class="checkbox"><input type="checkbox" ng-model="medida" ng-true-value="40" ng-false-value="''" ng-change="filtrarMedida()">Contenedores de 40'</label>
+        </div>
+        <div class="col-lg-4 text-right">
             <button class="btn btn-primary" ng-click="agregarQuitarTodo(true)">Marcar todo</button>
             <button class="btn btn-warning" ng-click="agregarQuitarTodo(false)">Desmarcar todo</button>
         </div>
-        <div class="col-lg-3 text-right">
+        <div class="col-lg-2 text-right">
             <h4 class="text-right">{{ tarifasGraficar.length }} tarifas seleccionadas</h4>
         </div>
     </div>
