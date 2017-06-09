@@ -53,7 +53,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.search = '';
-		$scope.medida = '';
+		$scope.filterLarge20 = false;
+		$scope.filterLarge40 = false;
 		$scope.selectedList = [];
 		$scope.filteredPrices = [];
 
@@ -200,9 +201,17 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 
 		$scope.filtrarMedida = () => {
 			$scope.selectedList = angular.copy(listaAnterior);
-			if ($scope.medida){
+			if ($scope.filterLarge20 && $scope.filterLarge40){
 				$scope.selectedList = $scope.selectedList.filter((price) => {
-					return price.largo == $scope.medida;
+					return price.largo == 20 || price.largo == 40;
+				})
+			} else if ($scope.filterLarge20){
+				$scope.selectedList = $scope.selectedList.filter((price) => {
+					return price.largo == 20;
+				})
+			} else if ($scope.filterLarge40){
+				$scope.selectedList = $scope.selectedList.filter((price) => {
+					return price.largo == 40;
 				})
 			}
 			$scope.totalItems = $scope.selectedList.length

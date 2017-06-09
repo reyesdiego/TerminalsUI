@@ -47,10 +47,10 @@
             <label class="checkbox"><input type="checkbox" ng-model="tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas</label>
         </div>
         <div class="col-lg-2">
-            <label class="checkbox"><input type="checkbox" ng-model="medida" ng-true-value="20" ng-false-value="''" ng-change="filtrarMedida()">Contenedores de 20'</label>
+            <label class="checkbox"><input type="checkbox" ng-model="filterLarge20" ng-change="filtrarMedida()">Contenedores de 20'</label>
         </div>
         <div class="col-lg-2">
-            <label class="checkbox"><input type="checkbox" ng-model="medida" ng-true-value="40" ng-false-value="''" ng-change="filtrarMedida()">Contenedores de 40'</label>
+            <label class="checkbox"><input type="checkbox" ng-model="filterLarge40" ng-change="filtrarMedida()">Contenedores de 40'</label>
         </div>
         <div class="col-lg-4 text-right">
             <button class="btn btn-primary" ng-click="agregarQuitarTodo(true)">Marcar todo</button>

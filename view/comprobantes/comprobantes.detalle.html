@@ -53,7 +53,7 @@
 			<tbody ng-repeat="contenedor in verDetalle.detalle">
 			<tr>
 				<td colspan="6" style="text-align: left">
-					<a href class="hidden-print" ng-click="trackContainer(contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>
+					<a href class="hidden-print" ng-click="trackContainer(contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span><span ng-if="contenedor.iso">{{ ' - ' + contenedor.iso }}</span></strong>
 					<!--<a href class="hidden-print" ng-click="filtrado('contenedor', contenedor.contenedor)" ng-hide="ocultarFiltros.indexOf('contenedor') >= 0"><span class="glyphicon glyphicon-search"></span></a><strong><span> Contenedor: {{ contenedor.contenedor }}</span></strong>-->
 					<!--<span ng-show="contenedor.buque.codigo != '' && contenedor.buque.viaje != null"> - Buque: ({{contenedor.buque.codigo}}) {{ contenedor.buque.nombre }}</span>-->
 					<span ng-show="contenedor.buque.codigo != '' && contenedor.buque.viaje != null"> - Buque: {{ contenedor.buque.nombre }}</span>
