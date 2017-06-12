@@ -14,7 +14,7 @@
                     <input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o tarifa" toupper>
                     <span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
                 </div>
-                <div class="checkbox col-lg-6 left">
+                <div class="checkbox col-lg-6">
                     <label>
                         <input type="checkbox" ng-model="tasas" ng-change="prepararDatos()">Tasa a las cargas
                     </label>
@@ -24,6 +24,9 @@
                     <label>
                         &nbsp;<input type="checkbox" ng-model="norma" ng-change="prepararDatos()">Fuera de norma
                     </label>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="text-right">{{ filteredPrices.length }} tarifas.</h3>
                 </div>
             </div>
         </div>
