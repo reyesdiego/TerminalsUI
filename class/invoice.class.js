@@ -49,6 +49,15 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
                 this.interfazLiquidada = 'text-danger';
             }
 
+            if (this.detalle){
+                this.detalle.forEach(detalleContenedor => {
+                    detalleContenedor.totalContenedor = 0;
+                    detalleContenedor.items.forEach(item => {
+                        detalleContenedor.totalContenedor += item.impTot;
+                    })
+                })
+            }
+
             this.setInterface();
             if (!this.resend || this.resend == null){
                 this.resend = false;
