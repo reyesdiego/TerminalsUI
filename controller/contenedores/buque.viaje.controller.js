@@ -292,13 +292,20 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			};
 			$scope.pageComprobantes.skip = (($scope.currentPage - 1) * $scope.model.itemsPerPage);
 			$scope.pageComprobantes.limit = $scope.model.itemsPerPage;
-			$scope.contenedorElegido.getInvoices($scope.$id, $scope.pageComprobantes).then().catch(() => {
+			$scope.contenedorElegido.getInvoicesByContainer().then().catch(() => {
 				$scope.mensajeResultado = {
 					titulo: 'Comprobantes',
 					mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
 					tipo: 'panel-danger'
 				};
 			}).finally(() => $scope.loadingInvoices = false);
+			/*$scope.contenedorElegido.getInvoices($scope.$id, $scope.pageComprobantes).then().catch(() => {
+				$scope.mensajeResultado = {
+					titulo: 'Comprobantes',
+					mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
+					tipo: 'panel-danger'
+				};
+			}).finally(() => $scope.loadingInvoices = false);*/
 		};
 
 		function cargaTasasCargas(){

@@ -49,6 +49,18 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             return deferred.promise;
         }
 
+        getInvoicesByContainer(datos){
+            const deferred = $q.defer();
+            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byContainer`;
+            $http.get(inserturl, { params: datos }).then(response => {
+                response.data.data = this.retrieveInvoices(response.data.data);
+                deferred.resolve(response.data);
+            }).catch(response => {
+                deferred.reject(response.data);
+            });
+            return deferred.promise;
+        }
+
         getComprobantesLiquidar(page, datos, callback){
             if (datos.byContainer){
                 this.cancelRequest('comprobantesLiquidarContainer');

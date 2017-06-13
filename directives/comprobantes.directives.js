@@ -18,7 +18,8 @@ myapp.directive('vistaComprobantes', function(){
 			ocultarAccordionComprobantesVistos:	'=',
 			panelMensaje:						'=',
 			volverAPrincipal:					'=',
-			filtroEstados:						'='
+			filtroEstados:						'=',
+			byContainer:						'@'
 		},
 		controller: 'vistaComprobantesCtrl'
 	}

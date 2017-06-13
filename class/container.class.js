@@ -51,6 +51,24 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             return deferred.promise;
         }
 
+        getInvoicesByContainer(){
+            const deferred = $q.defer();
+			let params = {
+				contenedor: this.contenedor,
+				terminal: loginService.filterTerminal
+			};
+			if (this.ship) params.buqueNombre = this.ship;
+			if (this.trip) params.viaje = this.trip;
+			invoiceFactory.getInvoicesByContainer(params).then(invoices => {
+                this.invoices.data = invoices.data;
+                this.invoices.total = invoices.data.length;
+                deferred.resolve();
+			}).catch(error => {
+			    deferred.reject();
+            });
+            return deferred.promise;
+        }
+
         getAppointments(page){
             const deferred = $q.defer();
             const searchParams = {
