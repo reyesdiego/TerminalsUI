@@ -70,25 +70,25 @@
 				<td><span title="El total no se corresponde con el precio unitario cobrado." class="glyphicon glyphicon-exclamation-sign text-danger" ng-show="item.impTot - item.impUnit*item.cnt > 0.2 || item.impTot - item.impUnit*item.cnt < - 0.2"></span> {{ item.impTot | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 			</tr>
 			<tr>
-				<td class="text-right" colspan="2"><strong>Total facturado para el contenedor {{ contenedor.contenedor }}</strong></td>
-				<td class="text-right" colspan="4">{{ contenedor.totalContenedor | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
+				<td class="text-left" colspan="2" style="border-right: none"><strong>&nbsp;&nbsp;Total Contenedor {{ contenedor.contenedor }}<span ng-if="contenedor.iso">{{ ' - ' + contenedor.iso }}</span></strong></td>
+				<td class="text-right" colspan="4" style="border-left: none">{{ contenedor.totalContenedor | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 			</tr>
 			</tbody>
 			<tfoot class="text-right">
 			<tr>
-				<td colspan="2"><strong>Subtotal</strong></td>
+				<td colspan="2" style="border-bottom: none"><strong>Subtotal</strong></td>
 				<td colspan="4">{{ verDetalle.importe.subtotal | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 			</tr>
 			<tr>
-				<td colspan="2"><strong>IVA</strong></td>
+				<td colspan="2" style="border-top: none; border-bottom: none"><strong>IVA</strong></td>
 				<td colspan="4">{{ verDetalle.importe.iva | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 			</tr>
 			<tr>
-				<td colspan="2"><strong>Otros Tributos</strong></td>
+				<td colspan="2" style="border-top: none; border-bottom: none"><strong>Otros Tributos</strong></td>
 				<td colspan="4">{{ verDetalle.importe.otrosTributos | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 			</tr>
 			<tr>
-				<td colspan="2"><strong>Total</strong></td>
+				<td colspan="2" style="border-top: none"><strong>Total</strong></td>
 				<td colspan="4">{{ verDetalle.importe.total | currency: (verDetalle.codMoneda | formatCurrency) }}</td>
 			</tr>
 			<tr class="text-center">

@@ -2,13 +2,14 @@
 	<table class="table table-bordered table-hover">
 		<thead>
 		<tr>
+			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fecha.emision" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Pto. Venta" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="nroPtoVenta" filtro-orden="nroPtoVentaOrden"></encabezado-tabla-ordenado></th>
 			<th><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Nro" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="nroComprob" filtro-orden="nroComprobOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-center" ng-show="byContainer">Buque</th>
 			<th class="text-center" ng-show="byContainer">Viaje</th>
 			<th><encabezado-tabla-ordenado titulo="Razón Social" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="razon" filtro-orden="razonOrden"></encabezado-tabla-ordenado></th>
-			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fecha.emision" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
+			<th class="text-right"># Contenedores</th>
 			<th class="text-right" ng-hide="byContainer"><encabezado-tabla-ordenado titulo="Importe Total" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="importe.total" filtro-orden="importeOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-right" ng-show="byContainer">Importe contenedor</th>
 			<th class="hidden-print text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
@@ -18,13 +19,14 @@
 		</thead>
 		<tbody ng-show="dataTerminal.type == 'agp'">
 		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }" class="fila-animada">
+			<td class="text-center" style="width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
 			<td class="text-right" style="width: 9%"><span ng-show="invoice.resend == 1" title="Comprobante marcado para reenviar" class="glyphicon glyphicon-warning-sign text-danger"></span> {{ invoice.nroPtoVenta }}</td>
 			<td style="width: 7%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
 			<td class="text-right" style="width: 8%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
 			<td class="text-center" style="width: 14%" ng-show="byContainer">{{ invoice.buque }}</td>
 			<td class="text-center" ng-show="byContainer">{{ invoice.viaje }}</td>
 			<td style="width: 31%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon | maxLength : 32}}<a href="" ng-show="(invoice.razon.length > 32)" uib-popover="{{ invoice.razon }}" popover-trigger="'mouseenter'"> (...)</a></td>
-			<td class="text-center" style="width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
+			<td class="text-right" style="width: 8%" >{{ invoice.contes}}</td>
 			<td class="text-right" style="width: 12%" ng-hide="byContainer">
 				<span class="text-danger glyphicon glyphicon-exclamation-sign" ng-show="invoice.controlTarifas.length > 0" uib-popover="Error en tarifas" popover-trigger="'mouseenter'"></span>
 				<span class="text-warning glyphicon glyphicon-question-sign" ng-show="invoice.noMatch" uib-popover="Códigos sin asociar" popover-trigger="'mouseenter'"></span>
