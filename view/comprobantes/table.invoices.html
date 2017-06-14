@@ -1,5 +1,5 @@
 <div class="table-responsive invoice-shadow">
-	<table class="table table-bordered table-hover">
+	<table class="table table-bordered table-hover text-small">
 		<thead>
 		<tr>
 			<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="fecha.emision" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
@@ -19,42 +19,42 @@
 		</thead>
 		<tbody ng-show="dataTerminal.type == 'agp'">
 		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }" class="fila-animada">
-			<td class="text-center" style="width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
-			<td class="text-right" style="width: 9%"><span ng-show="invoice.resend == 1" title="Comprobante marcado para reenviar" class="glyphicon glyphicon-warning-sign text-danger"></span> {{ invoice.nroPtoVenta }}</td>
-			<td style="width: 7%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
-			<td class="text-right" style="width: 8%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
-			<td class="text-center" style="width: 14%" ng-show="byContainer">{{ invoice.buque }}</td>
+			<td class="text-center"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
+			<td class="text-right"><span ng-show="invoice.resend == 1" title="Comprobante marcado para reenviar" class="glyphicon glyphicon-warning-sign text-danger"></span> {{ invoice.nroPtoVenta }}</td>
+			<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
+			<td class="text-right"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+			<td class="text-center" ng-show="byContainer">{{ invoice.buque }}</td>
 			<td class="text-center" ng-show="byContainer">{{ invoice.viaje }}</td>
-			<td style="width: 31%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon | maxLength : 32}}<a href="" ng-show="(invoice.razon.length > 32)" uib-popover="{{ invoice.razon }}" popover-trigger="'mouseenter'"> (...)</a></td>
-			<td class="text-right" style="width: 8%" >{{ invoice.contes}}</td>
-			<td class="text-right" style="width: 12%" ng-hide="byContainer">
+			<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+			<td class="text-right">{{ invoice.contes}}</td>
+			<td class="text-right" ng-hide="byContainer">
 				<span class="text-danger glyphicon glyphicon-exclamation-sign" ng-show="invoice.controlTarifas.length > 0" uib-popover="Error en tarifas" popover-trigger="'mouseenter'"></span>
 				<span class="text-warning glyphicon glyphicon-question-sign" ng-show="invoice.noMatch" uib-popover="Códigos sin asociar" popover-trigger="'mouseenter'"></span>
 				<span ng-class="invoice.total < 0 ? 'text-danger' : ''"><span ng-show="invoice.total < 0">- </span>{{ invoice.importe.total | currency: (invoice.codMoneda | formatCurrency) }}</span>
 			</td>
-			<td class="text-right" ng-show="byContainer" style="width: 12%;">{{ invoice.importeContenedor | currency: (invoice.codMoneda | formatCurrency) }}</td>
-			<td ng-hide="inTrackContainer" class="hidden-print text-center" style="width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-			<td style="width: 14%" class="hidden-print text-left">
+			<td class="text-right" ng-show="byContainer">{{ invoice.importeContenedor | currency: (invoice.codMoneda | formatCurrency) }}</td>
+			<td ng-hide="inTrackContainer" class="hidden-print text-center"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td class="hidden-print text-left">
 				<a href ng-click="trackInvoice(invoice)" uib-popover="{{ invoice.lastComment }}" popover-trigger="'mouseenter'"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>
 			</td>
 			<!--<td style="width: 3%" class="hidden-print text-center">
 				<a href ng-click="invoice.trackInvoice()"><span class="glyphicon glyphicon-edit"></span></a>
 			</td>-->
-			<td style="width: 3%" class="hidden-print text-center" title="{{invoice.title}}"><span class="glyphicon glyphicon-check {{ invoice.interfazLiquidada }}" ng-show="invoice.tienePayment"></span><span class="glyphicon glyphicon-remove {{ invoice.interfazLiquidada }}" ng-hide="invoice.tienePayment"></span> </td>
+			<td class="hidden-print text-center" title="{{invoice.title}}"><span class="glyphicon glyphicon-check {{ invoice.interfazLiquidada }}" ng-show="invoice.tienePayment"></span><span class="glyphicon glyphicon-remove {{ invoice.interfazLiquidada }}" ng-hide="invoice.tienePayment"></span> </td>
 		</tr>
 		</tbody>
 		<tbody ng-show="dataTerminal.type == 'terminal'">
 		<tr ng-repeat="invoice in datosInvoices" ng-class="{ comprobanteReenviar: invoice.resend == 1 }" class="fila-animada">
-			<td class="text-right" style="width: 10%">{{ invoice.nroPtoVenta }}</td>
-			<td style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
-			<td class="text-right" style="width: 11%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
-			<td style="width: 38%"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon | maxLength : 45 }}<a href="" ng-show="(invoice.razon.length > 45)" uib-popover="{{ invoice.razon }}" popover-trigger="'mouseenter'"> (...)</a></td>
-			<td class="text-center" style="width: 10%;"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
-			<td class="text-right" style="width: 17%">
+			<td class="text-right">{{ invoice.nroPtoVenta }}</td>
+			<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
+			<td class="text-right"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+			<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
+			<td class="text-center"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0" ng-click="filtrado('fechaInicio', invoice.fecha.emision)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.fecha.emision | date: 'dd/MM/yyyy':'UTC' }}</td>
+			<td class="text-right">
 				<span class="text-danger glyphicon glyphicon-exclamation-sign" ng-show="invoice.controlTarifas.length > 0" uib-popover="Error en tarifas" popover-trigger="'mouseenter'"></span>
 				<span class="text-warning glyphicon glyphicon-question-sign" ng-show="invoice.noMatch" uib-popover="Códigos sin asociar" popover-trigger="'mouseenter'"></span>
 				<span ng-class="invoice.total < 0 ? 'text-danger' : ''"><span ng-show="invoice.total < 0">- </span>{{ invoice.importe.total | currency: (invoice.codMoneda | formatCurrency) }}</span>
-			<td class="hidden-print text-center" style="width: 3%"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+			<td class="hidden-print text-center"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 		</tr>
 		</tbody>
 	</table>
