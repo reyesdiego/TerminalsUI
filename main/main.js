@@ -142,13 +142,14 @@ myapp.config(['$provide', '$httpProvider', function($provide, $httpProvider){
 
 }]);
 
+//Configuración de todas las rutas de la app
 myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceProvider', function ($stateProvider, $urlRouterProvider, $provide, cacheServiceProvider) {
 
 	const initialLoadFactory = cacheServiceProvider.$get();
 
 	$provide.decorator("$exceptionHandler", ['$delegate', '$injector', function($delegate, $injector){
 		return function(exception, cause){
-			var $rootScope = $injector.get("$rootScope");
+			const $rootScope = $injector.get("$rootScope");
 			$rootScope.addError({message:"Exception", reason:exception});
 			$delegate(exception, cause);
 		};
@@ -157,7 +158,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 	// For any unmatched url, send to /login
 	//$urlRouterProvider.otherwise("/login");
 	$urlRouterProvider.otherwise( function($injector, $location) {
-		var $state = $injector.get("$state");
+		const $state = $injector.get("$state");
 		$state.go("login");
 	});
 
@@ -252,30 +253,30 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 			},
 			redirectTo: 'cfacturas.correlatividad'
 		})
-			.state('cfacturas.tasas', {
+		.state('cfacturas.tasas', {
 				url: '/tasas',
 				templateUrl: 'view/comprobantes/control.tasas.html',
 				controller: 'tasaCargasCtrl'
 			})
-			.state('cfacturas.correlatividad', {
+		.state('cfacturas.correlatividad', {
 				url: '/correlatividad',
 				templateUrl: 'view/comprobantes/control.correlatividad.html',
 				controller: 'correlatividadCtrl'
 			})
-			.state('cfacturas.codigos', {
+		.state('cfacturas.codigos', {
 				url: '/codigos',
 				templateUrl: 'view/comprobantes/control.codigos.html',
 				controller: 'codigosCtrl'
 			})
-			.state('cfacturas.revisar', {
+		.state('cfacturas.revisar', {
 				url: '/revisar',
 				templateUrl: 'view/comprobantes/control.revisar.html'
 			})
-			.state('cfacturas.erroneos', {
+		.state('cfacturas.erroneos', {
 				url: '/erroneos',
 				templateUrl: 'view/comprobantes/control.erroneos.html'
 			})
-			.state('cfacturas.reenviar', {
+		.state('cfacturas.reenviar', {
 				url: '/reenviar',
 				templateUrl: 'view/comprobantes/control.reenviar.html'
 			})
@@ -315,15 +316,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 			},
 			redirectTo: 'cgates.gates'
 		})
-			.state('cgates.gates', {
+		.state('cgates.gates', {
 				url: '/gatesFaltantes',
 				templateUrl: 'view/gates/gates.control.faltantes.html'
 			})
-			.state('cgates.invoices', {
+		.state('cgates.invoices', {
 				url: '/comprobantesFaltantes',
 				templateUrl: 'view/gates/gates.control.sinFacturacion.html'
 			})
-			.state('cgates.appointments', {
+		.state('cgates.appointments', {
 				url: '/turnosFaltantes',
 				templateUrl: 'view/gates/gates.control.sinTurnos.html'
 			})
@@ -413,6 +414,12 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 			resolve: {
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 			}
+		})
+		//TODO ver si este reporte necesita algún resolve
+		.state('reports.containers', {
+			url: '/contenedores',
+			templateUrl: 'view/reportes/reportes.contenedores.html',
+			controller: 'reporteContenedorCtrl'
 		})
 		//========================================================================\\
 		//************************* CONTENEDORES *********************************\\

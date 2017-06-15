@@ -25,6 +25,10 @@ html, body {
     text-decoration: underline;
 }
 
+.text-bold {
+    font-weight: bolder;
+}
+
 .back-container{
     position:absolute;
     top:0;

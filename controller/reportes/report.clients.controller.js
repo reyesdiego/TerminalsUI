@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 21/08/15.
  */
-myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 'dialogs', 'loginService', 'cacheService', 'downloadFactory',
-	function($scope, controlPanelFactory, dialogs, loginService, cacheService, downloadFactory){
+myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'reportsFactory', 'dialogs', 'loginService', 'cacheService', 'downloadFactory',
+	function($scope, reportsFactory, dialogs, loginService, cacheService, downloadFactory){
 
 		$scope.ranking = true;
 
@@ -88,9 +88,6 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 			if ($scope.model.clients.length == 0) $scope.ranking = true;
 		};
 
-		$scope.fechaInicio = new Date();
-		$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-
 		$scope.mensajeResultado = {
 			titulo: 'Reporte empresas',
 			mensaje: 'Seleccione una razón social para realizar la búsqueda.',
@@ -104,8 +101,8 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		});
 
 		$scope.model = {
-			fechaInicio: $scope.fechaInicio,
-			fechaFin: $scope.fechaFin,
+			fechaInicio: new Date(),
+			fechaFin: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
 			clients: [],
 			terminal: '',
 			top: '20',
@@ -146,12 +143,12 @@ myapp.controller('facturacionPorEmpresaCtrl', ['$scope', 'controlPanelFactory', 
 		function cargarReporte(){
 			$scope.cargando = true;
 			$scope.model.terminal = loginService.filterTerminal;
-			let datos = angular.copy($scope.model);
+			const datos = angular.copy($scope.model);
 			if ($scope.ranking){
-				controlPanelFactory.getTopFacturacionEmpresas(datos, tratarResultado)
+				reportsFactory.getTopFacturacionEmpresas(datos, tratarResultado)
 			} else {
 				datos.top = '';
-				controlPanelFactory.getFacturacionEmpresas(datos, tratarResultado)
+				reportsFactory.getFacturacionEmpresas(datos, tratarResultado)
 			}
 		}
 

@@ -57,13 +57,13 @@ myapp.service('loginService', ['generalFunctions', '$cookies', '$http', function
 		set acceso(rutas){
 			if (generalFunctions.in_array('cfacturas', rutas)){
 				const controlComprobantes = ['cfacturas.tasas', 'cfacturas.correlatividad', 'cfacturas.codigos', 'cfacturas.revisar', 'cfacturas.erroneos', 'cfacturas.reenviar'];
-				for (var i=0; i<controlComprobantes.length; i++ ){
+				for (let i=0; i<controlComprobantes.length; i++ ){
 					rutas.push(controlComprobantes[i]);
 				}
 			}
 			if (generalFunctions.in_array('reports', rutas)){
-				const reportes = ['reports.tasas', 'reports.tarifas', 'reports.empresas', 'reports.terminales'];
-				for (var j = 0; j < reportes.length; j++){
+				const reportes = ['reports.tasas', 'reports.tarifas', 'reports.empresas', 'reports.terminales', 'reports.containers'];
+				for (let j = 0; j < reportes.length; j++){
 					rutas.push(reportes[j]);
 				}
 			}

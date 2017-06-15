@@ -32,7 +32,9 @@
 				<span class="text-warning glyphicon glyphicon-question-sign" ng-show="invoice.noMatch" uib-popover="Códigos sin asociar" popover-trigger="'mouseenter'"></span>
 				<span ng-class="invoice.total < 0 ? 'text-danger' : ''"><span ng-show="invoice.total < 0">- </span>{{ invoice.importe.total | currency: (invoice.codMoneda | formatCurrency) }}</span>
 			</td>
-			<td class="text-right" ng-show="byContainer">{{ invoice.importeContenedor | currency: (invoice.codMoneda | formatCurrency) }}</td>
+			<td class="text-right" ng-show="byContainer">
+				<span ng-class="invoice.importeContenedor < 0 ? 'text-danger' : ''"><span ng-show="invoice.importeContenedor < 0">- </span>{{ invoice.importeContenedor | currency: (invoice.codMoneda | formatCurrency) }}</span>
+			</td>
 			<td ng-hide="inTrackContainer" class="hidden-print text-center"><a href ng-click="mostrarDetalle(invoice)"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
 			<td class="hidden-print text-left">
 				<a href ng-click="trackInvoice(invoice)" uib-popover="{{ invoice.lastComment }}" popover-trigger="'mouseenter'"><img ng-src="{{ invoice.interfazEstado.imagen }}" height="16" width="16" ><span class="{{ invoice.interfazEstado.btnEstado }}"> {{ invoice.interfazEstado.description }}</span></a>

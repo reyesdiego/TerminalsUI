@@ -150,7 +150,8 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 					$scope.currentPage = 1;
 					$scope.$emit('cambioFiltro', $scope.model);
 				} else {
-					dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta');
+					//dialogs.error('Comprobantes', 'Se ha producido un error al cargar los puntos de venta.');
+					$scope.$emit('errorInesperado', 'Se ha producido un error al cargar los puntos de venta.');
 				}
 			});
 		}

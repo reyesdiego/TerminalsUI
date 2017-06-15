@@ -10,7 +10,8 @@ myapp.controller('reportsCtrl', ['$scope', function ($scope){
 		{name: 'Tasas a las cargas', ref: 'reports.tasas'},
 		{name: 'Totales por tarifa', ref: 'reports.tarifas'},
 		{name: 'Facturación por empresa', ref: 'reports.empresas'},
-		{name: 'Tarifas por terminal', ref: 'reports.terminales'}
+		{name: 'Tarifas por terminal', ref: 'reports.terminales'},
+		{name: 'Facturación contenedores', ref: 'reports.containers'}
 	];
 
 	$scope.$on('$stateChangeSuccess', function (ev, to) {
