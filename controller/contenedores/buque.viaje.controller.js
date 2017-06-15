@@ -114,20 +114,20 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			$scope.mostrarAnterior = true;
 		};
 
-		$scope.$on('cambioPagina', function(event, data){
+		$scope.$on('cambioPagina', (event, data) => {
 			$scope.currentPage = data;
 			cargaComprobantes();
 		});
 
 		////// Para containers ////////////////////////////////////////////////////////////////////////////////
-		$scope.$on('detalleContenedor', function(event, container){
+		$scope.$on('detalleContenedor', (event, container) => {
 			$scope.model.contenedor = container.contenedor;
 			$scope.contenedorElegido = container;
 			$scope.volverAPrincipal = !$scope.volverAPrincipal;
 			$scope.filtrar();
 		});
 
-		$scope.$on('iniciarBusqueda', function(){
+		$scope.$on('iniciarBusqueda', () => {
 			$scope.volverAPrincipal = !$scope.volverAPrincipal;
 			if ($scope.model.contenedor != ''){
 				$scope.contenedorElegido = new Container({contenedor: $scope.model.contenedor});
@@ -162,7 +162,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 		});
 		///////////////////////////////////////////////////////////////////////////////////////
 
-		$scope.$on('errorInesperado', function(e, mensaje){
+		$scope.$on('errorInesperado', (e, mensaje) => {
 			$scope.loadingState = false;
 			$scope.panelMensaje = mensaje;
 			$scope.totalItems = 0;
@@ -173,7 +173,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			///////////////////////////////
 		});
 
-		$scope.$on('cambioOrden', function(event, data){
+		$scope.$on('cambioOrden', (event, data) => {
 			$scope.cargaComprobantes();
 		});
 
@@ -191,7 +191,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			$scope.loadingState = true;
 			$scope.currentPageContainers = 1;
 			$scope.model.contenedor = '';
-			var cargar = true;
+			let cargar = true;
 			switch (filtro){
 				case 'buque':
 					if (contenido == '') {
@@ -299,14 +299,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 					tipo: 'panel-danger'
 				};
 			}).finally(() => $scope.loadingInvoices = false);
-			/*$scope.contenedorElegido.getInvoices($scope.$id, $scope.pageComprobantes).then().catch(() => {
-				$scope.mensajeResultado = {
-					titulo: 'Comprobantes',
-					mensaje: 'Se ha producido un error al cargar los datos de los comprobantes.',
-					tipo: 'panel-danger'
-				};
-			}).finally(() => $scope.loadingInvoices = false);*/
-		};
+		}
 
 		function cargaTasasCargas(){
 			if (angular.isDefined($scope.model.contenedor) && $scope.model.contenedor != ''){
@@ -316,20 +309,19 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 					titulo: 'Tasas',
 					mensaje: 'No se encontraron tasas para los filtros seleccionados.'
 				};
-				$scope.contenedorElegido.getRates($state.current.name, $scope.moneda).then(function(){
-					$scope.loadingTasas = false;
-				}, function(error){
+				$scope.contenedorElegido.getRates($state.current.name, $scope.moneda).then().catch((error) => {
 					$scope.configPanelTasas = {
 						tipo: 'panel-danger',
 						titulo: 'Tasas',
 						mensaje: 'Se ha producido un error al cargar los datos de las tasas.'
 					};
+				}).finally(() => {
 					$scope.loadingTasas = false;
 				});
 			}
-		};
+		}
 
-		var cargaGates = function(page){
+		function cargaGates(page){
 			$scope.loadingGates = true;
 			$scope.configPanelGates = {
 				tipo: 'panel-info',
@@ -338,19 +330,18 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			};
 			page = page || { skip: 0, limit: $scope.itemsPerPage };
 			if (page.skip == 0){ $scope.currentPage = 1}
-			$scope.contenedorElegido.getGates(page).then(function(){
-				$scope.loadingGates = false;
-			}, function(){
+			$scope.contenedorElegido.getGates(page).then().catch(() => {
 				$scope.configPanelGates = {
 					tipo: 'panel-danger',
 					titulo: 'Gates',
 					mensaje: 'Se ha producido un error al cargar los gates.'
 				};
+			}).finally(() => {
 				$scope.loadingGates = false;
 			});
-		};
+		}
 
-		var cargaTurnos = function(page){
+		function cargaTurnos(page){
 			$scope.loadingTurnos = true;
 			$scope.configPanelTurnos = {
 				tipo: 'panel-info',
@@ -358,19 +349,18 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 				mensaje: 'No se encontraron Turnos para los filtros seleccionados.'
 			};
 			page = page || { skip:0, limit: $scope.itemsPerPage };
-			$scope.contenedorElegido.getAppointments(page).then(function(){
-				$scope.loadingTurnos = false;
-			}, function(){
+			$scope.contenedorElegido.getAppointments(page).then().catch(() => {
 				$scope.configPanelTurnos = {
 					tipo: 'panel-danger',
 					titulo: 'Turnos',
 					mensaje: 'Se ha producido un error al cargar los turnos.'
 				};
+			}).finally(() => {
 				$scope.loadingTurnos = false;
 			});
-		};
+		}
 
-		var cargaSumaria = function(){
+		function cargaSumaria(){
 			$scope.sumariaAfip = [];
 			$scope.cargandoSumaria = true;
 			$scope.sumariaConfigPanel = {
@@ -378,23 +368,25 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 				titulo: 'A.F.I.P. sumaria',
 				mensaje: 'No se encontraron datos en los registros de A.F.I.P. para el contenedor seleccionado.'
 			};
-			$scope.contenedorElegido.getAfipData()
-				.then(function(){
-					$scope.cargandoSumaria = false;
-				}, function(error){
-					console.log(error);
-					$scope.cargandoSumaria = false;
-				});
-		};
+			$scope.contenedorElegido.getAfipData().then().catch((error) => {
+				$scope.sumariaConfigPanel = {
+					tipo: 'panel-danger',
+					titulo: 'A.F.I.P. sumaria',
+					mensaje: 'Se produjo un error al cargar los datos de AFIP.'
+				};
+			}).finally(() => {
+				$scope.cargandoSumaria = false;
+			});
+		}
 
-		$rootScope.$watch('moneda', function(){
+		$rootScope.$watch('moneda', () => {
 			$scope.moneda = $rootScope.moneda;
 			if ($scope.detalle){
 				cargaTasasCargas();
 			}
 		});
 
-		$scope.$on('destroy', function(){
+		$scope.$on('destroy', () => {
 			containerFactory.cancelRequest();
 			//Agregar las que falten
 		});
