@@ -16,6 +16,8 @@ myapp.controller('reporteContenedorCtrl', ['$scope', 'reportsFactory', function(
 		normalOrder: true
 	};
 
+	$scope.ocultarFiltros = ['campo'];
+
 	$scope.mensajeResultado = {
 		titulo: 'Reporte contenedores',
 		mensaje: 'Selecciones los parámetros deseados y presione "Buscar" para generar el reporte.',

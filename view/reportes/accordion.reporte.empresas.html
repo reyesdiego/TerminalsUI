@@ -9,7 +9,7 @@
 			<option value="5">Top 5</option>
 		</select>
 	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('campo', 0) >= 0">
 		<select id="orderField" class="form-control" ng-model="model.campo">
 			<option value="total" ng-selected="true">Total</option>
 			<option value="max">Máximo</option>

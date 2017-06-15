@@ -4,7 +4,7 @@
     </div>
     <br>
     <div class="col-lg-12">
-        <reporte-empresas-search model="model" ranking="ranking"></reporte-empresas-search>
+        <reporte-empresas-search model="model" ranking="ranking" ocultar-filtros="ocultarFiltros"></reporte-empresas-search>
         <div class="col-lg-12" ng-show="cargando">
             <img class="media-object center-block" src="images/loading.gif">
         </div>
@@ -18,29 +18,32 @@
                 <table class="table table-bordered table-hover" style="font-size: 12px">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>Medida</th>
                         <th>Contenedor</th>
                         <th>Buque</th>
                         <th>Viaje</th>
-                        <td class="text-right">Cant. contenedores</td>
                         <th class="text-right">Total</th>
                     </tr>
                     </thead>
-                    <tbody ng-repeat="medida in resultados">
-                    <tr class="clickableRow bg-info text-bold" ng-click="medida.detalle = !medida.detalle">
+                    <tbody ng-repeat="medida in resultados | orderBy: 'total' : model.order == -1">
+                    <tr class="clickableRow text-bold" ng-click="medida.detalle = !medida.detalle">
+                        <td>
+                            <i ng-show="!medida.detalle" class="glyphicon glyphicon-plus"></i>
+                            <i ng-show="medida.detalle" class="glyphicon glyphicon-minus"></i>
+                        </td>
                         <td>{{ medida.medida | isoMedida }}</td>
+                        <td>{{ medida.contenedores.length }} contenedores</td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td class="text-right">{{ medida.contenedores.length }}</td>
                         <td class="text-right">{{ medida.total | currency: ('DOL' | formatCurrency) }}</td>
                     <tr>
-                    <tr ng-repeat="contenedor in medida.contenedores" ng-show="medida.detalle">
+                    <tr ng-repeat="contenedor in medida.contenedores | orderBy: 'total' : model.order == -1" ng-show="medida.detalle">
+                        <td></td>
                         <td></td>
                         <td>{{ contenedor.contenedor }}</td>
                         <td>{{ contenedor.buque }}</td>
                         <td>{{ contenedor.viaje }}</td>
-                        <td></td>
                         <td class="text-right">{{ contenedor.total | currency: ('DOL' | formatCurrency) }}</td>
                     </tr>
                     </tbody>

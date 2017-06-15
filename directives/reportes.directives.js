@@ -7,7 +7,8 @@ myapp.directive('reporteEmpresasSearch', function(){
 		templateUrl:	'view/reportes/accordion.reporte.empresas.html',
 		scope: {
 			model:					"=",
-			ranking:				"="
+			ranking:				"=",
+			ocultarFiltros:			"="
 		},
 		controller: 'searchController'
 	}
