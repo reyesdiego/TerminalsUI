@@ -2,8 +2,8 @@
  * Created by artiom on 02/10/14.
  */
 
-myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'cacheService', 'downloadFactory',
-	function($scope, reportsFactory, priceFactory, dialogs, loginService, cacheService, downloadFactory) {
+myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'cacheService', 'downloadFactory', '$filter',
+	function($scope, reportsFactory, priceFactory, dialogs, loginService, cacheService, downloadFactory, $filter) {
 
 		const barColors = {
 			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
@@ -28,8 +28,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				"Terminal": (item) => {return item.terminal;},
 				"Cantidad": (item) => {return item.cantidad;},
 				"Total": (item) => {return item.total;},
-				"Tipo": (item) => {return item.norma;},
-				"Medida": (item) => {return item.largo;},
+				"Tipo": (item) => {return item.iso3Name ? item.iso3Name : 'Sin informar';},
+				"Medida": (item) => {return  $filter('isoMedida')(item.largo);},
 				"Año": (item) => {return item.anio},
 				"Mes": (item) => {return item.mes}
 			}
@@ -39,7 +39,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			data: [],
 			options: {
 				derivedAttributes: getPivotTableFields(),
-				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes"],
+				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name"],
 				rows: ["Terminal"],
 				cols: ["Medida"],
 				vals: ["Total"],
