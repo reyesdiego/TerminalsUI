@@ -1,7 +1,7 @@
 <div class="container col-lg-offset-1 col-lg-10 col-md-12">
 
 	<div class="row col-lg-12 page-header">
-		<h1><img ng-src="images/container.png" height="64" width="64" class="hidden-xs">Contenedor</h1>
+		<h1><img ng-src="images/container.png" height="64" width="64" class="hidden-xs">&nbsp;Contenedor <span ng-show="contenedorElegido != ''">{{ contenedorElegido.contenedor }}</span></h1>
 	</div>
 
 	<accordion-invoices-search model="model" ocultar-filtros="ocultarFiltros"></accordion-invoices-search>
