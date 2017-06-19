@@ -20,7 +20,7 @@
     /*
     Utilities
      */
-    var PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, getSort, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, rd, renderers, rx, rz, sortAs, usFmt, usFmtInt, usFmtPct, zeroPad;
+    var PivotData, addSeparators, aggregatorTemplates, aggregators, dayNamesEn, derivers, getSort, locales, mthNamesEn, naturalSort, numberFormat, pivotTableRenderer, rd, renderers, rx, rz, sortAs, usFmt, usFmtInt, usFmtPct, zeroPad, usFmtCurrency;
     addSeparators = function(nStr, thousandsSep, decimalSep) {
       var rgx, x, x1, x2;
       nStr += '';
@@ -66,6 +66,12 @@
       scaler: 100,
       suffix: "%"
     });
+    usFmtCurrency = numberFormat({
+		digitsAfterDecimal: 2,
+		prefix: "$ ",
+		decimalSep: ",",
+		thousandsSep: "."
+	});
     aggregatorTemplates = {
       count: function(formatter) {
         if (formatter == null) {
@@ -406,6 +412,8 @@
         "Count Unique Values": tpl.countUnique(usFmtInt),
         "List Unique Values": tpl.listUnique(", "),
         "Sum": tpl.sum(usFmt),
+        "SumCurrency": tpl.sum(usFmtCurrency),
+        "SumInteger": tpl.sum(usFmtInt),
         "Integer Sum": tpl.sum(usFmtInt),
         "Average": tpl.average(usFmt),
         "Median": tpl.median(usFmt),

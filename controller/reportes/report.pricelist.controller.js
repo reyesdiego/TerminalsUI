@@ -44,7 +44,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				cols: ["Medida"],
 				vals: ["Total"],
 				rendererName: "Tabla",
-				aggregatorName: "Suma"
+				aggregatorName: "Suma de moneda"
 				/*renderers: $.extend(
 					$.pivotUtilities.renderers,
 					$.pivotUtilities.c3_renderers

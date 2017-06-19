@@ -12,7 +12,7 @@
   };
 
   callWithJQuery(function($) {
-    var frFmt, frFmtInt, frFmtPct, nf, tpl;
+    var frFmt, frFmtInt, frFmtPct, nf, tpl, frFmtCurrency;
     nf = $.pivotUtilities.numberFormat;
     tpl = $.pivotUtilities.aggregatorTemplates;
     frFmt = nf({
@@ -30,6 +30,12 @@
       suffix: "%",
       thousandsSep: " ",
       decimalSep: ","
+    });
+    frFmtCurrency = nf({
+		digitsAfterDecimal: 2,
+        prefix: "$ ",
+		decimalSep: ",",
+		thousandsSep: "."
     });
     return $.pivotUtilities.locales.es = {
       localeStrings: {
@@ -50,6 +56,7 @@
         "Lista de valores únicos": tpl.listUnique(", "),
         "Suma": tpl.sum(frFmt),
         "Suma de enteros": tpl.sum(frFmtInt),
+        "Suma de moneda": tpl.sum(frFmtCurrency),
         "Promedio": tpl.average(frFmt),
         "Mínimo": tpl.min(frFmt),
         "Máximo": tpl.max(frFmt),
