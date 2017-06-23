@@ -14,31 +14,46 @@
             </div-panel>
         </div>
         <div class="col-lg-12" ng-hide="cargando || resultados.length == 0">
-            <div class="table-responsive invoice-shadow">
-                <table class="table table-bordered table-hover" style="font-size: 12px">
-                    <thead>
+            <div>
+                <table class="table" style="font-size: 12px" ng-repeat="medida in resultados | orderBy: 'total' : model.order == -1 track by $index">
+                    <thead ng-if="$first">
                     <tr>
                         <th></th>
                         <th>Medida</th>
+                        <th>Movimiento</th>
                         <th>Contenedor</th>
                         <th>Buque</th>
                         <th>Viaje</th>
                         <th class="text-right">Total</th>
                     </tr>
                     </thead>
-                    <tbody ng-repeat="medida in resultados | orderBy: 'total' : model.order == -1">
-                    <tr class="clickableRow text-bold" ng-click="medida.detalle = !medida.detalle">
-                        <td>
+                    <tbody ng-repeat="movimiento in medida.movimientos">
+                    <tr class="clickableRow text-bold" ng-click="medida.detalle = !medida.detalle" ng-if="$first">
+                        <td class="col-lg-1">
                             <i ng-show="!medida.detalle" class="glyphicon glyphicon-plus"></i>
                             <i ng-show="medida.detalle" class="glyphicon glyphicon-minus"></i>
                         </td>
-                        <td>{{ medida.medida | isoMedida }}</td>
-                        <td>{{ medida.contenedores.length }} contenedores</td>
+                        <td class="col-lg-2">{{ medida.medida | isoMedida }}</td>
+                        <td class="col-lg-1"></td>
+                        <td class="col-lg-2"></td>
+                        <td class="col-lg-2"></td>
+                        <td class="col-lg-2"></td>
+                        <td class="text-right col-lg-2">{{ medida.total | currency: ('DOL' | formatCurrency) }}</td>
+                    </tr>
+                    <tr class="clickableRow text-bold" ng-click="movimiento.detalle = !movimiento.detalle" ng-show="medida.detalle">
+                        <td></td>
+                        <td>
+                            <i ng-show="!movimiento.detalle" class="glyphicon glyphicon-plus"></i>
+                            <i ng-show="movimiento.detalle" class="glyphicon glyphicon-minus"></i>
+                        </td>
+                        <td>{{ movimiento.movimiento || 'Sin informar' }}</td>
+                        <td>{{ movimiento.contenedores.length }} contenedores</td>
                         <td></td>
                         <td></td>
-                        <td class="text-right">{{ medida.total | currency: ('DOL' | formatCurrency) }}</td>
-                    <tr>
-                    <tr ng-repeat="contenedor in medida.contenedores | orderBy: 'total' : model.order == -1" ng-show="medida.detalle">
+                        <td class="text-right">{{ movimiento.total | currency: ('DOL' | formatCurrency) }}</td>
+                    </tr>
+                    <tr ng-repeat="contenedor in movimiento.contenedores | orderBy: 'total' : model.order == -1" ng-show="movimiento.detalle && medida.detalle">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td><a href ng-click="contenedor.openDetailView()"><i class="glyphicon glyphicon-search"></i></a>{{ ' ' + contenedor.contenedor }}</td>

@@ -9,10 +9,15 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 		processReportContainer(data){
 			let result = [];
 			data.forEach(medida => {
-				let reg = { medida: medida.iso, contenedores: [], detalle: false, total: 0};
-				medida.data.forEach(container => {
-					reg.contenedores.push(new Container(container));
-					reg.total += container.total;
+				let reg = { medida: medida.iso, movimientos: [], detalle: false, total: 0};
+				medida.data.forEach(movimiento => {
+					let mov = { movimiento: movimiento.mov, contenedores: [], detalle: false, total: 0};
+					movimiento.data.forEach(container => {
+						mov.contenedores.push(new Container(container));
+						mov.total += container.total;
+					});
+					reg.total += mov.total;
+					reg.movimientos.push(mov);
 				});
 				result.push(reg);
 			});
