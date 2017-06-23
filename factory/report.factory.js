@@ -2,25 +2,21 @@
  * Created by Artiom on 17/06/14.
  */
 
-myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', 'APP_CONFIG', 'downloadService', '$q', function($http, dialogs, formatService, loginService, APP_CONFIG, downloadService, $q){
+myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginService', 'APP_CONFIG', 'downloadService', '$q', 'Container', function($http, dialogs, formatService, loginService, APP_CONFIG, downloadService, $q, Container){
 
 	class reportsFactory {
 
 		processReportContainer(data){
 			let result = [];
-			let medidas = {};
-			data.forEach(reg => {
-				if (!medidas[reg.iso1]) medidas[reg.iso1] = [];
-				medidas[reg.iso1].push(reg);
-			});
-			for (let medida in medidas){
-				let reg = { medida: medida, contenedores: [], detalle: false, total: 0};
-				medidas[medida].forEach((container) => {
-					reg.contenedores.push(container);
+			data.forEach(medida => {
+				let reg = { medida: medida.iso, contenedores: [], detalle: false, total: 0};
+				medida.data.forEach(container => {
+					reg.contenedores.push(new Container(container));
 					reg.total += container.total;
 				});
 				result.push(reg);
-			}
+			});
+			//console.log(result);
 			return result;
 		}
 
@@ -110,7 +106,7 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byContainerTotales`;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)}).then(response => {
-				console.log(response);
+				//console.log(response);
 				if (response.data.status == 'OK'){
 
 					deferred.resolve(this.processReportContainer(response.data.data));

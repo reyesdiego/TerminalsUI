@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 25/08/2016.
  */
-myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'cacheService', 'loginService', 'formatService', function($http, $q, APP_CONFIG, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, cacheService, loginService, formatService){
+myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'controlPanelFactory', 'gatesFactory', 'turnosFactory', 'cacheService', 'loginService', 'formatService', '$state', '$window', function($http, $q, APP_CONFIG, invoiceFactory, controlPanelFactory, gatesFactory, turnosFactory, cacheService, loginService, formatService, $state, $window){
 
     class Container{
         constructor(containerData){
@@ -32,6 +32,11 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 total: 0
             };
             this.afipData = [];
+        }
+
+        openDetailView(){
+			const url = $state.href('container', {container: this.contenedor});
+			$window.open(url,'_blank');
         }
 
         getInvoices(scopeId, page){

@@ -41,7 +41,7 @@
                     <tr ng-repeat="contenedor in medida.contenedores | orderBy: 'total' : model.order == -1" ng-show="medida.detalle">
                         <td></td>
                         <td></td>
-                        <td>{{ contenedor.contenedor }}</td>
+                        <td><a href ng-click="contenedor.openDetailView()"><i class="glyphicon glyphicon-search"></i></a>{{ ' ' + contenedor.contenedor }}</td>
                         <td>{{ contenedor.buque }}</td>
                         <td>{{ contenedor.viaje }}</td>
                         <td class="text-right">{{ contenedor.total | currency: ('DOL' | formatCurrency) }}</td>
