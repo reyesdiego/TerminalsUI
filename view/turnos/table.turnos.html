@@ -13,31 +13,31 @@
 		<uib-tab heading="EXPO" ng-click="cambiarTipoMov('EXPO')" active="active.expo"></uib-tab>
 	</uib-tabset>
 	<br>
-	<div ng-hide="datosTurnos.length != undefined && datosTurnos.length > 0">
+	<div ng-hide="datosTurnos.length && datosTurnos.length > 0">
 		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
-	<div ng-show="datosTurnos.length != undefined && datosTurnos.length > 0 && !mostrarHTML">
+	<div ng-show="datosTurnos.length && datosTurnos.length > 0 && !mostrarHTML">
 		<h5><strong>Resultados: {{ totalItems }}</strong><span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
 		<div class="table-responsive invoice-shadow">
-			<table class="table table-bordered table-hover" style="text-align: center">
-				<tr style="font-size: 10pt">
-					<th ng-show="control" style="text-align: center">Terminal</th>
+			<table class="table table-bordered table-hover text-small text-center">
+				<tr>
+					<th ng-show="control" class="text-center">Terminal</th>
 					<th class="text-center" colspan="3"><encabezado-tabla-ordenado titulo="Turno" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="inicio" filtro-orden="inicioOrden"></encabezado-tabla-ordenado></th>
 					<th class="text-center"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
 					<th class="text-center"><encabezado-tabla-ordenado titulo="Viaje" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="viaje" filtro-orden="viajeOrden"></encabezado-tabla-ordenado></th>
 					<th class="text-center"><encabezado-tabla-ordenado titulo="Contenedor" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="contenedor" filtro-orden="contenedorOrden"></encabezado-tabla-ordenado></th>
 					<th class="text-center"><encabezado-tabla-ordenado titulo="Patente camión" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="patenteCamion" filtro-orden="patentecamionOrden"></encabezado-tabla-ordenado></th>
 					<th class="text-center"><encabezado-tabla-ordenado titulo="Alta" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="alta" filtro-orden="altaOrden"></encabezado-tabla-ordenado></th>
-					<th ng-show="!control" style="text-align: center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="usuario" filtro-orden="usuarioOrden"></encabezado-tabla-ordenado></th>
-					<th ng-show="control" style="text-align: center">Intentos</th>
-					<th ng-show="control" style="text-align: center">Fecha</th>
-					<th style="text-align: center">E-Mail</th>
+					<th ng-show="!control" class="text-center"><encabezado-tabla-ordenado titulo="Usuario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="usuario" filtro-orden="usuarioOrden"></encabezado-tabla-ordenado></th>
+					<th ng-show="control" class="text-center">Intentos</th>
+					<th ng-show="control" class="text-center">Fecha</th>
+					<th class="text-center">E-Mail</th>
 					<th ng-show="!control" class="text-center">Mail</th>
 					<th ng-show="!control" class="text-center">Disp. T1</th>
 					<th class="text-center" colspan="3">Verificación</th>
 					<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 				</tr>
-				<tr ng-repeat="turno in datosTurnos" style="font-size: 8pt" class="fila-animada">
+				<tr ng-repeat="turno in datosTurnos" class="fila-animada">
 					<td ng-show="control">{{ turno.terminal }}</td>
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ turno.inicio | date: 'HH:mm' }}</td>

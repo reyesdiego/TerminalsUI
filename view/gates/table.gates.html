@@ -15,7 +15,7 @@
 		<h5 ng-hide="detallesGates"><strong>Resultados: {{ totalItems }}</strong> ({{ tiempoConsulta }} segundos)<span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
 		<div ng-hide="detallesGates">
 			<div class="table-responsive invoice-shadow">
-				<table class="table table-bordered table-hover text-center">
+				<table class="table table-bordered table-hover text-center text-small">
 					<tr>
 						<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
 						<th class="text-center">Buque</th>
