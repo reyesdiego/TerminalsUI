@@ -28,6 +28,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				"Terminal": (item) => {return item.terminal;},
 				"Cantidad": (item) => {return item.cantidad;},
 				"Total": (item) => {return item.total;},
+				"Movimiento": (item) => {return item.mov ? item.mov : 'Sin informar';},
 				"Tipo": (item) => {return item.iso3Name ? item.iso3Name : 'Sin informar';},
 				"Medida": (item) => {return  $filter('isoMedida')(item.largo);},
 				"Año": (item) => {return item.anio},
@@ -39,7 +40,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			data: [],
 			options: {
 				derivedAttributes: getPivotTableFields(),
-				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name"],
+				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name", "mov"],
 				rows: ["Terminal"],
 				cols: ["Medida"],
 				vals: ["Total"],
