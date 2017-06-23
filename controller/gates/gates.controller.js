@@ -20,7 +20,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'loginService', functio
 	$scope.fechaFin.setHours($scope.fechaFin.getHours() + 1, 0);
 
 	// Variable para almacenar la info principal que trae del factory
-	$scope.gates = {};
+	$scope.gates = [];
 	$scope.detallesGates = false;
 
 	$scope.filtrosGates = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
