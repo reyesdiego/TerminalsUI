@@ -31,12 +31,14 @@ myapp.controller('reporteContenedorCtrl', ['$scope', 'reportsFactory', function(
 	function cargarReporte(){
 		$scope.cargando = true;
 		reportsFactory.getReporteContainers($scope.model).then(data => {
-			console.log(data);
 			$scope.resultados = data;
-			console.log($scope.resultados);
 		}).catch(error => {
-			console.log('error');
-			console.log(error);
+			$scope.resultados = [];
+			$scope.mensajeResultado = {
+				titulo: 'Error',
+				mensaje: `Se produjo un error al cargar los datos del reporte.\n${error.message}`,
+				tipo: 'panel-danger'
+			};
 		}).finally(() => {
 			$scope.cargando = false;
 		});
