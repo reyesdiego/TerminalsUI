@@ -2,7 +2,7 @@ html, body {
     height: 100%;
 }
 
-table {
+.table.no-margin-bottom {
     margin-top: 0;
     margin-bottom: 0 !important;
 }
