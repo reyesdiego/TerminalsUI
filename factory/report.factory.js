@@ -7,21 +7,50 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 	class reportsFactory {
 
 		processReportContainer(data){
+			console.log(data);
+			/*let result = [];
+			 data.forEach(medida => {
+			 let reg = { medida: medida.iso, movimientos: [], detalle: false, total: 0};
+			 medida.data.forEach(movimiento => {
+			 let mov = { movimiento: movimiento.mov, contenedores: [], detalle: false, total: 0};
+			 movimiento.data.forEach(container => {
+			 mov.contenedores.push(new Container(container));
+			 mov.total += container.total;
+			 });
+			 reg.total += mov.total;
+			 reg.movimientos.push(mov);
+			 });
+			 result.push(reg);
+			 });
+			 console.log(result);*/
+
 			let result = [];
+			let medidas = {};
 			data.forEach(medida => {
-				let reg = { medida: medida.iso, movimientos: [], detalle: false, total: 0};
+				if (!medidas[medida.iso]) medidas[medida.iso] = {};
 				medida.data.forEach(movimiento => {
-					let mov = { movimiento: movimiento.mov, contenedores: [], detalle: false, total: 0};
-					movimiento.data.forEach(container => {
-						mov.contenedores.push(new Container(container));
-						mov.total += container.total;
-					});
-					reg.total += mov.total;
-					reg.movimientos.push(mov);
+					if (!medidas[medida.iso][movimiento.mov]) medidas[medida.iso][movimiento.mov] = [];
+					medidas[medida.iso][movimiento.mov].push(movimiento);
 				});
-				result.push(reg);
 			});
-			//console.log(result);
+			for (let medida in medidas){
+				if (medidas.hasOwnProperty(medida)){
+					let reg = { medida: medida, movimientos: [], detalle: false, total: 0};
+					for (let movimiento in medidas[medida]){
+						if (medidas[medida].hasOwnProperty(movimiento)){
+							let mov = { movimiento: movimiento, contenedores: [], detalle: false, total: 0};
+							medidas[medida][movimiento].forEach(contenedor => {
+								mov.contenedores.push(new Container(contenedor));
+								mov.total += contenedor.total;
+							});
+							reg.total += mov.total;
+							reg.movimientos.push(mov);
+						}
+					}
+					result.push(reg);
+				}
+			}
+			console.log(result);
 			return result;
 		}
 
