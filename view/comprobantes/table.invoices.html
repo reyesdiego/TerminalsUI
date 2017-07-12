@@ -6,6 +6,7 @@
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Pto. Venta" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="nroPtoVenta" filtro-orden="nroPtoVentaOrden"></encabezado-tabla-ordenado></th>
 			<th><encabezado-tabla-ordenado titulo="Tipo" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="codTipoComprob" filtro-orden="codTipoComprobOrden"></encabezado-tabla-ordenado></th>
 			<th class="text-right"><encabezado-tabla-ordenado titulo="Nro" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="nroComprob" filtro-orden="nroComprobOrden"></encabezado-tabla-ordenado></th>
+			<th>Movimiento</th>
 			<th class="text-center" ng-if="byContainer">Buque</th>
 			<th class="text-center" ng-if="byContainer">Viaje</th>
 			<th><encabezado-tabla-ordenado titulo="Razón Social" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="razon" filtro-orden="razonOrden"></encabezado-tabla-ordenado></th>
@@ -24,6 +25,7 @@
 			<td class="text-right"><span ng-show="invoice.resend == 1" title="Comprobante marcado para reenviar" class="glyphicon glyphicon-warning-sign text-danger"></span> {{ invoice.nroPtoVenta }}</td>
 			<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
 			<td class="text-right"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+			<td class="text-bold" ng-class="!invoice.tipo ? 'text-danger' : invoice.tipo == 'EXPO' ? 'text-success' : invoice.tipo == 'IMPO' ? 'text-info' : 'text-warning'">{{ invoice.tipo || 'SIN TASA A LAS CARGAS' }}</td>
 			<td class="text-center" ng-show="byContainer">{{ invoice.buque }}</td>
 			<td class="text-center" ng-show="byContainer">{{ invoice.viaje }}</td>
 			<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
@@ -52,6 +54,7 @@
 			<td class="text-right">{{ invoice.nroPtoVenta }}</td>
 			<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0" ng-click="filtrado('codTipoComprob', invoice.codTipoComprob)"><span class="glyphicon glyphicon-search"></span></a> <span title="{{ invoice.codTipoComprob | nombreComprobante : false }}">{{ invoice.codTipoComprob | nombreComprobante : true }}</span></td>
 			<td class="text-right"><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0" ng-click="filtrado('nroComprobante', invoice.nroComprob)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.nroComprob }}</td>
+			<td class="text-bold" ng-class="!invoice.tipo ? 'text-danger' : invoice.tipo == 'EXPO' ? 'text-success' : invoice.tipo == 'IMPO' ? 'text-info' : 'text-warning'">{{ invoice.tipo || 'SIN TASA A LAS CARGAS' }}</td>
 			<td class="text-center" ng-if="byContainer">{{ invoice.buque }}</td>
 			<td class="text-center" ng-if="byContainer">{{ invoice.viaje }}</td>
 			<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0" ng-click="filtrado('razonSocial', invoice.razon)"><span class="glyphicon glyphicon-search"></span></a> {{ invoice.razon }}</td>
