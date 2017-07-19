@@ -356,7 +356,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		.state('consultaTurnos', {
 			url: '/consultaTurnos',
 			templateUrl: 'view/turnos/turnos.consulta.html',
-			controller: 'turnosConsultaCtrl as vmTurnos'
+			controller: 'turnosConsultaCtrl as vmTurnos',
+			resolve: {
+				containersList: function(){ return initialLoadFactory.cargaContainersList() },
+				patentesList: function(){ return initialLoadFactory.cargaPatentesList() }
+			}
 		})
 		//===========================================================================\\
 		//******************************* REPORTES **********************************\\

@@ -41,6 +41,29 @@ myapp.factory('turnosFactory', ['$http', 'formatService', 'loginService', '$q', 
 				return deferred.promise;
 			}
 
+			consultarTurnoCamion(patente){
+				const deferred = $q.defer();
+				const inserturl = `${APP_CONFIG.SERVER_URL}/camionTurno/${patente}`;
+				$http.get(inserturl).then((response) => {
+					if (response.data.status == 'OK'){
+						if (response.data.data.length > 0){
+							const turnos = this.retrieveAppointments(response.data.data);
+							deferred.resolve(turnos);
+						} else {
+							const error = {
+								message: `No se ha encontrado ningún turno para el camión de patente ${container}`
+							};
+							deferred.reject(error);
+						}
+					} else {
+						deferred.reject(response.data);
+					}
+				}).catch((error) => {
+					deferred.reject(error.data);
+				});
+				return deferred.promise;
+			}
+
 			getTurnos(datos, page){
 				this.cancelRequest('getTurnos');
 				const deferred = $q.defer();

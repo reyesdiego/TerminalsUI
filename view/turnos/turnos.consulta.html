@@ -12,10 +12,16 @@
             </div>
             <div class="panel-body">
                 <form ng-submit="vmTurnos.getTurno()">
-                    <div class="form-group col-md-10 visible-lg visible-md">
+                    <div class="form-group">
+                        <div class="radio radio-inline">
+                            <label><input type="radio" ng-model="vmTurnos.searchBy" value="C">Contenedor</label>
+                            <label><input type="radio" ng-model="vmTurnos.searchBy" value="P">Patente</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-10 visible-lg visible-md" ng-if="vmTurnos.searchBy == 'C'">
                         <div class="input-group">
                             <span class="input-group-addon"> Contenedor</span>
-                            <input type="text" class="form-control" name="contenedorInput" ng-model="vmTurnos.containerSearch" toupper ng-required="true">
+                            <input type="text" class="form-control" autocomplete="off" uib-typeahead="contenedor for contenedor in vmTurnos.containersList | filter: $viewValue | limitTo: 15" name="contenedorInput" ng-model="vmTurnos.containerSearch" toupper ng-required="true" typeahead-on-select="vmTurnos.getTurno()">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="vmTurnos.containerSearch = ''">
                                     <i class="glyphicon glyphicon-remove"></i>
@@ -23,11 +29,33 @@
                             </span>
                         </div>
                     </div>
-                    <div class="form-group col-xs-10 visible-xs visible-sm">
+
+                    <div class="form-group col-md-10 visible-lg visible-md" ng-if="vmTurnos.searchBy == 'P'">
                         <div class="input-group">
-                            <input style="font-size: 8pt" type="text" name="contenedorInput" class="form-control input-sm" ng-model="vmTurnos.containerSearch" placeholder="Contenedor" toupper ng-required="true">
+                            <span class="input-group-addon"> Patente</span>
+                            <input type="text" class="form-control" autocomplete="off" uib-typeahead="patente for patente in vmTurnos.patentesList | filter: $viewValue | limitTo: 15" name="patenteInput" ng-model="vmTurnos.patenteSearch" toupper ng-required="true" typeahead-on-select="vmTurnos.getTurno()">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="vmTurnos.patenteSearch = ''">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-10 visible-xs visible-sm" ng-if="vmTurnos.searchBy == 'C'">
+                        <div class="input-group">
+                            <input style="font-size: 8pt" type="text" name="contenedorInput" autocomplete="off" uib-typeahead="contenedor for contenedor in vmTurnos.containersList | filter: $viewValue | limitTo: 15" class="form-control input-sm" ng-model="vmTurnos.containerSearch" placeholder="Contenedor" toupper ng-required="true" typeahead-on-select="vmTurnos.getTurno()">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-default" ng-click="vmTurnos.containerSearch = ''">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-10 visible-xs visible-sm" ng-if="vmTurnos.searchBy == 'P'">
+                        <div class="input-group">
+                            <input style="font-size: 8pt" type="text" name="patenteInput" autocomplete="off" uib-typeahead="patente for patente in vmTurnos.patentesList | filter: $viewValue | limitTo: 15" class="form-control input-sm" ng-model="vmTurnos.patenteSearch" placeholder="Patente" toupper ng-required="true" typeahead-on-select="vmTurnos.getTurno()">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-default" ng-click="vmTurnos.patenteSearch = ''">
                                     <i class="glyphicon glyphicon-remove"></i>
                                 </button>
                             </span>

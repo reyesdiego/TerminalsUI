@@ -535,7 +535,7 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             };
 
             cargaAfectacionBuques(){
-                var deferred = $q.defer();
+                const deferred = $q.defer();
                 if (this.afipCache.get('AfectacionBuques')){
                     deferred.resolve();
                 } else {
@@ -565,6 +565,36 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                 }
                 return deferred.promise;
             };
+
+            cargaContainersList(){
+                const deferred = $q.defer();
+				const inserturl = `${APP_CONFIG.SERVER_URL}/containerTurnoList`;
+				$http.get(inserturl).then((response) => {
+					if (response.data.status == 'OK'){
+						deferred.resolve(response.data.data);
+                    } else {
+					    deferred.resolve([]);
+                    }
+				}).catch((error) => {
+					deferred.resolve([]);
+				});
+				return deferred.promise;
+            }
+
+            cargaPatentesList(){
+				const deferred = $q.defer();
+				const inserturl = `${APP_CONFIG.SERVER_URL}/camionTurnoList`;
+				$http.get(inserturl).then((response) => {
+					if (response.data.status == 'OK'){
+						deferred.resolve(response.data.data);
+					} else {
+						deferred.resolve([]);
+					}
+				}).catch((error) => {
+					deferred.resolve([]);
+				});
+				return deferred.promise;
+            }
         }
 
         return new cacheService();
