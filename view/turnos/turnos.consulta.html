@@ -90,9 +90,9 @@
                         </tr>
                         <tr class="bg-primary">
                             <td class="text-center">Patente</td>
-                            <td class="text-center">Semi</td>
                             <td class="text-center">DNI</td>
                             <td class="text-center">Celular</td>
+                            <td class="text-center">Gate Pass</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -104,10 +104,13 @@
                             <td>{{ turno.buque }}</td>
                             <td>{{ turno.viaje }}</td>
                             <td>{{ turno.contenedor }}</td>
-                            <td>{{ turno.transporte.camion }}</td>
-                            <td>{{ turno.transporte.semi }}</td>
+                            <td>
+                                <a href ng-if="vmTurnos.patenteDataFlag" ng-click="vmTurnos.detalleCamion()"><i class="glyphicon glyphicon-info-sign"></i> {{ turno.transporte.camion }}</a>
+                                <span ng-if="!vmTurnos.patenteDataFlag">{{ turno.transporte.camion }}</span>
+                            </td>
                             <td>{{ turno.transporte.dni }}</td>
                             <td>{{ turno.transporte.celular }}</td>
+                            <td>{{ turno.transporte.semi }}</td>
                             <td>{{ turno.mov }}</td>
                             <td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
                             <td>{{ turno.email }}</td>
