@@ -105,7 +105,7 @@
                             </td>
                             <td class="col-lg-2" style="text-align: right">
 								<span ng-repeat="codigo in price.matches.match track by $index">
-                                    <a href ng-click="price.getDetailMatch(codigo.code)" ng-class=" codigo.status ? 'text-success' : 'text-danger'"><i class="glyphicon ion-ios-information"></i> {{ codigo.code }}</a>
+                                    <a href ng-click="detalleTarifa(price, codigo.code)" ng-class=" codigo.status ? 'text-success' : 'text-danger'"><i class="glyphicon ion-ios-information"></i> {{ codigo.code }}</a>
 									<span ng-show="!$last">, </span>
 								</span>
                             </td>

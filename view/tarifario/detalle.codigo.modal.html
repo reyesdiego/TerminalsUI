@@ -1,8 +1,8 @@
 <div class="modal-header bg-info" style="border-radius: 5px">
-    <h3 class="modal-title">Código: {{ vmModal.codigo }}</h3>
+    <h3 class="modal-title">Código: {{ detalleMatch.codigo }}</h3>
 </div>
 <div class="modal-body">
-    <h4>Valor registrado de la tarifa: {{ vmModal.valorTarifa | currency: (vmModal.tipoMoneda | formatCurrency)}}</h4>
+    <h4>Valor registrado de la tarifa: {{ detalleMatch.valorTarifa | currency: (detalleMatch.tipoMoneda | formatCurrency)}}</h4>
 
     <div class="table-responsive fixed-height-table">
         <table class="table table-bordered">
@@ -14,9 +14,9 @@
             </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="registro in vmModal.registroTarifas">
+                <tr ng-repeat="registro in detalleMatch.tarifasData">
                     <td>{{ registro.fecha | date: 'dd/MM/yyyy'}}</td>
-                    <td>{{ registro.imp_unit | currency: (vmModal.tipoMoneda | formatCurrency) }}</td>
+                    <td>{{ registro.imp_unit | currency: (detalleMatch.tipoMoneda | formatCurrency) }}</td>
                     <td>{{ registro.cnt }}</td>
                 </tr>
             </tbody>

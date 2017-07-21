@@ -2,7 +2,7 @@
  * Created by kolesnikov-a on 23/08/2016.
  */
 
-myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginService', 'APP_CONFIG', '$uibModal', 'dialogs', function($http, cacheService, $q, formatService, loginService, APP_CONFIG, $uibModal, dialogs){
+myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginService', 'APP_CONFIG', 'dialogs', function($http, cacheService, $q, formatService, loginService, APP_CONFIG, dialogs){
 
     class Price {
         constructor(priceData){
@@ -283,6 +283,7 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
         }
 
         getDetailMatch(matchCode){
+            const deferred = $q.defer();
             const body = angular.element(document).find('body');
             body.addClass('async-loading');
             const inserturl =  `${APP_CONFIG.SERVER_URL}/invoices/byCode/`;
@@ -291,35 +292,20 @@ myapp.factory('Price', ['$http', 'cacheService', '$q', 'formatService', 'loginSe
                 terminal: loginService.filterTerminal
             };
             $http.get(inserturl, { params: params }).then((response) => {
-				$uibModal.open({
-					templateUrl: 'view/tarifario/detalle.codigo.modal.html',
-                    controller: ['codigo', 'tarifasData', 'tipoMoneda', 'valorTarifa', function(codigo, tarifasData, tipoMoneda, valorTarifa){
-						this.valorTarifa = valorTarifa;
-						this.tipoMoneda = tipoMoneda;
-						this.registroTarifas = tarifasData;
-						this.codigo = codigo
-					}],
-                    controllerAs: 'vmModal',
-					resolve: {
-						codigo: () => {
-							return matchCode;
-						},
-                        tarifasData: () => {
-						    return response.data.data;
-                        },
-                        tipoMoneda: () => {
-						    return this.currency
-                        },
-                        valorTarifa: () => {
-						    return this.price
-                        }
-					}
-				});
+                const result = {
+                    codigo: matchCode,
+                    tarifasData: response.data.data,
+                    tipoMoneda: this.currency,
+                    valorTarifa: this.price
+                };
+                deferred.resolve(result);
             }).catch((response) => {
                 dialogs.error('Error', `Se produjo un error al cargar los usos del código seleccionado.\n${response.data.message}`);
+                deferred.reject();
             }).finally(() => {
                 body.removeClass('async-loading');
             });
+            return deferred.promise;
         }
 
         get tipoTarifa(){

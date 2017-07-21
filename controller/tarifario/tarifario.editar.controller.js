@@ -2,8 +2,8 @@
  * Created by Diego Reyes on 1/29/14.
  */
 
-myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'cacheService', '$state', 'Price', 'generalFunctions',
-	function($scope, priceFactory, $timeout, dialogs, loginService, $filter, cacheService, $state, Price, generalFunctions) {
+myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dialogs', 'loginService', '$filter', 'cacheService', '$state', 'Price', 'generalFunctions', '$uibModal',
+	function($scope, priceFactory, $timeout, dialogs, loginService, $filter, cacheService, $state, Price, generalFunctions, $uibModal) {
 		'use strict';
 
 		$scope.dataTerminal = loginService;
@@ -209,6 +209,16 @@ myapp.controller('matchPricesCtrl', ['$scope', 'priceFactory', '$timeout', 'dial
 				dialogs.error('Error', 'Se ha producido un error al cargar los datos de la tarifa.');
 			});
 
+		};
+
+		$scope.detalleTarifa = function(price, codigo){
+			price.getDetailMatch(codigo).then(data => {
+				$scope.detalleMatch = data;
+				$uibModal.open({
+					templateUrl: 'view/tarifario/detalle.codigo.modal.html',
+					scope: $scope
+				});
+			}).catch()
 		};
 
 		//Verifica que al modificar un código no coincida con otro ya existente
