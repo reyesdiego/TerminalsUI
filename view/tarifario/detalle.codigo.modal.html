@@ -2,7 +2,7 @@
     <h3 class="modal-title">Código: {{ detalleMatch.codigo }}</h3>
 </div>
 <div class="modal-body">
-    <h4>Valor registrado de la tarifa: {{ detalleMatch.valorTarifa | currency: (detalleMatch.tipoMoneda | formatCurrency)}}</h4>
+    <h4>Valor tope actual: {{ detalleMatch.valorTarifa | currency: (detalleMatch.tipoMoneda | formatCurrency)}}</h4>
 
     <div class="table-responsive fixed-height-table">
         <table class="table table-bordered">
