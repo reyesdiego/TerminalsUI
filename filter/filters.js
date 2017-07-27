@@ -2,27 +2,6 @@
  * Created by leo on 16/05/14.
  */
 
-myapp.filter('isoMedida', [function(){
-	return function(iso1){
-		switch (iso1){
-			case '1':
-				return "10 pies";
-				break;
-			case '2':
-				return "20 pies";
-				break;
-			case '3':
-				return "30 pies";
-				break;
-			case '4':
-				return "40 pies";
-				break;
-			default:
-				return 'Sin informar'
-		}
-	}
-}]);
-
 myapp.filter('formatCurrency', [function(){
 	return function(text){
 		if (text == 'DOL' || text == 'DOLARES'){ return 'U$S '; }
