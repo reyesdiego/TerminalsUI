@@ -1,0 +1,61 @@
+<div class="col-md-12 page-header">
+    <h1>Agrupación de tarifario</h1>
+</div>
+
+<div class="col-md-2">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Grupos</h2>
+        </div>
+        <div class="panel-body">
+            <a ng-repeat="grupo in vmAgrupar.grupos" ng-click="vmAgrupar.grupoSeleccionado = grupo" href>
+                <span>{{ grupo.nombre }}</span><span class="pull-right">{{ grupo.tarifas.length }}</span>
+            </a>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" ng-click="vmAgrupar.nuevoGrupo()">Nuevo grupo</button>
+</div>
+
+<div class="col-md-5">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h2 class="panel-title">Tarifas del grupo {{ vmAgrupar.grupoSeleccionado.nombre }}</h2>
+        </div>
+        <div class="panel-body" drop-here drop="vmAgrupar.agregarTarifa(priceId)">
+            <div class="col-lg-12 table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="tarifa in vmAgrupar.grupoSeleccionado.tarifas">
+                        <td>{{ tarifa.code }}</td>
+                        <td>{{ tarifa.description }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-5">
+    <table class="table table-responsive table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="tarifa in vmAgrupar.tarifasTerminal" drag-me draggable="true" id="{{ tarifa._id }}">
+            <td>{{ tarifa.code }}</td>
+            <td>{{ tarifa.description }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

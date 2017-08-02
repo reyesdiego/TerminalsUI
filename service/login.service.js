@@ -73,6 +73,9 @@ myapp.service('loginService', ['generalFunctions', '$cookies', '$http', function
 					rutas.push(controlGates[k]);
 				}
 			}
+			if (generalFunctions.in_array('matches', rutas)){
+				rutas.push('agrupar');
+			}
 
 			sessionStorage.acceso = JSON.stringify(rutas);
 		}

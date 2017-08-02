@@ -85,6 +85,7 @@
 	<script src="class/container.class.js"></script>
 	<script src="class/payment.class.js"></script>
 	<script src="class/user.class.js"></script>
+	<script src="class/priceGroup.class.js"></script>
 	<!-- Services -->
 	<script src="service/format.service.js"></script>
 	<script src="service/util.service.js"></script>
@@ -146,6 +147,7 @@
 	<script src="controller/turnos/turnos.patentes.modal.controller.js"></script>
 	<script src="controller/turnos/turnos.consulta.controller.js"></script>
 	<script src="controller/reportes/report.container.controller.js"></script>
+	<script src="controller/tarifario/tarifario.agrupar.controller.js"></script>
 	<!-- Directives -->
 	<script src="directives/general.directives.js"></script>
 	<script src="directives/afip.directives.js"></script>
@@ -157,6 +159,8 @@
 	<script src="directives/turnos.directives.js"></script>
 	<script src="directives/angular-multi-select.js"></script>
 	<script src="directives/ngPivot.directive.js"></script>
+	<script src="directives/draggable.directive.js"></script>
+	<script src="directives/droppable.directive.js"></script>
 	<!-- /build -->
 	<!-- Style Switcher -->
 	<script src="js/linq.min.js"></script>
@@ -207,6 +211,7 @@
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('tarifario')" ng-click="cerrarMenu()"><a ui-sref="tarifario">Tarifario</a></li>
 						<li ng-if="tieneAcceso('matches')" ng-click="cerrarMenu()"><a ui-sref="matches">Editar</a></li>
+						<li ng-if="tieneAcceso('agrupar')" ng-click="cerrarMenu()"><a ui-sref="agrupar">Agrupar tarifas</a></li>
 					</ul>
 				</li>
 				<li ng-if="dataTerminal.type!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" uib-dropdown>

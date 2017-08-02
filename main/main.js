@@ -64,7 +64,7 @@ myapp.constant('uiDatetimePickerConfig', {
 });
 
 myapp.config(['$qProvider', function ($qProvider) {
-	$qProvider.errorOnUnhandledRejections(false);
+	//$qProvider.errorOnUnhandledRejections(false);
 }]);
 
 myapp.config(['$httpProvider', function ($httpProvider) {
@@ -216,6 +216,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 			url: "/editarTarifario",
 			templateUrl: "view/tarifario/tarifario.editar.nuevo.html"
 
+		})
+		.state('agrupar', {
+			url: "/agrupaciones",
+			templateUrl: "view/tarifario/tarifario.agrupar.html",
+			controller: 'agruparTarifarioCtrl as vmAgrupar'
 		})
 		//=======================================================\\
 		//**************** COMPROBANTES *************************\\
