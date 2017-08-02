@@ -119,7 +119,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				$scope.selectedList = pricelistTrp;
 			}
 			$scope.totalItems = $scope.selectedList.length;
-			listaAnterior = angular.copy($scope.selectedList);
+			//listaAnterior = angular.copy($scope.selectedList);
 			$scope.filtrarMedida();
 		};
 
@@ -202,7 +202,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.filtrarMedida = () => {
-			$scope.selectedList = angular.copy(listaAnterior);
+			//$scope.selectedList = angular.copy(listaAnterior);
 			if ($scope.filterLarge20 && $scope.filterLarge40){
 				$scope.selectedList = $scope.selectedList.filter((price) => {
 					return price.largo == 20 || price.largo == 40;
@@ -216,7 +216,8 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 					return price.largo == 40;
 				})
 			}
-			$scope.totalItems = $scope.selectedList.length
+			$scope.totalItems = $scope.selectedList.length;
+			$scope.currentPage = 1;
 		};
 
 		$scope.agregarGrafico = (precio) => {
@@ -233,9 +234,25 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		};
 
 		$scope.agregarQuitarTodo = (onOff) => {
-			$scope.filteredPrices.forEach((precio) => {
-				precio.graficar = onOff;
-				$scope.agregarGrafico(precio);
+			pricelistAgp.forEach((tarifa) => {
+				tarifa.graficar = onOff;
+				$scope.agregarGrafico(tarifa);
+			});
+			pricelistAgpTasas.forEach((tarifa) => {
+				tarifa.graficar = onOff;
+				$scope.agregarGrafico(tarifa);
+			});
+			pricelistBactssa.forEach((tarifa) => {
+				tarifa.graficar = onOff;
+				$scope.agregarGrafico(tarifa);
+			});
+			pricelistTerminal4.forEach((tarifa) => {
+				tarifa.graficar = onOff;
+				$scope.agregarGrafico(tarifa);
+			});
+			pricelistTrp.forEach((tarifa) => {
+				tarifa.graficar = onOff;
+				$scope.agregarGrafico(tarifa);
 			});
 		};
 
