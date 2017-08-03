@@ -57,12 +57,46 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 
 		getPricelistTerminal(terminal){
 			const deferred = $q.defer();
-			const inserturl = `${APP_CONFIG.SERVER_URL}/matchprices/${terminal}`;
+			let inserturl = '';
+			if (terminal == 'agp'){
+				inserturl = `${APP_CONFIG.SERVER_URL}/prices/${terminal}`;
+			} else {
+				inserturl = `${APP_CONFIG.SERVER_URL}/matchprices/${terminal}`;
+			}
+
 			$http.get(inserturl).then((response) => {
 				response.data.data = this.retrievePrice(response.data.data);
 				deferred.resolve(response.data);
 			}).catch((error) => {
 				deferred.reject(error.data);
+			});
+			return deferred.promise;
+		}
+
+		getAllPricelist(){
+			const terminales = ['agp', 'BACTSSA', 'TERMINAL4', 'TRP'];
+			const deferred = $q.defer();
+			let llamadas = [];
+			let result = [];
+
+			terminales.forEach((terminal) => {
+				llamadas.push(this.getPricelistTerminal(terminal))
+			});
+			$q.all(llamadas).then((responses) => {
+				responses.forEach(response => {
+					console.log(response.data);
+					result.push(...response.data);
+				});
+				const idArray = result.map((curr) => {
+					return curr._id;
+				});
+
+				result = result.filter((current, index) => {
+					return idArray.indexOf(current._id, index+1) < 0;
+				});
+				deferred.resolve(result);
+			}).catch(error => {
+				deferred.reject(error);
 			});
 			return deferred.promise;
 		}

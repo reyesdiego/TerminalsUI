@@ -15,12 +15,16 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 
 		emptyGroup(){
 			this.tarifas = [];
+			this.idTarifas = [];
 			this.nombre = 'Nuevo Grupo';
 			this.terminal = loginService.filterTerminal;
 		}
 
 		addRate(rate){
-			this.tarifas.push(rate);
+			if (this.idTarifas.indexOf(rate._id) == -1){
+				this.tarifas.push(rate);
+				this.idTarifas.push(rate._id);
+			}
 		}
 
 		guardar(){

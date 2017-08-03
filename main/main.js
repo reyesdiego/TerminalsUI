@@ -64,7 +64,7 @@ myapp.constant('uiDatetimePickerConfig', {
 });
 
 myapp.config(['$qProvider', function ($qProvider) {
-	//$qProvider.errorOnUnhandledRejections(false);
+	$qProvider.errorOnUnhandledRejections(false);
 }]);
 
 myapp.config(['$httpProvider', function ($httpProvider) {

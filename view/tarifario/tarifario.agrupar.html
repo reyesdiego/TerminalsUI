@@ -8,9 +8,14 @@
             <h2 class="panel-title">Grupos</h2>
         </div>
         <div class="panel-body">
-            <a ng-repeat="grupo in vmAgrupar.grupos" ng-click="vmAgrupar.grupoSeleccionado = grupo" href>
-                <span>{{ grupo.nombre }}</span><span class="pull-right">{{ grupo.tarifas.length }}</span>
-            </a>
+            <ul>
+                <li ng-repeat="grupo in vmAgrupar.listadoGrupos">
+                    <a ng-click="vmAgrupar.grupoSeleccionado = grupo" href>
+                        <span>{{ grupo.nombre }}</span><span class="pull-right badge">{{ grupo.tarifas.length }}</span>
+                    </a>
+                </li>
+            </ul>
+
         </div>
     </div>
 
@@ -22,7 +27,10 @@
         <div class="panel-heading">
             <h2 class="panel-title">Tarifas del grupo {{ vmAgrupar.grupoSeleccionado.nombre }}</h2>
         </div>
-        <div class="panel-body" drop-here drop="vmAgrupar.agregarTarifa(priceId)">
+        <div class="panel-body">
+            <div class="col-lg-12 drop-area" drop-here drop="vmAgrupar.agregarTarifa(priceId)" ng-show="vmAgrupar.dragging">
+                <h1>Arrastre las tarifas aquí</h1>
+            </div>
             <div class="col-lg-12 table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead>
@@ -44,18 +52,31 @@
 </div>
 
 <div class="col-md-5">
-    <table class="table table-responsive table-bordered table-hover">
-        <thead>
-        <tr>
-            <th>Código</th>
-            <th>Descripción</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="tarifa in vmAgrupar.tarifasTerminal" drag-me draggable="true" id="{{ tarifa._id }}">
-            <td>{{ tarifa.code }}</td>
-            <td>{{ tarifa.description }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="col-md-12">
+        <ul class="nav nav-tabs hidden-print">
+            <li ng-repeat="terminal in vmAgrupar.tabsTerminales" ng-class="{'active': terminal.active}">
+                <a href ng-click="vmAgrupar.filtrarListado(terminal.nombre)">{{ terminal.nombre }}</a>
+            </li>
+        </ul>
+        <br>
+    </div>
+
+    <div class="col-md-12 table-responsive">
+        <table class="table table-bordered table-hover text-small">
+            <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descripción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="tarifa in vmAgrupar.filteredPrices = (vmAgrupar.listadoTarifas | filter: {terminal: vmAgrupar.filtroTerminal} ) | orderBy: 'code' | startFrom:(vmAgrupar.currentPage-1)*vmAgrupar.itemsPerPage | limitTo:vmAgrupar.itemsPerPage" drag-me draggable="true" id="{{ tarifa._id }}">
+                <td>{{ tarifa.code }}</td>
+                <td>{{ tarifa.description }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div-pagination total-items="vmAgrupar.filteredPrices.length" items-per-page="vmAgrupar.itemsPerPage" current-page="vmAgrupar.currentPage"></div-pagination>
 </div>

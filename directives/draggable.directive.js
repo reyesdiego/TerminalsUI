@@ -10,15 +10,17 @@ myapp.directive('dragMe', function(){
 				scope.$emit('dragstart');
 			});
 
-			console.log('empieza el drag');
 			e.dataTransfer.effectAllowed = 'copy';
 			e.dataTransfer.setData('Text', el.id);
-			console.log(this);
 			el.classList.add('drag');
 			return false;
 		}, false);
 
 		el.addEventListener('dragend', (e) => {
+			scope.$apply(() => {
+				scope.$emit('dragend');
+			});
+
 			el.classList.remove('drag');
 			return false;
 		}, false);
