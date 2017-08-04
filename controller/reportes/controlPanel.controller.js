@@ -1,8 +1,8 @@
 /**
  * Created by kolesnikov-a on 21/02/14.
  */
-myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'formatService', 'generalFunctions', 'cacheService', 'loginService',
-	function ($rootScope, $scope, controlPanelFactory, formatService, generalFunctions, cacheService, loginService){
+myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 'formatService', 'generalFunctions', 'TERMINAL_COLORS', 'loginService',
+	function ($rootScope, $scope, controlPanelFactory, formatService, generalFunctions, TERMINAL_COLORS, loginService){
 
 		const maxDate = new Date();
 
@@ -42,9 +42,9 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 		};
 
 		const barColors = {
-			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
-			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
-			"trp": cacheService.colorTerminalesCache.get('Trp')
+			"bactssa": TERMINAL_COLORS.BACTSSA,
+			"terminal4": TERMINAL_COLORS.TERMINAL4,
+			"trp": TERMINAL_COLORS.TRP
 		};
 
 		$scope.radioModel = 'Gates';

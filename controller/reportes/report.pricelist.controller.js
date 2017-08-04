@@ -2,13 +2,13 @@
  * Created by artiom on 02/10/14.
  */
 
-myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'cacheService', 'downloadFactory', '$filter',
-	function($scope, reportsFactory, priceFactory, dialogs, loginService, cacheService, downloadFactory, $filter) {
+myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'TERMINAL_COLORS', 'downloadFactory', '$filter',
+	function($scope, reportsFactory, priceFactory, dialogs, loginService, TERMINAL_COLORS, downloadFactory, $filter) {
 
 		const barColors = {
-			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
-			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
-			"trp": cacheService.colorTerminalesCache.get('Trp')
+			"bactssa": TERMINAL_COLORS.BACTSSA,
+			"terminal4": TERMINAL_COLORS.TERMINAL4,
+			"trp": TERMINAL_COLORS.TRP
 		};
 
 		let listaAnterior;

@@ -8,9 +8,6 @@
 	<meta charset="utf-8">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" ng-href="css/{{ dataTerminal.terminalEstilo }}.css">
-	<!-- build:css css/terminalColor.min.css -->
-	<link rel="stylesheet" href="css/terminalColor.css" title="TERMINALES">
-	<!-- /build -->
 	<!-- build:css css/aditional.min.css -->
 	<link rel="stylesheet" href="css/app.css">
 	<link rel="stylesheet" href="css/dialogs.css">
@@ -211,7 +208,7 @@
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('tarifario')" ng-click="cerrarMenu()"><a ui-sref="tarifario">Tarifario</a></li>
 						<li ng-if="tieneAcceso('matches')" ng-click="cerrarMenu()"><a ui-sref="matches">Editar</a></li>
-						<li ng-if="tieneAcceso('agrupar')" ng-click="cerrarMenu()"><a ui-sref="agrupar">Agrupar tarifas</a></li>
+						<!--<li ng-if="tieneAcceso('agrupar')" ng-click="cerrarMenu()"><a ui-sref="agrupar">Agrupar tarifas</a></li>-->
 					</ul>
 				</li>
 				<li ng-if="dataTerminal.type!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" uib-dropdown>

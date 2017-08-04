@@ -3,13 +3,19 @@
  */
 
 
-myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'cacheService', 'loginService', 'downloadFactory', 'dialogs', '$filter',
-	function ($rootScope, $scope, invoiceFactory, generalFunctions, cacheService, loginService, downloadFactory, dialogs, $filter) {
+myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'generalFunctions', 'TERMINAL_COLORS', 'loginService', 'downloadFactory', 'dialogs', '$filter',
+	function ($rootScope, $scope, invoiceFactory, generalFunctions, TERMINAL_COLORS, loginService, downloadFactory, dialogs, $filter) {
 
-		const barColors = {
+		/*const barColors = {
 			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
 			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
 			"trp": cacheService.colorTerminalesCache.get('Trp')
+		};*/
+
+		const barColors = {
+			"bactssa": TERMINAL_COLORS.BACTSSA,
+			"terminal4": TERMINAL_COLORS.TERMINAL4,
+			"trp": TERMINAL_COLORS.TRP
 		};
 
 		$rootScope.predicate = 'terminal';

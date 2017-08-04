@@ -99,34 +99,6 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
                     this.afipCache = CacheFactory.get('afipCache');
                 }
 
-                if (!CacheFactory.get('colorTerminalesCache')){
-                    this.colorTerminalesCache = CacheFactory.createCache('colorTerminalesCache', { storageMode: 'localStorage' });
-                } else {
-                    this.colorTerminalesCache = CacheFactory.get('colorTerminalesCache')
-                }
-
-                var styles=document.styleSheets;
-                for(var i=0,l=styles.length; i<l; ++i){
-                    var sheet=styles[i];
-                    var rules, rule, j, l2;
-                    if(sheet.title === "TERMINALES"){
-                        rules=sheet.cssRules;
-                        for(j=0, l2=rules.length; j<l2; j++){
-                            rule=rules[j];
-                            if('.BACTSSA' === rule.selectorText){
-                                this.colorTerminalesCache.put('Bactssa', rule.style['color']);
-                            }
-                            if('.TERMINAL4' === rule.selectorText){
-                                this.colorTerminalesCache.put('Terminal4', rule.style['color']);
-                            }
-                            if('.TRP' === rule.selectorText){
-                                this.colorTerminalesCache.put('Trp', rule.style['color']);
-                            }
-                        }
-                    }
-                }
-                //console.log(this.cache);
-                //console.log(this.probando);
             }
 
             cargaTrenes(){

@@ -623,6 +623,12 @@ myapp.config(['$cookiesProvider', function($cookiesProvider){
 	$cookiesProvider.defaults.expires = new Date(hoy.getFullYear(), hoy.getMonth()+1, hoy.getDate());
 }]);
 
+myapp.constant('TERMINAL_COLORS', {
+	BACTSSA: 'rgb(47, 164, 231)',
+	TERMINAL4: 'rgb(221, 72, 20)',
+	TRP: 'rgb(44, 62, 80)'
+});
+
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', '$cookies', 'appSocket', '$http', 'generalFunctions',
 	function($rootScope, $state, loginService, authFactory, dialogs, $injector, $cookies, appSocket, $http, generalFunctions){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 

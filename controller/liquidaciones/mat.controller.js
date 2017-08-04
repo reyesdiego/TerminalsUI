@@ -1,8 +1,8 @@
 /**
  * Created by artiom on 17/11/15.
  */
-myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', 'cacheService', 'dialogs', 'downloadFactory',
-	function($scope, liquidacionesFactory, generalFunctions, cacheService, dialogs, downloadFactory){
+myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions', 'TERMINAL_COLORS', 'dialogs', 'downloadFactory',
+	function($scope, liquidacionesFactory, generalFunctions, TERMINAL_COLORS, dialogs, downloadFactory){
 
 		$scope.disableModify = {
 			BACTSSA: true,
@@ -11,9 +11,9 @@ myapp.controller('matCtrl', ['$scope', 'liquidacionesFactory', 'generalFunctions
 		};
 
 		$scope.barColors = {
-			"bactssa": cacheService.colorTerminalesCache.get('Bactssa'),
-			"terminal4": cacheService.colorTerminalesCache.get('Terminal4'),
-			"trp": cacheService.colorTerminalesCache.get('Trp')
+			"bactssa": TERMINAL_COLORS.BACTSSA,
+			"terminal4": TERMINAL_COLORS.TERMINAL4,
+			"trp": TERMINAL_COLORS.TRP
 		};
 
 		$scope.chartReporteMat = {
