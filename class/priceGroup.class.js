@@ -27,6 +27,14 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 			}
 		}
 
+		removeRate(rateId){
+			const indice = this.tarifas.findIndex((curr) => {
+				return curr._id == rateId;
+			});
+			this.tarifas.splice(indice, 1);
+			this.idTarifas.splice(indice, 1);
+		}
+
 		guardar(){
 			if (this.id){
 				this.actualizar();

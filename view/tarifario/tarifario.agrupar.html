@@ -28,25 +28,29 @@
             <h2 class="panel-title">Tarifas del grupo {{ vmAgrupar.grupoSeleccionado.nombre }}</h2>
         </div>
         <div class="panel-body">
-            <div class="col-lg-12 drop-area" drop-here drop="vmAgrupar.agregarTarifa(priceId)" ng-show="vmAgrupar.dragging">
-                <h1>Arrastre las tarifas aquí</h1>
+            <div class="col-lg-12 drop-area" drop-here drop="vmAgrupar.agregarTarifa(priceId)" ng-show="vmAgrupar.dragging && vmAgrupar.grupoSeleccionado">
+                Arrastre las tarifas aquí
             </div>
-            <div class="col-lg-12 table-responsive">
-                <table class="table table-bordered table-hover">
+            <div class="col-lg-12 table-responsive" ng-show="vmAgrupar.grupoSeleccionado && vmAgrupar.grupoSeleccionado.tarifas.length > 0">
+                <table class="table table-bordered table-hover text-small">
                     <thead>
                     <tr>
                         <th>Código</th>
                         <th>Descripción</th>
+                        <th class="text-center"><i class="glyphicon glyphicon-remove"></i></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="tarifa in vmAgrupar.grupoSeleccionado.tarifas">
                         <td>{{ tarifa.code }}</td>
                         <td>{{ tarifa.description }}</td>
+                        <td class="text-center"><button class="btn btn-danger btn-sm" ng-click="vmAgrupar.grupoSeleccionado.removeRate(tarifa._id)"><i class="glyphicon glyphicon-remove"></i></button></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+            <p ng-show="!vmAgrupar.grupoSeleccionado">Seleccione o cree un nuevo grupo para visualizar y modificar sus tarifas.</p>
+            <p ng-show="vmAgrupar.grupoSeleccionado && vmAgrupar.grupoSeleccionado.tarifas.length == 0">El grupo seleccionado aún no tiene ninguna tarifa asociada.</p>
         </div>
     </div>
 </div>
@@ -60,23 +64,37 @@
         </ul>
         <br>
     </div>
-
+    <div class="input-group col-lg-12">
+        <input type="text" class="form-control" ng-model="vmAgrupar.searchText" placeholder="Filtrar...">
+        <span class="input-group-btn"><button class="btn btn-default" ng-click="vmAgrupar.searchText = ''"><i class="glyphicon glyphicon-remove"></i></button></span>
+    </div>
+    <br>
     <div class="col-md-12 table-responsive">
         <table class="table table-bordered table-hover text-small">
             <thead>
             <tr>
                 <th>Código</th>
                 <th>Descripción</th>
+                <th class="text-center"><i class="glyphicon glyphicon-plus"></i></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="tarifa in vmAgrupar.filteredPrices = (vmAgrupar.listadoTarifas | filter: {terminal: vmAgrupar.filtroTerminal} ) | orderBy: 'code' | startFrom:(vmAgrupar.currentPage-1)*vmAgrupar.itemsPerPage | limitTo:vmAgrupar.itemsPerPage" drag-me draggable="true" id="{{ tarifa._id }}">
+            <tr ng-repeat="tarifa in vmAgrupar.filteredPrices = (vmAgrupar.listadoTarifas | filter: {terminal: vmAgrupar.filtroTerminal} | filter: vmAgrupar.searchText) | orderBy: 'code' | startFrom:(vmAgrupar.currentPage-1)*vmAgrupar.itemsPerPage | limitTo:vmAgrupar.itemsPerPage" drag-me draggable="true" id="{{ tarifa._id }}">
                 <td>{{ tarifa.code }}</td>
                 <td>{{ tarifa.description }}</td>
+                <td class="text-center"><button class="btn btn-sm btn-success" ng-click="vmAgrupar.agregarTarifa(tarifa._id)"><i class="glyphicon glyphicon-plus"></i></button></td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <div-pagination total-items="vmAgrupar.filteredPrices.length" items-per-page="vmAgrupar.itemsPerPage" current-page="vmAgrupar.currentPage"></div-pagination>
+    <div class="col-lg-12 hidden-print hidden-xs" ng-show="vmAgrupar.filteredPrices.length > vmAgrupar.itemsPerPage">
+        <div class="text-center visible-sm"><ul uib-pagination boundary-links="true" total-items="vmAgrupar.filteredPrices.length" items-per-page="vmAgrupar.itemsPerPage" ng-model="vmAgrupar.currentPage" max-size="3" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul></div>
+        <div class="text-center visible-md"><ul uib-pagination boundary-links="true" total-items="vmAgrupar.filteredPrices.length" items-per-page="vmAgrupar.itemsPerPage" ng-model="vmAgrupar.currentPage" max-size="7" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul></div>
+        <div class="text-center visible-lg"><ul uib-pagination boundary-links="true" total-items="vmAgrupar.filteredPrices.length" items-per-page="vmAgrupar.itemsPerPage" ng-model="vmAgrupar.currentPage" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></ul></div>
+    </div>
+    <div class="col-lg-12 hidden-print visible-xs" ng-show="vmAgrupar.filteredPrices.length > vmAgrupar.itemsPerPage">
+        <ul uib-pager total-items="vmAgrupar.filteredPrices.length" ng-model="currentPage" previous-text="<< Anterior" next-text="Siguiente >>"></ul>
+    </div>
+
 </div>

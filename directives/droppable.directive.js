@@ -41,4 +41,4 @@ myapp.directive('dropHere', function(){
 			}, false);
 		}
 	}
-})
+});

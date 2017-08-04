@@ -16,6 +16,8 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 
 	this.dragging = false;
 
+	this.searchText = '';
+
 	this.tabsTerminales = [
 		{nombre: 'AGP', active: true},
 		{nombre: 'BACTSSA', active: false},
