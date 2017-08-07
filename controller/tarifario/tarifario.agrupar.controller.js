@@ -25,9 +25,14 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 		{nombre: 'TRP', active: false}
 	];
 
-	priceFactory.getAllPricelist().then(data => {
-		this.listadoTarifas = data;
-		console.log(this.listadoTarifas);
+	priceFactory.getAllPricelist().then(pricelistData => {
+		this.listadoTarifas = pricelistData;
+	}).catch(error => {
+
+	});
+
+	priceFactory.getGroupPrices().then(groupsData => {
+		this.listadoGrupos = groupsData;
 	}).catch(error => {
 
 	});
@@ -39,8 +44,9 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 			controller: 'nuevoGrupoModalCtrl',
 			controllerAs: 'vmNuevo'
 		});
-		modalInstance.result.then(nombre => {
-			this.grupoSeleccionado.nombre = nombre;
+		modalInstance.result.then(groupData => {
+			this.grupoSeleccionado.code = groupData.code;
+			this.grupoSeleccionado.description = groupData.description;
 			this.grupoSeleccionado.guardar();
 			this.listadoGrupos.push(this.grupoSeleccionado);
 		}).catch(() => {
@@ -76,12 +82,13 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 
 myapp.controller('nuevoGrupoModalCtrl', ['$uibModalInstance', function($uibModalInstance){
 
-	this.nombreGrupo = '';
-
+	this.datosGrupo = {
+		code: '',
+		description: ''
+	};
 
 	this.guardar = () => {
-		console.log('hola');
-		$uibModalInstance.close(this.nombreGrupo);
+		$uibModalInstance.close(this.datosGrupo);
 	};
 
 	this.cancelar = () => {

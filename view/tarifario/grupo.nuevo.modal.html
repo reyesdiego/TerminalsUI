@@ -2,11 +2,20 @@
     <h3 class="modal-title">Nuevo grupo</h3>
 </div>
 <div class="modal-body">
-    <h4>Ingrese nombre para el nuevo grupo</h4>
+    <h4>Ingrese datos para el nuevo grupo</h4>
 
     <form ng-submit="vmNuevo.guardar()">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="vmNuevo.nombreGrupo" placeholder="Ej: Nuevo Grupo" ng-required="true">
+            <div class="input-group">
+                <span class="input-group-addon">Nombre</span>
+                <input type="text" class="form-control" ng-model="vmNuevo.datosGrupo.code" placeholder="Ej: Nuevo Grupo" ng-required="true">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Descripción</span>
+                <input type="text" class="form-control" ng-model="vmNuevo.datosGrupo.description" placeholder="Ej: Manipuleos hasta el 6to día." ng-required="true">
+            </div>
         </div>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Guardar</button>

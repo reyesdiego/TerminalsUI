@@ -208,7 +208,7 @@
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('tarifario')" ng-click="cerrarMenu()"><a ui-sref="tarifario">Tarifario</a></li>
 						<li ng-if="tieneAcceso('matches')" ng-click="cerrarMenu()"><a ui-sref="matches">Editar</a></li>
-						<!--<li ng-if="tieneAcceso('agrupar')" ng-click="cerrarMenu()"><a ui-sref="agrupar">Agrupar tarifas</a></li>-->
+						<li ng-if="tieneAcceso('agrupar')" ng-click="cerrarMenu()"><a ui-sref="agrupar">Agrupar tarifas</a></li>
 					</ul>
 				</li>
 				<li ng-if="dataTerminal.type!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" uib-dropdown>

@@ -11,21 +11,20 @@
             <ul>
                 <li ng-repeat="grupo in vmAgrupar.listadoGrupos">
                     <a ng-click="vmAgrupar.grupoSeleccionado = grupo" href>
-                        <span>{{ grupo.nombre }}</span><span class="pull-right badge">{{ grupo.tarifas.length }}</span>
+                        <span uib-popover="{{ grupo.description }}" popover-trigger="'mouseenter'">{{ grupo.nombreGrupo }}</span><span class="pull-right badge">{{ grupo.tarifas.length }}</span>
                     </a>
                 </li>
             </ul>
-
         </div>
     </div>
 
-    <button class="btn btn-primary" ng-click="vmAgrupar.nuevoGrupo()">Nuevo grupo</button>
+    <button type="button" class="btn btn-primary" ng-click="vmAgrupar.nuevoGrupo()">Nuevo grupo</button>
 </div>
 
 <div class="col-md-5">
     <div class="panel panel-success">
         <div class="panel-heading">
-            <h2 class="panel-title">Tarifas del grupo {{ vmAgrupar.grupoSeleccionado.nombre }}</h2>
+            <h2 class="panel-title">Tarifas del grupo <span ng-show="vmAgrupar.grupoSeleccionado">{{ vmAgrupar.grupoSeleccionado.nombreGrupo }}</span></h2>
         </div>
         <div class="panel-body">
             <div class="col-lg-12 drop-area" drop-here drop="vmAgrupar.agregarTarifa(priceId)" ng-show="vmAgrupar.dragging && vmAgrupar.grupoSeleccionado">

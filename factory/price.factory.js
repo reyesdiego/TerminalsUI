@@ -1,7 +1,7 @@
 /**
  * Created by gutierrez-g on 18/02/14.
  */
-myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price', 'APP_CONFIG', 'downloadService', '$q', 'HTTPCanceler', function($http, loginService, formatService, Price, APP_CONFIG, downloadService, $q, HTTPCanceler){
+myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price', 'APP_CONFIG', 'downloadService', '$q', 'HTTPCanceler', 'PriceGroup', function($http, loginService, formatService, Price, APP_CONFIG, downloadService, $q, HTTPCanceler, PriceGroup){
 
 	class priceFactory {
 
@@ -19,6 +19,12 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 				pricesArray.push(new Price(newPrice))
 			});
 			return pricesArray;
+		}
+
+		retrieveGroupPrices(groupsData){
+			return groupsData.map(data => {
+				return new PriceGroup(data);
+			})
 		}
 
 		getPricelistAgp() {
@@ -84,7 +90,6 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			});
 			$q.all(llamadas).then((responses) => {
 				responses.forEach(response => {
-					console.log(response.data);
 					result.push(...response.data);
 				});
 				const idArray = result.map((curr) => {
@@ -147,6 +152,17 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 				deferred.resolve(response.data);
 			}).catch((response) => {
 				if (response.status != -5) deferred.reject(response.data);
+			});
+			return deferred.promise;
+		}
+
+		getGroupPrices(){
+			const deferred = $q.defer();
+			const inserturl = `${APP_CONFIG.SERVER_URL}/prices/headers/all`;
+			$http.get(inserturl).then(response => {
+				deferred.resolve(this.retrieveGroupPrices(response.data.data));
+			}).catch(error => {
+				deferred.reject(error);
 			});
 			return deferred.promise;
 		}

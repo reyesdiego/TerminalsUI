@@ -6,6 +6,8 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 	class PriceGroup {
 
 		constructor(groupData){
+			this.tarifas = [];
+			this.idTarifas = [];
 			if (groupData){
 				angular.extend(this, groupData);
 			} else {
@@ -14,10 +16,13 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 		}
 
 		emptyGroup(){
-			this.tarifas = [];
-			this.idTarifas = [];
-			this.nombre = 'Nuevo Grupo';
-			this.terminal = loginService.filterTerminal;
+			this._id = 'NEW';
+			this.code = 'Nuevo Grupo';
+			this.description = 'Sin descripción';
+		}
+
+		get nombreGrupo(){
+			return `${this._id} - ${this.code}`
 		}
 
 		addRate(rate){
@@ -44,7 +49,7 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 		}
 
 		actualizar(){
-			console.log('acá un put o un pacth');
+			console.log('acá un put o un patch');
 		}
 
 		crearNuevo(){
