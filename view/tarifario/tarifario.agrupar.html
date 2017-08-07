@@ -2,16 +2,16 @@
     <h1>Agrupación de tarifario</h1>
 </div>
 
-<div class="col-md-2">
+<div class="col-md-3">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h2 class="panel-title">Grupos</h2>
         </div>
         <div class="panel-body">
             <ul>
-                <li ng-repeat="grupo in vmAgrupar.listadoGrupos">
+                <li ng-repeat="grupo in vmAgrupar.listadoGrupos | orderBy: '_id'">
                     <a ng-click="vmAgrupar.grupoSeleccionado = grupo" href>
-                        <span uib-popover="{{ grupo.description }}" popover-trigger="'mouseenter'">{{ grupo.nombreGrupo }}</span><span class="pull-right badge">{{ grupo.tarifas.length }}</span>
+                        <span uib-popover="{{ grupo.mov }}" popover-trigger="'mouseenter'">{{ grupo.nombreGrupo }}</span><span class="pull-right badge">{{ grupo.tarifas.length }}</span>
                     </a>
                 </li>
             </ul>
@@ -21,7 +21,7 @@
     <button type="button" class="btn btn-primary" ng-click="vmAgrupar.nuevoGrupo()">Nuevo grupo</button>
 </div>
 
-<div class="col-md-5">
+<div class="col-md-4">
     <div class="panel panel-success">
         <div class="panel-heading">
             <h2 class="panel-title">Tarifas del grupo <span ng-show="vmAgrupar.grupoSeleccionado">{{ vmAgrupar.grupoSeleccionado.nombreGrupo }}</span></h2>

@@ -37,6 +37,16 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 
 	});
 
+	this.guardarGrupo = (groupData) => {
+		//this.grupoSeleccionado.code = groupData.code;
+		this.grupoSeleccionado.description = groupData.description;
+		this.grupoSeleccionado.guardar().then(() => {
+			this.listadoGrupos.push(this.grupoSeleccionado);
+		}).catch(error => {
+			console.log(error);
+		});
+	};
+
 	this.nuevoGrupo = () => {
 		this.grupoSeleccionado = new PriceGroup();
 		let modalInstance = $uibModal.open({
@@ -44,12 +54,7 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 			controller: 'nuevoGrupoModalCtrl',
 			controllerAs: 'vmNuevo'
 		});
-		modalInstance.result.then(groupData => {
-			this.grupoSeleccionado.code = groupData.code;
-			this.grupoSeleccionado.description = groupData.description;
-			this.grupoSeleccionado.guardar();
-			this.listadoGrupos.push(this.grupoSeleccionado);
-		}).catch(() => {
+		modalInstance.result.then(this.guardarGrupo).catch(() => {
 			this.grupoSeleccionado = null;
 		});
 	};

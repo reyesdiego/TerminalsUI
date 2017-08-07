@@ -17,12 +17,12 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 
 		emptyGroup(){
 			this._id = 'NEW';
-			this.code = 'Nuevo Grupo';
+			this.mov = '';
 			this.description = 'Sin descripción';
 		}
 
 		get nombreGrupo(){
-			return `${this._id} - ${this.code}`
+			return `${this._id} - ${this.description}`
 		}
 
 		addRate(rate){
@@ -41,11 +41,18 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 		}
 
 		guardar(){
-			if (this.id){
-				this.actualizar();
-			} else {
-				this.crearNuevo();
-			}
+			const deferred = $q.defer();
+			const inserturl = `${APP_CONFIG.SERVER_URL}/prices/header/add`;
+			const body = {
+				description: this.description
+			};
+			$http.post(inserturl, body).then(response => {
+				this._id = response.data.data._id;
+				deferred.resolve();
+			}).catch(error => {
+				deferred.reject();
+			});
+			return deferred.promise;
 		}
 
 		actualizar(){
