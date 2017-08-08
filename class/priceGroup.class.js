@@ -10,6 +10,7 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 			this.tarifario_id = [];
 			if (groupData){
 				angular.extend(this, groupData);
+				this.getTarifas();
 			} else {
 				this.emptyGroup();
 			}
@@ -19,6 +20,25 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 			this._id = 'NEW';
 			this.mov = '';
 			this.description = 'Sin descripción';
+		}
+
+		getTarifas(){
+			const deferred = $q.defer();
+			const inserturl = `${APP_CONFIG.SERVER_URL}/prices/group/all/${this._id}`;
+			$http.get(inserturl).then(response => {
+				this.tarifario_id = [];
+				this.tarifas = [];
+				if (response.data.data.length == 1){
+					response.data.data[0].tarifario.forEach(tarifa => {
+						this.tarifario_id.push(tarifa.id);
+						this.tarifas.push(tarifa);
+					});
+				}
+				deferred.resolve();
+			}).catch(error => {
+				deferred.reject(error);
+			});
+			return deferred.promise;
 		}
 
 		get nombreGrupo(){

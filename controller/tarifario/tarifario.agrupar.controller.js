@@ -69,13 +69,13 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 
 	this.guardarTarifas = () => {
 		this.grupoSeleccionado.guardarTarifas().then(() => {
-			this.divAlert.show = true;
 			this.divAlert.message = `Las tarifas para el grupo ${this.grupoSeleccionado.nombreGrupo} han sido guardadas correctamente.`;
 			this.divAlert.class = 'alert-success';
 		}).catch(error => {
-			this.divAlert.show = true;
 			this.divAlert.message = `Se produjo un error al intentar guardar las tarifas para el grupo ${this.grupoSeleccionado.nombreGrupo}.\n${error.message}`;
 			this.divAlert.class = 'alert-danger';
+		}).finally(() => {
+			this.divAlert.show = true;
 		});
 	};
 
