@@ -8,8 +8,14 @@
             <h2 class="panel-title">Grupos</h2>
         </div>
         <div class="panel-body">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" ng-model="vmAgrupar.filterGroups" placeholder="Filtrar..." class="form-control">
+                    <span class="input-group-btn"><button class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button></span>
+                </div>
+            </div>
             <ul>
-                <li ng-repeat="grupo in vmAgrupar.listadoGrupos | orderBy: '_id'">
+                <li ng-repeat="grupo in vmAgrupar.listadoGrupos | filter: vmAgrupar.filterGroups | orderBy: '_id'">
                     <a ng-click="vmAgrupar.grupoSeleccionado = grupo" href>
                         <span uib-popover="{{ grupo.mov }}" popover-trigger="'mouseenter'">{{ grupo.nombreGrupo }}</span><span class="pull-right badge">{{ grupo.tarifas.length }}</span>
                     </a>

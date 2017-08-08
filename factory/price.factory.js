@@ -101,7 +101,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 				});
 				deferred.resolve(result);
 			}).catch(error => {
-				deferred.reject(error);
+				deferred.reject(error.data);
 			});
 			return deferred.promise;
 		}
@@ -162,7 +162,7 @@ myapp.factory('priceFactory', ['$http', 'loginService', 'formatService', 'Price'
 			$http.get(inserturl).then(response => {
 				deferred.resolve(this.retrieveGroupPrices(response.data.data));
 			}).catch(error => {
-				deferred.reject(error);
+				deferred.reject(error.data);
 			});
 			return deferred.promise;
 		}

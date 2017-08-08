@@ -1,7 +1,7 @@
 /**
  * Created by kolesnikov-a on 01/08/2017.
  */
-myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFactory', '$scope', function(PriceGroup, $uibModal, priceFactory, $scope){
+myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFactory', '$scope', '$q', 'dialogs', function(PriceGroup, $uibModal, priceFactory, $scope, $q, dialogs){
 
 	this.grupoSeleccionado = null;
 	this.listadoGrupos = [];
@@ -17,6 +17,7 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 	this.dragging = false;
 
 	this.searchText = '';
+	this.filterGroups = '';
 
 	this.tabsTerminales = [
 		{nombre: 'AGP', active: true},
@@ -28,13 +29,13 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 	priceFactory.getAllPricelist().then(pricelistData => {
 		this.listadoTarifas = pricelistData;
 	}).catch(error => {
-
+		dialogs.error('Agrupar tarifario', `Se produjo un error al cargar los tarifarios de las terminales.\r\n${error.message}`);
 	});
 
 	priceFactory.getGroupPrices().then(groupsData => {
 		this.listadoGrupos = groupsData;
 	}).catch(error => {
-
+		dialogs.error('Agrupar tarifario', `Se produjo un error al cargar los grupos existentes.\r\n${error.message}`);
 	});
 
 	this.guardarGrupo = (groupData) => {
@@ -43,7 +44,8 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 		this.grupoSeleccionado.guardar().then(() => {
 			this.listadoGrupos.push(this.grupoSeleccionado);
 		}).catch(error => {
-			console.log(error);
+			this.grupoSeleccionado = null;
+			dialogs.error('Agrupar tarifario', `Se produjo un error al intentar guardar el nuevo grupo. \n ${error.message}`);
 		});
 	};
 

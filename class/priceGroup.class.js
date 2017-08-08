@@ -50,7 +50,7 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 				this._id = response.data.data._id;
 				deferred.resolve();
 			}).catch(error => {
-				deferred.reject();
+				deferred.reject(error.data);
 			});
 			return deferred.promise;
 		}
