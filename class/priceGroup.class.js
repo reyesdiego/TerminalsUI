@@ -7,7 +7,7 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 
 		constructor(groupData){
 			this.tarifas = [];
-			this.idTarifas = [];
+			this.tarifario_id = [];
 			if (groupData){
 				angular.extend(this, groupData);
 			} else {
@@ -26,9 +26,9 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 		}
 
 		addRate(rate){
-			if (this.idTarifas.indexOf(rate._id) == -1){
+			if (this.tarifario_id.indexOf(rate._id) == -1){
 				this.tarifas.push(rate);
-				this.idTarifas.push(rate._id);
+				this.tarifario_id.push(rate._id);
 			}
 		}
 
@@ -37,7 +37,7 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 				return curr._id == rateId;
 			});
 			this.tarifas.splice(indice, 1);
-			this.idTarifas.splice(indice, 1);
+			this.tarifario_id.splice(indice, 1);
 		}
 
 		guardar(){
@@ -48,6 +48,21 @@ myapp.factory('PriceGroup', ['$http', '$q', 'APP_CONFIG', 'Price', 'loginService
 			};
 			$http.post(inserturl, body).then(response => {
 				this._id = response.data.data._id;
+				deferred.resolve();
+			}).catch(error => {
+				deferred.reject(error.data);
+			});
+			return deferred.promise;
+		}
+
+		guardarTarifas(){
+			const deferred = $q.defer();
+			const inserturl = `${APP_CONFIG.SERVER_URL}/prices/group/add`;
+			const body = {
+				tarifario_header_id: this._id,
+				tarifario_id: this.tarifario_id
+			};
+			$http.post(inserturl, body).then(response => {
 				deferred.resolve();
 			}).catch(error => {
 				deferred.reject(error.data);

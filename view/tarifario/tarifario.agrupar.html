@@ -2,6 +2,8 @@
     <h1>Agrupación de tarifario</h1>
 </div>
 
+<div uib-alert dismiss-on-timeout="5000" close="vmAgrupar.divAlert.show = false" class="col-md-12" ng-class="vmAgrupar.divAlert.class" ng-if="vmAgrupar.divAlert.show">{{ vmAgrupar.divAlert.message }}</div>
+
 <div class="col-md-3">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -58,6 +60,8 @@
             <p ng-show="vmAgrupar.grupoSeleccionado && vmAgrupar.grupoSeleccionado.tarifas.length == 0">El grupo seleccionado aún no tiene ninguna tarifa asociada.</p>
         </div>
     </div>
+
+    <button type="button" class="btn btn-primary" ng-click="vmAgrupar.guardarTarifas()">Guardar tarifas</button>
 </div>
 
 <div class="col-md-5">

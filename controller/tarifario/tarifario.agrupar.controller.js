@@ -19,6 +19,12 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 	this.searchText = '';
 	this.filterGroups = '';
 
+	this.divAlert = {
+		show: false,
+		class: 'alert-success',
+		message: 'OK'
+	};
+
 	this.tabsTerminales = [
 		{nombre: 'AGP', active: true},
 		{nombre: 'BACTSSA', active: false},
@@ -58,6 +64,18 @@ myapp.controller('agruparTarifarioCtrl', ['PriceGroup', '$uibModal', 'priceFacto
 		});
 		modalInstance.result.then(this.guardarGrupo).catch(() => {
 			this.grupoSeleccionado = null;
+		});
+	};
+
+	this.guardarTarifas = () => {
+		this.grupoSeleccionado.guardarTarifas().then(() => {
+			this.divAlert.show = true;
+			this.divAlert.message = `Las tarifas para el grupo ${this.grupoSeleccionado.nombreGrupo} han sido guardadas correctamente.`;
+			this.divAlert.class = 'alert-success';
+		}).catch(error => {
+			this.divAlert.show = true;
+			this.divAlert.message = `Se produjo un error al intentar guardar las tarifas para el grupo ${this.grupoSeleccionado.nombreGrupo}.\n${error.message}`;
+			this.divAlert.class = 'alert-danger';
 		});
 	};
 
