@@ -69,7 +69,7 @@
         </ul>
     </div>
 
-    <div class="row col-lg-12" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
+    <div class="row col-lg-12" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario || gruposTarifas">
         <br>
         <div class="table-responsive invoice-shadow">
             <table class="table table-bordered table-hover">
@@ -87,6 +87,39 @@
                     <td class="col-lg-1">{{ price.code }}</td>
                     <td class="col-lg-8">{{ price.description | maxLength : 240 }}<a href="" ng-show="(price.description.length > 240)" uib-popover="{{ price.description }}" popover-trigger="'mouseenter'"> (...)</a></td>
                     <td class="col-lg-1 text-right">{{ price.largo }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-12" ng-show="gruposTarifas && !(mostrarGrafico || loadingReporteTarifas || errorTarifario)">
+        <br>
+        <div class="table-responsive invoice-shadow">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center"><span class="glyphicon glyphicon-check"></span> Seleccionar</th>
+                    <th><span class="glyphicon glyphicon-bookmark"></span> Código</th>
+                    <th> Descripción</th>
+                    <th> Tipo de movimiento</th>
+                    <th> Cant. de tarifas</th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="grupo in listadoGrupos" ng-init="grupo.detalle = false">
+                <tr ng-click="grupo.detalle = !grupo.detalle">
+                    <td class="col-lg-1 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="grupo.graficar" ng-click="graficarPorGrupo($event, grupo)"></td>
+                    <td class="col-lg-1">{{ grupo._id }}</td>
+                    <td class="col-lg-8">{{ grupo.description }}</td>
+                    <td class="col-lg-1">{{ grupo.mov }}</td>
+                    <td class="col-lg-1">{{ grupo.tarifas.length }}</td>
+                </tr>
+                <tr style="height:60px" ng-repeat="tarifa in grupo.tarifas" ng-show="grupo.detalle">
+                    <td></td>
+                    <td>{{ tarifa.code }}</td>
+                    <td>{{ tarifa.description }}</td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
