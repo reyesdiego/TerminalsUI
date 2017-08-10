@@ -13,7 +13,7 @@ myapp.directive('liquidacionesSearch', function(){
 	}
 });
 
-myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dialogs, generalFunctions){
+myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', 'loginService', function(dialogs, generalFunctions, loginService){
 	return {
 		restrict:		'E',
 		templateUrl:	'view/liquidaciones/table.sinLiquidar.html',
@@ -24,6 +24,8 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 			ocultarFiltros:			"="
 		},
 		link: function(scope){
+			scope.acceso = loginService.type;
+			scope.logoTerminal = loginService.logoTerminal;
 			scope.panelMensaje = {
 				titulo: 'Liquidaciones',
 				mensaje: 'No se encontraron comprobantes para los filtros seleccionados.',
@@ -82,9 +84,20 @@ myapp.directive('tableSinLiquidar', ['dialogs', 'generalFunctions', function(dia
 				}).finally(() => scope.cargando = false);
 			};
 
+			scope.ocultarResultado = function(){
+				scope.mostrarResultado = false;
+			};
+
 			scope.ordenar = function(filtro){
 				scope.payment.searchParams = generalFunctions.filtrarOrden(scope.payment.searchParams, filtro);
 				loadInvoices();
+			};
+
+			scope.verPdf = function(){
+				scope.disablePdf = true;
+				scope.verDetalle.verPdf().then().catch(() => {
+					dialogs.error('Comprobantes', 'Se ha producido un error al procesar el comprobante');
+				}).finally(() => scope.disablePdf = false);
 			};
 
 			loadInvoices();
