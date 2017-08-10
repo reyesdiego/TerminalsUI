@@ -179,26 +179,26 @@
     <div class="row" ng-if="mostrarGrafico && !errorTarifario && !tarifasAgrupadas">
         <div class="col-lg-12 text-center table-responsive">
             <column-chart
-                class="chart col-xs-12"
-                data="chartReporteTarifas.data"
-                options="chartReporteTarifas.options"
-                click="selectRow(selectedRow, id)"></column-chart>
+                    class="chart col-xs-12"
+                    data="chartReporteTarifas.data"
+                    options="chartReporteTarifas.options"
+                    click="selectRow(selectedRow, id)"></column-chart>
         </div>
     </div>
 
     <div class="row" ng-if="mostrarGrafico && !errorTarifario && !tarifasAgrupadas">
         <div class="col-lg-6 text-center table-responsive">
             <pie-chart
-                class="chart col-xs-12"
-                data="chartTotalesPorTarifa.data"
-                options="chartTotalesPorTarifa.options"
-                click="selectRow(selectedRow, id)"></pie-chart>
+                    class="chart col-xs-12"
+                    data="chartTotalesPorTarifa.data"
+                    options="chartTotalesPorTarifa.options"
+                    click="selectRow(selectedRow, id)"></pie-chart>
         </div>
         <div class="col-lg-6 text-center table-responsive">
             <pie-chart
-                class="chart col-xs-12"
-                data="chartTotalesPorTerminal.data"
-                options="chartTotalesPorTerminal.options"></pie-chart>
+                    class="chart col-xs-12"
+                    data="chartTotalesPorTerminal.data"
+                    options="chartTotalesPorTerminal.options"></pie-chart>
         </div>
     </div>
 

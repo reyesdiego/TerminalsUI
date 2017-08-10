@@ -1,9 +1,12 @@
 /**
+ * Created by kolesnikov-a on 09/08/2017.
+ */
+/**
  * Created by artiom on 02/10/14.
  */
 
-myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'TERMINAL_COLORS', 'downloadFactory', '$filter',
-	function($scope, reportsFactory, priceFactory, dialogs, loginService, TERMINAL_COLORS, downloadFactory, $filter) {
+myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactory', 'dialogs', 'loginService', 'TERMINAL_COLORS', 'downloadFactory',
+	function($scope, reportsFactory, priceFactory, dialogs, loginService, TERMINAL_COLORS, downloadFactory) {
 
 		const barColors = {
 			"bactssa": TERMINAL_COLORS.BACTSSA,
@@ -49,9 +52,9 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				rendererName: "Tabla",
 				aggregatorName: "Suma de moneda"
 				/*renderers: $.extend(
-					$.pivotUtilities.renderers,
-					$.pivotUtilities.c3_renderers
-				)*/
+				 $.pivotUtilities.renderers,
+				 $.pivotUtilities.c3_renderers
+				 )*/
 			}
 		};
 
