@@ -38,7 +38,6 @@ myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunction
 
 		cacheService.cargaClientes().then(function(data){
 			$scope.listaRazonSocial = data;
-			console.log($scope.listaRazonSocial);
 		});
 
 		cacheService.cargaTrenes().then(function(data){

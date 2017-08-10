@@ -105,10 +105,9 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             }
             const inserturl = `${APP_CONFIG.SERVER_URL}/paying/payed/${loginService.filterTerminal}/${liquidacion}/${page.skip}/${page.limit}`;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
-                response.data.data = factory.retrieveInvoices(response.data.data);
+                response.data.data = this.retrieveInvoices(response.data.data);
                 callback(response.data);
             }).catch((response) => {
-                //console.log(response);
                 if (response.status != -5){
                     if (response.data == null){
                         response.data = {
