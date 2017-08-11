@@ -1,0 +1,118 @@
+<div class="container col-lg-offset-1 col-lg-10 col-md-12">
+
+    <div class="row col-lg-12 page-header">
+        <h1><img ng-src="images/container.png" height="64" width="64" class="hidden-xs">&nbsp;Manifiestos</h1>
+    </div>
+
+
+    <div class="col-lg-12 hidden-print">
+        <uib-accordion>
+            <div uib-accordion-group is-open="estado" class="panel-default" ng-init="estado = true">
+                <uib-accordion-heading>
+                    <strong>Filtrar por</strong><i class="pull-right glyphicon" ng-class="estado ?  'glyphicon-chevron-down' : 'glyphicon-chevron-right'"></i>
+                </uib-accordion-heading>
+                <div class="row">
+                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                        <div class="input-group">
+                            <input type="text" ng-keyup="vmManifiesto.hitEnter($event)" ng-model="vmManifiesto.model.sumaria" class="form-control" placeholder="Sumaria"/>
+                            <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('sumaria', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                        <div class="input-group">
+                            <input type="text" ng-model="vmManifiesto.model.buqueNombre" uib-typeahead="buque.D for buque in vmManifiesto.listaBuques | filter:$viewValue | limitTo:15" class="form-control" placeholder="Buque" toupper typeahead-on-select="vmManifiesto.buqueSelected($item, $model, $label, $event)" typeahead-editable="false"/>
+                            <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('buqueNombre', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                        <div class="input-group">
+                            <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="vmManifiesto.fechaInicio.open = !vmManifiesto.fechaInicio.open;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
+                            <input id="fechaInicio" type="text" class="form-control" ng-keyup="vmManifiesto.hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="vmManifiesto.model.fechaInicio" is-open="vmManifiesto.fechaInicio.open" datepicker-options="vmManifiesto.fechaInicio.options" readonly style="background-color: #ffffff" clear-text="Borrar" close-text="Listo" current-text="Hoy">
+                            <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                        <div class="input-group">
+                            <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="vmManifiesto.fechaFin.open = !vmManifiesto.fechaFin.open;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
+                            <input id="fechaFin" type="text" class="form-control" ng-keyup="vmManifiesto.hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="vmManifiesto.model.fechaFin" is-open="vmManifiesto.fechaFin.open" datepicker-options="vmManifiesto.fechaFin.options" readonly style="background-color: #ffffff" clear-text="Borrar" close-text="Listo" current-text="Hoy">
+                            <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                        <div class="input-group">
+                            <button class="btn btn-primary" ng-click="vmManifiesto.cargaDatos();"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+    
+    <div class="col-lg-12">
+        <div>
+            <div>
+                <h3>Manifiesto de Importaciones</h3>
+            </div>
+            <div>
+                <h5><strong>Resultados: {{ vmManifiesto.totalItems }}</strong></h5>
+                <div class="table-responsive invoice-shadow">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th rowspan="2">
+                                <encabezado-tabla-ordenado titulo="Sumaria" filtrar-orden="filtrarOrden('SUMARIA')" oculta-filtros="ocultarFiltros" model="model" filtro="SUMARIA" filtro-orden="SUMARIAORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                            <th colspan="2" class="columnaAnidada">Fecha</th>
+                            <th rowspan="2">
+                                <encabezado-tabla-ordenado titulo="País procedencia" filtrar-orden="filtrarOrden('PAISPROCEDENCIA')" oculta-filtros="ocultarFiltros" model="model" filtro="PAISPROCEDENCIA" filtro-orden="PAISPROCEDENCIAORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                            <th rowspan="2">
+                                <encabezado-tabla-ordenado titulo="Transportista" filtrar-orden="filtrarOrden('TRANSPORTISTA')" oculta-filtros="ocultarFiltros" model="model" filtro="TRANSPORTISTA" filtro-orden="TRANSPORTISTAORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                            <th rowspan="2">
+                                <encabezado-tabla-ordenado titulo="Desconsolidado" filtrar-orden="filtrarOrden('DESCONSOLIDADO')" oculta-filtros="ocultarFiltros" model="model" filtro="DESCONSOLIDADO" filtro-orden="DESCONSOLIDADOORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                            <th rowspan="2">
+                                <encabezado-tabla-ordenado titulo="Lugar operativo" filtrar-orden="filtrarOrden('LUGAROPERATIVO')" oculta-filtros="ocultarFiltros" model="model" filtro="LUGAROPERATIVO" filtro-orden="LUGAROPERATIVOORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                            <th rowspan="2">
+                                <encabezado-tabla-ordenado titulo="Lugar de giro" filtrar-orden="filtrarOrden('LUGARDEGIRO')" oculta-filtros="ocultarFiltros" model="model" filtro="LUGARDEGIRO" filtro-orden="LUGARDEGIROORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                            <th rowspan="2">
+                                <encabezado-tabla-ordenado titulo="Buque" filtrar-orden="filtrarOrden('NOMBREBUQUE')" oculta-filtros="ocultarFiltros" model="model" filtro="NOMBREBUQUE" filtro-orden="NOMBREBUQUEORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                            <th rowspan="2">
+                                <i class="glyphicon glyphicon-zoom-in"></i>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <encabezado-tabla-ordenado titulo="Registro" filtrar-orden="filtrarOrden('FECHAREGISTRO')" oculta-filtros="ocultarFiltros" model="model" filtro="FECHAREGISTRO" filtro-orden="FECHAREGISTROORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                            <th>
+                                <encabezado-tabla-ordenado titulo="Arribo" filtrar-orden="filtrarOrden('FECHAARRIBO')" oculta-filtros="ocultarFiltros" model="model" filtro="FECHAARRIBO" filtro-orden="FECHAARRIBOORDEN"></encabezado-tabla-ordenado>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="registro in vmManifiesto.datosRegistro" class="fila-animada" style="font-size: 8pt">
+                            <td>{{ registro.SUMARIA }}</td>
+                            <td>{{ registro.FECHAREGISTRO | date: 'dd/MM/yyyy':'UTC'}}</td>
+                            <td>{{ registro.FECHAARRIBO | date: 'dd/MM/yyyy':'UTC'}}</td>
+                            <td>{{ registro.PAISPROCEDENCIA }}</td>
+                            <td>{{ registro.TRANSPORTISTA }}</td>
+                            <td>{{ registro.DESCONSOLIDADO }}</td>
+                            <td>{{ registro.LUGAROPERATIVO }}</td>
+                            <td>{{ registro.LUGARDEGIRO }}</td>
+                            <td>{{ registro.NOMBREBUQUE }}</td>
+                            <td><a href ng-click="registro.cargarDetalles()"><i class="glyphicon glyphicon-zoom-in"></i></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div-pagination current-page="model.currentPage" items-per-page="itemsPerPage" total-items="totalItems" panel-size="10"></div-pagination>
+        </div>
+    </div>
+
+</div>

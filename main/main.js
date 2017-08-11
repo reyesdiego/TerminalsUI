@@ -467,6 +467,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
+		.state('manifiesto', {
+			url: "/manifiestos",
+			templateUrl: "view/contenedores/manifiesto.html",
+			controller: "manifiestoCtrl as vmManifiesto"
+		})
 		//=====================================================================\\
 		//************************** AFIP *************************************\\
 		//=====================================================================\\
