@@ -175,7 +175,7 @@
     return $.pivotUtilities.gchart_renderers = {
       "Gráfico Lineal": makeGoogleChart("LineChart"),
       "Gráfico de barras": makeGoogleChart("ColumnChart"),
-      "Grafico de barras agrupadas": makeGoogleChart("ColumnChart", {
+      "Gráfico de barras agrupadas": makeGoogleChart("ColumnChart", {
         isStacked: true
       }),
       "Gráfico de área": makeGoogleChart("AreaChart", {

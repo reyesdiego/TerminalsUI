@@ -14,9 +14,9 @@ myapp.directive('ngPivot', ['chartLoader', '$window', function(chartLoader, $win
 			function render(){
 
 				chartLoader.then(() => {
-					scope.options.renderers = $.extend($.pivotUtilities.locales.es.renderers, $.pivotUtilities.gchart_renderers);
+					scope.options.renderers = $.extend($.pivotUtilities.locales.es.renderers, $.pivotUtilities.gchart_renderers, $.pivotUtilities.export_renderers);
 				}).catch(() => {
-					scope.options.renderers = $.pivotUtilities.locales.es.renderers;
+					scope.options.renderers = $.extend($.pivotUtilities.locales.es.renderers, $.pivotUtilities.export_renderers);
 				}).finally(() => {
 					if(scope.data.length > 0){
 						element.pivotUI(scope.data, scope.options, true, 'es');
