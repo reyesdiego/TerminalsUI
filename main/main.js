@@ -399,8 +399,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		})
 		.state('reports.tarifas', {
 			url: '/tarifas',
-			templateUrl: 'view/reportes/reportes.tarifas.html',
-			controller: 'reporteTarifasCtrl',
+			templateUrl: 'view/reportes/reportes.tarifas.new.html',
+			controller: 'reporteCuboCtrl as vmCubo',
 			resolve: {
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 			}
