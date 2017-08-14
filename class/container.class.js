@@ -137,15 +137,16 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             };
             llamadas.push($http.get(inserturl, { params: formatService.formatearDatos(queryString)}));
             llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/impo/container/${this.contenedor}`));
-            //llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/expo/container/${this.contenedor}`));
+            llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/expo/container/${this.contenedor}`));
 
             $q.all(llamadas).then((responses) => {
                 this.rates = this.putDescriptionRates(responses[0].data);
                 this.manifestsImpo = responses[1].data.data;
-                //this.manifestsExpo = responses[2].data.data;
+                this.manifestsExpo = responses[2].data.data;
                 deferred.resolve();
             }).catch((response) => {
                 deferred.reject(response.data);
+                console.log(this);
             });
             return deferred.promise;
         }
