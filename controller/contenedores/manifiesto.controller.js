@@ -24,8 +24,21 @@ class ManifiestoController {
 
 		this.fechaInicio = {
 			open: false,
-
 		};
+
+		this.fechaFin = {
+			open: false
+		};
+
+		this.panelMensaje = {
+			titulo: 'Manifiestos',
+			mensaje: 'No se encontraron datos de manifiestos para los filtros seleccionados.',
+			tipo: 'panel-info'
+		};
+
+		this.listaBuques = cacheService.afipCache.get('SumImpoBuques');
+		//this.listaBuques = cacheService.afipCache.get('SumExpoBuques');
+		//manifiests/impo/container/:idcontenedor
 
 		this.cargaDatos();
 	}
@@ -37,13 +50,14 @@ class ManifiestoController {
 			this.model.fechaFin = new Date(this.model.fechaInicio);
 			this.model.fechaFin.setDate(this.model.fechaFin.getDate() + 1);
 		}
-
 	};
 
 	buqueSelected(selected){
+		console.log('hola');
 		if (angular.isDefined(selected) && selected.title != this.model.buqueNombre){
 			this.model.buqueNombre = selected.originalObject.D;
 		}
+		console.log(this.model);
 	};
 
 	hitEnter(evt){
@@ -55,8 +69,8 @@ class ManifiestoController {
 		this.sumariaDetalle = {};
 		this.cargando = true;
 		this.panelMensaje = {
-			titulo: 'AFIP',
-			mensaje: 'No se encontraron datos en la tabla seleccionada.',
+			titulo: 'Manifiestos',
+			mensaje: 'No se encontraron datos de manifiestos para los filtros seleccionados.',
 			tipo: 'panel-info'
 		};
 
