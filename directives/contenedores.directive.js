@@ -29,8 +29,7 @@ myapp.directive('tableTasasCargas', function(){
 		templateUrl:	'view/contenedores/table.tasas.cargas.html',
 		scope: {
 			configPanel:		'=',
-			tasas:				'=',
-			totalTasas:			'=',
+			container:			'=',
 			loadingState:		'=',
 			moneda:				'='
 		}
@@ -47,6 +46,17 @@ myapp.directive('tableContainerSumaria', function(){
 			configPanel:	'='
 		},
 		controller: 'containerSumariaCtrl'
+	}
+});
+
+myapp.directive('giroBuques', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'view/contenedores/giroBuques.html',
+		scope: {
+			container: '=',
+			loadingState: '='
+		}
 	}
 });
 

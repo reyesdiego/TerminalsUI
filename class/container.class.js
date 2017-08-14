@@ -31,7 +31,11 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 data: [],
                 total: 0
             };
+            this.manifestsImpo = [];
+            this.manifestsExpo = [];
             this.afipData = [];
+            this.giroBuques = [];
+            this.shipList = [];
         }
 
         openDetailView(){
@@ -67,6 +71,10 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
 			invoiceFactory.getInvoicesByContainer(params).then(invoices => {
                 this.invoices.data = invoices.data;
                 this.invoices.total = invoices.data.length;
+                this.invoices.data.forEach(invoice => {
+                    this.shipList.push(invoice.buque);
+                });
+                this.getGiroBuque();
                 deferred.resolve();
 			}).catch(error => {
 			    deferred.reject();
@@ -91,6 +99,15 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             return deferred.promise;
         }
 
+        getGiroBuque(){
+			const inserturl = `${APP_CONFIG.SERVER_URL}/ob2/dates/`;
+			this.shipList.forEach((ship) => {
+			    $http.get(`${inserturl}${ship}`).then(response => {
+			        this.giroBuques.push(response.data.data);
+                })
+            });
+        }
+
         getGates(page){
             const deferred = $q.defer();
             const searchParams = {
@@ -110,13 +127,22 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
         getRates(stateName, currency){
             const deferred = $q.defer();
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${loginService.filterTerminal}/${this.contenedor}/${currency}`;
+            let llamadas = [];
+
+            //ob2/dates/:buque;
             let queryString = {};
             if (stateName == 'buque') queryString = {
                 buqueNombre: this.ship,
                 viaje: this.trip
             };
-            $http.get(inserturl, { params: formatService.formatearDatos(queryString)}).then((response) => {
-                this.rates = this.putDescriptionRates(response.data);
+            llamadas.push($http.get(inserturl, { params: formatService.formatearDatos(queryString)}));
+            llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/impo/container/${this.contenedor}`));
+            //llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/expo/container/${this.contenedor}`));
+
+            $q.all(llamadas).then((responses) => {
+                this.rates = this.putDescriptionRates(responses[0].data);
+                this.manifestsImpo = responses[1].data.data;
+                //this.manifestsExpo = responses[2].data.data;
                 deferred.resolve();
             }).catch((response) => {
                 deferred.reject(response.data);

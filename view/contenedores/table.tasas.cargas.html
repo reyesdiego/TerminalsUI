@@ -1,8 +1,48 @@
 <div-cargando mostrar="loadingState">
-	<div ng-hide="tasas.length != undefined && tasas.length > 0">
+
+	<div class="col-lg-12" ng-if="container.manifestsImpo || container.manifestsExpo">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Manifiestos AFIP</h3>
+			</div>
+			<div class="panel-body">
+				<div class="table-responsive" >
+					<table class="table table-striped text-small">
+						<thead>
+						<tr>
+							<td>Tipo</td>
+							<td>Sumaria</td>
+							<td>Conocimiento</td>
+							<td>Medida</td>
+							<td>Peso</td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="manifiesto in container.manifestsImpo">
+							<td>IMPO</td>
+							<td>{{ manifiesto.sumaria }}</td>
+							<td>{{ manifiesto.conocimiento }}</td>
+							<td>{{ manifiesto.medida }}</td>
+							<td>{{ manifiesto.peso }}</td>
+						</tr>
+						<tr ng-repeat="manifiesto in container.manifestsExpo">
+							<td>EXPO</td>
+							<td>{{ manifiesto.sumaria }}</td>
+							<td>{{ manifiesto.conocimiento }}</td>
+							<td>{{ manifiesto.medida }}</td>
+							<td>{{ manifiesto.peso }}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div ng-hide="container.rates.data.length != undefined && container.rates.data.length > 0" class="col-lg-12">
 		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
-	<div ng-show="tasas.length != undefined && tasas.length > 0" class="table-responsive">
+	<div ng-show="container.rates.data.length != undefined && container.rates.data.length > 0" class="col-lg-12">
 		<div class="invoice-shadow table-responsive">
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
@@ -14,7 +54,7 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr ng-repeat="tasa in tasas">
+				<tr ng-repeat="tasa in container.rates.data">
 					<td>{{ tasa._id.id }}</td>
 					<td>{{ tasa._id.descripcion }}</td>
 					<td class="text-right">{{ tasa.cnt | number:2 }}</td>
@@ -24,7 +64,7 @@
 				<tfoot>
 				<tr>
 					<th colspan="3" class="text-right">Total</th>
-					<td class="text-right">{{ moneda | formatCurrency}} {{ totalTasas | currency }}</td>
+					<td class="text-right">{{ moneda | formatCurrency}} {{ container.rates.total | currency }}</td>
 				</tr>
 				</tfoot>
 			</table>
