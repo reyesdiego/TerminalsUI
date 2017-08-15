@@ -55,8 +55,8 @@
 				</thead>
 				<tbody>
 				<tr ng-repeat="tasa in container.rates.data">
-					<td>{{ tasa._id.id }}</td>
-					<td>{{ tasa._id.descripcion }}</td>
+					<td>{{ tasa.code }}</td>
+					<td>{{ tasa.description }}</td>
 					<td class="text-right">{{ tasa.cnt | number:2 }}</td>
 					<td class="text-right">{{ moneda | formatCurrency }} {{ tasa.total | currency }}</td>
 				</tr>
