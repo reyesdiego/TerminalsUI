@@ -19,7 +19,7 @@ myapp.directive('tableBuqueViaje', function(){
 myapp.directive('buqueViajeDetail', function() {
 	return {
 		restrict:		'E',
-		templateUrl:	'view/contenedores/buque.viaje.detail.html'
+		templateUrl:	'view/contenedores/container.detail.html'
 	}
 });
 
