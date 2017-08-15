@@ -140,7 +140,8 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/expo/container/${this.contenedor}`));
 
             $q.all(llamadas).then((responses) => {
-                this.rates = this.putDescriptionRates(responses[0].data);
+                this.rates = responses[0].data;
+                //this.rates = this.putDescriptionRates(responses[0].data);
                 this.manifestsImpo = responses[1].data.data;
                 this.manifestsExpo = responses[2].data.data;
                 deferred.resolve();
@@ -150,7 +151,7 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             });
             return deferred.promise;
         }
-
+/** AHORA TRAE DEL SERVIDOR
         putDescriptionRates(data){
             const descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
             data.total = 0;
@@ -160,7 +161,7 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             });
             return data
         }
-
+*/
         getAfipData(){
             this.afipData = [];
             const deferred = $q.defer();
