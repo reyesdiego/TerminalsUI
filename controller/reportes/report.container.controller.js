@@ -16,6 +16,8 @@ myapp.controller('reporteContenedorCtrl', ['$scope', 'reportsFactory', function(
 		normalOrder: true
 	};
 
+	$scope.reverse = false;
+
 	$scope.ocultarFiltros = ['campo'];
 
 	$scope.mensajeResultado = {
@@ -29,6 +31,7 @@ myapp.controller('reporteContenedorCtrl', ['$scope', 'reportsFactory', function(
 	$scope.resultados = [];
 
 	function cargarReporte(){
+		$scope.reverse = ($scope.model.order == -1);
 		$scope.cargando = true;
 		reportsFactory.getReporteContainers($scope.model).then(data => {
 			$scope.resultados = data;

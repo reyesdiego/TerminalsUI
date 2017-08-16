@@ -20,7 +20,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table style="font-size: 12px" class="table no-margin-bottom" ng-repeat="medida in resultados | orderBy: 'total' : model.order == -1 track by $index">
+                        <table style="font-size: 12px" class="table no-margin-bottom" ng-repeat="medida in resultados | orderBy: 'total' track by $index">
                             <thead ng-if="$first">
                             <tr>
                                 <th></th>
@@ -57,7 +57,7 @@
                                 <td></td>
                                 <td class="text-right">{{ movimiento.total | currency: ('DOL' | formatCurrency) }}</td>
                             </tr>
-                            <tr ng-repeat="contenedor in movimiento.contenedores | orderBy: 'total' : model.order == -1" ng-show="movimiento.detalle && medida.detalle">
+                            <tr ng-repeat="contenedor in movimiento.contenedores | orderBy: 'total' : reverse" ng-show="movimiento.detalle && medida.detalle">
                                 <td></td>
                                 <td></td>
                                 <td></td>

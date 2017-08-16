@@ -136,7 +136,7 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 		}
 
 		getReporteContainers(datos){
-			datos.terminal = loginService.filterTerminal;
+			//datos.terminal = loginService.filterTerminal;
 			const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byContainerTotales`;
 			$http.get(inserturl, { params: formatService.formatearDatos(datos)}).then(response => {
