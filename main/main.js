@@ -465,7 +465,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
 				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
-			}
+			},
+			controller: 'buqueViajeCtrl as vmBuqueViaje'
 		})
 		.state('manifiesto', {
 			url: "/manifiestos",

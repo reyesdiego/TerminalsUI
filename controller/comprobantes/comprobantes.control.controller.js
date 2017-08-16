@@ -145,21 +145,18 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 			if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
 		}
 		$scope.$broadcast('checkAutoComplete');
-		containerFactory.getContainersSinTasaCargas($scope.model, function(data){
-			if (data.status == "OK"){
-				$scope.totalContenedores = data.totalCount;
-				$scope.resultado = data.data;
-				$scope.$emit('updateView', 'tasas', $scope.model, $scope.resultado);
-			} else {
-				$scope.hayError = true;
-				$scope.mensajeResultado = {
-					titulo: 'Error',
-					mensaje: 'Se ha producido un error al cargar los datos.',
-					tipo: 'panel-danger'
-				};
-			}
-			$scope.loadingTasaCargas = false;
-		});
+		containerFactory.getContainersSinTasaCargas($scope.model).then((data) => {
+			$scope.totalContenedores = data.totalCount;
+			$scope.resultado = data.data;
+			$scope.$emit('updateView', 'tasas', $scope.model, $scope.resultado);
+		}).catch(error => {
+			$scope.hayError = true;
+			$scope.mensajeResultado = {
+				titulo: 'Error',
+				mensaje: 'Se ha producido un error al cargar los datos.',
+				tipo: 'panel-danger'
+			};
+		}).finally($scope.loadingTasaCargas = false);
 	};
 
 	if (loginService.isLoggedIn){
