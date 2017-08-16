@@ -125,6 +125,14 @@ class BuqueViajeCtrl {
 		}).finally(this.loadingTasaCargas = false);
 	}
 
+	verDetalles(contenedor){
+		//$scope.volverAPrincipal = !$scope.volverAPrincipal;
+		this.detalle = true;
+		this.contenedorElegido = contenedor;
+		//this.model.contenedor = contenedor.contenedor;
+		//$scope.filtrar();
+	};
+
 }
 
 BuqueViajeCtrl.$inject = ['cacheService', 'containerFactory', 'loginService'];

@@ -1,25 +1,15 @@
 /**
  * Created by kolesnikov-a on 28/04/2017.
  */
-myapp.directive('buqueViajeSearch', function(){
-	return {
-		restrict:		'E',
-		templateUrl:	'view/contenedores/buque.viaje.search.html',
-		controller: 'buqueViajeCtrl'
-	}
-});
 
-myapp.directive('tableBuqueViaje', function(){
+myapp.directive('containerDetail', function() {
 	return {
 		restrict:		'E',
-		templateUrl:	'view/contenedores/buque.viaje.result.html'
-	}
-});
-
-myapp.directive('buqueViajeDetail', function() {
-	return {
-		restrict:		'E',
-		templateUrl:	'view/contenedores/container.detail.html'
+		templateUrl:	'view/contenedores/container.detail.html',
+		scope: {
+			container: '='
+		},
+		controller: 'containerDetailCtrl as vmContainer'
 	}
 });
 
