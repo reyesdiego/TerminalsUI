@@ -436,33 +436,28 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		.state('container',{
 			url: "/contenedor",
 			templateUrl: "view/contenedores/contenedor.html",
-			controller: "containerCtrl as vmContenedor"
+			controller: "containerCtrl as vmContenedor",
+			resolve: {
+				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
+				//buques: initialLoadFactory.cargaBuques,
+				//trenes: initialLoadFactory.cargaTrenes,
+				//clientes: initialLoadFactory.cargaClientes,
+				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
+				estados: function(){ return initialLoadFactory.cargaEstados() },
+				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
+			}
 		})
 		.state('container.detail', {
 			url: "/:containerId",
 			templateUrl: "view/contenedores/container.detail.html",
-			controller: "containerDetailCtrl as vmContainer",
-			resolve: {
-				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
-				//buques: initialLoadFactory.cargaBuques,
-				//trenes: initialLoadFactory.cargaTrenes,
-				//clientes: initialLoadFactory.cargaClientes,
-				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
-				estados: function(){ return initialLoadFactory.cargaEstados() },
-				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
-				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
-				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
-			}
+			controller: "containerDetailCtrl as vmContainer"
 		})
 		.state('buque',{
 			url: "/buqueViaje",
 			templateUrl: "view/contenedores/buque.viaje.html",
-			controller: 'buqueViajeCtrl as vmBuqueViaje'
-		})
-		.state('buque.container', {
-			url: "/:containerId",
-			templateUrl: "view/contenedores/container.detail.html",
-			controller: "containerDetailCtrl as vmContainer",
+			controller: 'buqueViajeCtrl as vmBuqueViaje',
 			resolve: {
 				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
@@ -474,6 +469,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
 				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
+		})
+		.state('buque.container', {
+			url: "/:containerId",
+			templateUrl: "view/contenedores/container.detail.html",
+			controller: "containerDetailCtrl as vmContainer"
 		})
 		.state('manifiesto', {
 			url: "/manifiestos",
