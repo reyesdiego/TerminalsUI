@@ -684,7 +684,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'consultaTurnos'];
 		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat', 'liquidaciones', 'trackContainer'];
-		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos', 'trackContainer'];
+		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos', 'trackContainer', 'reports', 'reports.tasas', 'reports.tarifas', 'reports.containers'];
 		$rootScope.$state = $state;
 		// Variables Globales de Paginacion
 		$rootScope.itemsPerPage = 15;
