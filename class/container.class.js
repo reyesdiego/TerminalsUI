@@ -39,7 +39,7 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
         }
 
         openDetailView(){
-			const url = $state.href('container', {container: this.contenedor});
+			const url = $state.href('container.detail', {containerId: this.contenedor});
 			$window.open(url,'_blank');
         }
 

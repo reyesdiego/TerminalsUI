@@ -203,7 +203,7 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		};
 
 		$scope.trackContainer = function(contenedor){
-			const url = $state.href('container', {container: contenedor});
+			const url = $state.href('container.detail', {containerId: contenedor});
 			$window.open(url,'_blank');
 		};
 

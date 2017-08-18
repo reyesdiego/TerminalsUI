@@ -435,9 +435,6 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		//========================================================================\\
 		.state('container',{
 			url: "/contenedor",
-			params: {
-				container: null
-			},
 			templateUrl: "view/contenedores/contenedor.html",
 			controller: "containerCtrl as vmContenedor"
 		})
@@ -720,7 +717,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.loadingNewView = false;
 		});
 
-		$rootScope.$on('$stateChangeStart', function(event, toState){
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams){
 			if (toState.redirectTo){
 				event.preventDefault();
 				$state.transitionTo(toState.redirectTo);
@@ -738,7 +735,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');
 					} else {
-						$state.transitionTo(toState.name);
+						$state.transitionTo(toState.name, toParams);
 					}
 				}, function(err){
 					//console.log(err);

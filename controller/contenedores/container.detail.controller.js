@@ -6,8 +6,6 @@ class ContainerDetail {
 
 	constructor(Container, $state, $stateParams){
 
-		console.log($stateParams.containerId);
-
 		this.container = new Container({contenedor: $stateParams.containerId});
 		this.state = $state;
 
