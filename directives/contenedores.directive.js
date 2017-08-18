@@ -2,17 +2,6 @@
  * Created by kolesnikov-a on 28/04/2017.
  */
 
-myapp.directive('containerDetail', function() {
-	return {
-		restrict:		'E',
-		templateUrl:	'view/contenedores/container.detail.html',
-		scope: {
-			container: '='
-		},
-		controller: 'containerDetailCtrl as vmContainer'
-	}
-});
-
 myapp.directive('tableTasasCargas', function(){
 	return {
 		restrict:		'E',
@@ -45,7 +34,8 @@ myapp.directive('giroBuques', function(){
 		templateUrl: 'view/contenedores/giroBuques.html',
 		scope: {
 			container: '=',
-			loadingState: '='
+			loadingState: '=',
+			configPanel: '='
 		}
 	}
 });

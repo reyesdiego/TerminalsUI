@@ -76,11 +76,15 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
 		});
 
 		$scope.$watch('model.rates', function(){
-			if ($scope.model.rates != 1) $scope.model.payment = '';
+			if ($scope.model){
+				if ($scope.model.rates != 1) $scope.model.payment = '';
+			}
 		});
 
 		$scope.$watch('model.payment', function(){
-			if ($scope.model.payment != 1) $scope.model.payed = '';
+			if ($scope.model){
+				if ($scope.model.payment != 1) $scope.model.payed = '';
+			}
 		});
 
 		$scope.filtrado = function(filtro, contenido){
