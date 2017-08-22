@@ -1,6 +1,7 @@
 <div-cargando mostrar="loadingState">
 
-	<div class="col-lg-12" ng-if="container.manifestsImpo.length + container.manifestsExpo.length > 0">
+
+	<div class="col-lg-12" ng-if="(container.manifestsImpo.length + container.manifestsExpo.length) > 0">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title">Manifiestos AFIP</h3>
@@ -55,8 +56,8 @@
 				</thead>
 				<tbody>
 				<tr ng-repeat="tasa in container.rates.data">
-					<td>{{ tasa._id.id }}</td>
-					<td>{{ tasa._id.descripcion }}</td>
+					<td>{{ tasa.code }}</td>
+					<td>{{ tasa.description }}</td>
 					<td class="text-right">{{ tasa.cnt | number:2 }}</td>
 					<td class="text-right">{{ moneda | formatCurrency }} {{ tasa.total | currency }}</td>
 				</tr>

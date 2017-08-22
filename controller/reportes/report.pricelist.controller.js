@@ -30,14 +30,12 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		function getPivotTableFields(){
 			return {
 				"Terminal": (item) => (item.terminal),
-				"Cantidad": (item) => (item.cantidad),
 				"Total": (item) => (item.total),
 				"Movimiento": (item) => (item.mov ? item.mov : 'Indefinido'),
-				"Tipo": (item) => (item.iso3Name ? item.iso3Name : 'Sin informar'),
+				"Tipo": (item) => (item.tipo),
 				"Medida": (item) => (item.largo),
 				"Año": (item) => (item.anio),
-				"Mes": (item) => (item.mes),
-				"TEUS": (item) => (item.teus)
+				"Mes": (item) => (item.mes)
 			}
 		}
 
@@ -45,12 +43,12 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			data: [],
 			options: {
 				derivedAttributes: getPivotTableFields(),
-				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name", "mov", "teus"],
+				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name", "mov", "teus", "tipo"],
 				rows: ["Terminal"],
-				cols: ["Medida"],
+				cols: ["Movimiento", "Medida", "Tipo"],
 				vals: ["Total"],
 				rendererName: "Tabla",
-				aggregatorName: "Suma de moneda"
+				aggregatorName: "Cuenta"
 				/*renderers: $.extend(
 				 $.pivotUtilities.renderers,
 				 $.pivotUtilities.c3_renderers

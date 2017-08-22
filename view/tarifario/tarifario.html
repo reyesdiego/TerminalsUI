@@ -39,7 +39,8 @@
 				<table class="table table-bordered table-striped table-hover">
 					<thead>
 					<tr>
-						<th style="width: 10%"><a href="" ng-click="ordenarPor('code')">
+						<th class="text-center" style="width: 10%">Movimiento</th>
+						<th style="width: 8%"><a href="" ng-click="ordenarPor('code')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'code' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'code' && reverse"></span>
 							<span class="glyphicon glyphicon-bookmark"></span> Código
@@ -49,7 +50,7 @@
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'description' && reverse"></span>
 							<span class="glyphicon glyphicon-credit-card"></span> Tarifa
 						</a></th>
-						<th style="width: 10%"><a href="" ng-click="ordenarPor('unit')">
+						<th style="width: 8%"><a href="" ng-click="ordenarPor('unit')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'unit' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'unit' && reverse"></span>
 							<span class="glyphicon glyphicon-tag"></span> Unidad
@@ -64,7 +65,7 @@
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'largo' && reverse"></span>
 							<span class="glyphicon glyphicon-chevron-right"></span> Tipo
 						</a></th>
-						<th class="text-right" style="width: 14%"><a href="" ng-click="ordenarPor('orderPrice')">
+						<th class="text-right" style="width: 8%"><a href="" ng-click="ordenarPor('orderPrice')">
 							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'orderPrice' && !reverse"></span>
 							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'orderPrice' && reverse"></span>
 							<span class="glyphicon glyphicon-usd"></span> Tope
@@ -73,6 +74,9 @@
 					</thead>
 					<tbody>
 					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter: searchPrice) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+						<td class="text-bold text-center" ng-class="price.mov == 'EXPO' ? 'text-success' : price.mov == 'IMPO' ? 'text-info' : 'text-warning'">
+							<i class="glyphicon" ng-class="price.mov == 'IMPO' ? 'glyphicon-import' : price.mov == 'EXPO' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="price.mov"></i> {{ price.mov }}
+						</td>
 						<td>{{ price.code }}</td>
 						<td>{{ price.description | maxLength : 210 }}<a href ng-show="(price.description.length > 210)" uib-popover="{{ price.description }}" popover-trigger="'mouseenter'"> (...)</a></td>
 						<td>{{ price.unit}}</td>

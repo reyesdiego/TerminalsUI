@@ -131,8 +131,8 @@
             <div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
         </div>
         <div class="col-lg-4 text-right" style="margin-top: 20px">
-            <button class="btn btn-primary" ng-click="armarGraficoTarifas(true)"><span class="glyphicon ion-arrow-graph-up-right"></span> Reporte dinámico</button>
-            <button class="btn btn-default" ng-click="armarGraficoTarifas(false)"><span class="glyphicon ion-pie-graph"></span> Reporte estático</button>
+            <button class="btn btn-primary" ng-click="armarGraficoTarifas(true)"><span class="glyphicon ion-arrow-graph-up-right"></span> Cargar reporte</button>
+            <!--<button class="btn btn-default" ng-click="armarGraficoTarifas(false)"><span class="glyphicon ion-pie-graph"></span> Reporte estático</button>-->
         </div>
     </div>
 
@@ -205,6 +205,7 @@
     <div class="row hidden-print" ng-if="mostrarGrafico && !errorTarifario">
         <div class="col-lg-6 text-right">
             <button class="btn btn-primary" ng-click="volver()"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+            <button class="btn btn-default" ng-click="armarGraficoTarifas(true)"><span class="glyphicon glyphicon-refresh"></span></button>
         </div>
         <div class="col-lg-6" ng-show="!tarifasAgrupadas">
             <button class="btn btn-success" ng-click="descargarPdf()"><span class="glyphicon glyphicon-download"></span> Descargar PDF</button>

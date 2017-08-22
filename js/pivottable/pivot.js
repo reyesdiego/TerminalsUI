@@ -68,7 +68,7 @@
     });
     usFmtCurrency = numberFormat({
 		digitsAfterDecimal: 2,
-		prefix: "$ ",
+		prefix: "US$ ",
 		decimalSep: ",",
 		thousandsSep: "."
 	});
