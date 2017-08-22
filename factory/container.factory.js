@@ -64,26 +64,27 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'ca
 				});
 			}
 
-			getContainersSinTasaCargas(datos, callback) {
+			getContainersSinTasaCargas(datos) {
 				this.cancelRequest('containersSinTasaCargas');
-				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, this.namespace, 'containersSinTasaCargas');
+				const deferred = $q.defer();
+				const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'containersSinTasaCargas');
 				const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/containersNoRates/${loginService.filterTerminal}`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					response.data.data = this.retrieveContainers(response.data.data.map((container) => {
 						return {contenedor: container}
 					}));
-					callback(response.data);
+					deferred.resolve(response.data);
 				}).catch((response) => {
 					if (response.data == null) response.data = { status: 'ERROR'};
-					if (response.status != -5) callback(response.data)
+					if (response.status != -5) deferred.reject(response.data)
 				});
+				return deferred.promise;
 			}
 
-			getShipContainers(datos, callback){
+			getShipContainers(datos){
 				this.cancelRequest('shipContainers');
-				const defer = $q.defer();
-				const canceler = HTTPCanceler.get(defer, this.namespace, 'shipContainers');
+				const deferred = $q.defer();
+				const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'shipContainers');
 				const inserturl = `${APP_CONFIG.SERVER_URL }/invoices/${loginService.filterTerminal}/shipContainers`;
 				$http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
 					let formatData = [];
@@ -98,10 +99,11 @@ myapp.factory('containerFactory', ['$http', 'loginService', 'formatService', 'ca
 						formatData.push(newContainer);
 					});
 					response.data.data = this.retrieveContainers(formatData);
-					callback(response.data);
+					deferred.resolve(response.data);
 				}).catch((response) => {
-					if (response.status != -5) callback(response.data);
+					if (response.status != -5) deferred.reject(response.data);
 				});
+				return deferred.promise;
 			}
 
 		}
