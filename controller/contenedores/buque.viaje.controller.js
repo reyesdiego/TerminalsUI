@@ -5,7 +5,7 @@ class BuqueViajeCtrl {
 
 	constructor(cacheService, containerFactory, loginService){
 		this.buscarBuque = '';
-		this.buques = cacheService.cache.get('buquesviaje' + loginService.filterTerminal);
+		this.buques = cacheService.cache.get(`buquesviaje${loginService.filterTerminal}`);
 
 		this.filtrarDesde = 0;
 		this.mostrarAnterior = false;

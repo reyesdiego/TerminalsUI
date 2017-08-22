@@ -460,7 +460,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 			controller: 'buqueViajeCtrl as vmBuqueViaje',
 			resolve: {
 				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
-				//buques: initialLoadFactory.cargaBuques,
+				buques: function() {return initialLoadFactory.cargaBuqueViajes() },
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
