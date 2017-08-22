@@ -74,8 +74,8 @@
 					</thead>
 					<tbody>
 					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter: searchPrice) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
-						<td class="text-bold text-center" ng-class="price.mov == 'EXPORTACION' ? 'text-success' : price.mov == 'IMPORTACION' ? 'text-info' : 'text-warning'">
-							<i class="glyphicon" ng-class="price.mov == 'IMPORTACION' ? 'glyphicon-import' : price.mov == 'EXPORTACION' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="price.mov"></i> {{ price.mov }}
+						<td class="text-bold text-center" ng-class="price.mov == 'EXPO' ? 'text-success' : price.mov == 'IMPO' ? 'text-info' : 'text-warning'">
+							<i class="glyphicon" ng-class="price.mov == 'IMPO' ? 'glyphicon-import' : price.mov == 'EXPO' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="price.mov"></i> {{ price.mov }}
 						</td>
 						<td>{{ price.code }}</td>
 						<td>{{ price.description | maxLength : 210 }}<a href ng-show="(price.description.length > 210)" uib-popover="{{ price.description }}" popover-trigger="'mouseenter'"> (...)</a></td>
