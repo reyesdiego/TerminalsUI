@@ -39,7 +39,7 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
         }
 
         openDetailView(){
-			const url = $state.href('container', {container: this.contenedor});
+			const url = $state.href('container.detail', {containerId: this.contenedor});
 			$window.open(url,'_blank');
         }
 
@@ -74,7 +74,7 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 this.invoices.data.forEach(invoice => {
                     this.shipList.push(invoice.buque);
                 });
-                this.getGiroBuque();
+                //this.getGiroBuque();
                 deferred.resolve();
 			}).catch(error => {
 			    deferred.reject();
@@ -100,12 +100,23 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
         }
 
         getGiroBuque(){
+            const deferred = $q.defer();
 			const inserturl = `${APP_CONFIG.SERVER_URL}/ob2/dates/`;
+			let llamadas = [];
+
 			this.shipList.forEach((ship) => {
-			    $http.get(`${inserturl}${ship}`).then(response => {
-			        this.giroBuques.push(response.data.data);
-                })
+			    llamadas.push($http.get(`${inserturl}${ship}`))
             });
+
+			$q.all(llamadas).then(responses => {
+			    responses.forEach(response => {
+					this.giroBuques.push(response.data.data);
+                });
+				deferred.resolve();
+			}).catch(error => {
+			    deferred.reject(error);
+            });
+			return deferred.promise;
         }
 
         getGates(page){
@@ -129,7 +140,6 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${loginService.filterTerminal}/${this.contenedor}/${currency}`;
             let llamadas = [];
 
-            //ob2/dates/:buque;
             let queryString = {};
             if (stateName == 'buque') queryString = {
                 buqueNombre: this.ship,

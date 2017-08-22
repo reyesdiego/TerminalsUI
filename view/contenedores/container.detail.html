@@ -1,0 +1,45 @@
+<div class="col-lg-12">
+	<h2>Detalles del contenedor {{ vmContainer.container.contenedor }}</h2>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h4>Comprobantes</h4>
+			<vista-comprobantes model="vmContainer.model" datos-invoices="vmContainer.container.invoices.data" ocultar-filtros="vmContainer.filtrosComprobantes" total-items="vmContainer.container.invoices.total" control-codigos="false" loading-state="vmContainer.loadingInvoices" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="vmContainer.volverAPrincipal" by-container="true"></vista-comprobantes>
+		</div>
+	</div>
+
+	<div class="row" ng-hide="vmContainer.ocultaTasas">
+		<div class="col-lg-12">
+			<h4>Tasas a la carga</h4>
+			<table-tasas-cargas container="vmContainer.container" config-panel="vmContainer.configPanelTasas" loading-state="vmContainer.loadingTasas" moneda="moneda"></table-tasas-cargas>
+		</div>
+	</div>
+
+	<div class="row" ng-show="vmContainer.container.giroBuques">
+		<div class="col-lg-12">
+			<h4>Giro de buques</h4>
+			<giro-buques container="vmContainer.container" loading-state="vmContainer.loadingGiro" config-panel="vmContainer.configPanelGiro"></giro-buques>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h4>Gates</h4>
+			<table-gates ocultar-busqueda="true" model="vmContainer.model" datos-gates="vmContainer.container.gates.data" detalles-gates="vmContainer.detalleGates" total-items="vmContainer.container.gates.total" tiempo-consulta="gatesTiempoConsulta" ocultar-filtros="vmContainer.filtrosComprobantes" loading-state="vmContainer.loadingGates" config-panel="vmContainer.configPanelGates"></table-gates>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h4>Turnos</h4>
+			<table-turnos ocultar-busqueda="true" model="vmContainer.model" datos-turnos="vmContainer.container.appointments.data" total-items="vmContainer.container.appointments.total" ocultar-filtros="vmContainer.filtrosComprobantes" config-panel="vmContainer.configPanelTurnos" loading-state="vmContainer.loadingTurnos"></table-turnos>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h4>A.F.I.P. sumaria</h4>
+			<table-container-sumaria datos-sumaria="vmContainer.container.afipData" loading-state="vmContainer.cargandoSumaria" config-panel="vmContainer.sumariaConfigPanel"></table-container-sumaria>
+		</div>
+	</div>
+</div>

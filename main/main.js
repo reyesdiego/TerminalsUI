@@ -434,12 +434,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		//************************* CONTENEDORES *********************************\\
 		//========================================================================\\
 		.state('container',{
-			url: "/contenedor?container",
-			params: {
-				container: null
-			},
+			url: "/contenedor",
 			templateUrl: "view/contenedores/contenedor.html",
-			controller: "buqueViajeCtrl",
+			controller: "containerCtrl as vmContenedor",
 			resolve: {
 				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
@@ -452,12 +449,18 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
+		.state('container.detail', {
+			url: "/:containerId",
+			templateUrl: "view/contenedores/container.detail.html",
+			controller: "containerDetailCtrl as vmContainer"
+		})
 		.state('buque',{
 			url: "/buqueViaje",
 			templateUrl: "view/contenedores/buque.viaje.html",
+			controller: 'buqueViajeCtrl as vmBuqueViaje',
 			resolve: {
 				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
-				buques: function(){ return initialLoadFactory.cargaBuqueViajes() },
+				//buques: initialLoadFactory.cargaBuques,
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
@@ -466,6 +469,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
 				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
+		})
+		.state('buque.container', {
+			url: "/:containerId",
+			templateUrl: "view/contenedores/container.detail.html",
+			controller: "containerDetailCtrl as vmContainer"
 		})
 		.state('manifiesto', {
 			url: "/manifiestos",
@@ -728,7 +736,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.loadingNewView = false;
 		});
 
-		$rootScope.$on('$stateChangeStart', function(event, toState){
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams){
 			if (toState.redirectTo){
 				event.preventDefault();
 				$state.transitionTo(toState.redirectTo);
@@ -746,7 +754,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');
 					} else {
-						$state.transitionTo(toState.name);
+						$state.transitionTo(toState.name, toParams);
 					}
 				}, function(err){
 					//console.log(err);
