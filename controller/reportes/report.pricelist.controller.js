@@ -242,18 +242,28 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			$scope.tablaGrafico.data = [];
 			for (let list in pricelists){
 				pricelists[list].forEach(tarifa => {
-					tarifa.graficar = false;
+					//////////////////tarifa.graficar = false;
 				})
 			}
 			$scope.listadoGrupos.forEach(unGrupo => {
-				if (unGrupo._id != grupo._id){
-					unGrupo.graficar = false;
-				} else if (unGrupo.graficar){
-					const codesTarifas = grupo.tarifas.map((tarifa) => {
-						return tarifa.code;
-					});
-					$scope.tarifasGraficar.push(...codesTarifas);
+				if (unGrupo.graficar) {
+					$scope.tarifasGraficar.push(unGrupo._id);
 				}
+/*
+				if (unGrupo._id != grupo._id){
+					///////////////////unGrupo.graficar = false;
+				} else if (unGrupo.graficar){
+					//const codesTarifas = grupo.tarifas.map((tarifa) => {
+					//	return tarifa.code;
+					//});
+					//$scope.tarifasGraficar.push(...codesTarifas);
+
+					const codesTarifas = grupo.tarifas.map((tarifa) => {
+							return tarifa.code;
+					});
+					$scope.tarifasGraficar.push(grupo._id);
+
+				}*/
 			});
 		};
 
@@ -371,6 +381,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				} else {
 					$scope.tablePivot.options.derivedAttributes.Tarifa = (item) => {return item.code};
 				}
+				console.log($scope.tarifasGraficar)
 				reportsFactory.getReporteTarifasPivot($scope.model, $scope.tarifasGraficar).then((data) => {
 					$scope.tablePivot.data = data.data;
 					$scope.mostrarGrafico = true;
