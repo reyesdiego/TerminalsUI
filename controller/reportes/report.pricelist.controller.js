@@ -236,34 +236,15 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			$scope.currentPage = 1;
 		};
 
-		$scope.graficarPorGrupo = (event, grupo) => {
+		$scope.graficarPorGrupo = (event) => {
 			event.stopPropagation();
 			$scope.tarifasGraficar = [];
 			$scope.tablaGrafico.data = [];
-			for (let list in pricelists){
-				pricelists[list].forEach(tarifa => {
-					//////////////////tarifa.graficar = false;
-				})
-			}
+
 			$scope.listadoGrupos.forEach(unGrupo => {
 				if (unGrupo.graficar) {
 					$scope.tarifasGraficar.push(unGrupo._id);
 				}
-/*
-				if (unGrupo._id != grupo._id){
-					///////////////////unGrupo.graficar = false;
-				} else if (unGrupo.graficar){
-					//const codesTarifas = grupo.tarifas.map((tarifa) => {
-					//	return tarifa.code;
-					//});
-					//$scope.tarifasGraficar.push(...codesTarifas);
-
-					const codesTarifas = grupo.tarifas.map((tarifa) => {
-							return tarifa.code;
-					});
-					$scope.tarifasGraficar.push(grupo._id);
-
-				}*/
 			});
 		};
 

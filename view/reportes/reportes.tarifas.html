@@ -108,7 +108,7 @@
                 </thead>
                 <tbody ng-repeat="grupo in listadoGrupos" ng-init="grupo.detalle = false">
                 <tr ng-click="grupo.detalle = !grupo.detalle" class="clickableRow">
-                    <td class="col-lg-1 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="grupo.graficar" ng-click="graficarPorGrupo($event, grupo)"></td>
+                    <td class="col-lg-1 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="grupo.graficar" ng-click="graficarPorGrupo($event)"></td>
                     <td class="col-lg-1">{{ grupo._id }}</td>
                     <td class="col-lg-8">{{ grupo.description }}</td>
                     <td class="col-lg-1 text-center" ng-class="grupo.mov == 'EXPO' ? 'text-success' : grupo.mov == 'IMPO' ? 'text-info' : 'text-warning'">
