@@ -102,16 +102,18 @@
                     <th class="text-center"><span class="glyphicon glyphicon-check"></span> Seleccionar</th>
                     <th><span class="glyphicon glyphicon-bookmark"></span> Código</th>
                     <th> Descripción</th>
-                    <th> Tipo de movimiento</th>
+                    <th class="text-center"> Tipo de movimiento</th>
                     <th> Cant. de tarifas</th>
                 </tr>
                 </thead>
                 <tbody ng-repeat="grupo in listadoGrupos" ng-init="grupo.detalle = false">
-                <tr ng-click="grupo.detalle = !grupo.detalle">
-                    <td class="col-lg-1 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="grupo.graficar" ng-click="graficarPorGrupo($event, grupo)"></td>
+                <tr ng-click="grupo.detalle = !grupo.detalle" class="clickableRow">
+                    <td class="col-lg-1 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="grupo.graficar" ng-click="graficarPorGrupo($event)"></td>
                     <td class="col-lg-1">{{ grupo._id }}</td>
                     <td class="col-lg-8">{{ grupo.description }}</td>
-                    <td class="col-lg-1">{{ grupo.mov }}</td>
+                    <td class="col-lg-1 text-center" ng-class="grupo.mov == 'EXPO' ? 'text-success' : grupo.mov == 'IMPO' ? 'text-info' : 'text-warning'">
+                        <i class="glyphicon" ng-class="grupo.mov == 'IMPO' ? 'glyphicon-import' : grupo.mov == 'EXPO' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="grupo.mov"></i> {{ grupo.mov }}
+                    </td>
                     <td class="col-lg-1">{{ grupo.tarifas.length }}</td>
                 </tr>
                 <tr style="height:60px" ng-repeat="tarifa in grupo.tarifas" ng-show="grupo.detalle">
@@ -131,8 +133,8 @@
             <div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
         </div>
         <div class="col-lg-4 text-right" style="margin-top: 20px">
-            <button class="btn btn-primary" ng-click="armarGraficoTarifas(true)"><span class="glyphicon ion-arrow-graph-up-right"></span> Reporte dinámico</button>
-            <button class="btn btn-default" ng-click="armarGraficoTarifas(false)"><span class="glyphicon ion-pie-graph"></span> Reporte estático</button>
+            <button class="btn btn-primary" ng-click="armarGraficoTarifas(true)"><span class="glyphicon ion-arrow-graph-up-right"></span> Cargar reporte</button>
+            <!--<button class="btn btn-default" ng-click="armarGraficoTarifas(false)"><span class="glyphicon ion-pie-graph"></span> Reporte estático</button>-->
         </div>
     </div>
 
@@ -205,6 +207,7 @@
     <div class="row hidden-print" ng-if="mostrarGrafico && !errorTarifario">
         <div class="col-lg-6 text-right">
             <button class="btn btn-primary" ng-click="volver()"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+            <button class="btn btn-default" ng-click="armarGraficoTarifas(true)"><span class="glyphicon glyphicon-refresh"></span></button>
         </div>
         <div class="col-lg-6" ng-show="!tarifasAgrupadas">
             <button class="btn btn-success" ng-click="descargarPdf()"><span class="glyphicon glyphicon-download"></span> Descargar PDF</button>

@@ -73,6 +73,13 @@ myapp.service('loginService', ['generalFunctions', '$cookies', '$http', function
 					rutas.push(controlGates[k]);
 				}
 			}
+			if (generalFunctions.in_array('container', rutas)){
+				rutas.push('container.detail');
+			}
+			if (generalFunctions.in_array('buque', rutas)){
+				rutas.push('manifiesto');
+				rutas.push('buque.container');
+			}
 
 			sessionStorage.acceso = JSON.stringify(rutas);
 		}

@@ -1,8 +1,145 @@
 /**
  * Created by artiom on 08/04/15.
  */
+class BuqueViajeCtrl {
 
-myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 'cacheService', '$state', 'loginService', 'Container', '$stateParams',
+	constructor(cacheService, containerFactory, loginService){
+		this.buscarBuque = '';
+		this.buques = cacheService.cache.get(`buquesviaje${loginService.filterTerminal}`);
+
+		this.filtrarDesde = 0;
+		this.mostrarAnterior = false;
+
+		this.factory = containerFactory;
+
+		this.model = {
+			buqueNombre: '',
+			viaje: ''
+		};
+
+		this.buqueElegido = {
+			viajes: []
+		};
+		this.viajeElegido = null;
+		
+		this.detalle = false;
+		this.loadingState = false;
+		this.loadingTasaCargas = false;
+
+		this.datosContainers = [];
+		this.filteredContainers = [];
+		this.totalItems = 0;
+		this.currentPageContainers = 1;
+		this.itemsPerPage = 10;
+
+		this.totalSinRates = 0;
+		this.containersSinRates = [];
+		this.hayError = false;
+
+		this.panelMensaje = {
+			titulo: 'Buque-Viaje',
+			mensaje: 'Seleccione un buque y un viaje para iniciar la búsqueda.',
+			tipo: 'panel-info'
+		};
+
+		this.panelContainerNoRates = {
+			titulo: 'Sin Tasa a las cargas',
+			mensaje: 'Seleccione un buque y un viaje para iniciar la búsqueda.',
+			tipo: 'panel-info'
+		};
+
+	}
+
+	mostrarMenosViajes(){
+		this.filtrarDesde -= 5;
+		if (this.filtrarDesde == 0){
+			this.mostrarAnterior = false;
+		}
+	}
+
+	mostrarMasViajes(){
+		this.filtrarDesde += 5;
+		this.mostrarAnterior = true;
+	}
+
+	buqueSelected(selected){
+		console.log(selected);
+		this.buqueElegido.elegido = '';
+		selected.elegido = 'bg-info';
+		this.buqueElegido = selected;
+		this.buqueElegido.viajes[0][2] = true;
+		this.model.buqueNombre = selected.buque;
+		this.model.viaje = selected.viajes[0][0];
+		this.traerResultados();
+	}
+
+	viajeSelected(viaje){
+		console.log(viaje);
+		this.model.viaje = viaje[0];
+		this.viajeElegido = viaje;
+		this.traerResultados();
+	}
+
+	traerResultados(){
+		this.detalle = false;
+		this.loadingState = true;
+		this.loadingTasaCargas = true;
+		this.datosContainers = [];
+		this.containersSinRates = [];
+		this.factory.getShipContainers(this.model).then((data) => {
+			this.datosContainers = data.data;
+			this.totalItems = this.datosContainers.length;
+			if (this.totalItems == 0){
+				this.panelMensaje = {
+					titulo: 'Buque-Viaje',
+					mensaje: 'No se encontraron contenedores para los filtros seleccionados',
+					tipo: 'panel-info'
+				};
+			}
+		}).catch(error => {
+			this.panelMensaje = {
+				titulo: 'Buque - Viaje',
+				mensaje: 'Se ha producido un error al cargar los datos.',
+				tipo: 'panel-danger'
+			};
+		}).finally(this.loadingState = false);
+		
+		this.factory.getContainersSinTasaCargas(this.model).then((data) => {
+			this.totalSinRates = data.totalCount;
+			if (this.totalSinRates == 0){
+				this.panelContainerNoRates = {
+					titulo: 'Sin Tasa a las cargas',
+					mensaje: 'No se encontraron contenedores sin tasa a las cargas para los filtros seleccionados',
+					tipo: 'panel-info'
+				};
+			}
+			this.containersSinRates = data.data;
+		}).catch(error => {
+			this.totalSinRates = 0;
+			this.hayError = true;
+			this.panelContainerNoRates = {
+				titulo: 'Error',
+				mensaje: 'Se ha producido un error al cargar los datos.',
+				tipo: 'panel-danger'
+			};
+		}).finally(this.loadingTasaCargas = false);
+	}
+
+	verDetalles(contenedor){
+		//$scope.volverAPrincipal = !$scope.volverAPrincipal;
+		this.detalle = true;
+		this.contenedorElegido = contenedor;
+		//this.model.contenedor = contenedor.contenedor;
+		//$scope.filtrar();
+	};
+
+}
+
+BuqueViajeCtrl.$inject = ['cacheService', 'containerFactory', 'loginService'];
+
+myapp.controller('buqueViajeCtrl', BuqueViajeCtrl);
+
+/*myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 'cacheService', '$state', 'loginService', 'Container', '$stateParams',
 	function($rootScope, $scope, containerFactory, cacheService, $state, loginService, Container, $stateParams){
 		////// Para containers /////////////
 		$scope.model = {
@@ -95,6 +232,7 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 		$scope.cargandoSumaria = false;
 		$scope.moneda = $rootScope.moneda;
 		$scope.search = '';
+
 		$scope.filtrarDesde = 0;
 		$scope.mostrarAnterior = false;
 
@@ -397,4 +535,4 @@ myapp.controller('buqueViajeCtrl', ['$rootScope', '$scope', 'containerFactory', 
 			$scope.filtrar();
 		}
 
-	}]);
+	}]);*/

@@ -30,14 +30,12 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 		function getPivotTableFields(){
 			return {
 				"Terminal": (item) => (item.terminal),
-				"Cantidad": (item) => (item.cantidad),
 				"Total": (item) => (item.total),
 				"Movimiento": (item) => (item.mov ? item.mov : 'Indefinido'),
-				"Tipo": (item) => (item.iso3Name ? item.iso3Name : 'Sin informar'),
+				"Tipo": (item) => (item.tipo),
 				"Medida": (item) => (item.largo),
 				"Año": (item) => (item.anio),
-				"Mes": (item) => (item.mes),
-				"TEUS": (item) => (item.teus)
+				"Mes": (item) => (item.mes)
 			}
 		}
 
@@ -45,12 +43,12 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			data: [],
 			options: {
 				derivedAttributes: getPivotTableFields(),
-				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name", "mov", "teus"],
+				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name", "mov", "teus", "tipo"],
 				rows: ["Terminal"],
-				cols: ["Medida"],
+				cols: ["Movimiento", "Medida", "Tipo"],
 				vals: ["Total"],
 				rendererName: "Tabla",
-				aggregatorName: "Suma de moneda"
+				aggregatorName: "Cuenta"
 				/*renderers: $.extend(
 				 $.pivotUtilities.renderers,
 				 $.pivotUtilities.c3_renderers
@@ -238,23 +236,14 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 			$scope.currentPage = 1;
 		};
 
-		$scope.graficarPorGrupo = (event, grupo) => {
+		$scope.graficarPorGrupo = (event) => {
 			event.stopPropagation();
 			$scope.tarifasGraficar = [];
 			$scope.tablaGrafico.data = [];
-			for (let list in pricelists){
-				pricelists[list].forEach(tarifa => {
-					tarifa.graficar = false;
-				})
-			}
+
 			$scope.listadoGrupos.forEach(unGrupo => {
-				if (unGrupo._id != grupo._id){
-					unGrupo.graficar = false;
-				} else if (unGrupo.graficar){
-					const codesTarifas = grupo.tarifas.map((tarifa) => {
-						return tarifa.code;
-					});
-					$scope.tarifasGraficar.push(...codesTarifas);
+				if (unGrupo.graficar) {
+					$scope.tarifasGraficar.push(unGrupo._id);
 				}
 			});
 		};
@@ -373,6 +362,7 @@ myapp.controller('reporteTarifasCtrl', ['$scope', 'reportsFactory', 'priceFactor
 				} else {
 					$scope.tablePivot.options.derivedAttributes.Tarifa = (item) => {return item.code};
 				}
+				console.log($scope.tarifasGraficar)
 				reportsFactory.getReporteTarifasPivot($scope.model, $scope.tarifasGraficar).then((data) => {
 					$scope.tablePivot.data = data.data;
 					$scope.mostrarGrafico = true;

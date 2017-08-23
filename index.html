@@ -146,6 +146,9 @@
 	<script src="controller/turnos/turnos.consulta.controller.js"></script>
 	<script src="controller/reportes/report.container.controller.js"></script>
 	<script src="controller/tarifario/tarifario.agrupar.controller.js"></script>
+	<script src="controller/contenedores/manifiesto.controller.js"></script>
+	<script src="controller/contenedores/container.detail.controller.js"></script>
+	<script src="controller/contenedores/container.controller.js"></script>
 	<!-- Directives -->
 	<script src="directives/general.directives.js"></script>
 	<script src="directives/afip.directives.js"></script>
@@ -256,6 +259,7 @@
 						<li class="dropdown-header" ng-show="tieneAcceso('container') || tieneAcceso('buque')">Contenedores</li>
 						<li ng-if="tieneAcceso('container')" ng-click="cerrarMenu()"><a ui-sref="container">Ver</a></li>
 						<li ng-if="tieneAcceso('buque')" ng-click="cerrarMenu()"><a ui-sref="buque">Buque - Viaje</a></li>
+						<li ng-if="tieneAcceso('manifiesto')" ng-click="cerrarMenu()"><a ui-sref="manifiesto">Manifiestos</a></li>
 						<li class="divider" ng-show="(tieneAcceso('container') || tieneAcceso('buque')) && (tieneAcceso('liquidaciones') || tieneAcceso('mat') || tieneAcceso('afip'))"></li>
 						<li class="dropdown-header" ng-show="tieneAcceso('liquidaciones') || tieneAcceso('mat') || tieneAcceso('afip')">Contabilidad</li>
 						<li ng-if="tieneAcceso('liquidaciones')" ng-click="cerrarMenu()"><a  ui-sref="liquidaciones">Liquidaciones</a></li>

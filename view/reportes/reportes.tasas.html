@@ -91,30 +91,31 @@
                                     </a></th>
                                     <th>C&oacute;digo</th>
                                     <th>Descripci&oacute;n</th>
-                                    <th><a href="" ng-click="ordenarPor('ton')">
+                                    <th class="text-right"><a href="" ng-click="ordenarPor('ton')">
                                         <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'ton' && !reverse"></span>
                                         <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'ton' && reverse"></span>
                                         Toneladas
                                     </a></th>
+                                    <th class="text-right">Contenedores</th>
                                     <th class="text-right" ng-hide="tasaAgp"><a href="" ng-click="ordenarPor('total')">
                                         <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'total' && !reverse"></span>
                                         <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'total' && reverse"></span>
-                                        Tasa
+                                        U$S
                                     </a></th>
                                     <th class="text-right" ng-show="tasaAgp"><a href="" ng-click="ordenarPor('totalAgp')">
                                         <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'total' && !reverse"></span>
                                         <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'total' && reverse"></span>
-                                        Tasa
+                                        U$S
                                     </a></th>
                                     <th class="text-right" ng-hide="tasaAgp"><a href="" ng-click="ordenarPor('totalPeso')">
                                         <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'totalPeso' && !reverse"></span>
                                         <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'totalPeso' && reverse"></span>
-                                        Importe
+                                        AR$
                                     </a></th>
                                     <th class="text-right" ng-show="tasaAgp"><a href="" ng-click="ordenarPor('totalPesoAgp')">
                                         <span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'totalPesoAgp' && !reverse"></span>
                                         <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'totalPesoAgp' && reverse"></span>
-                                        Importe
+                                        AR$
                                     </a></th>
                                 </tr>
                                 </thead>
@@ -123,14 +124,15 @@
                                     <td>{{ tasa.terminal }}</td>
                                     <td>{{ tasa.code }}</td>
                                     <td style="width: 200px">{{ tasa.descripcion }}</td>
-                                    <td class="text-right">{{ tasa.ton | number: 2 }}</td>
+                                    <td class="text-right">{{ tasa.ton | setDecimal:2}}</td>
+                                    <td style="width: 150px" class="text-right">{{ tasa.contenedores }}</td>
                                     <td class="text-right" ng-hide="tasaAgp">{{ tasa.total | currency: 'U$S ' }}</td>
                                     <td class="text-right" ng-show="tasaAgp">{{ tasa.totalAgp | currency: 'U$S ' }}</td>
                                     <td class="text-right" ng-hide="tasaAgp">{{ tasa.totalPeso | currency: 'AR$ ' }}</td>
                                     <td class="text-right" ng-show="tasaAgp">{{ tasa.totalPesoAgp | currency: 'AR$ ' }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="text-right"><strong>Total</strong></td>
+                                    <td colspan="5" class="text-right"><strong>Total</strong></td>
                                     <td class="text-right" ng-hide="tasaAgp">{{ total | currency: 'U$S ' }}</td>
                                     <td class="text-right" ng-show="tasaAgp">{{ totalAgp | currency: 'U$S ' }}</td>
                                     <td class="text-right" ng-hide="tasaAgp">{{ totalPeso | currency: 'AR$ ' }}</td>
@@ -145,7 +147,7 @@
             <div class="col-lg-4 col-md-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Totales por terminal</h3>
+                        <h3 class="panel-title">Totales por Terminal</h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">

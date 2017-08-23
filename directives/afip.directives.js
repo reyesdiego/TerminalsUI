@@ -4,7 +4,7 @@
 myapp.directive('accordionAfipSearch', function(){
 	return {
 		restrict:		'E',
-		templateUrl:	'view/accordion.afip.search.html'
+		templateUrl:	'view/afip/accordion.afip.search.html'
 	}
 });
 

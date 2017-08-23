@@ -434,12 +434,9 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		//************************* CONTENEDORES *********************************\\
 		//========================================================================\\
 		.state('container',{
-			url: "/contenedor?container",
-			params: {
-				container: null
-			},
+			url: "/contenedor",
 			templateUrl: "view/contenedores/contenedor.html",
-			controller: "buqueViajeCtrl",
+			controller: "containerCtrl as vmContenedor",
 			resolve: {
 				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
 				//buques: initialLoadFactory.cargaBuques,
@@ -452,12 +449,18 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
 		})
+		.state('container.detail', {
+			url: "/:containerId",
+			templateUrl: "view/contenedores/container.detail.html",
+			controller: "containerDetailCtrl as vmContainer"
+		})
 		.state('buque',{
 			url: "/buqueViaje",
 			templateUrl: "view/contenedores/buque.viaje.html",
+			controller: 'buqueViajeCtrl as vmBuqueViaje',
 			resolve: {
 				unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
-				buques: function(){ return initialLoadFactory.cargaBuqueViajes() },
+				buques: function() {return initialLoadFactory.cargaBuqueViajes() },
 				//trenes: initialLoadFactory.cargaTrenes,
 				//clientes: initialLoadFactory.cargaClientes,
 				vouchers: function(){ return initialLoadFactory.cargaVouchers() },
@@ -466,6 +469,16 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
 				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
 			}
+		})
+		.state('buque.container', {
+			url: "/:containerId",
+			templateUrl: "view/contenedores/container.detail.html",
+			controller: "containerDetailCtrl as vmContainer"
+		})
+		.state('manifiesto', {
+			url: "/manifiestos",
+			templateUrl: "view/contenedores/manifiesto.html",
+			controller: "manifiestoCtrl as vmManifiesto"
 		})
 		//=====================================================================\\
 		//************************** AFIP *************************************\\
@@ -629,6 +642,25 @@ myapp.constant('TERMINAL_COLORS', {
 	TRP: 'rgb(44, 62, 80)'
 });
 
+myapp.filter('singleDecimal', function ($filter) {
+	return function (input) {
+		if (isNaN(input)) return input;
+		return Math.round(input * 10) / 10;
+	};
+});
+
+myapp.filter('setDecimal', function ($filter) {
+	return function (input, places) {
+		if (isNaN(input)) return input;
+		// If we want 1 decimal place, we want to mult/div by 10
+		// If we want 2 decimal places, we want to mult/div by 100, etc
+		// So use the following to create that factor
+		var factor = "1" + Array(+(places > 0 && places + 1)).join("0");
+		return Math.round(input * factor) / factor;
+	};
+});
+
+
 myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$injector', '$cookies', 'appSocket', '$http', 'generalFunctions',
 	function($rootScope, $state, loginService, authFactory, dialogs, $injector, $cookies, appSocket, $http, generalFunctions){ //El app socket está simplemente para que inicie la conexión al iniciar la aplicación
 
@@ -679,7 +711,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 
 		$rootScope.rutasComunes = ['login', 'forbidden', 'changepass', 'register', 'consultaTurnos'];
 		$rootScope.rutasSinMoneda = ['reports', 'afip', 'tarifario', 'matches', 'turnos', 'users', 'agenda', 'access', 'control', 'cturnos', 'mat', 'liquidaciones', 'trackContainer'];
-		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos', 'trackContainer'];
+		$rootScope.rutasSinTerminal = ['control', 'afip', 'mat', 'access', 'users', 'cturnos', 'trackContainer', 'reports', 'reports.tasas', 'reports.tarifas', 'reports.containers'];
 		$rootScope.$state = $state;
 		// Variables Globales de Paginacion
 		$rootScope.itemsPerPage = 15;
@@ -704,7 +736,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 			$rootScope.loadingNewView = false;
 		});
 
-		$rootScope.$on('$stateChangeStart', function(event, toState){
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams){
 			if (toState.redirectTo){
 				event.preventDefault();
 				$state.transitionTo(toState.redirectTo);
@@ -722,7 +754,7 @@ myapp.run(['$rootScope', '$state', 'loginService', 'authFactory', 'dialogs', '$i
 					if (toState.name == 'login') {
 						$state.transitionTo('tarifario');
 					} else {
-						$state.transitionTo(toState.name);
+						$state.transitionTo(toState.name, toParams);
 					}
 				}, function(err){
 					//console.log(err);

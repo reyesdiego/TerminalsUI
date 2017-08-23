@@ -1,27 +1,6 @@
 /**
  * Created by kolesnikov-a on 28/04/2017.
  */
-myapp.directive('buqueViajeSearch', function(){
-	return {
-		restrict:		'E',
-		templateUrl:	'view/contenedores/buque.viaje.search.html',
-		controller: 'buqueViajeCtrl'
-	}
-});
-
-myapp.directive('tableBuqueViaje', function(){
-	return {
-		restrict:		'E',
-		templateUrl:	'view/contenedores/buque.viaje.result.html'
-	}
-});
-
-myapp.directive('buqueViajeDetail', function() {
-	return {
-		restrict:		'E',
-		templateUrl:	'view/contenedores/buque.viaje.detail.html'
-	}
-});
 
 myapp.directive('tableTasasCargas', function(){
 	return {
@@ -29,8 +8,7 @@ myapp.directive('tableTasasCargas', function(){
 		templateUrl:	'view/contenedores/table.tasas.cargas.html',
 		scope: {
 			configPanel:		'=',
-			tasas:				'=',
-			totalTasas:			'=',
+			container:			'=',
 			loadingState:		'=',
 			moneda:				'='
 		}
@@ -47,6 +25,18 @@ myapp.directive('tableContainerSumaria', function(){
 			configPanel:	'='
 		},
 		controller: 'containerSumariaCtrl'
+	}
+});
+
+myapp.directive('giroBuques', function(){
+	return {
+		restrict: 'E',
+		templateUrl: 'view/contenedores/giroBuques.html',
+		scope: {
+			container: '=',
+			loadingState: '=',
+			configPanel: '='
+		}
 	}
 });
 

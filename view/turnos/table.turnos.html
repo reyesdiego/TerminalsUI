@@ -12,7 +12,7 @@
 		<uib-tab heading="IMPO" ng-click="cambiarTipoMov('IMPO')" active="active.impo"></uib-tab>
 		<uib-tab heading="EXPO" ng-click="cambiarTipoMov('EXPO')" active="active.expo"></uib-tab>
 	</uib-tabset>
-	<br>
+	<br ng-hide="ocultarBusqueda">
 	<div ng-hide="datosTurnos.length && datosTurnos.length > 0">
 		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
 	</div>
