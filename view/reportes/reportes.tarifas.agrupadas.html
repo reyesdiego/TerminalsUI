@@ -1,0 +1,91 @@
+<div class="container col-lg-12">
+    <div class="visible-print-block">
+        <h3>Totales por tarifa</h3>
+    </div>
+    <br>
+    <div class="col-lg-12" ng-show="vmCubo.loadingReporteTarifas">
+        <img class="media-object center-block" src="images/loading.gif">
+    </div>
+
+    <div ng-show="vmCubo.errorTarifario">
+        <div-panel config-panel="vmCubo.configPanel">
+            <span>{{ vmCubo.configPanel.mensaje }}</span>
+        </div-panel>
+    </div>
+
+    <accordion-min heading="Filtros reporte" ng-hide="vmCubo.mostrarGrafico || vmCubo.loadingReporteTarifas || vmCubo.errorTarifario">
+        <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <div class="input-group">
+                <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
+                <input id="fechaInicio" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="vmCubo.model.fechaInicio" is-open="openfechaInicio" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff">
+            </div>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-6">
+            <div class="input-group">
+                <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaFin = !openfechaFin;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
+                <input id="fechaFin" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="vmCubo.model.fechaFin" is-open="openfechaFin" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff">
+            </div>
+        </div>
+    </accordion-min>
+
+    <div class="col-lg-12" ng-show="!(vmCubo.mostrarGrafico || vmCubo.loadingReporteTarifas || vmCubo.errorTarifario)">
+        <h3>Grupos de tarifas</h3>
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="vmCubo.filterGroups" placeholder="Filtrar grupos...">
+            <span class="input-group-btn"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button> </span>
+        </div>
+        <br>
+        <div class="table-responsive invoice-shadow">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center"><span class="glyphicon glyphicon-check"></span> Seleccionar</th>
+                    <th><span class="glyphicon glyphicon-bookmark"></span> Código</th>
+                    <th> Descripción</th>
+                    <th class="text-center"> Tipo de movimiento</th>
+                    <th> Cant. de tarifas</th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="grupo in vmCubo.listadoGrupos | filter: vmCubo.filterGroups" ng-init="grupo.detalle = false">
+                <tr ng-click="grupo.detalle = !grupo.detalle" class="clickableRow">
+                    <td class="col-lg-1 text-center"><input style="width: 24px; height: 24px;" type="checkbox" ng-model="grupo.graficar" ng-click="$event.stopPropagation()"></td>
+                    <td class="col-lg-1">{{ grupo._id }}</td>
+                    <td class="col-lg-8">{{ grupo.description }}</td>
+                    <td class="col-lg-1 text-center" ng-class="grupo.mov == 'EXPO' ? 'text-success' : grupo.mov == 'IMPO' ? 'text-info' : 'text-warning'">
+                        <i class="glyphicon" ng-class="grupo.mov == 'IMPO' ? 'glyphicon-import' : grupo.mov == 'EXPO' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="grupo.mov"></i> {{ grupo.mov }}
+                    </td>
+                    <td class="col-lg-1">{{ grupo.tarifas.length }}</td>
+                </tr>
+                <tr style="height:60px" ng-repeat="tarifa in grupo.tarifas" ng-show="grupo.detalle">
+                    <td></td>
+                    <td>{{ tarifa.code }}</td>
+                    <td>{{ tarifa.description }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-offset-8 col-lg-4 text-right" style="margin-top: 20px" ng-hide="vmCubo.mostrarGrafico || vmCubo.loadingReporteTarifas || vmCubo.errorTarifario">
+        <button class="btn btn-primary" ng-click="vmCubo.armarGraficoTarifas()"><span class="glyphicon ion-arrow-graph-up-right"></span> Generar reporte</button>
+    </div>
+
+    <div class="row col-lg-12" ng-show="vmCubo.mostrarGrafico && !vmCubo.loadingReporteTarifas && !vmCubo.errorTarifario">
+        <h3>Del {{ vmCubo.model.fechaInicio | date: 'dd/MM/yyyy' }} al {{ vmCubo.model.fechaFin | date: 'dd/MM/yyyy' }}</h3>
+    </div>
+
+    <div class="row table-responsive col-lg-12" ng-if="vmCubo.mostrarGrafico && !vmCubo.loadingReporteTarifas && !vmCubo.errorTarifario">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Reporte de tarifas agrupadas</h3>
+            </div>
+            <div class="panel-body">
+                <ng-pivot data="vmCubo.tablePivot.data" options="vmCubo.tablePivot.options"></ng-pivot>
+            </div>
+        </div>
+    </div>
+
+    <br>
+</div>

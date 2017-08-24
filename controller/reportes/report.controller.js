@@ -8,7 +8,8 @@ myapp.controller('reportsCtrl', ['$scope', function ($scope){
 
 	$scope.tabs = [
 		{name: 'Tasas a las cargas', ref: 'reports.tasas'},
-		{name: 'Totales por tarifa', ref: 'reports.tarifas'},
+		{name: 'Totales por tarifas agrupadas', ref: 'reports.groups'},
+		{name: 'Totales por tarifas', ref: 'reports.tarifas'},
 		{name: 'Facturación por empresa', ref: 'reports.empresas'},
 		{name: 'Tarifas por terminal', ref: 'reports.terminales'},
 		{name: 'Facturación contenedores', ref: 'reports.containers'}
