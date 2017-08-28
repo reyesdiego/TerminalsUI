@@ -397,10 +397,15 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				estados: function(){ return initialLoadFactory.cargaEstados() }
 			}
 		})
+		.state('reports.groups', {
+			url: '/gruposTarifas',
+			templateUrl: 'view/reportes/reportes.tarifas.agrupadas.html',
+			controller: 'reporteCuboCtrl as vmCubo'
+		})
 		.state('reports.tarifas', {
 			url: '/tarifas',
 			templateUrl: 'view/reportes/reportes.tarifas.html',
-			controller: 'reporteTarifasCtrl',
+			controller: 'reporteTarifasCtrl as vmTarifas',
 			resolve: {
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() }
 			}

@@ -62,7 +62,7 @@ myapp.service('loginService', ['generalFunctions', '$cookies', '$http', function
 				}
 			}
 			if (generalFunctions.in_array('reports', rutas)){
-				const reportes = ['reports.tasas', 'reports.tarifas', 'reports.empresas', 'reports.terminales', 'reports.containers'];
+				const reportes = ['reports.tasas', 'reports.groups', 'reports.tarifas', 'reports.empresas', 'reports.terminales', 'reports.containers'];
 				for (let j = 0; j < reportes.length; j++){
 					rutas.push(reportes[j]);
 				}
