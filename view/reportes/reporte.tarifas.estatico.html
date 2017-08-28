@@ -28,6 +28,30 @@
         </div>
     </accordion-min>
 
+    <!--<div class="row hidden-print col-lg-12" ng-hide="mostrarGrafico || loadingReporteTarifas || errorTarifario">
+        <div class="input-group col-lg-12">
+            <input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción o medida" toupper>
+            <span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+        </div>
+        <br>
+        <div class="col-lg-2">
+            <label class="checkbox"><input type="checkbox" ng-model="tasas" ng-change="recargarPricelist()">Sólo tasa a las cargas</label>
+        </div>
+        <div class="col-lg-2">
+            <label class="checkbox"><input type="checkbox" ng-model="filterLarge20" ng-change="filtrarMedida()">Contenedores de 20'</label>
+        </div>
+        <div class="col-lg-2">
+            <label class="checkbox"><input type="checkbox" ng-model="filterLarge40" ng-change="filtrarMedida()">Contenedores de 40'</label>
+        </div>
+        <div class="col-lg-4 text-right">
+            <button class="btn btn-primary" ng-click="agregarQuitarTodo(true)">Marcar todo</button>
+            <button class="btn btn-warning" ng-click="agregarQuitarTodo(false)">Desmarcar todo</button>
+        </div>
+        <div class="col-lg-2 text-right">
+            <h4 class="text-right">{{ tarifasGraficar.length }} tarifas seleccionadas</h4>
+        </div>
+    </div>-->
+
     <div class="col-xs-12" ng-hide="vmTarifas.mostrarGrafico || vmTarifas.loadingReporteTarifas || vmTarifas.errorTarifario">
         <ul class="nav nav-tabs hidden-print">
             <li ng-repeat="terminal in vmTarifas.tabsTerminales" ng-class="{'active': terminal.active}">
@@ -109,11 +133,65 @@
         </div>
     </div>
 
+    <!--<div class="row table-responsive col-lg-12" ng-if="!tarifasAgrupadas && mostrarGrafico && !loadingReporteTarifas && !errorTarifario">
+        <table class="invoice-shadow table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="col-lg-1"></th>
+                <th class="col-lg-3 text-center" ng-repeat="terminal in tablaGrafico.terminales"><span class="glyphicon glyphicon-credit-card"></span> {{ terminal }}</th>
+                <th class="col-lg-2 text-center"><span class="glyphicon glyphicon-plus-sign"></span> Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="tarifa in tablaGrafico.data" ng-if="tarifa.mostrar">
+                <td class="text-center"><a href uib-popover="{{ tarifa.description }}" popover-trigger="'mouseenter'">{{ tarifa.code }}</a></td>
+                <td ng-repeat="cantidad in tarifa.conteo track by $index" class="text-center">
+                    <span ng-show="cantidad==0">-</span>
+                    <span ng-show="!$last && cantidad>0">U$S {{ cantidad | number:2 }} ({{ tarifa.porcentaje[$index] | number:2 }} %)</span>
+                    <strong ng-show="$last && cantidad>0">U$S {{ cantidad | number:2 }}</strong></td>
+            </tr>
+            <tr>
+                <td class="text-center"><strong>Totales</strong></td>
+                <td ng-repeat="total in totales track by $index" class="text-center"><strong>U$S {{ total | number:2 }}</strong></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>-->
+
+    <!--<div class="row" ng-if="mostrarGrafico && !errorTarifario && !tarifasAgrupadas">
+        <div class="col-lg-12 text-center table-responsive">
+            <column-chart
+                    class="chart col-xs-12"
+                    data="chartReporteTarifas.data"
+                    options="chartReporteTarifas.options"
+                    click="selectRow(selectedRow, id)"></column-chart>
+        </div>
+    </div>
+
+    <div class="row" ng-if="mostrarGrafico && !errorTarifario && !tarifasAgrupadas">
+        <div class="col-lg-6 text-center table-responsive">
+            <pie-chart
+                    class="chart col-xs-12"
+                    data="chartTotalesPorTarifa.data"
+                    options="chartTotalesPorTarifa.options"
+                    click="selectRow(selectedRow, id)"></pie-chart>
+        </div>
+        <div class="col-lg-6 text-center table-responsive">
+            <pie-chart
+                    class="chart col-xs-12"
+                    data="chartTotalesPorTerminal.data"
+                    options="chartTotalesPorTerminal.options"></pie-chart>
+        </div>
+    </div>-->
+
     <div class="row hidden-print" ng-if="vmTarifas.mostrarGrafico && !vmTarifas.errorTarifario">
         <div class="col-lg-6 text-right">
             <button class="btn btn-primary" ng-click="vmTarifas.mostrarGrafico = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
             <button class="btn btn-default" ng-click="vmTarifas.armarGraficoTarifas()"><span class="glyphicon glyphicon-refresh"></span></button>
         </div>
+        <!--<div class="col-lg-6" ng-show="!tarifasAgrupadas">
+            <button class="btn btn-success" ng-click="descargarPdf()"><span class="glyphicon glyphicon-download"></span> Descargar PDF</button>
+        </div>-->
     </div>
     <br>
 </div>
