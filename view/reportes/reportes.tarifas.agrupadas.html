@@ -87,5 +87,12 @@
         </div>
     </div>
 
+    <div class="row hidden-print" ng-if="vmCubo.mostrarGrafico && !vmCubo.errorTarifario">
+        <div class="col-lg-6 text-right">
+            <button class="btn btn-primary" ng-click="vmCubo.mostrarGrafico = false"><span class="glyphicon glyphicon-arrow-left"></span> Volver</button>
+            <button class="btn btn-default" ng-click="vmCubo.armarGraficoTarifas()"><span class="glyphicon glyphicon-refresh"></span></button>
+        </div>
+    </div>
+
     <br>
 </div>

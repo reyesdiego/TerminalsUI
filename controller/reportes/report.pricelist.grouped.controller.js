@@ -32,7 +32,7 @@ class ReporteCuboCtrl {
 			data: [],
 			options: {
 				derivedAttributes: this.pivotTableFields,
-				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name", "mov", "teus"],
+				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name", "mov", "teus", "tipo"],
 				rows: ["Terminal"],
 				cols: ["Medida"],
 				vals: ["Total"],
@@ -60,6 +60,7 @@ class ReporteCuboCtrl {
 
 	armarGraficoTarifas() {
 		this.loadingReporteTarifas = true;
+		this.tarifasGraficar = [];
 		this.listadoGrupos.forEach(grupo => {
 			if (grupo.graficar) this.tarifasGraficar.push(grupo._id)
 		});
