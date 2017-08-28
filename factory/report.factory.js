@@ -102,6 +102,21 @@ myapp.factory('reportsFactory', ['$http', 'dialogs', 'formatService', 'loginServ
 			return deferred.promise;
 		}
 
+		getReporteTarifasGroupsPivot(fecha, tarifas){
+			const deferred = $q.defer();
+			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byGroups/pivot`;
+			$http.post(inserturl, tarifas, {params: formatService.formatearDatos(fecha)}).then((response) => {
+				if (response.data.status == 'OK'){
+					deferred.resolve(response.data);
+				} else {
+					deferred.reject(response.data);
+				}
+			}).catch((response) => {
+				deferred.reject(response.data)
+			});
+			return deferred.promise;
+		}
+
 		getFacturacionEmpresas(datos, callback){
 			const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/totalClient`;
 			$http.get(inserturl, {params: formatService.formatearDatos(datos)}).then((response) => {

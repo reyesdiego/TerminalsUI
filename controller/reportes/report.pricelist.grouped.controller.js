@@ -64,7 +64,7 @@ class ReporteCuboCtrl {
 			if (grupo.graficar) this.tarifasGraficar.push(grupo._id)
 		});
 
-		this.reportsFactory.getReporteTarifasPivot(this.model, this.tarifasGraficar).then((data) => {
+		this.reportsFactory.getReporteTarifasGroupsPivot(this.model, this.tarifasGraficar).then((data) => {
 			this.tablePivot.data = data.data;
 			this.mostrarGrafico = true;
 		}).catch((err) => {
