@@ -2,36 +2,46 @@
  * Created by Artiom on 11/03/14.
  */
 
-myapp.controller('changePassCtrl', ['authFactory', 'dialogs', '$state', function(authFactory, dialogs, $state) {
-	'use strict';
-	const vm = this;
+class ChangePassCtrl {
 
-	vm.changePass = function(){
+	constructor(authFactory, dialogs, $state){
+		this._authFactory = authFactory;
+		this._dialogs = dialogs;
+		this._$state = $state;
 
-		if (vm.newPass != vm.confirmPass){
-			dialogs.notify('Cambiar contraseña', 'Las contraseñas no coinciden');
+		this.email = '';
+		this.password = '';
+
+		this.newPass = '';
+		this.confirmPass = '';
+
+	}
+
+	changePass(){
+		if (this.newPass != this.confirmPass){
+			this._dialogs.notify('Cambiar contraseña', 'Las contraseñas no coinciden');
 			return;
 		}
 
-		var formData = {
-			"email": vm.email,
-			"password": vm.password,
-			"newPass": vm.newPass,
-			"confirmPass": vm.confirmPass
+		const formData = {
+			"email": this.email,
+			"password": this.password,
+			"newPass": this.newPass,
+			"confirmPass": this.confirmPass
 		};
 
-		authFactory.cambiarContraseña(formData, function(data){
-			if (data.status === 'OK'){
-				vm.codStatus = data.data;
-				var dl = dialogs.notify('Cambio de contraseña', vm.codStatus);
-				dl.result.then(function(){
-					$state.transitionTo('login');
-				})
-			} else {
-				dialogs.error('Cambio de contraseña', data.data);
-			}
-
+		this._authFactory.cambiarContraseña(formData).then((response) => {
+			this.codStatus = response.data.data;
+			const dl = this._dialogs.notify('Cambio de contraseña', this.codStatus);
+			dl.result.then(() => {
+				this._$state.transitionTo('login');
+			})
+		}).catch((error) => {
+			this._dialogs.error('Cambio de contraseña', error.data.message);
 		});
-
 	}
-}]);
+}
+
+ChangePassCtrl.$inject = ['authFactory', 'dialogs', '$state'];
+
+myapp.controller('changePassCtrl', ChangePassCtrl);

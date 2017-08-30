@@ -175,7 +175,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		.state('register', {
 			url: "/registro",
 			templateUrl: "view/login/registro.html",
-			controller: "registerCtrl"
+			controller: "registerCtrl as vmRegistro"
 		})
 		.state('changepass', {
 			url: "/cambiarpass",

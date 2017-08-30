@@ -25,14 +25,14 @@ class ReporteCuboCtrl {
 			"Medida": (item) => (item.largo),
 			"Año": (item) => (item.anio),
 			"Mes": (item) => (item.mes),
-			"Tarifa": (item) => (item.code)
+			"Altura": (item) => (item.iso2Id)
 		};
 
 		this.tablePivot = {
 			data: [],
 			options: {
 				derivedAttributes: this.pivotTableFields,
-				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso3Name", "mov", "teus", "tipo"],
+				hiddenAttributes: ["largo", "terminal", "total", "cantidad", "norma", "code", "anio", "mes", "iso3Id", "iso2Id", "mov", "teus", "tipo"],
 				rows: ["Terminal"],
 				cols: ["Medida"],
 				vals: ["Total"],

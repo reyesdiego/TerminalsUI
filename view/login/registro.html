@@ -7,25 +7,25 @@
 	<div class="row">
 		<div class="col-lg-8">
 			<div class="well">
-				<form ng-submit="register()" class="bs-example form-horizontal">
+				<form ng-submit="vmRegistro.register()" class="bs-example form-horizontal">
 					<fieldset>
 						<legend>Datos del usuario</legend>
 						<div class="form-group">
 							<label for="inputName" class="col-lg-3 control-label"> Nombre</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" ng-model="nombre" id="inputName" placeholder="Ingresar nombre" ng-required="true">
+								<input type="text" class="form-control" ng-model="vmRegistro.nombre" id="inputName" placeholder="Ingresar nombre" ng-required="true">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputSurname" class="col-lg-3 control-label"> Apellido</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" ng-model="apellido" id="inputSurname" placeholder="Ingresar apellido" ng-required="true">
+								<input type="text" class="form-control" ng-model="vmRegistro.apellido" id="inputSurname" placeholder="Ingresar apellido" ng-required="true">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputEntity" class="col-lg-3 control-label"> Entidad</label>
 							<div class="col-lg-8">
-								<select id="inputEntity" class="form-control" ng-model="entidad" ng-required="true">
+								<select id="inputEntity" class="form-control" ng-model="vmRegistro.entidad" ng-required="true">
 									<option value="bactssa">BACTSSA</option>
 									<option value="trp">TRP</option>
 									<option value="apmterminals">TERMINAL 4</option>
@@ -36,49 +36,49 @@
 						<div class="form-group">
 							<label for="inputEmail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-inbox"></span> E-Mail</label>
 							<div class="col-lg-8">
-								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="email" id="inputEmail" placeholder="Ingresar correo electrónico" ng-required="true">
+								<input ng-disabled="vmRegistro.disableForm" type="text" class="form-control" ng-model="vmRegistro.email" id="inputEmail" placeholder="Ingresar correo electrónico" ng-required="true">
 							</div>
 							<div class="col-lg-1">
-								<a href="" uib-popover="La dirección ingresada no es válida" popover-trigger="'mouseenter'" ng-show="email != '' && !validEmail"><img src="images/error.png" height="32" width="32"></a>
-								<img src="images/ok.png" height="32" width="32" ng-show="email != '' && validEmail">
+								<a href="" uib-popover="La dirección ingresada no es válida" popover-trigger="'mouseenter'" ng-show="vmRegistro.email != '' && !vmRegistro.validEmail"><img src="images/error.png" height="32" width="32"></a>
+								<img src="images/ok.png" height="32" width="32" ng-show="vmRegistro.email != '' && vmRegistro.validEmail">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="inputConfirmMail" class="col-lg-3 control-label"><span class="glyphicon glyphicon-inbox"></span> Confirme E-Mail</label>
 							<div class="col-lg-8">
-								<input ng-disabled="disableForm" type="text" class="form-control" ng-model="confirmEmail" id="inputConfirmMail" placeholder="Ingresar correo electrónico" ng-required="true" onpaste="return false"/>
+								<input ng-disabled="vmRegistro.disableForm" type="text" class="form-control" ng-model="vmRegistro.confirmEmail" id="inputConfirmMail" placeholder="Ingresar correo electrónico" ng-required="true" onpaste="return false"/>
 							</div>
 							<div class="col-lg-1">
-								<a href="" uib-popover="La direcciones ingresadas no coinciden" popover-trigger="'mouseenter'" ng-show="confirmEmail != '' && email != confirmEmail"><img src="images/error.png" height="32" width="32"></a>
-								<img src="images/ok.png" height="32" width="32" ng-show="confirmEmail != '' && email == confirmEmail">
+								<a href="" uib-popover="La direcciones ingresadas no coinciden" popover-trigger="'mouseenter'" ng-show="vmRegistro.confirmEmail != '' && vmRegistro.email != vmRegistro.confirmEmail"><img src="images/error.png" height="32" width="32"></a>
+								<img src="images/ok.png" height="32" width="32" ng-show="vmRegistro.confirmEmail != '' && vmRegistro.email == vmRegistro.confirmEmail">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword" class="col-lg-3 control-label"><span class="glyphicon glyphicon-asterisk"></span> Contraseña</label>
 							<div class="col-lg-8">
-								<input type="password" class="form-control" ng-model="password" id="inputPassword" placeholder="Ingresar contraseña" ng-required="true">
+								<input type="password" class="form-control" ng-model="vmRegistro.password" id="inputPassword" placeholder="Ingresar contraseña" ng-required="true">
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="inputConfirmPassword" class="col-lg-3 control-label"><span class="glyphicon glyphicon-asterisk"></span> Confirme contraseña</label>
 							<div class="col-lg-8">
-								<input type="password" class="form-control" ng-model="confirmPassword" id="inputConfirmPassword" placeholder="Ingresar contraseña" ng-required="true" onpaste="return false"/>
+								<input type="password" class="form-control" ng-model="vmRegistro.confirmPassword" id="inputConfirmPassword" placeholder="Ingresar contraseña" ng-required="true" onpaste="return false"/>
 							</div>
 							<div class="col-lg-1">
-								<a href="" uib-popover="La contraseñas ingresadas no coinciden" popover-trigger="'mouseenter'" ng-show="confirmPassword != '' && password != confirmPassword"><img src="images/error.png" height="32" width="32"></a>
-								<img src="images/ok.png" height="32" width="32" ng-show="confirmPassword != '' && password == confirmPassword">
+								<a href="" uib-popover="La contraseñas ingresadas no coinciden" popover-trigger="'mouseenter'" ng-show="vmRegistro.confirmPassword != '' && vmRegistro.password != vmRegistro.confirmPassword"><img src="images/error.png" height="32" width="32"></a>
+								<img src="images/ok.png" height="32" width="32" ng-show="vmRegistro.confirmPassword != '' && vmRegistro.password == vmRegistro.confirmPassword">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputUser" class="col-lg-3 control-label"><span class="glyphicon glyphicon-user"></span> Usuario</label>
 							<div class="col-lg-8">
-								<input type="text" class="form-control" ng-model="usuario" id="inputUser" ng-required="true" readonly>
+								<input type="text" class="form-control" ng-model="vmRegistro.usuario" id="inputUser" ng-required="true" readonly>
 							</div>
 						</div>
 						<div class="form-group">
 							<br>
 							<div class="col-lg-12 text-right">
-								<button type="submit" class="btn btn-primary" ng-disabled="entrando"><span class="glyphicon glyphicon-log-in"></span> Enviar</button>
+								<button type="submit" class="btn btn-primary" ng-disabled="vmRegistro.entrando"><span class="glyphicon glyphicon-log-in"></span> Enviar</button>
 								<button type="button" ui-sref="login" class="btn"><span class="glyphicon glyphicon-remove-sign"></span> Cancelar</button>
 							</div>
 						</div>

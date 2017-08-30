@@ -3,89 +3,99 @@
  */
 
 
-myapp.controller('registerCtrl', ['$scope', 'dialogs', 'authFactory', '$state', function ($scope, dialogs, authFactory, $state) {
+class RegisterCtrl {
 
-	$scope.nombre = '';
-	$scope.apellido = '';
-	$scope.email = '';
-	$scope.password = '';
-	$scope.usuario = '';
-	$scope.confirmPassword = '';
-	$scope.confirmEmail = '';
+	constructor($scope, dialogs, authfactory, $state){
+		this._dialogs = dialogs;
+		this._authFactory = authfactory;
+		this._$state = $state;
 
-	$scope.entidad = '';
-	$scope.role = '';
-	$scope.terminal = '';
+		this.nombre = '';
+		this.apellido = '';
+		this.email = '';
+		this.password = '';
+		this.usuario = '';
+		this.confirmPassword = '';
+		this.confirmEmail = '';
 
-	$scope.validEmail = false;
-	$scope.disableForm = true;
+		this.entidad = '';
+		this.role = '';
+		this.terminal = '';
 
-	$scope.$watch('[nombre, apellido]', function(){
-		if ($scope.nombre != '' && $scope.apellido != ''){
-			$scope.usuario = ($scope.apellido + '-' + $scope.nombre.substr(0, 1)).toLowerCase();
-		}
-	}, true);
+		this.validEmail = false;
+		this.disableForm = true;
 
-	$scope.$watch('[email,entidad]', function(){
-		if ($scope.entidad != ''){
-			$scope.disableForm = false;
-		}
-		var expr = new RegExp("^([a-zA-Z0-9_\\.\\-])+\\@(" + $scope.entidad + ")\\.([a-zA-Z0-9]{2,4})+(\\.[a-zA-Z]{2})?$");
-		//var expr = /^([a-zA-Z0-9_\.\-])+\@(bactssa|trp|apmterminals|puertobuenosaires)\.([a-zA-Z0-9]{2,4})+(\.[a-zA-Z]{2})?$/;
-		$scope.validEmail = expr.test($scope.email);
-		if ($scope.entidad == 'puertobuenosaires'){
-			$scope.role = 'agp';
-			$scope.terminal = 'AGP'
-		} else {
-			$scope.role = 'terminal';
-			$scope.terminal = $scope.entidad.toUpperCase();
-		}
-		if ($scope.entidad == 'apmterminals'){
-			$scope.terminal = 'TERMINAL4';
-		}
-	}, true);
+		$scope.$watch(() => ([this.nombre, this.apellido]), () => {
+			if (this.nombre != '' && this.apellido != ''){
+				this.usuario = (this.apellido + '-' + this.nombre.substr(0, 1)).toLowerCase();
+			}
+		}, true);
 
-	$scope.register = function(){
-		if (!$scope.validEmail){
-			dialogs.error('Error', 'La dirección de correo electrónico ingresada no es válida o no corresponde con la entidad elegida');
+		$scope.$watch(() => ([this.email,this.entidad]), () => {
+			if (this.entidad != ''){
+				this.disableForm = false;
+			}
+			const expr = new RegExp(`^([a-zA-Z0-9_\\.\\-])+\\@(${this.entidad})\\.([a-zA-Z0-9]{2,4})+(\\.[a-zA-Z]{2})?$`);
+			//var expr = /^([a-zA-Z0-9_\.\-])+\@(bactssa|trp|apmterminals|puertobuenosaires)\.([a-zA-Z0-9]{2,4})+(\.[a-zA-Z]{2})?$/;
+			this.validEmail = expr.test(this.email);
+			if (this.entidad == 'puertobuenosaires'){
+				this.role = 'agp';
+				this.terminal = 'AGP'
+			} else {
+				this.role = 'terminal';
+				this.terminal = this.entidad.toUpperCase();
+			}
+			if (this.entidad == 'apmterminals'){
+				this.terminal = 'TERMINAL4';
+			}
+		}, true);
+
+	}
+
+	register(){
+		if (!this.validEmail){
+			this._dialogs.error('Error', 'La dirección de correo electrónico ingresada no es válida o no corresponde con la entidad elegida');
 			return;
 		}
-		if ($scope.email != $scope.confirmEmail){
-			dialogs.error('Error', 'Las direccciones de correo electrónico no coinciden');
+		if (this.email != this.confirmEmail){
+			this._dialogs.error('Error', 'Las direccciones de correo electrónico no coinciden');
 			return;
 		}
-		if ($scope.password != $scope.confirmPassword){
-			dialogs.error('Error', 'Las contraseñas ingresadas no coinciden');
+		if (this.password != this.confirmPassword){
+			this._dialogs.error('Error', 'Las contraseñas ingresadas no coinciden');
 			return;
 		}
-		var formData = {
-			lastname: $scope.apellido,
-			firstname: $scope.nombre,
-			full_name: $scope.nombre + ' ' + $scope.apellido,
-			email: $scope.email,
-			password: $scope.password,
-			user: $scope.usuario,
-			role: $scope.role,
-			terminal: $scope.terminal
+		const formData = {
+			lastname: this.apellido,
+			firstname: this.nombre,
+			full_name: `${this.nombre} ${this.apellido}`,
+			email: this.email,
+			password: this.password,
+			user: this.usuario,
+			role: this.role,
+			terminal: this.terminal
 		};
-		authFactory.newUser(formData, function(data){
+		this._authFactory.newUser(formData, (data) => {
 			if (data.status == 'OK'){
-				var dl;
+				let dl;
 				if (data.emailDeliver){
-					dl = dialogs.notify('Registro', 'El usuario ' + $scope.usuario + ' ha sido registrado exitosamente. En breve recibirá un mail en la cuenta ' + $scope.email + ' para poder habilitarlo.');
-					dl.result.then(function(){
-						$state.transitionTo('login');
+					dl = this._dialogs.notify('Registro', `El usuario ${this.usuario} ha sido registrado exitosamente. En breve recibirá un mail en la cuenta ${this.email} para poder habilitarlo.`);
+					dl.result.then(() => {
+						this._$state.transitionTo('login');
 					})
 				} else {
-					dl = dialogs.notify('Registro', 'El usuario ' + $scope.usuario + ' ha sido registrado exitosamente. Inicie sesión en el sistema para solicitar la validación del mismo.')
-					dl.result.then(function(){
-						$state.transitionTo('login');
+					dl = this._dialogs.notify('Registro', `El usuario ${$scope.usuario} ha sido registrado exitosamente. Inicie sesión en el sistema para solicitar la validación del mismo.`);
+					dl.result.then(() => {
+						this._$state.transitionTo('login');
 					})
 				}
 			} else {
-				console.log(data);
-				dialogs.error('Registro', data.data);
+				this._dialogs.error('Registro', data.data);
 			}
 		})
-	};
-}]);
+	}
+}
+
+RegisterCtrl.$inject = ['$scope', 'dialogs', 'authFactory', '$state'];
+
+myapp.controller('registerCtrl', RegisterCtrl);

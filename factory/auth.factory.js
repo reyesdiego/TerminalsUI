@@ -98,13 +98,9 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 				loginService.unsetLogin();
 			}
 
-			cambiarContraseña(formData, callback){
+			cambiarContraseña(formData){
 				const inserturl = `${APP_CONFIG.SERVER_URL}/agp/password`;
-				$http.post(inserturl, formData).then((response) => {
-					callback(response.data);
-				}).catch((response) => {
-					callback(response.data);
-				});
+				return $http.post(inserturl, formData);
 			}
 
 			newUser(formData, callback){
