@@ -196,7 +196,7 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 		.state('tarifario', {
 			url: "/pricelist",
 			templateUrl: "view/tarifario/tarifario.html",
-			controller: "pricelistCtrl",
+			controller: "pricelistCtrl as vmTarifario",
 			resolve: {
 				unitTypes: function(){
 					return initialLoadFactory.cargaUnidades()

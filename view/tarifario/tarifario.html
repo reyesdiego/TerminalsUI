@@ -7,31 +7,31 @@
 	<div class="row hidden-print" ng-hide="hayError">
 		<div class="col-lg-12">
 			<div class="input-group">
-				<input type="text" class="form-control" ng-model="search" placeholder="Buscar por código, descripción, medida o tarifa" toupper>
-				<span class="input-group-btn"><button class="btn btn-default" ng-click="search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+				<input type="text" class="form-control" ng-model="vmTarifario.search" placeholder="Buscar por código, descripción, medida o tarifa" toupper>
+				<span class="input-group-btn"><button class="btn btn-default" ng-click="vmTarifario.search = ''"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 			</div>
 			<div class="checkbox col-lg-6">
 				<label>
-					<input type="checkbox" ng-model="tasas" ng-change="cargaPricelist()" ng-disabled="!tiposTarifas[0].active">Tasa a las cargas
+					<input type="checkbox" ng-model="vmTarifario.tasas" ng-change="vmTarifario.cargaPricelist()" ng-disabled="!vmTarifario.tiposTarifas[0].active">Tasa a las cargas
 				</label>
 				<label>
-					&nbsp;<input type="checkbox" ng-model="medida" ng-change="cargaPricelist()" >Con medida
+					&nbsp;<input type="checkbox" ng-model="vmTarifario.medida" ng-change="vmTarifario.cargaPricelist()" >Con medida
 				</label>
 				<label>
-					&nbsp;<input type="checkbox" ng-model="norma" ng-change="cargaPricelist()" >Fuera de norma
+					&nbsp;<input type="checkbox" ng-model="vmTarifario.norma" ng-change="vmTarifario.cargaPricelist()" >Fuera de norma
 				</label>
 			</div>
 			<div class="col-lg-6">
-				<h3 class="text-right">{{ filteredPrices.length }} tarifas.</h3>
+				<h3 class="text-right">{{ vmTarifario.filteredPrices.length }} tarifas.</h3>
 			</div>
 		</div>
 	</div>
 
-	<div class="row" ng-hide="hayError">
+	<div class="row" ng-hide="vmTarifario.hayError">
 		<div class="col-lg-12">
 			<ul class="nav nav-tabs hidden-print">
-				<li ng-repeat="tipoTarifa in tiposTarifas" ng-class="{'active': tipoTarifa.active}">
-					<a href ng-click="cambiarTarifas(tipoTarifa);">{{ tipoTarifa.nombre }}</a>
+				<li ng-repeat="tipoTarifa in vmTarifario.tiposTarifas" ng-class="{'active': tipoTarifa.active}">
+					<a href ng-click="vmTarifario.cambiarTarifas(tipoTarifa);">{{ tipoTarifa.nombre }}</a>
 				</li>
 			</ul>
 			<br>
@@ -41,39 +41,39 @@
 					<tr>
 						<th class="text-center" style="width: 10%">Movimiento</th>
 						<th style="width: 8%"><a href="" ng-click="ordenarPor('code')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'code' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'code' && reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="vmTarifario.predicate == 'code' && !vmTarifario.reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="vmTarifario.predicate == 'code' && vmTarifario.reverse"></span>
 							<span class="glyphicon glyphicon-bookmark"></span> Código
 						</a></th>
 						<th style="width: 52%"><a href="" ng-click="ordenarPor('description')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'description' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'description' && reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="vmTarifario.predicate == 'description' && !vmTarifario.reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="vmTarifario.predicate == 'description' && vmTarifario.reverse"></span>
 							<span class="glyphicon glyphicon-credit-card"></span> Tarifa
 						</a></th>
 						<th style="width: 8%"><a href="" ng-click="ordenarPor('unit')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'unit' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'unit' && reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="vmTarifario.predicate == 'unit' && !vmTarifario.reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="vmTarifario.predicate == 'unit' && vmTarifario.reverse"></span>
 							<span class="glyphicon glyphicon-tag"></span> Unidad
 						</a></th>
 						<th class="text-right" style="width: 7%"><a href="" ng-click="ordenarPor('largo')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'largo' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'largo' && reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="vmTarifario.predicate == 'largo' && !vmTarifario.reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="vmTarifario.predicate == 'largo' && vmTarifario.reverse"></span>
 							<span class="glyphicon glyphicon-chevron-right"></span> Medida
 						</a></th>
 						<th class="text-right" style="width: 7%"><a href="" ng-click="ordenarPor('norma')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'largo' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'largo' && reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="vmTarifario.predicate == 'largo' && !vmTarifario.reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="vmTarifario.predicate == 'largo' && vmTarifario.reverse"></span>
 							<span class="glyphicon glyphicon-chevron-right"></span> Tipo
 						</a></th>
 						<th class="text-right" style="width: 8%"><a href="" ng-click="ordenarPor('orderPrice')">
-							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="predicate == 'orderPrice' && !reverse"></span>
-							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'orderPrice' && reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes" ng-show="vmTarifario.predicate == 'orderPrice' && !vmTarifario.reverse"></span>
+							<span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="vmTarifario.predicate == 'orderPrice' && vmTarifario.reverse"></span>
 							<span class="glyphicon glyphicon-usd"></span> Tope
 						</a></th>
 					</tr>
 					</thead>
 					<tbody>
-					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in filteredPrices = (listaElegida | filter: searchPrice) | orderBy: predicate : reverse | emptyToEnd: predicate | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+					<tr style="height:60px" class="hidden-print fila-animada" ng-repeat="price in vmTarifario.filteredPrices = (vmTarifario.listaElegida | filter: vmTarifario.search) | orderBy: vmTarifario.predicate : vmTarifario.reverse | emptyToEnd: vmTarifario.predicate | startFrom:(vmTarifario.currentPage-1)*vmTarifario.itemsPerPage | limitTo:vmTarifario.itemsPerPage">
 						<td class="text-bold text-center" ng-class="price.mov == 'EXPO' ? 'text-success' : price.mov == 'IMPO' ? 'text-info' : 'text-warning'">
 							<i class="glyphicon" ng-class="price.mov == 'IMPO' ? 'glyphicon-import' : price.mov == 'EXPO' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="price.mov"></i> {{ price.mov }}
 						</td>
@@ -86,7 +86,7 @@
 							<span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
 						</td>
 					</tr>
-					<tr style="height:60px" class="visible-print" ng-repeat="price in pricelist | filter:search | orderBy: predicate : reverse">
+					<tr style="height:60px" class="visible-print" ng-repeat="price in vmTarifario.pricelist | filter:vmTarifario.search | orderBy: vmTarifario.predicate : vmTarifario.reverse">
 						<td>{{ price.code }}</td>
 						<td>{{ price.description }}</td>
 						<td>{{ price.unit}}</td>
@@ -99,23 +99,23 @@
 					</tbody>
 				</table>
 			</div>
-			<div-pagination total-items="filteredPrices.length" items-per-page="itemsPerPage" current-page="currentPage"></div-pagination>
+			<div-pagination total-items="vmTarifario.filteredPrices.length" items-per-page="vmTarifario.itemsPerPage" current-page="vmTarifario.currentPage"></div-pagination>
 			<div class="col-lg-2" uib-dropdown is-open="status.isopen">
-				<button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="procesando">
-					<span ng-show="!procesando"><span class="glyphicon glyphicon-list"></span> Exportar <span class="caret"></span></span>
-					<span ng-show="procesando"><img src="images/loadingChico.gif" height="20" width="20"> Procesando</span>
+				<button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="vmTarifario.procesando">
+					<span ng-show="!vmTarifario.procesando"><span class="glyphicon glyphicon-list"></span> Exportar <span class="caret"></span></span>
+					<span ng-show="vmTarifario.procesando"><img src="images/loadingChico.gif" height="20" width="20"> Procesando</span>
 				</button>
 				<ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
-					<li role="menuitem"><a href ng-click="exportarAPdf()">a PDF</a></li>
-					<li role="menuitem"><a href ng-click="exportarAExcel()">a CSV</a></li>
+					<li role="menuitem"><a href ng-click="vmTarifario.exportarAPdf()">a PDF</a></li>
+					<li role="menuitem"><a href ng-click="vmTarifario.exportarAExcel()">a CSV</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-lg-12" ng-show="hayError">
-		<div-panel config-panel="mensajeResultado">
-			<span>{{ mensajeResultado.mensaje }}</span>
+	<div class="col-lg-12" ng-show="vmTarifario.hayError">
+		<div-panel config-panel="vmTarifario.mensajeResultado">
+			<span>{{ vmTarifario.mensajeResultado.mensaje }}</span>
 		</div-panel>
 	</div>
 
