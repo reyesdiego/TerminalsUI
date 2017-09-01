@@ -20,7 +20,8 @@ class ReporteCuboCtrl {
 		this.pivotTableFields = {
 			"Terminal": (item) => (item.terminal),
 			"Total": (item) => (item.total),
-			"Movimiento": (item) => (item.mov ? item.mov : 'Indefinido'),
+			//"Movimiento": (item) => (item.mov ? item.mov : 'Indefinido'),
+			"Movimiento": (item) => (item.mov),
 			"Tipo": (item) => (item.tipo),
 			"Medida": (item) => (item.largo),
 			"Año": (item) => (item.anio),

@@ -135,9 +135,9 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
             return deferred.promise;
         }
 
-        getRates(stateName, currency){
+        getRates(stateName){
             const deferred = $q.defer();
-            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${loginService.filterTerminal}/${this.contenedor}/${currency}`;
+            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates/${loginService.filterTerminal}/${this.contenedor}/DOL`;
             let llamadas = [];
 
             let queryString = {};
@@ -146,14 +146,14 @@ myapp.factory('Container', ['$http', '$q', 'APP_CONFIG', 'invoiceFactory', 'cont
                 viaje: this.trip
             };
             llamadas.push($http.get(inserturl, { params: formatService.formatearDatos(queryString)}));
-            llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/impo/container/${this.contenedor}`));
-            llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/expo/container/${this.contenedor}`));
+            //llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/impo/container/${this.contenedor}`));
+            //llamadas.push($http.get(`${APP_CONFIG.SERVER_URL}/manifests/expo/container/${this.contenedor}`));
 
             $q.all(llamadas).then((responses) => {
                 this.rates = responses[0].data;
                 //this.rates = this.putDescriptionRates(responses[0].data);
-                this.manifestsImpo = responses[1].data.data;
-                this.manifestsExpo = responses[2].data.data;
+                //this.manifestsImpo = responses[1].data.data;
+                //this.manifestsExpo = responses[2].data.data;
                 deferred.resolve();
             }).catch((response) => {
                 deferred.reject(response.data);

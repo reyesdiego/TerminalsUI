@@ -106,7 +106,7 @@ class ContainerDetail {
 			};
 		}).finally(() => this.loadingInvoices = false);
 
-		this.container.getRates(this.state.current.name, this.moneda).then().catch((error) => {
+		this.container.getRates(this.state.current.name).then().catch((error) => {
 			this.configPanelTasas = {
 				tipo: 'panel-danger',
 				titulo: 'Tasas',

@@ -238,7 +238,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				estados: function(){ return initialLoadFactory.cargaEstados() },
 				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
-				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+				isos: function(){ return initialLoadFactory.cargaISOSFormas() }
 			}
 		})
 		.state('cfacturas', {
@@ -254,7 +255,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				estados: function(){ return initialLoadFactory.cargaEstados() },
 				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
-				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+				isos: function(){ return initialLoadFactory.cargaISOSFormas() }
 			},
 			redirectTo: 'cfacturas.correlatividad'
 		})
@@ -301,7 +303,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				estados: function(){ return initialLoadFactory.cargaEstados() },
 				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
-				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+				isos: function(){ return initialLoadFactory.cargaISOSFormas() }
 			}
 		})
 		.state('cgates', {
@@ -317,7 +320,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				estados: function(){ return initialLoadFactory.cargaEstados() },
 				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
-				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+				isos: function(){ return initialLoadFactory.cargaISOSFormas() }
 			},
 			redirectTo: 'cgates.gates'
 		})
@@ -451,7 +455,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				estados: function(){ return initialLoadFactory.cargaEstados() },
 				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
-				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+				isos: function(){ return initialLoadFactory.cargaISOSFormas() }
 			}
 		})
 		.state('container.detail', {
@@ -472,7 +477,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				estados: function(){ return initialLoadFactory.cargaEstados() },
 				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
-				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+				isos: function(){ return initialLoadFactory.cargaISOSFormas() }
 			}
 		})
 		.state('buque.container', {
@@ -625,7 +631,8 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
 				estados: function(){ return initialLoadFactory.cargaEstados() },
 				matches: function(){ return initialLoadFactory.cargaMatchesArray() },
 				ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
-				descripciones: function(){ return initialLoadFactory.cargaDescripciones() }
+				descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+				isos: function(){ return initialLoadFactory.cargaISOSFormas() }
 			}
 		})
 		//TODO Esta vista no se está usando en realidad, no está la parte del servidor
