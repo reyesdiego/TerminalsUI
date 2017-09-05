@@ -1,45 +1,47 @@
 <accordion-min heading="Buscar por">
-	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="!ranking">
-		<select id="topRanking" class="form-control" ng-model="model.top">
-			<option value="100">Top 100</option>
-			<option value="50">Top 50</option>
-			<option value="20" ng-selected="true">Top 20</option>
-			<option value="15">Top 15</option>
-			<option value="10">Top 10</option>
-			<option value="5">Top 5</option>
-		</select>
-	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('campo', 0) >= 0">
-		<select id="orderField" class="form-control" ng-model="model.campo">
-			<option value="total" ng-selected="true">Total</option>
-			<option value="max">Máximo</option>
-			<option value="min">Mínimo</option>
-			<option value="avg">Promedio</option>
-		</select>
-	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6">
-		<select id="order" class="form-control" ng-model="model.order">
-			<option value="-1" ng-selected="true">De mayor a menor</option>
-			<option value="1">De menor a mayor</option>
-		</select>
-	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6">
-		<div class="input-group">
-			<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
-			<input id="model.fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="model.fechaInicio" is-open="openfechaInicio" datepicker-options="dateOptions" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff">
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+	<form ng-submit="cargaPorFiltros()">
+		<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="!ranking">
+			<select id="topRanking" class="form-control" ng-model="model.top">
+				<option value="100">Top 100</option>
+				<option value="50">Top 50</option>
+				<option value="20" ng-selected="true">Top 20</option>
+				<option value="15">Top 15</option>
+				<option value="10">Top 10</option>
+				<option value="5">Top 5</option>
+			</select>
 		</div>
-	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6">
-		<div class="input-group">
-			<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaFin = !openfechaFin;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
-			<input id="model.fechaFin" type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="model.fechaFin" is-open="openfechaFin" datepicker-options="dateHasta" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff">
-			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+		<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('campo', 0) >= 0">
+			<select id="orderField" class="form-control" ng-model="model.campo">
+				<option value="total" ng-selected="true">Total</option>
+				<option value="max">Máximo</option>
+				<option value="min">Mínimo</option>
+				<option value="avg">Promedio</option>
+			</select>
 		</div>
-	</div>
-	<div class="form-group col-lg-4 col-md-4 col-sm-6">
-		<div class="input-group">
-			<button class="btn btn-primary" ng-click="cargaPorFiltros();" ng-disabled="deshabilitarBuscar"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+		<div class="form-group col-lg-4 col-md-4 col-sm-6">
+			<select id="order" class="form-control" ng-model="model.order">
+				<option value="-1" ng-selected="true">De mayor a menor</option>
+				<option value="1">De menor a mayor</option>
+			</select>
 		</div>
-	</div>
+		<div class="form-group col-lg-4 col-md-4 col-sm-6">
+			<div class="input-group">
+				<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
+				<input id="model.fechaInicio" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="model.fechaInicio" is-open="openfechaInicio" datepicker-options="dateOptions" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff">
+				<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+			</div>
+		</div>
+		<div class="form-group col-lg-4 col-md-4 col-sm-6">
+			<div class="input-group">
+				<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaFin = !openfechaFin;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
+				<input id="model.fechaFin" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="model.fechaFin" is-open="openfechaFin" datepicker-options="dateHasta" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff">
+				<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+			</div>
+		</div>
+		<div class="form-group col-lg-4 col-md-4 col-sm-6">
+			<div class="input-group">
+				<button class="btn btn-primary" ng-click="cargaPorFiltros();" ng-disabled="deshabilitarBuscar"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+			</div>
+		</div>
+	</form>
 </accordion-min>

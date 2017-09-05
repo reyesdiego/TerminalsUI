@@ -105,10 +105,6 @@ myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunction
 		$scope.openDate = function(event){
 			generalFunctions.openDate(event);
 		};
-		$scope.hitEnter = function(evt){
-			if(angular.equals(evt.keyCode,13))
-				$scope.$emit('iniciarBusqueda', 'hitEnter');
-		};
 		$scope.cambioItemsPorPagina = function(data){
 			$scope.filtrado('itemsPerPage', data.value);
 		};

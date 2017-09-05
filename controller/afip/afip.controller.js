@@ -166,11 +166,6 @@ myapp.controller('afipCtrl',['$scope', 'afipFactory', '$state', 'generalFunction
 			$scope.panelMensaje = mensaje;
 		});
 
-		$scope.hitEnter = function(evt){
-			if(angular.equals(evt.keyCode,13))
-				$scope.cargaDatos($scope.actualRegistro);
-		};
-
 		$scope.filtrado = function(filtro, contenido){
 			$scope.model.currentPage = 1;
 			$scope.model[filtro] = contenido;

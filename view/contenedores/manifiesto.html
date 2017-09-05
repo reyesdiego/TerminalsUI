@@ -11,39 +11,41 @@
                 <uib-accordion-heading>
                     <strong>Filtrar por</strong><i class="pull-right glyphicon" ng-class="estado ?  'glyphicon-chevron-down' : 'glyphicon-chevron-right'"></i>
                 </uib-accordion-heading>
-                <div class="row">
-                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
-                        <div class="input-group">
-                            <input type="text" ng-keyup="vmManifiesto.hitEnter($event)" ng-model="vmManifiesto.model.sumaria" class="form-control" placeholder="Sumaria"/>
-                            <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('sumaria', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                <form ng-submit="vmManifiesto.cargaDatos()">
+                    <div class="row">
+                        <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                            <div class="input-group">
+                                <input type="text" ng-model="vmManifiesto.model.sumaria" class="form-control" placeholder="Sumaria"/>
+                                <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('sumaria', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                            <div class="input-group">
+                                <input type="text" ng-model="vmManifiesto.model.buqueNombre" uib-typeahead="buque.D for buque in vmManifiesto.listaBuques | filter:$viewValue | limitTo:15" class="form-control" placeholder="Buque" toupper typeahead-on-select="vmManifiesto.buqueSelected($item, $model, $label, $event)" typeahead-editable="false"/>
+                                <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('buqueNombre', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                            <div class="input-group">
+                                <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="vmManifiesto.fechaInicio.open = !vmManifiesto.fechaInicio.open;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
+                                <input id="fechaInicio" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="vmManifiesto.model.fechaInicio" is-open="vmManifiesto.fechaInicio.open" datepicker-options="vmManifiesto.fechaInicio.options" readonly style="background-color: #ffffff" clear-text="Borrar" close-text="Listo" current-text="Hoy">
+                                <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                            <div class="input-group">
+                                <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="vmManifiesto.fechaFin.open = !vmManifiesto.fechaFin.open;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
+                                <input id="fechaFin" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="vmManifiesto.model.fechaFin" is-open="vmManifiesto.fechaFin.open" datepicker-options="vmManifiesto.fechaFin.options" readonly style="background-color: #ffffff" clear-text="Borrar" close-text="Listo" current-text="Hoy">
+                                <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
+                            </div>
+                        </div>
+                        <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
+                            <div class="input-group">
+                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
-                        <div class="input-group">
-                            <input type="text" ng-model="vmManifiesto.model.buqueNombre" uib-typeahead="buque.D for buque in vmManifiesto.listaBuques | filter:$viewValue | limitTo:15" class="form-control" placeholder="Buque" toupper typeahead-on-select="vmManifiesto.buqueSelected($item, $model, $label, $event)" typeahead-editable="false"/>
-                            <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('buqueNombre', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-                        </div>
-                    </div>
-                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
-                        <div class="input-group">
-                            <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="vmManifiesto.fechaInicio.open = !vmManifiesto.fechaInicio.open;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
-                            <input id="fechaInicio" type="text" class="form-control" ng-keyup="vmManifiesto.hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="vmManifiesto.model.fechaInicio" is-open="vmManifiesto.fechaInicio.open" datepicker-options="vmManifiesto.fechaInicio.options" readonly style="background-color: #ffffff" clear-text="Borrar" close-text="Listo" current-text="Hoy">
-                            <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-                        </div>
-                    </div>
-                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
-                        <div class="input-group">
-                            <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="vmManifiesto.fechaFin.open = !vmManifiesto.fechaFin.open;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
-                            <input id="fechaFin" type="text" class="form-control" ng-keyup="vmManifiesto.hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="vmManifiesto.model.fechaFin" is-open="vmManifiesto.fechaFin.open" datepicker-options="vmManifiesto.fechaFin.options" readonly style="background-color: #ffffff" clear-text="Borrar" close-text="Listo" current-text="Hoy">
-                            <span class="input-group-btn"><button class="btn btn-default" ng-click="vmManifiesto.filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
-                        </div>
-                    </div>
-                    <div class="form-group col-xlg-3 col-lg-4 col-md-4 col-sm-6">
-                        <div class="input-group">
-                            <button class="btn btn-primary" ng-click="vmManifiesto.cargaDatos();"><span class="glyphicon glyphicon-search"></span> Buscar</button>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </uib-accordion>
     </div>

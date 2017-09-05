@@ -10,11 +10,6 @@ myapp.controller('controlCtrl', ['$rootScope', '$scope', 'controlPanelFactory', 
 
 		$scope.openfechaInicio = false;
 
-		$scope.hitEnter = function(evt){
-			if(angular.equals(evt.keyCode,13))
-				$scope.filtrar();
-		};
-
 		$scope.datepickerNormal = {
 			formatYear: 'yyyy',
 			maxDate: new Date(),

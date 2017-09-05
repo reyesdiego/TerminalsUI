@@ -60,11 +60,6 @@ class ManifiestoController {
 		console.log(this.model);
 	};
 
-	hitEnter(evt){
-		if(angular.equals(evt.keyCode,13))
-			this.cargaDatos();
-	};
-
 	cargaDatos(){
 		this.sumariaDetalle = {};
 		this.cargando = true;
