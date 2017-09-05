@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     display: none;
+    font-size: 14px;
 }
 
 .table.no-margin-bottom {

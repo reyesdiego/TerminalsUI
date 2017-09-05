@@ -1,11 +1,11 @@
 <accordion-min heading="Buscar por">
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroPtoVenta', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroPtoVenta', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.nroPtoVenta" class="form-control" placeholder="N° Punto de venta"/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('nroPtoVenta', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codTipoComprob', 0) >= 0">
 		<div class="input-group">
 			<select id="codTipoComprob" class="form-control" ng-model="model.codTipoComprob">
 				<option value="" disabled ng-selected="model.codTipoComprob == ''">Seleccionar Comprobante</option>
@@ -14,43 +14,43 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('codTipoComprob', 0);"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('nroComprobante', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.nroComprobante" class="form-control" placeholder="N° Comprobante"/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('nroComprobante', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('razonSocial', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-model="model.razonSocial" uib-typeahead="cliente.nombre for cliente in listaRazonSocial | filter:$viewValue | limitTo:15" class="form-control" placeholder="Razón Social" toupper typeahead-on-select="filtrado('razonSocial', $model)" typeahead-editable="false"/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('razonSocial', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('documentoCliente', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('documentoCliente', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.documentoCliente" class="form-control" placeholder="Documento Cliente"/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('documentoCliente', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.contenedor" class="form-control" placeholder="Contenedor" toupper/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('contenedor', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.iso3Forma" uib-typeahead="forma.name for forma in isosFormas | filter:$viewValue" class="form-control" placeholder="ISO3 Forma" toupper/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('iso3Forma', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codigo', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('codigo', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-keyup="hitEnter($event)" ng-model="model.code" class="form-control" placeholder="Código de tarifa" toupper>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('code', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0">
 		<div class="input-group">
 			<input type="text" ng-model="model.buqueNombre" uib-typeahead="buque for buque in listaBuques | filter:$viewValue | limitTo:15" class="form-control" placeholder="Buque" toupper typeahead-editable="false"/>
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('buqueNombre', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
@@ -62,24 +62,24 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('viaje', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>-->
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaInicio', 0) >= 0">
 		<div class="input-group">
 			<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;">Desde <span class="glyphicon glyphicon-calendar"></span></button></span>
 			<input id="model.fechaInicio" type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="model.fechaInicio" is-open="openfechaInicio" datepicker-options="dateOptions" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaInicio', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-3 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('fechaFin', 0) >= 0">
 		<div class="input-group">
 			<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaFin = !openfechaFin;">Hasta <span class="glyphicon glyphicon-calendar"></span></button></span>
 			<input id="model.fechaFin" type="text" class="form-control" ng-keyup="hitEnter($event)" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" ng-model="model.fechaFin" is-open="openfechaFin" datepicker-options="dateOptions" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff">
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('fechaFin', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('estado', 0) >= 0">
 		<multi-select input-model="estadosComprobantes" button-label="icon description" item-label="icon description" tick-property="ticked" helper-elements="none" default-label="Seleccionar estado" max-labels="1" on-item-click="estadoSeleccionado(data)"></multi-select>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('rates', '') >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('rates', '') >= 0">
 		<div class="input-group">
 			<select class="form-control" ng-model="model.rates" ng-init="model.rates=''">
 				<option value="" disabled>Según Tasa a las cargas</option>
@@ -88,7 +88,7 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('rates', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('payment', 0) >= 0 || model.rates == ''">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="acceso != 'agp' || ocultarFiltros.indexOf('payment', 0) >= 0 || model.rates == ''">
 		<div class="input-group">
 			<select class="form-control" ng-model="model.payment" ng-init="model.payment=''">
 				<option value="" disabled>Según liquidación</option>
@@ -108,10 +108,13 @@
 			<span class="input-group-btn"><button class="btn btn-default" ng-click="filtrado('payed', '');"><span class="glyphicon glyphicon-remove-circle"></span></button></span>
 		</div>
 	</div>-->
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('itemsPerPage', 0) >= 0">
-		<multi-select input-model="itemsPerPageData" button-label="description" item-label="description" tick-property="ticked" helper-elements="" selection-mode="single" on-item-click="cambioItemsPorPagina(data)"></multi-select>
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('itemsPerPage', 0) >= 0">
+		<select class="form-control" ng-model="model.itemsPerPage">
+			<option ng-repeat="pageData in itemsPerPageData" ng-value="pageData.value" ng-selected="pageData.ticked">{{ pageData.description }}</option>
+		</select>
+		<!--<multi-select input-model="itemsPerPageData" button-label="description" item-label="description" tick-property="ticked" helper-elements="" selection-mode="single" on-item-click="cambioItemsPorPagina(data)"></multi-select>-->
 	</div>
-	<div class="form-group col-lg-2 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('btnBuscar', 0) >= 0">
+	<div class="form-group col-lg-4 col-md-4 col-sm-6" ng-hide="ocultarFiltros.indexOf('btnBuscar', 0) >= 0">
 		<div class="input-group">
 			<button class="btn btn-primary" ng-click="cargaPorFiltros();" ng-disabled="deshabilitarBuscar"><span class="glyphicon glyphicon-search"></span> Buscar</button>
 		</div>

@@ -107,12 +107,12 @@ myapp.service('cacheService', ['CacheFactory', '$http', 'APP_CONFIG', '$q', 'log
             cargaISOSFormas(){
                 const deferred = $q.defer();
                 if (this.cache.get('isosFormas')){
-					console.log(this.cache.get('isosFormas'));
+					//console.log(this.cache.get('isosFormas'));
                     deferred.resolve(this.cache.get('isosFormas'));
                 } else {
                     const inserturl = `${APP_CONFIG.SERVER_URL}/ISOS/ISO3Formas`;
                     $http.get(inserturl).then((response) => {
-                        console.log(response.data.data);
+                        //console.log(response.data.data);
                         this.cache.put('isosFormas', response.data.data);
                         deferred.resolve();
                     }).catch(error => {
