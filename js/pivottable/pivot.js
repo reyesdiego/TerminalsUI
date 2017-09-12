@@ -1196,7 +1196,7 @@
     /*
     Pivot Table UI: calls Pivot Table core above with options set by user
      */
-    $.fn.pivotUI = function(input, inputOpts, overwrite, locale) {
+    $.fn.pivotUI = function(input, inputOpts, overwrite, locale, sacar) {
       var a, aggregator, attr, attrLength, attrValues, colOrderArrow, defaults, e, existingOpts, fn1, i, initialRender, l, len1, len2, len3, localeDefaults, localeStrings, materializedInput, n, o, opts, ordering, pivotTable, recordsProcessed, ref, ref1, ref2, ref3, refresh, refreshDelayed, renderer, rendererControl, rowOrderArrow, shownAttributes, tr1, tr2, uiTable, unused, unusedAttrsVerticalAutoCutoff, unusedAttrsVerticalAutoOverride, x;
       if (overwrite == null) {
         overwrite = false;
@@ -1207,6 +1207,14 @@
       if (locales[locale] == null) {
         locale = "en";
       }
+
+      if (sacar && sacar.length > 0) {
+        for (var i=0; i < sacar.length; i++) {
+          delete locales[locale].aggregators[sacar[i]];
+        }
+      }
+
+
       defaults = {
         derivedAttributes: {},
         aggregators: locales[locale].aggregators,
