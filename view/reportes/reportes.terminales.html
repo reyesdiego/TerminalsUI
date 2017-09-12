@@ -9,6 +9,7 @@
                         <select class="form-control" ng-model="model.tipo">
                             <option value="month">Mensual</option>
                             <option value="year" ng-selected="true">Anual</option>
+                            <option value="day">Fechas</option>
                         </select>
                     </div>
                 </div>
@@ -35,6 +36,27 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3 col-sm-6" ng-show="model.tipo == 'day'">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Desde</span>
+                        <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" popup-placement="bottom-left" ng-model="model.fecha" is-open="openfechaInicio" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
+                        <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Hasta</span>
+                        <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" popup-placement="bottom-left" ng-model="model.fechaFin" is-open="openfechaFin" clear-text="Borrar" close-text="Listo" current-text="Hoy" readonly style="background-color: #ffffff"/>
+                        <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openfechaFin = !openfechaFin;"><span class="glyphicon glyphicon-calendar"></span></button>
+								</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group col-lg-3 col-sm-6">
                 <div class="input-group checkbox checkBoxContainer">
                     <label><input type="checkbox" ng-model="model.tarifa" ng-true-value="'agp'" ng-false-value="''">Tarifas Asociadas a AGP</label>
@@ -76,19 +98,19 @@
             <table class="table table-bordered table-striped table-hover invoice-shadow">
                 <thead>
                 <tr>
-                    <th class="col-lg-1 text-center">
-                        Código
+                    <th class="col-lg-1 text-center" >
+                        <a ng-click="ordenar('code')"><i class="glyphicon glyphicon-sort-by-attributes" ng-show="!ordenType && ordenField == 'code'"></i><i class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="ordenType && ordenField == 'code'"></i>Código</a>
                     </th>
                     <th class="col-lg-9">
-                        Descripción
+                        <a ng-click="ordenar('description')"><i class="glyphicon glyphicon-sort-by-attributes" ng-show="!ordenType && ordenField == 'description'"></i><i class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="ordenType && ordenField == 'description'"></i>Descripción</a>
                     </th>
                     <th class="col-lg-2 text-right">
-                        Total
+                        <a ng-click="ordenar('total')"><i class="glyphicon glyphicon-sort-by-attributes" ng-show="!ordenType && ordenField == 'total'"></i><i class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="ordenType && ordenField == 'total'"></i>Total</a>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="tarifa in dataReporte | filter:search">
+                <tr ng-repeat="tarifa in dataReporte | filter:search | orderBy: ordenField:ordenType">
                     <td class="text-center">{{ tarifa.code }}</td>
                     <td>{{ tarifa.description }}</td>
                     <td class="text-right">{{ tarifa.total | currency: 'AR$ ' }}</td>

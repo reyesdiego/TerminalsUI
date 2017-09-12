@@ -6,10 +6,19 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
 
     //$scope.descripciones = cacheService.cache.get('descripciones' + loginService.filterTerminal);
 
+    $scope.ordenField = 'total';
+    $scope.ordenType = true;
+
+    $scope.ordenar = field => {
+        $scope.ordenField = field;
+        $scope.ordenType = !$scope.ordenType;
+    };
+
     $scope.model = {
         tipo: 'year',
         tarifa: '',
         fecha: new Date(),
+        fechaFin: new Date(),
         loading: false
     };
 
@@ -45,6 +54,10 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
         if ($scope.model.tipo == 'month'){
             param.month = $scope.model.fecha.getMonth() + 1;
         }
+        if ($scope.model.tipo == 'day'){
+            param.fechaInicio = $scope.model.fecha;
+            param.fechaFin = $scope.model.fechaFin;
+        }
         param.tarifa = $scope.model.tarifa;
         reportsFactory.getReporteTerminales(param, (data) => {
             $scope.model.loading = false;
@@ -65,15 +78,22 @@ myapp.controller ('tarifasTerminalesCtrl', ['$scope', 'reportsFactory', 'loginSe
     };
 
     $scope.descargarCSV = function(){
+        let nombreReporte;
         $scope.disableDown = true;
         let param = {
             year: $scope.model.fecha.getFullYear()
         };
-        let nombreReporte = 'Tarifas_terminales_' + loginService.filterTerminal + '_' + param.year;
         if ($scope.model.tipo == 'month'){
+            nombreReporte = 'Tarifas_terminales_' + loginService.filterTerminal + '_' + param.year;
             param.month = $scope.model.fecha.getMonth() + 1;
             nombreReporte += '_' + param.month;
         }
+        if ($scope.model.tipo == 'day'){
+            nombreReporte = 'Tarifas_terminales_' + $scope.model.fecha.getDay() + '_' + $scope.model.fechaFin.getDay();
+            param.fechaInicio = $scope.model.fecha;
+            param.fechaFin = $scope.model.fechaFin;
+        }
+
         param.tarifa = $scope.model.tarifa;
         param.output = 'csv';
         nombreReporte += '.csv';
