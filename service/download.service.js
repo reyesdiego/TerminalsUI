@@ -1,18 +1,22 @@
 /**
  * Created by kolesnikov-a on 25/10/2016.
  */
-myapp.service('downloadService', ['$window', function($window){
 
-	this.setDownloadPdf = function(reportName, data){
+class DownloadService {
+	constructor($window){
+		this._$window = $window;
+	}
 
-		var file = new Blob([data], {type: 'application/pdf'});
+	setDownloadPdf(reportName, data){
 
-		if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-			$window.navigator.msSaveOrOpenBlob(file, reportName);
+		const file = new Blob([data], {type: 'application/pdf'});
+
+		if (this._$window.navigator.userAgent.indexOf('Trident') != -1 || this._$window.navigator.userAgent.indexOf('MSI') != -1){
+			this._$window.navigator.msSaveOrOpenBlob(file, reportName);
 		} else {
-			var fileURL = URL.createObjectURL(file);
+			const fileURL = URL.createObjectURL(file);
 
-			var anchor = angular.element('<a/>');
+			const anchor = angular.element('<a/>');
 			anchor.css({display: 'none'}); // Make sure it's not visible
 			angular.element(document.body).append(anchor); // Attach to document
 
@@ -25,17 +29,17 @@ myapp.service('downloadService', ['$window', function($window){
 			anchor.remove(); // Clean it up afterwards
 		}
 
-	};
+	}
 
-	this.setDownloadCsv = function(reportName, data){
-		if ($window.navigator.userAgent.indexOf('Trident') != -1 || $window.navigator.userAgent.indexOf('MSI') != -1){
-			var csvBlob = new Blob([data], {type: 'text/csv'});
-			$window.navigator.msSaveOrOpenBlob(csvBlob, reportName);
+	setDownloadCsv(reportName, data){
+		if (this._$window.navigator.userAgent.indexOf('Trident') != -1 || this._$window.navigator.userAgent.indexOf('MSI') != -1){
+			const csvBlob = new Blob([data], {type: 'text/csv'});
+			this._$window.navigator.msSaveOrOpenBlob(csvBlob, reportName);
 		} else {
 			data = "data:text/csv;charset=utf-8," + data;
-			var encodedUri = encodeURI(data);
+			const encodedUri = encodeURI(data);
 
-			var anchor = angular.element('<a/>');
+			const anchor = angular.element('<a/>');
 			anchor.css({display: 'none'}); // Make sure it's not visible
 			angular.element(document.body).append(anchor); // Attach to document
 
@@ -47,6 +51,10 @@ myapp.service('downloadService', ['$window', function($window){
 
 			anchor.remove(); // Clean it up afterwards
 		}
-	};
+	}
 
-}]);
+}
+
+DownloadService.$inject = ['$window'];
+
+myapp.service('downloadService', DownloadService);
