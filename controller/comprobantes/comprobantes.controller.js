@@ -2,9 +2,10 @@
  * Created by Diego Reyes on 2/3/14.
  */
 
-myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', function($rootScope, $scope, invoiceFactory, loginService){
+myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'loginService', 'dialogs', function($rootScope, $scope, invoiceFactory, loginService, dialogs){
 
 	$scope.dataTerminal = loginService;
+	$scope.disableDown = false;
 
 	$scope.fechaInicio = new Date();
 	$scope.fechaFin = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -75,5 +76,15 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'log
 			$scope.invoices = [];
 		}).finally(() => $scope.cargando = false);
 	};
+
+	$scope.descargarCSV = function(){
+		$scope.disableDown = true;
+		invoiceFactory.getCSV($scope.model, 'Comprobantes.csv', (status) => {
+			if (status != 'OK'){
+				dialogs.error('Comprobantes', 'Se ha producido un error al exportar los datos a CSV.');
+			}
+			$scope.disableDown = false;
+		});
+	}
 
 }]);
