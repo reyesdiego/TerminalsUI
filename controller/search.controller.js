@@ -47,6 +47,12 @@ myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunction
 		$scope.vouchers = cacheService.cache.get('vouchers' + loginService.filterTerminal);
 		$scope.isosFormas = cacheService.cache.get('isosFormas');
 
+		$scope.iso3FormaView = '';
+
+		$scope.selectIso3Forma = function(item){
+			$scope.model.iso3Forma = item.id;
+		};
+
 		$scope.itemsPerPageData = [
 			{ value: 10, description: '10 items por página', ticked: false},
 			{ value: 15, description: '15 items por página', ticked: true},
