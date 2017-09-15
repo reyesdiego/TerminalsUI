@@ -117,7 +117,7 @@ myapp.controller('navigationCtrl', ['$scope', '$rootScope', '$state', 'loginServ
 				}
 			}
 		}
-
+		//socket: palabra default de la libreria angular-socket
 		$scope.$on('socket:appointment', (ev, data) => {
 			if (loginService.isLoggedIn){
 				if (data.status === 'OK') {
