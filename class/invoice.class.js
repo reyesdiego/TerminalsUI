@@ -6,6 +6,10 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
         constructor(invoiceData){
             if (invoiceData)
                 this.setData(invoiceData);
+                this.mostrarDetalle()
+                    .then(()=> {
+                                this.controlarTarifas();
+                            });
         }
 
         /**
@@ -326,7 +330,8 @@ myapp.factory('Invoice', ['$http', '$q', 'formatService', 'cacheService', 'login
                 this.detalle.forEach((detalle) => {
                     detalle.items.forEach((item) => {
                         precioEncontrado = false;
-                        if (angular.isDefined(lookup[item.id])){
+                        //if (angular.isDefined(lookup[item.id])){
+                        if (angular.isDefined(item.description)){
                             valorTomado = item.impUnit.toFixed(2);
                             lookup[item.id].topPrices.forEach((precioMatch) => {
                                 if (this.fecha.emision >= precioMatch.from){
