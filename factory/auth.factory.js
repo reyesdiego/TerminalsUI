@@ -58,7 +58,7 @@ myapp.factory('authFactory', ['$state', '$cookies', 'loginService', '$rootScope'
 						$rootScope.rutasComunes.push('validar');
 						deferred.reject(response.data);
 					} else {
-						deferred.reject(response.data);
+                        deferred.reject(response.data);
 					}
 				});
 				return deferred.promise;

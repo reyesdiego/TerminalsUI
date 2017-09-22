@@ -102,8 +102,8 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 
 	$scope.$on('errorSinTasaCargas', (event, error) => {
 		$scope.mensajeResultado = {
-			titulo: 'Error',
-			mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+			titulo: 'Sin tasa a las cargas',
+			mensaje: 'Se ha producido un error en la carga de datos.',
 			tipo: 'panel-danger'
 		};
 		$scope.loadingTasaCargas = false;
@@ -152,8 +152,8 @@ myapp.controller('tasaCargasCtrl', ['$scope', 'containerFactory', 'gatesFactory'
 		}).catch(error => {
 			$scope.hayError = true;
 			$scope.mensajeResultado = {
-				titulo: 'Error',
-				mensaje: 'Se ha producido un error al cargar los datos.',
+				titulo: 'Sin tasa a las cargas',
+				mensaje: 'Se ha producido un error en la carga de datos.',
 				tipo: 'panel-danger'
 			};
 		}).finally($scope.loadingTasaCargas = false);
@@ -310,11 +310,11 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 			$scope.tipoComprob = vouchersArray[$scope.model.codTipoComprob];
 			$scope.mostrarBotonImprimir = false;
 
-			invoiceFactory.getCorrelative($scope.model, socketIoRegister, function(dataComprob) {
-				if (dataComprob.status == 'OK'){
+			invoiceFactory.getCorrelative($scope.model, socketIoRegister, dataComprob => {
+				if (dataComprob.status === 'OK'){
 					if ($scope.totalPuntos > 0){
 						$scope.leerData = false;
-						dataComprob.data.forEach(function(punto){
+						dataComprob.data.forEach( punto => {
 							if (!generalFunctions.in_array(punto.nroPtoVenta, $scope.arrayCargados)){
 								generarInterfaz(punto);
 							}
@@ -333,12 +333,12 @@ myapp.controller('correlatividadCtrl', ['$rootScope', '$scope', 'invoiceFactory'
 					$scope.pantalla = {
 						titulo:  "Correlatividad",
 						tipo: "panel-danger",
-						mensajeCorrelativo : 'Se ha producido un error al cargar los datos.'
+						mensajeCorrelativo : 'Se ha producido un error en la carga de datos.'
 					};
 				}
 				$scope.loadingCorrelatividad = false;
 			});
-		};
+		}
 
 		$scope.$watch('totalPuntos', function(){
 			if ($scope.totalPuntos == 0){
@@ -441,8 +441,8 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceFactory', fun
 			$scope.totalItems = invoicesNoMatches.totalCount;
 		}).catch((error) => {
 			$scope.mensajeResultado = {
-				titulo: 'Error',
-				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+				titulo: 'Control de códigos',
+				mensaje: 'Se ha producido un error en la carga de datos.',
 				tipo: 'panel-danger'
 			};
 		}).finally(() => $scope.loadingControlCodigos = false);
@@ -463,8 +463,8 @@ myapp.controller('codigosCtrl', ['$scope', 'priceFactory', 'invoiceFactory', fun
 		}).catch((error) => {
 			//dialogs.error('Control de códigos', 'Se ha producido un error al cargar los datos.');
 			$scope.mensajeResultado = {
-				titulo: 'Error',
-				mensaje: 'Se produjo un error al cargar los datos. Inténtelo nuevamente más tarde o comuníquese con el soporte técnico.',
+				titulo: 'Control de códigos',
+				mensaje: 'Se ha producido un error en la carga de datos.',
 				tipo: 'panel-danger'
 			};
 		}).finally(() => $scope.loadingControlCodigos = false);
