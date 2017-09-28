@@ -53,6 +53,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             const deferred = $q.defer();
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byContainer`;
             $http.get(inserturl, { params: datos }).then(response => {
+                console.log(response.data.data)
                 response.data.data = this.retrieveInvoices(response.data.data);
                 deferred.resolve(response.data);
             }).catch(response => {
