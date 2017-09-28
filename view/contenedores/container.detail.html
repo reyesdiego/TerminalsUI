@@ -1,5 +1,5 @@
 <div class="col-lg-12">
-	<h2>Detalles del contenedor {{ vmContainer.container.contenedor }}</h2>
+	<h2>Detalles del Contenedor {{ vmContainer.container.contenedor }} <span ng-show="vmContainer.container.invoices.data.length > 0">- {{vmContainer.container.invoices.data[0].iso}}</span></h2>
 
 	<div class="row">
 		<div class="col-lg-12">
