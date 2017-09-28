@@ -283,7 +283,7 @@
             $scope.$emit('iniciarBusqueda');
         };
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        $scope.cargaPorFiltros = function () {
+        $scope.cargaPorFiltros = () => {
             if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
                 $scope.model.fechaFin = new Date($scope.model.fechaInicio);
                 $scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
