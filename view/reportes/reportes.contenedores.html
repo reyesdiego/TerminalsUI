@@ -27,6 +27,7 @@
                                 <th>Medida</th>
                                 <th>Movimiento</th>
                                 <th>Contenedor</th>
+                                <th>Terminal</th>
                                 <th>Buque</th>
                                 <th>Viaje</th>
                                 <th class="text-right">Total</th>
@@ -41,8 +42,9 @@
                                 <td class="col-lg-2">{{ medida.medida }}</td>
                                 <td class="col-lg-1"></td>
                                 <td class="col-lg-2"></td>
+                                <td class="col-lg-1"></td>
                                 <td class="col-lg-2"></td>
-                                <td class="col-lg-2"></td>
+                                <td class="col-lg-1"></td>
                                 <td class="text-right col-lg-2">{{ medida.total | currency: ('DOL' | formatCurrency) }}</td>
                             </tr>
                             <tr class="clickableRow text-bold" ng-click="movimiento.detalle = !movimiento.detalle" ng-show="medida.detalle">
@@ -55,6 +57,7 @@
                                 <td>{{ movimiento.contenedores.length }} contenedores</td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
                                 <td class="text-right">{{ movimiento.total | currency: ('DOL' | formatCurrency) }}</td>
                             </tr>
                             <tr ng-repeat="contenedor in movimiento.contenedores | orderBy: 'total' : reverse" ng-show="movimiento.detalle && medida.detalle">
@@ -62,6 +65,7 @@
                                 <td></td>
                                 <td></td>
                                 <td><a href ng-click="contenedor.openDetailView()"><i class="glyphicon glyphicon-search"></i></a>{{ ' ' + contenedor.contenedor }}</td>
+                                <td>{{ contenedor.terminal }}</td>
                                 <td>{{ contenedor.buque }}</td>
                                 <td>{{ contenedor.viaje }}</td>
                                 <td class="text-right">{{ contenedor.total | currency: ('DOL' | formatCurrency) }}</td>
