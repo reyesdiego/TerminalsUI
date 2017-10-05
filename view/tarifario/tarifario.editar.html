@@ -80,7 +80,7 @@
                                 <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="predicate == 'price' && reverse"></span>
                                 <span class="glyphicon glyphicon-credit-card"></span> Tope
                             </a></th>
-                            <th><span class="glyphicon glyphicon-check"></span> Código asociado</th>
+                            <th><span class="glyphicon glyphicon-check"></span> Códigos asociados</th>
                             <!--<th class="hidden-print" ng-show="acceso=='terminal'"><span class="glyphicon glyphicon-plus-sign"></span> Agregar</th>-->
                             <th class="col-lg-1 text-center"><span class="glyphicon glyphicon-edit"></span> Editar</th>
                         </tr>
@@ -93,8 +93,8 @@
                             <td class="col-lg-5">
                                 <span>{{ price.description | maxLength : 160 }}</span><a href="" ng-show="(price.description.length > 160) && !price.editar" uib-popover="{{ price.description }}" popover-trigger="'mouseenter'"> (...)</a>
                             </td>
-                            <td class="col-lg-1">
-                                <span>{{ price.largo }}</span>
+                            <td class="col-lg-1 text-right">
+                                <span>{{ price.largo }}<span ng-show="price.largo>0">'</span></span>
                             </td>
                             <td class="col-lg-1">
                                 <span>{{ price.norma }}</span>
@@ -104,10 +104,10 @@
                                 <span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2" style="text-align: right">
-								<span ng-repeat="codigo in price.matches.match track by $index">
+                                <span ng-repeat="codigo in price.matches.match track by $index">
                                     <a href ng-click="detalleTarifa(price, codigo.code)" ng-class=" codigo.status ? 'text-success' : 'text-danger'"><i class="glyphicon ion-ios-information"></i> {{ codigo.code }}</a>
-									<span ng-show="!$last">, </span>
-								</span>
+                                    <span ng-show="!$last">, </span>
+                                </span>
                             </td>
                             <!--<td class="col-lg-2 hidden-print" style="text-align: right" ng-show="acceso=='terminal'">
                                 <div class="input-group">
@@ -133,10 +133,10 @@
                                 <span ng-class="price.price <= 0 ? 'text-danger' : ''">{{ price.price | currency: (price.currency | formatCurrency) }}</span>
                             </td>
                             <td class="col-lg-2 anchoFijoImpresion" style="text-align: right">
-								<span ng-repeat="codigo in price.matches.match track by $index">
-									<span>{{ codigo.code }}</span>
-									<span ng-show="!$last">, </span>
-								</span>
+                                <span ng-repeat="codigo in price.matches.match track by $index">
+                                    <span>{{ codigo.code }}</span>
+                                    <span ng-show="!$last">, </span>
+                                </span>
                             </td>
                         </tr>
                         </tbody>
