@@ -1,7 +1,7 @@
     /**
     * Created by Diego Reyes on 1/23/14.
     */
-    class LoginCtrl {
+class LoginCtrl {
 
     constructor($state, loginService, authFactory, dialogs, $uibModal, generalFunctions){
         this._$state = $state;
@@ -49,13 +49,13 @@
 
     login(){
         this.entrando = true;
-        this._authFactory.userEnter(this.email, this.password, this.sesion).then((result) => {
+        this._authFactory.userEnter(this.email, this.password, this.sesion).then(result => {
             if (this._generalFunctions.in_array('tarifario', this._loginService.acceso)) {
                 this._$state.transitionTo('tarifario');
             } else {
                 this._$state.transitionTo(this._loginService.acceso[0])
             }
-        }).catch((error) => this.errorHandler(error));
+        }).catch(error => this.errorHandler(error));
     }
 
     resetPassword(){
@@ -75,9 +75,8 @@
             })
         });
     }
+}
 
-    }
+LoginCtrl.$inject = ['$state', 'loginService', 'authFactory', 'dialogs', '$uibModal', 'generalFunctions'];
 
-    LoginCtrl.$inject = ['$state', 'loginService', 'authFactory', 'dialogs', '$uibModal', 'generalFunctions'];
-
-    myapp.controller('loginCtrl', LoginCtrl);
+myapp.controller('loginCtrl', LoginCtrl);
