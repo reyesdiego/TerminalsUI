@@ -1,41 +1,44 @@
 /**
-* Created by kolesnikov-a on 28/04/2017.
-*/
-    myapp.directive('vistaComprobantes', () => {
+ * Created by kolesnikov-a on 28/04/2017.
+ */
+"use strict";
+
+myapp.directive('vistaComprobantes', () => {
     return {
         restrict:		'E',
         templateUrl:	'view/comprobantes/comprobantes.vista.html',
         scope: {
-            model:								'=',
-            datosInvoices:						'=',
-            ocultarFiltros:						'=',
-            totalItems:							'=',
-            loadingState:						'=',
-            controlCodigos:						'=',
-            codigosSinAsociar:					'=',
-            mostrarPtosVenta:					'=',
-            ocultarAccordionInvoicesSearch:		'=',
-            ocultarAccordionComprobantesVistos:	'=',
-            panelMensaje:						'=',
-            volverAPrincipal:					'=',
-            filtroEstados:						'=',
-            byContainer:						'@'
+            model: '=',
+            datosInvoices: '=',
+            ocultarFiltros: '=',
+            totalItems: '=',
+            loadingState: '=',
+            controlCodigos: '=',
+            codigosSinAsociar: '=',
+            mostrarPtosVenta: '=',
+            ocultarAccordionInvoicesSearch: '=',
+            ocultarAccordionComprobantesVistos: '=',
+            panelMensaje: '=',
+            volverAPrincipal: '=',
+            filtroEstados: '=',
+            canDescargarCsv: '=',
+            byContainer: '@'
         },
         controller: 'vistaComprobantesCtrl'
     }
-    });
+});
 
-    myapp.directive('tableInvoices', function(){
+myapp.directive('tableInvoices', function(){
     return {
         restrict:		'E',
         templateUrl:	'view/comprobantes/table.invoices.html'
     }
-    });
+});
 
-    myapp.directive('accordionComprobantesVistos', function(){
+myapp.directive('accordionComprobantesVistos', function(){
     return {
-        restrict:		'E',
-        templateUrl:	'view/comprobantes/accordion.comprobantes.vistos.html',
+        restrict: 'E',
+        templateUrl: 'view/comprobantes/accordion.comprobantes.vistos.html',
         link: function ($scope) {
             $scope.quitarVista = function (comprobante) {
                 comprobante.controlled = false;
@@ -44,35 +47,48 @@
             };
         }
     }
-    });
+});
 
-    myapp.directive('accordionInvoicesSearch', function(){
+myapp.directive('accordionInvoicesSearch', function(){
     return {
-        restrict:		'E',
-        templateUrl:	'view/comprobantes/accordion.invoices.search.html',
+        restrict: 'E',
+        templateUrl: 'view/comprobantes/accordion.invoices.search.html',
         scope: {
-            model:				'=',
-            ocultarFiltros:		'='
+            model: '=',
+            ocultarFiltros: '=',
+            canDescargarCsv: '='
         },
         controller: 'searchController'
     }
-    });
+});
 
-    myapp.directive('invoicesResult', function(){
+myapp.directive('invoicesResult', function(){
     return {
-        restrict:		'E',
-        templateUrl:	'view/comprobantes/comprobantes.detalle.html'
+        restrict: 'E',
+        templateUrl: 'view/comprobantes/comprobantes.detalle.html'
     }
-    });
+});
 
-    myapp.directive('comprobantesPorEstado', function(){
+myapp.directive('comprobantesPorEstado', function(){
     return {
-        restrict:		'E',
-        templateUrl:	'view/comprobantes/comprobantesPorEstado.html',
+        restrict: 'E',
+        templateUrl: 'view/comprobantes/comprobantesPorEstado.html',
         scope: {
-            estado:								'@',
-            filtroEstados:						'@'
+            estado: '@',
+            filtroEstados: '@'
         },
         controller: 'comprobantesPorEstadoCtrl'
     }
-    });
+});
+
+myapp.directive('comprobantesResumen', () => {
+    return {
+        restrict: 'E',
+        templateUrl: 'view/comprobantes/comprobantes-resumen.html',
+        scope: {
+            model: '=',
+            invoicesResumen: '='
+        },
+        controller: 'comprobantesResumenController'
+    }
+});

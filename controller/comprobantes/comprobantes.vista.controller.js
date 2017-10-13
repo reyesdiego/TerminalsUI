@@ -1,10 +1,10 @@
-        /**
-        * Created by artiom on 30/03/15.
-        */
-        myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceFactory', 'Invoice',
-        function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceFactory, Invoice){
+/**
+ * Created by artiom on 30/03/15.
+ */
+myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService', 'generalFunctions', 'dialogs', '$state', '$window', 'invoiceFactory', 'Invoice',
+    function($rootScope, $scope, loginService, generalFunctions, dialogs, $state, $window, invoiceFactory, Invoice){
 
-        //console.log($scope.mostrarPtosVenta);
+//console.log($scope.mostrarPtosVenta);
         $scope.dataTerminal = loginService;
 
         $scope.hayError = false;
@@ -14,7 +14,7 @@
         };
         $scope.currentPage = 1;
         $scope.itemsPerPage = 15;
-        //Variables para control de fechas
+//Variables para control de fechas
         $scope.maxDateD = new Date();
         $scope.maxDateH = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
         $scope.logoTerminal = loginService.logoTerminal;
@@ -23,7 +23,7 @@
 
         $scope.acceso = loginService.type;
 
-        // Puntos de Ventas
+// Puntos de Ventas
         $scope.todosLosPuntosDeVentas = [
             {'heading': 'Todos los Puntos de Ventas', 'punto': '', 'active': true}
         ];
@@ -32,7 +32,9 @@
         $scope.mostrarResultado = false;
         $scope.verDetalle = {};
 
-        //Control de tarifas
+        $scope.canDescargarCsv = false;
+
+//Control de tarifas
         $scope.controlTarifas = [];
 
         $scope.commentsInvoice = [];
@@ -137,7 +139,7 @@
             $scope.$emit('cambioFiltro', $scope.model);
         };
 
-        // Funciones de Puntos de Venta
+// Funciones de Puntos de Venta
         function cargaPuntosDeVenta(){
             let i = 0;
             $scope.todosLosPuntosDeVentas = [
@@ -149,8 +151,8 @@
                         i++;
                         let dato = {'heading': punto, 'punto': punto, 'index': i };
                         /*if ($scope.model['nroPtoVenta'] == punto){
-                            $scope.indexActive = i;
-                        }*/
+                         $scope.indexActive = i;
+                         }*/
                         $scope.todosLosPuntosDeVentas.push(dato);
                     });
                     $scope.currentPage = 1;
@@ -240,4 +242,4 @@
             $scope.mostrarResultado = false;
         })
 
-        }]);
+    }]);

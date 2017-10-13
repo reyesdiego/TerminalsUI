@@ -156,7 +156,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             });
         }
 
-        getRatesInvoices(datos, callback){
+        getRatesInvoices(datos, callback) {
             this.cancelRequest('ratesInvoices');
             const defer = $q.defer();
             const canceler = HTTPCanceler.get(defer, this.namespace, 'ratesInvoices');
@@ -182,6 +182,21 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             }).catch((response) => {
                 if (response.status != -5) callback(response.data)
             });
+        }
+
+        getTotales(params) {
+            const deferred = $q.defer();
+            this.cancelRequest('getTotales');
+            const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'getTotales');
+            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/totales`;
+            $http.get(inserturl, {params: formatService.formatearDatos(params), timeout: canceler.promise}).then((response) => {
+            //$http.get(inserturl, {params: formatService.formatearDatos(params)}).then(response => {
+                //response.data.data = this.retrieveInvoices(response.data.data);
+                deferred.resolve(response.data);
+            }).catch((response) => {
+                if (response.status != -5) deferred.reject(response.data);
+            });
+            return deferred.promise;
         }
 
         getCSV(datos, reportName, callback){
