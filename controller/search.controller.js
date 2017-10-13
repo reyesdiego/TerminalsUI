@@ -246,7 +246,7 @@
         $scope.colorHorario = function (gate) {
             return generalFunctions.colorHorario(gate);
         };
-        $scope.mostrarDetalle = function(contenedor){
+        $scope.mostrarDetalle = function(contenedor) {
             $scope.loadingState = true;
             $scope.paginaAnterior = $scope.currentPage;
             $scope.totalGates = $scope.totalItems;
@@ -260,14 +260,15 @@
                 console.log(error)
             }).finally(() => $scope.loadingState = false);
         };
-        $scope.ocultarDetallesGates = function(){
+
+        $scope.ocultarDetallesGates = function() {
             $scope.volverAPrincipal = !$scope.volverAPrincipal;
             $scope.detallesGates = false;
             $scope.totalItems = $scope.totalGates;
             $scope.currentPage = $scope.paginaAnterior
         };
 
-        $scope.cambiarTipoMov = function(tipoMov){
+        $scope.cambiarTipoMov = function(tipoMov) {
             if ($scope.ocultarBusqueda || $scope.ocultarFiltros.indexOf('mov', 0) < 0){
                 $scope.active = {
                     impo: (tipoMov == 'IMPO'),
@@ -278,7 +279,7 @@
             }
         };
 
-        $scope.filtrarOrden = function(filtro){
+        $scope.filtrarOrden = function(filtro) {
             $scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
             $scope.$emit('iniciarBusqueda');
         };
@@ -295,4 +296,7 @@
             $scope.$emit('iniciarBusqueda', $scope.model);
         };
 
+        $scope.descargarCSV = () => {
+            $scope.$emit('descargarCsv', $scope.model);
+        };
     }]);

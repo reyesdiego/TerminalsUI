@@ -7,7 +7,8 @@
 		control-codigos="false"
 		mostrar-ptos-venta="true"
 		panel-mensaje="mensajeResultado"
-		filtro-estados="filtroEstados">
+		filtro-estados="filtroEstados"
+		can-descargar-csv=false>
 </vista-comprobantes>
 
 <button class="btn btn-success" ng-show="estado=='R,T,E' && !loadingState && comprobantes.length > 0" ng-click="descargarCSV()" ng-disabled="disableDown">
