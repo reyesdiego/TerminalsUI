@@ -228,7 +228,7 @@ myapp.controller('ratesCtrl',['$rootScope', '$scope', 'invoiceFactory', 'general
 				}
 				switch ($scope.model.period){
 					case 'date':
-						ponerFecha = $filter('date')(datosDia.date, 'dd/MM/yyyy');
+						ponerFecha = $filter('date')(datosDia.date, 'EEEE dd/MM/yyyy');
 						break;
 					case 'month':
 						//ponerFecha = ($scope.meses[datosDia.month-1] + ' del ' + datosDia.year);

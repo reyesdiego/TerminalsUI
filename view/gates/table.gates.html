@@ -1,66 +1,129 @@
 <div class="hidden-print" ng-hide="detallesGates || ocultarBusqueda">
-	<containers-gates-search></containers-gates-search>
+    <containers-gates-search></containers-gates-search>
 </div>
 <div class="visible-print-block" ng-hide="ocultarBusqueda">
-	<impresion-filtros></impresion-filtros>
+    <impresion-filtros></impresion-filtros>
 </div>
 <div class="col-lg-12 text-center" ng-show="loadingState">
-	<img class="media-object center-block" src="images/loading.gif">
+    <img class="media-object center-block" src="images/loading.gif">
 </div>
 <div class="col-lg-12" ng-hide="loadingState">
-	<div ng-hide="datosGates.length && datosGates.length > 0 || detallesGates">
-		<div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
-	</div>
-	<div ng-show="datosGates.length && datosGates.length > 0">
-		<h5 ng-hide="detallesGates"><strong>Resultados: {{ totalItems }}</strong> ({{ tiempoConsulta }} segundos)<span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
-		<div ng-hide="detallesGates">
-			<div class="table-responsive invoice-shadow">
-				<table class="table table-bordered table-hover text-center text-small">
-					<tr>
-						<th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
-						<th class="text-center">Buque</th>
-						<th class="text-center">Viaje</th>
-						<th class="text-center">Contenedor</th>
-						<th class="text-center">Pies</th>
-						<th class="text-center">Patente cami&oacute;n</th>
-						<th class="text-center" colspan="2">Tipo</th>
-						<th class="text-center"><encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
-						<th class="text-center">Inicio turno</th>
-						<th class="text-center">Fin turno</th>
-						<th class="hidden-print text-center" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0">Facturas</th>
-					</tr>
-					<tr ng-repeat="gate in datosGates" class="fila-animada">
-						<td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
-						<td><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO' || gate.buque == '' || gate.buque == null" ng-click="filtrado('buqueNombre', gate.buque); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
-						<td>{{ gate.viaje }}</td>
-						<td>
-							<a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO' || gate.contenedor == ''" ng-click="filtrado('contenedor', gate.contenedor); cargaPorFiltros()">
-								<span class="glyphicon glyphicon-search"></span>
-							</a>
-							<span ng-show="gate.carga == 'LL'" class="text-success" title="Contenedor con carga">{{ gate.contenedor }}</span>
-							<span ng-show="gate.carga == 'VA'" class="text-danger" title="Contenedor vacío">{{ gate.contenedor }}</span>
-							<span ng-hide="gate.carga == 'VA' || gate.carga == 'LL'">{{ gate.contenedor }}</span>
-						</td>
-						<td>{{ gate.largo }}</td>
-						<td ng-show="noVoyEnTrenVoyEnCamion(gate.patenteCamion)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('patenteCamion', 0) >= 0" ng-click="filtrado('patenteCamion', gate.patenteCamion); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.patenteCamion }}</td>
-						<td ng-show="noVoyEnTrenVoyEnCamion(gate.tren)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('tren', 0) >= 0" ng-click="filtrado('tren', gate.tren); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.tren }} <i class="icon ion-android-train"></i> </td>
-						<td class="text-center"><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
-						<td class="text-center">{{ gate.mov }}</td>
-						<td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
-						<td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
-						<td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
-						<td class="hidden-print" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)" ng-hide="gate.carga == 'NO' || gate.contenedor == ''"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-				</table>
-			</div>
-			<div-pagination total-items="totalItems" current-page="currentPage" items-per-page="itemsPerPage"></div-pagination>
-		</div>
-	</div>
-	<div class="row" ng-show="detallesGates">
-		<div class="col-lg-12">
-			<h4>Comprobantes del contenedor {{ contenedor }}</h4>
-			<vista-comprobantes model="$parent.model" datos-invoices="invoices" ocultar-filtros="$parent.filtrosComprobantes" total-items="totalItems" loading-state="loadingState" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
-			<button class="btn btn-default hidden-print" ng-hide="mostrarResultado" ng-click="ocultarDetallesGates()"><span class="glyphicon glyphicon-arrow-left"></span> Volver a Gates</button>
-			<br>
-		</div>
-	</div>
+    <div ng-hide="datosGates.length && datosGates.length > 0 || detallesGates">
+        <div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
+    </div>
+    <div ng-show="datosGates.length && datosGates.length > 0">
+        <h5 ng-hide="detallesGates"><strong>Resultados: {{ totalItems }}</strong> ({{ tiempoConsulta }} segundos)<span class="visible-print-block"><strong>Mostrando del {{ $parent.currentPage * $parent.itemsPerPage - ($parent.itemsPerPage - 1) }} al {{ $parent.currentPage * $parent.itemsPerPage > totalItems ? totalItems : $parent.currentPage * $parent.itemsPerPage }} (página {{ $parent.currentPage }})</strong></span></h5>
+        <div ng-hide="detallesGates">
+            <div class="table-responsive invoice-shadow">
+                <table class="table table-bordered table-hover text-center text-small">
+                    <tr>
+                        <th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
+                        <th class="text-center">Buque</th>
+                        <th class="text-center">Viaje</th>
+                        <th class="text-center">Contenedor</th>
+                        <th class="text-center">Pies</th>
+                        <th class="text-center">Patente cami&oacute;n</th>
+                        <th class="text-center" colspan="2">Tipo</th>
+                        <th class="text-center"><encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
+                        <th class="text-center">Inicio turno</th>
+                        <th class="text-center">Fin turno</th>
+                        <th class="hidden-print text-center" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0">Facturas</th>
+                    </tr>
+                    <tr ng-repeat="gate in datosGates" class="fila-animada">
+                        <td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
+                        <td><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO' || gate.buque == '' || gate.buque == null" ng-click="filtrado('buqueNombre', gate.buque); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
+                        <td>{{ gate.viaje }}</td>
+                        <td>
+                            <a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('contenedor', 0) >= 0 || gate.carga == 'NO' || gate.contenedor == ''" ng-click="filtrado('contenedor', gate.contenedor); cargaPorFiltros()">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </a>
+                            <span ng-show="gate.carga == 'LL'" class="text-success" title="Contenedor con carga">{{ gate.contenedor }}</span>
+                            <span ng-show="gate.carga == 'VA'" class="text-danger" title="Contenedor vacío">{{ gate.contenedor }}</span>
+                            <span ng-hide="gate.carga == 'VA' || gate.carga == 'LL'">{{ gate.contenedor }}</span>
+                        </td>
+                        <td>{{ gate.largo }}</td>
+                        <td ng-show="noVoyEnTrenVoyEnCamion(gate.patenteCamion)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('patenteCamion', 0) >= 0" ng-click="filtrado('patenteCamion', gate.patenteCamion); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.patenteCamion }}</td>
+                        <td ng-show="noVoyEnTrenVoyEnCamion(gate.tren)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('tren', 0) >= 0" ng-click="filtrado('tren', gate.tren); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.tren }} <i class="icon ion-android-train"></i> </td>
+                        <td class="text-center"><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
+                        <td class="text-center" ng-class="gate.mov == 'EXPO' ? 'text-success' : gate.mov == 'IMPO' ? 'text-info' : 'text-warning'">
+                            <i class="glyphicon" ng-class="gate.mov == 'IMPO' ? 'glyphicon-import' : gate.mov == 'EXPO' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="gate.mov"></i> {{ gate.mov }}
+                        </td>
+                        <td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
+                        <td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
+                        <td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
+                        <td class="hidden-print" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)" ng-hide="gate.carga == 'NO' || gate.contenedor == ''"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                </table>
+            </div>
+            <div-pagination total-items="totalItems" current-page="currentPage" items-per-page="itemsPerPage"></div-pagination>
+        </div>
+    </div>
+
+    <div class="row" ng-hide="detallesGates">
+        <div class="col-lg-4" ng-hide="graphByType.error">
+            <h4 class="text-left">Gráficos</h4>
+            <div class="col-lg-4" ng-show="graphByType.loading" style="position: absolute; left: 30%; top: 30%">
+                <img class="media-object center-block" src="images/loading.gif">
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Totales por Movimiento</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <pie-chart
+                                class="chart col-xs-12"
+                                data="chartGatesByType.data"
+                                options="chartGatesByType.options"
+                                click="selectRow(selectedRow, id)">
+                        </pie-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8" ng-show="graphByType.error">
+            <div class="alert alert-danger">
+                <strong>Error</strong>
+                <h6>No se han podido cargar los datos correspondientes a los Gates. {{ graphByType.mensaje }}</h6>
+                <span>Presione <a href ng-click="cargaGatesByTypeGraph()">aquí</a> para reintentar.</span>
+            </div>
+        </div>
+
+        <div class="col-lg-8" ng-hide="gatesTurnos.error">
+            <h4 class="text-left">&nbsp;</h4>
+            <div class="col-lg-8" ng-show="gatesTurnos.loading" style="position: absolute; left: 30%; top: 30%">
+                <img class="media-object center-block" src="images/loading.gif">
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Totales por Horario</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                    <column-chart
+                    class="chart col-xs-12"
+                    data="chartDiaGatesTurnos.data"
+                    options="chartDiaGatesTurnos.options"></column-chart>
+                        </div></div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-lg-offset-4" ng-show="gatesTurnos.error">
+            <div class="alert alert-danger">
+                <strong>Error</strong>
+                <h6>No se han podido cargar los datos correspondientes a la cantidad de turnos/gates por hora. {{ gatesTurnos.mensaje }}</h6>
+                <span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row" ng-show="detallesGates">
+        <div class="col-lg-12">
+            <h4>Comprobantes del contenedor {{ contenedor }}</h4>
+            <vista-comprobantes model="$parent.model" datos-invoices="invoices" ocultar-filtros="$parent.filtrosComprobantes" total-items="totalItems" loading-state="loadingState" mostrar-ptos-venta="false" ocultar-accordion-invoices-search="true" ocultar-accordion-comprobantes-vistos="true" panel-mensaje="mensajeResultado" volver-a-principal="volverAPrincipal"></vista-comprobantes>
+            <button class="btn btn-default hidden-print" ng-hide="mostrarResultado" ng-click="ocultarDetallesGates()"><span class="glyphicon glyphicon-arrow-left"></span> Volver a Gates</button>
+            <br>
+        </div>
+    </div>
 </div>
