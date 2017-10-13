@@ -1,219 +1,219 @@
 <div class="container col-lg-offset-1 col-lg-10 col-md-12">
 
-	<div class="row col-lg-12 page-header">
-		<h1><img ng-src="images/paneldecontrol.png" height="64" width="80" class="hidden-xs">Panel de control</h1>
-	</div>
+    <div class="row col-lg-12 page-header">
+        <h1><img ng-src="images/paneldecontrol.png" height="64" width="80" class="hidden-xs">Panel de control</h1>
+    </div>
 
-	<div class="row">
-		<br>
-		<div class="col-lg-8 col-md-12">
-			<h4 ng-show="tipoFiltro=='cantidad'" class="text-left">Comprobantes diario: {{ comprobantesCantidad.invoicesCount }}</h4>
-			<h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: {{ comprobantesCantidad.totalCount | currency }}</h4>
-			<div class="rowcol-lg-12">
-				<div class="form-group col-lg-5">
-					<div class="input-group text-left">
-						<label for="desde" class="sr-only">Fecha</label>
-						<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button></span>
-						<input id="desde" type="text" class="form-control" ng-model="desde" uib-datepicker-popup="yyyy-MM-dd" is-open="openfechaInicio" datepicker-options="datepickerNormal" ng-change="traerDatosFacturadoDia()" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
-					</div>
-				</div>
-				<div class="form-group radio col-lg-7 text-right">
-					<label>
-						<input type="radio" ng-model="tipoFiltro" value="cantidad">Cantidad de comprobantes
-					</label>
-					<label>
-						<input type="radio" ng-model="tipoFiltro" value="total">Total facturado
-					</label>
-				</div>
-			</div>
-			<div class="col-lg-12 table-responsive" style="max-height: 230px; max-width: 100%; overflow: auto">
-				<table class="table table-bordered table-hover">
-					<thead>
-					<tr>
-						<th class="text-left"><span class="glyphicon glyphicon-list-alt"></span> Comprobante</th>
-						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> BACTSSA</th>
-						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> TERMINAL 4</th>
-						<th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> TRP</th>
-						<th class="text-right">Subtotal</th>
-					</tr>
-					</thead>
-					<tbody>
-					<tr style="font-size: 8pt" ng-show="tipoFiltro=='cantidad'" ng-repeat="comprobante in comprobantesCantidad">
-						<td class="text-left">{{ comprobante.description }}</td>
-						<td class="text-right">{{ comprobante.BACTSSA.cnt[0] | numero }} ({{ comprobante.BACTSSA.cnt[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.TERMINAL4.cnt[0] | numero }} ({{ comprobante.TERMINAL4.cnt[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.TRP.cnt[0] | numero }} ({{ comprobante.TRP.cnt[1] | numero | number:2 }} %)</td>
-						<td class="text-right"><b>{{ comprobante.cnt }}</b></td>
-					</tr>
-					<tr style="font-size: 8pt" ng-show="tipoFiltro=='total'" ng-repeat="comprobante in comprobantesCantidad">
-						<td class="text-left">{{ comprobante.description }}</td>
-						<td class="text-right">{{ comprobante.BACTSSA.total[0] | numero | currency }} ({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.TERMINAL4.total[0] | numero | currency }} ({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right">{{ comprobante.TRP.total[0] | numero | currency }} ({{ comprobante.TRP.total[1] | numero | number:2 }} %)</td>
-						<td class="text-right"><b>{{ comprobante.total | currency }}</b></td>
-					</tr>
-					<tr>
-						<th class="text-right" colspan="4">Total</th>
-						<th ng-show="tipoFiltro=='cantidad'" class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
-						<th ng-show="tipoFiltro=='total'" class="text-right">{{ comprobantesCantidad.totalCount | currency }}</th>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+    <div class="row">
+        <br>
+        <div class="col-lg-8">
+            <h4 ng-show="tipoFiltro=='cantidad'" class="text-left">Comprobantes: {{ comprobantesCantidad.invoicesCount }}</h4>
+            <h4 ng-show="tipoFiltro=='total'" class="text-left">Facturado diario: {{ comprobantesCantidad.totalCount | currency }}</h4>
+            <div class="rowcol-lg-12">
+                <div class="form-group col-lg-5">
+                    <div class="input-group text-left">
+                        <label for="desde" class="sr-only">Fecha</label>
+                        <span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openfechaInicio = !openfechaInicio;"><span class="glyphicon glyphicon-calendar"></span></button></span>
+                        <input id="desde" type="text" class="form-control" ng-model="desde" uib-datepicker-popup="yyyy-MM-dd" is-open="openfechaInicio" datepicker-options="datepickerNormal" ng-change="traerDatosFacturadoDia()" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
+                    </div>
+                </div>
+                <div class="form-group radio col-lg-7 text-right">
+                    <label>
+                        <input type="radio" ng-model="tipoFiltro" value="cantidad">Cantidad de comprobantes
+                    </label>
+                    <label>
+                        <input type="radio" ng-model="tipoFiltro" value="total">Total facturado
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-12 table-responsive" style="max-height: 230px; max-width: 100%; overflow: auto">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-left"><span class="glyphicon glyphicon-list-alt"></span> Comprobante</th>
+                        <th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> BACTSSA</th>
+                        <th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> TERMINAL 4</th>
+                        <th class="text-center"><span class="glyphicon glyphicon-credit-card"></span> TRP</th>
+                        <th class="text-right">Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="font-size: 8pt" ng-show="tipoFiltro=='cantidad'" ng-repeat="comprobante in comprobantesCantidad">
+                        <td class="text-left">{{ comprobante.description }}</td>
+                        <td class="text-right">{{ comprobante.BACTSSA.cnt[0] | numero }} ({{ comprobante.BACTSSA.cnt[1] | numero | number:2 }} %)</td>
+                        <td class="text-right">{{ comprobante.TERMINAL4.cnt[0] | numero }} ({{ comprobante.TERMINAL4.cnt[1] | numero | number:2 }} %)</td>
+                        <td class="text-right">{{ comprobante.TRP.cnt[0] | numero }} ({{ comprobante.TRP.cnt[1] | numero | number:2 }} %)</td>
+                        <td class="text-right"><b>{{ comprobante.cnt }}</b></td>
+                    </tr>
+                    <tr style="font-size: 8pt" ng-show="tipoFiltro=='total'" ng-repeat="comprobante in comprobantesCantidad">
+                        <td class="text-left">{{ comprobante.description }}</td>
+                        <td class="text-right">{{ comprobante.BACTSSA.total[0] | numero | currency }} ({{ comprobante.BACTSSA.total[1] | numero | number:2 }} %)</td>
+                        <td class="text-right">{{ comprobante.TERMINAL4.total[0] | numero | currency }} ({{ comprobante.TERMINAL4.total[1] | numero | number:2 }} %)</td>
+                        <td class="text-right">{{ comprobante.TRP.total[0] | numero | currency }} ({{ comprobante.TRP.total[1] | numero | number:2 }} %)</td>
+                        <td class="text-right"><b>{{ comprobante.total | currency }}</b></td>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="4">Total</th>
+                        <th ng-show="tipoFiltro=='cantidad'" class="text-right">{{ comprobantesCantidad.invoicesCount }}</th>
+                        <th ng-show="tipoFiltro=='total'" class="text-right">{{ comprobantesCantidad.totalCount | currency }}</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-		<!--<div class="col-lg-4" ng-show="facturadoDia.loading">
-			<img class="media-object center-block" src="images/loading.gif">
-		</div>-->
-		<div class="col-lg-4" ng-hide="facturadoDia.error">
-			<h4 class="text-left">Facturado diario</h4>
-			<div class="table-responsive col-xs-12">
-				<div class="col-lg-4" ng-show="facturadoDia.loading" style="position: absolute; left: 30%; top: 30%">
-					<img class="media-object center-block" src="images/loading.gif">
-				</div>
-				<column-chart
-					class="chart col-xs-12"
-					data="chartFacturado.data"
-					options="chartFacturado.options"></column-chart>
-			</div>
-		</div>
-		<div class="col-lg-4" ng-show="facturadoDia.error">
-			<div class="alert alert-danger">
-				<strong>Error</strong>
-				<h6>No se han podido cargar los datos correspondientes a lo facturado por día. {{ facturadoDia.mensaje }}</h6>
-				<span>Presione <a href ng-click="traerDatosFacturadoDia()">aquí</a> para reintentar.</span>
-			</div>
-		</div>
-	</div>
+        <!--<div class="col-lg-4" ng-show="facturadoDia.loading">
+            <img class="media-object center-block" src="images/loading.gif">
+        </div>-->
+        <div class="col-lg-4" ng-hide="facturadoDia.error">
+            <h4 class="text-left">Facturado diario</h4>
+            <div class="table-responsive col-xs-12">
+                <div class="col-lg-4" ng-show="facturadoDia.loading" style="position: absolute; left: 30%; top: 30%">
+                    <img class="media-object center-block" src="images/loading.gif">
+                </div>
+                <column-chart
+                    class="chart col-xs-12"
+                    data="chartFacturado.data"
+                    options="chartFacturado.options"></column-chart>
+            </div>
+        </div>
+        <div class="col-lg-4" ng-show="facturadoDia.error">
+            <div class="alert alert-danger">
+                <strong>Error</strong>
+                <h6>No se han podido cargar los datos correspondientes a lo facturado por día. {{ facturadoDia.mensaje }}</h6>
+                <span>Presione <a href ng-click="traerDatosFacturadoDia()">aquí</a> para reintentar.</span>
+            </div>
+        </div>
+    </div>
 
-	<div class="row col-lg-12">
-		<div class="col-lg-4" ng-hide="facturadoMes.error">
-			<h4 class="text-left">Facturado mensual</h4>
-			<p class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="isOpenMonth = !isOpenMonth"><i class="glyphicon glyphicon-calendar"></i></button>
-				</span>
-				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenMonth" datepicker-options="datepickerMonth" ng-model="mesDesde" ng-change="traerDatosFacturadoMes()" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
-			</p>
-			<div class="table-responsive col-xs-12">
-				<div class="col-lg-4" ng-show="facturadoMes.loading" style="position: absolute; left: 30%; top: 30%">
-					<img class="media-object center-block" src="images/loading.gif">
-				</div>
-				<column-chart
-					class="chart col-xs-12"
-					data="chartFacturas.data"
-					options="chartFacturas.options"></column-chart>
-			</div>
-		</div>
-		<div class="col-lg-4" ng-show="facturadoMes.error">
-			<div class="alert alert-danger">
-				<strong>Error</strong>
-				<h6>No se han podido cargar los datos correspondientes a lo facturado por mes. {{ facturadoMes.mensaje }}</h6>
-				<span>Presione <a href ng-click="traerDatosFacturadoMes()">aquí</a> para reintentar.</span>
-			</div>
-		</div>
+    <div class="row">
+        <div class="col-lg-4" ng-hide="facturadoMes.error">
+            <h4 class="text-left">Facturado mensual</h4>
+            <p class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="isOpenMonth = !isOpenMonth"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenMonth" datepicker-options="datepickerMonth" ng-model="mesDesde" ng-change="traerDatosFacturadoMes()" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
+            </p>
+            <div class="table-responsive col-xs-12">
+                <div class="col-lg-4" ng-show="facturadoMes.loading" style="position: absolute; left: 30%; top: 30%">
+                    <img class="media-object center-block" src="images/loading.gif">
+                </div>
+                <column-chart
+                    class="chart col-xs-12"
+                    data="chartFacturas.data"
+                    options="chartFacturas.options"></column-chart>
+            </div>
+        </div>
+        <div class="col-lg-4" ng-show="facturadoMes.error">
+            <div class="alert alert-danger">
+                <strong>Error</strong>
+                <h6>No se han podido cargar los datos correspondientes a lo facturado por mes. {{ facturadoMes.mensaje }}</h6>
+                <span>Presione <a href ng-click="traerDatosFacturadoMes()">aquí</a> para reintentar.</span>
+            </div>
+        </div>
 
-		<div class="col-lg-4" ng-hide="cantGates.error">
-			<h4 class="text-left">Gates mensuales</h4>
-			<p class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="isOpenGates = !isOpenGates"><i class="glyphicon glyphicon-calendar"></i></button>
-				</span>
-				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenGates" datepicker-options="datepickerMonth" ng-change="traerDatosGates()" ng-model="mesDesdeGates" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
-			</p>
-			<div class="table-responsive col-xs-12">
-				<div class="col-lg-4" ng-show="cantGates.loading" style="position: absolute; left: 30%; top: 30%">
-					<img class="media-object center-block" src="images/loading.gif">
-				</div>
-				<column-chart
-					class="chart col-xs-12"
-					data="chartGates.data"
-					options="chartGates.options"></column-chart>
-			</div>
-		</div>
-		<div class="col-lg-4" ng-show="cantGates.error">
-			<div class="alert alert-danger">
-				<strong>Error</strong>
-				<h6>No se han podido cargar los datos de cantidad de gates registrados. {{ cantGates.mensaje }}</h6>
-				<span>Presione <a href ng-click="traerDatosGates()">aquí</a> para reintentar.</span>
-			</div>
-		</div>
+        <div class="col-lg-4" ng-hide="cantGates.error">
+            <h4 class="text-left">Gates Mensuales (full)</h4>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="isOpenGates = !isOpenGates"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenGates" datepicker-options="datepickerMonth" ng-change="traerDatosGates()" ng-model="mesDesdeGates" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
+            </div>
+            <div class="table-responsive col-xs-12">
+                <div class="col-lg-4" ng-show="cantGates.loading" style="position: absolute; left: 30%; top: 30%">
+                    <img class="media-object center-block" src="images/loading.gif">
+                </div>
+                <column-chart
+                    class="chart col-xs-12"
+                    data="chartGates.data"
+                    options="chartGates.options"></column-chart>
+            </div>
+        </div>
+        <div class="col-lg-4" ng-show="cantGates.error">
+            <div class="alert alert-danger">
+                <strong>Error</strong>
+                <h6>No se han podido cargar los datos de cantidad de gates registrados. {{ cantGates.mensaje }}</h6>
+                <span>Presione <a href ng-click="traerDatosGates()">aquí</a> para reintentar.</span>
+            </div>
+        </div>
 
-		<div class="col-lg-4" ng-hide="cantTurnos.error">
-			<h4 class="text-left">Turnos mensuales</h4>
-			<p class="input-group">
-				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="isOpenTurnos = !isOpenTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
-				</span>
-				<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenTurnos" datepicker-options="datepickerMonthTurnos" ng-change="traerDatosTurnos()" ng-model="mesDesdeTurnos" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
-			</p>
-			<div class="table-responsive col-xs-12">
-				<div class="col-lg-4" ng-show="cantTurnos.loading" style="position: absolute; left: 30%; top: 30%">
-					<img class="media-object center-block" src="images/loading.gif">
-				</div>
-				<column-chart
-					class="chart col-xs-12"
-					data="chartTurnos.data"
-					options="chartTurnos.options"></column-chart>
-			</div>
-		</div>
-		<div class="col-lg-4" ng-show="cantTurnos.error">
-			<div class="alert alert-danger">
-				<strong>Error</strong>
-				<h6>No se han podido cargar los datos de cantidad de turnos registrados. {{ cantTurnos.mensaje }}</h6>
-				<span>Presione <a href ng-click="traerDatosTurnos()">aquí</a> para reintentar.</span>
-			</div>
-		</div>
-	</div>
+        <div class="col-lg-4" ng-hide="cantTurnos.error">
+            <h4 class="text-left">Turnos mensuales</h4>
+            <p class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="isOpenTurnos = !isOpenTurnos"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM" is-open="isOpenTurnos" datepicker-options="datepickerMonthTurnos" ng-change="traerDatosTurnos()" ng-model="mesDesdeTurnos" readonly clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
+            </p>
+            <div class="table-responsive col-xs-12">
+                <div class="col-lg-4" ng-show="cantTurnos.loading" style="position: absolute; left: 30%; top: 30%">
+                    <img class="media-object center-block" src="images/loading.gif">
+                </div>
+                <column-chart
+                    class="chart col-xs-12"
+                    data="chartTurnos.data"
+                    options="chartTurnos.options"></column-chart>
+            </div>
+        </div>
+        <div class="col-lg-4" ng-show="cantTurnos.error">
+            <div class="alert alert-danger">
+                <strong>Error</strong>
+                <h6>No se han podido cargar los datos de cantidad de turnos registrados. {{ cantTurnos.mensaje }}</h6>
+                <span>Presione <a href ng-click="traerDatosTurnos()">aquí</a> para reintentar.</span>
+            </div>
+        </div>
+    </div>
 
-	<div class="row col-lg-12">
-		<!--<div ng-show="gatesTurnos.loading">
-			<img class="media-object center-block" src="images/loading.gif">
-		</div>-->
-		<div ng-hide="gatesTurnos.error">
-			<h4 class="text-left">{{ labelPorHora }}</h4>
-			<div class="row col-lg-6 col-lg-offset-2">
-				<div class="form-group col-lg-6">
-					<div class="input-group text-left">
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="isOpenDayGatesTurnos = !isOpenDayGatesTurnos;"><i class="glyphicon glyphicon-calendar"></i> Desde</button>
-					</span>
-						<input type="text" readonly class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="isOpenDayGatesTurnos" datepicker-options="datepickerGatesTurnos" ng-model="diaGatesTurnos" ng-change="traerDatosGatesTurnosDia()" clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
-					</div>
-				</div>
-				<div class="form-group col-lg-6">
-					<div class="input-group text-left">
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="isOpenDayGatesTurnosFin = !isOpenDayGatesTurnosFin"><i class="glyphicon glyphicon-calendar"></i> Hasta</button>
-					</span>
-						<input type="text" readonly class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="isOpenDayGatesTurnosFin" datepicker-options="datepickerGatesTurnos" ng-model="diaGatesTurnosFin" ng-change="traerDatosGatesTurnosDia()" clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4">
-				<div class="input-group">
-					<div class="btn-group">
-						<label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Gates'" ng-change="traerDatosGatesTurnosDia()">Gates</label>
-						<label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Turnos'" ng-change="traerDatosGatesTurnosDia()">Turnos</label>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-offset-1 col-lg-10 col-md-12 table-responsive">
-				<div class="col-lg-4" ng-show="gatesTurnos.loading" style="position: absolute; left: 30%; top: 30%">
-					<img class="media-object center-block" src="images/loading.gif">
-				</div>
-				<column-chart
-					class="chart col-xs-12"
-					data="chartDiaGatesTurnos.data"
-					options="chartDiaGatesTurnos.options"></column-chart>
-			</div>
-		</div>
-		<div class="col-lg-4 col-lg-offset-4" ng-show="gatesTurnos.error">
-			<div class="alert alert-danger">
-				<strong>Error</strong>
-				<h6>No se han podido cargar los datos correspondientes a la cantidad de turnos/gates por hora. {{ gatesTurnos.mensaje }}</h6>
-				<span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <!--<div ng-show="gatesTurnos.loading">
+            <img class="media-object center-block" src="images/loading.gif">
+        </div>-->
+        <div ng-hide="gatesTurnos.error">
+            <h4 class="text-left">{{ labelPorHora }}</h4>
+            <div class="row col-lg-6 col-lg-offset-2">
+                <div class="form-group col-lg-6">
+                    <div class="input-group text-left">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="isOpenDayGatesTurnos = !isOpenDayGatesTurnos;"><i class="glyphicon glyphicon-calendar"></i> Desde</button>
+                    </span>
+                        <input type="text" readonly class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="isOpenDayGatesTurnos" datepicker-options="datepickerGatesTurnos" ng-model="diaGatesTurnos" ng-change="traerDatosGatesTurnosDia()" clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
+                    </div>
+                </div>
+                <div class="form-group col-lg-6">
+                    <div class="input-group text-left">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="isOpenDayGatesTurnosFin = !isOpenDayGatesTurnosFin"><i class="glyphicon glyphicon-calendar"></i> Hasta</button>
+                    </span>
+                        <input type="text" readonly class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="isOpenDayGatesTurnosFin" datepicker-options="datepickerGatesTurnos" ng-model="diaGatesTurnosFin" ng-change="traerDatosGatesTurnosDia()" clear-text="Borrar" close-text="Listo" current-text="Hoy"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Gates'" ng-change="traerDatosGatesTurnosDia()">Gates</label>
+                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Turnos'" ng-change="traerDatosGatesTurnosDia()">Turnos</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-offset-1 col-lg-10 col-md-12 table-responsive">
+                <div class="col-lg-4" ng-show="gatesTurnos.loading" style="position: absolute; left: 30%; top: 30%">
+                    <img class="media-object center-block" src="images/loading.gif">
+                </div>
+                <column-chart
+                    class="chart col-xs-12"
+                    data="chartDiaGatesTurnos.data"
+                    options="chartDiaGatesTurnos.options"></column-chart>
+            </div>
+        </div>
+        <div class="col-lg-4 col-lg-offset-4" ng-show="gatesTurnos.error">
+            <div class="alert alert-danger">
+                <strong>Error</strong>
+                <h6>No se han podido cargar los datos correspondientes a la cantidad de turnos/gates por hora. {{ gatesTurnos.mensaje }}</h6>
+                <span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
+            </div>
+        </div>
+    </div>
 </div>
