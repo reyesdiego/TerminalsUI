@@ -156,15 +156,19 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             });
         }
 
-        getRatesInvoices(datos, callback) {
-            this.cancelRequest('ratesInvoices');
-            const defer = $q.defer();
-            const canceler = HTTPCanceler.get(defer, this.namespace, 'ratesInvoices');
-            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates`;
-            $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
-                callback(response.data);
-            }).catch((response) => {
-                if (response.status != -5) callback(response.data)
+        getRatesInvoices(params) {
+            return new Promise((resolve, reject) => {
+                this.cancelRequest('ratesInvoices');
+                const defer = $q.defer();
+                const canceler = HTTPCanceler.get(defer, this.namespace, 'ratesInvoices');
+                const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/rates`;
+                $http.get(inserturl, { params: formatService.formatearDatos(params), timeout: canceler.promise })
+                    .then(response => {
+                        //$http.get(inserturl, { params: formatService.formatearDatos(datos)}).then(response => {
+                        resolve(response.data);
+                    }).catch(response => {
+                        if (response.status != -5) reject(response.data)
+                    });
             });
         }
 
@@ -185,18 +189,18 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
         }
 
         getTotales(params) {
-            const deferred = $q.defer();
-            this.cancelRequest('getTotales');
-            const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'getTotales');
-            const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/totales`;
-            $http.get(inserturl, {params: formatService.formatearDatos(params), timeout: canceler.promise}).then((response) => {
-            //$http.get(inserturl, {params: formatService.formatearDatos(params)}).then(response => {
-                //response.data.data = this.retrieveInvoices(response.data.data);
-                deferred.resolve(response.data);
-            }).catch((response) => {
-                if (response.status != -5) deferred.reject(response.data);
+            return new Promise((resolve, reject) => {
+                this.cancelRequest('getTotales');
+                const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'getTotales');
+                const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/totales`;
+                $http.get(inserturl, {params: formatService.formatearDatos(params), timeout: canceler.promise}).then((response) => {
+                    //$http.get(inserturl, {params: formatService.formatearDatos(params)}).then(response => {
+                    //response.data.data = this.retrieveInvoices(response.data.data);
+                    resolve(response.data);
+                }).catch((response) => {
+                    if (response.status != -5) reject(response.data);
+                });
             });
-            return deferred.promise;
         }
 
         getCSV(datos, reportName, callback){
