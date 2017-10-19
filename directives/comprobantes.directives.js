@@ -21,7 +21,7 @@ myapp.directive('vistaComprobantes', () => {
             panelMensaje: '=',
             volverAPrincipal: '=',
             filtroEstados: '=',
-            canDescargarCsv: '=',
+            canDescargarCsv: '@',
             byContainer: '@'
         },
         controller: 'vistaComprobantesCtrl'
@@ -56,7 +56,7 @@ myapp.directive('accordionInvoicesSearch', function(){
         scope: {
             model: '=',
             ocultarFiltros: '=',
-            canDescargarCsv: '='
+            canDescargarCsv: '@'
         },
         controller: 'searchController'
     }
