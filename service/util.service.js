@@ -13,10 +13,11 @@ myapp.service('generalFunctions', [function () {
 		return model;
 	};
 
-	this.colorHorario = function (gate) {
-		var horarioGate = new Date(gate.gateTimestamp);
-		var horarioInicio = new Date(gate.turnoInicio);
-		var horarioFin = new Date(gate.turnoFin);
+
+	this.colorHorario = (time, begin, end) => {
+		var horarioGate = new Date(time);
+		var horarioInicio = new Date(begin);
+		var horarioFin = new Date(end);
 		if (horarioGate >= horarioInicio && horarioGate <= horarioFin) {
 			return 'green';
 		} else {
@@ -51,7 +52,7 @@ myapp.service('generalFunctions', [function () {
 			}
 		}
 		return false;
-	}
+	};
 
 	this.isEqualArray = function(myArray, compareArray){
 		// if the other array is a falsy value, return
