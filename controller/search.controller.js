@@ -3,7 +3,7 @@
     */
 
     myapp.controller("searchController", ['$scope', 'cacheService', 'generalFunctions', '$sce', 'dialogs', 'loginService', '$filter', 'invoiceFactory', '$uibModal',
-    function($scope, cacheService, generalFunctions, $sce, dialogs, loginService, $filter, invoiceFactory, $uibModal){
+    ($scope, cacheService, generalFunctions, $sce, dialogs, loginService, $filter, invoiceFactory, $uibModal) => {
 
         $scope.dataTerminal = loginService;
 
@@ -32,15 +32,15 @@
         $scope.listaRazonSocial = [];
         $scope.listaTrenes = [];
 
-        cacheService.cargaBuques().then(function(data){
+        cacheService.cargaBuques().then( data => {
             $scope.listaBuques = data;
         });
 
-        cacheService.cargaClientes().then(function(data){
+        cacheService.cargaClientes().then( data => {
             $scope.listaRazonSocial = data;
         });
 
-        cacheService.cargaTrenes().then(function(data){
+        cacheService.cargaTrenes().then( data => {
             $scope.listaTrenes = data;
         });
 
@@ -49,7 +49,7 @@
 
         $scope.iso3FormaView = '';
 
-        $scope.selectIso3Forma = function(item){
+        $scope.selectIso3Forma = item => {
             $scope.model.iso3Forma = item.id;
         };
 
@@ -60,7 +60,7 @@
             { value: 50, description: '50 items por página', ticked: false}
         ];
         $scope.estadosComprobantes = $filter('filter')(cacheService.cache.get('estados'), $scope.filtroEstados);
-        $scope.estadosComprobantes.forEach(function(unEstado){
+        $scope.estadosComprobantes.forEach( unEstado => {
             unEstado.ticked = false;
         });
 
@@ -75,7 +75,7 @@
 
         $scope.mostrarViajes = false;
 
-        $scope.$on('notificacionDetalle', function(event, data){
+        $scope.$on('notificacionDetalle', (event, data) => {
             var fechaAuxInicio, fechaAuxFin, fechaAux;
             if (data.filtro == 'fechaTurno'){
                 fechaAuxInicio = new Date(data.contenido.inicio);
@@ -108,13 +108,13 @@
             }
         });
 
-        $scope.openDate = function(event){
+        $scope.openDate = event => {
             generalFunctions.openDate(event);
         };
-        $scope.cambioItemsPorPagina = function(data){
+        $scope.cambioItemsPorPagina = data => {
             $scope.filtrado('itemsPerPage', data.value);
         };
-        $scope.estadoSeleccionado = function(data){
+        $scope.estadoSeleccionado = data => {
             var contenido = '';
             if (data.ticked){
                 $scope.estadosComprobantes.forEach(function(unEstado){
@@ -154,11 +154,11 @@
             }
         };*/
 
-        $scope.definidoStatus = function(turno){
+        $scope.definidoStatus = turno => {
             return angular.isDefined(turno.email);
         };
 
-        $scope.filtrado = function(filtro, contenido){
+        $scope.filtrado = (filtro, contenido) => {
             if (filtro == 'fechaInicio' && contenido == 'liquidacion') contenido = $scope.minDate;
             if (filtro == 'fechaFin' && contenido == 'liquidacion') contenido = $scope.model.fechaInicio;
 
@@ -198,7 +198,7 @@
             cargaPorFiltros();*/
         };
 
-        var filtrarCaracteresInvalidos = function(palabra){
+        var filtrarCaracteresInvalidos = palabra => {
             if (angular.isDefined(palabra) && palabra.length > 0){
                 var palabraFiltrada;
                 var caracteresInvalidos = ['*', '(', ')', '+', ':', '?'];
@@ -217,7 +217,7 @@
         //FUNCIONES DE TABLE TURNOS /////////////////////////////////////////////////////////////////////
         $scope.mostrarHTML = false;
 
-        $scope.comprobanteTurno = function(turno){
+        $scope.comprobanteTurno = turno => {
             $scope.loadingState = true;
             turno.getComprobante()
                 .then(function(data){
@@ -231,22 +231,22 @@
                 });
         };
 
-        $scope.ocultarTurno = function(){
+        $scope.ocultarTurno = () => {
             $scope.mostrarHTML = false;
         };
 
-        $scope.to_trusted = function(htmlCode) {
+        $scope.to_trusted = htmlCode => {
             return $sce.trustAsHtml(htmlCode);
         };
 
         //FUNCIONES DE TABLE GATES //////////////////////////////////////////////////////////////////////
-        $scope.noVoyEnTrenVoyEnCamion = function(trenOCamion){
+        $scope.noVoyEnTrenVoyEnCamion = trenOCamion => {
             return angular.isDefined(trenOCamion) && trenOCamion != null && trenOCamion != "";
         };
-        $scope.colorHorario = function (gate) {
-            return generalFunctions.colorHorario(gate);
+        $scope.colorHorario = (gateTime, inicio, fin) => {
+            return generalFunctions.colorHorario(gateTime, inicio, fin);
         };
-        $scope.mostrarDetalle = function(contenedor) {
+        $scope.mostrarDetalle = contenedor => {
             $scope.loadingState = true;
             $scope.paginaAnterior = $scope.currentPage;
             $scope.totalGates = $scope.totalItems;
@@ -261,14 +261,14 @@
             }).finally(() => $scope.loadingState = false);
         };
 
-        $scope.ocultarDetallesGates = function() {
+        $scope.ocultarDetallesGates = () => {
             $scope.volverAPrincipal = !$scope.volverAPrincipal;
             $scope.detallesGates = false;
             $scope.totalItems = $scope.totalGates;
             $scope.currentPage = $scope.paginaAnterior
         };
 
-        $scope.cambiarTipoMov = function(tipoMov) {
+        $scope.cambiarTipoMov = tipoMov => {
             if ($scope.ocultarBusqueda || $scope.ocultarFiltros.indexOf('mov', 0) < 0){
                 $scope.active = {
                     impo: (tipoMov == 'IMPO'),
@@ -279,12 +279,14 @@
             }
         };
 
-        $scope.filtrarOrden = function(filtro) {
+        $scope.filtrarOrden = filtro =>  {
             $scope.model = generalFunctions.filtrarOrden($scope.model, filtro);
             $scope.$emit('iniciarBusqueda');
         };
         ///////////////////////////////////////////////////////////////////////////////////////////////////
+
         $scope.cargaPorFiltros = () => {
+            console.log("vino aca search.controller");
             if ($scope.model.fechaInicio > $scope.model.fechaFin && $scope.model.fechaFin != ''){
                 $scope.model.fechaFin = new Date($scope.model.fechaInicio);
                 $scope.model.fechaFin.setDate($scope.model.fechaFin.getDate() + 1);
@@ -292,6 +294,7 @@
             for (var elemento in $scope.model){
                 if (!angular.isDefined($scope.model[elemento])) $scope.model[elemento] = '';
             }
+
             $scope.$broadcast('checkAutoComplete');
             $scope.$emit('iniciarBusqueda', $scope.model);
         };
