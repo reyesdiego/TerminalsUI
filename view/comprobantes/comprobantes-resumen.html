@@ -1,18 +1,18 @@
 <div class="col-lg-12">
-    <h3>Resumen del período</h3>
+    <h3>Resumen de la búsqueda</h3>
     <div class="col-lg-2">
-        <h5><strong>Total</strong></h5><strong>{{invoicesResumen.total | currency: ('DOL' | formatCurrency)}}</strong>
+        <h5><strong>Total</strong></h5><strong ng-class="invoicesResumen.total < 0 ? 'text-danger' : ''">{{invoicesResumen.total | currency: ('DOL' | formatCurrency)}}</strong>
     </div>
     <div class="col-lg-2">
-        <h5><strong>Promedio</strong></h5><strong>{{invoicesResumen.avg | currency: ('DOL' | formatCurrency)}}</strong>
+        <h5><strong>Promedio</strong></h5><strong ng-class="invoicesResumen.avg < 0 ? 'text-danger' : ''">{{invoicesResumen.avg | currency: ('DOL' | formatCurrency)}}</strong>
     </div>
     <div class="col-lg-2">
         <h5><strong>Contenedores</strong></h5><strong>{{invoicesResumen.contes}}</strong>
     </div>
     <div class="col-lg-2">
-        <h5><strong>Toneladas</strong></h5><strong>{{invoicesResumen.ton}}</strong>
+        <h5><strong>Toneladas</strong></h5><strong ng-class="invoicesResumen.ton < 0 ? 'text-danger' : ''">{{invoicesResumen.ton}}</strong>
     </div>
     <div class="col-lg-2">
-        <h5><strong>Tasa a las Cargas</strong></h5><strong>{{invoicesResumen.tasa | currency: ('DOL' | formatCurrency)}}</strong>
+        <h5><strong>Tasa a las Cargas</strong></h5><strong ng-class="invoicesResumen.tasa < 0 ? 'text-danger' : ''">{{invoicesResumen.tasa | currency: ('DOL' | formatCurrency)}}</strong>
     </div>
 </div>
