@@ -90,29 +90,21 @@ myapp.controller('invoicesCtrl', ['$rootScope', '$scope', 'invoiceFactory', 'log
 
     $scope.getTotales = () => {
         var terminal = loginService.filterTerminal;
-        invoiceFactory.getTotales($scope.model)
-        .then(data => {
-                $scope.invoicesResumen = data.data.filter(item => (item.terminal === terminal))[0];
-            })
-        .catch(err => {
-                console.err(err);
-            });
 
-        invoiceFactory.getRatesInvoices($scope.model, (data) => {
-            var invoData = {};
-            if (data.status === "OK") {
-                invoData = data.data.map(item => (item.codes))[0].filter(ter => ter.terminal === terminal).map(x => ({total: x.total, ton: x.ton}) ).reduce((x, y) => ({total: x.total + y.total, ton: x.ton + y.ton}));
+        let prom1 = invoiceFactory.getTotales($scope.model);
+        let prom2 = invoiceFactory.getRatesInvoices($scope.model);
+
+        Promise.all([prom1, prom2])
+        .then(data => {
+                let totales = data[0];
+                let tasas = data[1];
+                $scope.invoicesResumen = totales.data.find(item => (item.terminal === terminal));
+                let codes = [];
+                tasas.data.forEach(item => {codes = codes.concat(item.codes)});
+                let invoData = codes.filter(ter => ter.terminal === terminal).map(x => ({total: x.total, ton: x.ton}) ).reduce((x, y) => ({total: x.total + y.total, ton: x.ton + y.ton}));
                 $scope.invoicesResumen.tasa = invoData.total;
                 $scope.invoicesResumen.ton = invoData.ton;
-            } else {
-                //$scope.configPanel = {
-                //    tipo: 'panel-danger',
-                //    titulo: 'Tasas a las cargas',
-                //    mensaje: 'Se ha producido un error al cargar los datos de tasas a las cargas.'
-                //};
-            }
-        });
-
+            });
     };
 
 
