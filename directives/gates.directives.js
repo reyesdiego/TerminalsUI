@@ -13,19 +13,19 @@ myapp.directive('tableGates', function(){
         restrict:       'E',
         templateUrl:    'view/gates/table.gates.html',
         scope: {
-            ocultarBusqueda:    '=',
-            model:              '=',
-            datosGates:         '=',
-            totalItems:         '=',
-            tiempoConsulta:     '=',
-            itemsPerPage:       '=',
-            detallesGates:      '=',
-            ocultarFiltros:     '=',
-            currentPage:        '=',
-            configPanel:        '=',
-            loadingState:       '=',
-            chartGatesByType:   '=',
-            chartDiaGatesTurnos:'='
+            ocultarBusqueda: '=',
+            model: '=',
+            datosGates: '=',
+            totalItems: '=',
+            tiempoConsulta: '=',
+            itemsPerPage: '=',
+            detallesGates: '=',
+            ocultarFiltros: '=',
+            currentPage: '=',
+            configPanel: '=',
+            loadingState: '=',
+            chartGatesByType: '=',
+            chartDiaGatesTurnos: '='
         },
         controller: 'searchController'
     }

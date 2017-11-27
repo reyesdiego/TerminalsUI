@@ -4,6 +4,7 @@
 myapp.controller('controlGatesCtrl', ['$scope', function($scope){
 
     $scope.active = 0;
+    $scope.canDescargarCsv = false;
 
     $scope.tabs = [
         {name: 'Facturaciones sin gates', ref: 'cgates.gates'},

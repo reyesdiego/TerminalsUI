@@ -4,6 +4,7 @@
 
 myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'loginService', 'TERMINAL_COLORS', function ($scope, gatesFactory, turnosFactory, loginService, TERMINAL_COLORS) {
 
+    $scope.canDescargarCsv = false;
     $scope.totalItems = 0;
     $scope.tiempoConsulta = 0;
     $scope.turnosGates = true;
@@ -128,6 +129,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'login
     });
 
     $scope.$on('iniciarBusqueda', function (event, data) {
+        console.log("vino aca gates.controller");
         $scope.currentPage = 1;
         $scope.cargaGates(() => { //le pongo un callback por el maldito render
             $scope.cargaGatesByTypeGraph();
@@ -205,7 +207,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'login
         gatesFactory.getGatesCountByDay($scope.model)
             .then(data => {
                 if (data.status == 'OK'){
-                    console.log(data.data);
+                    //console.log(data.data);
                     //$scope.chartDiaGatesTurnos.data = $scope.prepararDatosGatesTurnosDia(graf.data);
                 } else {
                     //$scope.gatesTurnos.error = true;
@@ -227,7 +229,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'login
         turnosFactory.getTurnosByDay($scope.model)
             .then(data => {
                 if (data.status == 'OK'){
-                    console.log("TurnosByDay %s", JSON.stringify(data.data));
+                    //console.log("TurnosByDay %s", JSON.stringify(data.data));
                     //$scope.chartDiaGatesTurnos.data = $scope.prepararDatosGatesTurnosDia(graf.data);
                 } else {
                     //$scope.gatesTurnos.error = true;
