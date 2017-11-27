@@ -17,20 +17,22 @@
             <div class="table-responsive invoice-shadow">
                 <table class="table table-bordered table-hover text-center text-small">
                     <tr>
-                        <th class="text-center"><encabezado-tabla-ordenado titulo="Fecha" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
+                        <th class="text-center"><encabezado-tabla-ordenado titulo="Fecha Hora" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
                         <th class="text-center">Buque</th>
                         <th class="text-center">Viaje</th>
                         <th class="text-center">Contenedor</th>
                         <th class="text-center">Pies</th>
-                        <th class="text-center">Patente cami&oacute;n</th>
+                        <!--<th class="text-center">Patente cami&oacute;n</th>-->
+                        <th class="text-center"><encabezado-tabla-ordenado titulo="Patente cami&oacute;n" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="patenteCamion" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
                         <th class="text-center" colspan="2">Tipo</th>
-                        <th class="text-center"><encabezado-tabla-ordenado titulo="Horario" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="gateTimestamp" filtro-orden="fechaOrden"></encabezado-tabla-ordenado></th>
-                        <th class="text-center">Inicio turno</th>
-                        <th class="text-center">Fin turno</th>
+                        <th class="text-center">Ingreso</th>
+                        <th class="text-center">Espera</th>
+                        <th class="text-center">Egreso</th>
+                        <th class="text-center">Turno</th>
                         <th class="hidden-print text-center" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0">Facturas</th>
                     </tr>
                     <tr ng-repeat="gate in datosGates" class="fila-animada">
-                        <td>{{ gate.gateTimestamp | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ gate.gateTimestamp | date: 'dd/MM/yy HH:mm' }}</td>
                         <td><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('buque', 0) >= 0 || gate.carga == 'NO' || gate.buque == '' || gate.buque == null" ng-click="filtrado('buqueNombre', gate.buque); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.buque }}</td>
                         <td>{{ gate.viaje }}</td>
                         <td>
@@ -44,13 +46,14 @@
                         <td>{{ gate.largo }}</td>
                         <td ng-show="noVoyEnTrenVoyEnCamion(gate.patenteCamion)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('patenteCamion', 0) >= 0" ng-click="filtrado('patenteCamion', gate.patenteCamion); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.patenteCamion }}</td>
                         <td ng-show="noVoyEnTrenVoyEnCamion(gate.tren)"><a class="hidden-print" href ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('tren', 0) >= 0" ng-click="filtrado('tren', gate.tren); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ gate.tren }} <i class="icon ion-android-train"></i> </td>
-                        <td class="text-center"><span class="label" ng-class="{'label-success' : gate.tipo == 'IN', 'label-danger' : gate.tipo == 'OUT'}">{{ gate.tipo }}</span></td>
-                        <td class="text-center" ng-class="gate.mov == 'EXPO' ? 'text-success' : gate.mov == 'IMPO' ? 'text-info' : 'text-warning'">
-                            <i class="glyphicon" ng-class="gate.mov == 'IMPO' ? 'glyphicon-import' : gate.mov == 'EXPO' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="gate.mov"></i> {{ gate.mov }}
+                        <td class="text-center"><span class="label" ng-class="{'label-success' : gate.tipo === 'IN', 'label-danger' : gate.tipo === 'OUT'}">{{ gate.tipo }}</span></td>
+                        <td class="text-center" ng-class="gate.mov == 'EXPO' ? 'text-success' : gate.mov === 'IMPO' ? 'text-info' : 'text-warning'">
+                            <i class="glyphicon" ng-class="gate.mov == 'IMPO' ? 'glyphicon-import' : gate.mov === 'EXPO' ? 'glyphicon-export' : 'glyphicon-transfer'" ng-show="gate.mov"></i> {{ gate.mov }}
                         </td>
-                        <td ng-init="colorH = colorHorario(gate)" ng-style="{'color': colorH}">{{ gate.gateTimestamp | date: 'HH:mm' }}</td>
-                        <td>{{ gate.turnoInicio | date: 'HH:mm' }}</td>
-                        <td>{{ gate.turnoFin | date: 'HH:mm' }}</td>
+                        <td ng-init="colorH = colorHorario(gate.gateTimestamp_in, gate.turnoInicio, gate.turnoFin)" ng-style="{'color': colorH}"><span ng-if="gate.tipo!=='IN' && gate.gateTimestamp_in">*</span>{{ gate.gateTimestamp_in | date: 'HH:mm' }}</td>
+                        <td><strong ng-if="gate.gateTimestamp_in && gate.gateTimestamp_out">{{ gate.timeInside }}</strong></td>
+                        <td ng-init="colorH = colorHorario(gate.gateTimestamp_out, gate.turnoInicio, gate.turnoFin)" ng-style="{'color': colorH}"><span ng-if="gate.tipo!=='OUT'  && gate.gateTimestamp_out">*</span>{{ gate.gateTimestamp_out | date: 'HH:mm' }}</td>
+                        <td>{{ gate.turnoInicio | date: 'HH:mm' }} - {{ gate.turnoFin | date: 'HH:mm' }}</td>
                         <td class="hidden-print" ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('comprobantes', 0) >= 0" style="text-align: center; width: 3%"><a href ng-click="mostrarDetalle(gate)" ng-hide="gate.carga == 'NO' || gate.contenedor == ''"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
                 </table>
             </div>
@@ -58,6 +61,7 @@
         </div>
     </div>
 
+<!--
     <div class="row" ng-hide="detallesGates">
         <div class="col-lg-4" ng-hide="graphByType.error">
             <h4 class="text-left">Gráficos</h4>
@@ -114,9 +118,8 @@
                 <span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
             </div>
         </div>
-
-
     </div>
+-->
 
     <div class="row" ng-show="detallesGates">
         <div class="col-lg-12">
