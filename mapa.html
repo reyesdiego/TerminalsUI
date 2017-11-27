@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+
+<head>
+    <title>Administraci&oacute;n General de Puertos S.E.</title>
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" ng-href="css/{{ terminalEstilo }}.css">
+    <link rel="stylesheet" href="css/terminalColor.css" title="TERMINALES">
+    <!-- build:css css/aditional-min.css -->
+    <link rel="stylesheet" href="css/angucomplete-alt.css">
+    <link rel="stylesheet" href="css/dialogs.css">
+    <link rel="stylesheet" href="css/angular-multi-select.css">
+    <link rel="stylesheet" href="css/notificaciones.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="js/angular-notify/angular-notify.css">
+    <link rel="stylesheet" href="css/ionicons.css">
+    <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.css">
+
+    <!-- /build -->
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css">
+    <!-- Less test -->
+    <!--<link rel="stylesheet/less" type="text/css" href="less/bootstrap.cerulean.less"/>
+    <script src="angular/less-1.7.3.min.js" type="text/javascript"></script>-->
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]-->
+    <script src="js/html5.js"></script>
+    <!--[endif]-->
+    <!-- Angular y modulos-->
+    <!-- build:js bower_components/angular/angular.min.js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/angular-cookies/angular-cookies.min.js -->
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/angular-sanitize/angular-sanitize.min.js -->
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/angular-cache/dist/angular-cache.min.js -->
+    <script src="bower_components/angular-cache/dist/angular-cache.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/angular-ui-router/release/angular-ui-router.min.js -->
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js -->
+    <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js -->
+    <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
+    <!-- /build -->
+    <script src="js/moment-with-locales.min.js"></script>
+    <!-- build:js bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.min.js -->
+    <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/angular-socket-io/socket.min.js -->
+    <script src="bower_components/angular-socket-io/socket.js"></script>
+    <!-- /build -->
+    <!-- build:js js/angular-notify/angular-notify.min.js -->
+    <script src="js/angular-notify/angular-notify.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/angular-animate/angular-animate.min.js -->
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <!-- /build -->
+    <!-- build:js bower_components/ng-tags-input/ng-tags-input.min.js -->
+    <script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
+    <!-- /build -->
+    <script src="js/socket.io.min.js"></script>
+    <script src="js/angular-locale_es-ar.js"></script>
+    <!-- Google charts -->
+    <script src="js/jsapi.js"></script>
+    <!-- App Script -->
+    <!-- build:js js/app-min.js -->
+    <script src="includes/js/utils/config.js"></script>
+    <script src="main/main.js"></script>
+    <!-- Services -->
+    <script src="service/cache.js"></script>
+    <script src="service/format.js"></script>
+    <script src="service/general.js"></script>
+    <script src="service/login.js"></script>
+    <script src="service/invoice.js"></script>
+    <script src="service/httpCanceler.js"></script>
+    <!-- Factories -->
+    <script src="factory/afip.js"></script>
+    <script src="factory/auth.js"></script>
+    <script src="factory/cache.js"></script>
+    <script src="factory/controlPanel.js"></script>
+    <script src="factory/controlUsers.js"></script>
+    <script src="factory/errorFactory.js"></script>
+    <script src="factory/gates.js"></script>
+    <script src="factory/invoice.js"></script>
+    <script src="factory/price.js"></script>
+    <script src="factory/reports.js"></script>
+    <script src="factory/states.js"></script>
+    <script src="factory/turnos.js"></script>
+    <script src="factory/user.js"></script>
+    <script src="factory/vouchersType.js"></script>
+    <script src="factory/downloadFactory.js"></script>
+    <script src="factory/socket.js"></script>
+    <script src="factory/liquidaciones.js"></script>
+    <!-- Filters -->
+    <script src="filter/filters.js"></script>
+    <!-- Controles Angular-->
+    <script src="controller/controlComprobantes.js"></script>
+    <script src="controller/control.js"></script>
+    <script src="controller/dialogs.js"></script>
+    <script src="controller/gates.js"></script>
+    <script src="controller/invoices.js"></script>
+    <script src="controller/login.js"></script>
+    <script src="controller/matchprices.js"></script>
+    <script src="controller/navigation.js"></script>
+    <script src="controller/newpass.js"></script>
+    <script src="controller/pricelist.js"></script>
+    <script src="controller/turnos.js"></script>
+    <script src="controller/reports.js"></script>
+    <script src="controller/trackingInvoice.js"></script>
+    <script src="controller/reporteTarifas.js"></script>
+    <script src="controller/afip.js"></script>
+    <script src="controller/register.js"></script>
+    <script src="controller/users.js"></script>
+    <script src="controller/resetPasswordModal.js"></script>
+    <script src="controller/rates.js"></script>
+    <script src="controller/missingInfo.js"></script>
+    <script src="controller/searchController.js"></script>
+    <script src="controller/vistaComprobantes.js"></script>
+    <script src="controller/buqueViaje.js"></script>
+    <script src="controller/accessControl.js"></script>
+    <script src="controller/turnosEncolados.js"></script>
+    <script src="controller/validarUsuario.js"></script>
+    <script src="controller/liquidaciones.js"></script>
+    <script src="controller/reporteEmpresas.js"></script>
+    <script src="controller/mat.js"></script>
+    <script src="controller/tablaAnidada.js"></script>
+    <script src="controller/containerSumaria.js"></script>
+    <!-- Directives -->
+    <script src="directives/directives.js"></script>
+    <script src="directives/angular-multi-select.js"></script>
+    <script src="directives/angucomplete-alt.js"></script>
+    <script src="directives/chartDirectives.js"></script>
+    <!-- /build -->
+    <!-- Style Switcher-->
+    <script src="js/linq.min.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body class="container" ng-controller="navigationCtrl">
+<div id="map" ></div>
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.597791, lng: -58.3687323},
+            zoom: 18,
+            mapTypeId: google.maps.MapTypeId.SATELLITE
+        });
+        map.setTilt(45);
+
+        var flightPlanCoordinates = [
+            {lat: -34.597791, lng: -58.366721},
+            {lat: -34.597791, lng: -58.365521},
+            {lat: -34.597291, lng: -58.365521},
+            {lat: -34.597791, lng: -58.366721}
+        ];
+        var flightPath = new google.maps.Polyline({
+            path: flightPlanCoordinates,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 3,
+            draggable: true
+        });
+
+        flightPath.setMap(map);
+
+    }
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3H-O1mKc1tJgW2sHUf9tWRYxnu0X5wWw&callback=initMap" type="text/javascript"></script>
+
+<nav class="navbar navbar-default navbar-fixed-top hidden-print">
+    <div class="container">
+        <div class="navbar-header">
+            <a ng-click="irA()" class="nav navbar-brand"><img src="images/LogoPUERTO_30x30.png" width="30" height="30"> AGP S.E.</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" ng-hide="cargandoCache" data-target=".navbar-responsive-collapse" ng-click="isCollapsed = !isCollapsed">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="navbar-collapse collapse navbar-responsive-collapse" collapse="!isCollapsed">
+            <ul class="nav navbar-nav navbar-left" ng-hide="cargandoCache">
+                <li ng-show="acceso=='agp' && cambioTerminal" class="hidden-sm" dropdown>
+                    <a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-info-sign"></span> Terminal: {{ filtroTerminal }}<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+                        <li><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+                        <li><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+                        <li class="visible-lg divider"></li>
+                        <li><a ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"> Deshabilitar</span><span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"> Habilitar</span> Notificaciones</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" ng-hide="cargandoCache">
+                <li ng-show="acceso==''"><a ui-sref="register"><span class="glyphicon glyphicon-bookmark"></span> Registrarse</a></li>
+                <li ng-show="acceso!='' && (tieneAcceso('tarifario') || tieneAcceso('matches'))" dropdown>
+                    <a data-ng-hide="dropdown" dropdown-toggle>Tarifas<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li ng-show="tieneAcceso('tarifario')"><a ui-sref="tarifario">Tarifario</a></li>
+                        <li ng-show="tieneAcceso('matches')"><a ui-sref="matches">Editar</a></li>
+                        <!--<li class="visible-lg divider" ng-show="tieneAcceso('modificarTarifario')"></li>
+                        <li ng-show="tieneAcceso('modificarTarifario')"><a  ui-sref="modificarTarifario">Editar</a></li>-->
+                    </ul>
+                </li>
+                <li ng-show="acceso!='' && (tieneAcceso('invoices') || tieneAcceso('cfacturas'))" dropdown>
+                    <a data-ng-hide="dropdown" dropdown-toggle>Comprobantes<b class="caret"></b><span ng-hide="invoiceNotify==0" class="burbuja {{ invoiceAnimar }}">{{ invoiceNotify }}</span></a>
+                    <ul class="dropdown-menu">
+                        <li ng-show="tieneAcceso('invoices')"><a ui-sref="invoices">Ver</a></li>
+                        <li ng-show="tieneAcceso('cfacturas')"><a ui-sref="cfacturas">Control</a></li>
+                    </ul>
+                </li>
+                <li class="hidden-sm" ng-show="acceso!='' && (tieneAcceso('gates') || tieneAcceso('cgates'))" dropdown>
+                    <a data-ng-hide="dropdown" dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
+                    <ul class="dropdown-menu">
+                        <li ng-show="tieneAcceso('gates')"><a ui-sref="gates">Ver</a></li>
+                        <li ng-show="tieneAcceso('cgates')"><a ui-sref="cgates">Control</a></li>
+                    </ul>
+                </li>
+                <li class="hidden-sm" ng-show="acceso!='' && (tieneAcceso('turnos') || tieneAcceso('agenda') || tieneAcceso('cturnos'))" dropdown>
+                    <a data-ng-hide="dropdown" dropdown-toggle>Turnos<b class="caret"></b><span ng-hide="appointmentNotify==0" class="burbuja {{ appointmentAnimar }}">{{ appointmentNotify }}</span></a>
+                    <ul class="dropdown-menu">
+                        <li ng-show="tieneAcceso('turnos')"><a ui-sref="turnos">Ver</a></li>
+                        <!--<li ng-show="false"><a  ui-sref="agenda">Agenda</a></li>-->
+                        <li ng-show="tieneAcceso('cturnos')"><a ui-sref="cturnos">Sin notificar</a></li>
+                        <li ng-show="tieneAcceso('mturnos')"><a ui-sref="mturnos">Control</a></li>
+                    </ul>
+                </li>
+                <li class="visible-sm" ng-show="acceso!='' && (tieneAcceso('turnos') || tieneAcceso('agenda')) || tieneAcceso('cturnos') || (tieneAcceso('gates') || tieneAcceso('cgates'))" dropdown>
+                    <a data-ng-hide="dropdown" dropdown-toggle>Gates/Turnos<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="visible-sm dropdown-header">Gates</li>
+                        <li ng-show="tieneAcceso('gates')"><a ui-sref="gates">Ver</a></li>
+                        <li ng-show="tieneAcceso('cgates')"><a ui-sref="cgates">Control</a></li>
+                        <li class="visible-sm divider"></li>
+                        <li class="visible-sm dropdown-header">Turnos</li>
+                        <li ng-show="tieneAcceso('turnos')"><a ui-sref="turnos">Ver</a></li>
+                        <!--<li ng-show="false"><a  ui-sref="agenda">Agenda</a></li>-->
+                        <li ng-show="tieneAcceso('cturnos')"><a ui-sref="cturnos">Sin notificar</a></li>
+                    </ul>
+                </li>
+                <li ng-show="acceso != '' && (tieneAcceso('liquidaciones') || tieneAcceso('control') || tieneAcceso('reports') || tieneAcceso('container') || tieneAcceso('buque') || tieneAcceso('afip') || tieneAcceso('users') || tieneAcceso('access'))" dropdown>
+                    <a data-toggle="dropdown" dropdown-toggle>Administrar<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header" ng-show="tieneAcceso('control') || tieneAcceso('reports')">Gráficos</li>
+                        <li ng-show="tieneAcceso('control')"><a ui-sref="control">Control</a></li>
+                        <li ng-show="tieneAcceso('reports')"><a ui-sref="reports">Reportes</a></li>
+                        <li class="divider" ng-show="(tieneAcceso('control') || tieneAcceso('reports')) && (tieneAcceso('container') || tieneAcceso('buque'))"></li>
+                        <li class="dropdown-header" ng-show="tieneAcceso('container') || tieneAcceso('buque')">Contenedores</li>
+                        <li ng-show="tieneAcceso('container')"><a ui-sref="container">Ver</a></li>
+                        <li ng-show="tieneAcceso('buque')"><a ui-sref="buque">Buque - Viaje</a></li>
+                        <li class="divider" ng-show="(tieneAcceso('container') || tieneAcceso('buque')) && (tieneAcceso('liquidaciones') || tieneAcceso('mat') || tieneAcceso('afip'))"></li>
+                        <li class="dropdown-header" ng-show="tieneAcceso('liquidaciones') || tieneAcceso('mat') || tieneAcceso('afip')">Contabilidad</li>
+                        <li ng-show="tieneAcceso('liquidaciones')"><a  ui-sref="liquidaciones">Liquidaciones</a></li>
+                        <li ng-show="tieneAcceso('mat')"><a ui-sref="mat">M.A.T.</a></li>
+                        <li ng-show="tieneAcceso('afip')"><a ui-sref="afip">A.F.I.P</a></li>
+                        <li class="divider" ng-show="(tieneAcceso('liquidaciones') || tieneAcceso('mat') || tieneAcceso('afip')) && (tieneAcceso('users') || tieneAcceso('access'))"></li>
+                        <li class="dropdown-header" ng-show="tieneAcceso('users') || tieneAcceso('access')">Seguridad</li>
+                        <li ng-show="tieneAcceso('users')"><a ui-sref="users">Usuarios</a></li>
+                        <li ng-show="tieneAcceso('access')"><a ui-sref="access">Control de acceso</a></li>
+                        <li class="visible-sm divider" ng-show="tieneAcceso('users') || tieneAcceso('access')"></li>
+                        <li class="visible-sm dropdown-header">Seleccione Terminal</li>
+                        <li class="visible-sm"><a ng-click="setearTerminal('BACTSSA');"><span ng-show="filtroTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
+                        <li class="visible-sm"><a ng-click="setearTerminal('TERMINAL4');"><span ng-show="filtroTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
+                        <li class="visible-sm"><a ng-click="setearTerminal('TRP');"><span ng-show="filtroTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+                        <li class="visible-sm divider"></li>
+                        <li class="visible-sm dropdown-header">Cambiar moneda</li>
+                        <li class="visible-sm"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
+                    </ul>
+                </li>
+                <li class="hidden-sm" ng-show="acceso!='' && cambioMoneda"><a href ng-click="switchMoneda();">{{ moneda | formatCurrency}}</a></li>
+                <li ng-show="acceso!=''" ng-click="imprimirVista()"><a href><span class="glyphicon glyphicon-print"></span></a></li>
+                <li ng-show="acceso!=''" dropdown>
+                    <a href data-toggle="dropdown" dropdown-toggle><span class="glyphicon glyphicon-user"></span> {{ terminal.user }}<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li ng-click="salir(); isCollapsed = !isCollapsed"><a href ><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="row wrapper">
+    <div ui-view></div>
+</div>
+
+<footer class="footer">
+    <hr>
+    <span class="hidden-xs">Administración General de Puertos S.E. - Departamento de desarrollo <img src="images/LogoPUERTO_30x30.png" width="30" height="30"></span>
+    <span class="visible-xs">AGP S.E. - Depto. de desarrollo <img src="images/LogoPUERTO_30x30.png" width="30" height="30"></span>
+</footer>
+
+</body>
+
+</html>
