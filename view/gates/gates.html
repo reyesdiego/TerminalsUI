@@ -21,5 +21,64 @@
                 >
         </table-gates>
     </div>
+    <div class="row">
+        <div class="row" ng-hide="detallesGates">
+            <div class="col-lg-4" ng-hide="graphByType.error">
+                <h4 class="text-left">Gráficos</h4>
+                <div class="col-lg-4" ng-show="graphByType.loading" style="position: absolute; left: 30%; top: 30%">
+                    <img class="media-object center-block" src="images/loading.gif">
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Totales por Movimiento</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <pie-chart
+                                    class="chart col-xs-12"
+                                    data="chartGatesByType.data"
+                                    options="chartGatesByType.options"
+                                    click="selectRow(selectedRow, id)">
+                            </pie-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8" ng-show="graphByType.error">
+                <div class="alert alert-danger">
+                    <strong>Error</strong>
+                    <h6>No se han podido cargar los datos correspondientes a los Gates. {{ graphByType.mensaje }}</h6>
+                    <span>Presione <a href ng-click="cargaGatesByTypeGraph()">aquí</a> para reintentar.</span>
+                </div>
+            </div>
+
+            <div class="col-lg-8" ng-hide="gatesTurnos.error">
+                <h4 class="text-left">&nbsp;</h4>
+                <div class="col-lg-8" ng-show="gatesTurnos.loading" style="position: absolute; left: 30%; top: 30%">
+                    <img class="media-object center-block" src="images/loading.gif">
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Totales por Horario</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+
+                            <column-chart
+                                    class="chart col-xs-12"
+                                    data="chartDiaGatesTurnos.data"
+                                    options="chartDiaGatesTurnos.options"></column-chart>
+                        </div></div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-lg-offset-4" ng-show="gatesTurnos.error">
+                <div class="alert alert-danger">
+                    <strong>Error</strong>
+                    <h6>No se han podido cargar los datos correspondientes a la cantidad de turnos/gates por hora. {{ gatesTurnos.mensaje }}</h6>
+                    <span>Presione <a href ng-click="traerDatosGatesTurnosDia()">aquí</a> para reintentar.</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
