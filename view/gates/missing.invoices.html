@@ -77,7 +77,7 @@
 					<td class="usuarioActivo">{{ registro.contenedor.contenedor }}</td>
 					<td>{{ registro.patenteCamion }}</td>
 					<td><span class="label" ng-class="{'label-success' : registro.tipo == 'IN', 'label-danger' : registro.tipo == 'OUT'}">{{ registro.tipo }}</span></td>
-					<td ng-init="colorH = colorHorario(registro)" ng-style="{'color': colorH}">{{ registro.gateTimestamp | date: 'HH:mm' }}</td>
+					<td ng-init="colorH = colorHorario(registro.gateTimestamp_in, registro.turnoInicio, registro.turnoFin)" ng-style="{'color': colorH}">{{ registro.gateTimestamp | date: 'HH:mm' }}</td>
 					<td>{{ registro.turnoInicio | date: 'HH:mm' }}</td>
 					<td>{{ registro.turnoFin | date: 'HH:mm' }}</td>
 					<td>{{ registro.mov }}</td>
