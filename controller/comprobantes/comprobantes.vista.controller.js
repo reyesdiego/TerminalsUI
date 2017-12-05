@@ -168,7 +168,12 @@ myapp.controller('vistaComprobantesCtrl', ['$rootScope', '$scope', 'loginService
             $scope.loadingState = true;
             let controlled = false;
             comprobante.mostrarDetalle().then(() => {
-                comprobante.controlarTarifas();
+                try {
+                    comprobante.controlarTarifas();
+                } catch (error) {
+                    console.error(error);                    
+                }
+
                 if (!controlled) $scope.comprobantesVistos.push(comprobante);
                 $scope.verDetalle = comprobante;
                 $scope.mostrarResultado = true;
