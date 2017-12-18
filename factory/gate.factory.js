@@ -27,6 +27,19 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
                 return deferred.promise;
             }
 
+            getGateIN(datos, page) {
+                this.cancelRequest('getGatesIN');
+                const deferred = $q.defer();
+                const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'getGatesIN');
+                const inserturl = `${APP_CONFIG.SERVER_URL}/gates/IN/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
+                $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
+                    deferred.resolve(response.data);
+                }).catch((response) => {
+                    if (response.status != -5) deferred.reject(response.data);
+                });
+                return deferred.promise;
+            }
+
             getMissingInvoices(datos, page, callback) {
                 const defer = $q.defer();
                 const canceler = HTTPCanceler.get(defer, this.namespace, 'getMissingInvoices');

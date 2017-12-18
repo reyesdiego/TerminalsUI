@@ -307,6 +307,23 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
                 isos: function(){ return initialLoadFactory.cargaISOSFormas() }
             }
         })
+        .state('gatesIN', {
+            url: "/gatesIN",
+            templateUrl: "view/gates/gatesIN.html",
+            controller: "gatesINCtrl",
+            resolve: {
+                unitTypes: function(){ return initialLoadFactory.cargaUnidades() },
+                //buques: initialLoadFactory.cargaBuques,
+                //trenes: initialLoadFactory.cargaTrenes,
+                //clientes: initialLoadFactory.cargaClientes,
+                vouchers: function(){ initialLoadFactory.cargaVouchers() },
+                estados: function(){ return initialLoadFactory.cargaEstados() },
+                matches: function(){ return initialLoadFactory.cargaMatchesArray() },
+                ratesMatches: function(){ return initialLoadFactory.cargaMatchesRates() },
+                descripciones: function(){ return initialLoadFactory.cargaDescripciones() },
+                isos: function(){ return initialLoadFactory.cargaISOSFormas() }
+            }
+        })
         .state('cgates', {
             url: '/controlGates',
             templateUrl: 'view/gates/gates.control.html',

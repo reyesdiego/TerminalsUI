@@ -113,6 +113,7 @@
 	<script src="controller/comprobantes/comprobantes.control.controller.js"></script>
 	<script src="controller/reportes/controlPanel.controller.js"></script>
 	<script src="controller/gates/gates.controller.js"></script>
+	<script src="controller/gates/gatesIN.controller.js"></script>
 	<script src="controller/comprobantes/comprobantes.controller.js"></script>
 	<script src="controller/login/login.controller.js"></script>
 	<script src="controller/tarifario/tarifario.editar.controller.js"></script>
@@ -228,6 +229,7 @@
 					<a href uib-dropdown-toggle>Gates<b class="caret"></b><span ng-hide="gateNotify==0" class="burbuja {{ gateAnimar }}">{{ gateNotify }}</span></a>
 					<ul class="dropdown-menu">
 						<li ng-if="tieneAcceso('gates')" ng-click="cerrarMenu()"><a ui-sref="gates">Ver</a></li>
+						<li ng-if="tieneAcceso('gatesIN')" ng-click="cerrarMenu()"><a ui-sref="gatesIN">Vivo</a></li>
 						<li ng-if="tieneAcceso('cgates')" ng-click="cerrarMenu()"><a ui-sref="cgates">Control</a></li>
 					</ul>
 				</li>
