@@ -11,6 +11,8 @@
 	<uib-tabset ng-hide="ocultarBusqueda || ocultarFiltros.indexOf('mov', 0) >= 0 || mostrarHTML">
 		<uib-tab heading="IMPO" ng-click="cambiarTipoMov('IMPO')" active="active.impo"></uib-tab>
 		<uib-tab heading="EXPO" ng-click="cambiarTipoMov('EXPO')" active="active.expo"></uib-tab>
+		<uib-tab heading="ENTREGA VACIO" ng-click="cambiarTipoMov('VACIO_OUT')" active="active.vacio_out"></uib-tab>
+		<uib-tab heading="DEVOLUCION VACIO" ng-click="cambiarTipoMov('VACIO_IN')" active="active.vacio_in"></uib-tab>
 	</uib-tabset>
 	<br ng-hide="ocultarBusqueda">
 	<div ng-hide="datosTurnos.length && datosTurnos.length > 0">
@@ -42,9 +44,9 @@
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
 					<td>{{ turno.fin | date: 'HH:mm' }}</td>
-					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || ocultarBusqueda" ng-click="filtrado('buqueNombre', turno.buque); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || ocultarBusqueda || turno.buque == ''" ng-click="filtrado('buqueNombre', turno.buque); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
 					<td>{{ turno.viaje }}</td>
-					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || ocultarBusqueda" ng-click="filtrado('contenedor', turno.contenedor); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || ocultarBusqueda || turno.contenedor == ''" ng-click="filtrado('contenedor', turno.contenedor); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
 					<td>{{ turno.transporte.camion }}&nbsp;&nbsp;&nbsp;<a href ng-click="turno.editarPatente()"><span class="glyphicon glyphicon-edit" ng-if="dataTerminal.type == 'terminal'"></span></a></td>
 					<!--<td>{{ turno.mov }}</td>-->
 					<td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
