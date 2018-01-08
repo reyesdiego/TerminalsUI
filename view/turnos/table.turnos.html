@@ -44,9 +44,9 @@
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
 					<td>{{ turno.fin | date: 'HH:mm' }}</td>
-					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || ocultarBusqueda || turno.buque == ''" ng-click="filtrado('buqueNombre', turno.buque); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('buque', 0) >= 0 || ocultarBusqueda || turno.buque === undefined ||turno.buque == ''" ng-click="filtrado('buqueNombre', turno.buque); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ turno.buque }}</td>
 					<td>{{ turno.viaje }}</td>
-					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || ocultarBusqueda || turno.contenedor == ''" ng-click="filtrado('contenedor', turno.contenedor); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
+					<td><a class="hidden-print" href ng-hide="ocultarFiltros.indexOf('contenedor', 0) >= 0 || ocultarBusqueda || turno.contenedor === undefined || turno.contenedor == ''" ng-click="filtrado('contenedor', turno.contenedor); cargaPorFiltros()"><span class="glyphicon glyphicon-search"></span></a> {{ turno.contenedor }}</td>
 					<td>{{ turno.transporte.camion }}&nbsp;&nbsp;&nbsp;<a href ng-click="turno.editarPatente()"><span class="glyphicon glyphicon-edit" ng-if="dataTerminal.type == 'terminal'"></span></a></td>
 					<!--<td>{{ turno.mov }}</td>-->
 					<td>{{ turno.alta | date: 'dd/MM/yyyy HH:mm'  }}</td>
