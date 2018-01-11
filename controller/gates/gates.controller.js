@@ -4,7 +4,7 @@
 
 myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'loginService', 'TERMINAL_COLORS', function ($scope, gatesFactory, turnosFactory, loginService, TERMINAL_COLORS) {
 
-    $scope.canDescargarCsv = false;
+    $scope.disableDown = false;
     $scope.totalItems = 0;
     $scope.tiempoConsulta = 0;
     $scope.turnosGates = true;
@@ -32,7 +32,6 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'login
         mensaje: ''
     };
 
-
     // Fecha (dia y hora)
     $scope.fechaInicio = new Date();
     $scope.fechaFin = new Date();
@@ -46,6 +45,8 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'login
     $scope.filtrosGates = ['codTipoComprob', 'nroComprobante', 'razonSocial', 'fechaInicio', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
     $scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'fechaInicio', 'codigo', 'razonSocial', 'contenedor', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
+
+    $scope.ocultarFiltros = ['tren'];
 
     $scope.model = {
         'nroPtoVenta': '',
@@ -291,6 +292,21 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'login
         });
         return matAux;
     };
+
+    $scope.descargarCSV = (model) => {
+        $scope.disableDown = true;
+        gatesFactory.getCSV(model, 'Gates.csv')
+        .then(status => {
+            $scope.disableDown = false;
+        })
+        .catch(err => {
+            dialogs.error('Gates', 'Se ha producido un error al exportar los datos a CSV.');
+        });
+    }
+    $scope.$on('descargarCsv', (event, model) => {
+        console.log("paso por gate.controller descargarCsv %j", model);
+        $scope.descargarCSV(model);
+    });
 
     $scope.selectRow = (index, id) => {
 

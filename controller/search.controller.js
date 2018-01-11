@@ -269,10 +269,13 @@
         };
 
         $scope.cambiarTipoMov = tipoMov => {
+
             if ($scope.ocultarBusqueda || $scope.ocultarFiltros.indexOf('mov', 0) < 0){
                 $scope.active = {
                     impo: (tipoMov == 'IMPO'),
-                    expo: (tipoMov == 'EXPO')
+                    expo: (tipoMov == 'EXPO'),
+                    vacio_out: (tipoMov == 'VACIO_OUT'),
+                    vacio_in: (tipoMov == 'VACIO_IN')
                 };
                 $scope.model.mov = tipoMov;
                 $scope.$emit('iniciarBusqueda');

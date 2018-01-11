@@ -8,6 +8,12 @@
     <img class="media-object center-block" src="images/loading.gif">
 </div>
 <div class="col-lg-12" ng-hide="loadingState">
+	<uib-tabset ng-hide="ocultarBusqueda">
+		<uib-tab heading="TODO" ng-click="cambiarTipoMov('TODO')" active="active.todo"></uib-tab>
+		<uib-tab heading="IMPO" ng-click="cambiarTipoMov('IMPO')" active="active.impo"></uib-tab>
+		<uib-tab heading="EXPO" ng-click="cambiarTipoMov('EXPO')" active="active.expo"></uib-tab>
+		<uib-tab heading="PASO" ng-click="cambiarTipoMov('PASO')" active="active.paso"></uib-tab>
+	</uib-tabset>
     <div ng-hide="datosGates.length && datosGates.length > 0 || detallesGates">
         <div-panel config-panel="configPanel">{{ configPanel.mensaje }}</div-panel>
     </div>

@@ -2,8 +2,8 @@
  * Created by leo on 14/04/14.
  */
 
-myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', 'HTTPCanceler', 'APP_CONFIG',
-    function($http, formatService, loginService, $q, HTTPCanceler, APP_CONFIG){
+myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', 'HTTPCanceler', 'APP_CONFIG', 'downloadService',
+    function($http, formatService, loginService, $q, HTTPCanceler, APP_CONFIG, downloadService){
 
         class gatesFactory {
             constructor(){
@@ -21,6 +21,23 @@ myapp.factory('gatesFactory', ['$http', 'formatService', 'loginService', '$q', '
                 const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
                 $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
                     deferred.resolve(response.data);
+                }).catch((response) => {
+                    if (response.status != -5) deferred.reject(response.data);
+                });
+                return deferred.promise;
+            }
+
+            getCSV(datos, reportName) {
+                this.cancelRequest('getGatesCSV');
+                const deferred = $q.defer();
+                const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'getGatesCSV');
+                const inserturl = `${APP_CONFIG.SERVER_URL}/gates/${loginService.filterTerminal}/down`;
+                $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
+                    const contentType = response.headers('Content-Type');
+                    if (contentType.indexOf('text/csv') >= 0){
+                        downloadService.setDownloadCsv(reportName, response.data);
+                        return deferred.resolve(response.data);
+                    }
                 }).catch((response) => {
                     if (response.status != -5) deferred.reject(response.data);
                 });

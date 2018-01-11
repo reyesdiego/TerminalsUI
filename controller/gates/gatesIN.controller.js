@@ -4,7 +4,6 @@
 
 myapp.controller('gatesINCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'loginService', 'TERMINAL_COLORS', function ($scope, gatesFactory, turnosFactory, loginService, TERMINAL_COLORS) {
 
-    $scope.canDescargarCsv = false;
     $scope.totalItems = 0;
     $scope.tiempoConsulta = 0;
     $scope.turnosGates = true;

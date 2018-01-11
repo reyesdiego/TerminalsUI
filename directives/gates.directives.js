@@ -24,8 +24,13 @@ myapp.directive('tableGates', function(){
             currentPage: '=',
             configPanel: '=',
             loadingState: '=',
+            canDescargarCsv: '=',
+            disableDown: '=',
             chartGatesByType: '=',
             chartDiaGatesTurnos: '='
+        },
+        link: function (scope, element, attrs) {
+            console.log(attrs)
         },
         controller: 'searchController'
     }
