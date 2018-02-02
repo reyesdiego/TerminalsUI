@@ -1,18 +1,18 @@
 /**
  * Created by kolesnikov-a on 17/08/2016.
  */
-myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'loginService', 'formatService', 'APP_CONFIG', 'downloadService', function(Invoice, $http, $q, HTTPCanceler, loginService, formatService, APP_CONFIG, downloadService){
+myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'loginService', 'formatService', 'APP_CONFIG', 'downloadService', function (Invoice, $http, $q, HTTPCanceler, loginService, formatService, APP_CONFIG, downloadService) {
 
     class invoiceFactory {
-        constructor(){
+        constructor() {
             this.namespace = 'invoices';
         }
 
-        cancelRequest(request){
+        cancelRequest(request) {
             HTTPCanceler.cancel(this.namespace, request);
         }
 
-        retrieveInvoices(invoicesData){
+        retrieveInvoices(invoicesData) {
             let invoicesArray = [];
             invoicesData.forEach((invoice) => {
                 invoicesArray.push(new Invoice(invoice));
@@ -20,12 +20,12 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             return invoicesArray;
         }
 
-        getInvoices(idLlamada, datos, page){
+        getInvoices(idLlamada, datos, page) {
             const deferred = $q.defer();
             this.cancelRequest(idLlamada);
             const canceler = HTTPCanceler.get($q.defer(), this.namespace, idLlamada);
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/${page.skip}/${page.limit}`;
-            $http.get(inserturl, {params: formatService.formatearDatos(datos), timeout: canceler.promise}).then((response) => {
+            $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
                 response.data.data = this.retrieveInvoices(response.data.data);
                 deferred.resolve(response.data);
             }).catch((response) => {
@@ -34,7 +34,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             return deferred.promise;
         }
 
-        getInvoicesNoMatches(datos, page){
+        getInvoicesNoMatches(datos, page) {
             const deferred = $q.defer();
             this.cancelRequest('invoicesNoMatches');
             const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'invoicesNoMatches');
@@ -49,7 +49,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             return deferred.promise;
         }
 
-        getInvoicesByContainer(datos){
+        getInvoicesByContainer(datos) {
             const deferred = $q.defer();
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/byContainer`;
             $http.get(inserturl, { params: datos }).then(response => {
@@ -62,15 +62,15 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             return deferred.promise;
         }
 
-        getComprobantesLiquidar(page, datos, callback){
-            if (datos.byContainer){
+        getComprobantesLiquidar(page, datos, callback) {
+            if (datos.byContainer) {
                 this.cancelRequest('comprobantesLiquidarContainer');
             } else {
                 this.cancelRequest('comprobantesLiquidar');
             }
             const defer = $q.defer();
             let canceler;
-            if (datos.byContainer){
+            if (datos.byContainer) {
                 canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidarContainer');
             } else {
                 canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidar');
@@ -80,8 +80,8 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                 response.data.data = this.retrieveInvoices(response.data.data);
                 callback(response.data);
             }).catch((response) => {
-                if (response.status != -5){
-                    if (response.data == null){
+                if (response.status != -5) {
+                    if (response.data == null) {
                         response.data = {
                             status: 'ERROR'
                         }
@@ -91,15 +91,15 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             });
         }
 
-        getComprobantesLiquidados(page, liquidacion, datos, callback){
-            if (datos.byContainer){
+        getComprobantesLiquidados(page, liquidacion, datos, callback) {
+            if (datos.byContainer) {
                 this.cancelRequest('comprobantesLiquidadosContainer');
             } else {
                 this.cancelRequest('comprobantesLiquidados');
             }
             const defer = $q.defer();
             let canceler;
-            if (datos.byContainer){
+            if (datos.byContainer) {
                 canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidadosContainer');
             } else {
                 canceler = HTTPCanceler.get(defer, this.namespace, 'comprobantesLiquidados');
@@ -109,8 +109,8 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                 response.data.data = this.retrieveInvoices(response.data.data);
                 callback(response.data);
             }).catch((response) => {
-                if (response.status != -5){
-                    if (response.data == null){
+                if (response.status != -5) {
+                    if (response.data == null) {
                         response.data = {
                             status: 'ERROR',
                             message: 'Se ha producido un error al procesar la liquidación.'
@@ -121,7 +121,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             });
         }
 
-        getCorrelative(datos, socketIoRegister, callback){
+        getCorrelative(datos, socketIoRegister, callback) {
             this.cancelRequest('correlative');
             const defer = $q.defer();
             const canceler = HTTPCanceler.get(defer, this.namespace, 'correlative');
@@ -135,19 +135,19 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             });
         }
 
-        getCashbox(idLlamada, datos, callback){
+        getCashbox(idLlamada, datos, callback) {
             this.cancelRequest(idLlamada);
             const defer = $q.defer();
             const canceler = HTTPCanceler.get(defer, this.namespace, idLlamada);
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/cashbox/${loginService.filterTerminal}`;
             $http.get(inserturl, { params: formatService.formatearDatos(datos), timeout: canceler.promise }).then((response) => {
-                if (response.data == null){
+                if (response.data == null) {
                     response.data = {
                         status: 'ERROR',
                         data: []
                     }
                 }
-                response.data.data.sort((a,b)=>{
+                response.data.data.sort((a, b) => {
                     return a - b;
                 });
                 callback(response.data);
@@ -172,7 +172,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             });
         }
 
-        getDetailRates(datos, callback){
+        getDetailRates(datos, callback) {
             this.cancelRequest('ratesDetail');
             const defer = $q.defer();
             const canceler = HTTPCanceler.get(defer, this.namespace, 'ratesDetail');
@@ -193,7 +193,7 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
                 this.cancelRequest('getTotales');
                 const canceler = HTTPCanceler.get($q.defer(), this.namespace, 'getTotales');
                 const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/totales`;
-                $http.get(inserturl, {params: formatService.formatearDatos(params), timeout: canceler.promise}).then((response) => {
+                $http.get(inserturl, { params: formatService.formatearDatos(params), timeout: canceler.promise }).then((response) => {
                     //$http.get(inserturl, {params: formatService.formatearDatos(params)}).then(response => {
                     //response.data.data = this.retrieveInvoices(response.data.data);
                     resolve(response.data);
@@ -203,11 +203,11 @@ myapp.factory('invoiceFactory', ['Invoice', '$http', '$q', 'HTTPCanceler', 'logi
             });
         }
 
-        getCSV(datos, reportName, callback){
+        getCSV(datos, reportName, callback) {
             const inserturl = `${APP_CONFIG.SERVER_URL}/invoices/${loginService.filterTerminal}/down`;
-            $http.get(inserturl, { params: formatService.formatearDatos(datos)}).then((response) => {
+            $http.get(inserturl, { params: formatService.formatearDatos(datos) }).then((response) => {
                 const contentType = response.headers('Content-Type');
-                if (contentType.indexOf('text/csv') >= 0){
+                if (contentType.indexOf('text/csv') >= 0) {
                     downloadService.setDownloadCsv(reportName, response.data);
                     callback('OK');
                 } else {
