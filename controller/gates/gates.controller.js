@@ -46,7 +46,7 @@ myapp.controller('gatesCtrl', ['$scope', 'gatesFactory', 'turnosFactory', 'login
 
     $scope.filtrosComprobantes = ['codTipoComprob', 'nroComprobante', 'fechaInicio', 'codigo', 'razonSocial', 'contenedor', 'nroPtoVentaOrden', 'codTipoComprobOrden', 'nroComprobOrden', 'razonOrden', 'fechaOrden', 'importeOrden'];
 
-    $scope.ocultarFiltros = ['tren'];
+    $scope.ocultarFiltros = ['tren', 'fecha'];
 
     $scope.model = {
         'nroPtoVenta': '',
