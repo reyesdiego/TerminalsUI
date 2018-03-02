@@ -23,7 +23,7 @@
 		<div class="table-responsive invoice-shadow">
 			<table class="table table-bordered table-hover text-small text-center">
 				<tr>
-					<th ng-show="control" class="text-center">Terminal</th>
+					<th ng-show="control || terminal" class="text-center">Terminal</th>
 					<th class="text-center" colspan="3"><encabezado-tabla-ordenado titulo="Turno" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="inicio" filtro-orden="inicioOrden"></encabezado-tabla-ordenado></th>
 					<th class="text-center"><encabezado-tabla-ordenado titulo="Buque" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="buque" filtro-orden="buqueOrden"></encabezado-tabla-ordenado></th>
 					<th class="text-center"><encabezado-tabla-ordenado titulo="Viaje" filtrar-orden="filtrarOrden(filtro)" oculta-filtros="ocultarFiltros" model="model" filtro="viaje" filtro-orden="viajeOrden"></encabezado-tabla-ordenado></th>
@@ -40,7 +40,7 @@
 					<th class="text-center"><span class="glyphicon glyphicon-zoom-in"></span></th>
 				</tr>
 				<tr ng-repeat="turno in datosTurnos" class="fila-animada">
-					<td ng-show="control">{{ turno.terminal }}</td>
+					<td ng-show="control || terminal">{{ turno.terminal }}</td>
 					<td>{{ turno.inicio | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ turno.inicio | date: 'HH:mm' }}</td>
 					<td>{{ turno.fin | date: 'HH:mm' }}</td>

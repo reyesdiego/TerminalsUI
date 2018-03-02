@@ -366,6 +366,11 @@ myapp.config(['$stateProvider', '$urlRouterProvider', '$provide', 'cacheServiceP
                 estados: function(){ return initialLoadFactory.cargaEstados() }
             }
         })
+        .state('turnosTodos', {
+            url: "/turnosTodos",
+            templateUrl: "view/turnos/turnos.todos.html",
+            controller: "turnosTodosCtrl"
+        })
         .state('cturnos', {
             url: "/colaTurnos",
             templateUrl: 'view/turnos/turnos.sinNotificar.html',

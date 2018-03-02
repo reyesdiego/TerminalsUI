@@ -15,7 +15,9 @@ myapp.directive('tableTurnos', function(){
 			currentPage:		'=',
 			ocultarFiltros:		'=',
 			loadingState:		'=',
-			control:			'='
+			control:			'=',
+			showCsv:			'=',
+			terminal:			'='
 		},
 		controller: 'searchController'
 	}

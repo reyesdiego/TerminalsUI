@@ -145,6 +145,7 @@
 	<script src="controller/reportes/report.terminalRates.controller.js"></script>
 	<script src="controller/gates/gates.control.controller.js"></script>
 	<script src="controller/turnos/turnos.patentes.modal.controller.js"></script>
+	<script src="controller/turnos/turnos.todos.controller.js"></script>
 	<script src="controller/turnos/turnos.consulta.controller.js"></script>
 	<script src="controller/reportes/report.container.controller.js"></script>
 	<script src="controller/tarifario/tarifario.agrupar.controller.js"></script>
@@ -196,6 +197,7 @@
 						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('BACTSSA');"><span ng-show="dataTerminal.filterTerminal == 'BACTSSA'" class="glyphicon glyphicon-ok-sign"></span> BACTSSA</a></li>
 						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('TERMINAL4');"><span ng-show="dataTerminal.filterTerminal == 'TERMINAL4'" class="glyphicon glyphicon-ok-sign"></span> TERMINAL 4</a></li>
 						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('TRP');"><span ng-show="dataTerminal.filterTerminal == 'TRP'" class="glyphicon glyphicon-ok-sign"></span> TRP</a></li>
+						<li ng-click="cerrarMenu()"><a href ng-click="setearTerminal('ZAP');"><span ng-show="dataTerminal.filterTerminal == 'ZAP'" class="glyphicon glyphicon-ok-sign"></span> ZAP</a></li>
 						<li class="visible-lg divider"></li>
 						<li ng-click="cerrarMenu()"><a href ng-click="onOffNotificaciones();"><span ng-show="verNotificaciones" class="glyphicon glyphicon-remove"></span> <span ng-show="verNotificaciones">Deshabilitar</span> <span ng-show="!verNotificaciones" class="glyphicon glyphicon-check"></span> <span ng-show="!verNotificaciones">Habilitar</span> Notificaciones</a></li>
 					</ul>
@@ -260,6 +262,8 @@
 						<li ng-if="tieneAcceso('control')" ng-click="cerrarMenu()"><a ui-sref="control">Control</a></li>
 						<li ng-if="tieneAcceso('reports')" ng-click="cerrarMenu()"><a ui-sref="reports">Reportes</a></li>
 						<li class="divider" ng-show="(tieneAcceso('control') || tieneAcceso('reports')) && (tieneAcceso('container') || tieneAcceso('buque'))"></li>
+						<li class="dropdown-header" ng-show="tieneAcceso('turnos')">Turnos</li>
+						<li ng-if="tieneAcceso('turnosTodos')" ng-click="cerrarMenu()"><a ui-sref="turnosTodos">Ver</a></li>
 						<li class="dropdown-header" ng-show="tieneAcceso('container') || tieneAcceso('buque')">Contenedores</li>
 						<li ng-if="tieneAcceso('container')" ng-click="cerrarMenu()"><a ui-sref="container">Ver</a></li>
 						<li ng-if="tieneAcceso('buque')" ng-click="cerrarMenu()"><a ui-sref="buque">Buque - Viaje</a></li>
